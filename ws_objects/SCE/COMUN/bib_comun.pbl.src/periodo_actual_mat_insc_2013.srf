@@ -1,0 +1,46 @@
+﻿$PBExportHeader$periodo_actual_mat_insc_2013.srf
+global type periodo_actual_mat_insc_2013 from function_object
+end type
+
+forward prototypes
+global subroutine periodo_actual_mat_insc_2013 (ref integer periodo, ref integer anio, transaction trans)
+end prototypes
+
+global subroutine periodo_actual_mat_insc_2013 (ref integer periodo, ref integer anio, transaction trans);
+uo_periodo_servicios luo_periodo_servicios
+luo_periodo_servicios = CREATE uo_periodo_servicios
+//luo_periodo_servicios.f_carga_periodos(gs_tipo_periodo)
+IF luo_periodo_servicios.f_carga_periodo_activo(periodo, anio, trans) < 0 THEN 
+	MessageBox("Error al seleccionar el periodo de mat_inscritas", luo_periodo_servicios.imensaje)
+END IF 
+RETURN 
+
+ 
+
+
+
+////Función que recibe dos parametros variables en los que se regresa el periodo y año actual
+////Mayo 2000 APR
+//
+//string ls_mensaje
+//integer li_codigo_error
+//
+//SELECT max(mat_inscritas.periodo), 
+//     max(mat_inscritas.anio)
+//INTO :periodo, 
+//     :anio
+//FROM mat_inscritas
+//USING trans;
+//
+//li_codigo_error= trans.SqlCode
+//ls_mensaje= trans.SqlErrText
+//
+//if li_codigo_error = -1 then
+//	MessageBox("Error al seleccionar el periodo de mat_inscritas", ls_mensaje)
+//end if
+//
+//return
+//
+//
+end subroutine
+

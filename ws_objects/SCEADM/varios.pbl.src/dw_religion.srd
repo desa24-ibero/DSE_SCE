@@ -1,0 +1,12 @@
+﻿$PBExportHeader$dw_religion.srd
+$PBExportComments$Catálogo de Religiones, Leído de SCE.
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cve_religion dbname="religion.cve_religion" )
+ column=(type=char(15) updatewhereclause=yes name=religion dbname="religion.religion" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"religion~" ) COLUMN(NAME=~"religion.cve_religion~") COLUMN(NAME=~"religion.religion~")) " )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="1" y="4" height="77" width="700" format="[general]"  name=religion edit.limit=15 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

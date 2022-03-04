@@ -1,0 +1,45 @@
+﻿$PBExportHeader$of_obten_fecha_opcion.srf
+global type of_obten_fecha_opcion from function_object
+end type
+
+forward prototypes
+global function long of_obten_fecha_opcion (long al_cuenta, long al_cve_carrera, long al_cve_plan, ref datetime adttm_fecha_examen, ref long al_opcion_titulacion)
+end prototypes
+
+global function long of_obten_fecha_opcion (long al_cuenta, long al_cve_carrera, long al_cve_plan, ref datetime adttm_fecha_examen, ref long al_opcion_titulacion);//of_obten_fecha_opcion
+//Recibe	al_cuenta			long
+//			al_cve_carrera		long
+//			al_cve_plan			long
+
+//Devuelve el numero de fechas encontradas
+
+long ll_cve_concepto, ll_cve_subconcepto, ll_num_fechas, ll_folio_mov_alumnos
+string ls_mensaje
+integer li_codigo_sql
+
+	SELECT
+	fecha_examen,
+	opcion_titulacion
+	INTO
+	:adttm_fecha_examen,
+	:al_opcion_titulacion
+	FROM titulacion 
+	WHERE cuenta = :al_cuenta
+	AND cve_carrera = :al_cve_carrera
+	AND cve_plan = :al_cve_plan
+	USING gtr_sce;
+	
+	li_codigo_sql = gtr_sce.SqlCode
+	ls_mensaje = gtr_sce.SqlErrText
+	
+	IF li_codigo_sql= -1 THEN
+		MessageBox("Error al consultar titulacion",ls_mensaje,StopSign! )
+		return  -1
+	END IF
+
+
+return li_codigo_sql
+
+			
+end function
+

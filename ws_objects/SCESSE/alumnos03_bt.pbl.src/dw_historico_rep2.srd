@@ -1,0 +1,137 @@
+﻿$PBExportHeader$dw_historico_rep2.srd
+$PBExportComments$Este data_window nos trae los datos resultado de la consulta de las tablas historico,academicos y materias.  Juan Campos Nov-1996. (Modificado para su impresion       By M.a.d.  Ago-1997)
+release 10;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+header(height=824 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=172 color="536870912" )
+detail(height=92 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=historico_cve_mat dbname="historico.cve_mat" )
+ column=(type=char(6) updatewhereclause=yes name=materias_sigla dbname="materias.sigla" )
+ column=(type=char(42) updatewhereclause=yes name=materias_materia dbname="materias.materia" )
+ column=(type=char(2) updatewhereclause=yes name=historico_calificacion dbname="historico.calificacion" )
+ column=(type=long updatewhereclause=yes name=historico_periodo dbname="historico.periodo" values="P	0/V	1/O	2/" )
+ column=(type=long updatewhereclause=yes name=historico_anio dbname="historico.anio" )
+ column=(type=long updatewhereclause=yes name=historico_observacion dbname="historico.observacion" values="NO ACREDITADA	0/ACREDITADA	1/EXTRAORDINARIO	2/ORDINARIO	3/PRERREQ. HIST.	4/REVALIDADA	5/TIT. SUFICIENCIA	6/" )
+ column=(type=char(2) updatewhereclause=yes name=historico_gpo dbname="historico.gpo" )
+ column=(type=long updatewhereclause=yes name=historico_cve_plan dbname="historico.cve_plan" )
+ column=(type=long updatewhereclause=yes name=historico_cuenta dbname="historico.cuenta" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_carrera dbname="academicos.cve_carrera" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_plan dbname="academicos.cve_plan" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_nombre dbname="alumnos.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_apaterno dbname="alumnos.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_amaterno dbname="alumnos.amaterno" )
+ column=(type=long updatewhereclause=yes name=materias_creditos dbname="materias.creditos" )
+ column=(type=char(6) updatewhereclause=yes name=materias_sigla_anterior dbname="materias.sigla_anterior" )
+ column=(type=long updatewhereclause=yes name=hti dbname="hti" )
+ retrieve=" SELECT historico.cve_mat,   
+         materias.sigla,   
+         materias.materia,   
+         historico.calificacion,   
+         historico.periodo,   
+         historico.anio,   
+         historico.observacion,   
+         historico.gpo,   
+         historico.cve_plan,
+         historico.cuenta,
+			academicos.cve_carrera,
+			academicos.cve_plan,
+			alumnos.nombre,
+			alumnos.apaterno,
+			alumnos.amaterno,
+			materias.creditos,
+         materias.sigla_anterior,
+			hti = 0   
+    FROM academicos,   
+         historico,   
+         materias,
+         alumnos
+   WHERE ( academicos.cuenta = :cuenta ) AND  
+         ( academicos.cuenta = historico.cuenta ) AND 
+         ( academicos.cuenta = alumnos.cuenta) AND
+         ( academicos.cve_carrera = historico.cve_carrera ) AND           
+         ( academicos.cve_plan = historico.cve_plan ) AND           
+         ( historico.cve_mat *= materias.cve_mat ) and  
+         (( historico.calificacion between :cal1 AND :cal2 ) OR  
+          ( historico.calificacion = :cal3 ) OR  
+          ( historico.calificacion = :cal4 ) OR  
+          ( historico.calificacion = :cal5 ) OR  
+          ( historico.calificacion = :cal6 ) OR 
+          ( historico.calificacion = :cal7 ) OR 
+          ( historico.calificacion = :cal8 ) OR
+			 ( historico.calificacion = :cal9 ) OR  
+          ( historico.calificacion = :cal10 ) OR  
+          ( historico.calificacion = :cal11 ) OR 
+          ( historico.calificacion = :cal12 ) OR 
+          ( historico.calificacion = :cal13 ) )    
+  ORDER BY historico.anio,historico.periodo" arguments=(("cuenta", number),("cal1", string),("cal2", string),("cal3", string),("cal4", string),("cal5", string),("cal6", string),("cal7", string),("cal8", string),("cal9", string),("cal10", string),("cal11", string),("cal12", string),("cal13", string)) )
+roundrectangle(band=header ellipseheight="60" ellipsewidth="69"x="32" y="684" height="124" width="3415"  name=rr_1 visible="1" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="10789024" )
+roundrectangle(band=header ellipseheight="60" ellipsewidth="69"x="571" y="204" height="80" width="2848"  name=rr_2 visible="1" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="10789024" )
+roundrectangle(band=header ellipseheight="60" ellipsewidth="69"x="5" y="188" height="180" width="3433"  name=rr_3 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="10789024" )
+roundrectangle(band=header ellipseheight="60" ellipsewidth="69"x="23" y="28" height="124" width="745"  name=rr_4 visible="1" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="12632256" )
+roundrectangle(band=header ellipseheight="60" ellipsewidth="69"x="2638" y="28" height="124" width="745"  name=rr_5 visible="1" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=header ellipseheight="60" ellipsewidth="69"x="3003" y="28" height="124" width="379"  name=rr_6 visible="1" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2999" y1="28" x2="2999" y2="144"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="12632256" )
+rectangle(band=header x="3003" y="28" height="116" width="50"  name=r_1 visible="1" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="5" pen.color="16777215"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Este documento no es oficial." border="0" color="0" x="5" y="592" height="64" width="882" html.valueishtml="0"  name=t_1 visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+roundrectangle(band=header ellipseheight="60" ellipsewidth="69"x="389" y="28" height="124" width="379"  name=rr_7 visible="1" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Fecha" border="0" color="0" x="146" y="52" height="68" width="165" html.valueishtml="0"  name=t_2 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+rectangle(band=header x="389" y="28" height="116" width="50"  name=r_2 visible="1" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="5" pen.color="16777215"  background.mode="2" background.color="16777215" )
+line(band=header x1="389" y1="28" x2="389" y2="144"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="12632256" )
+compute(band=header alignment="2" expression="today()"border="0" color="0" x="411" y="48" height="76" width="334" format="dd/mm/yyyy" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Página " border="0" color="0" x="2738" y="52" height="68" width="201" html.valueishtml="0"  name=t_3 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+compute(band=header alignment="2" expression="page()"border="0" color="0" x="3035" y="52" height="68" width="288" format="[general]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="   Histórico Alumno   " border="6" color="0" x="1408" y="48" height="76" width="649" html.valueishtml="0"  name=t_4 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+text(band=header alignment="0" text="Apellido Paterno" border="0" color="0" x="850" y="208" height="64" width="439" html.valueishtml="0"  name=t_5 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+roundrectangle(band=header ellipseheight="60" ellipsewidth="69"x="32" y="204" height="80" width="489"  name=rr_8 visible="1" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="10789024" )
+line(band=header x1="549" y1="188" x2="549" y2="364"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+text(band=header alignment="1" text="_" border="0" color="0" x="338" y="268" height="64" width="37" html.valueishtml="0"  name=t_6 visible="1"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="No. de Cuenta" border="0" color="0" x="82" y="208" height="64" width="384" html.valueishtml="0"  name=t_7 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="Apellido Materno" border="0" color="0" x="1797" y="208" height="64" width="443" html.valueishtml="0"  name=t_8 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=header id=15 alignment="2" tabsequence=32766 border="0" color="0" x="1536" y="292" height="68" width="891" format="[general]" html.valueishtml="0"  name=alumnos_amaterno visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=header id=13 alignment="2" tabsequence=32766 border="0" color="0" x="2501" y="292" height="68" width="891" format="[general]" html.valueishtml="0"  name=alumnos_nombre visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=header id=14 alignment="2" tabsequence=32766 border="0" color="0" x="581" y="292" height="68" width="891" format="[general]" html.valueishtml="0"  name=alumnos_apaterno visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=header id=10 alignment="1" tabsequence=32766 border="0" color="0" x="50" y="288" height="64" width="270" format="[general]" html.valueishtml="0"  name=historico_cuenta visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=header alignment="0" expression="obten_digito( historico_cuenta )"border="0" color="0" x="389" y="288" height="64" width="96" format="[general]" html.valueishtml="0"  name=compute_3 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+roundrectangle(band=header ellipseheight="60" ellipsewidth="69"x="5" y="384" height="188" width="1673"  name=rr_9 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="10789024" )
+column(band=header id=11 alignment="2" tabsequence=32766 border="0" color="0" x="69" y="492" height="64" width="1559" format="[general]" html.valueishtml="0"  name=academicos_cve_carrera visible="1" dddw.name=dw_carrera dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+roundrectangle(band=header ellipseheight="60" ellipsewidth="69"x="1783" y="396" height="80" width="1646"  name=rr_10 visible="1" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="10789024" )
+text(band=header alignment="0" text="Plan" border="0" color="0" x="2496" y="404" height="68" width="119" html.valueishtml="0"  name=t_9 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+roundrectangle(band=header ellipseheight="60" ellipsewidth="69"x="27" y="396" height="80" width="1637"  name=rr_11 visible="1" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="10789024" )
+text(band=header alignment="0" text="Carrera" border="0" color="0" x="631" y="404" height="68" width="224" html.valueishtml="0"  name=t_10 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+roundrectangle(band=header ellipseheight="60" ellipsewidth="69"x="1765" y="384" height="188" width="1682"  name=rr_12 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="10789024" )
+column(band=header id=12 alignment="2" tabsequence=32766 border="0" color="0" x="1842" y="492" height="64" width="1536" format="[general]" html.valueishtml="0"  name=academicos_cve_plan visible="1" dddw.name=dw_plan dddw.displaycolumn=nombre_plan dddw.datacolumn=cve_plan dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Nombre" border="0" color="0" x="2843" y="208" height="64" width="206" html.valueishtml="0"  name=t_11 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="1" text="Cve." border="0" color="0" x="78" y="716" height="64" width="137" html.valueishtml="0"  name=historico_cve_mat_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+text(band=header alignment="1" text="Sigla" border="0" color="0" x="306" y="716" height="64" width="142" html.valueishtml="0"  name=materias_sigla_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+text(band=header alignment="1" text="Nombre de la Materia" border="0" color="0" x="1010" y="716" height="64" width="631" html.valueishtml="0"  name=materias_materia_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+text(band=header alignment="1" text="Cal." border="0" color="0" x="2112" y="716" height="64" width="119" html.valueishtml="0"  name=historico_calificacion_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+text(band=header alignment="0" text="Per_Año" border="0" color="0" x="2318" y="716" height="64" width="256" html.valueishtml="0"  name=historico_periodo_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+text(band=header alignment="1" text="Gpo." border="0" color="0" x="2642" y="716" height="64" width="146" html.valueishtml="0"  name=historico_gpo_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+text(band=header alignment="1" text="Obs." border="0" color="0" x="3054" y="716" height="64" width="146" html.valueishtml="0"  name=historico_observacion_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="0" color="0" x="270" y="12" height="64" width="219" format="[general]" html.valueishtml="0"  name=materias_sigla_anterior visible="1~tif(  historico_cve_plan  =6 , 0, 1 )" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="2679" y="12" height="64" width="87" format="[general]" html.valueishtml="0"  name=historico_gpo visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="2866" y="12" height="64" width="571" format="[general]" html.valueishtml="0"  name=historico_observacion visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="2098" y="12" height="64" width="146" format="[general]" html.valueishtml="0"  name=historico_calificacion visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="2313" y="12" height="64" width="78" format="[general]" html.valueishtml="0"  name=historico_periodo visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="2432" y="12" height="64" width="160" format="[general]" html.valueishtml="0"  name=historico_anio visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="50" y="12" height="64" width="165" format="[general]" html.valueishtml="0"  name=historico_cve_mat visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="503" y="12" height="64" width="1454" format="[general]" html.valueishtml="0"  name=materias_materia visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="0" color="0" x="1970" y="12" height="64" width="110" format="[general]" html.valueishtml="0"  name=materias_creditos visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="270" y="12" height="64" width="219" format="[general]" html.valueishtml="0"  name=materias_sigla visible="1~tif(  historico_cve_plan =6 , 1, 0 )" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=footer alignment="0" expression="cred_prom_str(cuenta)"border="0" color="0" x="1609" y="0" height="68" width="1440" format="[general]" html.valueishtml="0"  name=compute_4 visible="0"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=footer alignment="2" text="  Créditos  " border="6" color="0" x="1166" y="12" height="68" width="325" html.valueishtml="0"  name=t_13 visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="30791125" )
+text(band=footer alignment="2" text="  Promedio  " border="6" color="0" x="2034" y="12" height="68" width="370" html.valueishtml="0"  name=t_12 visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="30791125" )
+compute(band=footer alignment="0" expression="f_obten_creditos_cuenta_nit(   historico_cuenta )"border="0" color="0" x="1202" y="100" height="68" width="256" format="[General]" html.valueishtml="0"  name=compute_5 visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=footer alignment="0" expression="f_obten_promedio_cuenta_nit(   historico_cuenta )"border="0" color="0" x="2089" y="100" height="68" width="256" format="#,##0.00" html.valueishtml="0"  name=compute_6 visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="0" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0  template=(comment="" encoding="UTF-16LE" name="dw_historico_rep2" xml="<?xml version=~"1.0~" encoding=~"UTF-16LE~" standalone=~"no~"?><dw_historico_rep2><dw_historico_rep2_row __pbband=~"detail~"><historico_cve_mat>historico_cve_mat</historico_cve_mat><materias_sigla>materias_sigla</materias_sigla><materias_materia>materias_materia</materias_materia><historico_calificacion>historico_calificacion</historico_calificacion><historico_periodo>historico_periodo</historico_periodo><historico_anio>historico_anio</historico_anio><historico_observacion>historico_observacion</historico_observacion><historico_gpo>historico_gpo</historico_gpo><historico_cve_plan>historico_cve_plan</historico_cve_plan><historico_cuenta>historico_cuenta</historico_cuenta><academicos_cve_carrera>academicos_cve_carrera</academicos_cve_carrera><academicos_cve_plan>academicos_cve_plan</academicos_cve_plan><alumnos_nombre>alumnos_nombre</alumnos_nombre><alumnos_apaterno>alumnos_apaterno</alumnos_apaterno><alumnos_amaterno>alumnos_amaterno</alumnos_amaterno><materias_creditos>materias_creditos</materias_creditos><materias_sigla_anterior>materias_sigla_anterior</materias_sigla_anterior><hti/></dw_historico_rep2_row></dw_historico_rep2>"))
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

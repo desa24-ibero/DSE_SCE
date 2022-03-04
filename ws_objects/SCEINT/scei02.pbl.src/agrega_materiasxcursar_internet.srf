@@ -1,0 +1,328 @@
+﻿$PBExportHeader$agrega_materiasxcursar_internet.srf
+global type agrega_materiasxcursar_internet from function_object
+end type
+
+forward prototypes
+global function integer agrega_materiasxcursar_internet (long il_cuenta, ref string is_respuesta, ref datastore dw_materiasxcursar, ref datastore dw_historico, datastore dw_plan_estud, ref datawindow dw_materias_inscritas, datastore dw_materias_abiertas)
+end prototypes
+
+global function integer agrega_materiasxcursar_internet (long il_cuenta, ref string is_respuesta, ref datastore dw_materiasxcursar, ref datastore dw_historico, datastore dw_plan_estud, ref datawindow dw_materias_inscritas, datastore dw_materias_abiertas);string ls_nivel,ls_textin
+long ll_cont_1,ll_cont_2,ll_cont_3,ll_cont_4,ll_found
+integer li_carr,li_plan,li_tema1,li_tema2,li_tema3,li_tema4,areas[12],borrables[3,100],li_puede
+integer li_ingles,li_ss,li_subsistema,mat_borrable
+decimal creditos[2,12]
+long titula[2]
+integer li_cve_flag_promedio,li_baja_3_reprob,li_baja_4_insc,li_baja_disciplina
+integer li_baja_documentos,li_cve_flag_biblioteca,li_cve_flag_diapositeca
+datetime ld_hora
+
+SELECT academicos.nivel,academicos.cve_carrera,academicos.cve_plan,
+		banderas.tema_1,banderas.tema_2,banderas.tema_3,banderas.tema_4,
+		banderas.cve_flag_prerreq_ingles,banderas.cve_flag_serv_social,
+		academicos.cve_subsistema,banderas.cve_flag_promedio,banderas.baja_3_reprob,
+      banderas.baja_4_insc,banderas.baja_disciplina,banderas.baja_documentos,
+      banderas.cve_flag_biblioteca,banderas.cve_flag_diapositeca
+INTO :ls_nivel,:li_carr,:li_plan,:li_tema1,:li_tema2,:li_tema3,:li_tema4,:li_ingles,
+     :li_ss,:li_subsistema,:li_cve_flag_promedio,:li_baja_3_reprob,:li_baja_4_insc,
+	  :li_baja_disciplina,:li_baja_documentos,:li_cve_flag_biblioteca,:li_cve_flag_diapositeca
+FROM academicos,banderas
+WHERE academicos.cuenta = :il_cuenta AND academicos.cuenta = banderas.cuenta
+USING gtr_sce;
+commit USING gtr_sce;
+
+setnull(ll_cont_1)
+
+SELECT horario_insc.hora_entrada,horario_insc.lugar_fila
+INTO :ld_hora,:ll_cont_1
+FROM horario_insc
+WHERE horario_insc.cuenta = :il_cuenta
+USING gtr_sce;
+commit USING gtr_sce;
+
+if isnull(ll_cont_1) then
+	is_respuesta=is_respuesta+'NO TIENE HORARIO DE INSCRIPCION ASIGNADO.~n~r'
+else
+	is_respuesta=is_respuesta+'FECHA Y HORA DE INSCRIPCION EN LINEA:	'+&
+		traduce_hor_insc(String(ld_hora, "ddd,dd,mm, yyyy hh:mm") )+&
+		'~n~r					LUGAR EN LA FILA:	'+string(ll_cont_1)+'~n~r'
+end if
+
+IF ls_nivel='L' THEN
+	dw_materiasxcursar.Modify("DataWindow.Table.Select = 'SELECT area_mat.cve_area,materias.cve_mat,materias.sigla,materias.materia,materias.creditos,materias.horas_reales,prerrequisitos.cve_prerreq,prerrequisitos.enlace,semestre_ideal,prerrequisitos.orden FROM materias,mat_prerrequisito,prerrequisitos,area_mat WHERE ( mat_prerrequisito.cve_mat *= prerrequisitos.cve_mat) and ( prerrequisitos.cve_carrera =* mat_prerrequisito.cve_carrera) and ( mat_prerrequisito.cve_plan *= prerrequisitos.cve_plan) and ( materias.cve_mat = mat_prerrequisito.cve_mat ) and ( area_mat.cve_mat = materias.cve_mat ) and ( ( materias.creditos > 0 ) AND ( area_mat.cve_area in ( :areas ) ) AND ( mat_prerrequisito.cve_carrera = :carrera ) AND ( mat_prerrequisito.cve_plan = :plan ) ) '")
+	ll_cont_1=0
+ELSE
+	dw_materiasxcursar.Modify("DataWindow.Table.Select = 'SELECT area_mat.cve_area,materias.cve_mat,materias.sigla,materias.materia,materias.creditos,materias.horas_reales,prerrequisitos.cve_prerreq,prerrequisitos.enlace,semestre_ideal,prerrequisitos.orden FROM materias,mat_prerreq_pos,prerrequisitos,area_mat WHERE ( mat_prerreq_pos.cve_mat *= prerrequisitos.cve_mat) and ( prerrequisitos.cve_carrera =* mat_prerreq_pos.cve_carrera) and ( mat_prerreq_pos.cve_plan *= prerrequisitos.cve_plan) and ( materias.cve_mat = mat_prerreq_pos.cve_mat ) and ( area_mat.cve_mat = materias.cve_mat ) and ( ( materias.creditos > 0 ) AND ( area_mat.cve_area in ( :areas ) ) AND ( mat_prerreq_pos.cve_carrera = :carrera ) AND ( mat_prerreq_pos.cve_plan = :plan ) ) '")
+	ll_cont_1=1
+END IF
+
+SELECT aviso_sol_mat.texto
+INTO :ls_textin
+FROM aviso_sol_mat
+WHERE aviso_sol_mat.id = :ll_cont_1
+USING gtr_sce;
+commit USING gtr_sce;
+
+is_respuesta=is_respuesta+'~n~r			*** AVISOS CONTROL ESCOLAR ***~n~r~n~r'+ls_textin
+
+setnull(ll_cont_1)
+
+ld_hora=datetime(today(),now())
+
+SELECT cuenta
+INTO :ll_cont_1
+FROM saldos
+WHERE cuenta = :il_cuenta and status = 0 and fecha_ven < :ld_hora
+USING gtr_scob;
+commit USING gtr_scob;
+
+if not(isnull(ll_cont_1)) then
+	is_respuesta=is_respuesta+'~n~rTIENES ADEUDOS VENCIDOS, PASA A COBRANZAS A LIQUIDARLOS.~n~r'
+end if
+
+CHOOSE CASE li_cve_flag_promedio
+	CASE 1
+		is_respuesta=is_respuesta+'~n~rESTAS AMONESTADO POR PROMEDIO.~n~r'
+	CASE 2
+		is_respuesta=is_respuesta+'~n~rESTAS DADO DE BAJA POR PROMEDIO.~n~r'
+	CASE 3
+		is_respuesta=is_respuesta+'~n~rESTAS EXENTO POR CONCEPTO DE PROMEDIO.~n~r'
+END CHOOSE
+
+CHOOSE CASE li_baja_3_reprob
+	CASE 1
+		is_respuesta=is_respuesta+'~n~rESTAS DADO DE BAJA POR REPROBAR 3 VECES LA MISMA MATERIA.~n~r'
+END CHOOSE
+
+CHOOSE CASE li_baja_4_insc
+	CASE 1
+		is_respuesta=is_respuesta+'~n~rESTAS DADO DE BAJA POR INSCRIBIR 4 VECES LA MISMA MATERI.~n~r'
+END CHOOSE
+
+CHOOSE CASE li_baja_disciplina
+	CASE 1
+		is_respuesta=is_respuesta+'~n~rESTAS DADO DE BAJA POR DISCIPLINA.~n~r'
+END CHOOSE
+
+CHOOSE CASE li_baja_documentos
+	CASE 1
+		is_respuesta=is_respuesta+'~n~rESTAS DADO DE BAJA POR ADEUDAR DOCUMENTOS.~n~r'
+END CHOOSE
+
+CHOOSE CASE li_cve_flag_biblioteca
+	CASE 1
+		is_respuesta=is_respuesta+'~n~rESTAS AMONESTADO POR BIBLIOTECA.~n~r'
+	CASE 2
+		is_respuesta=is_respuesta+'~n~rESTAS SUSPENDIDO POR BIBLIOTECA.~n~r'
+	CASE 3
+		is_respuesta=is_respuesta+'~n~rESTAS DADO DE BAJA POR BIBLIOTECA.~n~r'
+END CHOOSE
+
+CHOOSE CASE li_cve_flag_diapositeca
+	CASE 1
+		is_respuesta=is_respuesta+'~n~rESTAS AMONESTADO POR DIAPOSITECA.~n~r'
+	CASE 2
+		is_respuesta=is_respuesta+'~n~rESTAS SUSPENDIDO POR DIAPOSITECA.~n~r'
+	CASE 3
+		is_respuesta=is_respuesta+'~n~rESTAS DADO DE BAJA POR DIAPOSITECA.~n~r'
+END CHOOSE
+
+/*Agrega Kardex*/
+is_respuesta=is_respuesta+'~n~r'
+agrega_historico_internet(dw_historico,il_cuenta,dw_materias_inscritas,is_respuesta)
+
+dw_plan_estud.retrieve(li_plan,li_carr,li_subsistema)
+
+if dw_plan_estud.rowcount()=0 then
+	return 0
+end if
+
+areas[1]=dw_plan_estud.object.cve_area_basica[1]
+creditos[2,1]=busca_creditos(areas[1])
+
+areas[2]=dw_plan_estud.object.cve_area_mayor_oblig[1]
+creditos[2,2]=busca_creditos(areas[2])
+
+areas[3]=dw_plan_estud.object.cve_area_mayor_opt[1]
+creditos[2,3]=busca_creditos(areas[3])
+
+areas[4]=dw_plan_estud.object.cve_area_servicio_social[1]
+creditos[2,4]=busca_creditos(areas[4])
+
+areas[5]=dw_plan_estud.object.cve_area_integ_fundamental[1]
+creditos[2,5]=busca_creditos(areas[5])
+
+if ls_nivel='L' then
+	areas[6]=dw_plan_estud.object.subsistema_cve_area[1]
+	creditos[2,6]=busca_creditos(areas[6])
+	
+	if dw_plan_estud.rowcount()>1 then
+		areas[7]=dw_plan_estud.object.subsistema_cve_area[2]
+		creditos[2,6]=creditos[2,6]+busca_creditos(areas[7])
+	end if
+end if
+
+IF ls_nivel='L' THEN
+	/*Titulación*/
+	titula[1]=dw_plan_estud.object.cve_proyecto_opc_ter[1]
+	titula[2]=dw_plan_estud.object.cve_seminario_tit[1]
+	
+	SELECT sum(creditos)
+	INTO :creditos[2,8]
+	FROM dbo.materias
+	WHERE dbo.materias.cve_mat = :titula[1] or dbo.materias.cve_mat = :titula[2]
+	USING gtr_sce;
+	commit using gtr_sce;
+	/**/
+
+	areas[9]=dw_plan_estud.object.cve_area_integ_tema1[1]
+	creditos[2,9]=busca_creditos(areas[9])
+	
+	areas[10]=dw_plan_estud.object.cve_area_integ_tema2[1]
+	creditos[2,10]=busca_creditos(areas[10])
+	
+	areas[11]=dw_plan_estud.object.cve_area_integ_tema3[1]
+	creditos[2,11]=busca_creditos(areas[11])
+	
+	areas[12]=dw_plan_estud.object.cve_area_integ_tema4[1]
+	creditos[2,12]=busca_creditos(areas[12])
+end if
+
+dw_materiasxcursar.retrieve(li_plan,li_carr,areas)
+
+quita_prerrequisitos(areas[1],dw_materiasxcursar,dw_historico)
+quita_prerrequisitos(areas[2],dw_materiasxcursar,dw_historico)
+quita_prerrequisitos(areas[3],dw_materiasxcursar,dw_historico)
+quita_prerrequisitos(areas[4],dw_materiasxcursar,dw_historico)
+quita_prerrequisitos(areas[5],dw_materiasxcursar,dw_historico)
+quita_prerrequisitos(areas[6],dw_materiasxcursar,dw_historico)
+if dw_plan_estud.rowcount()>1 then
+	quita_prerrequisitos(areas[7],dw_materiasxcursar,dw_historico)
+end if
+
+/*Elimina las materias que ya cursaste*/
+creditos[1,1]=elimina_cursadas(areas[1],dw_materiasxcursar,dw_historico)
+creditos[1,2]=elimina_cursadas(areas[2],dw_materiasxcursar,dw_historico)
+creditos[1,4]=elimina_cursadas(areas[4],dw_materiasxcursar,dw_historico)
+creditos[1,5]=elimina_cursadas(areas[5],dw_materiasxcursar,dw_historico)
+
+IF ls_nivel='L' THEN	
+	/*Titulación*/
+	dw_historico.SetFilter('historico_calificacion in ("6","7","8","9","10","AC","RE","E","MB","B","S")'+&
+		' and ( historico_cve_mat='+string(titula[1])+' or historico_cve_mat='+string(titula[2])+')')
+	dw_historico.Filter( )
+	
+	creditos[1,8]=0
+	ll_found = dw_historico.Find("historico_cve_mat="+string(titula[1]),&
+		1, dw_historico.RowCount( ))
+	if ll_found>0 then
+		creditos[1,8]=creditos[1,8]+dw_historico.object.materias_creditos[ll_found]
+		dw_historico.deleterow(ll_found)
+	end if
+	ll_found = dw_historico.Find("historico_cve_mat="+string(titula[2]),&
+		1, dw_historico.RowCount( ))
+	if ll_found>0 then
+		creditos[1,8]=creditos[1,8]+dw_historico.object.materias_creditos[ll_found]
+		dw_historico.deleterow(ll_found)
+	end if
+	/**/
+	
+	creditos[1,9]=elimina_cursadas(areas[9],dw_materiasxcursar,dw_historico)
+	creditos[1,10]=elimina_cursadas(areas[10],dw_materiasxcursar,dw_historico)
+	creditos[1,11]=elimina_cursadas(areas[11],dw_materiasxcursar,dw_historico)
+	creditos[1,12]=elimina_cursadas(areas[12],dw_materiasxcursar,dw_historico)
+end if
+
+elimina_cursadas_3(dw_historico,dw_materiasxcursar,areas,creditos)
+quita_no_abiertas(dw_materiasxcursar,dw_materias_abiertas)
+
+is_respuesta=is_respuesta+'~n~r				DIAGNOSTICO:~n~r~n~r			MINIMO	CURSADO	FALTAN~n~r'
+is_respuesta=is_respuesta+'~n~r			'+string(creditos[2,1])+'	'+string(creditos[1,1])+'	'+string(creditos[2,1] - creditos[1,1])+'	AREA BASICA'
+is_respuesta=is_respuesta+'~n~r			'+string(creditos[2,2])+'	'+string(creditos[1,2])+'	'+string(creditos[2,2] - creditos[1,2])+'	AREA MAYOR OBLIGATORIA'
+is_respuesta=is_respuesta+'~n~r			'+string(creditos[2,3])+'	'+string(creditos[1,3])+'	'+string(creditos[2,3] - creditos[1,3])+'	AREA MAYOR OPTATIVA'
+IF ls_nivel='L' THEN	
+	is_respuesta=is_respuesta+'~n~r			'+string(creditos[2,4])+'	'+string(creditos[1,4])+'	'+string(creditos[2,4] - creditos[1,4])+'	SERVICIO SOCIAL'
+	is_respuesta=is_respuesta+'~n~r			'+string(creditos[2,5])+'	'+string(creditos[1,5])+'	'+string(creditos[2,5] - creditos[1,5])+'	INTEGRACION FUNDAMENTAL'
+	is_respuesta=is_respuesta+'~n~r			'+string(creditos[2,9])+'	'+string(creditos[1,9])+'	'+string(creditos[2,9] - creditos[1,9])+'	INTEGRACION TEMA 1'
+	is_respuesta=is_respuesta+'~n~r			'+string(creditos[2,10])+'	'+string(creditos[1,10])+'	'+string(creditos[2,10] - creditos[1,10])+'	INTEGRACION TEMA 2'
+	is_respuesta=is_respuesta+'~n~r			'+string(creditos[2,11])+'	'+string(creditos[1,11])+'	'+string(creditos[2,11] - creditos[1,11])+'	INTEGRACION TEMA 3'
+	is_respuesta=is_respuesta+'~n~r			'+string(creditos[2,12])+'	'+string(creditos[1,12])+'	'+string(creditos[2,12] - creditos[1,12])+'	INTEGRACION TEMA 4'
+	is_respuesta=is_respuesta+'~n~r			'+string(creditos[2,8])+'	'+string(creditos[1,8])+'	'+string(creditos[2,8] - creditos[1,8])+'	TITULACION'
+END IF
+
+if dw_plan_estud.object.subsistema_subsistema[1]<>"" then
+	is_respuesta=is_respuesta+'~n~r			'+string(creditos[2,6])+'	'+string(creditos[1,6])+'	'+string(creditos[2,6] - creditos[1,6])+&
+		+'	'+dw_plan_estud.object.subsistema_subsistema[1]
+end if
+is_respuesta=is_respuesta+'~n~r~n~r			'+&
+	string(creditos[2,1]+creditos[2,2]+creditos[2,3]+creditos[2,4]+creditos[2,5]+creditos[2,9]+creditos[2,10]+creditos[2,11]+creditos[2,12]+creditos[2,8]+creditos[2,6])+'	'+&
+	string(creditos[1,1]+creditos[1,2]+creditos[1,3]+creditos[1,4]+creditos[1,5]+creditos[1,9]+creditos[1,10]+creditos[1,11]+creditos[1,12]+creditos[1,8]+creditos[1,6])+'	'+&
+	string(creditos[2,1]+creditos[2,2]+creditos[2,3]+creditos[2,4]+creditos[2,5]+creditos[2,9]+creditos[2,10]+creditos[2,11]+creditos[2,12]+creditos[2,8]+creditos[2,6] - &
+	(creditos[1,1]+creditos[1,2]+creditos[1,3]+creditos[1,4]+creditos[1,5]+creditos[1,9]+creditos[1,10]+creditos[1,11]+creditos[1,12]+creditos[1,8]+creditos[1,6]) )+'	TOTAL~n~r'
+
+is_respuesta=is_respuesta+'~n~r				PUEDES INSCRIBIR:~n~r'
+
+if creditos[1,1]<creditos[2,1] then
+	is_respuesta=is_respuesta+'~n~rAREA BASICA:~n~r'
+	w_correo_electronico.despliega_materias(areas[1])
+end if
+
+if creditos[1,2]<creditos[2,2] then
+	is_respuesta=is_respuesta+'~n~rAREA MAYOR OBLIGATORIA:~n~r'
+	w_correo_electronico.despliega_materias(areas[2])
+end if
+
+if creditos[1,3]<creditos[2,3] then
+	is_respuesta=is_respuesta+'~n~rAREA MAYOR OPTATIVA:~n~r'
+	w_correo_electronico.despliega_materias(areas[3])
+end if
+
+IF ls_nivel='L' THEN	
+
+	if (creditos[1,4]<creditos[2,4] and li_ss=1) then
+		is_respuesta=is_respuesta+'~n~rSERVICIO SOCIAL:~n~r'
+		w_correo_electronico.despliega_materias(areas[4])
+	end if
+
+	if li_ingles=1 then
+		is_respuesta=is_respuesta+'~n~rDEBES EL PRERREQUISITO DE INGLES'+'~n~r'
+	end if
+	
+	if li_ingles=2 then
+		is_respuesta=is_respuesta+'~n~rRECUERDA QUE DEBES APROBAR EL PRERREQUISITO DE INGLES'+'~n~r'
+	end if
+		
+	if (creditos[1,5]<creditos[2,5]) then
+		is_respuesta=is_respuesta+'~n~rINTEGRACION FUNDAMENTAL:~n~r'
+		w_correo_electronico.despliega_materias(areas[5])
+	end if
+	
+	if li_tema1=0 then
+		is_respuesta=is_respuesta+'~n~rPUEDES CURSAR EL TEMA 1 DE INTEGRACION.'+'~n~r'
+	end if
+	
+	if li_tema2=0 then
+		is_respuesta=is_respuesta+'~n~rPUEDES CURSAR EL TEMA 2 DE INTEGRACION.'+'~n~r'
+	end if
+	
+	if li_tema3=0 then
+		is_respuesta=is_respuesta+'~n~rPUEDES CURSAR EL TEMA 3 DE INTEGRACION.'+'~n~r'
+	end if
+	
+	if li_tema4=0 then
+		is_respuesta=is_respuesta+'~n~rPUEDES CURSAR EL TEMA 4 DE INTEGRACION.'+'~n~r'
+	end if
+END IF
+
+if dw_plan_estud.object.subsistema_subsistema[1]<>"" and ls_nivel='L' then
+	if (creditos[1,6]<creditos[2,6]) then
+		is_respuesta=is_respuesta+'~n~r'+dw_plan_estud.object.subsistema_subsistema[1]+':~n~r'
+		IF li_subsistema<>99 THEN
+			w_correo_electronico.despliega_materias(areas[6])
+			w_correo_electronico.despliega_materias(areas[7])
+		END IF
+	end if
+end if
+
+RETURN 0
+end function
+

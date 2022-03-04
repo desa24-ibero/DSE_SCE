@@ -1,0 +1,551 @@
+﻿$PBExportHeader$m_documentos.srm
+$PBExportComments$Menu de control de la pantalla documentos del alumno usado para actualización, revisión, borrado,...
+forward
+global type m_documentos from m_menu
+end type
+end forward
+
+global type m_documentos from m_menu
+end type
+global m_documentos m_documentos
+
+forward prototypes
+public subroutine carga_adeudo (long cuenta)
+end prototypes
+
+public subroutine carga_adeudo (long cuenta);int cont, lim
+string grado
+
+for cont = 1 to 3
+	w_documentos.dw_adeuda.insertrow(0)
+	w_documentos.dw_adeuda.setitem(cont,"cuenta",cuenta)
+next
+
+  SELECT academicos.nivel  
+    INTO :grado  
+    FROM academicos  
+   WHERE academicos.cuenta = :cuenta    using gtr_sce;
+
+if grado = "L" then
+	lim = 0
+	for cont = 1 to 3
+		w_documentos.dw_adeuda.setitem(cont,"cve_documento",lim)
+		lim++
+	next
+elseif grado = "P" then
+	lim = 10
+	for cont = 1 to 3
+		w_documentos.dw_adeuda.setitem(cont,"cve_documento",lim)
+		lim++
+	next
+end if
+	
+end subroutine
+
+on m_documentos.create
+m_documentos=this
+call super::create
+end on
+
+on m_documentos.destroy
+call super::destroy
+end on
+
+type m_archivo from m_menu`m_archivo within m_documentos
+end type
+
+on m_archivo.create
+call super::create
+end on
+
+on m_archivo.destroy
+call super::destroy
+end on
+
+type m_leer from m_menu`m_leer within m_archivo
+end type
+
+on m_leer.create
+call super::create
+end on
+
+on m_leer.destroy
+call super::destroy
+end on
+
+type m_salvar from m_menu`m_salvar within m_archivo
+end type
+
+on m_salvar.create
+call super::create
+end on
+
+on m_salvar.destroy
+call super::destroy
+end on
+
+type m_configurarimpresora from m_menu`m_configurarimpresora within m_archivo
+end type
+
+on m_configurarimpresora.create
+call super::create
+end on
+
+on m_configurarimpresora.destroy
+call super::destroy
+end on
+
+type m_imprimir from m_menu`m_imprimir within m_archivo
+end type
+
+event m_imprimir::clicked;call super::clicked;//open(w_prev_doc)
+end event
+
+on m_imprimir.create
+call super::create
+this.visible = false
+this.enabled = false
+end on
+
+on m_imprimir.destroy
+call super::destroy
+end on
+
+type m_- from m_menu`m_- within m_archivo
+end type
+
+on m_-.create
+call super::create
+end on
+
+on m_-.destroy
+call super::destroy
+end on
+
+type m_salir from m_menu`m_salir within m_archivo
+end type
+
+on m_salir.create
+call super::create
+this.text = "Cerrar"
+end on
+
+on m_salir.destroy
+call super::destroy
+end on
+
+type m_edicion from m_menu`m_edicion within m_documentos
+end type
+
+on m_edicion.create
+call super::create
+end on
+
+on m_edicion.destroy
+call super::destroy
+end on
+
+type m_deshacer from m_menu`m_deshacer within m_edicion
+end type
+
+on m_deshacer.create
+call super::create
+end on
+
+on m_deshacer.destroy
+call super::destroy
+end on
+
+type m_cortar from m_menu`m_cortar within m_edicion
+end type
+
+on m_cortar.create
+call super::create
+end on
+
+on m_cortar.destroy
+call super::destroy
+end on
+
+type m_copiar from m_menu`m_copiar within m_edicion
+end type
+
+on m_copiar.create
+call super::create
+end on
+
+on m_copiar.destroy
+call super::destroy
+end on
+
+type m_pegar from m_menu`m_pegar within m_edicion
+end type
+
+on m_pegar.create
+call super::create
+end on
+
+on m_pegar.destroy
+call super::destroy
+end on
+
+type m_registro from m_menu`m_registro within m_documentos
+end type
+
+on m_registro.create
+call super::create
+end on
+
+on m_registro.destroy
+call super::destroy
+end on
+
+type m_nuevo from m_menu`m_nuevo within m_registro
+end type
+
+event m_nuevo::clicked;call super::clicked;long cuenta
+int cont
+long ll_newrow
+
+cuenta = long(w_documentos.uo_nombre.em_cuenta.text)
+ll_newrow = w_documentos.dw_adeuda.insertrow(0)
+w_documentos.dw_adeuda.ScrollToRow(ll_newrow)
+w_documentos.dw_adeuda.setitem(ll_newrow ,"cuenta",cuenta)
+
+//  SELECT documentos.cuenta  
+//    INTO :cuenta  
+//    FROM documentos  
+//   WHERE documentos.cuenta = :cuenta    using gtr_sce;
+//
+//if gtr_sce.sqlcode = 100 then
+//	if	w_documentos.dw_doc.rowcount() = 1 then
+//		w_documentos.dw_doc.setitem(w_documentos.dw_doc.getrow(),"cuenta",cuenta)
+//	elseif w_documentos.dw_doc.rowcount() > 1 then 
+//		for cont = 2 to w_documentos.dw_doc.rowcount()
+//			w_documentos.dw_doc.deleterow(cont)
+//		next
+//		w_documentos.dw_doc.setitem(w_documentos.dw_doc.getrow(),"cuenta",cuenta)
+//	else
+//		w_documentos.dw_doc.insertrow(0)
+//		w_documentos.dw_doc.setitem(w_documentos.dw_doc.getrow(),"cuenta",cuenta)
+//	end if	
+//end if
+//
+//  SELECT documentos_adeuda.cuenta  
+//    INTO :cuenta  
+//    FROM documentos_adeuda  
+//   WHERE documentos_adeuda.cuenta = :cuenta    using gtr_sce;
+//	
+//if gtr_sce.sqlcode = 100 then
+//	carga_adeudo(cuenta)		
+//end if
+//
+end event
+
+on m_nuevo.create
+call super::create
+end on
+
+on m_nuevo.destroy
+call super::destroy
+end on
+
+type m_actualiza from m_menu`m_actualiza within m_registro
+end type
+
+event m_actualiza::clicked;call super::clicked;long cuenta
+int banderas
+
+
+cuenta = long(w_documentos.uo_nombre.em_cuenta.text)
+banderas = w_documentos.dw_doc.getitemnumber(w_documentos.dw_doc.getrow(),"banderas_baja_documentos")
+
+  UPDATE banderas  
+     SET baja_documentos = :banderas  
+   WHERE banderas.cuenta = :cuenta    using gtr_sce;
+	
+if gtr_sce.sqlcode <> 0 then
+	messagebox("Aviso","No se pudo guardar modificación sobre banderas.",stopsign!)
+end if
+
+
+	if w_documentos.dw_doc.update(true) = 1 then
+		if w_documentos.dw_adeuda.update(true) = 1 then
+			commit using gtr_sce;
+			//INICIO:Replica a Internet
+			transaction ltr_web
+			n_transfiere_sybase_sql ln_transfiere_sybase_sql
+			ln_transfiere_sybase_sql =  create n_transfiere_sybase_sql
+			string ls_classname
+			long ll_cuentas[]
+			integer li_replica_activa, li_obten_parametros_replicacion, li_res_actualizacion
+				li_obten_parametros_replicacion = ln_transfiere_sybase_sql.of_obten_parametros_replica(li_replica_activa)
+				if li_replica_activa = 1 then
+					w_documentos.st_replica.text = 'A'
+					w_documentos.st_replica.BackColor =RGB(0,255,0)
+					ls_classname =	w_documentos.ClassName()
+					ll_cuentas[1] = cuenta
+					li_res_actualizacion = ln_transfiere_sybase_sql.of_actualizacion_objeto_replica(ll_cuentas, ls_classname, gtr_sce, ltr_web)
+				else
+					w_documentos.st_replica.text = 'I'
+					w_documentos.st_replica.BackColor =RGB(255,0,0)
+				end if
+			//FIN:Replica a Internet				
+			messagebox("Información","Se han guardado los cambios")	
+		else
+			rollback using gtr_sce;
+			messagebox("Información","No se han guardado los cambios")	
+		end if
+	else
+		rollback using gtr_sce;
+		messagebox("Información","No se han guardado los cambios")	
+	end if
+
+w_documentos.uo_nombre.em_cuenta.setfocus()
+
+//  SELECT alumnos.cuenta  
+//    INTO :cuenta  
+//    FROM alumnos  
+//   WHERE alumnos.cuenta = :cuenta    using gtr_sce;
+//	
+//if gtr_sce.sqlcode = 0 then
+//	if w_documentos.em_clave.text = "" then
+//		w_documentos.em_clave.text = "0"
+//		w_documentos.em_clave.triggerevent(modified!)
+//	end if
+//	if w_documentos.dw_doc.update(true) = 1 then
+//		if w_documentos.dw_adeuda.update(true) = 1 then
+//			commit using gtr_sce;
+//			messagebox("Información","Se han guardado los cambios")	
+//		else
+//			rollback using gtr_sce;
+//			messagebox("Información","No se han guardado los cambios")	
+//		end if
+//	else
+//		rollback using gtr_sce;
+//		messagebox("Información","No se han guardado los cambios")	
+//	end if
+//elseif gtr_sce.sqlcode = 100 then 
+//	messagebox("Información","El alumno con numero de cuenta "+string(cuenta)+" no esta dado de alta.~rDebe darse de alta desde la ventana de datos generales",stopsign!)
+//	rollback using gtr_sce;
+//end if	
+//
+//
+end event
+
+on m_actualiza.create
+call super::create
+end on
+
+on m_actualiza.destroy
+call super::destroy
+end on
+
+type m_borraregistro from m_menu`m_borraregistro within m_registro
+end type
+
+event m_borraregistro::clicked;call super::clicked;string cuenta
+int respuesta,cont,trash
+
+cuenta = w_documentos.uo_nombre.em_cuenta.text
+respuesta = messagebox("Atención","Esta seguro de querer borrar el documento ~r seleccionado del alumno "+cuenta+ ".",StopSign!,YesNo!,2)
+
+if respuesta = 1 then
+	w_documentos.dw_adeuda.deleterow(w_documentos.dw_adeuda.getrow())	
+	if w_documentos.dw_adeuda.update() = 1 then
+		commit using gtr_sce;
+	else
+		rollback using gtr_sce;
+		messagebox("Información","No se han guardado los cambios")	
+	end if
+end if 
+//	if w_documentos.dw_doc.deleterow(w_documentos.dw_doc.getrow())	= 1 then
+//		trash = w_documentos.dw_adeuda.rowcount()
+//		for cont = 1 to trash
+//			w_documentos.dw_adeuda.deleterow(1)			
+//		next
+//		m_documentos.m_registro.m_actualiza.triggerevent(Clicked!)			   
+//	else
+//		messagebox("Información","No se han guardado los cambios")	
+//	end if
+//elseif respuesta = 2 then
+//	rollback using gtr_sce;
+//end if
+
+end event
+
+on m_borraregistro.create
+call super::create
+this.text = "&Borra documentos~tCtrl+B"
+end on
+
+on m_borraregistro.destroy
+call super::destroy
+end on
+
+type m_cargaregistro from m_menu`m_cargaregistro within m_registro
+end type
+
+on m_cargaregistro.create
+call super::create
+end on
+
+on m_cargaregistro.destroy
+call super::destroy
+end on
+
+type m_-1 from m_menu`m_-1 within m_registro
+end type
+
+on m_-1.create
+call super::create
+end on
+
+on m_-1.destroy
+call super::destroy
+end on
+
+type m_primero from m_menu`m_primero within m_registro
+end type
+
+on m_primero.create
+call super::create
+end on
+
+on m_primero.destroy
+call super::destroy
+end on
+
+type m_anterior from m_menu`m_anterior within m_registro
+end type
+
+on m_anterior.create
+call super::create
+end on
+
+on m_anterior.destroy
+call super::destroy
+end on
+
+type m_siguiente from m_menu`m_siguiente within m_registro
+end type
+
+on m_siguiente.create
+call super::create
+end on
+
+on m_siguiente.destroy
+call super::destroy
+end on
+
+type m_ltimo from m_menu`m_ltimo within m_registro
+end type
+
+on m_ltimo.create
+call super::create
+end on
+
+on m_ltimo.destroy
+call super::destroy
+end on
+
+type m_-2 from m_menu`m_-2 within m_registro
+end type
+
+on m_-2.create
+call super::create
+this.visible = false
+end on
+
+on m_-2.destroy
+call super::destroy
+end on
+
+type m_filtrar from m_menu`m_filtrar within m_registro
+end type
+
+on m_filtrar.create
+call super::create
+end on
+
+on m_filtrar.destroy
+call super::destroy
+end on
+
+type m_ordenar from m_menu`m_ordenar within m_registro
+end type
+
+on m_ordenar.create
+call super::create
+end on
+
+on m_ordenar.destroy
+call super::destroy
+end on
+
+type m_ventana from m_menu`m_ventana within m_documentos
+end type
+
+on m_ventana.create
+call super::create
+end on
+
+on m_ventana.destroy
+call super::destroy
+end on
+
+type m_horizontal from m_menu`m_horizontal within m_ventana
+end type
+
+on m_horizontal.create
+call super::create
+end on
+
+on m_horizontal.destroy
+call super::destroy
+end on
+
+type m_vertical from m_menu`m_vertical within m_ventana
+end type
+
+on m_vertical.create
+call super::create
+end on
+
+on m_vertical.destroy
+call super::destroy
+end on
+
+type m_primerplano from m_menu`m_primerplano within m_ventana
+end type
+
+on m_primerplano.create
+call super::create
+end on
+
+on m_primerplano.destroy
+call super::destroy
+end on
+
+type m_cascada from m_menu`m_cascada within m_ventana
+end type
+
+on m_cascada.create
+call super::create
+end on
+
+on m_cascada.destroy
+call super::destroy
+end on
+
+type m_ayuda from m_menu`m_ayuda within m_documentos
+end type
+
+on m_ayuda.create
+call super::create
+end on
+
+on m_ayuda.destroy
+call super::destroy
+end on
+

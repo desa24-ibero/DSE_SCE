@@ -1,0 +1,65 @@
+﻿$PBExportHeader$d_bitacora_alumnos_preinscritos.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=220 color="536870912" )
+summary(height=76 color="536870912" )
+footer(height=64 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cuenta dbname="cuenta" )
+ column=(type=char(2) updatewhereclause=yes name=movimiento dbname="movimiento" )
+ column=(type=char(30) updatewhereclause=yes name=usuario dbname="usuario" )
+ column=(type=datetime updatewhereclause=yes name=fecha dbname="fecha" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_carrera dbname="cve_carrera" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_plan dbname="cve_plan" )
+ column=(type=char(1) updatewhereclause=yes name=academicos_nivel dbname="nivel" )
+ column=(type=char(30) updatewhereclause=yes name=v_sce_alumno_digito_digito dbname="digito" )
+ retrieve="SELECT  cuenta = movmat_preinsc.cuenta ,
+           movimiento = movmat_preinsc.movimiento ,
+           usuario = movmat_preinsc.usuario ,
+           fecha = max(movmat_preinsc.fecha) ,
+           cve_carrera = academicos.cve_carrera ,
+           cve_plan = academicos.cve_plan ,
+           nivel = academicos.nivel ,
+           digito = v_sce_alumno_digitoverificador.digito_verificador     
+FROM movmat_preinsc, academicos, v_sce_alumno_digitoverificador
+where movmat_preinsc.fecha >= :adttm_fecha_inicial
+AND movmat_preinsc.fecha <= :adttm_fecha_final
+and movmat_preinsc.periodo = :al_periodo
+and movmat_preinsc.anio = :al_anio
+and movmat_preinsc.movimiento in ('IN', 'DE')
+and movmat_preinsc.cuenta = academicos.cuenta
+and movmat_preinsc.cuenta = v_sce_alumno_digitoverificador.cuenta
+and(academicos.nivel = :as_nivel OR
+	:as_nivel = 'A')
+and(academicos.cuenta = :al_cuenta OR  
+    :al_cuenta = 9999999) 
+group by movmat_preinsc.cuenta,
+			movmat_preinsc.movimiento ,
+         movmat_preinsc.usuario ,
+         academicos.cve_carrera ,
+         academicos.cve_plan ,
+         academicos.nivel ,
+         v_sce_alumno_digitoverificador.digito_verificador     
+order by movmat_preinsc.cuenta" arguments=(("al_cuenta", number),("adttm_fecha_inicial", datetime),("adttm_fecha_final", datetime),("as_nivel", string),("al_periodo", number),("al_anio", number)) )
+text(band=header alignment="2" text="Usuario" border="0" color="0" x="800" y="152" height="64" width="850"  name=usuario_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Movimiento" border="0" color="0" x="498" y="152" height="64" width="297"  name=movimiento_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cuenta" border="0" color="0" x="151" y="152" height="64" width="329"  name=cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="RELACION DE ALUMNOS PREINSCRITOS" border="0" color="0" x="535" y="36" height="92" width="2117"  name=t_1  font.face="Arial" font.height="-14" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Fecha" border="0" color="0" x="1655" y="152" height="64" width="489"  name=fecha_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Carrera" border="0" color="0" x="2149" y="152" height="64" width="329"  name=t_2  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Plan" border="0" color="0" x="2482" y="152" height="64" width="329"  name=t_3  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Nivel" border="0" color="0" x="2816" y="152" height="64" width="329"  name=t_4  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="1" expression="~"Pag: ~"+string(page()) +~"/~" +string(pageCount())"border="0" color="0" x="2848" y="8" height="68" width="297" format="[GENERAL]"  name=compute_2  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="800" y="4" height="76" width="850" format="[general]"  name=usuario edit.limit=30 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="603" y="4" height="76" width="82" format="[general]"  name=movimiento edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="string( cuenta )+'-'+ v_sce_alumno_digito_digito "border="0" color="0" x="151" y="4" height="76" width="329" format="[GENERAL]"  name=compute_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1655" y="4" height="76" width="489" format="dd/mm/yyyy hh:mm"  name=fecha edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="2176" y="4" height="76" width="274" format="[general]"  name=academicos_cve_carrera edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="2606" y="4" height="76" width="82" format="[general]"  name=academicos_cve_plan edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="2944" y="4" height="76" width="73" format="[general]"  name=academicos_nivel edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=summary alignment="1" text="REGISTROS" border="0" color="0" x="133" y="4" height="64" width="361"  name=t_6  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="count(movimiento for all)"border="0" color="0" x="521" y="4" height="64" width="288" format="#,##0"  name=compute_3  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="1" text="" border="0" color="0" x="2624" y="4" height="56" width="521"  name=t_fecha_servidor  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="<d_bitacora_alumnos_preinscritos>" border="0" color="0" x="137" y="12" height="40" width="969"  name=t_5  font.face="Arial" font.height="-6" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

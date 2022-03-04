@@ -1,0 +1,57 @@
+﻿$PBExportHeader$f_profesor_bloqueado.srf
+global type f_profesor_bloqueado from function_object
+end type
+
+forward prototypes
+global function boolean f_profesor_bloqueado (long al_cve_profesor, long al_periodo, long al_anio, long al_cve_coordinacion)
+end prototypes
+
+global function boolean f_profesor_bloqueado (long al_cve_profesor, long al_periodo, long al_anio, long al_cve_coordinacion);//f_profesor_bloqueado
+//Recibe:
+//	al_cve_profesor		long
+//	al_periodo		integer
+//	al_anio			integer
+// al_cve_coordinacion 	integer
+//Devuelve:
+//	Boolean que indica si el profesor en cuestion está bloqueado para el periodo vigente
+
+long  ll_cve_profesor
+integer li_codigo_sql
+string ls_mensaje_sql
+
+
+//(( periodo_inicio <= :al_periodo And anio_inicio = :al_anio) Or (anio_inicio < :al_anio))
+//((AND	periodo_inicio <= :al_periodo AND ((AND	anio_inicio = :al_anio) OR (anio_inicio < :al_anio))
+
+SELECT nomina
+INTO	:ll_cve_profesor
+FROM	dbo.v_sg_profesores_bloq
+WHERE nomina = :al_cve_profesor
+AND (( periodo_inicio <= :al_periodo And anio_inicio = :al_anio) Or (anio_inicio < :al_anio))
+AND (( periodo_fin     >= :al_periodo And anio_fin     = :al_anio) Or (anio_fin    > :al_anio))
+and (cve_coordinacion = :al_cve_coordinacion OR cve_coordinacion = 9999)
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 or isnull(ll_cve_profesor) then
+	return false
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar v_sg_profesores_bloq", ls_mensaje_sql)
+	return false
+elseif li_codigo_sql = 0 then	
+	if ll_cve_profesor> 0 then
+		return true
+	else
+		return false
+	end if	
+end if
+
+return false
+
+
+
+
+end function
+

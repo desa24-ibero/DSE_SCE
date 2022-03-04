@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_param_obj_nombre_r.srs
+global type str_param_obj_nombre_r from structure
+	datawindow		nombre
+	editmask		cuenta
+	editmask		digito
+	boolean		usuario_especial
+end type
+

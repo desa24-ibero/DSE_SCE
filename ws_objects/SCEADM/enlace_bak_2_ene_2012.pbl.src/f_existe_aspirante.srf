@@ -1,0 +1,37 @@
+﻿$PBExportHeader$f_existe_aspirante.srf
+global type f_existe_aspirante from function_object
+end type
+
+forward prototypes
+global function integer f_existe_aspirante (long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio)
+end prototypes
+
+global function integer f_existe_aspirante (long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio);//f_existe_aspirante
+//Recibe 	:	al_folio	long
+//					ai_clv_ver	integer
+//					ai_clv_per	integer
+//					ai_anio		integer
+//Devuelve : 0 Existe el aspirante
+//			100 No existe el aspirante
+//			 -1 Error al consultar
+long ll_folio
+int li_codigo_sql
+string ls_mensaje
+
+SELECT a.folio 
+INTO   :ll_folio
+FROM aspiran a
+WHERE a.folio = :al_folio
+AND	a.clv_ver = :ai_clv_ver
+AND	a.clv_per = :ai_clv_per
+AND	a.anio = :ai_anio
+USING gtr_sadm;
+li_codigo_sql = gtr_sadm.SqlCode
+ls_mensaje = gtr_sadm.SqlErrText
+IF li_codigo_sql = -1 THEN
+	MessageBox("Error al consultar aspiran", ls_mensaje, StopSign!)
+END IF
+
+RETURN li_codigo_sql
+end function
+

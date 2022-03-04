@@ -1,0 +1,33 @@
+﻿$PBExportHeader$tipoarea_nivel.srf
+global type tipoarea_nivel from function_object
+end type
+
+forward prototypes
+global function integer tipoarea_nivel (integer area, integer cve_plan, string as_nivel)
+end prototypes
+
+global function integer tipoarea_nivel (integer area, integer cve_plan, string as_nivel);CHOOSE CASE area
+	CASE 1 to 2
+		return 1
+	CASE 3		
+		if cve_plan = 2 then
+			//if as_nivel = "L" then
+			if as_nivel <> "P" then 
+				return 2
+			else
+				return 1
+			end if
+		else
+			return 1
+		end if
+	CASE 4
+		return 1
+	CASE 5
+		return 2
+	CASE 6 to 10
+		return 3
+	CASE 11 to 12
+		return 2
+END CHOOSE
+end function
+

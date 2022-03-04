@@ -1,0 +1,50 @@
+﻿$PBExportHeader$dw_consolidadoxcta.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=1 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no pointer="Arrow!" grid.lines=0 grid.columnmove=no selected.mouse=no )
+header(height=80 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=92 color="536870912" )
+table(column=(type=long updatewhereclause=yes key=yes name=cuenta dbname="mov_alumnos.cuenta" )
+ column=(type=long updatewhereclause=yes key=yes name=periodo dbname="mov_alumnos.periodo" )
+ column=(type=long updatewhereclause=yes key=yes name=anio dbname="mov_alumnos.anio" )
+ column=(type=datetime updatewhereclause=yes name=fecha_vencimiento dbname="mov_alumnos.fecha_vencimiento" )
+ column=(type=datetime updatewhereclause=yes name=fecha dbname="mov_alumnos.fecha" )
+ column=(type=number updatewhereclause=yes name=importe dbname="mov_alumnos.importe" )
+ column=(type=long updatewhereclause=yes key=yes name=corte dbname="mov_alumnos.corte" )
+ column=(type=long updatewhereclause=yes name=estatus dbname="mov_alumnos.estatus" )
+ column=(type=long update=yes updatewhereclause=yes name=traspasado dbname="mov_alumnos.traspasado" )
+ retrieve="  SELECT mov_alumnos.cuenta,   
+         mov_alumnos.periodo,   
+         mov_alumnos.anio,   
+         mov_alumnos.fecha_vencimiento,   
+         mov_alumnos.fecha,   
+         mov_alumnos.importe,   
+         mov_alumnos.corte,   
+         mov_alumnos.estatus,   
+         mov_alumnos.traspasado
+    FROM mov_alumnos  
+   WHERE ( mov_alumnos.cuenta = :cuenta ) AND  
+  			( isnull(mov_alumnos.traspasado,0) = 0 )  
+         
+" update="mov_alumnos" updatewhere=1 updatekeyinplace=yes filter="estatus = 0" arguments=(("cuenta", number)) )
+text(band=header alignment="0" text="Cuenta" border="0" color="0" x="9" y="4" height="76" width="635"  name=t_2  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Periodo" border="0" color="0" x="654" y="4" height="76" width="334"  name=t_3  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Anio" border="0" color="0" x="997" y="4" height="76" width="576"  name=t_4  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Fecha Vencimiento" border="0" color="0" x="1582" y="4" height="76" width="1234"  name=t_5  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Fecha" border="0" color="0" x="2825" y="4" height="76" width="869"  name=t_6  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Importe" border="0" color="0" x="3703" y="4" height="76" width="1367"  name=t_7  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Corte" border="0" color="0" x="5079" y="4" height="76" width="183"  name=t_8  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Estatus" border="0" color="0" x="5271" y="0" height="76" width="379"  name=t_9  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Traspasado" border="0" color="0" x="5659" y="4" height="76" width="247"  name=t_1  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="0" height="76" width="635" format="[general]"  name=cuenta edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="654" y="0" height="76" width="334" format="[general]"  name=periodo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="997" y="0" height="76" width="576" format="[general]"  name=anio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1582" y="0" height="76" width="1234" format="[shortdate] [time]"  name=fecha_vencimiento edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="2825" y="0" height="76" width="869" format="[shortdate] [time]"  name=fecha edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="3703" y="0" height="76" width="1367" format="[general]"  name=importe edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="5079" y="0" height="76" width="183" format="[general]"  name=corte edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="5271" y="0" height="76" width="379" format="[general]"  name=estatus edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="5659" y="0" height="76" width="247" format="[general]"  name=traspasado edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

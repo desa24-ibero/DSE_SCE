@@ -1,0 +1,42 @@
+﻿$PBExportHeader$dw_inscritos.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=141 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=alumnos_cuenta dbname="alumnos.cuenta" )
+ column=(type=char(70) updatewhereclause=yes name=alumnos_nombre_completo dbname="alumnos.nombre_completo" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_carrera dbname="academicos.cve_carrera" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_plan dbname="academicos.cve_plan" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_subsistema dbname="academicos.cve_subsistema" )
+ column=(type=long updatewhereclause=yes name=academicos_creditos_cursados dbname="academicos.creditos_cursados" )
+ column=(type=real updatewhereclause=yes name=academicos_promedio dbname="academicos.promedio" )
+ column=(type=char(1) updatewhereclause=yes name=alumnos_sexo dbname="alumnos.sexo" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"academicos~" )  TABLE(NAME=~"alumnos~" )  TABLE(NAME=~"inscritos_otonio~" ) COLUMN(NAME=~"alumnos.cuenta~") COLUMN(NAME=~"alumnos.nombre_completo~") COLUMN(NAME=~"academicos.cve_carrera~") COLUMN(NAME=~"academicos.cve_plan~") COLUMN(NAME=~"academicos.cve_subsistema~") COLUMN(NAME=~"academicos.creditos_cursados~") COLUMN(NAME=~"academicos.promedio~") COLUMN(NAME=~"alumnos.sexo~")    JOIN (LEFT=~"alumnos.cuenta~"    OP =~"=~"RIGHT=~"academicos.cuenta~" )    JOIN (LEFT=~"alumnos.cuenta~"    OP =~"=~"RIGHT=~"inscritos_otonio.cuenta~" )) " )
+text(band=header alignment="2" text="Alumnos
+Cuenta"border="0" color="0" x="5" y="4" height="129" width="330"  name=alumnos_cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Academicos
+Cve Carrera"border="0" color="0" x="2291" y="4" height="129" width="330"  name=academicos_cve_carrera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Academicos
+Cve Plan"border="0" color="0" x="2625" y="4" height="129" width="334"  name=academicos_cve_plan_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Academicos
+Cve Subsistema"border="0" color="0" x="2963" y="4" height="129" width="430"  name=academicos_cve_subsistema_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Academicos
+Creditos Cursados"border="0" color="0" x="3397" y="4" height="129" width="490"  name=academicos_creditos_cursados_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Academicos
+Promedio"border="0" color="0" x="3891" y="4" height="129" width="330"  name=academicos_promedio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="330" format="[general]"  name=alumnos_cuenta edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="2291" y="4" height="77" width="330" format="[general]"  name=academicos_cve_carrera edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="0" x="2625" y="4" height="77" width="334" format="[general]"  name=academicos_cve_plan edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="2963" y="4" height="77" width="330" format="[general]"  name=academicos_cve_subsistema edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="3397" y="4" height="77" width="330" format="[general]"  name=academicos_creditos_cursados edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="3891" y="4" height="77" width="330" format="[general]"  name=academicos_promedio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="513" y="4" height="77" width="1765" format="[general]"  name=alumnos_nombre_completo edit.limit=70 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Alumnos
+Nombre Completo"border="0" color="0" x="513" y="4" height="129" width="1765"  name=alumnos_nombre_completo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="obten_digito( alumnos_cuenta )"border="0" color="0" x="357" y="8" height="65" width="87"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Alumnos
+Sexo"border="0" color="0" x="4348" y="4" height="129" width="238"  name=alumnos_sexo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="4348" y="4" height="77" width="55" format="[general]"  name=alumnos_sexo edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="reprobadas( alumnos_cuenta )"border="0" color="0" x="4238" y="8" height="65" width="92"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

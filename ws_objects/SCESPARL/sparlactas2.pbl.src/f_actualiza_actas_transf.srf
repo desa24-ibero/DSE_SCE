@@ -1,0 +1,79 @@
+﻿$PBExportHeader$f_actualiza_actas_transf.srf
+global type f_actualiza_actas_transf from function_object
+end type
+
+forward prototypes
+global function integer f_actualiza_actas_transf (integer ai_periodo, integer ai_anio, integer ai_cve_estatus_acta, integer ai_cve_tipo_examen, transaction atr_transaction)
+end prototypes
+
+global function integer f_actualiza_actas_transf (integer ai_periodo, integer ai_anio, integer ai_cve_estatus_acta, integer ai_cve_tipo_examen, transaction atr_transaction);//f_actualiza_actas_transf
+//
+//Recibe:
+//ai_periodo				integer
+//ai_anio					integer
+//ai_cve_estatus_acta	integer
+//ai_cve_tipo_examen		integer
+//atr_transaction			transaction
+
+integer li_codigo_sql
+long li_no_acta
+string ls_mensaje_sql
+
+if ai_cve_tipo_examen = 3 then
+	UPDATE acta_evaluacion_preeliminar
+	SET cve_estatus_acta        = acta_evaluacion_transf.cve_estatus_acta,
+	 cve_origen_confirmacion = acta_evaluacion_transf.cve_origen_confirmacion,
+	 cve_tipo_recepcion = acta_evaluacion_transf.cve_tipo_recepcion	 
+	FROM acta_evaluacion_preeliminar,   
+     acta_evaluacion_transf  
+	WHERE ( acta_evaluacion_preeliminar.cve_mat = acta_evaluacion_transf.cve_mat ) and  
+         ( acta_evaluacion_preeliminar.gpo = acta_evaluacion_transf.gpo ) and  
+         ( acta_evaluacion_preeliminar.periodo = acta_evaluacion_transf.periodo ) and  
+         ( acta_evaluacion_preeliminar.anio = acta_evaluacion_transf.anio ) and  
+         ( acta_evaluacion_preeliminar.no_acta = acta_evaluacion_transf.no_acta ) and  
+         ( acta_evaluacion_preeliminar.cve_tipo_examen = acta_evaluacion_transf.cve_tipo_examen ) and  
+         ( acta_evaluacion_preeliminar.nivel = acta_evaluacion_transf.nivel )  AND
+			( acta_evaluacion_preeliminar.periodo = :ai_periodo )  AND
+			( acta_evaluacion_preeliminar.anio = :ai_anio )  AND
+			( acta_evaluacion_preeliminar.cve_estatus_acta <= :ai_cve_estatus_acta ) AND
+			( acta_evaluacion_preeliminar.cve_tipo_examen IN (:ai_cve_tipo_examen) )  			
+	USING atr_transaction;
+elseif ai_cve_tipo_examen = 26 then
+	UPDATE acta_evaluacion_preeliminar
+	SET cve_estatus_acta        = acta_evaluacion_transf.cve_estatus_acta,
+	 cve_origen_confirmacion = acta_evaluacion_transf.cve_origen_confirmacion,
+	 cve_tipo_recepcion = acta_evaluacion_transf.cve_tipo_recepcion	 
+	FROM acta_evaluacion_preeliminar,   
+     acta_evaluacion_transf  
+	WHERE ( acta_evaluacion_preeliminar.cve_mat = acta_evaluacion_transf.cve_mat ) and  
+         ( acta_evaluacion_preeliminar.gpo = acta_evaluacion_transf.gpo ) and  
+         ( acta_evaluacion_preeliminar.periodo = acta_evaluacion_transf.periodo ) and  
+         ( acta_evaluacion_preeliminar.anio = acta_evaluacion_transf.anio ) and  
+         ( acta_evaluacion_preeliminar.no_acta = acta_evaluacion_transf.no_acta ) and  
+         ( acta_evaluacion_preeliminar.cve_tipo_examen = acta_evaluacion_transf.cve_tipo_examen ) and  
+         ( acta_evaluacion_preeliminar.nivel = acta_evaluacion_transf.nivel )  AND
+			( acta_evaluacion_preeliminar.periodo = :ai_periodo )  AND
+			( acta_evaluacion_preeliminar.anio = :ai_anio )  AND
+			( acta_evaluacion_preeliminar.cve_estatus_acta <= :ai_cve_estatus_acta ) AND
+			( acta_evaluacion_preeliminar.cve_tipo_examen IN (2,6) )  			
+	USING atr_transaction;
+	
+end if
+
+li_codigo_sql = atr_transaction.SqlCode
+ls_mensaje_sql = atr_transaction.SqlErrText
+
+if li_codigo_sql = 100  then	
+	return li_codigo_sql
+elseif li_codigo_sql = -1 then
+	rollback using atr_transaction;
+	MessageBox("Error al actualizar en acta_evaluacion_preeliminar", ls_mensaje_sql)
+	return li_codigo_sql
+elseif li_codigo_sql = 0 then
+	commit using atr_transaction;
+end if
+
+return li_codigo_sql
+
+end function
+

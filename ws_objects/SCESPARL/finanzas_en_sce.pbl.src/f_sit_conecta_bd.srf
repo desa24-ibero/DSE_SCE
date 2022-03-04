@@ -1,0 +1,49 @@
+﻿$PBExportHeader$f_sit_conecta_bd.srf
+$PBExportComments$Conexión a una base de datos con el objeto de transacción
+global type f_sit_conecta_bd from function_object
+end type
+
+forward prototypes
+global function integer f_sit_conecta_bd (ref transaction tr_base_datos, string st_seccion, string st_usuario, string st_contrasenia)
+end prototypes
+
+global function integer f_sit_conecta_bd (ref transaction tr_base_datos, string st_seccion, string st_usuario, string st_contrasenia);/*
+DESCRIPCIÓN: Se hace la conexión a la base de datos por medio del objeto de trabsacción
+					del archivo_ini y la sección.
+PARÁMETROS: Transaction tr_base_datos, string st_seccion,string st_usuario, string st_contrasenia																
+REGRESA: 1 si la conexión se realizó de forma correcta
+AUTOR: CAMP(DkWf)
+FECHA: 17 Junio 1998
+MODIFICACIÓN: Se copio de la función original para el uso del sistema de tesorería
+Juan Campos Sánchez. 25-junio-2001
+*/
+
+if isvalid(tr_base_datos) = false  then
+	tr_base_datos = CREATE transaction//Creación de la transacción
+end if
+
+// Se anexa el path del ini del sistema . Juan Campos 5-nov-2001
+ 
+/* Populate sqlca from current PB.INI settings */
+tr_base_datos.DBMS       = ProfileString (  gs_startupfile, st_seccion, "dbms",       "")
+tr_base_datos.database   = ProfileString (  gs_startupfile, st_seccion, "database",   "")
+tr_base_datos.userid     = ProfileString (  gs_startupfile, st_seccion, "userid",     "")
+tr_base_datos.dbpass     = ProfileString (  gs_startupfile, st_seccion, "dbpass",     "")
+
+tr_base_datos.logid      = st_usuario
+tr_base_datos.logpass    = st_contrasenia
+
+tr_base_datos.servername = ProfileString (  gs_startupfile, st_seccion, "servername", "")
+tr_base_datos.dbparm     = ProfileString (  gs_startupfile, st_seccion, "dbparm",     "")
+
+//Conexión a la base de datos
+connect using tr_base_datos;
+
+if tr_base_datos.sqlcode <> 0 then
+	MessageBox ("No hay conexión con la Base de Datos "+st_seccion+".", tr_base_datos.sqlerrtext, None!)
+	return 0
+end if
+return 1
+
+end function
+

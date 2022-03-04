@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_save_image.srs
+global type str_save_image from structure
+	integer		filetype
+	string		extension
+end type
+

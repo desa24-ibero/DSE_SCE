@@ -1,0 +1,39 @@
+﻿$PBExportHeader$revisa_cred_en_curso.srf
+$PBExportComments$Función que regresa el numero de creditos que esta cursando el alumno en el semestre actual  Entrada: Cuenta del alumno Salida:~tCreditos que esta cursando MARZO 1998  CAMP DkWf
+global type revisa_cred_en_curso from function_object
+end type
+
+forward prototypes
+global function decimal revisa_cred_en_curso (long cta)
+end prototypes
+
+global function decimal revisa_cred_en_curso (long cta);//Función que regresa el numero de creditos que esta cursando el alumno en el semestre actual
+//Entrada: Cuenta del alumno
+//Salida:	Creditos que esta cursando
+//Marzo 1998 CAMP DkWf
+
+decimal cred_curso
+
+SELECT sum(materias.creditos )  
+ INTO :cred_curso  
+ FROM mat_inscritas,   
+		materias  
+WHERE ( materias.cve_mat = mat_inscritas.cve_mat ) and  
+		( ( mat_inscritas.cuenta = :cta ) AND  
+		( mat_inscritas.periodo = :g_per ) AND  
+		( mat_inscritas.anio = :g_year ) )   using gtr_sce;
+		
+if gtr_sce.sqlcode	=	0 then
+	if isnull(cred_curso) then
+			//messagebox("ERROR en la busqueda de CREDITOS del SEMESTRE ACTUAL","No se puede obtener los creditos  de la cuenta "+string(cta)+".",stopsign!)
+		return 0
+	else
+		return cred_curso
+	end if
+else
+//	messagebox("ERROR en la busqueda de CREDITOS del SEMESTRE ACTUAL","No se puede obtener los creditos  de la cuenta "+string(cta)+".",stopsign!)
+	return 0
+end if
+
+end function
+

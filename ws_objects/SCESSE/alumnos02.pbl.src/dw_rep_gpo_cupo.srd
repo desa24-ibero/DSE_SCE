@@ -1,0 +1,58 @@
+﻿$PBExportHeader$dw_rep_gpo_cupo.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=409 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=85 color="536870912"  height.autosize=yes)
+table(column=(type=long updatewhereclause=yes name=grupos_cve_mat dbname="grupos.cve_mat" )
+ column=(type=char(2) updatewhereclause=yes name=grupos_gpo dbname="grupos.gpo" )
+ column=(type=long updatewhereclause=yes name=grupos_cupo dbname="grupos.cupo" )
+ column=(type=long updatewhereclause=yes name=coordinaciones_cve_coordinacion dbname="coordinaciones.cve_coordinacion" )
+ column=(type=char(70) updatewhereclause=yes name=coordinaciones_coordinacion dbname="coordinaciones.coordinacion" )
+ column=(type=char(42) updatewhereclause=yes name=materias_materia dbname="materias.materia" )
+ column=(type=long updatewhereclause=yes name=grupos_inscritos dbname="grupos.inscritos" )
+ retrieve="  SELECT  grupos.cve_mat ,
+           grupos.gpo ,
+           grupos.cupo ,
+           coordinaciones.cve_coordinacion ,
+           coordinaciones.coordinacion ,
+           materias.materia ,
+           grupos.inscritos     
+        FROM coordinaciones ,
+           grupos ,
+           materias     
+        WHERE ( grupos.cve_mat = materias.cve_mat ) and
+          ( coordinaciones.cve_coordinacion = materias.cve_coordinacion )   "  sort="coordinaciones_cve_coordinacion A grupos_cve_mat A grupos_gpo A " )
+group(level=1 header.height=293 trailer.height=33 by=("coordinaciones_coordinacion" ) newpage=yes resetpagecount=yes header.color="536870912" trailer.color="536870912" )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="2702" y="108" height="125" width="746" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="12632256" )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="3068" y="108" height="125" width="380" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="92" y="108" height="125" width="746" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="12632256" )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="458" y="108" height="125" width="380" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Fecha"border="0" color="0" x="211" y="136" height="69" width="165"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+rectangle(band=header x="453" y="112" height="117" width="51" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="5" pen.color="16777215"  background.mode="2" background.color="16777215" )
+compute(band=header alignment="2" expression="today()"border="0" color="0" x="476" y="132" height="77" width="334" format="dd/mm/yyyy"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="878" y="24" height="365" width="1797" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Universidad Iberoamericana"border="0" color="0" x="924" y="56" height="101" width="1687"  font.face="CopprplGoth BT" font.height="-18" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Página "border="0" color="0" x="2803" y="136" height="69" width="202"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+rectangle(band=header x="3063" y="112" height="117" width="51" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="5" pen.color="16777215"  background.mode="2" background.color="16777215" )
+compute(band=header alignment="2" expression="page() "border="0" color="0" x="3100" y="136" height="69" width="289" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+line(band=header x1="453" y1="108" x2="453" y2="228" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="12632256" )
+line(band=header x1="3063" y1="108" x2="3063" y2="228" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Direccion de Servicios Escolares"border="0" color="0" x="1134" y="184" height="93" width="1281"  font.face="Arial" font.height="-14" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Reporte de Grupos"border="0" color="0" x="1473" y="288" height="77" width="609"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+roundrectangle(band=header.1 ellipseheight="61" ellipsewidth="69"x="69" y="152" height="121" width="2817" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+text(band=header.1 alignment="1" text="Clave"border="0" color="0" x="156" y="180" height="65" width="142"  name=grupos_cve_mat_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="1" text="Grupo"border="0" color="0" x="494" y="180" height="65" width="161"  name=grupos_gpo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="1" text="Materia"border="0" color="0" x="1244" y="180" height="65" width="197"  name=materias_materia_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="1" text="Coordinacion"border="0" color="0" x="106" y="16" height="81" width="476"  name=departamentos_departamento_t  font.face="Arial" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="1" text="Cupo"border="0" color="0" x="2172" y="180" height="65" width="138"  name=grupos_cupo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="1" text="Inscritos"border="0" color="0" x="2597" y="180" height="65" width="225"  name=grupos_inscritos_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="535" y="4" height="77" width="83" format="[general]"  name=grupos_gpo edit.limit=2 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="755" y="4" height="77" width="1180" format="[general]"  name=materias_materia edit.limit=42 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="2172" y="4" height="77" width="138" format="[general]"  name=grupos_cupo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="2597" y="4" height="77" width="225" format="[general]"  name=grupos_inscritos edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="65" y="4" height="77" width="330" format="[general]"  name=grupos_cve_mat edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=trailer.1 x1="69" y1="16" x2="2885" y2="16" pen.style="0" pen.width="14" pen.color="0"  background.mode="2" background.color="0" )
+column(band=header.1 id=4 alignment="0" tabsequence=0 border="0" color="0" x="613" y="24" height="65" width="298"  name=coordinaciones_cve_coordinacion  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header.1 id=5 alignment="0" tabsequence=0 border="0" color="0" x="924" y="24" height="65" width="1962"  name=coordinaciones_coordinacion  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

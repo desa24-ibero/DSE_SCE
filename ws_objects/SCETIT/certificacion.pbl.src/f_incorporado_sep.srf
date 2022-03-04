@@ -1,0 +1,50 @@
+﻿$PBExportHeader$f_incorporado_sep.srf
+global type f_incorporado_sep from function_object
+end type
+
+forward prototypes
+global function long f_incorporado_sep (long al_cve_carrera, long al_cve_plan)
+end prototypes
+
+global function long f_incorporado_sep (long al_cve_carrera, long al_cve_plan);//Función que revisa si un plan de estudios esta incorporado a la sep o no
+//
+//f_incorporado_sep
+//
+//Parámetros:		al_cve_carrera
+//						al_cve_plan
+
+
+int li_codigo_sql, li_cve_constancia, li_existente
+long ll_cuenta, ll_cve_carrera, ll_cve_plan, ll_max_folio, ll_max_libro
+long ll_folio_siguiente, ll_libro_siguiente, ll_libro
+string ls_carrera, ls_nivel, ls_mensaje_sql, ls_sexo, ls_mensaje_aux
+boolean 	lb_nueva_insercion
+string ls_cve_grado, ls_cve_grupo_grado
+long ll_incorporado_sep
+lb_nueva_insercion = false
+	
+ll_cve_carrera = al_cve_carrera
+ll_cve_plan = al_cve_plan
+
+
+SELECT c.cve_grado,
+       isnull(pe.incorporado_sep,0)
+INTO 	:ls_cve_grado,
+		:ll_incorporado_sep
+FROM plan_estudios pe, carreras c
+WHERE pe.cve_carrera = c.cve_carrera
+AND   pe.cve_carrera = :ll_cve_carrera
+AND   pe.cve_plan = :ll_cve_plan
+USING gtr_sce;
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	ls_mensaje_aux="Error al consultar plan de estudios y carrera : "
+	MessageBox(ls_mensaje_aux+string(ll_cve_carrera)+" - "+string(ll_cve_plan),  ls_mensaje_sql, StopSign!)
+	return -1
+end if
+return ll_incorporado_sep
+end function
+

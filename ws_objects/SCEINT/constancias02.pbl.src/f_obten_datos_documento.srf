@@ -1,0 +1,79 @@
+﻿$PBExportHeader$f_obten_datos_documento.srf
+global type f_obten_datos_documento from function_object
+end type
+
+forward prototypes
+global function integer f_obten_datos_documento (long a_cuenta, integer ai_cve_documento, ref integer ai_cve_flag_documento, ref string as_desc_flag_documento, ref string as_documento)
+end prototypes
+
+global function integer f_obten_datos_documento (long a_cuenta, integer ai_cve_documento, ref integer ai_cve_flag_documento, ref string as_desc_flag_documento, ref string as_documento);//Función que revisa los documentos de licenciatura de un alumno 
+//
+//f_revisa_docum_pos
+//
+//Parámetros:		a_cuenta			long
+//
+//Regresa:			li_resultado	integer
+
+
+
+integer li_documentos[ ] = {1, 4, 5, 7, 8, 38, 47}
+int li_limite_inferior, li_limite_superior, li_indice, li_resultado, li_codigo_sql, li_num_ciclos, li_doc_pendientes
+long ll_cuenta
+string ls_carrera, ls_nivel, ls_mensaje_sql
+string ls_desc_flag_documento, ls_documento
+integer li_cve_documento, li_cve_flag_documento
+boolean lb_documento_pendiente
+boolean lb_encontrado
+int li_res
+int li_nip, li_hora, li_biblioteca, li_finanzas
+datetime ldt_fecha
+DataStore lds_documentos_cuenta
+lds_documentos_cuenta = Create DataStore
+lds_documentos_cuenta.DataObject = "d_documentos_cuenta"
+lds_documentos_cuenta.SetTransObject(gtr_sce)
+
+ll_cuenta= a_cuenta
+lb_encontrado = false
+li_indice = 1
+
+li_limite_inferior =LowerBound(li_documentos)
+li_limite_superior =UpperBound(li_documentos)
+li_res = lds_documentos_cuenta.Retrieve(ll_cuenta, li_documentos)
+setnull(ai_cve_flag_documento)
+setnull(as_desc_flag_documento)
+setnull(as_documento)
+
+if li_res >= 1 then
+	do while li_indice <= li_res 
+	
+		li_cve_documento = lds_documentos_cuenta.GetItemNumber(li_indice,"ccve_documento")
+		li_cve_flag_documento = lds_documentos_cuenta.GetItemNumber(li_indice,"ccve_flag_documento")
+		ls_desc_flag_documento = lds_documentos_cuenta.GetItemString(li_indice,"cdesc_flag_documento")
+		ls_documento = lds_documentos_cuenta.GetItemString(li_indice,"cdocumento")
+
+//Se encontro el documento		
+		if li_cve_documento = ai_cve_documento then
+//Debe estar registrado como 1- MICROFILMADO 2- S/MICRO 3- ANOMALIA ARCH 
+			if li_cve_flag_documento = 1 or li_cve_flag_documento= 2 or &
+			   li_cve_flag_documento = 3 or li_cve_flag_documento =6 then
+				lb_encontrado = true
+			else
+				lb_encontrado = false
+			end if
+			ai_cve_flag_documento=li_cve_flag_documento
+			as_desc_flag_documento=ls_desc_flag_documento
+			as_documento=ls_documento
+			exit	
+		end if
+		li_indice = li_indice +1
+	loop
+end if
+
+if lb_encontrado then
+	return 1
+else
+	return 0	
+end if
+
+end function
+

@@ -1,0 +1,185 @@
+﻿$PBExportHeader$m_bajas_materias.srm
+$PBExportComments$Este menu es ansestro de m_bajas_academicas y m_bajas_totales, no contiene codigo. Juan campos Nov.1996.
+forward
+global type m_bajas_materias from menu
+end type
+type m_imprime from menu within m_bajas_materias
+end type
+type m_imprime from menu within m_bajas_materias
+end type
+type m_baja from menu within m_bajas_materias
+end type
+type m_baja from menu within m_bajas_materias
+end type
+type m_reactivabaja from menu within m_bajas_materias
+end type
+type m_reactivabaja from menu within m_bajas_materias
+end type
+type m_ventana from menu within m_bajas_materias
+end type
+type m_horizontal from menu within m_ventana
+end type
+type m_vertical from menu within m_ventana
+end type
+type m_primerplano from menu within m_ventana
+end type
+type m_cascada from menu within m_ventana
+end type
+type m_ventana from menu within m_bajas_materias
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+type m_fin from menu within m_bajas_materias
+end type
+type m_fin from menu within m_bajas_materias
+end type
+end forward
+
+global type m_bajas_materias from menu
+m_imprime m_imprime
+m_baja m_baja
+m_reactivabaja m_reactivabaja
+m_ventana m_ventana
+m_fin m_fin
+end type
+global m_bajas_materias m_bajas_materias
+
+on m_bajas_materias.create
+m_bajas_materias=this
+this.m_imprime=create m_imprime
+this.m_baja=create m_baja
+this.m_reactivabaja=create m_reactivabaja
+this.m_ventana=create m_ventana
+this.m_fin=create m_fin
+this.Item[]={this.m_imprime, &
+this.m_baja, &
+this.m_reactivabaja, &
+this.m_ventana, &
+this.m_fin}
+end on
+
+on m_bajas_materias.destroy
+destroy(this.m_imprime)
+destroy(this.m_baja)
+destroy(this.m_reactivabaja)
+destroy(this.m_ventana)
+destroy(this.m_fin)
+end on
+
+type m_imprime from menu within m_bajas_materias
+end type
+
+on m_imprime.create
+this.Text="Imprime"
+this.ToolBarItemName="Print!"
+this.ToolBarItemText="Imprime"
+end on
+
+on m_imprime.destroy
+end on
+
+type m_baja from menu within m_bajas_materias
+end type
+
+on m_baja.create
+this.Text="Baja"
+this.ToolBarItemName="Custom094!"
+end on
+
+on m_baja.destroy
+end on
+
+type m_reactivabaja from menu within m_bajas_materias
+end type
+
+on m_reactivabaja.create
+this.Text="Reactiva Baja "
+this.ToolBarItemName="DosEdit5!"
+this.Enabled=false
+end on
+
+on m_reactivabaja.destroy
+end on
+
+type m_ventana from menu within m_bajas_materias
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+
+on m_ventana.create
+this.Text="Ventana"
+this.m_horizontal=create m_horizontal
+this.m_vertical=create m_vertical
+this.m_primerplano=create m_primerplano
+this.m_cascada=create m_cascada
+this.Item[]={this.m_horizontal, &
+this.m_vertical, &
+this.m_primerplano, &
+this.m_cascada}
+end on
+
+on m_ventana.destroy
+destroy(this.m_horizontal)
+destroy(this.m_vertical)
+destroy(this.m_primerplano)
+destroy(this.m_cascada)
+end on
+
+type m_horizontal from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(tilehorizontal!)
+end event
+
+on m_horizontal.create
+this.Text="Horizontal"
+end on
+
+type m_vertical from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(tile!)
+end event
+
+on m_vertical.create
+this.Text="Vertical"
+end on
+
+type m_primerplano from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(layer!)
+end event
+
+on m_primerplano.create
+this.Text="Primer Plano"
+end on
+
+type m_cascada from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(cascade!)
+end event
+
+on m_cascada.create
+this.Text="Cascada"
+end on
+
+type m_fin from menu within m_bajas_materias
+end type
+
+event clicked;close(parentwindow)
+end event
+
+on m_fin.create
+this.Text="Fin"
+this.ToolBarItemName="Exit!"
+end on
+
+on m_fin.destroy
+end on
+

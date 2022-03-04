@@ -1,0 +1,33 @@
+﻿$PBExportHeader$f_obten_millar.srf
+global type f_obten_millar from function_object
+end type
+
+forward prototypes
+global function string f_obten_millar (integer a_numero, boolean a_con_prefijo)
+end prototypes
+
+global function string f_obten_millar (integer a_numero, boolean a_con_prefijo);
+integer li_millar
+string ls_millar, ls_unidad
+
+li_millar =a_numero
+
+if li_millar = 1 then
+	if a_con_prefijo then
+		ls_millar = "UN MIL"
+	else
+		ls_millar = "MIL"
+	end if
+elseif li_millar > 1 and li_millar <= 9 then
+	ls_unidad = f_obten_unidad(a_numero)
+	ls_millar = ls_unidad+ " MIL"	
+else 
+	ls_millar = ""
+end if
+
+return ls_millar
+		
+		
+
+end function
+

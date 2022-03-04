@@ -1,0 +1,26 @@
+﻿$PBExportHeader$periodo_actual.srf
+$PBExportComments$Función que recibe dos parametros variables en los que se regresa el periodo y año actual. Marzo 1998 CAMP DkWf
+global type periodo_actual from function_object
+end type
+
+forward prototypes
+global subroutine periodo_actual (ref integer periodo, ref integer anio, transaction trans)
+end prototypes
+
+global subroutine periodo_actual (ref integer periodo, ref integer anio, transaction trans);//Función que recibe dos parametros variables en los que se regresa el periodo y año actual
+//Marzo 1998 CAMP DkWf
+
+string fecha,mes
+
+fecha = fecha_ingles_servidor(trans)
+anio = long(mid(fecha,8,4))
+mes = upper(mid(fecha,1,3))
+if mes = "JAN" or mes = "FEB" or mes = "MAR" or mes = "APR" or mes = "MAY"  then
+	periodo = 0
+elseif mes = "JUN" or mes = "JUL"  then
+	periodo = 1	
+elseif mes = "AUG" or mes = "SEP" or mes = "OCT" or mes = "NOV" or mes = "DEC"  then
+	periodo = 2
+end if
+end subroutine
+

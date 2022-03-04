@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_imp_sol_reval_sep.srs
+global type str_imp_sol_reval_sep from structure
+	datawindow		sdw_datawindow
+	long		sl_folio
+	window		sw_window
+	uo_nombre_aspirante_reval		suo_user_object
+end type
+

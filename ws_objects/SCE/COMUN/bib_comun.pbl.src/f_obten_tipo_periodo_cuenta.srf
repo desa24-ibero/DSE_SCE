@@ -1,0 +1,43 @@
+﻿$PBExportHeader$f_obten_tipo_periodo_cuenta.srf
+global type f_obten_tipo_periodo_cuenta from function_object
+end type
+
+forward prototypes
+global function string f_obten_tipo_periodo_cuenta (long al_cuenta)
+end prototypes
+
+global function string f_obten_tipo_periodo_cuenta (long al_cuenta);
+// Función de recuperación de tipo de periodo a partir de la cuenta.
+LONG ll_cve_carrera 
+LONG ll_cve_plan 
+STRING ls_tipo_periodo 
+
+SELECT cve_carrera, cve_plan 
+INTO :ll_cve_carrera, :ll_cve_plan 
+FROM academicos 
+WHERE cuenta = :al_cuenta 
+USING gtr_sce;
+IF ISNULL(ll_cve_carrera) THEN ll_cve_carrera = 0
+IF ISNULL(ll_cve_plan) THEN ll_cve_plan = 0 
+IF ll_cve_carrera = 0 OR ll_cve_plan = 0 THEN RETURN ""
+
+SELECT tipo_periodo 
+INTO :ls_tipo_periodo 
+FROM plan_estudios 
+WHERE cve_carrera = :ll_cve_carrera
+AND cve_plan = :ll_cve_plan 
+USING gtr_sce;
+
+RETURN ls_tipo_periodo
+
+
+
+
+
+
+
+
+
+
+end function
+

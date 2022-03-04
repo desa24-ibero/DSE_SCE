@@ -1,0 +1,110 @@
+﻿$PBExportHeader$m_principal_pg.srm
+forward
+global type m_principal_pg from menu
+end type
+type m_archivo from menu within m_principal_pg
+end type
+type m_reportes from menu within m_principal_pg
+end type
+type m_análisisdeprogramacióndegrupos from menu within m_reportes
+end type
+type m_catálogodetiposdegrupoclase from menu within m_reportes
+end type
+type m_reportes from menu within m_principal_pg
+m_análisisdeprogramacióndegrupos m_análisisdeprogramacióndegrupos
+m_catálogodetiposdegrupoclase m_catálogodetiposdegrupoclase
+end type
+global type m_principal_pg from menu
+m_archivo m_archivo
+m_reportes m_reportes
+end type
+end forward
+
+global type m_principal_pg from menu
+m_archivo m_archivo
+m_reportes m_reportes
+end type
+global m_principal_pg m_principal_pg
+
+on m_principal_pg.create
+m_principal_pg=this
+call super::create
+this.text = "m_principal"
+this.m_archivo=create m_archivo
+this.m_reportes=create m_reportes
+this.Item[UpperBound(this.Item)+1]=this.m_archivo
+this.Item[UpperBound(this.Item)+1]=this.m_reportes
+end on
+
+on m_principal_pg.destroy
+call super::destroy
+destroy(this.m_archivo)
+destroy(this.m_reportes)
+end on
+
+type m_archivo from menu within m_principal_pg
+end type
+
+on m_archivo.create
+call super::create
+this.text = "Archivo"
+end on
+
+on m_archivo.destroy
+call super::destroy
+end on
+
+type m_reportes from menu within m_principal_pg
+m_análisisdeprogramacióndegrupos m_análisisdeprogramacióndegrupos
+m_catálogodetiposdegrupoclase m_catálogodetiposdegrupoclase
+end type
+
+on m_reportes.create
+call super::create
+this.text = "Reportes"
+this.m_análisisdeprogramacióndegrupos=create m_análisisdeprogramacióndegrupos
+this.m_catálogodetiposdegrupoclase=create m_catálogodetiposdegrupoclase
+this.Item[UpperBound(this.Item)+1]=this.m_análisisdeprogramacióndegrupos
+this.Item[UpperBound(this.Item)+1]=this.m_catálogodetiposdegrupoclase
+end on
+
+on m_reportes.destroy
+call super::destroy
+destroy(this.m_análisisdeprogramacióndegrupos)
+destroy(this.m_catálogodetiposdegrupoclase)
+end on
+
+type m_análisisdeprogramacióndegrupos from menu within m_reportes
+end type
+
+on m_análisisdeprogramacióndegrupos.create
+call super::create
+this.text = "Análisis de Programación de Grupos"
+end on
+
+on m_análisisdeprogramacióndegrupos.destroy
+call super::destroy
+end on
+
+event clicked;w_analisis_programacion_grupos lw_sheet
+
+OpenSheet (lw_sheet ,  w_mdi , 0 , Layered! )
+end event
+
+type m_catálogodetiposdegrupoclase from menu within m_reportes
+end type
+
+on m_catálogodetiposdegrupoclase.create
+call super::create
+this.text = "Catálogo de Tipos de Grupo Clase"
+end on
+
+on m_catálogodetiposdegrupoclase.destroy
+call super::destroy
+end on
+
+event clicked;w_mtto_tipo_grupo_clase lw_sheet
+
+OpenSheet ( lw_sheet ,  w_mdi , 0 , Layered! )
+end event
+

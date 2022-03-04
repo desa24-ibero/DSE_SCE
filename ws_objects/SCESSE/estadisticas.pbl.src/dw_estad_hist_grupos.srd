@@ -1,0 +1,49 @@
+﻿$PBExportHeader$dw_estad_hist_grupos.srd
+$PBExportComments$Estadistica hist_grupos: Total de inscritos por periodo,bajas,reprobados,grupos cerrado, y abiertos. Juan campos Sánchez. Mar-1998
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=605 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=hist_grupos_cve_mat dbname="hist_grupos.cve_mat" )
+ column=(type=char(42) updatewhereclause=yes name=materias_materia dbname="materias.materia" )
+ column=(type=long updatewhereclause=yes name=hist_grupos_periodo dbname="hist_grupos.periodo" values="PRIMAVERA	0/VERANO	1/OTOÑO	2/" )
+ column=(type=long updatewhereclause=yes name=hist_grupos_anio dbname="hist_grupos.anio" )
+ column=(type=long updatewhereclause=yes name=compute_0005 dbname="compute_0005" )
+ retrieve="  SELECT hist_grupos.cve_mat,   
+         materias.materia,   
+         hist_grupos.periodo,   
+         hist_grupos.anio,   
+         ~"Tot. Abiertos~"=count(hist_grupos.cve_mat)  
+    FROM hist_grupos,   
+         materias  
+   WHERE ( hist_grupos.cve_mat = materias.cve_mat ) and  
+         ( hist_grupos.anio = :ano AND hist_grupos.periodo = :periodo) AND  
+         (hist_grupos.cond_gpo = 1) AND  
+         (hist_grupos.tipo <> 2)   
+GROUP BY hist_grupos.cve_mat,   
+         materias.materia,   
+         hist_grupos.periodo,   
+         hist_grupos.anio   
+" arguments=(("ano", number),("periodo", number)) )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="28" y="492" height="105" width="3383" brush.hatch="6" brush.color="30791125" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="0" )
+text(band=header alignment="1" text="Universidad Iberoamericana"border="0" color="0" x="874" y="24" height="125" width="1651"  font.face="Century Schoolbook" font.height="-18" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="1" text="Estadística de histórico grupos: Total alumnos inscritos por periodo; Reprobados; Bajas académicas; Grupos(abiertos, cerrados)."border="0" color="0" x="1" y="292" height="65" width="3415"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="Dirección de Servicios Escolares"border="0" color="0" x="1057" y="152" height="93" width="1281"  font.face="Arial" font.height="-14" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=header id=3 alignment="2" tabsequence=32766 border="6" color="0" x="1249" y="376" height="77" width="490" format="[general]"  name=hist_grupos_periodo ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=4 alignment="2" tabsequence=32766 border="6" color="0" x="1802" y="376" height="77" width="179" format="[general]"  name=hist_grupos_anio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Total Insc"border="0" color="0" x="1687" y="508" height="69" width="257"  name=compute_0005_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Grupos Abiertos"border="0" color="0" x="1962" y="508" height="69" width="430"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Grupos Cerrados"border="0" color="0" x="2405" y="508" height="69" width="453"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Bajas"border="0" color="0" x="2871" y="508" height="69" width="151"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="Reprobadas"border="0" color="0" x="3041" y="508" height="69" width="316"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="Cve Mat"border="0" color="0" x="60" y="508" height="69" width="215"  name=hist_grupos_cve_mat_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Nombre"border="0" color="0" x="833" y="508" height="69" width="211"  name=materias_materia_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="inscritos_por_periodo(hist_grupos_anio,hist_grupos_periodo,hist_grupos_cve_mat)"border="0" color="0" x="1724" y="8" height="69" width="179" format="[general]"  name=inscritos  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="2085" y="4" height="77" width="179" format="[general]"  name=compute_0005 edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="tot_gpo_cerrados(hist_grupos_anio,hist_grupos_periodo,hist_grupos_cve_mat)"border="0" color="0" x="2542" y="8" height="69" width="179" format="[general]"  name=gpo_cerrados  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression="bajas_por_periodo(hist_grupos_anio,hist_grupos_periodo,hist_grupos_cve_mat)"border="0" color="0" x="2858" y="8" height="69" width="179" format="[general]"  name=bajas  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression="reprobadas_por_periodo(hist_grupos_anio,hist_grupos_periodo,hist_grupos_cve_mat)"border="0" color="0" x="3109" y="8" height="69" width="179" format="[general]"  name=reprobadas  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="60" y="4" height="77" width="215" format="[general]"  name=hist_grupos_cve_mat edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="293" y="4" height="77" width="1331" format="[general]"  name=materias_materia edit.limit=42 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

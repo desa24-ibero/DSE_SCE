@@ -1,0 +1,489 @@
+﻿$PBExportHeader$m_movs_prof.srm
+forward
+global type m_movs_prof from menu
+end type
+type m_archivo from menu within m_movs_prof
+end type
+type m_leer from menu within m_archivo
+end type
+type m_salvar from menu within m_archivo
+end type
+type m_configurarimpresora from menu within m_archivo
+end type
+type m_imprimir from menu within m_archivo
+end type
+type m_- from menu within m_archivo
+end type
+type m_salir from menu within m_archivo
+end type
+type m_archivo from menu within m_movs_prof
+m_leer m_leer
+m_salvar m_salvar
+m_configurarimpresora m_configurarimpresora
+m_imprimir m_imprimir
+m_- m_-
+m_salir m_salir
+end type
+type m_registro from menu within m_movs_prof
+end type
+type m_nuevoprofesor from menu within m_registro
+end type
+type m_borraprofesoradjunto from menu within m_registro
+end type
+type m_-adjuntos from menu within m_registro
+end type
+type m_movimientoaprofesoradjunto from menu within m_registro
+end type
+type m_registro from menu within m_movs_prof
+m_nuevoprofesor m_nuevoprofesor
+m_borraprofesoradjunto m_borraprofesoradjunto
+m_-adjuntos m_-adjuntos
+m_movimientoaprofesoradjunto m_movimientoaprofesoradjunto
+end type
+type m_ventana from menu within m_movs_prof
+end type
+type m_horizontal from menu within m_ventana
+end type
+type m_vertical from menu within m_ventana
+end type
+type m_primerplano from menu within m_ventana
+end type
+type m_cascada from menu within m_ventana
+end type
+type m_ventana from menu within m_movs_prof
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+type m_ayuda from menu within m_movs_prof
+end type
+global type m_movs_prof from menu
+m_archivo m_archivo
+m_registro m_registro
+m_ventana m_ventana
+m_ayuda m_ayuda
+end type
+end forward
+
+global type m_movs_prof from menu
+m_archivo m_archivo
+m_registro m_registro
+m_ventana m_ventana
+m_ayuda m_ayuda
+end type
+global m_movs_prof m_movs_prof
+
+type variables
+datawindow dw, dw_2
+userobject objeto
+end variables
+
+forward prototypes
+public function integer asigna_dw (datawindow a_dw)
+end prototypes
+
+public function integer asigna_dw (datawindow a_dw);dw = a_dw
+return 1
+end function
+
+on m_movs_prof.create
+m_movs_prof=this
+call super::create
+this.m_archivo=create m_archivo
+this.m_registro=create m_registro
+this.m_ventana=create m_ventana
+this.m_ayuda=create m_ayuda
+this.Item[UpperBound(this.Item)+1]=this.m_archivo
+this.Item[UpperBound(this.Item)+1]=this.m_registro
+this.Item[UpperBound(this.Item)+1]=this.m_ventana
+this.Item[UpperBound(this.Item)+1]=this.m_ayuda
+end on
+
+on m_movs_prof.destroy
+call super::destroy
+destroy(this.m_archivo)
+destroy(this.m_registro)
+destroy(this.m_ventana)
+destroy(this.m_ayuda)
+end on
+
+type m_archivo from menu within m_movs_prof
+m_leer m_leer
+m_salvar m_salvar
+m_configurarimpresora m_configurarimpresora
+m_imprimir m_imprimir
+m_- m_-
+m_salir m_salir
+end type
+
+on m_archivo.create
+call super::create
+this.text = "Archivo"
+this.m_leer=create m_leer
+this.m_salvar=create m_salvar
+this.m_configurarimpresora=create m_configurarimpresora
+this.m_imprimir=create m_imprimir
+this.m_-=create m_-
+this.m_salir=create m_salir
+this.Item[UpperBound(this.Item)+1]=this.m_leer
+this.Item[UpperBound(this.Item)+1]=this.m_salvar
+this.Item[UpperBound(this.Item)+1]=this.m_configurarimpresora
+this.Item[UpperBound(this.Item)+1]=this.m_imprimir
+this.Item[UpperBound(this.Item)+1]=this.m_-
+this.Item[UpperBound(this.Item)+1]=this.m_salir
+end on
+
+on m_archivo.destroy
+call super::destroy
+destroy(this.m_leer)
+destroy(this.m_salvar)
+destroy(this.m_configurarimpresora)
+destroy(this.m_imprimir)
+destroy(this.m_-)
+destroy(this.m_salir)
+end on
+
+type m_leer from menu within m_archivo
+end type
+
+event clicked;string nulo
+
+setnull(nulo)
+
+if isvalid(dw) then
+	SetPointer(HourGlass!)
+	if dw.ImportFile(nulo)<1 then
+		messagebox("No se pudo leer el archivo","")
+	end if
+end if
+end event
+
+on m_leer.create
+call super::create
+this.text = "Leer"
+this.toolbaritemname = "Custom050!"
+this.toolbaritemtext = "Leer"
+end on
+
+on m_leer.destroy
+call super::destroy
+end on
+
+type m_salvar from menu within m_archivo
+end type
+
+event clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	if dw.SaveAs("",Excel!, TRUE)<>1 then
+		dw.SaveAs("",Clipboard!, TRUE)
+		messagebox("No se pudo guardar el archivo","La información se encuentra en el Clipboard")	
+	end if
+end if
+end event
+
+on m_salvar.create
+call super::create
+this.text = "Salvar"
+this.toolbaritemname = "Save!"
+this.toolbaritemtext = "Salvar"
+this.toolbaritemorder = 1
+end on
+
+on m_salvar.destroy
+call super::destroy
+end on
+
+type m_configurarimpresora from menu within m_archivo
+end type
+
+event clicked;printsetup()
+
+end event
+
+on m_configurarimpresora.create
+call super::create
+this.text = "C&onfigurar Impresora"
+this.toolbaritemorder = 2
+end on
+
+on m_configurarimpresora.destroy
+call super::destroy
+end on
+
+type m_imprimir from menu within m_archivo
+end type
+
+on m_imprimir.create
+call super::create
+this.visible = false
+this.text = "&Imprimir~tCtrl+I"
+this.enabled = false
+this.shortcut = 329
+this.microhelp = "Imprimir "
+this.toolbaritemname = "Print!"
+this.toolbaritemtext = "Imprimir"
+this.toolbaritemorder = 3
+end on
+
+event clicked;if isvalid(dw) then
+	dw.modify("Datawindow.print.preview = Yes")
+	SetPointer(HourGlass!)
+	openwithparm(conf_impr,dw)
+end if
+end event
+
+on m_imprimir.destroy
+call super::destroy
+end on
+
+type m_- from menu within m_archivo
+end type
+
+on m_-.create
+call super::create
+this.text = "-"
+end on
+
+on m_-.destroy
+call super::destroy
+end on
+
+type m_salir from menu within m_archivo
+end type
+
+event clicked;Close(ParentWindow)
+end event
+
+on m_salir.create
+call super::create
+this.text = "Salir"
+this.microhelp = "Salir de la Ventana Actual"
+this.toolbaritemname = "Exit!"
+this.toolbaritemtext = "Salir"
+this.toolbaritemorder = 99
+this.toolbaritemspace = 3
+end on
+
+on m_salir.destroy
+call super::destroy
+end on
+
+type m_registro from menu within m_movs_prof
+m_nuevoprofesor m_nuevoprofesor
+m_borraprofesoradjunto m_borraprofesoradjunto
+m_-adjuntos m_-adjuntos
+m_movimientoaprofesoradjunto m_movimientoaprofesoradjunto
+end type
+
+on m_registro.create
+call super::create
+this.text = "Registro"
+this.m_nuevoprofesor=create m_nuevoprofesor
+this.m_borraprofesoradjunto=create m_borraprofesoradjunto
+this.m_-adjuntos=create m_-adjuntos
+this.m_movimientoaprofesoradjunto=create m_movimientoaprofesoradjunto
+this.Item[UpperBound(this.Item)+1]=this.m_nuevoprofesor
+this.Item[UpperBound(this.Item)+1]=this.m_borraprofesoradjunto
+this.Item[UpperBound(this.Item)+1]=this.m_-adjuntos
+this.Item[UpperBound(this.Item)+1]=this.m_movimientoaprofesoradjunto
+end on
+
+on m_registro.destroy
+call super::destroy
+destroy(this.m_nuevoprofesor)
+destroy(this.m_borraprofesoradjunto)
+destroy(this.m_-adjuntos)
+destroy(this.m_movimientoaprofesoradjunto)
+end on
+
+type m_nuevoprofesor from menu within m_registro
+end type
+
+event clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	dw.triggerevent("nuevo_profesor")
+end if
+
+end event
+
+on m_nuevoprofesor.create
+call super::create
+this.text = "Nuevo Profesor Adjunto~tShift+P"
+this.shortcut = 1104
+this.microhelp = "Nuevo Profesor Adjunto"
+this.toolbaritemname = "Custom090!"
+this.toolbaritemtext = "Nuevo Profesor Adjunto"
+this.toolbaritemorder = 21
+end on
+
+on m_nuevoprofesor.destroy
+call super::destroy
+end on
+
+type m_borraprofesoradjunto from menu within m_registro
+end type
+
+on m_borraprofesoradjunto.create
+call super::create
+this.visible = false
+this.text = "Borra Profesor Adjunto~tShift+A"
+this.enabled = false
+this.shortcut = 1089
+this.microhelp = "Borra Profesor Adjunto"
+this.toolbaritemname = "Custom094!"
+this.toolbaritemtext = "Borra Profesor Adjunto"
+this.toolbaritemorder = 20
+end on
+
+event clicked;//if isvalid(dw) then
+//	SetPointer(HourGlass!)
+//	dw.triggerevent("borra_profesor_actual")
+//end if
+
+end event
+
+on m_borraprofesoradjunto.destroy
+call super::destroy
+end on
+
+type m_-adjuntos from menu within m_registro
+end type
+
+on m_-adjuntos.create
+call super::create
+this.text = "-"
+this.toolbaritemorder = 21
+end on
+
+on m_-adjuntos.destroy
+call super::destroy
+end on
+
+type m_movimientoaprofesoradjunto from menu within m_registro
+end type
+
+event clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	dw.triggerevent("movto_profesor_actual")
+end if
+
+end event
+
+on m_movimientoaprofesoradjunto.create
+call super::create
+this.text = "Movimiento a Profesor Adjunto~tShift+M"
+this.shortcut = 1101
+this.microhelp = "Movimientos a Profesor Adjunto"
+this.toolbaritemname = "Custom082!"
+this.toolbaritemtext = "Movimiento a Profesor Adjunto"
+this.toolbaritemorder = 22
+end on
+
+on m_movimientoaprofesoradjunto.destroy
+call super::destroy
+end on
+
+type m_ventana from menu within m_movs_prof
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+
+on m_ventana.create
+call super::create
+this.text = "Ventana"
+this.m_horizontal=create m_horizontal
+this.m_vertical=create m_vertical
+this.m_primerplano=create m_primerplano
+this.m_cascada=create m_cascada
+this.Item[UpperBound(this.Item)+1]=this.m_horizontal
+this.Item[UpperBound(this.Item)+1]=this.m_vertical
+this.Item[UpperBound(this.Item)+1]=this.m_primerplano
+this.Item[UpperBound(this.Item)+1]=this.m_cascada
+end on
+
+on m_ventana.destroy
+call super::destroy
+destroy(this.m_horizontal)
+destroy(this.m_vertical)
+destroy(this.m_primerplano)
+destroy(this.m_cascada)
+end on
+
+type m_horizontal from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Tilehorizontal!)
+end event
+
+on m_horizontal.create
+call super::create
+this.text = "Horizontal"
+this.microhelp = "Organiza las ventanas horizontalmente"
+end on
+
+on m_horizontal.destroy
+call super::destroy
+end on
+
+type m_vertical from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Tile!)
+end event
+
+on m_vertical.create
+call super::create
+this.text = "Vertical"
+this.microhelp = "Organiza las ventanas verticalmente"
+end on
+
+on m_vertical.destroy
+call super::destroy
+end on
+
+type m_primerplano from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Layer!)
+end event
+
+on m_primerplano.create
+call super::create
+this.text = "Primer Plano"
+end on
+
+on m_primerplano.destroy
+call super::destroy
+end on
+
+type m_cascada from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Cascade!)
+end event
+
+on m_cascada.create
+call super::create
+this.text = "Cascada"
+this.microhelp = "Organiza las ventanas en cascada"
+end on
+
+on m_cascada.destroy
+call super::destroy
+end on
+
+type m_ayuda from menu within m_movs_prof
+end type
+
+on m_ayuda.create
+call super::create
+this.text = "Ayuda"
+end on
+
+on m_ayuda.destroy
+call super::destroy
+end on
+

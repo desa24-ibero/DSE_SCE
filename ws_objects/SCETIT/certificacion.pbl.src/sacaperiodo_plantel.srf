@@ -1,0 +1,74 @@
+﻿$PBExportHeader$sacaperiodo_plantel.srf
+global type sacaperiodo_plantel from function_object
+end type
+
+forward prototypes
+global function string sacaperiodo_plantel (integer anio, integer peri, integer obs)
+end prototypes
+
+global function string sacaperiodo_plantel (integer anio, integer peri, integer obs);//sacaperiodo_plantel
+//Recibe integer	anio
+//			integer	peri
+//			integer	obs
+
+integer li_plantel_vigente
+string ls_acreditacion
+STRING ls_dsc 
+uo_periodo_servicios luo_periodo_servicios
+
+li_plantel_vigente = f_obten_cve_plantel_vigente()
+
+if li_plantel_vigente = -1 then
+	MessageBox("Error en consulta de plantel", "No es posible consultar el plantel vigente", StopSign!)
+	return ""
+end if
+if obs <> 5 and obs <> 7 then
+	
+	luo_periodo_servicios = CREATE uo_periodo_servicios 
+	luo_periodo_servicios.f_carga_periodos( gs_tipo_periodo, 'L', gtr_sce) 
+	
+	ls_dsc = luo_periodo_servicios.f_recupera_descripcion( peri, 'C') 
+	
+	DESTROY(luo_periodo_servicios) 
+	return Right(string(anio),2) + ls_dsc	 
+
+end if
+//SOLO SI ES CDMX DEVUELVE R.G.
+//DE LO CONTRARIO DEVUELVE EL PERIODO Y AÑO
+if obs >= 7  then
+	if li_plantel_vigente = 17 then
+		return "R.G."
+	else
+		luo_periodo_servicios = CREATE uo_periodo_servicios 
+		luo_periodo_servicios.f_carga_periodos( gs_tipo_periodo, 'L', gtr_sce) 
+	
+		ls_dsc = luo_periodo_servicios.f_recupera_descripcion( peri, 'C') 
+	
+		DESTROY(luo_periodo_servicios) 
+		return Right(string(anio),2) + ls_dsc
+	end if
+end if
+
+return ("---")
+
+
+
+
+
+
+//if obs <> 5 and obs <> 7 then
+//	CHOOSE CASE peri
+//		CASE 0
+//			return Right(string(anio),2) + "P"
+//		CASE 1
+//			return Right(string(anio),2) + "V"
+//		CASE 2
+//			return Right(string(anio),2) + "O"
+//	END CHOOSE
+//elseif obs = 7 then
+//	return "R.G."
+//end if
+//return ("---")
+
+end function
+

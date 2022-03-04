@@ -1,0 +1,35 @@
+﻿$PBExportHeader$existe_materia_en_historico.srf
+$PBExportComments$Regreasa "true" si la materia existe en la tabla de historico, en el mismo periodo y año. Juan Campos. Marzo.1997
+global type existe_materia_en_historico from function_object
+end type
+
+forward prototypes
+global function boolean existe_materia_en_historico (long cuenta, long materia, integer periodo, long año)
+end prototypes
+
+global function boolean existe_materia_en_historico (long cuenta, long materia, integer periodo, long año);// Regreasa "true" si la materia existe en la tabla de historico, en el mismo 
+// periodo y año.
+// Juan Campos. Marzo.1997
+
+Integer Num = 0
+
+select count(*)
+into :Num
+from historico
+where 	(cuenta  		= :cuenta)  and 
+       		(cve_mat 	= :materia) and 
+		 	(periodo 	= :periodo) and
+		 	(anio    		= :año)
+ Using gtr_sce;
+ 
+ if gtr_sce.sqlcode = -1 or gtr_sce.sqlcode = 100 then
+	Num = 0
+ End If
+ 
+if Num > 0 Then 
+ 	Return True 
+Else
+ 	Return False	
+End If
+end function
+

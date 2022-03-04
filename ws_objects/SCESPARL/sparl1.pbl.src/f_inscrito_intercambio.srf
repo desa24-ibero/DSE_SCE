@@ -1,0 +1,54 @@
+﻿$PBExportHeader$f_inscrito_intercambio.srf
+global type f_inscrito_intercambio from function_object
+end type
+
+forward prototypes
+global function integer f_inscrito_intercambio (long al_cuenta, integer ai_periodo, integer ai_anio)
+end prototypes
+
+global function integer f_inscrito_intercambio (long al_cuenta, integer ai_periodo, integer ai_anio);//f_inscrito_intercambio
+//Recibe
+//		al_cuenta	long
+//		ai_periodo	integer
+//		ai_anio		integer
+//Función que revisa si el alumno se encuentra inscrito como alumno de intercambio para el periodo correspondiente
+//de la inscripción
+//Regresa 0 si no esta inscrito y 1 si lo está
+
+int cont, ii_statusmat_preinsc
+long ll_no_folio_cuenta
+
+cont = 0
+intento: 
+
+   SELECT noFolioCuenta  //revisión si el alumno ya esta inscrito
+     INTO :ll_no_folio_cuenta  
+   FROM v_dcaPeriodoEstancia  
+	WHERE noFolioCuenta= :al_cuenta 
+	AND periodo = :ai_periodo
+	AND anio = :ai_anio
+	USING gtr_sce;
+	
+	//No esta inscrito
+	if gtr_sce.sqlcode = 100 then
+		commit USING gtr_sce;
+		return 0
+	//El alumno esta inscrito
+	elseif gtr_sce.sqlcode = 0 then
+		commit USING gtr_sce;
+		ii_statusmat_preinsc = 90 // No está inscrito como alumno de Intercambio
+		return 1
+	//Hubo algun problema
+	else
+		commit USING gtr_sce;
+		if cont < 5 then
+			cont ++
+			goto intento
+		end if
+		ii_statusmat_preinsc = 65 //Error de comunicación
+		return 1					
+	  end if
+				  
+
+end function
+

@@ -1,0 +1,15 @@
+﻿$PBExportHeader$dw_mad_departamento.srd
+$PBExportComments$Datawindow que ofrece todos los departamentos
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes key=yes name=cve_depto dbname="departamentos.cve_depto" )
+ column=(type=char(45) updatewhereclause=yes name=departamento dbname="departamentos.departamento" )
+ column=(type=char(3) updatewhereclause=yes name=sigla_depto dbname="departamentos.sigla_depto" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"departamentos~" ) COLUMN(NAME=~"departamentos.cve_depto~") COLUMN(NAME=~"departamentos.departamento~") COLUMN(NAME=~"departamentos.sigla_depto~")WHERE(    EXP1 =~"departamentos.cve_division~"   OP =~"=~"    EXP2 =~":division~" ) ) ARG(NAME = ~"division~" TYPE = number) " update="departamentos" updatewhere=1 updatekeyinplace=no arguments=(("division", number)) )
+column(band=detail id=1 alignment="0" tabsequence=0 border="0" color="0" x="23" y="4" height="69" width="156"  name=cve_depto  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=0 border="0" color="0" x="202" y="4" height="69" width="1486"  name=departamento  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=0 border="0" color="0" x="1729" y="8" height="69" width="353"  name=sigla_depto  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

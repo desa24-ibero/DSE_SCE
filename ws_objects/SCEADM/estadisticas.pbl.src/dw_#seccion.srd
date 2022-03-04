@@ -1,0 +1,35 @@
+﻿$PBExportHeader$dw_#seccion.srd
+$PBExportComments$Perfil de sección
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=73 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=1 color="536870912" )
+table(column=(type=number updatewhereclause=yes name=cali_sec_calif dbname="calif" )
+ column=(type=char(25) updatewhereclause=yes name=sec_nom_nombre dbname="nombre" )
+ retrieve="  SELECT cali_sec.calif,   
+         sec_nom.nombre  
+    FROM aspiran,   
+         cali_sec,   
+         sec_nom  
+   WHERE ( aspiran.folio = cali_sec.folio ) and  
+         ( aspiran.clv_ver = cali_sec.clv_ver ) and  
+         ( aspiran.clv_per = cali_sec.clv_per ) and  
+         ( aspiran.anio = cali_sec.anio ) and  
+         ( sec_nom.clv_area = cali_sec.clv_area ) and  
+         ( sec_nom.clv_sec = cali_sec.clv_sec ) and  
+         ( :ver=99 or aspiran.clv_ver = :ver ) AND  
+         ( aspiran.clv_per = :per ) AND  
+         ( aspiran.anio = :ani ) AND  
+         ( :carr = 9999 OR  
+         aspiran.clv_carr = :carr ) AND  
+         :status like ~"%~"+convert(varchar(1),aspiran.status)+~"%~" AND  
+         ( cali_sec.clv_area = :area ) AND  
+         ( cali_sec.clv_sec = :secc ) AND  
+         aspiran.pago_exam = 1    
+" arguments=(("ver", number),("per", number),("ani", number),("carr", number),("area", number),("secc", number),("status", string)) )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="174" y="12" height="77" width="1418" format="[general]"  name=cali_sec_calif edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="0" expression="sec_nom_nombre"border="0" color="0" x="1" y="4" height="65" width="668" format="[general]"  name=seccion  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="avg(  cali_sec_calif  for all )"border="0" color="0" x="682" y="4" height="65" width="444" format="#0"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="stdev(   cali_sec_calif   for all )"border="0" color="0" x="1134" y="4" height="65" width="407" format="##0.00"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

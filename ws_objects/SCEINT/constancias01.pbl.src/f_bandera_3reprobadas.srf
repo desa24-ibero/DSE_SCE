@@ -1,0 +1,43 @@
+﻿$PBExportHeader$f_bandera_3reprobadas.srf
+global type f_bandera_3reprobadas from function_object
+end type
+
+forward prototypes
+global function integer f_bandera_3reprobadas (long a_cuenta)
+end prototypes
+
+global function integer f_bandera_3reprobadas (long a_cuenta);//Función que regresa la bandera de baja_3_reprob un alumno 
+//
+//f_bandera_3reprobadas
+//
+//Parámetros:		a_cuenta		
+
+long ll_cuenta
+int li_res
+int li_nip, li_hora, li_baja_3_reprob, li_finanzas
+datetime ldt_fecha
+DataStore lds_banderas_por_cuenta
+lds_banderas_por_cuenta = Create DataStore
+lds_banderas_por_cuenta.DataObject = "d_banderas_por_cuenta"
+lds_banderas_por_cuenta.SetTransObject(gtr_sce)
+ll_cuenta= a_cuenta
+
+li_res = lds_banderas_por_cuenta.Retrieve(ll_cuenta)
+if li_res = 1 then
+	li_baja_3_reprob = lds_banderas_por_cuenta.GetItemNumber(1,"baja_3_reprob")
+	if li_baja_3_reprob = 1 then
+		li_baja_3_reprob = 1
+	else
+		li_baja_3_reprob = 0
+	end if
+else
+	li_baja_3_reprob = 0
+	Messagebox("Error de Comunicación","Error con la consulta de banderas BD: baja_3_reprob. Favor de intentar nuevamente", None!)
+end if
+
+
+return li_baja_3_reprob
+
+
+end function
+

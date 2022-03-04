@@ -1,0 +1,5 @@
+﻿$PBExportHeader$banderas.srs
+global type banderas from structure
+	integer		Band[22]
+end type
+

@@ -1,0 +1,10 @@
+﻿$PBExportHeader$str_aspi_alum_revalid.srs
+global type str_aspi_alum_revalid from structure
+	long		folio
+	long		cuenta
+	string		apaterno
+	string		amaterno
+	string		nombre
+	long		num_rows
+end type
+

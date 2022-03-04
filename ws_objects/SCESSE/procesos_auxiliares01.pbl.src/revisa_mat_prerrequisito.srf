@@ -1,0 +1,48 @@
+﻿$PBExportHeader$revisa_mat_prerrequisito.srf
+global type revisa_mat_prerrequisito from function_object
+end type
+
+forward prototypes
+global function boolean revisa_mat_prerrequisito ()
+end prototypes
+
+global function boolean revisa_mat_prerrequisito ();//Función que revisa si el  alumno cumplió todos los prerrequisitos para cursar una materia
+//Regresa un 0 si los prerrequisitos fueron cumplidos y 1 en caso contrario
+//long cvmat, cvcarrera, cvplan,respuesta
+//int cont, verifica
+//obten_carr_plan(cuenta,cvcarrera,cvplan)//Función que consulta la carrera y el plan de un alumno
+//
+//respuesta = dw_prerre.retrieve(mat,cvcarrera,cvplan)
+//
+//if respuesta = 0 then  //Consulta los prerrequisitos de la materia 
+//	commit using gtr_sce;
+//	return 0
+//elseif respuesta > 0 then
+//	commit using gtr_sce;
+//	for cont = 1 to dw_prerre.rowcount() // Revisión de los prerrequisitos en la tabla historico
+//		cvmat = dw_prerre.getitemnumber(cont,"cve_prerreq")
+//		 SELECT historico.cve_mat  
+//			   INTO :cvmat  
+//		     FROM historico  
+//	      WHERE ( historico.cuenta = :cuenta ) AND  
+//			           ( historico.cve_mat = :cvmat )    using gtr_sce;
+//		  if gtr_sce.sqlcode = 100 then
+// 				verifica = verifica + 1
+//		  end if
+//		  commit using gtr_sce;
+//	next
+//elseif respuesta < 0 then
+//	error_com()
+//end if
+//
+//if verifica = 0 then												
+//	return 0
+//else 
+//	messagebox("Atención", "El alumno con número de cuenta "+string(cuenta)+" no ha cursado todos ~rlos prerrequisitos para la materia "+string(mat)+".",Stopsign!)
+//	return 1
+//end if
+
+
+return false
+end function
+

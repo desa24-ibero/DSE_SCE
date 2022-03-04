@@ -1,0 +1,177 @@
+﻿$PBExportHeader$m_principal.srm
+$PBExportComments$Menú Principal de la Aplicación
+forward
+global type m_principal from menu
+end type
+type m_listados from menu within m_principal
+end type
+type m_alumnos from menu within m_listados
+end type
+type m_acadmicos from menu within m_listados
+end type
+type m_preparatorias from menu within m_listados
+end type
+type m_banderas from menu within m_listados
+end type
+type m_documentos from menu within m_listados
+end type
+type m_listados from menu within m_principal
+m_alumnos m_alumnos
+m_acadmicos m_acadmicos
+m_preparatorias m_preparatorias
+m_banderas m_banderas
+m_documentos m_documentos
+end type
+type m_especial from menu within m_principal
+end type
+type m_cambiapassword from menu within m_especial
+end type
+type m_salir from menu within m_especial
+end type
+type m_especial from menu within m_principal
+m_cambiapassword m_cambiapassword
+m_salir m_salir
+end type
+end forward
+
+global type m_principal from menu
+m_listados m_listados
+m_especial m_especial
+end type
+global m_principal m_principal
+
+type variables
+
+end variables
+
+on m_principal.create
+m_principal=this
+this.m_listados=create m_listados
+this.m_especial=create m_especial
+this.Item[]={this.m_listados, &
+this.m_especial}
+end on
+
+on m_principal.destroy
+destroy(this.m_listados)
+destroy(this.m_especial)
+end on
+
+type m_listados from menu within m_principal
+m_alumnos m_alumnos
+m_acadmicos m_acadmicos
+m_preparatorias m_preparatorias
+m_banderas m_banderas
+m_documentos m_documentos
+end type
+
+on m_listados.create
+this.Text="Listados"
+this.m_alumnos=create m_alumnos
+this.m_acadmicos=create m_acadmicos
+this.m_preparatorias=create m_preparatorias
+this.m_banderas=create m_banderas
+this.m_documentos=create m_documentos
+this.Item[]={this.m_alumnos, &
+this.m_acadmicos, &
+this.m_preparatorias, &
+this.m_banderas, &
+this.m_documentos}
+end on
+
+on m_listados.destroy
+destroy(this.m_alumnos)
+destroy(this.m_acadmicos)
+destroy(this.m_preparatorias)
+destroy(this.m_banderas)
+destroy(this.m_documentos)
+end on
+
+type m_alumnos from menu within m_listados
+end type
+
+event clicked;opensheet(w_listado_alumnos,w_principal,4,Original!)
+end event
+
+on m_alumnos.create
+this.Text="Alumnos"
+end on
+
+type m_acadmicos from menu within m_listados
+end type
+
+event clicked;opensheet(w_listado_academicos,w_principal,4,Original!)
+end event
+
+on m_acadmicos.create
+this.Text="Académicos"
+end on
+
+type m_preparatorias from menu within m_listados
+end type
+
+event clicked;opensheet(w_listado_preparatorias,w_principal,4,Original!)
+end event
+
+on m_preparatorias.create
+this.Text="Preparatorias"
+end on
+
+type m_banderas from menu within m_listados
+end type
+
+event clicked;opensheet(w_listado_banderas,w_principal,4,Original!)
+end event
+
+on m_banderas.create
+this.Text="Banderas"
+end on
+
+type m_documentos from menu within m_listados
+end type
+
+event clicked;opensheet(w_listado_documentos,w_principal,4,Original!)
+end event
+
+on m_documentos.create
+this.Text="Documentos"
+end on
+
+type m_especial from menu within m_principal
+m_cambiapassword m_cambiapassword
+m_salir m_salir
+end type
+
+on m_especial.create
+this.Text="Especial"
+this.m_cambiapassword=create m_cambiapassword
+this.m_salir=create m_salir
+this.Item[]={this.m_cambiapassword, &
+this.m_salir}
+end on
+
+on m_especial.destroy
+destroy(this.m_cambiapassword)
+destroy(this.m_salir)
+end on
+
+type m_cambiapassword from menu within m_especial
+end type
+
+event clicked;opensheet(cambio_password,w_principal,4,Original!)
+end event
+
+on m_cambiapassword.create
+this.Text="Cambia Password"
+end on
+
+type m_salir from menu within m_especial
+end type
+
+event clicked;close(w_principal)
+end event
+
+on m_salir.create
+this.Text="Salir"
+end on
+

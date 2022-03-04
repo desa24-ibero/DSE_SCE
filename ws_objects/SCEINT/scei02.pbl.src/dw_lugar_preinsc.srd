@@ -1,0 +1,31 @@
+﻿$PBExportHeader$dw_lugar_preinsc.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=141 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=90 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=mat_preinsc_cuenta dbname="mat_preinsc.cuenta" )
+ column=(type=datetime updatewhereclause=yes name=horario_insc_hora_entrada dbname="horario_insc.hora_entrada" )
+ column=(type=long updatewhereclause=yes name=horario_insc_lugar_fila dbname="horario_insc.lugar_fila" )
+ retrieve="  SELECT dbo.mat_preinsc.cuenta,   
+         dbo.horario_insc.hora_entrada,   
+         dbo.horario_insc.lugar_fila  
+    FROM dbo.horario_insc,   
+         dbo.mat_preinsc  
+   WHERE ( dbo.horario_insc.cuenta = dbo.mat_preinsc.cuenta ) and  
+         ( ( dbo.mat_preinsc.cve_mat = :materia ) AND  
+         ( dbo.mat_preinsc.gpo = :grupo ) AND  
+         ( dbo.mat_preinsc.periodo = :peri ) AND  
+         ( dbo.mat_preinsc.anio = :anio ) )    
+" arguments=(("materia", number),("grupo", string),("peri", number),("anio", number))  sort="horario_insc_hora_entrada A horario_insc_lugar_fila A " )
+text(band=header alignment="2" text="Mat Preinsc
+Cuenta"border="0" color="0" x="4" y="3" height="131" width="333"  name=mat_preinsc_cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Horario Insc
+Hora Entrada"border="0" color="0" x="340" y="3" height="131" width="603"  name=horario_insc_hora_entrada_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Horario Insc
+Lugar Fila"border="0" color="0" x="947" y="3" height="131" width="329"  name=horario_insc_lugar_fila_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="340" y="3" height="77" width="603" format="[shortdate] [time]"  name=horario_insc_hora_entrada edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="947" y="3" height="77" width="329" format="[general]"  name=horario_insc_lugar_fila edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="4" y="3" height="77" width="333" format="[general]"  name=mat_preinsc_cuenta edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

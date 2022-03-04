@@ -1,0 +1,35 @@
+USE controlescolar_bd
+GO
+
+INSERT INTO periodo
+VALUES(7,'Cuatrimestre 1','Q','Q1',0) -- 7 = CUATRIMESTRE 1
+GO
+
+IF @@ERROR = 0 BEGIN
+	PRINT 'EXITO: INSERT INTO periodo'
+END ELSE BEGIN
+	PRINT 'ERROR: INSERT INTO periodo'
+END          
+GO
+
+INSERT INTO periodo
+VALUES(8,'Cuatrimestre 2','Q','Q2',0) -- 8 = CUATRIMESTRE 2
+GO
+
+IF @@ERROR = 0 BEGIN
+	PRINT 'EXITO: INSERT INTO periodo'
+END ELSE BEGIN
+	PRINT 'ERROR: INSERT INTO periodo'
+END          
+GO
+
+INSERT INTO periodo
+VALUES(9,'Cuatrimestre 3','Q','Q3',0) -- 9 = CUATRIMESTRE 3
+GO
+
+IF @@ERROR = 0 BEGIN
+	PRINT 'EXITO: INSERT INTO periodo'
+END ELSE BEGIN
+	PRINT 'ERROR: INSERT INTO periodo'
+END          
+GO

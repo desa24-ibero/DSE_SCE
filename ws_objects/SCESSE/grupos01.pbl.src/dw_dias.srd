@@ -1,0 +1,12 @@
+﻿$PBExportHeader$dw_dias.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=30976088 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=21 color="536870912" )
+summary(height=5 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=121 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cve_dia dbname="dias.cve_dia" )
+ column=(type=char(9) updatewhereclause=yes name=dia dbname="dias.dia" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"dias~" ) COLUMN(NAME=~"dias.cve_dia~") COLUMN(NAME=~"dias.dia~")) " )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="5" color="0" x="215" y="28" height="77" width="385" format="[general]"  name=dia edit.limit=9 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="5" color="0" x="33" y="28" height="77" width="151" format="[general]"  name=cve_dia edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

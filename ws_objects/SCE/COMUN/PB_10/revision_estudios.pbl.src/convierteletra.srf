@@ -1,0 +1,37 @@
+﻿$PBExportHeader$convierteletra.srf
+global type convierteletra from function_object
+end type
+
+forward prototypes
+global function string convierteletra (string que)
+end prototypes
+
+global function string convierteletra (string que);CHOOSE CASE que
+	CASE "10"
+		return "Diez"
+	CASE "9"
+		return "Nueve"
+	CASE "8"
+		return "Ocho"
+	CASE "7"
+		return "Siete"
+	CASE "6"
+		return "Seis"
+	CASE "MB"
+		return "Muy Bien"
+	CASE "B"
+		return "Bien"
+	CASE "S"
+		return "Suficiente"
+	CASE "E"
+		return "Excelente"
+	CASE "AC"
+		return "Acreditada"
+	CASE "RE"
+		return "Revalidada"
+	CASE ELSE
+		return que
+END CHOOSE
+
+end function
+

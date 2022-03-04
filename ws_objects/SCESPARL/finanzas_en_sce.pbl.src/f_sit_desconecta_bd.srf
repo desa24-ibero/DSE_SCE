@@ -1,0 +1,37 @@
+﻿$PBExportHeader$f_sit_desconecta_bd.srf
+$PBExportComments$Desconecta a una base de datos
+global type f_sit_desconecta_bd from function_object
+end type
+
+forward prototypes
+global function integer f_sit_desconecta_bd (ref transaction tr_base_datos)
+end prototypes
+
+global function integer f_sit_desconecta_bd (ref transaction tr_base_datos);/*
+DESCRIPCIÓN: Función encargada de desconectar  y destruir el "transaction object" de su base de datos correspondiente.
+				 
+PARÁMETROS: Transaction tr_base_datos																
+REGRESA: 1 si la desconexión se realizó de forma correcta
+AUTOR: CAMP(DkWf)
+FECHA: 17 Junio 1998
+MODIFICACIÓN: Se copio de la función original para el uso del sistema de tesorería
+Juan Campos Sánchez. 25-junio-2001
+*/
+if isvalid(tr_base_datos) then
+	rollback using tr_base_datos;
+	
+	disconnect using tr_base_datos;
+	
+	if tr_base_datos.sqlcode <> 0 then
+		MessageBox ("Error al desconectar la base de datos", tr_base_datos.sqlerrtext, None!)
+		return 0
+	end if
+	
+	DESTROY tr_base_datos
+	
+	return 1
+end if
+return 1
+
+end function
+

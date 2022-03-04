@@ -1,0 +1,47 @@
+﻿$PBExportHeader$f_obten_carrera_modulo_examen.srf
+global type f_obten_carrera_modulo_examen from function_object
+end type
+
+forward prototypes
+global function integer f_obten_carrera_modulo_examen (long al_cve_carrera, ref integer ai_cve_tipo_examen, ref integer ai_cve_modulo_examen)
+end prototypes
+
+global function integer f_obten_carrera_modulo_examen (long al_cve_carrera, ref integer ai_cve_tipo_examen, ref integer ai_cve_modulo_examen);//f_obten_carrera_modulo_examen
+//
+//Recibe: 
+//	al_cve_carrera long (clave de carrera)
+//Devuelve:
+//	ai_cve_tipo_examen       integer       
+//	ai_cve_modulo_examen     integer
+string ls_cve_opcion_aplicacion 
+integer li_cve_tipo_examen, li_cve_modulo_examen    
+int li_codigo_sql, li_SQLNRows
+string ls_mensaje
+long ll_cve_carrera
+
+	SELECT
+		cve_carrera, 
+		cve_tipo_examen,
+		cve_modulo_examen    
+	INTO
+		:ll_cve_carrera,
+		:li_cve_tipo_examen, 
+		:li_cve_modulo_examen    
+	FROM carrera_modulo_examen
+	WHERE cve_carrera = :al_cve_carrera
+	USING gtr_sadm;
+	
+	li_codigo_sql = gtr_sadm.SqlCode
+	ls_mensaje = gtr_sadm.SqlErrText
+	li_SQLNRows = gtr_sadm.SQLNRows	
+
+	IF li_codigo_sql = -1 THEN
+		MessageBox("Error al consultar carrera_modulo_examen", ls_mensaje, StopSign!)
+	ELSE
+		ai_cve_tipo_examen=li_cve_tipo_examen
+		ai_cve_modulo_examen= li_cve_modulo_examen 
+	END IF
+
+return li_codigo_sql
+end function
+

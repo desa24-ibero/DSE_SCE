@@ -1,0 +1,30 @@
+﻿$PBExportHeader$llena_string_num.srf
+$PBExportComments$Funcion que convierte un long a un string~r~nagregando un caracter al principio (band=1) o al final(band=2)~r~nHasta obtener un tama&o =~tsize~r~nParametros valor,size,band, caracter~r~nRegresa un string~r~nAbril 1998~t~tDkWf
+global type llena_string_num from function_object
+end type
+
+forward prototypes
+global function string llena_string_num (long valor, long size, integer band, character caracter)
+end prototypes
+
+global function string llena_string_num (long valor, long size, integer band, character caracter);//Funcion que convierte un long a un string
+//agregando un caracter al principio (band=1) o al final(band=2)
+//Hasta obtener un tama&o =	size
+//Parametros valor,size,band, caracter
+//Regresa un string
+//Abril 1998		DkWf
+string num
+num	=	string(valor)
+choose case band
+	case 1
+		do while(len(num)<size)
+			num	=  num	+	caracter			
+		loop
+	case 2
+		do while(len(num)<size)
+			num	=	caracter	+  num
+		loop
+end choose
+return num
+end function
+

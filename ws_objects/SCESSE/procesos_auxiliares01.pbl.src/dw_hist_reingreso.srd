@@ -1,0 +1,29 @@
+﻿$PBExportHeader$dw_hist_reingreso.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=30791125 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=26 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=560 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cuenta dbname="hist_reingreso.cuenta" )
+ column=(type=long update=yes updatewhereclause=yes name=cve_formaingreso dbname="hist_reingreso.cve_formaingreso" values="REINGRESO MENOR A 2 AÑOS	5/REINGRESO MAYOR A 2 AÑOS	4/REVALIDACIÓN	3/NUEVA CARRERA	2/CAMBIO DE CARRERA	1/NORMAL	0/CAMBIO DE PLANTEL	6/" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=periodo_ing dbname="hist_reingreso.periodo_ing" values="PRIMAVERA	0/VERANO	1/OTOÑO	2/" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=anio_ing dbname="hist_reingreso.anio_ing" validationmsg="~"fuera de rango, intente de nuevo~"" )
+ retrieve="  SELECT hist_reingreso.cuenta,   
+         hist_reingreso.cve_formaingreso,   
+         hist_reingreso.periodo_ing,   
+         hist_reingreso.anio_ing  
+    FROM hist_reingreso  
+   WHERE hist_reingreso.cuenta = :cuenta   
+ORDER BY hist_reingreso.anio_ing desc, hist_reingreso.periodo_ing desc 
+" update="hist_reingreso" updatewhere=1 updatekeyinplace=no arguments=(("cuenta", number)) )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="18" y="3" height="531" width="2918"  name=rr_1 brush.hatch="6" brush.color="30791125" pen.style="0" pen.width="4" pen.color="16777215"  background.mode="2" background.color="0" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="30791125" x="2966" y="73" height="77" width="333" format="[general]"  name=cuenta edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="Forma de Ingreso" border="2" color="0" x="128" y="348" height="77" width="600"  name=cve_formaingreso_t  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=2 alignment="2" tabsequence=10 border="5" color="0" x="761" y="348" height="77" width="1174" format="[general]"  name=cve_formaingreso ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+text(band=detail alignment="2" text="Periodo de Ingreso" border="2" color="0" x="128" y="73" height="77" width="600"  name=periodo_ing_t  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="5" color="0" x="761" y="73" height="77" width="552" format="[general]"  name=periodo_ing ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+text(band=detail alignment="2" text="Año de Ingreso" border="2" color="0" x="128" y="217" height="77" width="600"  name=anio_ing_t  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="5" color="0" x="761" y="217" height="77" width="552" format="####"  name=anio_ing edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+htmltable(border="0" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

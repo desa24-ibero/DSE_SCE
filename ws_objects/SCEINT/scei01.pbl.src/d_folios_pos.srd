@@ -1,0 +1,21 @@
+﻿$PBExportHeader$d_folios_pos.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=77 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=90 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes name=cuenta dbname="horario_insc.cuenta" )
+ retrieve="  SELECT horario_insc.cuenta
+    FROM horario_insc,   
+         alumnos,
+			academicos
+   WHERE ( horario_insc.cuenta = alumnos.cuenta ) and  
+			( academicos.cuenta = alumnos.cuenta ) and
+			( academicos.nivel = 'P' )
+	ORDER BY academicos.cve_carrera,
+				alumnos.nombre_completo   
+" )
+text(band=header alignment="2" text="Cuenta"border="0" color="0" x="113" y="3" height="64" width="187"  name=cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=10 border="0" color="0" x="33" y="3" height="70" width="329" format="[general]"  name=cuenta edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

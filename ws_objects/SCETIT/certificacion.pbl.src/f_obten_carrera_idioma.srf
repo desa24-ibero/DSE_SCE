@@ -1,0 +1,78 @@
+﻿$PBExportHeader$f_obten_carrera_idioma.srf
+global type f_obten_carrera_idioma from function_object
+end type
+
+forward prototypes
+global function string f_obten_materia_idioma (long al_cve_carrera)
+global function string f_obten_carrera_idioma (long al_cve_carrera, integer ai_cve_idioma)
+end prototypes
+
+global function string f_obten_materia_idioma (long al_cve_carrera);//f_obten_nivel_carrera
+//Obtiene la clave del grado de la carrrera correspondiente recibida
+//Recibe			al_cve_carrera	long 
+//Devuelve		string
+
+integer li_codigo_sql
+string ls_mensaje_sql,  ls_nivel_carrera, ls_null
+
+SetNull(ls_null)
+
+SELECT isnull(dbo.carreras.nivel,"")
+INTO	:ls_nivel_carrera
+FROM	dbo.carreras
+WHERE dbo.carreras.cve_carrera = :al_cve_carrera
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 then
+	MessageBox("Carrera inexistente", "El nivel/carrera ["+string(al_cve_carrera)+"] no existe", StopSign!)
+	return ls_null
+elseif isnull(ls_nivel_carrera) then
+	return ""
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar nivel/carreras", ls_mensaje_sql,StopSign!)
+	return  ls_null
+end if
+
+return ls_nivel_carrera
+
+end function
+
+global function string f_obten_carrera_idioma (long al_cve_carrera, integer ai_cve_idioma);//f_obten_carrera_idioma
+//Obtiene la carreras en base a la clave y al idioma recibido
+//Recibe			al_cve_carrera	long 
+//					ai_cve_idioma	integer
+//Devuelve		string
+
+integer li_codigo_sql
+string ls_mensaje_sql,  ls_nivel_carrera, ls_null, ls_carreras_idioma
+
+SetNull(ls_null)
+
+
+SELECT isnull(carrera,"")
+INTO :ls_carreras_idioma
+FROM v_carreras_idioma
+WHERE cve_carrera = :al_cve_carrera
+AND cve_idioma = :ai_cve_idioma
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 then
+	MessageBox("Traducción inexistente", "La carreras ["+string(al_cve_carrera)+"] no cuenta con traducción", StopSign!)
+	return ls_null
+elseif isnull(ls_carreras_idioma) then
+	return ""
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar v_carrerass_idioma", ls_mensaje_sql,StopSign!)
+	return  ls_null
+end if
+
+return ls_carreras_idioma
+
+end function
+

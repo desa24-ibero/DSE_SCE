@@ -1,0 +1,26 @@
+﻿$PBExportHeader$ajusta_cupo.srf
+global type ajusta_cupo from function_object
+end type
+
+forward prototypes
+global subroutine ajusta_cupo (ref integer cupo)
+end prototypes
+
+global subroutine ajusta_cupo (ref integer cupo);// Esté criterio de cupo está aun por definirse.
+// Juan campos Octubre de 1997.
+
+CHOOSE CASE Cupo
+
+CASE 0 to 25
+	Cupo = 20
+CASE 26 to 44
+	Cupo = 40
+CASE 45 to 64
+	Cupo = 60
+CASE IS>=65
+	Cupo = 80
+END CHOOSE 
+
+
+end subroutine
+

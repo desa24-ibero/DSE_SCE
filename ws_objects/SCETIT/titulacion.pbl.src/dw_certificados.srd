@@ -1,0 +1,98 @@
+﻿$PBExportHeader$dw_certificados.srd
+$PBExportComments$Este DataWindow muestra la base de certificados
+release 10;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=932 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes name=parcial dbname="certificado.parcial" values="Si	1/No	0/" )
+ column=(type=long update=yes updatewhereclause=yes name=legalizado dbname="certificado.legalizado" values="Si	1/No	0/" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=num_reg dbname="certificado.num_reg" )
+ column=(type=datetime update=yes updatewhereclause=yes name=fecha_salida_sep dbname="certificado.fecha_salida_sep" )
+ column=(type=long update=yes updatewhereclause=yes name=checado_sep dbname="certificado.checado_sep" values="Si	1/No	0/" )
+ column=(type=long update=yes updatewhereclause=yes name=entrada_arch dbname="certificado.entrada_arch" values="Si	1/No	0/" )
+ column=(type=long update=yes updatewhereclause=yes name=num_veces_sep dbname="certificado.num_veces_sep" )
+ column=(type=datetime update=yes updatewhereclause=yes name=fecha_entrada_sep dbname="certificado.fecha_entrada_sep" )
+ column=(type=datetime update=yes updatewhereclause=yes key=yes name=fecha_inicio dbname="certificado.fecha_inicio" )
+ column=(type=datetime update=yes updatewhereclause=yes name=fecha_checado_sep dbname="certificado.fecha_checado_sep" )
+ column=(type=datetime update=yes updatewhereclause=yes name=fecha_salida_tentat_sep dbname="certificado.fecha_salida_tentat_sep" )
+ column=(type=datetime update=yes updatewhereclause=yes name=fecha_envio_plantel dbname="certificado.fecha_envio_plantel" )
+ column=(type=char(255) update=yes updatewhereclause=yes name=observaciones dbname="certificado.observaciones" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=cve_carrera dbname="certificado.cve_carrera" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=cuenta dbname="certificado.cuenta" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=cve_plan dbname="certificado.cve_plan" )
+ retrieve="  SELECT dbo.certificado.parcial,   
+         dbo.certificado.legalizado,   
+         dbo.certificado.num_reg,   
+         dbo.certificado.fecha_salida_sep,   
+         dbo.certificado.checado_sep,   
+         dbo.certificado.entrada_arch,   
+         dbo.certificado.num_veces_sep,   
+         dbo.certificado.fecha_entrada_sep,   
+         dbo.certificado.fecha_inicio,   
+         dbo.certificado.fecha_checado_sep,   
+         dbo.certificado.fecha_salida_tentat_sep,   
+         dbo.certificado.fecha_envio_plantel,   
+         dbo.certificado.observaciones,   
+         dbo.certificado.cve_carrera,   
+         dbo.certificado.cuenta,   
+         dbo.certificado.cve_plan  
+    FROM dbo.certificado  
+   WHERE ( :cta = 0 ) OR  
+         (( dbo.certificado.cve_carrera = :carrera ) AND  
+         ( dbo.certificado.cuenta = :cta ) AND  
+         ( dbo.certificado.cve_plan = :ai_cve_plan ))    
+ORDER BY dbo.certificado.cuenta ASC,   
+         dbo.certificado.cve_carrera ASC   
+" update="certificado" updatewhere=1 updatekeyinplace=yes arguments=(("cta", number),("carrera", number),("ai_cve_plan", number)) )
+roundrectangle(band=detail ellipseheight="60" ellipsewidth="69"x="1870" y="340" height="76" width="617"  name=rr_1 visible="1" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+text(band=detail alignment="2" text="Fecha Envio Plantel" border="0" color="0" x="1879" y="348" height="64" width="603" html.valueishtml="0"  name=fecha_envio_plantel_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+roundrectangle(band=detail ellipseheight="60" ellipsewidth="69"x="1874" y="28" height="72" width="617"  name=rr_2 visible="1" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=detail ellipseheight="60" ellipsewidth="69"x="1874" y="132" height="76" width="617"  name=rr_3 visible="1" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=detail ellipseheight="60" ellipsewidth="69"x="1879" y="236" height="72" width="617"  name=rr_4 visible="1" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=detail ellipseheight="60" ellipsewidth="69"x="37" y="756" height="76" width="3232"  name=rr_5 visible="1" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=detail ellipseheight="60" ellipsewidth="69"x="27" y="644" height="76" width="617"  name=rr_6 visible="1" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=detail ellipseheight="60" ellipsewidth="69"x="32" y="540" height="80" width="617"  name=rr_7 visible="1" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=detail ellipseheight="60" ellipsewidth="69"x="32" y="444" height="80" width="617"  name=rr_8 visible="1" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=detail ellipseheight="60" ellipsewidth="69"x="37" y="340" height="76" width="617"  name=rr_9 visible="1" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=detail ellipseheight="60" ellipsewidth="69"x="37" y="228" height="76" width="617"  name=rr_10 visible="1" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=detail ellipseheight="60" ellipsewidth="69"x="37" y="124" height="80" width="617"  name=rr_11 visible="1" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=detail ellipseheight="60" ellipsewidth="69"x="32" y="20" height="76" width="617"  name=rr_12 visible="1" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+text(band=detail alignment="2" text="Parcial" border="0" color="0" x="41" y="28" height="64" width="599" html.valueishtml="0"  name=parcial_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="Parcial" border="0" color="0" x="41" y="28" height="64" width="599" html.valueishtml="0"  name=t_1 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=50 border="5" color="0" x="741" y="444" height="64" width="238" format="[general]" html.valueishtml="0"  name=checado_sep visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=6 alignment="0" tabsequence=70 border="5" color="0" x="741" y="548" height="64" width="238" format="[general]" html.valueishtml="0"  name=entrada_arch visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=7 alignment="1" tabsequence=80 border="5" color="0" x="741" y="652" height="64" width="238" format="[general]" html.valueishtml="0"  name=num_veces_sep visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="0" x="1120" y="32" height="64" width="411" format="" html.valueishtml="0"  name=cuenta visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=40 border="5" color="0" x="741" y="340" height="64" width="302" format="d-mmm-yy" html.valueishtml="0"  name=fecha_salida_sep visible="1" editmask.mask="DD/MM/YYYY" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=10 alignment="0" tabsequence=60 border="5" color="0" x="1029" y="444" height="64" width="302" format="[shortdate]" html.valueishtml="0"  name=fecha_checado_sep visible="1" editmask.mask="DD/MM/YYYY" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=9 alignment="0" tabsequence=90 border="5" color="0" x="2583" y="28" height="64" width="302" format="[shortdate]" html.valueishtml="0"  name=fecha_inicio visible="1" editmask.mask="DD/MM/YYYY" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=8 alignment="0" tabsequence=100 border="5" color="0" x="2583" y="132" height="64" width="302" format="[shortdate]" html.valueishtml="0"  name=fecha_entrada_sep visible="1" editmask.mask="DD/MM/YYYY" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="5" color="0" x="2583" y="236" height="64" width="302" format="[shortdate]" html.valueishtml="0"  name=fecha_salida_tentat_sep visible="1" editmask.mask="DD/MM/YYYY" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=1 alignment="0" tabsequence=10 border="5" color="0" x="741" y="32" height="64" width="238" format="[general]" html.valueishtml="0"  name=parcial visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="5" color="0" x="741" y="132" height="64" width="238" format="[general]" html.valueishtml="0"  name=legalizado visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=3 alignment="0" tabsequence=30 border="5" color="0" x="741" y="236" height="64" width="530" format="" html.valueishtml="0"  name=num_reg visible="1" editmask.mask="####################" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+text(band=detail alignment="2" text="Observaciones" border="0" color="0" x="37" y="764" height="64" width="3232" html.valueishtml="0"  name=observaciones_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="0" tabsequence=120 border="5" color="0" x="37" y="852" height="64" width="3232" format="[general]" html.valueishtml="0"  name=observaciones visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+text(band=detail alignment="2" text="Fecha Inicio Tramite" border="0" color="0" x="1879" y="28" height="64" width="603" html.valueishtml="0"  name=fecha_inicio_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="Fecha Entrega a SEP" border="0" color="0" x="1883" y="132" height="64" width="603" html.valueishtml="0"  name=fecha_entrada_sep_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="Fecha Salida Tentativa" border="0" color="0" x="1888" y="236" height="64" width="603" html.valueishtml="0"  name=fecha_salida_tentat_sep_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="Legalizado" border="0" color="0" x="37" y="132" height="64" width="603" html.valueishtml="0"  name=legalizado_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="Número de Registro" border="0" color="0" x="37" y="236" height="64" width="603" html.valueishtml="0"  name=num_reg_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="Fecha Salida SEP" border="0" color="0" x="37" y="340" height="64" width="603" html.valueishtml="0"  name=fecha_salida_sep_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="Checado SEP" border="0" color="0" x="37" y="444" height="64" width="603" html.valueishtml="0"  name=checado_sep_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="Entrada Arch" border="0" color="0" x="37" y="548" height="64" width="603" html.valueishtml="0"  name=entrada_arch_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="Num Veces Sep" border="0" color="0" x="37" y="652" height="64" width="603" html.valueishtml="0"  name=num_veces_sep_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=110 border="5" color="0" x="2583" y="340" height="64" width="302" format="[shortdate]" html.valueishtml="0"  name=fecha_envio_plantel visible="1" editmask.mask="DD/MM/YYYY" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="5" color="0" x="1879" y="640" height="68" width="1317" format="[general]" html.valueishtml="0"  name=cve_carrera visible="1" dddw.name=dw_carrera dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="5" color="0" x="1879" y="556" height="64" width="530" format="[general]" html.valueishtml="0"  name=cve_plan visible="1" dddw.name=d_dddw_nombre_plan dddw.displaycolumn=nombre_plan dddw.datacolumn=cve_plan dddw.percentwidth=200 dddw.lines=0 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.hscrollbar=yes dddw.vscrollbar=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

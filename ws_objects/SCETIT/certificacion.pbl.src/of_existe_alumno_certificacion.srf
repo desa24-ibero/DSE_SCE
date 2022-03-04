@@ -1,0 +1,54 @@
+﻿$PBExportHeader$of_existe_alumno_certificacion.srf
+global type of_existe_alumno_certificacion from function_object
+end type
+
+forward prototypes
+global function long of_existe_alumno_certificacion (long al_cuenta, long al_cve_carrera, long al_cve_doc_control_sep, long al_legalizado)
+end prototypes
+
+global function long of_existe_alumno_certificacion (long al_cuenta, long al_cve_carrera, long al_cve_doc_control_sep, long al_legalizado);//of_existe_alumno_certificacion
+//Recibe	al_cuenta					long
+//			al_cve_carrera				long
+//			al_cve_doc_control_sep	long
+//			al_legalizado				long
+//Devuelve el numero de registros en certificacion para la carrera
+
+long ll_cve_concepto, ll_cve_subconcepto, ll_num_registros, ll_folio_mov_alumnos
+string ls_mensaje
+integer li_codigo_sql, li_parcial
+
+//Certificado Total
+if al_cve_doc_control_sep = 1 then
+	li_parcial = 0
+//Certificado Parcial
+elseif al_cve_doc_control_sep = 2 then
+	li_parcial = 1	
+end if
+
+	SELECT
+	COUNT(*)
+	INTO
+	:ll_num_registros
+	FROM dbo.certificado 
+	WHERE dbo.certificado.cuenta = :al_cuenta
+	AND dbo.certificado.cve_carrera = :al_cve_carrera
+	AND dbo.certificado.parcial = :li_parcial
+	AND dbo.certificado.legalizado = :al_legalizado
+	USING gtr_sce;
+
+	li_codigo_sql = gtr_sce.SqlCode
+	ls_mensaje = gtr_sce.SqlErrText
+	
+	IF li_codigo_sql= -1 THEN
+		MessageBox("Error al consultar certificado",ls_mensaje,StopSign! )
+		return  -1
+	ELSE
+		IF ll_num_registros = 0 THEN
+			return 0
+		END IF		
+	END IF
+
+return ll_num_registros			
+
+end function
+

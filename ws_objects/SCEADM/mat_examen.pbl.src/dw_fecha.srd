@@ -1,0 +1,32 @@
+﻿$PBExportHeader$dw_fecha.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=145 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=clv_ver dbname="fecha.clv_ver" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=clv_per dbname="fecha.clv_per" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=anio dbname="fecha.anio" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=clv_actividad dbname="fecha.clv_actividad" )
+ column=(type=datetime update=yes updatewhereclause=yes name=fecha_ini dbname="fecha.fecha_ini" )
+ column=(type=datetime update=yes updatewhereclause=yes name=fecha_fin dbname="fecha.fecha_fin" )
+ retrieve="  SELECT fecha.clv_ver,   
+         fecha.clv_per,   
+         fecha.anio,   
+         fecha.clv_actividad,   
+         fecha.fecha_ini,   
+         fecha.fecha_fin  
+    FROM fecha  
+   WHERE ( (fecha.clv_ver = :ver) OR
+           (:ver =99)            ) AND  
+         ( fecha.clv_per = :per ) AND  
+         ( fecha.anio = :anio )    
+" update="fecha" updatewhere=1 updatekeyinplace=no arguments=(("ver", number),("per", number),("anio", number)) )
+text(band=header alignment="2" text="Clv Actividad"border="0" color="0" x="133" y="68" height="65" width="1683"  name=clv_actividad_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text=""border="0" color="0" x="129" y="0" height="65" width="2908"  name=st_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Fecha Fin"border="0" color="0" x="2433" y="72" height="65" width="609"  name=fecha_fin_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Fecha Ini"border="0" color="0" x="1825" y="72" height="65" width="604"  name=fecha_ini_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=50 border="0" color="0" x="1825" y="8" height="77" width="604" format="[shortdate] [time]"  name=fecha_ini  tag=" " edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="2" tabsequence=60 border="0" color="0" x="2433" y="8" height="77" width="609" format="[shortdate] [time]"  name=fecha_fin  tag=" " edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=40 border="0" color="0" x="133" y="4" height="77" width="1683" format="[general]"  name=clv_actividad  tag=" " dddw.name=dw_actividad dddw.displaycolumn=nombre dddw.datacolumn=clave dddw.percentwidth=150 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

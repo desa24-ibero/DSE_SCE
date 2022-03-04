@@ -1,0 +1,26 @@
+﻿$PBExportHeader$conv.srf
+global type conv from function_object
+end type
+
+forward prototypes
+global function string conv (character cal)
+end prototypes
+
+global function string conv (character cal);CHOOSE CASE cal
+	CASE ' ','*'
+		return '5'
+	CASE 'D'
+		return '10'
+	CASE 'N'
+		return 'NA'
+	CASE 'A'
+		return 'AC'
+	CASE 'I'
+		return 'IN'
+	CASE 'B'
+		return 'BJ'
+	CASE ELSE
+		return cal
+END CHOOSE
+end function
+

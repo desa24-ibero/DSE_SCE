@@ -1,0 +1,47 @@
+﻿$PBExportHeader$dw_asig_autom_horario.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=31172699 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=77 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=73 color="536870912" )
+table(column=(type=long updatewhereclause=yes key=yes name=cve_mat dbname="horario.cve_mat" )
+ column=(type=char(2) updatewhereclause=yes key=yes name=gpo dbname="horario.gpo" )
+ column=(type=long updatewhereclause=yes key=yes name=periodo dbname="horario.periodo" )
+ column=(type=long updatewhereclause=yes key=yes name=anio dbname="horario.anio" )
+ column=(type=long updatewhereclause=yes key=yes name=cve_dia dbname="horario.cve_dia" )
+ column=(type=char(16) update=yes updatewhereclause=yes name=cve_salon dbname="horario.cve_salon" )
+ column=(type=long updatewhereclause=yes key=yes name=hora_inicio dbname="horario.hora_inicio" )
+ column=(type=long updatewhereclause=yes name=hora_final dbname="horario.hora_final" )
+ column=(type=long updatewhereclause=yes name=clase_aula dbname="horario.clase_aula" )
+ retrieve="  SELECT horario.cve_mat,   
+         horario.gpo,   
+         horario.periodo,   
+         horario.anio, 
+         horario.cve_dia,   
+         horario.cve_salon,   
+         horario.hora_inicio,   
+         horario.hora_final,
+         horario.clase_aula
+    FROM horario  
+    WHERE (horario.periodo = :Periodo AND horario.anio = :Ano) AND  
+          (horario.cve_mat = :Materia AND horario.gpo = :Grupo AND
+           horario.cve_salon = NULL)
+" update="horario" updatewhere=1 updatekeyinplace=yes arguments=(("Periodo", number),("Ano", number),("Materia", number),("Grupo", string)) )
+text(band=header alignment="2" text="Cve Mat"border="0" color="16777215" x="65" y="4" height="65" width="215"  name=cve_mat_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="8421376" )
+text(band=header alignment="2" text="Cve Dia"border="0" color="16777215" x="407" y="4" height="65" width="202"  name=cve_dia_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="8421376" )
+text(band=header alignment="2" text="Cve Salon"border="0" color="16777215" x="618" y="4" height="65" width="266"  name=cve_salon_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="8421376" )
+text(band=header alignment="2" text="Hora Inicio"border="0" color="16777215" x="892" y="4" height="65" width="279"  name=hora_inicio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="8421376" )
+text(band=header alignment="2" text="Hora Final"border="0" color="16777215" x="1180" y="4" height="65" width="270"  name=hora_final_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="8421376" )
+text(band=header alignment="0" text="Clase_Aula"border="0" color="16777215" x="1459" y="4" height="65" width="302"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="8421376" )
+text(band=header alignment="2" text="Periodo Año"border="0" color="16777215" x="1770" y="4" height="65" width="325"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="8421376" )
+text(band=header alignment="2" text="Gpo"border="0" color="16777215" x="289" y="4" height="65" width="110"  name=gpo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="8421376" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="65" y="4" height="69" width="215" format="[general]"  name=cve_mat edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="289" y="4" height="69" width="110" format="[general]"  name=gpo edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="407" y="4" height="69" width="202" format="[general]"  name=cve_dia edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="618" y="4" height="69" width="266" format="[general]"  name=cve_salon edit.limit=16 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="892" y="4" height="69" width="279" format="[general]"  name=hora_inicio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="1180" y="4" height="69" width="270" format="[general]"  name=hora_final edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="1459" y="4" height="69" width="302" format="[general]"  name=clase_aula edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1770" y="4" height="69" width="74" format="[general]"  name=periodo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1852" y="4" height="69" width="279" format="[general]"  name=anio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )

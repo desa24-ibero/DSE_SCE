@@ -1,0 +1,41 @@
+﻿$PBExportHeader$f_obten_fecha_version.srf
+global type f_obten_fecha_version from function_object
+end type
+
+forward prototypes
+global function datetime f_obten_fecha_version (integer ai_version, integer ai_periodo, integer ai_anio)
+end prototypes
+
+global function datetime f_obten_fecha_version (integer ai_version, integer ai_periodo, integer ai_anio);// f_obten_fecha_version
+// Regresa la fecha que le corresponde a una version de examen de cobranzas
+// en base a la fecha capturada para una version, periodo, anio
+// 
+// Recibe:
+// ai_version	:integer
+// ai_periodo	:integer
+// ai_anio		:integer
+
+datetime ldttm_fecha
+string ls_mensaje
+integer li_codigo
+
+//SELECT dbo.version_cobranzas.fecha
+//INTO :ldttm_fecha
+//FROM dbo.version_cobranzas
+//WHERE dbo.version_cobranzas.clv_ver = :ai_version
+//AND	dbo.version_cobranzas.clv_per = :ai_periodo
+//AND	dbo.version_cobranzas.anio = :ai_anio
+//USING gtr_sadm;
+//
+//li_codigo= gtr_sadm.SQLCode
+//ls_mensaje= gtr_sadm.SQLErrText
+//
+//if li_codigo = -1 then
+//	MessageBox("Error en la lectura de version_cobranzas", ls_mensaje )
+//end if
+
+return ldttm_fecha
+
+
+end function
+

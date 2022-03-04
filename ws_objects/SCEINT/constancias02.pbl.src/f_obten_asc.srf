@@ -1,0 +1,166 @@
+﻿$PBExportHeader$f_obten_asc.srf
+global type f_obten_asc from function_object
+end type
+
+forward prototypes
+global function string f_obten_asc (string as_cadena, ref integer ai_num_lineas)
+end prototypes
+
+global function string f_obten_asc (string as_cadena, ref integer ai_num_lineas);integer li_lon, li_indice, li_ascii, li_ascii_sig
+string ls_caracter, ls_caracter_sig, ls_sub_cadena_ant, ls_sub_cadena_post
+string ls_nl, ls_cr, ls_ff, ls_cadena
+integer li_nl, li_cr, li_ff, li_indice_array, li_posicion_string
+string array_strings[ ]
+boolean array_booleans[ ]
+integer array_integers[ ]
+decimal array_decimals[ ]
+decimal ld_factor_promedio
+string ls_caracter_lower, ls_caracter_upper
+integer li_num_lower, li_num_upper, li_nomas, li_tamanio_array, li_factor_promedio
+decimal ld_lower, ld_upper, ld_suma_caracteres, ld_base
+integer li_factor_lower, li_factor_upper, li_indice_previo_nl, li_indice_anterior, li_tamanio,li_indice2
+boolean lb_anterior_nl
+
+li_num_lower=0
+li_num_upper=0
+li_factor_lower =86
+li_factor_upper =65
+
+ld_factor_promedio= (li_factor_upper + li_factor_lower)/2
+li_factor_promedio = truncate(ld_factor_promedio, 0)
+li_lon = len(as_cadena)
+li_indice_array= 1
+li_indice = 1
+li_indice2 = 1
+
+li_posicion_string= 1
+ld_base = 0.98
+li_indice_array= 1
+li_indice_previo_nl= 1
+lb_anterior_nl= false
+
+ls_nl="~n"
+ls_cr="~r"
+ls_ff="~f"
+
+li_nl =asc(ls_nl)
+li_cr =asc(ls_cr)
+li_ff =asc(ls_ff)
+
+do while li_indice <= li_lon 
+	ls_caracter = mid(as_cadena, li_indice, 1)
+	ls_caracter_lower= lower(ls_caracter)
+	ls_caracter_upper= upper(ls_caracter)
+	if ls_caracter = ls_caracter_lower then
+		li_num_lower= li_num_lower+1
+		ld_lower= li_num_lower/li_factor_lower
+	elseif ls_caracter = ls_caracter_upper then
+		li_num_upper= li_num_upper+1
+		ld_upper= li_num_upper/li_factor_upper
+	else
+		li_num_upper= li_num_upper+1
+		ld_upper= li_num_upper/li_factor_upper
+	end if	
+	ld_suma_caracteres= ld_lower+ ld_upper
+	
+	if ld_suma_caracteres >= ld_base then
+		li_tamanio= li_indice - li_indice_previo_nl +1
+		if lb_anterior_nl then
+			array_strings[li_indice_array] = Mid (as_cadena, li_indice_previo_nl , li_tamanio)
+		else
+			array_strings[li_indice_array] = Mid (as_cadena, li_indice_previo_nl, li_tamanio)
+		end if
+		array_booleans[li_indice_array] = FALSE
+		array_integers[li_indice_array] = li_num_lower + li_num_upper
+		array_decimals[li_indice_array] = ld_suma_caracteres
+		li_indice_previo_nl = li_indice +1
+		li_indice_array= li_indice_array+1
+		li_num_lower=1
+		li_num_upper=1
+		lb_anterior_nl = false
+		Goto siguiente
+	end if
+	
+	li_ascii = asc(ls_caracter)
+	ls_caracter_sig = mid(as_cadena, li_indice + 1, 1)
+	li_ascii_sig = asc(ls_caracter_sig)
+	li_indice = li_indice + 1
+	if li_ascii = 13 and li_ascii_sig = 10 then
+		ls_sub_cadena_ant= mid(as_cadena, 1, li_indice - 2)
+		ls_sub_cadena_post= mid(as_cadena, li_indice + 1, li_lon - li_indice)
+		ls_cadena= ls_sub_cadena_ant +ls_cr + ls_sub_cadena_post
+		li_indice = li_indice + 1
+		if lb_anterior_nl then
+			li_tamanio= li_indice - li_indice_previo_nl -2
+			array_strings[li_indice_array] = Mid (as_cadena, li_indice_previo_nl, li_tamanio )
+		else
+			li_tamanio= li_indice - li_indice_previo_nl -2
+			array_strings[li_indice_array] = Mid (as_cadena, li_indice_previo_nl, li_tamanio )
+		end if			
+		array_booleans[li_indice_array] = TRUE
+		array_integers[li_indice_array] = li_num_lower + li_num_upper
+		array_decimals[li_indice_array] = ld_suma_caracteres
+		li_indice_previo_nl = li_indice 
+		li_indice_array= li_indice_array + 1
+		lb_anterior_nl = true
+	end if
+	siguiente:
+loop
+
+li_tamanio_array = upperbound(array_strings)
+
+if li_tamanio_array>0 or li_lon >0 then
+	if lb_anterior_nl then
+		li_tamanio= li_indice - li_indice_previo_nl
+	else
+		li_tamanio= li_indice - li_indice_previo_nl		
+	end if
+	array_strings[li_indice_array] = Mid (as_cadena, li_indice_previo_nl, li_tamanio)
+	array_booleans[li_indice_array] = FALSE
+	array_integers[li_indice_array] = li_num_lower + li_num_upper
+	array_decimals[li_indice_array] = ld_suma_caracteres
+
+end if
+
+li_tamanio_array = upperbound(array_strings)
+
+integer li_indice_2, li_lon_renglon, li_num_cars, li_num_espacios
+string ls_renglon, ls_spaces, ls_string_comp, ls_cadena_resultante
+decimal ld_dec_porcentaje, ld_dec_porc_esp, ld_num_espacios
+
+li_indice_2 = 1
+
+do while li_indice_2 <=li_tamanio_array
+
+	ls_renglon = array_strings[li_indice_2] 
+	if array_booleans[li_indice_2] then
+		li_num_cars = array_integers[li_indice_2] 
+		ld_dec_porcentaje = array_decimals[li_indice_2] 
+		li_lon_renglon= len(ls_renglon)
+		ld_dec_porc_esp = 1 - ld_dec_porcentaje
+		ld_num_espacios = li_factor_promedio*ld_dec_porc_esp
+		li_num_espacios = truncate(ld_num_espacios, 0)
+		ls_spaces= space(li_num_espacios - 2)
+		if len(ls_renglon) >=1 then
+			ls_string_comp= ls_spaces+ "."+ ls_cr + ls_nl
+		else
+			ls_string_comp= ls_cr + ls_nl
+		end if
+	else
+		ls_string_comp= ""
+	end if
+
+	ls_cadena_resultante= ls_cadena_resultante + ls_renglon + ls_string_comp 
+	
+	li_indice_2= li_indice_2 + 1
+loop
+
+li_nomas= 0
+
+ai_num_lineas = li_tamanio_array
+
+return ls_cadena_resultante
+
+
+end function
+

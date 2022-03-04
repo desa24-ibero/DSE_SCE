@@ -1,0 +1,244 @@
+﻿$PBExportHeader$f_asigna_salon.srf
+global type f_asigna_salon from function_object
+end type
+
+forward prototypes
+global function integer f_asigna_salon (ref datastore ads_asigna_automatica_salon, integer ai_critcupoinsc, string as_descnivel, integer ai_i, integer ai_crit)
+end prototypes
+
+global function integer f_asigna_salon (ref datastore ads_asigna_automatica_salon, integer ai_critcupoinsc, string as_descnivel, integer ai_i, integer ai_crit);int li_tothor, li_i, li_asignados, li_cve_dia, li_hora_inicio, li_hora_final,li_res
+int li_busco, li_salones_encontrados
+datastore lds_salones_libres, lds_salon_libre
+lds_salones_libres = CREATE DataStore
+lds_salon_libre = CREATE DataStore
+lds_salones_libres.DataObject = "d_salones_libres"
+lds_salon_libre.DataObject = "d_salon_libre"
+lds_salones_libres.SetTransObject(gtr_sce)
+lds_salon_libre.SetTransObject(gtr_sce)
+li_tothor = ads_asigna_automatica_salon.GetItemNumber(ai_i,"totalhorario")
+li_i = 0
+li_asignados = 0
+//if ai_crit = 3 then	/*Ant Cambio FMC Jun2006*/
+if ai_crit = 4 then		/*Nue Cambio FMC Jun2006*/
+	for li_i = 1 to li_tothor
+		li_cve_dia = ads_asigna_automatica_salon.GetItemNumber(ai_i,"horario_cve_dia")
+		li_hora_inicio = ads_asigna_automatica_salon.GetItemNumber(ai_i,"horario_hora_inicio")
+		li_hora_final = ads_asigna_automatica_salon.GetItemNumber(ai_i,"horario_hora_final")
+		li_res = lds_salones_libres.Retrieve(gi_anio,gi_periodo,ai_critcupoinsc,as_descnivel, li_cve_dia,li_hora_inicio,li_hora_final) 
+		if li_res > 0 then
+			ads_asigna_automatica_salon.SetItem(ai_i,"horario_cve_salon", lds_salones_libres.GetItemString(1,"cve_salon")) 
+			ads_asigna_automatica_salon.Update()
+			Commit USING gtr_sce;
+			li_asignados++
+		end if
+		ai_i++
+	next
+else
+	li_busco = 0
+	li_salones_encontrados = 0
+	li_cve_dia = ads_asigna_automatica_salon.GetItemNumber(ai_i,"horario_cve_dia")
+	li_hora_inicio = ads_asigna_automatica_salon.GetItemNumber(ai_i,"horario_hora_inicio")
+	li_hora_final = ads_asigna_automatica_salon.GetItemNumber(ai_i,"horario_hora_final")
+	li_res = lds_salones_libres.Retrieve(gi_anio,gi_periodo,ai_critcupoinsc,as_descnivel, 	li_cve_dia,li_hora_inicio,li_hora_final) 
+	if li_res > 0 then
+		li_salones_encontrados = 1
+		li_busco = 1
+		DO WHILE li_salones_encontrados < li_tothor AND li_busco <= li_res 
+			li_cve_dia = ads_asigna_automatica_salon.GetItemNumber(ai_i + li_salones_encontrados ,"horario_cve_dia")
+			li_hora_inicio = ads_asigna_automatica_salon.GetItemNumber(ai_i + li_salones_encontrados ,"horario_hora_inicio")
+			li_hora_final = ads_asigna_automatica_salon.GetItemNumber(ai_i + li_salones_encontrados ,"horario_hora_final")
+			IF (lds_salon_libre.Retrieve(gi_anio,gi_periodo,li_hora_inicio, li_hora_final,li_cve_dia, lds_salones_libres.GetItemString(li_busco,"cve_salon")) = 0) THEN  
+				li_salones_encontrados ++
+			ELSE
+				li_salones_encontrados = 1
+				li_busco++
+			END IF 
+		LOOP 
+		if li_salones_encontrados = li_tothor then
+			for li_i = 1 to li_tothor
+				ads_asigna_automatica_salon.SetItem(ai_i,"horario_cve_salon",&
+					lds_salones_libres.GetItemString(li_busco,"cve_salon"))
+				ai_i++
+				li_asignados++
+			next
+			ads_asigna_automatica_salon.Update()
+			Commit USING gtr_sce;
+		end if
+	end if
+end if
+DESTROY lds_salones_libres
+DESTROY lds_salon_libre
+return li_asignados
+
+
+
+
+//int li_tothor, li_i, li_asignados, li_cve_dia, li_hora_inicio, li_hora_final,li_res
+//int li_busco, li_salones_encontrados
+//datastore lds_salones_libres, lds_salon_libre
+//Date	ld_grupos_fecha_inicio	// Oscar Sánchez, 25-Octubre-2018. Se agrega para validación de cruce de horario (se validan bloques de fechas)
+//Date	ld_grupos_fecha_fin		// Oscar Sánchez, 25-Octubre-2018. Se agrega para validación de cruce de horario (se validan bloques de fechas)
+//Long	li_cve_mat	// Oscar Sánchez, 12-Julio-2019. Se agrega para validación de cruce de grupos modulares segunda etapa (grupos sesionados)
+//String	ls_gpo		// Oscar Sánchez, 12-Julio-2019. Se agrega para validación de cruce de grupos modulares segunda etapa (grupos sesionados)
+//String	ls_cadena_sql
+//Long	ll_contador
+//LONG ll_horario_cve_mat
+//STRING ls_horario_gpo
+//LONG ll_horario_anio
+//INTEGER le_horario_periodo 
+//LONG llpos 
+//STRING ls_salon 
+//
+//lds_salones_libres = CREATE DataStore
+//lds_salon_libre = CREATE DataStore
+//lds_salones_libres.DataObject = "d_salones_libres"
+//lds_salon_libre.DataObject = "d_salon_libre"
+//lds_salones_libres.SetTransObject(gtr_sce)
+//lds_salon_libre.SetTransObject(gtr_sce)
+//li_tothor = ads_asigna_automatica_salon.GetItemNumber(ai_i,"totalhorario")
+//li_i = 0
+//li_asignados = 0
+////if ai_crit = 3 then	/*Ant Cambio FMC Jun2006*/
+//if ai_crit = 4 then		/*Nue Cambio FMC Jun2006*/
+//	for li_i = 1 to li_tothor
+//		li_cve_dia = ads_asigna_automatica_salon.GetItemNumber(ai_i,"horario_cve_dia")
+//		li_hora_inicio = ads_asigna_automatica_salon.GetItemNumber(ai_i,"horario_hora_inicio")
+//		li_hora_final = ads_asigna_automatica_salon.GetItemNumber(ai_i,"horario_hora_final") 
+//		
+//		ll_horario_cve_mat = ads_asigna_automatica_salon.GetItemNumber(ai_i,"horario_cve_mat")   
+//		ls_horario_gpo = ads_asigna_automatica_salon.GetItemString(ai_i,"horario_gpo")    
+//		ll_horario_anio = ads_asigna_automatica_salon.GetItemNumber(ai_i,"horario_anio")    
+//		le_horario_periodo  = ads_asigna_automatica_salon.GetItemNumber(ai_i,"horario_periodo")     
+//	
+//		
+//		ld_grupos_fecha_inicio	= Date ( ads_asigna_automatica_salon.object.grupos_fecha_inicio [ ai_i ] )	// Oscar Sánchez, 25-Octubre-2018. Se agrega para validación de cruce de horario (se validan bloques de fechas)
+//		ld_grupos_fecha_fin		= Date ( ads_asigna_automatica_salon.object.grupos_fecha_fin [ ai_i ] )	// Oscar Sánchez, 25-Octubre-2018. Se agrega para validación de cruce de horario (se validan bloques de fechas)
+//		li_cve_mat	= ads_asigna_automatica_salon.object.horario_cve_mat [ ai_i ]		// Oscar Sánchez, 12-Julio-2019. Se agrega para validación de cruce de grupos modulares segunda etapa (grupos sesionados)
+//		ls_gpo		= ads_asigna_automatica_salon.object.horario_gpo [ ai_i ]				// Oscar Sánchez, 12-Julio-2019. Se agrega para validación de cruce de grupos modulares segunda etapa (grupos sesionados)
+//
+//		ll_contador ++
+//		IF mod(ll_contador , 50) = 0 THEN
+//			garbagecollect()
+//		END IF
+//		ls_cadena_sql = "EXEC sp_valida_cruce_x_cve_salon " + String ( li_cve_mat ) +  ", '" + ls_gpo + "'," + String ( li_cve_dia ) + ","  + String ( gi_anio ) + "," +  String ( gi_periodo )
+//		EXECUTE IMMEDIATE :ls_cadena_sql USING gtr_sce;
+//		
+//		IF gtr_sce.SQLCode < 0 THEN
+//			MessageBox ( "Error:" , "Al validar el cruce de horario de la materia: " + String ( li_cve_mat ) +  ", grupo: '" + ls_gpo + "~n~r" + gtr_sce.SQLErrText )
+//			Return -1
+//		END IF
+//		Commit USING gtr_sce;
+//		
+//		// Oscar Sánchez, 25-Octubre-2018. Se agrega para validación de cruce de horario (ahora se validan bloques de fechas en el query de la datawindow)
+//		// Oscar Sánchez, 12-Julio-2019. Se agrega para validación de cruce de grupos modulares segunda etapa (grupos sesionados)
+//		li_res = lds_salones_libres.Retrieve(gi_anio,gi_periodo,ai_critcupoinsc,as_descnivel,li_cve_dia,li_cve_mat,ls_gpo)
+//		
+//		if li_res > 0 then
+//			ads_asigna_automatica_salon.SetItem(ai_i,"horario_cve_salon", lds_salones_libres.GetItemString(1,"cve_salon")) 
+//			ads_asigna_automatica_salon.Update() 
+//			
+//			ls_salon = lds_salones_libres.GetItemString(1,"cve_salon")
+//			
+//			UPDATE horario_modular 
+//			SET horario_modular.cve_salon = :ls_salon 
+//			WHERE horario_modular.cve_mat = :ll_horario_cve_mat 
+//			AND horario_modular.gpo = :ls_horario_gpo
+//			AND horario_modular.periodo = :le_horario_periodo 
+//			AND horario_modular.anio = :ll_horario_anio
+//			USING gtr_sce;
+//			
+//			Commit USING gtr_sce;
+//			li_asignados++
+//		end if
+//		ai_i++
+//	next
+//else
+//	li_busco = 0
+//	li_salones_encontrados = 0
+//	li_cve_dia = ads_asigna_automatica_salon.GetItemNumber(ai_i,"horario_cve_dia")
+//	li_hora_inicio = ads_asigna_automatica_salon.GetItemNumber(ai_i,"horario_hora_inicio")
+//	li_hora_final = ads_asigna_automatica_salon.GetItemNumber(ai_i,"horario_hora_final")
+//	
+////	ll_horario_cve_mat = ads_asigna_automatica_salon.GetItemNumber(ai_i,"horario_cve_mat")   
+////	ls_horario_gpo = ads_asigna_automatica_salon.GetItemString(ai_i,"horario_gpo")    
+////	ll_horario_anio = ads_asigna_automatica_salon.GetItemNumber(ai_i,"horario_anio")    
+////	le_horario_periodo  = ads_asigna_automatica_salon.GetItemNumber(ai_i,"horario_periodo")     	
+//	
+//	ld_grupos_fecha_inicio	= Date ( ads_asigna_automatica_salon.object.grupos_fecha_inicio [ ai_i ] )	// Oscar Sánchez, 07-Enero-2019. Se agrega para validación de cruce de horario (se validan bloques de fechas)
+//	ld_grupos_fecha_fin		= Date ( ads_asigna_automatica_salon.object.grupos_fecha_fin [ ai_i ] )	// Oscar Sánchez, 07-Enero-2019. Se agrega para validación de cruce de horario (se validan bloques de fechas)
+//	li_cve_mat	= ads_asigna_automatica_salon.object.horario_cve_mat [ ai_i ]		// Oscar Sánchez, 12-Julio-2019. Se agrega para validación de cruce de grupos modulares segunda etapa (grupos sesionados)
+//	ls_gpo		= ads_asigna_automatica_salon.object.horario_gpo [ ai_i ]				// Oscar Sánchez, 12-Julio-2019. Se agrega para validación de cruce de grupos modulares segunda etapa (grupos sesionados)
+//
+//	ll_contador ++
+//	IF mod(ll_contador , 50) = 0 THEN
+//		garbagecollect()
+//	END IF
+//	ls_cadena_sql = "EXEC sp_valida_cruce_x_cve_salon " + String ( li_cve_mat ) +  ", '" + ls_gpo + "'," + String ( li_cve_dia ) + ","  + String ( gi_anio ) + "," +  String ( gi_periodo )
+//	EXECUTE IMMEDIATE :ls_cadena_sql USING gtr_sce;
+//	
+//	IF gtr_sce.SQLCode < 0 THEN
+//		MessageBox ( "Error:" , "Al validar el cruce de horario de la materia: " + String ( li_cve_mat ) +  ", grupo: '" + ls_gpo + "~n~r" + gtr_sce.SQLErrText )
+//		Return -1
+//	END IF
+//	Commit USING gtr_sce;
+//	
+//	// Oscar Sánchez, 25-Octubre-2018. Se agrega para validación de cruce de horario (ahora se validan bloques de fechas en el query de la datawindow)
+//	// Oscar Sánchez, 12-Julio-2019. Se agrega para validación de cruce de grupos modulares segunda etapa (grupos sesionados)
+//	li_res = lds_salones_libres.Retrieve(gi_anio,gi_periodo,ai_critcupoinsc,as_descnivel,li_cve_dia,li_cve_mat,ls_gpo)
+//		
+//	if li_res > 0 then
+//		li_salones_encontrados = 1
+//		li_busco = 1
+//			do while li_salones_encontrados < li_tothor AND li_busco <= li_res
+//			li_cve_dia = ads_asigna_automatica_salon.GetItemNumber(ai_i + li_salones_encontrados,"horario_cve_dia")
+//			li_hora_inicio = ads_asigna_automatica_salon.GetItemNumber(ai_i + li_salones_encontrados,"horario_hora_inicio")
+//			li_hora_final = ads_asigna_automatica_salon.GetItemNumber(ai_i + li_salones_encontrados,"horario_hora_final")
+//			ld_grupos_fecha_inicio	= Date ( ads_asigna_automatica_salon.object.grupos_fecha_inicio [ ai_i + li_salones_encontrados ] )	// Oscar Sánchez, 07-Enero-2019. Se agrega para validación de cruce de horario (se validan bloques de fechas)
+//			ld_grupos_fecha_fin		= Date ( ads_asigna_automatica_salon.object.grupos_fecha_fin [ ai_i + li_salones_encontrados ] )	// Oscar Sánchez, 07-Enero-2019. Se agrega para validación de cruce de horario (se validan bloques de fechas)
+//			
+//			if (lds_salon_libre.Retrieve(gi_anio,gi_periodo,li_hora_inicio, li_hora_final,li_cve_dia,&
+//								lds_salones_libres.GetItemString(li_busco,"cve_salon"),ld_grupos_fecha_inicio,ld_grupos_fecha_fin) = 0) then
+//				li_salones_encontrados ++
+//			else
+//				li_salones_encontrados = 1
+//				li_busco++
+//			end if
+//		loop
+//		if li_salones_encontrados = li_tothor then
+//			for li_i = 1 to li_tothor
+//				ads_asigna_automatica_salon.SetItem(ai_i,"horario_cve_salon",&
+//					lds_salones_libres.GetItemString(li_busco,"cve_salon"))
+//				ai_i++
+//				li_asignados++
+//			next
+//			ads_asigna_automatica_salon.Update() 
+//			Commit USING gtr_sce; 
+//			FOR llpos = 1 TO  ads_asigna_automatica_salon.ROWCOUNT() 
+//				
+//				ls_salon = ads_asigna_automatica_salon.GetItemString(llpos,"horario_cve_salon") 
+//				li_cve_dia = ads_asigna_automatica_salon.GetItemNumber(llpos,"horario_cve_dia")
+//				ll_horario_cve_mat = ads_asigna_automatica_salon.GetItemNumber(llpos,"horario_cve_mat")   
+//				ls_horario_gpo = ads_asigna_automatica_salon.GetItemString(llpos,"horario_gpo")    
+//				ll_horario_anio = ads_asigna_automatica_salon.GetItemNumber(llpos,"horario_anio")    
+//				le_horario_periodo  = ads_asigna_automatica_salon.GetItemNumber(llpos,"horario_periodo")     				
+//				
+//				UPDATE horario_modular 
+//				SET horario_modular.cve_salon = :ls_salon 
+//				WHERE horario_modular.cve_mat = :ll_horario_cve_mat 
+//				AND horario_modular.gpo = :ls_horario_gpo
+//				AND horario_modular.periodo = :le_horario_periodo 
+//				AND horario_modular.anio = :ll_horario_anio
+//				AND horario_modular.cve_dia = :li_cve_dia
+//				USING gtr_sce;			
+//				Commit USING gtr_sce;
+//				
+//			NEXT 
+//			
+//		end if
+//	end if
+//end if
+//DESTROY lds_salones_libres
+//DESTROY lds_salon_libre
+//return li_asignados
+end function
+

@@ -1,0 +1,139 @@
+﻿$PBExportHeader$elimina_cursadas_3.srf
+global type elimina_cursadas_3 from function_object
+end type
+
+forward prototypes
+global subroutine elimina_cursadas_3 (ref datastore dw_historico, ref datastore dw_materiasxcursar, integer areas[12], ref decimal creditos[2, 12])
+end prototypes
+
+global subroutine elimina_cursadas_3 (ref datastore dw_historico, ref datastore dw_materiasxcursar, integer areas[12], ref decimal creditos[2, 12]);long ll_cont_1,ll_cont_2,ll_cont_3,ll_cont_4
+long mat_borrable,li_puede
+decimal borrables[3,100]
+
+dw_historico.SetFilter('historico_calificacion in ("6","7","8","9","10","AC","RE","E","MB","B","S")')
+dw_historico.Filter( )
+dw_materiasxcursar.SetFilter("")
+dw_materiasxcursar.Filter( )
+ll_cont_4=0
+FOR ll_cont_1=dw_historico.rowcount() TO 1 STEP -1
+	FOR ll_cont_2=dw_materiasxcursar.rowcount() TO 1 STEP -1
+		if dw_materiasxcursar.object.cve_mat[ll_cont_2]=dw_historico.object.historico_cve_mat[ll_cont_1] AND &
+			areas[3]=dw_materiasxcursar.object.area_mat_cve_area[ll_cont_2] then
+			li_puede=1
+			FOR ll_cont_3=dw_materiasxcursar.rowcount() TO 1 STEP -1
+				if dw_materiasxcursar.object.cve_mat[ll_cont_2]=dw_materiasxcursar.object.cve_mat[ll_cont_3] AND &
+					areas[3]<>dw_materiasxcursar.object.area_mat_cve_area[ll_cont_3] then
+					li_puede=0
+					ll_cont_4=ll_cont_4+1
+					borrables[1,ll_cont_4]=dw_materiasxcursar.object.cve_mat[ll_cont_2]
+					borrables[2,ll_cont_4]=dw_materiasxcursar.object.creditos[ll_cont_2]
+					borrables[3,ll_cont_4]=-1
+					ll_cont_3=1
+				end if
+			NEXT
+			if li_puede=1 then
+				creditos[1,3]=creditos[1,3]+dw_materiasxcursar.object.creditos[ll_cont_2]
+				mat_borrable=dw_materiasxcursar.object.cve_mat[ll_cont_2]
+				FOR ll_cont_3=dw_materiasxcursar.rowcount() TO 1 STEP -1
+					IF dw_materiasxcursar.object.cve_mat[ll_cont_3]=mat_borrable THEN
+						dw_materiasxcursar.deleterow(ll_cont_3)
+					END IF
+				NEXT
+				ll_cont_2=0
+				dw_historico.deleterow(ll_cont_1)
+			end if
+		end if
+	NEXT
+NEXT
+
+int van,no_pude,tenemos[3,30]
+decimal tope
+/*Aquí va lo interesante...*/
+van=0
+tope=creditos[2,3]-creditos[1,3]
+
+FOR ll_cont_1=1 TO ll_cont_4
+	van=van+borrables[2,ll_cont_1]
+NEXT
+
+if van>tope then
+	ll_cont_3=0
+	FOR ll_cont_1=1 TO ll_cont_4
+		li_puede=0
+		borrables[3,ll_cont_1]=0
+		FOR ll_cont_2=1 TO ll_cont_3
+			if tenemos[1,ll_cont_2]=borrables[2,ll_cont_1] then
+				tenemos[2,ll_cont_2]=tenemos[2,ll_cont_2]+1
+				li_puede=1
+			end if
+		NEXT
+		if li_puede=0 then
+			ll_cont_3=ll_cont_3+1
+			tenemos[1,ll_cont_3]=borrables[2,ll_cont_1]
+			tenemos[2,ll_cont_3]=1
+		end if
+	NEXT
+	comb_encontre=0
+	multiplica(1,ll_cont_3,tenemos,0,tope)
+	if comb_encontre = 1 then
+		for ll_cont_1=1 TO ll_cont_3
+			//messagebox(string(tenemos[1,ll_cont_1]),string(tenemos[3,ll_cont_1]))
+			tenemos[2,ll_cont_1]=0
+		next
+		for ll_cont_1=1 to ll_cont_4
+			for ll_cont_2=1 TO ll_cont_3
+				if borrables[2,ll_cont_1]=tenemos[1,ll_cont_2] then
+					if tenemos[2,ll_cont_2]<tenemos[3,ll_cont_2] then
+						tenemos[2,ll_cont_2]=tenemos[2,ll_cont_2]+1
+						borrables[3,ll_cont_1]=-1
+					end if
+				end if
+			next			
+		next
+	end if
+end if
+
+/*Aquí acaba lo interesante...*/
+FOR ll_cont_1=1 TO ll_cont_4
+	FOR ll_cont_2=dw_materiasxcursar.rowcount() TO 1 STEP -1
+		IF borrables[1,ll_cont_1]=dw_materiasxcursar.object.cve_mat[ll_cont_2] AND borrables[3,ll_cont_1]=-1 THEN
+			if areas[3]=dw_materiasxcursar.object.area_mat_cve_area[ll_cont_2] then
+				creditos[1,3]=creditos[1,3]+dw_materiasxcursar.object.creditos[ll_cont_2]
+			end if
+			dw_materiasxcursar.deleterow(ll_cont_2)
+		END IF
+	NEXT
+	FOR ll_cont_2=dw_historico.rowcount() TO 1 STEP -1
+		IF borrables[1,ll_cont_1]=dw_historico.object.historico_cve_mat[ll_cont_2] AND &
+			borrables[3,ll_cont_1]=-1 THEN
+			dw_historico.deleterow(ll_cont_2)
+		END IF
+	NEXT
+NEXT
+/**/
+
+dw_materiasxcursar.SetFilter("")
+dw_materiasxcursar.Filter( )
+if creditos[1,3]>=creditos[2,3] then
+	FOR ll_cont_3=dw_materiasxcursar.rowcount() TO 1 STEP -1
+		IF areas[3]=dw_materiasxcursar.object.area_mat_cve_area[ll_cont_3] THEN
+			dw_materiasxcursar.deleterow(ll_cont_3)
+		END IF
+	NEXT				
+end if
+
+creditos[1,6]=elimina_cursadas(areas[6],dw_materiasxcursar,dw_historico)+&
+	elimina_cursadas(areas[7],dw_materiasxcursar,dw_historico)
+
+dw_materiasxcursar.SetFilter("")
+dw_materiasxcursar.Filter( )
+if creditos[1,6]>=creditos[2,6] then
+	FOR ll_cont_3=dw_materiasxcursar.rowcount() TO 1 STEP -1
+		IF areas[6]=dw_materiasxcursar.object.area_mat_cve_area[ll_cont_3] OR &
+			areas[7]=dw_materiasxcursar.object.area_mat_cve_area[ll_cont_3] THEN
+			dw_materiasxcursar.deleterow(ll_cont_3)
+		END IF
+	NEXT				
+end if
+end subroutine
+

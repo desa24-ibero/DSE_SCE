@@ -1,0 +1,63 @@
+﻿$PBExportHeader$f_obten_periodo_revalidacion.srf
+global type f_obten_periodo_revalidacion from function_object
+end type
+
+forward prototypes
+global function integer f_obten_periodo_revalidacion (integer ai_periodo, integer ai_anio, ref integer ai_periodo_rev, ref integer ai_anio_rev)
+end prototypes
+
+global function integer f_obten_periodo_revalidacion (integer ai_periodo, integer ai_anio, ref integer ai_periodo_rev, ref integer ai_anio_rev);//NOMBRE
+//f_obten_periodo_revalidacion
+//
+//En base al periodo recibido, devuelve el siguiente periodo válido para revalidación
+//REGRESA
+//int
+//
+//ai_periodo_rev			int ref
+//ai_anio_rev				int ref
+//
+//RECIBE
+//ai_periodo				int
+//ai_anio					int
+//ai_periodo_rev			int ref
+//ai_anio_rev				int ref
+
+IF gs_tipo_periodo = "S" THEN 
+	
+	CHOOSE CASE ai_periodo
+		CASE 0
+			ai_anio_rev = ai_anio
+			ai_periodo_rev = 2
+		CASE 1
+			ai_anio_rev = ai_anio
+			ai_periodo_rev = 2
+		CASE 2
+			ai_anio_rev = ai_anio + 1
+			ai_periodo_rev = 0
+		CASE ELSE
+			MessageBox("Error en f_obten_periodo_revalidacion", &
+						  "El periodo ["+string(ai_periodo)+"] y año ["+string(ai_anio)+"] no estan en rango válido",StopSign!)
+			return -1					  
+	END CHOOSE
+	
+ELSE
+	
+	IF ai_periodo = 6 THEN 
+		ai_anio_rev = ai_anio + 1
+		ai_periodo_rev = 3
+	ELSE
+		ai_anio_rev = ai_anio
+		ai_periodo_rev = ai_periodo + 1 
+	END IF
+	
+END IF
+
+return 0 
+
+
+
+
+
+
+end function
+

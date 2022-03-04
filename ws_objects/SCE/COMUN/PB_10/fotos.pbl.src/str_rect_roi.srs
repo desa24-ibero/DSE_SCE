@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_rect_roi.srs
+global type str_rect_roi from structure
+	unsignedlong		left
+	unsignedlong		top
+	unsignedlong		right
+	unsignedlong		bottom
+end type
+

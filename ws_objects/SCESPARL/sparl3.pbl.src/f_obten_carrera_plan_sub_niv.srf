@@ -1,0 +1,41 @@
+﻿$PBExportHeader$f_obten_carrera_plan_sub_niv.srf
+global type f_obten_carrera_plan_sub_niv from function_object
+end type
+
+forward prototypes
+global function integer f_obten_carrera_plan_sub_niv (long al_cuenta, ref long al_cve_carrera, ref long al_cve_plan, ref long al_cve_subsistema, ref string as_nivel)
+end prototypes
+
+global function integer f_obten_carrera_plan_sub_niv (long al_cuenta, ref long al_cve_carrera, ref long al_cve_plan, ref long al_cve_subsistema, ref string as_nivel);// Obtiene la carrera, el plan, subsistema y nivel de un alumno, 
+// correspondiente a su información de académicos
+//
+// f_obten_carrera_plan_sub_niv
+//
+// Recibe:
+// al_cuenta			long*
+//	al_cve_carrera		long
+//	al_cve_plan			long
+//	al_cve_subsistema long
+//	as_nivel				string
+
+Integer  li_codigo_sql
+String ls_mensaje_sql
+
+Select cve_carrera,   cve_plan,     cve_subsistema,     nivel
+Into :al_cve_carrera, :al_cve_plan, :al_cve_subsistema, :as_nivel
+From academicos 
+Where cuenta = :al_cuenta 
+Using gtr_sce;
+
+ls_mensaje_sql= gtr_sce.SqlErrtext
+li_codigo_sql= gtr_sce.SqlCode
+
+IF li_codigo_sql =-1 THEN
+	Messagebox("Error al consultar los académicos",ls_mensaje_sql,StopSign!)
+ELSEIF li_codigo_sql =100 THEN
+	Messagebox("Alumno inexistente",ls_mensaje_sql,StopSign!)
+END IF
+
+RETURN li_codigo_sql
+end function
+

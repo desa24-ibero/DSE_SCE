@@ -1,0 +1,40 @@
+﻿$PBExportHeader$f_obten_nombre_aspirante_reval.srf
+global type f_obten_nombre_aspirante_reval from function_object
+end type
+
+forward prototypes
+global function long f_obten_nombre_aspirante_reval (long al_folio, ref string as_apaterno, ref string as_amaterno, ref string as_nombre)
+end prototypes
+
+global function long f_obten_nombre_aspirante_reval (long al_folio, ref string as_apaterno, ref string as_amaterno, ref string as_nombre);//f_obten_nombre_aspirante_reval
+//Devuelve el nombre del aspirante de revalidacion
+
+
+integer li_codigo
+string ls_mensaje_error
+long ll_cuenta
+
+select dbo.aspirantes_revalidacion.apaterno,
+	dbo.aspirantes_revalidacion.amaterno,
+	dbo.aspirantes_revalidacion.nombre
+into :as_apaterno,
+	:as_amaterno,
+	:as_nombre
+from dbo.aspirantes_revalidacion
+where dbo.aspirantes_revalidacion.folio = :al_folio
+using gtr_sce;
+
+li_codigo= gtr_sce.SqlCode
+ls_mensaje_error= gtr_sce.SqlErrText
+
+
+if li_codigo = -1  then
+	MessageBox("Error al recuperar el nombre del folio actual",ls_mensaje_error, StopSign!)
+elseif li_codigo = 100  then
+	MessageBox("No existe el folio["+string(al_folio)+"]",ls_mensaje_error, StopSign!)
+end if
+
+return li_codigo
+
+end function
+

@@ -1,0 +1,12 @@
+﻿$PBExportHeader$dw_cond_gpo.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=31172699 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=93 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cond_gpo dbname="condicion_gpo.cond_gpo" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=condicion dbname="condicion_gpo.condicion" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"condicion_gpo~" ) COLUMN(NAME=~"condicion_gpo.cond_gpo~") COLUMN(NAME=~"condicion_gpo.condicion~")) " update="condicion_gpo" updatewhere=1 updatekeyinplace=no )
+column(band=detail id=1 alignment="2" tabsequence=10 border="5" color="0" x="5" y="4" height="77" width="92" format="[general]"  name=cond_gpo edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="5" color="0" x="129" y="4" height="77" width="398" format="[general]"  name=condicion edit.limit=10 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )

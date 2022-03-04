@@ -1,0 +1,39 @@
+﻿$PBExportHeader$tipoarea.srf
+global type tipoarea from function_object
+end type
+
+forward prototypes
+global function integer tipoarea (integer area, integer cve_plan)
+end prototypes
+
+global function integer tipoarea (integer area, integer cve_plan);
+CHOOSE CASE area
+	// Basica, Mayor Obligatoria	
+	CASE 1, 2, 14
+		return 1
+	// Opcion Terminal	
+	CASE 3
+		if cve_plan = 2 then
+			return 2
+		else
+			return 1
+		end if
+	// Servicio Social		
+	CASE 4
+		return 1
+	// Menor Obligatoria(Subsistema) 	
+	CASE 5
+		return 2
+	// Areas de Integracion	
+	CASE 6 to 10
+		return 3
+	// Mayor Optativa y Menor Optativa(Subsistema) *Se agrega Area Sintesis Evaluación Optativa		
+	CASE 11, 12, 13
+		return 2
+END CHOOSE
+
+
+
+
+end function
+

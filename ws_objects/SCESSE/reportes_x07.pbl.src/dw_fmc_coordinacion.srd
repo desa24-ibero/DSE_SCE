@@ -1,0 +1,14 @@
+﻿$PBExportHeader$dw_fmc_coordinacion.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cve_coordinacion dbname="coordinaciones.cve_coordinacion" )
+ column=(type=char(70) updatewhereclause=yes name=coordinacion dbname="coordinaciones.coordinacion" )
+ column=(type=char(3) updatewhereclause=yes name=sigla dbname="coordinaciones.sigla" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"coordinaciones~" )  TABLE(NAME=~"departamentos~" ) COLUMN(NAME=~"coordinaciones.cve_coordinacion~") COLUMN(NAME=~"coordinaciones.coordinacion~") COLUMN(NAME=~"coordinaciones.sigla~")    JOIN (LEFT=~"departamentos.cve_depto~"    OP =~"=~"RIGHT=~"coordinaciones.cve_depto~" )WHERE(    EXP1 =~"departamentos.cve_division~"   OP =~"=~"    EXP2 =~":division~" ) ) ARG(NAME = ~"division~" TYPE = number) " arguments=(("division", number)) )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="1" y="4" height="77" width="348" format="[general]"  name=cve_coordinacion edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="389" y="4" height="77" width="2021" format="[general]"  name=coordinacion edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="2410" y="0" height="77" width="101" format="[general]"  name=sigla edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

@@ -1,0 +1,22 @@
+﻿$PBExportHeader$d_banderas_adeuda_prueba.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=80 color="536870912" )
+summary(height=3 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=93 color="536870912" )
+table(column=(type=long updatewhereclause=yes key=yes name=cuenta dbname="banderas.cuenta" )
+ column=(type=long update=yes updatewhereclause=yes name=adeuda_finanzas dbname="banderas.adeuda_finanzas" )
+ retrieve="  SELECT dbo.banderas.cuenta,   
+         dbo.banderas.adeuda_finanzas  
+    FROM dbo.banderas,
+			dbo.prueba  
+   WHERE ( dbo.banderas.cuenta = dbo.prueba.cuenta ) AND
+			(( dbo.banderas.adeuda_finanzas = 1 ))   
+" update="banderas" updatewhere=0 updatekeyinplace=yes )
+text(band=header alignment="1" text="Adeuda Finanzas" border="0" color="33554432" x="680" y="10" height="64" width="464"  name=adeuda_finanzas_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="1" text="Cuenta" border="0" color="33554432" x="333" y="10" height="64" width="187"  name=cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=2 alignment="1" tabsequence=20 border="0" color="33554432" x="746" y="3" height="77" width="329" format="[general]"  name=adeuda_finanzas edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=1 alignment="1" tabsequence=10 border="0" color="33554432" x="260" y="3" height="77" width="329" format="[general]"  name=cuenta edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

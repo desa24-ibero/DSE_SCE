@@ -1,0 +1,17 @@
+﻿$PBExportHeader$dw_mad_verifica_mat1.srd
+$PBExportComments$Datawindow para verificar los subsistemas, para el proceso de materia plan.
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=5 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=85 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cve_carrera dbname="subsistema.cve_carrera" )
+ column=(type=long updatewhereclause=yes name=cve_plan dbname="subsistema.cve_plan" )
+ column=(type=long updatewhereclause=yes name=cve_subsistema dbname="subsistema.cve_subsistema" )
+ column=(type=char(40) updatewhereclause=yes name=subsistema dbname="subsistema.subsistema" )
+ column=(type=long updatewhereclause=yes name=cve_area dbname="subsistema.cve_area" )
+ column=(type=char(3) updatewhereclause=yes name=clase_area dbname="subsistema.clase_area" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"subsistema~" ) COLUMN(NAME=~"subsistema.cve_carrera~") COLUMN(NAME=~"subsistema.cve_plan~") COLUMN(NAME=~"subsistema.cve_subsistema~") COLUMN(NAME=~"subsistema.subsistema~") COLUMN(NAME=~"subsistema.cve_area~") COLUMN(NAME=~"subsistema.clase_area~")WHERE(    EXP1 =~"subsistema.cve_carrera~"   OP =~"=~"    EXP2 =~":carrera~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"subsistema.cve_plan~"   OP =~"=~"    EXP2 =~":plan~" ) ) ARG(NAME = ~"carrera~" TYPE = number)  ARG(NAME = ~"plan~" TYPE = number) " arguments=(("carrera", number),("plan", number)) )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="316" y="8" height="77" width="330" format="[general]"  name=cve_area edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Cve Area:"border="0" color="0" x="10" y="12" height="65" width="279"  name=cve_area_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

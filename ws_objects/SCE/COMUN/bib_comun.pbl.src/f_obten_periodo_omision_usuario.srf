@@ -1,0 +1,28 @@
+﻿$PBExportHeader$f_obten_periodo_omision_usuario.srf
+global type f_obten_periodo_omision_usuario from function_object
+end type
+
+forward prototypes
+global function string f_obten_periodo_omision_usuario (string as_usuario, string as_app, transaction as_tr)
+end prototypes
+
+global function string f_obten_periodo_omision_usuario (string as_usuario, string as_app, transaction as_tr);
+STRING ls_tipo_periodo
+
+SELECT periodo_default 
+INTO :ls_tipo_periodo 
+FROM security_user_app
+WHERE app_name = :as_app
+AND user_name = :as_usuario 
+USING as_tr;
+IF as_tr.SQLCODE < 0 THEN 
+	MESSAGEBOX("Error", "Se produjo un error al recuperar el tipo de periodo por omisión del usuario: " + as_tr.SQLERRTEXT)
+	RETURN ""
+END IF
+
+RETURN ls_tipo_periodo 
+
+
+
+end function
+

@@ -1,0 +1,14 @@
+﻿$PBExportHeader$str_movimiento_prof_aux.srs
+global type str_movimiento_prof_aux from structure
+	long		cve_profesor
+	long		cve_prof_ant
+	long		cve_mat
+	string		gpo
+	integer		periodo
+	integer		anio
+	string		usuario
+	integer		cve_dia
+	integer		hora_inicio
+	integer		hora_final
+end type
+

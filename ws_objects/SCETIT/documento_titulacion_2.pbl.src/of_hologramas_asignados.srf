@@ -1,0 +1,83 @@
+﻿$PBExportHeader$of_hologramas_asignados.srf
+global type of_hologramas_asignados from function_object
+end type
+
+forward prototypes
+global function long of_hologramas_asignados (long al_numero_inicial, long al_numero_final, long al_cve_doc_control_sep)
+end prototypes
+
+global function long of_hologramas_asignados (long al_numero_inicial, long al_numero_final, long al_cve_doc_control_sep);//of_hologramas_asignados
+//Recibe 	al_numero_inicial
+//				al_numero_final
+//				al_cve_doc_control_sep
+
+long ll_hologramas_sf, ll_hologramas_plant, ll_hologramas_totales
+int li_codigo_sql
+string ls_mensaje
+
+
+IF al_cve_doc_control_sep = 1 or al_cve_doc_control_sep = 2 THEN
+	SELECT count(*) 
+	INTO :ll_hologramas_sf
+	FROM control_sep
+	WHERE :al_numero_inicial <= num_holograma 
+	AND  num_holograma <= :al_numero_final
+	AND cve_doc_control_sep in (1,2)
+	USING gtr_sce;
+ELSE
+	SELECT count(*) 
+	INTO :ll_hologramas_sf
+	FROM control_sep
+	WHERE :al_numero_inicial <= num_holograma 
+	AND  num_holograma <= :al_numero_final
+	AND cve_doc_control_sep = :al_cve_doc_control_sep
+	USING gtr_sce;
+END IF
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje = gtr_sce.SqlErrText
+
+IF li_codigo_sql = -1 THEN
+	MessageBox("Error al contar hologramas locales",ls_mensaje, StopSign!)	
+	return -1
+END IF
+IF ISNULL(ll_hologramas_sf) THEN
+	ll_hologramas_sf= 0
+END IF
+
+IF al_cve_doc_control_sep = 1 or al_cve_doc_control_sep = 2 THEN
+	SELECT count(*) 
+	INTO :ll_hologramas_plant
+	FROM control_sep_planteles
+	WHERE :al_numero_inicial <= num_holograma 
+	AND  num_holograma <= :al_numero_final
+	AND cve_doc_control_sep in (1,2)
+	USING gtr_sce;
+ELSE
+	SELECT count(*) 
+	INTO :ll_hologramas_plant
+	FROM control_sep_planteles
+	WHERE :al_numero_inicial <= num_holograma 
+	AND  num_holograma <= :al_numero_final
+	AND cve_doc_control_sep = :al_cve_doc_control_sep
+	USING gtr_sce;	
+END IF
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje = gtr_sce.SqlErrText
+
+IF li_codigo_sql = -1 THEN
+	MessageBox("Error al contar hologramas planteles",ls_mensaje, StopSign!)	
+	return -1
+END IF
+IF ISNULL(ll_hologramas_plant) THEN
+	ll_hologramas_plant= 0
+END IF
+
+ll_hologramas_totales = ll_hologramas_sf + ll_hologramas_plant
+
+
+RETURN ll_hologramas_totales
+
+
+end function
+

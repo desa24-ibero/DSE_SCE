@@ -1,0 +1,138 @@
+﻿$PBExportHeader$f_inserta_padres.srf
+global type f_inserta_padres from function_object
+end type
+
+forward prototypes
+global function integer f_inserta_padres (long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio, long al_folio_apartado, integer ai_clv_ver_apartado, boolean ab_existe_nuevo_registro)
+end prototypes
+
+global function integer f_inserta_padres (long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio, long al_folio_apartado, integer ai_clv_ver_apartado, boolean ab_existe_nuevo_registro);//f_inserta_padres
+//Recibe 	:	al_folio	long
+//		ai_clv_ver	integer
+//		ai_clv_per	integer
+//		ai_anio		integer
+//		al_folio_apartado		long
+//		ai_clv_ver_apartado	integer
+//		ab_existe_nuevo_registro	boolean
+//Devuelve : 0 Inserción/Actualización exitosa
+//			100 No existe el registro
+//			 -1 Error al insertar/actualizar
+long ll_cuenta
+int li_codigo_sql
+string ls_mensaje, ls_operacion
+
+IF ab_existe_nuevo_registro THEN
+	UPDATE padres
+	SET 
+	nombre = p_origen.nombre ,
+	apaterno = p_origen.apaterno,
+	amaterno = p_origen.amaterno,
+	calle = p_origen.calle,
+	codigo_pos = p_origen.codigo_pos,
+	colonia = p_origen.colonia,
+	estado = p_origen.estado,
+	telefono = p_origen.telefono,
+	sexo = p_origen.sexo,
+	ladacasa = p_origen.ladacasa,
+	ladaof = p_origen.ladaof,
+	ladacel = p_origen.ladacel,
+	telefonoof = p_origen.telefonoof,
+	telefonocel = p_origen.telefonocel,
+	delomunpio = p_origen.delomunpio,
+	tiporegistro = p_origen.tiporegistro,
+	radiext = p_origen.radiext,
+	email = p_origen.email,
+	callenom = p_origen.callenom,
+	callenum = p_origen.callenum,
+	calleedf = p_origen.calleedf,
+	calledepto = p_origen.calledepto,
+	colnom = p_origen.colnom
+	FROM padres p_destino , v_padres p_origen
+	WHERE p_destino.folio = :al_folio_apartado
+	AND p_destino.clv_ver = :ai_clv_ver_apartado
+	AND p_destino.clv_per = :ai_clv_per 
+	AND p_destino.anio = :ai_anio
+	AND p_destino.folio = p_origen.folio
+	AND p_destino.clv_per = p_origen.clv_per
+	AND p_destino.anio = p_origen.anio
+	AND p_origen.clv_ver = :ai_clv_ver
+	AND p_origen.folio = :al_folio	
+	USING gtr_sadm;
+	ls_operacion = "Actualizar"
+ELSE
+
+	INSERT INTO padres(
+	folio,
+	clv_ver,
+	clv_per,
+	anio,
+	nombre,
+	apaterno,
+	amaterno,
+	calle,
+	codigo_pos,
+	colonia,
+	estado,
+	telefono,
+	sexo,
+	ladacasa,
+	ladaof,
+	ladacel,
+	telefonoof,
+	telefonocel,
+	delomunpio,
+	tiporegistro,
+	radiext,
+	email,
+	callenom,
+	callenum,
+	calleedf,
+	calledepto,
+	colnom)
+	SELECT
+	:al_folio_apartado,
+	:ai_clv_ver_apartado,
+	clv_per,
+	anio,
+	nombre,
+	apaterno,
+	amaterno,
+	calle,
+	codigo_pos,
+	colonia,
+	estado,
+	telefono,
+	sexo,
+	ladacasa,
+	ladaof,
+	ladacel,
+	telefonoof,
+	telefonocel,
+	delomunpio,
+	tiporegistro,
+	radiext,
+	email,
+	callenom,
+	callenum,
+	calleedf,
+	calledepto,
+	colnom
+	FROM padres
+	WHERE folio = :al_folio
+	AND clv_ver = :ai_clv_ver
+	AND clv_per = :ai_clv_per
+	AND anio = :ai_anio	
+	USING gtr_sadm;
+	ls_operacion = "Insertar"
+END IF
+
+li_codigo_sql = gtr_sadm.SqlCode
+ls_mensaje = gtr_sadm.SqlErrText
+
+IF li_codigo_sql = -1 THEN
+	MessageBox("Error al "+ls_operacion+" en padres", ls_mensaje, StopSign!)
+END IF
+
+RETURN li_codigo_sql
+end function
+

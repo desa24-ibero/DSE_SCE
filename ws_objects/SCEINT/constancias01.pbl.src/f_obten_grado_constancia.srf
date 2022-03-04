@@ -1,0 +1,41 @@
+﻿$PBExportHeader$f_obten_grado_constancia.srf
+global type f_obten_grado_constancia from function_object
+end type
+
+forward prototypes
+global function string f_obten_grado_constancia (long al_carrera)
+end prototypes
+
+global function string f_obten_grado_constancia (long al_carrera);
+STRING ls_clave_grado, ls_descripcion_constancia
+
+
+SELECT cve_grado
+INTO :ls_clave_grado 
+FROM carreras
+WHERE cve_carrera = :al_carrera 
+USING gtr_sce;
+IF gtr_sce.SQLCODE < 0 THEN 
+	MESSAGEBOX("Error", "Se produjo un error al recuperar el grado de la carrera:" + gtr_sce.SQLERRTEXT )
+	RETURN ""
+END IF
+
+SELECT descripcion_constancia 
+INTO :ls_descripcion_constancia 
+FROM grado 
+WHERE cve_grado = :ls_clave_grado 
+USING gtr_sce;
+IF gtr_sce.SQLCODE < 0 THEN 
+	MESSAGEBOX("Error", "Se produjo un error al recuperar la descripción del grado de la constancia:" + gtr_sce.SQLERRTEXT)  
+	RETURN ""	
+END IF
+
+RETURN ls_descripcion_constancia
+
+
+
+
+
+
+end function
+

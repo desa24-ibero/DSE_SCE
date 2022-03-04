@@ -1,0 +1,60 @@
+﻿$PBExportHeader$f_split.srf
+$PBExportComments$Matrices nxm. Emula a la función split de VB.
+global type f_split from function_object
+end type
+
+forward prototypes
+global function any f_split (string as_item, string as_separador)
+end prototypes
+
+global function any f_split (string as_item, string as_separador);//////////////////////////////////////////////////////////////////////////////
+//
+//	Function:  f_split
+//
+//	Access:  public
+//
+//	Arguments:
+//	as_item			La cadena con la que vamos a trabajar.
+//	as_separador	La cadena que nos va servir de delimitador.
+//
+//	Returns:
+//	Any				
+//
+//	Description:
+//	Emula el funcionamiento de la función f_split de VB. Parte la cadena de
+//	trabajo usando un delimitador y guarda cada fragmento dentro de un
+//	arreglo.
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+//	Revision History
+//
+//	Version
+//	1.0   Initial version
+//
+//////////////////////////////////////////////////////////////////////////////
+any la_resultado
+string ls_tmp[]
+integer li_i
+integer li_pos
+string ls_item
+
+ls_item = as_item
+li_pos =	pos(ls_item, as_separador)
+li_i = 1
+
+do while li_pos > 0
+	ls_tmp[li_i] = mid(ls_item,1,li_pos - 1)
+	ls_item = mid(ls_item,li_pos + 1)
+	li_pos =	pos(ls_item, as_separador)
+	li_i++
+loop
+	
+ls_tmp[li_i] = ls_item
+
+la_resultado = ls_tmp
+
+return la_resultado
+
+end function
+

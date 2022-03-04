@@ -1,0 +1,222 @@
+﻿$PBExportHeader$f_apartado_lugar_cob_sit.srf
+global type f_apartado_lugar_cob_sit from function_object
+end type
+
+forward prototypes
+global function integer f_apartado_lugar_cob_sit (long al_cuenta, integer ai_periodo_pago, integer ai_anio_pago, integer ai_periodo_apartado, integer ai_anio_apartado)
+end prototypes
+
+global function integer f_apartado_lugar_cob_sit (long al_cuenta, integer ai_periodo_pago, integer ai_anio_pago, integer ai_periodo_apartado, integer ai_anio_apartado);//f_apartado_lugar_cob_sit
+//Recibe: al_cuenta				long
+//			ai_periodo_pago		int
+//			ai_anio_pago			int
+//			ai_periodo_apartado	int
+//			ai_anio_apartado		int
+
+int li_existe_alumno, li_codigo_error, li_codigo_error_exec, li_exito, li_res_admision, li_res_control
+string ls_mensaje, ls_mensaje_exec, ls_mensaje_titulo, ls_periodo_pago, ls_periodo_apartado
+int li_anio_pago_cob, li_anio_apartado_cob, li_trncnt_out, li_anio_aportacion_out, li_anio_inscripcion_out
+string ls_mensaje_control, ls_mensaje_admision, ls_mensaje_out, ls_periodo_aportacion_out, ls_periodo_inscripcion_out
+string ls_mensaje_aportacion, ls_mensaje_inscripcion
+int li_periodo_pago, li_periodo_apartado
+li_existe_alumno = f_existe_alumno_adm(al_cuenta)
+li_exito= 0
+IF  li_existe_alumno= 0 THEN
+			
+
+
+				ls_mensaje_titulo = "Cuenta: ["+string(al_cuenta)+"] ~n" +&
+										  	"Periodo Pago: ["+string(ai_periodo_pago)+"] ~n"+&
+											"Anio Pago: ["+string(ai_anio_pago)+"] ~n"+&
+									  		"Periodo Apartado: ["+string(ai_periodo_apartado)+"] ~n"+&
+											"Anio Apartado: ["+string(ai_anio_apartado)+"] ~n"
+											
+			li_periodo_pago = ai_periodo_pago
+			li_anio_pago_cob = ai_anio_pago
+			li_periodo_apartado = ai_periodo_apartado
+			li_anio_apartado_cob = ai_anio_apartado
+//			begin
+//				select @periodo_pago_int = d1.clv_per ,
+//						 @anio_pago = d1.anio ,
+//						 @periodo_apartado_int = i1.ing_per ,
+//						 @anio_apartado = i1.ing_anio
+//				from inserted i1, deleted d1
+//				
+//
+//				if @periodo_pago_int= 0 
+//					select @periodo_pago = "P"
+//				if @periodo_pago_int= 1 
+//					select @periodo_pago = "V"
+//				if @periodo_pago_int= 2 
+//					select @periodo_pago = "O"	
+//
+//				if @periodo_apartado_int= 0 
+//					select @periodo_apartado = "P"
+//				if @periodo_apartado_int= 1 
+//					select @periodo_apartado = "V"
+//				if @periodo_apartado_int= 2 
+//					select @periodo_apartado = "O"
+//
+//--				   SELECT @errno = 20000, @errmsg = convert(varchar(10),@cuenta)+" "+
+//--							 convert(varchar(10),@periodo_pago)+" "+convert(varchar(10),@anio_pago)+" "+
+//--							 convert(varchar(10),@periodo_apartado)+" "+convert(varchar(10),@anio_apartado)
+//--					GOTO error
+//
+//				EXECUTE @res_exec = SYBFINPRO...sp_apartado_lugar_scob @cuenta, @periodo_pago, @anio_pago ,
+//																	 @periodo_apartado, @anio_apartado, @exito  output
+//
+//				IF @res_exec <> 0
+//				BEGIN
+//				   SELECT @errno = 20000, @errmsg = "Error al ejecutar sp_apartado_lugar_scob : tu_aspiran."
+//					GOTO error
+//				END
+//
+//				if @exito = 1 
+//				begin
+//					UPDATE controlescolar_bd.dbo.academicos
+//					SET ac.anio_ing = i1.ing_anio
+//					FROM controlescolar_bd.dbo.academicos ac, inserted i1
+//					WHERE ac.cuenta = @cuenta
+//				end
+//				else
+//				BEGIN
+//				   SELECT @errno = 20000, @errmsg = "Apartado de lugar no permitido"
+//					GOTO error
+//				END
+//			endstring ls_mensaje
+
+IF NOT isvalid(gtr_scob) THEN
+	IF conecta_bd(gtr_scob,"SCOB",gs_usuario,gs_password)<>1 THEN
+		RETURN -1
+	END IF
+END IF
+
+//Deja el manejo transaccional al stored procedure
+gtr_scob.Autocommit = true
+
+		DECLARE spapartadoslugarscob procedure for sp_apartado_de_lugar
+		@cuenta   = :al_cuenta,
+		@periodo   = :li_periodo_pago,
+		@anio      = :li_anio_pago_cob,
+		@p_cambio = :li_periodo_apartado,
+		@a_cambio = :li_anio_apartado_cob,
+		@status = :li_exito out
+		using gtr_scob;	
+		
+		EXECUTE spapartadoslugarscob;
+		li_codigo_error_exec= gtr_scob.SQLCode
+		ls_mensaje_exec= gtr_scob.SQLErrText
+		
+//Libera el manejo transaccional del stored procedure
+gtr_scob.Autocommit = false
+
+		IF li_codigo_error_exec= -1 THEN
+			CLOSE spapartadoslugarscob;
+			MessageBox("Error al ejecutar sp_apartado_de_lugar: ", ls_mensaje_titulo+"~n"+ls_mensaje_exec, StopSign!)		
+			desconecta_bd(gtr_scob)
+//			Goto ActualizaControl
+			RETURN -1			
+		END IF
+
+		FETCH spapartadoslugarscob INTO :li_exito;
+	
+		li_codigo_error= gtr_scob.SQLCode
+		ls_mensaje= gtr_scob.SQLErrText
+		IF li_codigo_error= -1 THEN
+			CLOSE spapartadoslugarscob;
+			MessageBox("Error al ejecutar fetch de sp_apartado_de_lugar: ", ls_mensaje_titulo+"~n"+ls_mensaje, StopSign!)		
+			desconecta_bd(gtr_scob)
+//			Goto ActualizaControl
+			RETURN -1
+		END IF
+	
+		
+		CLOSE spapartadoslugarscob;
+
+//	if li_codigo_error = -1 then
+//		MessageBox("Error al ejecutar sp_enlace_sce: ", ls_mensaje_titulo+"~n"+ls_mensaje)
+//		ROLLBACK USING gtr_scob;	
+//		return -1
+//	else
+//		return 0
+//	end if
+
+
+//Si se pudo realizar la actualizacion en cobranzas
+
+	IF li_exito = 1 THEN
+//ActualizaControl:
+		UPDATE controlescolar_bd.dbo.academicos
+		SET ac.periodo_ing = :ai_periodo_apartado,
+			 ac.anio_ing = :ai_anio_apartado
+		FROM controlescolar_bd.dbo.academicos ac
+		WHERE ac.cuenta = :al_cuenta
+		USING gtr_sce;
+		li_res_control = gtr_sce.SqlCode
+		ls_mensaje_control= gtr_sce.SqlErrtext
+		
+		IF li_res_control= -1 THEN
+			ROLLBACK USING gtr_sce;
+			MessageBox("Error al actualizar el periodo en academicos", ls_mensaje_titulo+"~n"+ls_mensaje_control, StopSign!)		
+			desconecta_bd(gtr_scob)
+			RETURN -1
+		END IF
+	
+		UPDATE admision_bd.dbo.aspiran
+		SET a.ing_per = :ai_periodo_apartado,
+		    a.ing_anio = :ai_anio_apartado
+		FROM admision_bd.dbo.aspiran a, admision_bd.dbo.general g
+		WHERE g.cuenta = :al_cuenta
+		AND   a.folio = g.folio
+		AND	a.clv_ver = g.clv_ver
+		AND	a.clv_per = g.clv_per
+		AND	a.anio = g.anio
+		USING gtr_sce;
+		li_res_admision= gtr_sce.SqlCode
+		ls_mensaje_admision= gtr_sce.SqlErrtext
+	
+		IF  li_res_admision= 0 THEN
+			COMMIT USING gtr_sce;
+			IF li_codigo_error_exec<> -1 AND li_codigo_error<>-1 THEN
+//NO realiza el manejo transaccional de la conexión a tesorería
+//				COMMIT USING gtr_scob;
+				IF IsValid( gtr_scob) then
+					desconecta_bd(gtr_scob)
+				END IF
+			END IF
+			RETURN 0
+		ELSE
+			ROLLBACK USING gtr_sce;
+			MessageBox("Error al actualizar el periodo en aspiran", ls_mensaje_titulo+"~n"+ls_mensaje_admision, StopSign!)		
+			desconecta_bd(gtr_scob)
+			RETURN -1
+		END IF
+	ELSE
+		
+//		IF isnull(ls_periodo_inscripcion_out) THEN
+//			ls_mensaje_inscripcion = "NO SE ENCUENTRA EL PAGO DE INSCRIPCION"
+//		ELSE
+//			ls_mensaje_inscripcion = "EL PERIODO DE PAGO DE INSCRIPCION ESTA EN ["+ls_periodo_inscripcion_out+"-"+&
+//											string(li_anio_inscripcion_out)+"]"
+//		END IF
+//		IF isnull(ls_periodo_aportacion_out) THEN
+//			ls_mensaje_aportacion = "NO SE ENCUENTRA EL PAGO DE APORTACION UNICA"
+//		ELSE
+//			ls_mensaje_aportacion = "EL PERIODO DE PAGO DE APORTACION UNICA ESTA EN ["+ls_periodo_aportacion_out+"-"+&
+//											string(li_anio_aportacion_out)+"]"
+//		END IF
+
+//SIN FUNCION MIENTRAS SE ESTABILIZA EL NUEVO SISTEMA DE COBRANZAS
+		MessageBox("Error al ejecutar sp_apartado_de_lugar: ", ls_mensaje_titulo+"~n"+ls_mensaje_out+"~n" +&
+						ls_mensaje_aportacion+"~n"+ls_mensaje_inscripcion, StopSign!)		
+		desconecta_bd(gtr_scob)
+		RETURN -1
+	END IF
+ELSEIF  li_existe_alumno= -1 THEN
+	RETURN -1
+ELSEIF  li_existe_alumno= 100 THEN
+	MessageBox("Alumno Inexistente","No existe el alumno con la cuenta["+string(al_cuenta)+"]",StopSign!)		
+END IF
+
+end function
+

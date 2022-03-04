@@ -1,0 +1,53 @@
+﻿$PBExportHeader$f_obten_nombre_usuario.srf
+$PBExportComments$Regreasa "true" si la materia existe en la tabla de historico, en el mismo periodo y año. Juan Campos. Marzo.1997
+global type f_obten_nombre_usuario from function_object
+end type
+
+forward prototypes
+global function integer f_obten_nombre_usuario (string as_usuario, ref string as_nombre_completo)
+end prototypes
+
+global function integer f_obten_nombre_usuario (string as_usuario, ref string as_nombre_completo);//f_obten_nombre_usuario
+//Recibe:
+//a_cuenta		long
+//a_cve_condicion		long
+//
+// Regresa el número de materias que no se encuentran en la condición especificada.
+//	Devuelve:
+//	1 	si existe
+// 0  si no existe 
+//	-1 si hubo algún error durante la consulta	
+
+
+Integer li_num_materias = 0
+integer li_codigo_sql
+string ls_mensaje_sql
+
+
+SELECT description
+INTO :as_nombre_completo
+FROM security_users
+WHERE security_users.name = :as_usuario
+USING gtr_sce;
+ 
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+//No existe el usuario
+if li_codigo_sql = 100  then
+	as_nombre_completo = ""
+	return 0
+//Error al consultar la tabla
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar security_users", ls_mensaje_sql)
+	as_nombre_completo = ""
+	return -1
+//Se pudo realizar la consulta
+elseif li_codigo_sql =0 Then 
+ 	Return 0	
+end if
+
+
+
+end function
+

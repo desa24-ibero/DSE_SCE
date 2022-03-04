@@ -1,0 +1,114 @@
+﻿$PBExportHeader$f_revisa_docum_pos.srf
+global type f_revisa_docum_pos from function_object
+end type
+
+forward prototypes
+global function string f_revisa_docum_pos (long a_cuenta)
+end prototypes
+
+global function string f_revisa_docum_pos (long a_cuenta);//Función que revisa los documentos de licenciatura de un alumno 
+//
+//f_revisa_docum_pos
+//
+//Parámetros:		a_cuenta			long
+//
+//Regresa:			li_resultado	integer
+
+
+
+integer array_li_documentos[ ] = {1, 4, 5, 7, 8, 38, 47}
+int li_limite_inferior, li_limite_superior, li_indice, li_resultado, li_codigo_sql, li_num_ciclos, li_doc_pendientes
+long ll_cuenta, ll_cuenta_cur
+string ls_carrera, ls_nivel, ls_mensaje_sql, ls_mensaje
+boolean lb_documento_pendiente
+
+integer array_li_cve_documento[ ]
+integer array_li_existe_documento[ ]
+integer array_li_cve_flag_documento[ ]
+string array_ls_desc_flag_documento[ ]
+string array_ls_documento[ ]
+
+integer li_cve_documento, li_cve_carr, li_plan, li_incorporado_sep
+integer li_cve_flag_documento
+string ls_desc_flag_documento
+string ls_documento
+
+decimal ld_promedio, ldc_creditos
+
+boolean lb_incorp_sep
+
+li_limite_inferior =LowerBound(array_li_documentos)
+li_limite_superior =UpperBound(array_li_documentos)
+
+li_indice =0
+ll_cuenta = a_cuenta
+
+//Obtiene la carrera y el plan del alumno para determinar el nivel de estudios y si el posgrado
+//es incorporado a la SEP
+li_cve_carr = f_obten_cve_carrera(ll_cuenta)
+li_plan = f_obten_cve_plan(ll_cuenta)
+li_incorporado_sep = f_obten_incorporado_sep(li_cve_carr, li_plan)
+
+if li_incorporado_sep = 0 then
+   lb_incorp_sep = false
+else
+   lb_incorp_sep = true
+end if
+
+//En este ciclo se asignan valores en los arreglos de datos para que correspondan las posiciones
+//con las claves de los documentos
+
+li_cve_documento= 1
+for li_indice = li_limite_inferior to li_limite_superior
+	
+	li_cve_documento = array_li_documentos[li_indice]
+	array_li_existe_documento[li_cve_documento]= f_obten_datos_documento(ll_cuenta, li_cve_documento, li_cve_flag_documento, ls_desc_flag_documento, ls_documento)
+	array_li_cve_documento[li_cve_documento]=li_cve_documento
+	array_li_cve_flag_documento[li_cve_documento]=li_cve_flag_documento
+	array_ls_desc_flag_documento[li_cve_documento]=ls_desc_flag_documento
+	array_ls_documento[li_cve_documento]=ls_documento
+	
+next
+
+ls_mensaje= ""
+
+//Posgrado incorporado a la SEP
+if lb_incorp_sep then
+// Todo correcto
+	if array_li_existe_documento[1] = 1 and &
+	   (array_li_existe_documento[5] = 1 or array_li_existe_documento[8] = 1 or array_li_existe_documento[38] = 1) and &
+		(array_li_existe_documento[4] = 1 or array_li_existe_documento[7] = 1 or array_li_existe_documento[38] = 1) then
+// Revisar si el alumno se titulará por créditos cursados en el posgrado
+		if	(array_li_existe_documento[5] = 0 and array_li_existe_documento[8] = 0 and array_li_existe_documento[38] = 1) or &
+			(array_li_existe_documento[4] = 0 and array_li_existe_documento[7] = 0 and array_li_existe_documento[38] = 1) then
+// Revisar que el alumno no haya tenga más de 45 créditos cursados
+			f_obten_promedio_creditos(ll_cuenta, li_cve_carr, li_plan, ld_promedio, ldc_creditos)
+//	El alumno rebasó los créditos para titularse			
+			if ldc_creditos>=45 then
+				ls_mensaje = "Documentos Pendientes.~nEl alumno rebasó el número de créditos en que debería titularse"
+			else	
+		 		ls_mensaje= ""
+ 			end if
+		end if
+	else
+		ls_mensaje = "El alumno tiene documentos pendientes del posgrado incorporado a SEP"
+	end if	
+		
+else	
+//Posgrado NO incorporado a la SEP
+	if array_li_existe_documento[1] = 1 and &
+	   (array_li_existe_documento[5] = 1 or array_li_existe_documento[8] = 1 or array_li_existe_documento[47] = 1) and &
+		(array_li_existe_documento[4] = 1 or array_li_existe_documento[7] = 1 or array_li_existe_documento[47] = 1) then
+// Todo correcto
+		ls_mensaje= ""
+	else
+		ls_mensaje = "El alumno tiene documentos pendientes del posgrado no incorporado a SEP"
+	end if	
+end if
+
+
+return ls_mensaje
+
+
+end function
+

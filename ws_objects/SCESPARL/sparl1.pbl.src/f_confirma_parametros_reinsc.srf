@@ -1,0 +1,59 @@
+﻿$PBExportHeader$f_confirma_parametros_reinsc.srf
+global type f_confirma_parametros_reinsc from function_object
+end type
+
+forward prototypes
+global function integer f_confirma_parametros_reinsc ()
+end prototypes
+
+global function integer f_confirma_parametros_reinsc ();//f_confirma_parametros_reinsc
+//
+//Obtiene los créditos que tiene registrados la materia
+
+long ll_creditos
+string ls_mensaje_sql
+integer li_codigo_sql
+integer li_exceso_cupo, li_exceso_cupo_su, li_confirmación
+string ls_mensaje_exceso_cupo = "", ls_mensaje_adicional= "~n¿Desea ejecutar el proceso?"
+
+SELECT activacion.exceso_cupo, 
+       activacion_su.exceso_cupo 
+INTO :li_exceso_cupo, 
+		:li_exceso_cupo_su
+FROM activacion, activacion_su 		
+WHERE activacion.tipo_periodo = activacion_su.tipo_periodo 
+AND activacion.tipo_periodo = :gs_tipo_periodo 
+USING gtr_sce;
+
+ls_mensaje_sql= gtr_sce.SqlErrtext
+li_codigo_sql= gtr_sce.SqlCode
+
+IF li_codigo_sql= -1 THEN
+	MessageBox("No es posible consultar los parámetros de configuración", ls_mensaje_sql, StopSign!)
+	RETURN  -1
+ELSEIF  li_codigo_sql = 100 THEN	
+	Return 100
+END IF
+
+if gi_nivel_usuario < 10 then
+	if	li_exceso_cupo = 1 then
+		ls_mensaje_exceso_cupo = "La configuración ¡PERMITIRA! EXCESO DE CUPO por salón"
+	else
+		ls_mensaje_exceso_cupo = "La configuración ¡NO! PERMITIRA EXCESO DE CUPO por salón"
+	end if
+else
+	if	li_exceso_cupo_su = 1 then
+		ls_mensaje_exceso_cupo = "La configuración ¡PERMITIRA! EXCESO DE CUPO por salón"
+	else
+		ls_mensaje_exceso_cupo = "La configuración ¡NO! PERMITIRA EXCESO DE CUPO por salón"
+	end if	
+end if
+
+li_confirmación = MessageBox("Confirmación", ls_mensaje_exceso_cupo+ls_mensaje_adicional, Question!, YesNo!, 2)
+
+RETURN li_confirmación
+
+
+
+end function
+

@@ -1,0 +1,115 @@
+﻿$PBExportHeader$f_conecta_pas_parametros_bd.srf
+$PBExportComments$Función encargada de conectar el "transaction object" a su base de datos indicada mediante el nombre del archivo_ini y la sección.~t~r~nParametros Entrada~tTransaction base_datos, str Salida Regresa 1 si la conexión se realizó de forma correcta. DkWf 1998
+global type f_conecta_pas_parametros_bd from function_object
+end type
+
+forward prototypes
+global function integer f_conecta_pas_parametros_bd (ref transaction atr_transaccion_parametros, ref transaction atr_transaccion_nueva_bd, string al_conexion, string as_usuario, string as_password)
+end prototypes
+
+global function integer f_conecta_pas_parametros_bd (ref transaction atr_transaccion_parametros, ref transaction atr_transaccion_nueva_bd, string al_conexion, string as_usuario, string as_password);//f_conecta_pas_parametros_bd
+//transaction		atr_transaccion_parametros
+//transaction		atr_transaccion_nueva_bd
+//integer 			ai_cve_conexion
+//string				as_usuario
+//string				as_password
+
+integer li_codigo_sql
+string ls_mensaje_sql
+
+integer li_cve_conexion, li_AutoCommit
+string ls_conexion, ls_Database, ls_DBMS, ls_DBParm, ls_DBPass, ls_Lock, ls_LogID, ls_LogPass, ls_ServerName, ls_SQLReturnData, ls_UserID
+boolean lb_autocommit
+string ls_sintaxis_sql
+
+SELECT 
+cve_conexion ,
+conexion  ,
+AutoCommit	,
+Database_	 ,
+DBMS	 ,	
+DBParm	 ,	
+DBPass	 ,	
+Lock_	 ,	
+LogID	 ,	
+LogPass	 ,	
+ServerName	 ,	
+SQLReturnData	 ,	
+UserID	 
+INTO
+:li_cve_conexion, 
+:ls_conexion,
+:li_AutoCommit,
+:ls_Database, 
+:ls_DBMS, 
+:ls_DBParm, 
+:ls_DBPass, 
+:ls_Lock, 
+:ls_LogID, 
+:ls_LogPass, 
+:ls_ServerName, 
+:ls_SQLReturnData, 
+:ls_UserID
+FROM parametros_conexion
+WHERE conexion = :al_conexion and activo = 1
+USING atr_transaccion_parametros;
+
+li_codigo_sql = atr_transaccion_parametros.SqlCode
+ls_mensaje_sql = atr_transaccion_parametros.SqlErrText
+
+if li_codigo_sql = -1 then
+	MessageBox ("No hay conexión con la Base de Datos "+string(al_conexion)+".", ls_mensaje_sql, StopSign!)
+	return 0
+end if
+
+
+if NOT isvalid(atr_transaccion_nueva_bd) then
+	atr_transaccion_nueva_bd = CREATE transaction	//Creación de la transacción
+else
+	disconnect using atr_transaccion_nueva_bd;  //Si está conectada, desconectar para que no marque
+															  //error al reconectarse más adelante.
+end if														  //Si no está conectada, no pasa nada
+
+if li_autocommit = 1 then
+	lb_autocommit = true
+elseif li_autocommit = 0 then
+	lb_autocommit = false
+end if
+//Asigna los valores de usuario y password a los recibidos como parametro
+ls_LogID = as_usuario
+ls_LogPass = as_password
+
+//Asigna los valores del objeto de transaccion nuevo en base a los valores leidos de la base de datos
+atr_transaccion_nueva_bd.AutoCommit			= lb_autocommit
+atr_transaccion_nueva_bd.Database			= ls_Database
+atr_transaccion_nueva_bd.DBMS	 				= ls_DBMS
+atr_transaccion_nueva_bd.DBParm				= ls_DBParm
+atr_transaccion_nueva_bd.DBPass				= ls_DBPass
+atr_transaccion_nueva_bd.Lock	 				= ls_Lock
+atr_transaccion_nueva_bd.LogID				= ls_LogID
+atr_transaccion_nueva_bd.LogPass				= ls_LogPass
+atr_transaccion_nueva_bd.ServerName	 		= ls_ServerName
+atr_transaccion_nueva_bd.SQLReturnData		= ls_SQLReturnData
+atr_transaccion_nueva_bd.UserID	 			= ls_UserID
+
+//Conexión a la base de datos
+connect using atr_transaccion_nueva_bd;
+if isnull(ls_Database) then ls_Database = ""
+
+if atr_transaccion_nueva_bd.sqlcode <> 0 then
+	MessageBox ("No hay conexión con la Base de Datos "+ls_Database+".", atr_transaccion_nueva_bd.sqlerrtext, StopSign!)
+	return 0
+ELSE
+	if atr_transaccion_nueva_bd.DBMS = 'OLE DB' then
+		ls_sintaxis_sql = 'SET TRANSACTION ISOLATION LEVEL READ COMMITTED'
+		EXECUTE IMMEDIATE :ls_sintaxis_sql USING atr_transaccion_nueva_bd;
+	end if
+end if
+
+//if isvalid(gtr_sce) then
+//	f_obten_titulo(w_principal)
+//end if
+return 1
+
+end function
+

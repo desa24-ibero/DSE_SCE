@@ -1,0 +1,36 @@
+﻿$PBExportHeader$f_consulta_promedio.srf
+global type f_consulta_promedio from function_object
+end type
+
+forward prototypes
+global function integer f_consulta_promedio (long al_cuenta, ref real ar_promedio)
+end prototypes
+
+global function integer f_consulta_promedio (long al_cuenta, ref real ar_promedio);/* 
+DESCRIPCIÓN:	Está función consulta el promedio de un alumno, de la base de datos de control escolar en la tabla de
+						academicos.				
+PARÁMETROS DE ENTRADA:	al_cuenta,ar_promedio
+PARÁMETROS DE SALIDA:		ar_promedio.
+REGRESA: 1 si hay exito en la consulta y 0 si ocurre algun error.
+AUTOR: Juan Campos Sánchez.
+FECHA: 18 Junio 1998.
+MODIFICACIÓN:	
+*/
+
+//SELECT promedio INTO :ar_promedio FROM academicos WHERE cuenta = :al_cuenta 
+//USING sce;
+//if sce.sqlcode = 0 then
+//	return 1
+//elseif sce.sqlcode = 100 then
+//	Messagebox("NO EXISTE EN EL CATÁLOGOS DE ACADEMICOS.","EL alumno con número de cuenta: "+scring(al_cuenta)+" no existe en el catálogo de académicos de la base de datos de control escolar.")
+//	return 0
+//else
+//	Messagebox("Error",sce.sqlerrtext)
+	return 0
+//end if
+ 
+
+
+
+end function
+

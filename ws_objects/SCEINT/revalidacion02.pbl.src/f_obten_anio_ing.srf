@@ -1,0 +1,37 @@
+﻿$PBExportHeader$f_obten_anio_ing.srf
+global type f_obten_anio_ing from function_object
+end type
+
+forward prototypes
+global function integer f_obten_anio_ing (long al_folio)
+end prototypes
+
+global function integer f_obten_anio_ing (long al_folio);//f_obten_anio_ing
+
+integer li_codigo
+string ls_mensaje_error
+integer li_anio_ing
+
+select dbo.aspirantes_revalidacion.anio_ing
+into :li_anio_ing
+from dbo.aspirantes_revalidacion
+where dbo.aspirantes_revalidacion.folio = :al_folio
+using gtr_sce;
+
+li_codigo= gtr_sce.SqlCode
+ls_mensaje_error= gtr_sce.SqlErrText
+
+if isnull(li_anio_ing) then
+	li_anio_ing= 0
+end if
+
+if li_codigo = -1  then
+	MessageBox("Error al recuperar cancelado en el folio actual",ls_mensaje_error, StopSign!)
+	return -1
+else
+	return li_anio_ing	
+end if
+
+
+end function
+

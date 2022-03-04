@@ -1,0 +1,37 @@
+﻿$PBExportHeader$desconecta_bd_n_tr.srf
+global type desconecta_bd_n_tr from function_object
+end type
+
+forward prototypes
+global function integer desconecta_bd_n_tr (ref n_tr tr_base_datos)
+end prototypes
+
+global function integer desconecta_bd_n_tr (ref n_tr tr_base_datos);//
+//DESCRIPCIÓN: Función encargada de desconectar  y destruir el "transaction object" de su base de datos correspondiente.
+//				 
+//PARÁMETROS: n_tr tr_base_datos																
+//REGRESA: 1 si la desconexión se realizó de forma correcta
+//AUTOR: CAMP(DkWf)
+//FECHA: 17 Junio 1998
+//MODIFICACIÓN:
+//
+if isvalid(tr_base_datos) then
+	rollback using tr_base_datos;
+	
+	disconnect using tr_base_datos;
+	
+	if tr_base_datos.sqlcode <> 0 then
+		MessageBox ("Error al desconectar la base de datos", tr_base_datos.sqlerrtext, None!)
+		return 0
+	end if
+	
+	DESTROY tr_base_datos
+	if isvalid(gtr_sce) then
+		f_obten_titulo(w_principal)
+	end if	
+	return 1
+end if
+return 1
+
+end function
+

@@ -1,0 +1,81 @@
+﻿$PBExportHeader$d_uo_grupos_coord.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=70 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=char(6) update=yes updatewhereclause=yes name=cve_mat_gpo dbname="grupos.cve_mat_gpo" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=cve_mat dbname="grupos.cve_mat" )
+ column=(type=char(2) update=yes updatewhereclause=yes key=yes name=gpo dbname="grupos.gpo" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=periodo dbname="grupos.periodo" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=anio dbname="grupos.anio" )
+ column=(type=long update=yes updatewhereclause=yes name=cond_gpo dbname="grupos.cond_gpo" )
+ column=(type=long update=yes updatewhereclause=yes name=cupo dbname="grupos.cupo" )
+ column=(type=long update=yes updatewhereclause=yes name=tipo dbname="grupos.tipo" )
+ column=(type=long update=yes updatewhereclause=yes name=inscritos dbname="grupos.inscritos" )
+ column=(type=long update=yes updatewhereclause=yes name=insc_desp_bajas dbname="grupos.insc_desp_bajas" )
+ column=(type=long update=yes updatewhereclause=yes name=cve_asimilada dbname="grupos.cve_asimilada" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=gpo_asimilado dbname="grupos.gpo_asimilado" )
+ column=(type=long update=yes updatewhereclause=yes name=cve_profesor dbname="grupos.cve_profesor" )
+ column=(type=real update=yes updatewhereclause=yes name=prom_gpo dbname="grupos.prom_gpo" )
+ column=(type=real update=yes updatewhereclause=yes name=porc_asis dbname="grupos.porc_asis" )
+ column=(type=number update=yes updatewhereclause=yes name=ema4 dbname="grupos.ema4" )
+ column=(type=long update=yes updatewhereclause=yes name=primer_sem dbname="grupos.primer_sem" )
+ retrieve="  SELECT grupos.cve_mat_gpo,   
+         grupos.cve_mat,   
+         grupos.gpo,   
+         grupos.periodo,   
+         grupos.anio,   
+         grupos.cond_gpo,   
+         grupos.cupo,   
+         grupos.tipo,   
+         grupos.inscritos,   
+         grupos.insc_desp_bajas,   
+         grupos.cve_asimilada,   
+         grupos.gpo_asimilado,   
+         grupos.cve_profesor,   
+         grupos.prom_gpo,   
+         grupos.porc_asis,   
+         grupos.ema4,   
+         grupos.primer_sem  
+    FROM grupos  
+   WHERE ( grupos.cve_mat in (select cve_mat from materias where cve_coordinacion = :al_cve_coordinacion)) AND
+         ( grupos.periodo = :ai_periodo ) AND  
+         ( grupos.anio = :ai_anio )    
+" update="grupos" updatewhere=1 updatekeyinplace=yes arguments=(("al_cve_coordinacion", number),("ai_periodo", number),("ai_anio", number)) )
+text(band=header alignment="2" text="Cve Mat Gpo"border="0" color="0" x="4" y="3" height="64" width="344"  name=cve_mat_gpo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Mat"border="0" color="0" x="351" y="3" height="64" width="351"  name=cve_mat_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Gpo"border="0" color="0" x="706" y="3" height="64" width="110"  name=gpo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Periodo"border="0" color="0" x="819" y="3" height="64" width="351"  name=periodo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Anio"border="0" color="0" x="1178" y="3" height="64" width="351"  name=anio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cond Gpo"border="0" color="0" x="1532" y="3" height="64" width="351"  name=cond_gpo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cupo"border="0" color="0" x="1887" y="3" height="64" width="351"  name=cupo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Tipo"border="0" color="0" x="2242" y="3" height="64" width="351"  name=tipo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Inscritos"border="0" color="0" x="2597" y="3" height="64" width="351"  name=inscritos_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Insc Desp Bajas"border="0" color="0" x="2951" y="3" height="64" width="435"  name=insc_desp_bajas_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Asimilada"border="0" color="0" x="3390" y="3" height="64" width="377"  name=cve_asimilada_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Gpo Asimilado"border="0" color="0" x="3771" y="3" height="64" width="384"  name=gpo_asimilado_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Profesor"border="0" color="0" x="4158" y="3" height="64" width="351"  name=cve_profesor_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Prom Gpo"border="0" color="0" x="4513" y="3" height="64" width="351"  name=prom_gpo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Porc Asis"border="0" color="0" x="4868" y="3" height="64" width="351"  name=porc_asis_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Ema4"border="0" color="0" x="5222" y="3" height="64" width="351"  name=ema4_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Primer Sem"border="0" color="0" x="5581" y="3" height="64" width="347"  name=primer_sem_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=10 border="0" color="0" x="4" y="4" height="74" width="205" format="[general]"  name=cve_mat_gpo edit.limit=6 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=20 border="0" color="0" x="351" y="4" height="74" width="351" format="[general]"  name=cve_mat edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=30 border="0" color="0" x="706" y="4" height="74" width="88" format="[general]"  name=gpo edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=40 border="0" color="0" x="819" y="4" height="74" width="351" format="[general]"  name=periodo edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=50 border="0" color="0" x="1178" y="4" height="74" width="351" format="[general]"  name=anio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=60 border="0" color="0" x="1532" y="4" height="74" width="351" format="[general]"  name=cond_gpo edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=70 border="0" color="0" x="1887" y="4" height="74" width="351" format="[general]"  name=cupo edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=80 border="0" color="0" x="2242" y="4" height="74" width="351" format="[general]"  name=tipo edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=90 border="0" color="0" x="2597" y="4" height="74" width="351" format="[general]"  name=inscritos edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=100 border="0" color="0" x="2951" y="4" height="74" width="351" format="[general]"  name=insc_desp_bajas edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="1" tabsequence=110 border="0" color="0" x="3390" y="4" height="74" width="351" format="[general]"  name=cve_asimilada edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=120 border="0" color="0" x="3771" y="4" height="74" width="88" format="[general]"  name=gpo_asimilado edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="1" tabsequence=130 border="0" color="0" x="4158" y="4" height="74" width="351" format="[general]"  name=cve_profesor edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="1" tabsequence=140 border="0" color="0" x="4513" y="4" height="74" width="351" format="[general]"  name=prom_gpo edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="1" tabsequence=150 border="0" color="0" x="4868" y="4" height="74" width="351" format="[general]"  name=porc_asis edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="1" tabsequence=160 border="0" color="0" x="5222" y="4" height="74" width="351" format="[general]"  name=ema4 edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="1" tabsequence=170 border="0" color="0" x="5581" y="4" height="74" width="347" format="[general]"  name=primer_sem edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

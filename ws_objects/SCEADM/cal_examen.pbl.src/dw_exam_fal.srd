@@ -1,0 +1,21 @@
+﻿$PBExportHeader$dw_exam_fal.srd
+$PBExportComments$DataWindow con los exámenes que faltan por cargar
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.columns=3 print.columns.width=1100 )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=aspiran_folio dbname="aspiran.folio" )
+ retrieve="  SELECT DISTINCT aspiran.folio  
+    FROM aspiran,   
+         sec_peso  
+   WHERE ( sec_peso.clv_carr = aspiran.clv_carr ) and  
+         ( ( :ver=99 or aspiran.clv_ver = :ver ) AND  
+         ( aspiran.clv_per = :per ) AND  
+         ( aspiran.anio = :ani ) AND  
+         ( sec_peso.clv_sec not in (  SELECT cali_sec.clv_sec                                            FROM cali_sec                                           WHERE ( cali_sec.folio = aspiran.folio ) AND                                                 ( cali_sec.clv_ver = :ver ) AND                                                 ( cali_sec.clv_per = :per ) AND                                                 ( cali_sec.anio = :ani ) AND                                                 ( cali_sec.clv_area = sec_peso.clv_area )  )) ) AND  
+         aspiran.pago_exam = 1   
+ORDER BY aspiran.folio ASC   
+" arguments=(("ver", number),("per", number),("ani", number))  sort="aspiran_folio A " )
+compute(band=detail alignment="2" expression=" aspiran_folio"border="0" color="0" x="5" y="4" height="65" width="330" format="[general]"  name=fol  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

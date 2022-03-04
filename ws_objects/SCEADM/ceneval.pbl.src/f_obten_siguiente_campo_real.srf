@@ -1,0 +1,58 @@
+﻿$PBExportHeader$f_obten_siguiente_campo_real.srf
+$PBExportComments$Funcion utilizada en el proceso de recepcion que en la lectura del archivo regresa el siguiente campo a una variable real
+global type f_obten_siguiente_campo_real from function_object
+end type
+
+forward prototypes
+global function real f_obten_siguiente_campo_real (ref string as_linea, ref integer ai_indice)
+end prototypes
+
+global function real f_obten_siguiente_campo_real (ref string as_linea, ref integer ai_indice);/*
+Esta función se utiliza en el proceso de carga automática del disco
+de CENEVAL para obtener el siguiente campo y convertirlo a real 
+a partir de una línea de caracteres y un índice.
+
+NOTA:
+	En este código se supone que el separador utilizado es el tabulador
+
+PARAMETROS:
+	as_linea			string 	reference
+	ai_indice		integer	reference
+	
+REGRESA:
+	La Cadena correspondiente al siguiente campo
+
+AUTOR:
+	Antonio Pica Ruiz
+
+FECHA:
+	11 de Abril de 1999
+	
+*/
+
+string ls_campo_actual 
+real lr_campo_actual
+
+//Obtiene el siguiente campo
+
+ls_campo_actual = f_obten_siguiente_campo(as_linea, ai_indice)
+
+if isnumber(ls_campo_actual) then
+	lr_campo_actual = real(ls_campo_actual)
+else
+	MessageBox("Error de Tipificación", "El campo leído:  "+ls_campo_actual+&
+					"  no corresponde a un tipo real")
+	lr_campo_actual = 0.0
+end if
+
+lr_campo_actual = (lr_campo_actual - 700.0) / 6
+
+if lr_campo_actual < 0 then
+	lr_campo_actual = 0
+end if
+
+return lr_campo_actual
+
+
+end function
+

@@ -1,0 +1,23 @@
+﻿$PBExportHeader$revisa_rows.srf
+global type revisa_rows from function_object
+end type
+
+forward prototypes
+global function integer revisa_rows ()
+end prototypes
+
+global function integer revisa_rows ();//Carlos Armando Melgoza Piña								Marzo 1997	
+//Función que detecta si el error con la base de datos se debe a que se obtuvieron varios renglones
+//Si el error se debe a muchos renglones coloca el sqlcode en 0
+if sqlca.sqlcode < 0 then
+	if sqlca.SQLDBCode = 0 then
+		sqlca.sqlcode = 0 
+		return 0
+	else
+		return 1
+	end if
+else
+	return 0
+end if
+end function
+

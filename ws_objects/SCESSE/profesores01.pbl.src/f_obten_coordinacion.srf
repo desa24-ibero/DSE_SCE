@@ -1,0 +1,39 @@
+﻿$PBExportHeader$f_obten_coordinacion.srf
+global type f_obten_coordinacion from function_object
+end type
+
+forward prototypes
+global function integer f_obten_coordinacion ()
+end prototypes
+
+global function integer f_obten_coordinacion ();//Devuelve el numero de coordinacion en base al usuario firmado
+
+string ls_usuario, ls_mensaje_error
+integer li_cve_coordinacion, li_codigo_error
+
+ls_usuario = Upper(gs_usuario)
+
+select cve_coordinacion
+into :li_cve_coordinacion
+from coordinaciones
+where user_id = :ls_usuario
+using gtr_sce;
+
+ls_mensaje_error = gtr_sce.SQLErrText
+li_codigo_error = gtr_sce.SQLCode
+
+if li_codigo_error = 100 then
+	MessageBox("Usuario sin Coordinacion", "El usuario "+ls_usuario+" no corresponde a ninguna coordinación")
+	return 0
+elseif li_codigo_error = -1 then
+	MessageBox("Error al consultar coordinaciones", ls_mensaje_error)
+	return 0
+end if
+
+return li_cve_coordinacion
+
+
+
+
+end function
+

@@ -1,0 +1,391 @@
+﻿$PBExportHeader$m_materias_inscritas.srm
+$PBExportComments$Este menu ejecuta el proceso de impresión de un comprobante de las materias inscritas y los procesos de primero,anteior,siguiente. Ver descripción detallada en cada script_cliked del menu. Juan Campos Nov-1996.
+forward
+global type m_materias_inscritas from menu
+end type
+type m_imprimematerias from menu within m_materias_inscritas
+end type
+type m_imprimematerias from menu within m_materias_inscritas
+end type
+type m_revision from menu within m_materias_inscritas
+end type
+type m_primero from menu within m_revision
+end type
+type m_anterior from menu within m_revision
+end type
+type m_siguiente from menu within m_revision
+end type
+type m_ultimo from menu within m_revision
+end type
+type m_revision from menu within m_materias_inscritas
+m_primero m_primero
+m_anterior m_anterior
+m_siguiente m_siguiente
+m_ultimo m_ultimo
+end type
+type m_ventana from menu within m_materias_inscritas
+end type
+type m_horizontal from menu within m_ventana
+end type
+type m_vertical from menu within m_ventana
+end type
+type m_primerplano from menu within m_ventana
+end type
+type m_cascada from menu within m_ventana
+end type
+type m_ventana from menu within m_materias_inscritas
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+type m_fin from menu within m_materias_inscritas
+end type
+type m_fin from menu within m_materias_inscritas
+end type
+end forward
+
+global type m_materias_inscritas from menu
+m_imprimematerias m_imprimematerias
+m_revision m_revision
+m_ventana m_ventana
+m_fin m_fin
+end type
+global m_materias_inscritas m_materias_inscritas
+
+on m_materias_inscritas.create
+m_materias_inscritas=this
+this.m_imprimematerias=create m_imprimematerias
+this.m_revision=create m_revision
+this.m_ventana=create m_ventana
+this.m_fin=create m_fin
+this.Item[]={this.m_imprimematerias, &
+this.m_revision, &
+this.m_ventana, &
+this.m_fin}
+end on
+
+on m_materias_inscritas.destroy
+destroy(this.m_imprimematerias)
+destroy(this.m_revision)
+destroy(this.m_ventana)
+destroy(this.m_fin)
+end on
+
+type m_imprimematerias from menu within m_materias_inscritas
+end type
+
+on m_imprimematerias.create
+this.Text="Imprime Materias"
+this.Microhelp="Impresión del comprobante de las materias inscritas"
+this.ToolBarItemName="Print!"
+this.ToolBarItemText="Imprime materias Inscritas"
+this.Enabled=false
+end on
+
+on m_imprimematerias.destroy
+end on
+
+event clicked;// Juan Campos. Enero-1997.
+
+SetPointer(Hourglass!)  
+
+string Nom,AMat,APat,CuentaStr  
+long   CuentaInt
+char   Digito
+long   job
+int    EstasSeguro
+
+CuentaStr = w_materias_inscritas.uo_nombre.em_cuenta.text
+CuentaInt = Long(CuentaStr)
+Digito = obten_digito(cuentaInt)
+
+w_materias_inscritas.dw_imprime_materias_inscritas.SetTransObject(gtr_sce)
+
+if w_materias_inscritas.dw_imprime_materias_inscritas.Retrieve(CuentaInt) = 0 then
+  MessageBox("Aviso","No tiene materias inscritas este semestre")
+Else
+  m_materias_inscritas.m_revision.enabled = false
+  Nom  = w_materias_inscritas.uo_nombre.dw_nombre_alumno.GetItemString(1,"nombre")
+  APat = w_materias_inscritas.uo_nombre.dw_nombre_alumno.GetItemString(1,"apaterno")
+  AMat = w_materias_inscritas.uo_nombre.dw_nombre_alumno.GetItemString(1,"amaterno")
+  w_materias_inscritas.dw_imprime_materias_inscritas.object.nombre_completo.text = Nom+" "+APat+" "+AMat
+  w_materias_inscritas.dw_imprime_materias_inscritas.object.cuenta_digito.text = CuentaStr+"-"+Digito	
+//  w_materias_inscritas.dw_imprime_materias_inscritas.object.fecha.text = fecha_espaniol_servidor()
+  EstasSeguro = MessageBox("Aviso","Está seguro que desea imprimir el comprobante de las materias inscritas de este alumno",Question!,YesNo!)	
+  If EstasSeguro = 1 then
+    job = PrintOpen("Materias Inscritas" )  
+    PrintDataWindow(job,w_materias_inscritas.dw_imprime_materias_inscritas) 
+    PrintClose(job)
+  End if
+End if  
+
+SetPointer(Arrow!)  
+
+
+end event
+
+type m_revision from menu within m_materias_inscritas
+m_primero m_primero
+m_anterior m_anterior
+m_siguiente m_siguiente
+m_ultimo m_ultimo
+end type
+
+on m_revision.create
+this.Text="Revisión"
+this.Enabled=false
+this.m_primero=create m_primero
+this.m_anterior=create m_anterior
+this.m_siguiente=create m_siguiente
+this.m_ultimo=create m_ultimo
+this.Item[]={this.m_primero, &
+this.m_anterior, &
+this.m_siguiente, &
+this.m_ultimo}
+end on
+
+on m_revision.destroy
+destroy(this.m_primero)
+destroy(this.m_anterior)
+destroy(this.m_siguiente)
+destroy(this.m_ultimo)
+end on
+
+type m_primero from menu within m_revision
+end type
+
+on m_primero.create
+this.Text="Primero"
+this.Microhelp="Posisión en el primer renglon de la tabla mat inscritas"
+this.ToolBarItemName="VCRFirst!"
+this.ToolBarItemText="Primero"
+end on
+
+event clicked;// Juan campos Nov-1996.
+
+Long cuenta
+Char digito
+
+SetPointer(HourGlass!)   
+w_materias_inscritas.uo_nombre.cbx_nuevo.checked = False
+
+SELECT min(cuenta)  
+INTO :cuenta  
+FROM mat_inscritas using gtr_sce;
+
+if gtr_sce.sqlcode <> 100 then
+	w_materias_inscritas.uo_nombre.em_cuenta.text = string(cuenta)		 
+	w_materias_inscritas.em_cuentaaux.text = String(Cuenta)
+ 	w_materias_inscritas.uo_nombre.em_cuenta.text = string(cuenta) + obten_digito(cuenta)		 
+	w_materias_inscritas.uo_nombre.em_cuenta.triggerevent("activarbusq")
+end if	
+
+
+ 
+end event
+
+type m_anterior from menu within m_revision
+end type
+
+on m_anterior.create
+this.Text="Anterior"
+this.Microhelp="Posición en el anterior renglon de la tabla mat_inscritas con respecto a la cuenta actual"
+this.ToolBarItemName="VCRPrior!"
+this.ToolBarItemText="Anterior"
+end on
+
+event clicked;// Juan campos Nov-1996.J
+ 
+Long cuenta
+Char digito
+
+Setpointer(hourglass!) 
+  
+w_materias_inscritas.uo_nombre.cbx_nuevo.checked = False
+
+Cuenta =long( w_materias_inscritas.em_cuentaaux.text)
+
+If w_materias_inscritas.uo_nombre.em_cuenta.text <> "" Then     
+	SELECT max(cuenta)  
+	INTO :cuenta  
+	FROM mat_inscritas
+	WHERE cuenta < :cuenta using gtr_sce;
+
+	if Not isnull(cuenta)  then	
+		w_materias_inscritas.uo_nombre.em_cuenta.text = string(cuenta)		 
+		w_materias_inscritas.em_cuentaaux.text = String(Cuenta)
+ 		w_materias_inscritas.uo_nombre.em_cuenta.text = string(cuenta) + obten_digito(cuenta)		 
+	     w_materias_inscritas.uo_nombre.em_cuenta.triggerevent("activarbusq")
+	else
+		Messagebox("Información","Este es el primer alumno")
+	end if	
+Else
+	MessageBox("Aviso","No hay un número de cuenta preestablecido")
+End If
+
+
+ 
+end event
+
+type m_siguiente from menu within m_revision
+end type
+
+on m_siguiente.create
+this.Text="Siguiente"
+this.Microhelp="Posición en el siguiente renglon de la tabla mat_inscritas con respecto a la cuenta actual"
+this.ToolBarItemName="VCRNext!"
+this.ToolBarItemText="Siguiente"
+end on
+
+event clicked;// Juan campos Nov-1997.
+
+Long 		Cuenta
+Char 		Digito
+
+SetPointer(HourGlass!) 
+  
+w_materias_inscritas.uo_nombre.cbx_nuevo.checked = False
+
+Cuenta =long(w_materias_inscritas.em_cuentaaux.text)
+ 
+If w_materias_inscritas.uo_nombre.em_cuenta.text <> "" Then   
+ 
+SELECT min(cuenta)  
+INTO :cuenta  
+FROM mat_inscritas
+WHERE cuenta > :cuenta using gtr_sce;
+
+if Not isnull(cuenta)  then
+	w_materias_inscritas.uo_nombre.em_cuenta.text = string(cuenta)
+     w_materias_inscritas.em_cuentaaux.text = String(Cuenta)
+	w_materias_inscritas.uo_nombre.em_cuenta.text = string(cuenta) + obten_digito(cuenta)		  
+	w_materias_inscritas.uo_nombre.em_cuenta.triggerevent("activarbusq")
+else
+	Messagebox("Información","Este es el último alumno")
+end if	
+
+Else
+  MessageBox("Aviso","No hay un número de cuenta en la ventana")
+End If
+
+
+  
+end event
+
+type m_ultimo from menu within m_revision
+end type
+
+on m_ultimo.create
+this.Text="Último"
+this.Microhelp="Posisión en el ultimo renglon de la tabla mat_inscritas"
+this.ToolBarItemName="VCRLast!"
+this.ToolBarItemText="Último"
+end on
+
+event clicked;// Juan campos Nov-1997.
+ 
+long cuenta
+char digito
+
+setpointer(hourglass!) 
+  
+w_materias_inscritas.uo_nombre.cbx_nuevo.checked = False
+ 
+SELECT max(cuenta)  
+INTO :cuenta  
+FROM mat_inscritas using gtr_sce;
+  
+if gtr_sce.sqlcode <> 100 then	
+	w_materias_inscritas.uo_nombre.em_cuenta.text = string(cuenta)		 
+	w_materias_inscritas.em_cuentaaux.text = String(Cuenta)
+	w_materias_inscritas.uo_nombre.em_cuenta.text = string(cuenta) + obten_digito(cuenta)		 
+	w_materias_inscritas.uo_nombre.em_cuenta.triggerevent("activarbusq")
+End if	
+
+
+end event
+
+type m_ventana from menu within m_materias_inscritas
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+
+on m_ventana.create
+this.Text="Ventana"
+this.Microhelp="Cambio de vista y posición de las ventanas"
+this.m_horizontal=create m_horizontal
+this.m_vertical=create m_vertical
+this.m_primerplano=create m_primerplano
+this.m_cascada=create m_cascada
+this.Item[]={this.m_horizontal, &
+this.m_vertical, &
+this.m_primerplano, &
+this.m_cascada}
+end on
+
+on m_ventana.destroy
+destroy(this.m_horizontal)
+destroy(this.m_vertical)
+destroy(this.m_primerplano)
+destroy(this.m_cascada)
+end on
+
+type m_horizontal from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(tilehorizontal!)
+end event
+
+on m_horizontal.create
+this.Text="Horizontal"
+end on
+
+type m_vertical from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(tile!)
+end event
+
+on m_vertical.create
+this.Text="Vertical"
+end on
+
+type m_primerplano from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(layer!)
+end event
+
+on m_primerplano.create
+this.Text="Primer Plano"
+end on
+
+type m_cascada from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(cascade!)
+end event
+
+on m_cascada.create
+this.Text="Cascada"
+end on
+
+type m_fin from menu within m_materias_inscritas
+end type
+
+event clicked;Close(w_materias_inscritas)
+end event
+
+on m_fin.create
+this.Text="Salir"
+this.Microhelp="Cierra la ventana actual"
+this.ToolBarItemName="Exit!"
+this.ToolBarItemText="Salir de Mat Inscritas y Horario"
+end on
+
+on m_fin.destroy
+end on
+

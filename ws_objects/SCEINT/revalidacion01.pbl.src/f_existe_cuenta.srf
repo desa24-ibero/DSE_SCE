@@ -1,0 +1,35 @@
+﻿$PBExportHeader$f_existe_cuenta.srf
+global type f_existe_cuenta from function_object
+end type
+
+forward prototypes
+global function long f_existe_cuenta (long al_cuenta)
+end prototypes
+
+global function long f_existe_cuenta (long al_cuenta);integer li_codigo
+string ls_mensaje_error
+long ll_cuenta
+
+select dbo.alumnos.cuenta
+into :ll_cuenta
+from dbo.alumnos
+where dbo.alumnos.cuenta = :al_cuenta
+using gtr_sce;
+
+li_codigo= gtr_sce.SqlCode
+ls_mensaje_error= gtr_sce.SqlErrText
+
+if isnull(ll_cuenta) then
+	ll_cuenta= 0
+end if
+
+if li_codigo = -1  then
+	MessageBox("Error al buscar la cuenta del alumno",ls_mensaje_error, StopSign!)
+	return -1
+else
+	return ll_cuenta	
+end if
+
+
+end function
+

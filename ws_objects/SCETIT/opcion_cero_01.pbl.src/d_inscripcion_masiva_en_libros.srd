@@ -1,0 +1,47 @@
+﻿$PBExportHeader$d_inscripcion_masiva_en_libros.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 2 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=310 color="536870912" )
+summary(height=86 color="536870912" )
+footer(height=48 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cuenta dbname="cuenta" )
+ column=(type=long updatewhereclause=yes name=cve_carrera dbname="cve_carrera" )
+ column=(type=long updatewhereclause=yes name=cve_plan dbname="cve_plan" )
+ column=(type=long updatewhereclause=yes name=cve_documento dbname="cve_documento" )
+ column=(type=char(255) updatewhereclause=yes name=descripcion dbname="descripcion" )
+ retrieve="  SELECT DISTINCT cuenta =bit_documento_titulacion.cuenta,   
+         cve_carrera =bit_documento_titulacion.cve_carrera,   
+         cve_plan =bit_documento_titulacion.cve_plan,   
+         cve_documento =documento_titulacion.cve_documento,   
+         descripcion =documento_titulacion.descripcion  
+    FROM bit_documento_titulacion,   
+         documento_titulacion,
+			alumnos  
+   WHERE ( bit_documento_titulacion.cve_documento = documento_titulacion.cve_documento ) 
+   and   ( ( bit_documento_titulacion.cve_documento in (30) ))    
+	and   ( bit_documento_titulacion.fecha > :adttm_fecha_inicial AND  
+           bit_documento_titulacion.fecha < :adttm_fecha_final) 
+	and   ( bit_documento_titulacion.cve_carrera not in (null) )
+	and   ( bit_documento_titulacion.cve_plan not in (null) )
+	and   ( bit_documento_titulacion.cuenta = alumnos.cuenta)
+	and	( isnull(bit_documento_titulacion.cancelado,0) not in (1))
+	ORDER BY bit_documento_titulacion.cve_carrera, alumnos.nombre_completo
+
+" arguments=(("adttm_fecha_inicial", datetime),("adttm_fecha_final", datetime)) )
+text(band=header alignment="2" text="Cve Carrera" border="0" color="0" x="424" y="237" height="64" width="351"  name=cve_carrera_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Plan" border="0" color="0" x="779" y="237" height="64" width="351"  name=cve_plan_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve" border="0" color="0" x="1123" y="237" height="64" width="351"  name=cve_documento_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cuenta" border="0" color="0" x="69" y="237" height="64" width="351"  name=cuenta_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Documento" border="0" color="0" x="1554" y="234" height="64" width="911"  name=descripcion_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="~"Alumnos Atendidos del ~"+string( adttm_fecha_inicial,~"dd/mm/yyyy~" )+~" al ~"+string(  adttm_fecha_final ,~"dd/mm/yyyy~" )"border="0" color="0" x="388" y="45" height="64" width="1543" format="[GENERAL]"  name=compute_3  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="779" y="4" height="74" width="351" format="[general]"  name=cve_plan edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="424" y="4" height="74" width="351" format="[general]"  name=cve_carrera edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="0" x="1134" y="4" height="74" width="351" format="[general]"  name=cve_documento edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="string( cuenta )+~"-~"+obten_digito( cuenta )"border="0" color="0" x="110" y="4" height="74" width="285" format="[GENERAL]"  name=compute_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="1562" y="4" height="74" width="911" format="[general]"  name=descripcion edit.limit=255 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="count(cve_carrera for all)"border="0" color="0" x="424" y="4" height="74" width="351" format="[general]"  name=compute_2  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=summary alignment="1" text="Atendidos" border="0" color="0" x="113" y="4" height="74" width="289"  name=t_3  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="<d_inscripcion_masiva_en_libros>" border="0" color="0" x="99" y="3" height="42" width="611"  name=t_1  font.face="Arial" font.height="-6" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

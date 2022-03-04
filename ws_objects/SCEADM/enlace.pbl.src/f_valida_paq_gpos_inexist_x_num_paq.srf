@@ -1,0 +1,76 @@
+﻿$PBExportHeader$f_valida_paq_gpos_inexist_x_num_paq.srf
+global type f_valida_paq_gpos_inexist_x_num_paq from function_object
+end type
+
+forward prototypes
+global function integer f_valida_paq_con_gpos_inexist_x_paq (integer ar_ing_anio, integer ar_ing_periodo)
+global function integer f_valida_paq_gpos_inexist_x_num_paq (integer ar_ing_anio, integer ar_ing_periodo, integer ar_num_paq)
+end prototypes
+
+global function integer f_valida_paq_con_gpos_inexist_x_paq (integer ar_ing_anio, integer ar_ing_periodo);/* VALIDA SI EXISTEN PAQUETES CON GRUPOS INEXISTENTES  */
+integer li_codigo_sql
+long ll_rows
+string ls_mensaje
+
+SELECT IsNull(COUNT(*), 0)
+   INTO : ll_rows
+  FROM paquetes_materias, controlescolar_bd.dbo.materias materias
+WHERE anio= :ar_ing_anio
+	AND clv_per =:ar_ing_periodo
+	AND NOT EXISTS (SELECT * FROM controlescolar_bd.dbo.grupos grupos
+                							WHERE grupos.cve_mat = paquetes_materias.clv_mat
+                								AND grupos.gpo = paquetes_materias.grupo
+                								AND grupos.anio =:ar_ing_anio
+                								AND grupos.periodo =:ar_ing_periodo)
+AND paquetes_materias.clv_mat = materias.cve_mat USING gtr_sadm;
+
+li_codigo_sql = gtr_sadm.SqlCode
+ls_mensaje = gtr_sadm.SqlErrText
+
+IF li_codigo_sql = -1 THEN
+	MessageBox ( "Mensaje del Sistema" , "Error al validar los paquetes con grupos inexistentes ~n~r" + ls_mensaje, StopSign!)
+	return -1
+END IF
+
+IF (li_codigo_sql <> 100) AND (ll_rows > 0)  THEN
+	MessageBox ( "Mensaje del Sistema" , "Existen paquetes con grupos inexistentes...Favor de verificar", StopSign!)
+	return 1
+END IF
+
+return 0
+end function
+
+global function integer f_valida_paq_gpos_inexist_x_num_paq (integer ar_ing_anio, integer ar_ing_periodo, integer ar_num_paq);/* VALIDA SI EXISTEN PAQUETES CON GRUPOS INEXISTENTES  */
+integer li_codigo_sql
+long ll_rows
+string ls_mensaje
+
+SELECT IsNull(COUNT(*), 0)
+   INTO : ll_rows
+  FROM paquetes_materias, controlescolar_bd.dbo.materias materias
+WHERE anio= :ar_ing_anio
+	AND clv_per =:ar_ing_periodo
+	AND num_paq =:ar_num_paq
+	AND NOT EXISTS (SELECT * FROM controlescolar_bd.dbo.grupos grupos
+                							WHERE grupos.cve_mat = paquetes_materias.clv_mat
+                								AND grupos.gpo = paquetes_materias.grupo
+                								AND grupos.anio =:ar_ing_anio
+                								AND grupos.periodo =:ar_ing_periodo)
+AND paquetes_materias.clv_mat = materias.cve_mat USING gtr_sadm;
+
+li_codigo_sql = gtr_sadm.SqlCode
+ls_mensaje = gtr_sadm.SqlErrText
+
+IF li_codigo_sql = -1 THEN
+	MessageBox ( "Mensaje del Sistema" , "Error al validar el paquete con grupos inexistentes ~n~r" + ls_mensaje, StopSign!)
+	return -1
+END IF
+
+IF (li_codigo_sql <> 100) AND (ll_rows > 0)  THEN
+	MessageBox ( "Mensaje del Sistema" , "Existen grupos inexistentes para el paquete: " +string(ar_num_paq), StopSign!)
+	return 1
+END IF
+
+return 0
+end function
+

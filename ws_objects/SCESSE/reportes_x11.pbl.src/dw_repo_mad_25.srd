@@ -1,0 +1,16 @@
+﻿$PBExportHeader$dw_repo_mad_25.srd
+$PBExportComments$Datawindow que trae los planes (Ojo NO los planes de estudio)
+release 5;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=165 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cve_plan dbname="nombre_plan.cve_plan" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=nombre_plan dbname="nombre_plan.nombre_plan" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"nombre_plan~" ) COLUMN(NAME=~"nombre_plan.cve_plan~") COLUMN(NAME=~"nombre_plan.nombre_plan~")) " update="nombre_plan" updatewhere=1 updatekeyinplace=no  sort="cve_plan A " )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="14" y="4" height="73" width="1619" brush.hatch="6" brush.color="10789024" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+text(band=detail alignment="2" text="Nombre del Plan"border="0" color="0" x="759" y="8" height="65" width="439"  name=nombre_tramite_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="Clave"border="0" color="0" x="87" y="8" height="65" width="142"  name=tiempo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="2" color="0" x="60" y="92" height="65" width="289" format="[general]"  name=cve_plan edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=2 alignment="2" tabsequence=10 border="2" color="0" x="522" y="92" height="65" width="1075" format="[general]"  name=nombre_plan editmask.mask="!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )

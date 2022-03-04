@@ -1,0 +1,35 @@
+﻿$PBExportHeader$f_obten_folio_acta.srf
+global type f_obten_folio_acta from function_object
+end type
+
+forward prototypes
+global function long f_obten_folio_acta (long al_cve_doc_control_sep, long al_cve_plantel)
+end prototypes
+
+global function long f_obten_folio_acta (long al_cve_doc_control_sep, long al_cve_plantel);//f_obten_folio_acta
+//al_cve_doc_control_sep long
+//al_cve_plantel integer long
+//
+//Devuelve el ultimo folio en base al documento y plantel recibidos
+
+long ll_ultimo_folio
+
+
+SELECT MAX(dbo.folio_acta_autenticacion.folio_acta)
+INTO :ll_ultimo_folio
+FROM dbo.folio_acta_autenticacion
+WHERE dbo.folio_acta_autenticacion.cve_doc_control_sep = :al_cve_doc_control_sep
+AND   dbo.folio_acta_autenticacion.cve_plantel  = :al_cve_plantel
+USING gtr_sce;
+
+if ISNULL(ll_ultimo_folio) then
+	ll_ultimo_folio= 0
+end if
+
+
+return ll_ultimo_folio
+
+
+
+end function
+

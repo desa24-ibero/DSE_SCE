@@ -1,0 +1,102 @@
+﻿$PBExportHeader$d_horas_profesor_coord_bloque.srd
+release 12;
+datawindow(units=0 timer_interval=0 color=16777215 brushmode=0 transparency=0 gradient.angle=0 gradient.color=8421504 gradient.focus=0 gradient.repetition.count=0 gradient.repetition.length=100 gradient.repetition.mode=0 gradient.scale=100 gradient.spread=100 gradient.transparency=0 picture.blur=0 picture.clip.bottom=0 picture.clip.left=0 picture.clip.right=0 picture.clip.top=0 picture.mode=0 picture.scale.x=100 picture.scale.y=100 picture.transparency=0 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.background=no print.preview.background=no print.preview.outline=yes hidegrayline=no showbackcoloronxp=no picture.file="" )
+header(height=196 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
+summary(height=0 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
+footer(height=0 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
+detail(height=80 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
+table(column=(type=long updatewhereclause=yes name=horas_tot dbname="horas_tot" )
+ retrieve="SELECT horas_tot = SUM(pc.horas_totales_grupo) 
+FROM profesor_cotitular pc, grupos g 
+WHERE pc.periodo = :ai_periodo
+AND pc.anio = :ai_anio
+AND pc.cve_profesor = :al_cve_profesor 
+AND pc.cve_mat = g.cve_mat
+AND pc.gpo = g.gpo
+AND pc.periodo = g.periodo
+AND pc.anio = g.anio 
+AND NOT (pc.cve_mat = :al_cve_mat
+		   AND pc.gpo = :as_gpo)   
+AND	g.cond_gpo = 1
+UNION 
+SELECT horas_tot = SUM(pc.horas_totales_grupo) 
+FROM profesor_cotitular pc, grupos g 
+WHERE pc.cve_mat = :al_cve_mat
+AND pc.gpo = :as_gpo
+AND pc.periodo IN(SELECT periodo from periodos_por_procesos where cve_proceso = 4 and tipo_periodo <> (SELECT tipo FROM periodo WHERE periodo = :ai_periodo))
+AND pc.anio = :ai_anio
+AND pc.cve_profesor = :al_cve_profesor 
+AND pc.cve_mat = g.cve_mat
+AND pc.gpo = g.gpo
+AND pc.periodo = g.periodo
+AND pc.anio = g.anio 
+AND NOT (pc.cve_mat = :al_cve_mat
+		   AND pc.gpo = :as_gpo)
+AND	g.cond_gpo = 1
+
+
+
+
+
+
+
+
+/*SELECT horas_tot_coord = sum(horas_reales), 
+       m.cve_coordinacion, 
+		 c.coordinacion,
+		 g.cve_profesor
+FROM grupos g, materias m, coordinaciones c
+WHERE g.cve_mat = m.cve_mat
+AND	g.cve_profesor = :al_cve_profesor
+AND	m.cve_coordinacion = c.cve_coordinacion
+AND	g.tipo not in (1, 2)
+AND   g.periodo = :ai_periodo
+AND   g.anio = :ai_anio
+AND NOT (g.cve_mat = :al_cve_mat
+		   AND g.gpo = :as_gpo)
+AND	g.cond_gpo = 1
+GROUP BY m.cve_coordinacion, 
+   		c.coordinacion, 
+         g.cve_profesor
+UNION 
+SELECT horas_tot_coord = sum(horas_reales), 
+       m.cve_coordinacion, 
+		 c.coordinacion,
+		 g.cve_profesor
+FROM grupos g, materias m, coordinaciones c
+WHERE g.cve_mat = m.cve_mat
+AND	g.cve_profesor = :al_cve_profesor
+AND	m.cve_coordinacion = c.cve_coordinacion
+AND	g.tipo not in (1, 2)
+AND   g.periodo IN(SELECT periodo from periodos_por_procesos where cve_proceso = 4 and tipo_periodo <> (SELECT tipo FROM periodo WHERE periodo = :ai_periodo))
+AND   g.anio = :ai_anio
+AND NOT (g.cve_mat = :al_cve_mat
+		   AND g.gpo = :as_gpo)
+AND	g.cond_gpo = 1
+GROUP BY m.cve_coordinacion, 
+   		c.coordinacion, 
+         g.cve_profesor
+ORDER BY g.cve_profesor*/
+
+
+
+" arguments=(("al_cve_profesor", number),("al_cve_mat", number),("as_gpo", string),("ai_periodo", number),("ai_anio", number)) )
+text(band=header alignment="2" text="Horas Tot Coord" border="0" color="0" x="5" y="4" height="64" width="439" html.valueishtml="0"  name=horas_tot_coord_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+text(band=header alignment="2" text="Materias
+Cve Coordinacion" border="0" color="0" x="448" y="4" height="128" width="475" html.valueishtml="0"  name=materias_cve_coordinacion_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+text(band=header alignment="2" text="Coordinaciones
+Coordinacion" border="0" color="0" x="928" y="4" height="128" width="2080" html.valueishtml="0"  name=coordinaciones_coordinacion_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+text(band=header alignment="2" text="Grupos
+Cve Profesor" border="0" color="0" x="3008" y="4" height="128" width="352" html.valueishtml="0"  name=grupos_cve_profesor_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+column(band=detail id=1 alignment="0" tabsequence=0 border="0" color="0" x="3360" y="0" height="64" width="2135" html.valueishtml="0"  name=horas_tot visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

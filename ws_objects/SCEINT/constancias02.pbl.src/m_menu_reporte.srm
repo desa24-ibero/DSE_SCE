@@ -1,0 +1,282 @@
+﻿$PBExportHeader$m_menu_reporte.srm
+forward
+global type m_menu_reporte from menu
+end type
+type m_archivo from menu within m_menu_reporte
+end type
+type m_salvar from menu within m_archivo
+end type
+type m_configurarimpresora from menu within m_archivo
+end type
+type m_imprimir from menu within m_archivo
+end type
+type m_- from menu within m_archivo
+end type
+type m_salir from menu within m_archivo
+end type
+type m_archivo from menu within m_menu_reporte
+m_salvar m_salvar
+m_configurarimpresora m_configurarimpresora
+m_imprimir m_imprimir
+m_- m_-
+m_salir m_salir
+end type
+type m_registro from menu within m_menu_reporte
+end type
+type m_cargaregistro from menu within m_registro
+end type
+type m_-2 from menu within m_registro
+end type
+type m_filtrar from menu within m_registro
+end type
+type m_ordenar from menu within m_registro
+end type
+type m_registro from menu within m_menu_reporte
+m_cargaregistro m_cargaregistro
+m_-2 m_-2
+m_filtrar m_filtrar
+m_ordenar m_ordenar
+end type
+type m_ayuda from menu within m_menu_reporte
+end type
+type m_ayuda from menu within m_menu_reporte
+end type
+end forward
+
+global type m_menu_reporte from menu
+m_archivo m_archivo
+m_registro m_registro
+m_ayuda m_ayuda
+end type
+global m_menu_reporte m_menu_reporte
+
+type variables
+datawindow dw
+userobject objeto
+end variables
+
+on m_menu_reporte.create
+m_menu_reporte=this
+this.m_archivo=create m_archivo
+this.m_registro=create m_registro
+this.m_ayuda=create m_ayuda
+this.Item[]={this.m_archivo, &
+this.m_registro, &
+this.m_ayuda}
+end on
+
+on m_menu_reporte.destroy
+destroy(this.m_archivo)
+destroy(this.m_registro)
+destroy(this.m_ayuda)
+end on
+
+type m_archivo from menu within m_menu_reporte
+m_salvar m_salvar
+m_configurarimpresora m_configurarimpresora
+m_imprimir m_imprimir
+m_- m_-
+m_salir m_salir
+end type
+
+on m_archivo.create
+this.Text="Archivo"
+this.m_salvar=create m_salvar
+this.m_configurarimpresora=create m_configurarimpresora
+this.m_imprimir=create m_imprimir
+this.m_-=create m_-
+this.m_salir=create m_salir
+this.Item[]={this.m_salvar, &
+this.m_configurarimpresora, &
+this.m_imprimir, &
+this.m_-, &
+this.m_salir}
+end on
+
+on m_archivo.destroy
+destroy(this.m_salvar)
+destroy(this.m_configurarimpresora)
+destroy(this.m_imprimir)
+destroy(this.m_-)
+destroy(this.m_salir)
+end on
+
+type m_salvar from menu within m_archivo
+end type
+
+event clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	if dw.SaveAs("",Excel!, TRUE)<>1 then
+		dw.SaveAs("",Clipboard!, TRUE)
+		messagebox("No se pudo guardar el archivo","La información se encuentra en el Clipboard")	
+	end if
+end if
+end event
+
+on m_salvar.create
+this.Text="Salvar"
+this.ToolBarItemName="Save!"
+this.ToolBarItemText="Salvar"
+this.ToolBarItemOrder=1
+end on
+
+type m_configurarimpresora from menu within m_archivo
+end type
+
+event clicked;printsetup()
+
+end event
+
+on m_configurarimpresora.create
+this.Text="C&onfigurar Impresora"
+this.ToolBarItemOrder=2
+end on
+
+type m_imprimir from menu within m_archivo
+end type
+
+on m_imprimir.create
+this.Text="&Imprimir~tCtrl+I"
+this.Microhelp="Imprimir "
+this.ToolBarItemName="Print!"
+this.ToolBarItemText="Imprimir"
+this.ToolBarItemOrder=3
+this.Shortcut=329
+end on
+
+event clicked;if isvalid(dw) then
+	dw.modify("Datawindow.print.preview = Yes")
+	SetPointer(HourGlass!)
+	openwithparm(conf_impr,dw)
+end if
+end event
+
+type m_- from menu within m_archivo
+end type
+
+on m_-.create
+this.Text="-"
+end on
+
+type m_salir from menu within m_archivo
+end type
+
+event clicked;Close(ParentWindow)
+end event
+
+on m_salir.create
+this.Text="Salir"
+this.Microhelp="Salir de la Ventana Actual"
+this.ToolBarItemName="Exit!"
+this.ToolBarItemText="Salir"
+this.ToolBarItemOrder=99
+this.ToolBarItemSpace=3
+end on
+
+type m_registro from menu within m_menu_reporte
+m_cargaregistro m_cargaregistro
+m_-2 m_-2
+m_filtrar m_filtrar
+m_ordenar m_ordenar
+end type
+
+on m_registro.create
+this.Text="Registro"
+this.m_cargaregistro=create m_cargaregistro
+this.m_-2=create m_-2
+this.m_filtrar=create m_filtrar
+this.m_ordenar=create m_ordenar
+this.Item[]={this.m_cargaregistro, &
+this.m_-2, &
+this.m_filtrar, &
+this.m_ordenar}
+end on
+
+on m_registro.destroy
+destroy(this.m_cargaregistro)
+destroy(this.m_-2)
+destroy(this.m_filtrar)
+destroy(this.m_ordenar)
+end on
+
+type m_cargaregistro from menu within m_registro
+end type
+
+event clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	dw.triggerevent("carga")
+end if
+end event
+
+on m_cargaregistro.create
+this.Text="&Carga registro~tCtrl+C"
+this.ToolBarItemName="Update!"
+this.ToolBarItemText="Cargar"
+this.ToolBarItemOrder=11
+this.Shortcut=323
+end on
+
+type m_-2 from menu within m_registro
+end type
+
+on m_-2.create
+this.Text="-"
+end on
+
+type m_filtrar from menu within m_registro
+end type
+
+event clicked;string filtro
+
+if isvalid(dw) then
+	SetPointer(HourGlass!)
+	SetNull(filtro)
+	dw.SetFilter(filtro)
+	dw.Filter( )
+	dw.sort()
+	dw.groupcalc()
+end if
+end event
+
+on m_filtrar.create
+this.Text="Filtrar~tAlt+F"
+this.ToolBarItemName="Custom096!"
+this.ToolBarItemText="Filtrar"
+this.ToolBarItemOrder=16
+this.ToolBarItemSpace=3
+this.Shortcut=582
+end on
+
+type m_ordenar from menu within m_registro
+end type
+
+event clicked;string orden
+
+if isvalid(dw) then
+	SetPointer(HourGlass!)
+	SetNull(orden)
+	dw.setsort(orden)
+	SetPointer(HourGlass!)
+	dw.sort()
+	dw.groupcalc()
+end if
+end event
+
+on m_ordenar.create
+this.Text="Ordenar~tAlt+O"
+this.ToolBarItemName="RichTextEdit!"
+this.ToolBarItemText="Ordenar"
+this.ToolBarItemOrder=17
+this.Shortcut=591
+end on
+
+type m_ayuda from menu within m_menu_reporte
+end type
+
+on m_ayuda.create
+this.Text="Ayuda"
+end on
+
+on m_ayuda.destroy
+end on
+

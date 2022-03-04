@@ -1,0 +1,27 @@
+﻿$PBExportHeader$dw_documentos_adeuda.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=10789024 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=106 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes name=cve_flag_documento dbname="documentos.cve_flag_documento" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=cve_documento dbname="documentos.cve_documento" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=cuenta dbname="documentos.cuenta" )
+ column=(type=long update=yes updatewhereclause=yes name=en_archivo dbname="documentos.en_archivo" values="SI	0/NO	1/" )
+ retrieve="  SELECT documentos.cve_flag_documento,   
+         documentos.cve_documento,   
+         documentos.cuenta,
+			documentos.en_archivo  
+    FROM documentos  
+   WHERE ( documentos.cuenta = :cuenta )    
+" update="documentos" updatewhere=1 updatekeyinplace=yes arguments=(("cuenta", number)) )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="48" y="3" height="93" width="2798"  name=rr_1 brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Documento" border="0" color="0" x="494" y="13" height="74" width="494"  name=cve_doc_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Estado" border="0" color="0" x="1997" y="13" height="74" width="187"  name=adeuda_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="En Archivo" border="0" color="0" x="2516" y="13" height="74" width="293"  name=t_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=2 alignment="0" tabsequence=10 border="5" color="0" x="69" y="3" height="67" width="1726" format="[general]"  name=cve_documento dddw.name=dw_tipo_doc dddw.displaycolumn=documento dddw.datacolumn=cve_documento dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=1 alignment="0" tabsequence=20 border="5" color="0" x="1825" y="3" height="67" width="702" format="[general]"  name=cve_flag_documento dddw.name=dw_docs dddw.displaycolumn=desc_flag_documento dddw.datacolumn=cve_flag_documento dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=4 alignment="0" tabsequence=30 border="5" color="0" x="2593" y="3" height="67" width="139" format="[general]"  name=en_archivo ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+htmltable(border="0" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

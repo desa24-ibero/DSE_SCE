@@ -1,0 +1,89 @@
+﻿$PBExportHeader$sacaperiodo_plantel_estatal.srf
+global type sacaperiodo_plantel_estatal from function_object
+end type
+
+forward prototypes
+global function string sacaperiodo_plantel_estatal (integer anio, integer peri, integer obs)
+end prototypes
+
+global function string sacaperiodo_plantel_estatal (integer anio, integer peri, integer obs);//sacaperiodo_plantel_estatal
+//Recibe integer	anio
+//			integer	peri
+//			integer	obs
+
+integer li_plantel_vigente, li_anio_inicial, li_anio_final
+string ls_acreditacion
+STRING ls_dsc, ls_intervalo_anios
+uo_periodo_servicios luo_periodo_servicios
+
+li_plantel_vigente = f_obten_cve_plantel_vigente()
+
+if li_plantel_vigente = -1 then
+	MessageBox("Error en consulta de plantel", "No es posible consultar el plantel vigente", StopSign!)
+	return ""
+end if
+//SOLO SI ES TIJUANA EVALÚA LOS PLANES ESTATALES
+//DE LO CONTRARIO DEVUELVE EL PERIODO Y AÑO
+if li_plantel_vigente = 20 then
+	choose case peri
+	//Semestral (Ejemplo)
+	//		2017-2018-1   Agosto (Otoño 2017)
+	//		2017-2018-2   Enero (Enero 2018)
+	//		2018-2019-1   Agosto (Otoño 2018)
+		case 0
+			li_anio_inicial = anio -1 
+			li_anio_final = anio	
+			ls_intervalo_anios= string(li_anio_inicial)+'-'+string(li_anio_final)+'-2'
+		case 1
+			li_anio_inicial = anio -1 
+			li_anio_final = anio	
+			ls_intervalo_anios= string(li_anio_inicial)+'-'+string(li_anio_final)+'-2'
+		case 2
+			li_anio_inicial = anio 
+			li_anio_final = li_anio_inicial +1		
+			ls_intervalo_anios= string(li_anio_inicial)+'-'+string(li_anio_final)+'-1'
+		
+	//Trimestral (Ejemplo)
+	//		2017-2018-1 Noviembre (Trimestre IV-2017)
+	//		2017-2018-2 Enero (Trimestre I-2018)
+	//		2017-2018-3 Marzo (Trimestre II-2018)
+	//		2017-2018-4 junio (Trimestre III-2018)
+	//		2018-2019- 1 Noviembre (Trimestre IV-2018)
+
+		case 3
+			li_anio_inicial = anio -1 
+			li_anio_final = anio	
+			ls_intervalo_anios= string(li_anio_inicial)+'-'+string(li_anio_final)+'-2'
+		case 4
+			li_anio_inicial = anio -1 
+			li_anio_final = anio	
+			ls_intervalo_anios= string(li_anio_inicial)+'-'+string(li_anio_final)+'-3'
+		case 5
+			li_anio_inicial = anio -1 
+			li_anio_final = anio	
+			ls_intervalo_anios= string(li_anio_inicial)+'-'+string(li_anio_final)+'-4'
+		case 6
+			li_anio_inicial = anio 
+			li_anio_final = li_anio_inicial +1		
+			ls_intervalo_anios= string(li_anio_inicial)+'-'+string(li_anio_final)+'-1'		
+		case else
+			ls_intervalo_anios= '--'
+	end choose
+	RETURN ls_intervalo_anios
+
+else
+		luo_periodo_servicios = CREATE uo_periodo_servicios 
+		luo_periodo_servicios.f_carga_periodos( gs_tipo_periodo, 'L', gtr_sce) 
+	
+		ls_dsc = luo_periodo_servicios.f_recupera_descripcion( peri, 'C') 
+	
+		DESTROY(luo_periodo_servicios) 
+		return Right(string(anio),2) + ls_dsc
+end if
+
+
+
+
+
+end function
+

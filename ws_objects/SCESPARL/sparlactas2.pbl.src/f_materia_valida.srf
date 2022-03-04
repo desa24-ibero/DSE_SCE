@@ -1,0 +1,38 @@
+﻿$PBExportHeader$f_materia_valida.srf
+global type f_materia_valida from function_object
+end type
+
+forward prototypes
+global function boolean f_materia_valida (long al_cve_mat, integer ai_cve_coordinacion)
+end prototypes
+
+global function boolean f_materia_valida (long al_cve_mat, integer ai_cve_coordinacion);integer li_codigo_sql
+long ll_cve_mat
+string ls_mensaje_sql
+
+if al_cve_mat= 0 then
+	return false
+end if
+
+SELECT dbo.materias.cve_mat 
+INTO	:ll_cve_mat
+FROM	dbo.materias
+WHERE dbo.materias.cve_mat = :al_cve_mat
+AND	(dbo.materias.cve_coordinacion = :ai_cve_coordinacion
+OR		:ai_cve_coordinacion = 9999)
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 or isnull(ll_cve_mat) then
+	return false
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar materias", ls_mensaje_sql)
+	return false
+end if
+
+return true
+
+end function
+

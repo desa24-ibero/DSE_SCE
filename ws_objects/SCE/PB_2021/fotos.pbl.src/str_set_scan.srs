@@ -1,0 +1,17 @@
+﻿$PBExportHeader$str_set_scan.srs
+global type str_set_scan from structure
+	integer		scanmode
+	integer		npages
+	integer		resolution
+	integer		feedertype
+	integer		compression
+	integer		paperformat
+	integer		custleft
+	integer		custtop
+	integer		custright
+	integer		custbottom
+	integer		brightness
+	integer		contrast
+	integer		duplex
+end type
+

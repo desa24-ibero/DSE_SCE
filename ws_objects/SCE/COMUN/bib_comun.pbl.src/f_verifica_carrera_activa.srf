@@ -1,0 +1,51 @@
+﻿$PBExportHeader$f_verifica_carrera_activa.srf
+global type f_verifica_carrera_activa from function_object
+end type
+
+forward prototypes
+global function boolean f_verifica_carrera_activa (long al_cuenta, readonly long al_cve_carrera)
+end prototypes
+
+global function boolean f_verifica_carrera_activa (long al_cuenta, readonly long al_cve_carrera);
+INTEGER le_existe
+
+
+
+// Se consulta academicos 
+SELECT COUNT(*) 
+INTO :le_existe  
+FROM academicos 
+WHERE cuenta = :al_cuenta 
+AND cve_carrera = :al_cve_carrera 
+USING gtr_sce; 
+IF gtr_sce.SQLCODE < 0 THEN 
+	MESSAGEBOX("Error", "Se produjo un error al consultar academicos: " + gtr_sce.SQLERRTEXT) 
+	RETURN FALSE
+END IF
+
+IF le_existe > 0 THEN RETURN TRUE 
+
+// Se consulta carreras concurrentes 
+SELECT COUNT(*) 
+INTO :le_existe  
+FROM mat_insc_carrera_simul 
+WHERE cuenta = :al_cuenta 
+AND cve_carrera = :al_cve_carrera 
+USING gtr_sce; 
+IF gtr_sce.SQLCODE < 0 THEN 
+	MESSAGEBOX("Error", "Se produjo un error al consultar el : " + gtr_sce.SQLERRTEXT) 
+	RETURN FALSE
+END IF
+
+IF le_existe > 0 THEN 
+	RETURN TRUE 
+ELSE
+	RETURN FALSE 
+END IF 
+
+
+
+
+
+end function
+

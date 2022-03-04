@@ -1,0 +1,49 @@
+﻿$PBExportHeader$f_obten_version_vigente.srf
+global type f_obten_version_vigente from function_object
+end type
+
+forward prototypes
+global function long f_obten_version_vigente (ref long al_clv_ver, ref long al_clv_per, ref long al_anio)
+end prototypes
+
+global function long f_obten_version_vigente (ref long al_clv_ver, ref long al_clv_per, ref long al_anio);//f_obten_version_vigente
+//Recibe:
+//	al_clv_ver		long
+//	al_clv_per		long
+//	al_anio			long
+//Devuelve:
+//	integer de control que indica si se pudo o no consultar
+//	al_clv_ver		long
+//	al_clv_per		long
+//	al_anio			long
+
+long ll_num_insertados
+integer li_codigo_sql
+string ls_mensaje_sql
+
+SELECT clv_ver, 
+		 clv_per, 
+		 anio
+INTO  :al_clv_ver, 
+		:al_clv_per, 
+		:al_anio
+FROM parametros_admision
+WHERE vigente = 1
+USING gtr_sadm;
+
+li_codigo_sql = gtr_sadm.SqlCode
+ls_mensaje_sql = gtr_sadm.SqlErrText
+
+if li_codigo_sql = 100 then
+	MessageBox("No existe una versión vigente", "Favor de ingresar a la venta de Parámetros y asignar una",StopSign!)
+	return -1
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar parametros_admision", ls_mensaje_sql)
+	return -1
+end if
+
+return li_codigo_sql
+
+
+end function
+

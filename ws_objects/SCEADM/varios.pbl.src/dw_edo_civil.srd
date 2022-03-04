@@ -1,0 +1,12 @@
+﻿$PBExportHeader$dw_edo_civil.srd
+$PBExportComments$Catálogo de Estados Civiles, Leído de SCE.
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cve_edocivil dbname="edo_civil.cve_edocivil" )
+ column=(type=char(11) updatewhereclause=yes name=edo_civil dbname="edo_civil.edo_civil" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"edo_civil~" ) COLUMN(NAME=~"edo_civil.cve_edocivil~") COLUMN(NAME=~"edo_civil.edo_civil~")) " )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="10" y="4" height="77" width="522" format="[general]"  name=edo_civil edit.limit=11 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

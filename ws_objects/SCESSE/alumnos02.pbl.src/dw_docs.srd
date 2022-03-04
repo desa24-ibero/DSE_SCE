@@ -1,0 +1,12 @@
+﻿$PBExportHeader$dw_docs.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=15780518 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=5 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=109 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cve_flag_documento dbname="flag_documentos.cve_flag_documento" )
+ column=(type=char(15) update=yes updatewhereclause=yes name=desc_flag_documento dbname="flag_documentos.desc_flag_documento" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"flag_documentos~" ) COLUMN(NAME=~"flag_documentos.cve_flag_documento~") COLUMN(NAME=~"flag_documentos.desc_flag_documento~")) " update="flag_documentos" updatewhere=1 updatekeyinplace=no )
+column(band=detail id=1 alignment="1" tabsequence=10 border="5" color="0" x="78" y="16" height="77" width="106" format="[general]"  name=cve_flag_documento edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="5" color="0" x="215" y="16" height="77" width="366" format="[general]"  name=desc_flag_documento edit.limit=15 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )

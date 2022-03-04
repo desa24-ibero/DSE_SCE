@@ -1,0 +1,47 @@
+﻿$PBExportHeader$f_actualiza_titular_intercambio.srf
+global type f_actualiza_titular_intercambio from function_object
+end type
+
+forward prototypes
+global function integer f_actualiza_titular_intercambio (integer ai_periodo, integer ai_anio, long al_num_empleado, transaction atr_transaction)
+end prototypes
+
+global function integer f_actualiza_titular_intercambio (integer ai_periodo, integer ai_anio, long al_num_empleado, transaction atr_transaction);//f_actualiza_titular_intercambio
+//
+//Recibe:
+//ai_periodo				integer
+//ai_anio					integer
+//al_num_empleado			long
+//atr_transaction			transaction
+
+integer li_codigo_sql, li_cve_intercambio = 5
+long li_no_acta
+string ls_mensaje_sql
+
+UPDATE acta_evaluacion_preeliminar
+SET cve_profesor_rh = :li_cve_intercambio,	
+	 cve_profesor = :al_num_empleado
+WHERE cve_profesor = :li_cve_intercambio		 	
+AND periodo = :ai_periodo
+AND anio = :ai_anio
+USING atr_transaction;
+
+li_codigo_sql = atr_transaction.SqlCode
+ls_mensaje_sql = atr_transaction.SqlErrText
+
+if li_codigo_sql = 100  then	
+	return li_codigo_sql
+elseif li_codigo_sql = -1 then
+	rollback using atr_transaction;
+	MessageBox("Error al actualizar en acta_evaluacion_preeliminar el titular de intercambio", ls_mensaje_sql)
+	return li_codigo_sql
+elseif li_codigo_sql = 0 then
+	commit using atr_transaction;
+end if
+
+
+
+return li_codigo_sql
+
+end function
+

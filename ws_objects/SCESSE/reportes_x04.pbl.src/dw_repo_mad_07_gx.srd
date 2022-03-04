@@ -1,0 +1,29 @@
+﻿$PBExportHeader$dw_repo_mad_07_gx.srd
+$PBExportComments$Datawindow para las Etiquetas de Correspondencia, de IMPRESION
+release 5;
+datawindow(units=2 timer_interval=0 color=16777215 processing=2 print.documentname="" print.orientation = 0 print.margin.left = 62 print.margin.right = 62 print.margin.top = 842 print.margin.bottom = 333 print.paper.source = 0 print.paper.size = 5 print.prompt=yes label.name="Laser Address 1.00 x 4.00 5161,5261" label.width=4000 label.height=1200 label.rows=7 label.rows.spacing=150 label.columns=2 label.columns.spacing=180 label.topdown=no label.sheet=yes label.shape=roundrectangle label.ellipse_height=150 label.ellipse_width=150 )
+detail(height=1197 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=academicos_cuenta dbname="cuenta" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_apaterno dbname="apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_amaterno dbname="amaterno" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_nombre dbname="nombre" )
+ column=(type=char(50) updatewhereclause=yes name=domicilio_calle dbname="calle" )
+ column=(type=char(50) updatewhereclause=yes name=domicilio_colonia dbname="colonia" )
+ column=(type=char(6) updatewhereclause=yes name=domicilio_cod_postal dbname="cod_postal" )
+ column=(type=char(31) updatewhereclause=yes name=estados_estado dbname="estado" )
+ column=(type=char(70) updatewhereclause=yes name=alumnos_nombre_completo dbname="nombre_completo" )
+ retrieve="  SELECT  academicos.cuenta ,           alumnos.apaterno ,           alumnos.amaterno ,           alumnos.nombre ,           domicilio.calle ,           domicilio.colonia ,           domicilio.cod_postal ,           estados.estado ,           alumnos.nombre_completo     
+        FROM academicos ,           alumnos ,           carreras ,           domicilio ,           estados ,           banderas_inscrito     
+        WHERE ( academicos.cuenta = alumnos.cuenta ) and     
+     ( academicos.cve_carrera = carreras.cve_carrera ) and
+          ( academicos.cuenta = banderas_inscrito.cuenta ) and 
+         ( academicos.cuenta = domicilio.cuenta ) and
+          ( domicilio.cve_estado = estados.cve_estado ) and
+          ( academicos.cve_plan in ( :plan ) ) and 
+         ( academicos.cve_carrera in ( :carrera ) )   " arguments=(("plan", numberlist),("carrera", numberlist))  sort="alumnos_nombre_completo A " )
+compute(band=detail alignment="0" expression="~"C.P. ~"+ domicilio_cod_postal "border="0" color="0" x="114" y="729" height="145" width="864" format="[general]"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression=" alumnos_apaterno + ~"  ~"+ alumnos_amaterno +~"  ~"+ alumnos_nombre "border="0" color="0" x="104" y="93" height="145" width="3031" format="[general]"  font.face="Arial" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="104" y="312" height="135" width="3802" format="[general]"  name=domicilio_calle edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression=" academicos_cuenta + ~" - ~"+obten_digito( academicos_cuenta )"border="0" color="0" x="3239" y="93" height="145" width="666" format="[general]"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" font.italic="1" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="104" y="520" height="135" width="3802" format="[general]"  name=domicilio_colonia edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="1625" y="739" height="135" width="2281" format="[general]"  name=estados_estado edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

@@ -1,0 +1,36 @@
+﻿$PBExportHeader$f_elimina_grupos_bloqueados.srf
+global type f_elimina_grupos_bloqueados from function_object
+end type
+
+forward prototypes
+global function integer f_elimina_grupos_bloqueados ()
+end prototypes
+
+global function integer f_elimina_grupos_bloqueados ();//f_elimina_grupos_bloqueados
+//Elimina todos los grupos bloqueados registrados en la tabla reinscripcion_materias
+//*! NOTA IMPORTANTE
+//Eliminar los grupos bloqueados implica que las materias dejan de estar 
+//restringidas por carrera  
+// NOTA IMPORTANTE !*
+
+Integer  li_codigo_sql
+String ls_mensaje_sql
+
+DELETE FROM reinscripcion_materias
+USING gtr_sce;
+
+ls_mensaje_sql= gtr_sce.SqlErrtext
+li_codigo_sql= gtr_sce.SqlCode
+
+IF li_codigo_sql <> 0 THEN
+	ROLLBACK USING gtr_sce;
+	Messagebox("Error al eliminar reinscripcion_materias en f_elimina_grupos_bloqueados",ls_mensaje_sql,StopSign!)
+ELSE
+	COMMIT USING gtr_sce;
+END IF
+
+RETURN li_codigo_sql
+
+
+end function
+

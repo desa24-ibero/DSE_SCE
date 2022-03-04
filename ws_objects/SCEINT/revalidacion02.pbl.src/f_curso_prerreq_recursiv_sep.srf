@@ -1,0 +1,51 @@
+﻿$PBExportHeader$f_curso_prerreq_recursiv_sep.srf
+global type f_curso_prerreq_recursiv_sep from function_object
+end type
+
+forward prototypes
+global function integer f_curso_prerreq_recursiv_sep (integer ai_folio, long al_cve_mat, integer ai_cve_carrera, integer ai_cve_plan, long al_array_long[])
+end prototypes
+
+global function integer f_curso_prerreq_recursiv_sep (integer ai_folio, long al_cve_mat, integer ai_cve_carrera, integer ai_cve_plan, long al_array_long[]);///*
+// *		Nombre	f_curso_prerreq_recursiv_sep
+// *		Recibe	ai_folio,al_cve_mat,ai_cve_carrera,ai_cve_plan, al_array_long[]
+// *		Regresa	1  si el alumno ai_folio ha cursado los prerrequisitos necesarios
+// *						para cursar la materia al_cve_mat dada la carrera ai_cve_carrera ai_cve_plan
+// *					0  en caso contrario
+// *					-1	error de comunicacion
+// *					APR 21/06/2004
+// */
+
+
+
+integer li_indice, li_curso_prerreq, li_curso_prerreq_rec
+long ll_cve_mat_actual, ll_lista_mats[]
+
+
+
+for li_indice= 1 to upperbound(al_array_long[])
+	ll_cve_mat_actual = al_array_long[li_indice]
+	li_curso_prerreq	=f_curso_prerreq_reval_sep(ai_folio, ll_cve_mat_actual, ai_cve_carrera, ai_cve_plan)
+	ll_lista_mats = gl_mats_prerreq[]
+	li_curso_prerreq_rec= 1
+	if li_curso_prerreq = 1 and upperbound(ll_lista_mats)= 0 then
+		//Bien
+	elseif li_curso_prerreq = 1 and upperbound(ll_lista_mats)<> 0 then
+		li_curso_prerreq_rec= f_curso_prerreq_recursiv_sep(ai_folio, ll_cve_mat_actual, &
+		                     ai_cve_carrera, ai_cve_plan, ll_lista_mats)
+	elseif li_curso_prerreq= -1 then
+		MessageBox("Revision Recursiva Erronea","No es posible continuar la revision")
+	elseif li_curso_prerreq= 0 then
+		return 0
+	end if
+	
+	if li_curso_prerreq_rec= 0 then
+		return 0
+	end if
+next
+
+return 1
+
+
+end function
+

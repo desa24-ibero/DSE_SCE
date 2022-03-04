@@ -1,0 +1,138 @@
+﻿$PBExportHeader$m_examen_extrao_tit.srm
+forward
+global type m_examen_extrao_tit from menu
+end type
+type m_comprobante from menu within m_examen_extrao_tit
+end type
+type m_imrpimir from menu within m_comprobante
+end type
+type m_configurarimpresora from menu within m_comprobante
+end type
+type m_comprobante from menu within m_examen_extrao_tit
+m_imrpimir m_imrpimir
+m_configurarimpresora m_configurarimpresora
+end type
+type m_bajas from menu within m_examen_extrao_tit
+end type
+type m_dardebajalamateria from menu within m_bajas
+end type
+type m_bajas from menu within m_examen_extrao_tit
+m_dardebajalamateria m_dardebajalamateria
+end type
+type m_salir from menu within m_examen_extrao_tit
+end type
+type m_salir from menu within m_examen_extrao_tit
+end type
+end forward
+
+global type m_examen_extrao_tit from menu
+m_comprobante m_comprobante
+m_bajas m_bajas
+m_salir m_salir
+end type
+global m_examen_extrao_tit m_examen_extrao_tit
+
+on m_examen_extrao_tit.create
+m_examen_extrao_tit=this
+this.m_comprobante=create m_comprobante
+this.m_bajas=create m_bajas
+this.m_salir=create m_salir
+this.Item[]={this.m_comprobante, &
+this.m_bajas, &
+this.m_salir}
+end on
+
+on m_examen_extrao_tit.destroy
+destroy(this.m_comprobante)
+destroy(this.m_bajas)
+destroy(this.m_salir)
+end on
+
+type m_comprobante from menu within m_examen_extrao_tit
+m_imrpimir m_imrpimir
+m_configurarimpresora m_configurarimpresora
+end type
+
+on m_comprobante.create
+this.Text="Comprobante"
+this.m_imrpimir=create m_imrpimir
+this.m_configurarimpresora=create m_configurarimpresora
+this.Item[]={this.m_imrpimir, &
+this.m_configurarimpresora}
+end on
+
+on m_comprobante.destroy
+destroy(this.m_imrpimir)
+destroy(this.m_configurarimpresora)
+end on
+
+type m_imrpimir from menu within m_comprobante
+end type
+
+on m_imrpimir.create
+this.Text="Imrpimir. . ."
+this.Microhelp="Imprime el comprobante"
+this.ToolBarItemName="Print!"
+this.ToolBarItemText="Imprime el comprobante"
+end on
+
+event clicked;w_examen_extrao_tit.dw_examen_extrao_titulo_comp.Event Carga()
+openwithparm(conf_impr,w_examen_extrao_tit.dw_examen_extrao_titulo_comp)
+end event
+
+type m_configurarimpresora from menu within m_comprobante
+end type
+
+on m_configurarimpresora.create
+this.Text="Configurar Impresora"
+end on
+
+event clicked;printsetup()
+end event
+
+type m_bajas from menu within m_examen_extrao_tit
+m_dardebajalamateria m_dardebajalamateria
+end type
+
+on m_bajas.create
+this.Text="Bajas"
+this.m_dardebajalamateria=create m_dardebajalamateria
+this.Item[]={this.m_dardebajalamateria}
+end on
+
+on m_bajas.destroy
+destroy(this.m_dardebajalamateria)
+end on
+
+type m_dardebajalamateria from menu within m_bajas
+end type
+
+on m_dardebajalamateria.create
+this.Text="Dar de baja la materia~tCtrl+B"
+this.Microhelp="Dar de baja la materia seleccionada"
+this.ToolBarItemName="NotFound!"
+this.ToolBarItemText="Dar de baja la materia seleccionada"
+this.Shortcut=322
+end on
+
+event clicked;w_examen_extrao_tit.dw_examen_extrao_titulo.Event borramateria()
+
+end event
+
+type m_salir from menu within m_examen_extrao_tit
+end type
+
+event clicked;Close(ParentWindow)
+end event
+
+on m_salir.create
+this.Text="Salir"
+this.Microhelp="Cerrar la ventana"
+this.ToolBarItemName="Exit!"
+this.ToolBarItemText="Cerrar la ventana"
+this.ToolBarItemSpace=2
+end on
+
+on m_salir.destroy
+end on
+

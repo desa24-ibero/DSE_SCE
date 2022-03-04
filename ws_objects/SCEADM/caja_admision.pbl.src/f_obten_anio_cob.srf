@@ -1,0 +1,42 @@
+﻿$PBExportHeader$f_obten_anio_cob.srf
+global type f_obten_anio_cob from function_object
+end type
+
+forward prototypes
+global function integer f_obten_anio_cob (integer ai_anio)
+end prototypes
+
+global function integer f_obten_anio_cob (integer ai_anio);// f_obten_anio_cob
+// Regresa el anio equivalente de cobranzas
+// 
+// Recibe:
+// ai_anio	:integer
+
+datetime ldttm_fecha
+string ls_mensaje, ls_anio_cob, ls_anio
+integer li_codigo, li_lon_anio, li_anio_cob
+
+ls_mensaje = ""
+ls_anio_cob = ""
+
+
+ls_anio = string(ai_anio)
+
+li_lon_anio= len(ls_anio)
+
+ls_anio_cob = mid(ls_anio, li_lon_anio - 1, 2)
+
+ls_mensaje="El anio utilizado no es valido"
+
+
+if not isnumber(ls_anio_cob) then
+	MessageBox("Error en la conversion de anios", ls_mensaje )
+else
+	li_anio_cob= integer(ls_anio_cob)
+end if
+
+return li_anio_cob
+
+
+end function
+

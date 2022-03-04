@@ -1,0 +1,58 @@
+﻿$PBExportHeader$dw_ae_eti_corr_pad_ant.srd
+release 6;
+datawindow(units=2 timer_interval=0 color=16777215 processing=2 print.documentname="" print.orientation = 0 print.margin.left = 62 print.margin.right = 62 print.margin.top = 842 print.margin.bottom = 333 print.paper.source = 0 print.paper.size = 5 print.prompt=yes print.buttons=no print.preview.buttons=no label.name="Laser Address 1.33 x 4.00 5162,5262" label.width=4000 label.height=1200 label.rows=7 label.rows.spacing=150 label.columns=2 label.columns.spacing=180 label.topdown=no label.sheet=yes label.shape=roundrectangle label.ellipse_height=130 label.ellipse_width=130 )
+detail(height=1200 color="536870912"  height.autosize=yes)
+table(column=(type=long updatewhereclause=yes name=general_cuenta dbname="general.cuenta" )
+ column=(type=long updatewhereclause=yes name=aspiran_folio dbname="aspiran.folio" )
+ column=(type=long updatewhereclause=yes name=clv_carr dbname="aspiran.clv_carr" )
+ column=(type=char(50) updatewhereclause=yes name=padres_nombre dbname="padres.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=padres_apaterno dbname="padres.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=padres_amaterno dbname="padres.amaterno" )
+ column=(type=char(50) updatewhereclause=yes name=padres_calle dbname="padres.calle" )
+ column=(type=char(6) updatewhereclause=yes name=padres_codigo_pos dbname="padres.codigo_pos" )
+ column=(type=char(50) updatewhereclause=yes name=padres_colonia dbname="padres.colonia" )
+ column=(type=long updatewhereclause=yes name=padres_estado dbname="padres.estado" )
+ column=(type=char(1) updatewhereclause=yes name=sexo_padres_sexo dbname="sexo_padres.sexo" )
+ retrieve="  SELECT dbo.general.cuenta,
+			dbo.aspiran.folio,   
+         dbo.aspiran.clv_carr,   
+         dbo.padres.nombre,   
+         dbo.padres.apaterno,   
+         dbo.padres.amaterno,   
+         dbo.padres.calle,   
+         dbo.padres.codigo_pos,   
+         dbo.padres.colonia,   
+         dbo.padres.estado,
+		sexo_padres.sexo
+    FROM dbo.aspiran,   
+         dbo.general,   
+         dbo.padres,
+		sexo_padres
+   WHERE ( dbo.aspiran.folio = dbo.general.folio ) and  
+         ( dbo.aspiran.clv_ver = dbo.general.clv_ver ) and  
+         ( dbo.aspiran.clv_per = dbo.general.clv_per ) and  
+         ( dbo.aspiran.anio = dbo.general.anio ) and  
+         ( dbo.aspiran.folio = dbo.padres.folio ) and  
+         ( dbo.aspiran.clv_ver = dbo.padres.clv_ver ) and  
+         ( dbo.aspiran.clv_per = dbo.padres.clv_per ) and 
+         ( dbo.aspiran.anio = dbo.padres.anio ) and
+	( dbo.aspiran.folio = sexo_padres.folio  ) and
+         (sexo_padres.cargado = 2) and
+         ( dbo.aspiran.clv_per = :per ) AND  
+         ( dbo.aspiran.anio = :ani ) AND  
+         (( :carr = 9999 ) OR  
+         ( dbo.aspiran.clv_carr = :carr )) AND  
+         dbo.aspiran.pago_insc = 1    
+" arguments=(("per", number),("ani", number),("carr", number))  sort="clv_carr A padres_apaterno A padres_amaterno A padres_nombre A " )
+compute(band=detail alignment="0" expression="general_cuenta+'--'+obten_digito(general_cuenta) "border="0" color="16777215" x="1175" y="91" height="108" width="166" format="[general]"  name=foli  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="16777215" x="1408" y="91" height="108" width="166" format="[general]"  name=sexo_padres_sexo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="16777215" x="1633" y="91" height="108" width="166" format="[general]"  name=aspiran_folio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression="general_cuenta+'-'+obten_digito(general_cuenta)"border="0" color="0" x="2625" y="41" height="158" width="833" format="[general]"  font.face="Arial" font.height="-7" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="3516" y="41" height="158" width="333" format="[general]"  name=clv_carr edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-7" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression="if( sexo_padres_sexo = 'M', 'Sr. ', 'Sra.' )"border="0" color="0" x="166" y="225" height="166" width="208" format="[general]"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression="padres_nombre+' '+padres_apaterno+' '+padres_amaterno "border="0" color="0" x="416" y="225" height="166" width="3433" format="[general]"  name=nombr  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression="padres_calle"border="0" color="0" x="166" y="425" height="166" width="3675" format="[general]"  name=direccion  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression="padres_colonia"border="0" color="0" x="166" y="625" height="166" width="3675" format="[general]"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression="'CÓDIGO POSTAL  '+padres_codigo_pos"border="0" color="0" x="166" y="825" height="141" width="2216" format="[general]"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="166" y="1000" height="166" width="3675" format="[general]"  name=padres_estado dddw.name=dw_estado dddw.displaycolumn=estado dddw.datacolumn=cve_estado dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

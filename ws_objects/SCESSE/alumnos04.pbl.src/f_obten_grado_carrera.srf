@@ -1,0 +1,41 @@
+﻿$PBExportHeader$f_obten_grado_carrera.srf
+global type f_obten_grado_carrera from function_object
+end type
+
+forward prototypes
+global function string f_obten_grado_carrera (long al_cve_carrera)
+end prototypes
+
+global function string f_obten_grado_carrera (long al_cve_carrera);//f_obten_grado_carrera
+//Obtiene la clave del grado de la carrrera correspondiente recibida
+//Recibe			al_cve_carrera	long 
+//Devuelve		string
+
+integer li_codigo_sql
+string ls_mensaje_sql,  ls_grado_carrera, ls_null
+
+SetNull(ls_null)
+
+SELECT isnull(dbo.carreras.cve_grado,"")
+INTO	:ls_grado_carrera
+FROM	dbo.carreras
+WHERE dbo.carreras.cve_carrera = :al_cve_carrera
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 then
+	MessageBox("Carrera inexistente", "El grado/carrera ["+string(al_cve_carrera)+"] no existe", StopSign!)
+	return ls_null
+elseif isnull(ls_grado_carrera) then
+	return ""
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar grado/carreras", ls_mensaje_sql,StopSign!)
+	return  ls_null
+end if
+
+return ls_grado_carrera
+
+end function
+

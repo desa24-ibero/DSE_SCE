@@ -1,0 +1,61 @@
+﻿$PBExportHeader$m_grupos_impartidos_salir.srm
+forward
+global type m_grupos_impartidos_salir from menu
+end type
+type m_salir from menu within m_grupos_impartidos_salir
+end type
+global type m_grupos_impartidos_salir from menu
+m_salir m_salir
+end type
+end forward
+
+global type m_grupos_impartidos_salir from menu
+m_salir m_salir
+end type
+global m_grupos_impartidos_salir m_grupos_impartidos_salir
+
+type variables
+datawindow dw, dw_2
+userobject objeto
+end variables
+
+forward prototypes
+public function integer asigna_dw (datawindow a_dw)
+end prototypes
+
+public function integer asigna_dw (datawindow a_dw);dw = a_dw
+return 1
+end function
+
+on m_grupos_impartidos_salir.create
+m_grupos_impartidos_salir=this
+call super::create
+this.m_salir=create m_salir
+this.Item[UpperBound(this.Item)+1]=this.m_salir
+end on
+
+on m_grupos_impartidos_salir.destroy
+call super::destroy
+destroy(this.m_salir)
+end on
+
+type m_salir from menu within m_grupos_impartidos_salir
+end type
+
+event clicked;Close(ParentWindow)
+end event
+
+on m_salir.create
+call super::create
+this.text = "Salir"
+this.microhelp = "Salir de la Ventana Actual"
+this.toolbaritemname = "Exit!"
+this.toolbaritemtext = "Salir"
+this.toolbaritemorder = 99
+this.toolbaritemspace = 3
+end on
+
+on m_salir.destroy
+call super::destroy
+end on
+

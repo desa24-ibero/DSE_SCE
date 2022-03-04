@@ -1,0 +1,49 @@
+﻿$PBExportHeader$d_historico_porcuentaanioper.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=136 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=88 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=historico_cuenta dbname="historico.cuenta" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=historico_cve_mat dbname="historico.cve_mat" )
+ column=(type=char(2) update=yes updatewhereclause=yes key=yes name=historico_gpo dbname="historico.gpo" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=historico_periodo dbname="historico.periodo" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=historico_anio dbname="historico.anio" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=historico_cve_carrera dbname="historico.cve_carrera" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=historico_cve_plan dbname="historico.cve_plan" )
+ column=(type=char(2) update=yes updatewhereclause=yes key=yes name=historico_calificacion dbname="historico.calificacion" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=historico_observacion dbname="historico.observacion" )
+ column=(type=char(42) updatewhereclause=yes name=materias_materia dbname="materias.materia" )
+ retrieve="  SELECT dbo.historico.cuenta,   
+         dbo.historico.cve_mat,   
+         dbo.historico.gpo,   
+         dbo.historico.periodo,   
+         dbo.historico.anio,   
+         dbo.historico.cve_carrera,   
+         dbo.historico.cve_plan,   
+         dbo.historico.calificacion,   
+         dbo.historico.observacion,   
+         dbo.materias.materia  
+    FROM dbo.historico,   
+         dbo.materias  
+   WHERE ( dbo.historico.cve_mat = dbo.materias.cve_mat ) and  
+         ( ( dbo.historico.cuenta = :cuenta ) and 
+			  ( dbo.historico.anio = :anio ) and
+			  ( dbo.historico.periodo = :periodo ) )    
+" update="dbo.historico" updatewhere=0 updatekeyinplace=yes arguments=(("cuenta", number),("anio", number),("periodo", number)) )
+roundrectangle(band=header ellipseheight="60" ellipsewidth="69"x="14" y="12" height="124" width="2400" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Clave"border="0" color="0" x="37" y="36" height="76" width="251"  name=mat_inscritas_cve_mat_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Grupo"border="0" color="0" x="320" y="36" height="76" width="165"  name=mat_inscritas_gpo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Materia"border="0" color="0" x="1161" y="36" height="76" width="251"  name=materias_materia_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="18" y="4" height="76" width="279" format="[general]"  name=cve_mat edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="311" y="4" height="76" width="73" format="[general]"  name=gpo edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="398" y="4" height="76" width="1134" format="[general]"  name=materias_materia edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="0" x="1545" y="4" height="76" width="270" format="[general]"  name=periodo ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="1829" y="4" height="76" width="169" format="[general]"  name=anio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="2011" y="4" height="76" width="82" format="[general]"  name=calificacion edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="0" x="2107" y="4" height="76" width="302" format="[general]"  name=observacion dddw.name=d_acreditacion dddw.displaycolumn=acreditacion dddw.datacolumn=cve_acreditacion dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="3095" y="4" height="76" width="37" format="[general]"  name=cuenta edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="3214" y="4" height="76" width="27" format="[general]"  name=cve_carrera edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="3323" y="4" height="76" width="69" format="[general]"  name=cve_plan edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

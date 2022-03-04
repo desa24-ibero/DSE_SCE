@@ -1,0 +1,132 @@
+﻿$PBExportHeader$f_actualiza_insc_sem_ant.srf
+global type f_actualiza_insc_sem_ant from function_object
+end type
+
+forward prototypes
+global function integer f_actualiza_insc_sem_ant (long al_cuenta)
+end prototypes
+
+global function integer f_actualiza_insc_sem_ant (long al_cuenta);//f_actualiza_insc_sem_ant
+//Recibe:	al_cuenta		long
+//Actualiza en controlescolar_bd la bandera de inscrito el semestre anterior
+
+integer li_codigo_sql, li_insc_sem_ant
+string ls_mensaje_sql
+String		ls_sintaxis_sql	/* OSS, 31-Ago-2011 */
+transaction itr_web		/* OSS, 31-Ago-2011 */
+
+/* OSS, 31-Ago-2011 */
+// Establecer la conexión a la base de datos web de SQLServer ...
+//if isvalid(itr_web) = false  then
+//	itr_web = CREATE transaction//Creación de la transacción
+//end if
+//
+///* Populate sqlca from current PB.INI settings */
+//itr_web.DBMS		= ProfileString (gs_startupfile, "WEB_PARAM", "dbms",       "")
+//itr_web.database	= ProfileString (gs_startupfile, "WEB_PARAM", "database",   "")
+//itr_web.userid		= ProfileString (gs_startupfile, "WEB_PARAM", "userid",     "")
+//itr_web.dbpass		= ProfileString (gs_startupfile, "WEB_PARAM", "dbpass",     "")
+//
+//
+//itr_web.servername	= ProfileString (gs_startupfile, "WEB_PARAM", "servername", "")
+//itr_web.dbparm		= ProfileString (gs_startupfile, "WEB_PARAM", "dbparm",     "OJSyntax='PB'")
+//
+//itr_web.logid		= gs_usuario
+//itr_web.logpass	= gs_password
+//
+////Conexión a la base de datos
+//connect using itr_web;
+//
+//if itr_web.sqlcode <> 0 then
+//	MessageBox ("No hay conexión con la Base de Datos "+"WEB_PARAM"+".", itr_web.sqlerrtext, None!)
+//	Return -1
+//ELSE
+//	if itr_web.DBMS = 'OLE DB' then
+//		ls_sintaxis_sql = 'SET IMPLICIT_TRANSACTIONS OFF'
+//		EXECUTE IMMEDIATE :ls_sintaxis_sql USING itr_web;
+//	end if
+//end if
+/* OSS, 31-Ago-2011 */
+
+li_codigo_sql=0
+
+SELECT insc_sem_ant	
+INTO 	:li_insc_sem_ant 
+FROM banderas
+WHERE cuenta = :al_cuenta
+USING gtr_sce;
+
+IF gtr_sce.SQLCode = -1 THEN
+	li_codigo_sql = gtr_sce.SQLCode
+	ls_mensaje_sql = gtr_sce.SQLErrText
+	ROLLBACK USING gtr_sce;
+	MessageBox("Error en Sybase al consultar el alumno["+string(al_cuenta)+"]",ls_mensaje_sql,StopSign!)
+	return -1
+END IF
+
+IF li_insc_sem_ant = 0 THEN
+	
+	UPDATE banderas	
+	SET 	insc_sem_ant = 1
+	FROM banderas
+	WHERE cuenta = :al_cuenta
+	USING gtr_sce;
+
+	IF gtr_sce.SQLCode = -1 THEN 
+		li_codigo_sql = gtr_sce.SQLCode
+		ls_mensaje_sql = gtr_sce.SQLErrText
+		ROLLBACK USING gtr_sce;
+		MessageBox("Error en Sybase al actualizar el alumno["+string(al_cuenta)+"]",ls_mensaje_sql,StopSign!)
+		return -1
+	ELSEIF gtr_sce.SQLCode = 0 THEN 
+		COMMIT USING gtr_sce; /* Quitar esta línea si se habilita la replica a SQLServer*/
+//OSS		COMMIT USING gtr_sce;
+//OSS		return 0
+	END IF
+ELSE
+	return 0
+END IF
+
+/* OSS, 31-Ago-2011 */
+
+li_codigo_sql=0
+
+//SELECT insc_sem_ant	
+//INTO 	:li_insc_sem_ant 
+//FROM banderas
+//WHERE cuenta = :al_cuenta
+//USING itr_web;
+//
+//IF itr_web.SQLCode = -1 THEN
+//	li_codigo_sql = itr_web.SQLCode
+//	ls_mensaje_sql = itr_web.SQLErrText
+//	ROLLBACK USING itr_web;
+//	MessageBox("Error en SQLServer al consultar el alumno["+string(al_cuenta)+"]",ls_mensaje_sql,StopSign!)
+//	return -1
+//END IF
+//
+//IF li_insc_sem_ant = 0 THEN
+//	
+//	UPDATE banderas	
+//	SET 	insc_sem_ant = 1
+//	FROM banderas
+//	WHERE cuenta = :al_cuenta
+//	USING itr_web;
+//
+//	IF itr_web.SQLCode = -1 THEN 
+//		li_codigo_sql = itr_web.SQLCode
+//		ls_mensaje_sql = itr_web.SQLErrText
+//		ROLLBACK USING itr_web;
+//		MessageBox("Error en SQLServer al actualizar el alumno["+string(al_cuenta)+"]",ls_mensaje_sql,StopSign!)
+//		return -1
+//	ELSEIF itr_web.SQLCode = 0 THEN 
+//		COMMIT USING itr_web;
+//		COMMIT USING gtr_sce;	
+//		return 0
+//	END IF
+//ELSE
+//	return 0
+//END IF
+/* OSS, 31-Ago-2011 */
+end function
+

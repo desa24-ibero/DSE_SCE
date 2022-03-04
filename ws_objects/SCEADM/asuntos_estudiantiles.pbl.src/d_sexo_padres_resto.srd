@@ -1,0 +1,18 @@
+﻿$PBExportHeader$d_sexo_padres_resto.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=77 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=folio dbname="aspiran.folio" )
+ retrieve="  SELECT dbo.aspiran.folio  
+    FROM dbo.aspiran  
+   WHERE ( dbo.aspiran.folio not in (  SELECT jcampos.sexo_padres.folio  
+                                         FROM jcampos.sexo_padres )) AND  
+         ( dbo.aspiran.clv_per = 0 ) AND  
+         ( dbo.aspiran.anio = 1999 ) AND  
+         ( dbo.aspiran.pago_insc = 1 )    
+" )
+text(band=header alignment="2" text="Folio"border="0" color="0" x="5" y="4" height="65" width="330"  name=folio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="330" format="[general]"  name=folio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

@@ -1,0 +1,109 @@
+﻿$PBExportHeader$sersoc_opcterm.srf
+$PBExportComments$Esta función regresa "True" si la Clave de la materia pertenece a ~r~nServicio Social o Opción terminal.~r~nJuan Campos. Febrero-1997.
+global type sersoc_opcterm from function_object
+end type
+
+forward prototypes
+global function boolean sersoc_opcterm (string cvemateria)
+end prototypes
+
+global function boolean sersoc_opcterm (string cvemateria);// Esta función regresa "True" si la Clave de la materia es de: 
+// Servicio Social o de Opción terminal.
+// Juan Campos. Enero-1997.
+
+LONG CveOpcionTerminal
+Long CveMatLong
+Boolean Bandera = False
+INTEGER le_es_CveServicioSocial
+  
+CveMatLong          = long(cvemateria)
+
+Select Count(plan_estudios.cve_area_servicio_social) 
+Into :le_es_CveServicioSocial
+From plan_estudios,area_mat 
+Where (area_mat.cve_mat = :CveMatLong) And 
+    (area_mat.cve_area = plan_estudios.cve_area_servicio_social) 
+Using gtr_sce;	
+IF ISNULL(le_es_CveServicioSocial) THEN le_es_CveServicioSocial = 0
+
+IF le_es_CveServicioSocial > 0 THEN 
+	If MessageBox("Atención","Está materia es el servicio social.~nAun desea continuar",Question!,YesNo!,2) = 1 Then
+		Return False
+	Else
+		Return True
+	End IF  
+End If
+
+
+
+Select Count(plan_estudios.cve_area_opcion_terminal) 
+Into :CveOpcionTerminal
+From plan_estudios,area_mat 
+Where (area_mat.cve_mat = :CveMatLong) And 
+    (area_mat.cve_area = plan_estudios.cve_area_opcion_terminal) 
+Using gtr_sce;	
+If gtr_sce.sqlcode = 0 Then
+	If CveOpcionTerminal <> 0 Then
+   	Bandera = True
+   	IF MessageBox("Atención","Está materia es la opción terminal.~nAun desea continuar.",Question!,YesNo!,2) = 1 Then
+			Return False
+		Else			
+			Return True
+		End IF	
+	Else
+		Return False
+	End IF
+Else
+	Messagebox("Error",gtr_sce.SQLErrText)
+	Return True
+End If
+
+
+// CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL 
+// CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL 
+// CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL 
+
+//// Esta función regresa "True" si la Clave de la materia es de: 
+//// Servicio Social o de Opción terminal.
+//// Juan Campos. Enero-1997.
+//
+//Long CveServicioSocial1,CveServicioSocial2, CveOpcionTerminal
+//Long CveMatLong
+//Boolean Bandera = False
+//  
+//CveMatLong          = long(cvemateria)
+//CveServicioSocial1 = 3748
+//CveServicioSocial2 = 8763
+//
+//If CveMatLong = CveServicioSocial1 or CveMatLong = CveServicioSocial2   Then
+//	If MessageBox("Atención","Está materia es el servicio social.~nAun desea continuar",Question!,YesNo!,2) = 1 Then
+//		Return False
+//	Else
+//		Return True
+//	End IF  
+//End If
+//
+//Select Count(plan_estudios.cve_area_opcion_terminal) 
+//Into :CveOpcionTerminal
+//From plan_estudios,area_mat 
+//Where (area_mat.cve_mat = :CveMatLong) And 
+//    (area_mat.cve_area = plan_estudios.cve_area_opcion_terminal) 
+//Using gtr_sce;	
+//If gtr_sce.sqlcode = 0 Then
+//	If CveOpcionTerminal <> 0 Then
+//   	Bandera = True
+//   	IF MessageBox("Atención","Está materia es la opción terminal.~nAun desea continuar.",Question!,YesNo!,2) = 1 Then
+//			Return False
+//		Else			
+//			Return True
+//		End IF	
+//	Else
+//		Return False
+//	End IF
+//Else
+//	Messagebox("Error",gtr_sce.SQLErrText)
+//	Return True
+//End If
+//
+end function
+

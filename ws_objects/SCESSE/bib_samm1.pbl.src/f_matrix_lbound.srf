@@ -1,0 +1,50 @@
+﻿$PBExportHeader$f_matrix_lbound.srf
+$PBExportComments$Matrices nxm. Emula a la función lbound de VB.
+global type f_matrix_lbound from function_object
+end type
+
+forward prototypes
+global function long f_matrix_lbound (ref any aa_matrix[], integer ai_index)
+end prototypes
+
+global function long f_matrix_lbound (ref any aa_matrix[], integer ai_index);//////////////////////////////////////////////////////////////////////////////
+//
+//	Function:  f_matrix_lbound
+//
+//	Access:  public
+//
+//	Arguments:
+//	aa_matrix		La matriz con la que vamos a trabajar.
+//	ai_index			El índice de la dimensión:
+//						1 = Primera dimensión
+//						2 = Segunda dimensión
+//
+//	Returns:
+//	Long				
+//
+//	Description:
+//	Emula el funcionamiento de la función lbound de VB para arreglos
+//	bidimensionales.
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+//	Revision History
+//
+//	Version
+//	1.0   Initial version
+//
+//////////////////////////////////////////////////////////////////////////////
+any la_tempo[]
+long ll_resultado
+
+CHOOSE CASE ai_index
+	CASE 1
+		ll_resultado = lowerbound(aa_matrix)
+	CASE 2
+		la_tempo = aa_matrix[lowerbound(aa_matrix)]
+		ll_resultado = lowerbound(la_tempo)
+END CHOOSE
+
+return ll_resultado
+end function
+

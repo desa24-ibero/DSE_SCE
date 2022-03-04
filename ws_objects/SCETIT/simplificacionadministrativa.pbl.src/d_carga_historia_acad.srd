@@ -1,0 +1,42 @@
+﻿$PBExportHeader$d_carga_historia_acad.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=10789024 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=237 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=70 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=historico_cuenta dbname="historico.cuenta" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=historico_cve_mat dbname="historico.cve_mat" )
+ column=(type=char(2) update=yes updatewhereclause=yes key=yes name=historico_gpo dbname="historico.gpo" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=historico_periodo dbname="historico.periodo" values="P	0/V	1/O	2/" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=historico_anio dbname="historico.anio" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=historico_cve_carrera dbname="historico.cve_carrera" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=historico_cve_plan dbname="historico.cve_plan" )
+ column=(type=char(2) update=yes updatewhereclause=yes key=yes name=historico_calificacion dbname="historico.calificacion" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=historico_observacion dbname="historico.observacion" )
+ retrieve="  SELECT dbo.historico.cuenta,   
+         dbo.historico.cve_mat,   
+         dbo.historico.gpo,   
+         dbo.historico.periodo,   
+         dbo.historico.anio,   
+         dbo.historico.cve_carrera,   
+         dbo.historico.cve_plan,   
+         dbo.historico.calificacion,   
+         dbo.historico.observacion  
+    FROM dbo.historico  
+   WHERE dbo.historico.cuenta = :cuenta    
+" update="historico" updatewhere=1 updatekeyinplace=yes arguments=(("cuenta", number)) )
+group(level=1 header.height=128 trailer.height=0 by=("historico_cve_carrera" , "historico_cve_plan" ) header.color="536870912" trailer.color="536870912" )
+column(band=header id=1 alignment="1" tabsequence=32766 border="0" color="0" x="26" y="42" height="80" width="519" format="[general]"  name=historico_cuenta edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="obten_digito( historico_cuenta )"border="0" color="0" x="585" y="42" height="80" width="88" format="[general]"  font.face="Arial" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header.1 id=7 alignment="0" tabsequence=32766 border="0" color="0" x="2370" y="45" height="77" width="439" format="[general]"  name=historico_cve_plan dddw.name=dw_plan dddw.displaycolumn=nombre_plan dddw.datacolumn=cve_plan dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header.1 id=6 alignment="0" tabsequence=32766 border="0" color="0" x="187" y="45" height="77" width="2191" format="[general]"  name=historico_cve_carrera dddw.name=dw_carrera dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="4" y="9" height="51" width="157" format="[general]" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="384" y="9" height="54" width="1693" format="[general]"  name=historico_cve_mat dddw.name=dw_materias dddw.displaycolumn=materia dddw.datacolumn=cve_mat dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="2096" y="9" height="54" width="51" format="[general]"  name=historico_gpo edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="2180" y="9" height="54" width="44" format="[general]"  name=historico_periodo ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="2238" y="9" height="54" width="106" format="[general]"  name=historico_anio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="2377" y="9" height="54" width="88" format="[general]"  name=historico_calificacion edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="2487" y="9" height="54" width="325" format="[general]"  name=historico_observacion dddw.name=dw_acreditacion dddw.displaycolumn=acreditacion dddw.datacolumn=cve_acreditacion dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression=" historico_cve_mat "border="0" color="0" x="187" y="9" height="51" width="176" format="[general]"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

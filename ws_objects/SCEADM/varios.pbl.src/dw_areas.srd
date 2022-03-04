@@ -1,0 +1,12 @@
+﻿$PBExportHeader$dw_areas.srd
+$PBExportComments$Catálogo de áreas del examén de admisión
+release 5;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=clv_area dbname="clv_area" )
+ column=(type=char(25) updatewhereclause=yes name=area dbname="area" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"area_nom~" ) COLUMN(NAME=~"area_nom.clv_area~") COLUMN(NAME=~"area_nom.area~")) ORDER(NAME=~"area_nom.clv_area~" ASC=yes ) " )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="5" y="4" height="77" width="787" format="[general]"  name=area edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )

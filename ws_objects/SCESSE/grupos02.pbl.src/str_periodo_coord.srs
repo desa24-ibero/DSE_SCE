@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_periodo_coord.srs
+global type str_periodo_coord from structure
+	long		cve_coordinacion
+	long		periodo
+	long		anio
+end type
+

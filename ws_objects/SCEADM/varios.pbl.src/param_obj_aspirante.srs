@@ -1,0 +1,8 @@
+﻿$PBExportHeader$param_obj_aspirante.srs
+$PBExportComments$Ver Descripción del objeto uo_nombre_aspirante
+global type param_obj_aspirante from structure
+	datawindow		nombre
+	long		folio
+	editmask		em_cuenta
+end type
+

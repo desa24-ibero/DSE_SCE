@@ -1,0 +1,92 @@
+﻿$PBExportHeader$f_baja_total_alumno_b.srf
+global type f_baja_total_alumno_b from function_object
+end type
+
+forward prototypes
+global function integer f_baja_total_alumno_b (long al_cuenta, ref n_tr atr_sit, ref n_tr atr_esta, ref n_tr atr_sqlserver, ref string as_mensaje)
+end prototypes
+
+global function integer f_baja_total_alumno_b (long al_cuenta, ref n_tr atr_sit, ref n_tr atr_esta, ref n_tr atr_sqlserver, ref string as_mensaje);//Efectúa la baja total de un alumno
+//f_baja_total_alumno
+//Recibe 	long			al_cuenta
+//				n_tr 			atr_sit
+//				n_tr 			atr_esta
+//				n_tr			 atr_sqlserver
+//				string 		as_mensaje
+//Devuelve
+//				0 	Si todo fue exitoso	
+//				-1 Si hubo algún error
+
+integer li_cve_condicion_normal , li_cve_condicion_ba, li_num_materias_sin_condicion, li_actualiza_condicion_materias
+integer li_cve_condicion_baja, li_transfiere_mov_estac_alumno
+n_tr 	ltr_sit, ltr_esta
+ 
+//CONDICION NORMAL
+li_cve_condicion_normal = 0
+//CONDICION BAJA ACADEMICA
+li_cve_condicion_ba = 1
+//Cuenta cuantas materis se encuentran sin la condición NORMAL
+li_num_materias_sin_condicion = f_num_materias_sin_condicion(al_cuenta, li_cve_condicion_normal, li_cve_condicion_ba)
+if li_num_materias_sin_condicion > 0 then
+//	 MessageBox("Alumno no susceptible","Se han encontrado ["+string(li_num_materias_sin_condicion)+"] materias del alumno ["+string(al_cuenta)+"-"+obten_digito(al_cuenta)+"] que no están en condicion Normal", Stopsign!)
+	 as_mensaje = "Alumno no susceptible: "+"Se han encontrado ["+string(li_num_materias_sin_condicion)+"] materias del alumno ["+string(al_cuenta)+"-"+obten_digito(al_cuenta)+"] que no están en condicion Normal"
+	 return -1
+end if
+
+//SI NO esta conectado a tesorería, se conecta
+if not isvalid(atr_sit) then
+	if f_conecta_pas_parametros_n_tr_bd(gtr_sce, ltr_sit, 2, gs_usuario, gs_password )=0 then
+//		messagebox("Atención...", "Problemas al conectarse a la base de datos de tesoreria")
+		as_mensaje = "Atención: "+"Problemas al conectarse a la base de datos de tesoreria"
+		return -1
+	end if 
+else
+	ltr_sit = atr_sit
+end if
+
+//SI NO esta conectado al estacionamiento, se conecta
+if not isvalid(atr_esta) then
+	if f_conecta_con_parametros_n_tr_bd(gtr_sce, ltr_esta, 3 )=0 then
+//		messagebox("Atención...", "Problemas al conectarse a la base de datos de estacionamiento")
+		as_mensaje = "Atención: "+ "Problemas al conectarse a la base de datos de estacionamiento"
+		return -1
+	end if
+else
+	ltr_esta = atr_esta
+end if
+
+
+//Efectúa la transferencia de movimientos de estacionamiento
+li_transfiere_mov_estac_alumno = f_transfiere_mov_estac_alumno(al_cuenta, ltr_sit,  ltr_esta)
+if li_transfiere_mov_estac_alumno = -1 then
+//	 MessageBox("Problemas con Estacionamiento","No se ha podido efectuar la consolidación de movimientos del alumno ["+string(al_cuenta)+"-"+obten_digito(al_cuenta)+"] ", Stopsign!)
+	 as_mensaje ="Problemas con Estacionamiento: "+"No se ha podido efectuar la consolidación de movimientos del alumno ["+string(al_cuenta)+"-"+obten_digito(al_cuenta)+"] "
+	 return -1
+end if
+
+//CONDICION BAJA
+li_cve_condicion_baja = 2
+//Actualiza el estatus de las materias del alumno a BAJA en SYBASE
+li_actualiza_condicion_materias = f_actualiza_condicion_materias(al_cuenta, li_cve_condicion_baja, gtr_sce)
+if li_actualiza_condicion_materias = -1 then
+//	 MessageBox("Materias no bloqueadas","No se han podido actualizar las materias del alumno ["+string(al_cuenta)+"-"+obten_digito(al_cuenta)+"] SYBASE ", Stopsign!)
+	 as_mensaje ="Materias no bloqueadas: "+"No se han podido actualizar las materias del alumno ["+string(al_cuenta)+"-"+obten_digito(al_cuenta)+"] SYBASE "
+	 return -1
+end if
+
+//CONDICION BAJA
+li_cve_condicion_baja = 2
+//Actualiza el estatus de las materias del alumno a BAJA en SQLServer
+li_actualiza_condicion_materias = f_actualiza_condicion_materias(al_cuenta, li_cve_condicion_baja, atr_sqlserver)
+if li_actualiza_condicion_materias = -1 then
+//	 MessageBox("Materias no bloqueadas","No se ha podido actualizar las materias del alumno ["+string(al_cuenta)+"-"+obten_digito(al_cuenta)+"] SQLServer", Stopsign!)
+	 as_mensaje = "Materias no bloqueadas: "+"No se han podido actualizar las materias del alumno ["+string(al_cuenta)+"-"+obten_digito(al_cuenta)+"] SQLServer"
+	 return -1
+end if
+
+
+
+return 0
+
+end function
+

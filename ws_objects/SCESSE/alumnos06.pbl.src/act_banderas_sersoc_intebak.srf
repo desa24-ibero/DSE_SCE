@@ -1,0 +1,111 @@
+﻿$PBExportHeader$act_banderas_sersoc_intebak.srf
+global type act_banderas_sersoc_intebak from function_object
+end type
+
+forward prototypes
+global function boolean act_banderas_sersoc_intebak (long cuenta, integer carrera, integer plan, integer creditos)
+end prototypes
+
+global function boolean act_banderas_sersoc_intebak (long cuenta, integer carrera, integer plan, integer creditos);// Regresa "true" si se actualizan correctamente las banderas de cve_servicio_social y 
+// puede_integracion de la tabla de banderas, con respecto a los nuevos creditos_cursados 
+// del alumno en la tabla de académicos.
+// recibe 4 parametros: cuenta, carrera, plan, creditos
+// Juan Campos.  Febrero-1997.
+
+                                                // Esta constante es para todos los planes
+Constant Integer  CreditosPuedeIntegracion = 72 // de estudio. 
+Boolean Continua
+Integer CreditosServicioSocial = 0 ,CveFlagServSocial = 0
+
+If creditos >= CreditosPuedeIntegracion Then 
+  update banderas 
+     set puede_integracion = 1
+	Where cuenta = :cuenta
+	using gtr_sce;
+Else	
+  update banderas 
+     set puede_integracion = 0
+	Where cuenta = :cuenta
+	using gtr_sce;
+End If	
+	
+If gtr_sce.sqlcode = 0 Then 
+  Continua = True
+Else
+  Continua = False
+  MessageBox("",gtr_sce.sqlerrtext)
+End If	
+
+
+If Continua Then	
+  select cred_serv_social
+    into :CreditosServicioSocial
+    from plan_estudios
+   where (cve_carrera = :carrera) and
+	      (cve_plan    = :plan)
+   using gtr_sce;	
+  IF gtr_sce.sqlcode = 0 Then  
+    Continua = True
+  Else
+    Continua = False
+	 MessageBox("",gtr_sce.sqlerrtext)
+  End IF
+End If
+
+If Continua Then
+  select cve_flag_serv_social
+    Into :CveFlagServSocial
+    from banderas
+   where cuenta = :cuenta
+   using gtr_sce;	
+  IF gtr_sce.sqlcode = 0 Then  
+    Continua = True
+  Else
+    Continua = False
+	 MessageBox("",gtr_sce.sqlerrtext)
+  End IF
+End If
+
+If continua Then
+  IF creditos >= CreditosServicioSocial Then 
+	 if CveFlagServSocial = 0 Then
+	   update banderas
+         set cve_flag_serv_social = 1  // Ya puede cursar
+       where cuenta = :cuenta
+       using gtr_sce;
+	   ElseIf CveFlagServSocial = 1 Then 
+		     update banderas
+              set cve_flag_serv_social = 2 // Esta o ya curso
+            where cuenta = :cuenta
+            using gtr_sce;
+		    Else
+			   gtr_sce.sqlcode = 0
+	 End If	
+  Else // Creditos >= 
+	 if CveFlagServSocial = 2 or CveFlagServSocial = 1  Then
+	   update banderas
+         set cve_flag_serv_social = 0  // No ha cursado
+       where cuenta = :cuenta
+       using gtr_sce;
+    Else
+		gtr_sce.sqlcode = 0
+	 End If	
+  End If
+  IF gtr_sce.sqlcode = 0 Then  
+    Continua = True
+  Else
+    Continua = False
+	 MessageBox("",gtr_sce.sqlerrtext)
+  End IF
+End If
+
+if Continua Then
+  commit using gtr_sce;
+  Return True
+Else
+  Rollback using gtr_sce;
+  Return False
+End If
+
+end function
+

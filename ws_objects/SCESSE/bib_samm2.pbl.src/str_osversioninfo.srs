@@ -1,0 +1,11 @@
+﻿$PBExportHeader$str_osversioninfo.srs
+$PBExportComments$API32. Estructura necesaria para el funcionamiento de algunas API's.
+global type str_osversioninfo from structure
+ulong dwOSVersionInfoSize
+ulong dwmajorversion
+ulong dwminorversion
+ulong dwbuildnumber
+ulong dwplatformid
+character szcsdverion[128]
+end type
+

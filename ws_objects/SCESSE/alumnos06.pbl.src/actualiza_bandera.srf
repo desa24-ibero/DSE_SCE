@@ -1,0 +1,65 @@
+﻿$PBExportHeader$actualiza_bandera.srf
+global type actualiza_bandera from function_object
+end type
+
+forward prototypes
+global function boolean actualiza_bandera (long ai_cuenta, integer ai_bandera)
+end prototypes
+
+global function boolean actualiza_bandera (long ai_cuenta, integer ai_bandera);// Actualiza la tabla banderas 3 Reprobadas, 4 Inscritas
+// true exito, false fracaso
+// Fantine Medina Carrillo	Nov1998
+int li_res1, li_res2
+datastore lds_3r4i, lds_banderas3r4i
+int li_i, li_row, li_baja4i, li_baja3r, li_cve_prom
+lds_3r4i = create DataStore
+lds_3r4i.DataObject = "d_3r4i"
+lds_3r4i.SetTransObject(gtr_sce)
+lds_banderas3r4i = create DataStore
+lds_banderas3r4i.DataObject = "d_banderas3r4i"
+lds_banderas3r4i.SetTransObject(gtr_sce)
+li_res1 = lds_3r4i.Retrieve(ai_cuenta)
+li_res2 = lds_banderas3r4i.Retrieve(ai_cuenta)
+if (lds_3r4i.Retrieve(ai_cuenta) >=  0  and lds_banderas3r4i.Retrieve(ai_cuenta) > 0) then
+	li_cve_prom =lds_banderas3r4i.GetItemNumber(1,"cve_flag_promedio")
+	if li_cve_prom < 3 then
+		li_row = lds_3r4i.Rowcount()
+		if li_row > 0 then
+			li_baja4i = lds_3r4i.Find("baja4i = 1",1,li_row)
+			li_baja3r = lds_3r4i.Find("baja3r = 1",1,li_row)
+		end if
+		if ( li_baja4i > 0 ) then
+			lds_banderas3r4i.SetItem(1,"baja_4_insc",1)
+		else
+			lds_banderas3r4i.SetItem(1,"baja_4_insc",0)
+		end if
+		if ( li_baja3r > 0 ) then
+			lds_banderas3r4i.SetItem(1,"baja_3_reprob",1)
+		else
+			lds_banderas3r4i.SetItem(1,"baja_3_reprob",0)
+		end if
+		if lds_banderas3r4i.Update() = 1 then
+			commit using gtr_sce;
+			destroy lds_banderas3r4i
+			destroy lds_3r4i
+			return true
+		else
+			rollback using gtr_sce;
+			destroy lds_banderas3r4i
+			destroy lds_3r4i
+			return false
+		end if
+	else
+		destroy lds_banderas3r4i
+		destroy lds_3r4i
+		return true
+	end if
+end if
+destroy lds_banderas3r4i
+destroy lds_3r4i
+return false
+
+
+
+end function
+

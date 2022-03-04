@@ -1,0 +1,51 @@
+﻿$PBExportHeader$dw_datos_globales.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=141 color="536870912" )
+summary(height=93 color="536870912" )
+footer(height=45 color="536870912" )
+detail(height=90 color="536870912" )
+table(column=(type=char(20) updatewhereclause=yes name=version_version dbname="version.version" )
+ column=(type=char(9) updatewhereclause=yes name=periodo_periodo dbname="periodo.periodo" )
+ column=(type=long updatewhereclause=yes name=aspiran_anio dbname="aspiran.anio" )
+ column=(type=long updatewhereclause=yes name=aspiran_folio dbname="aspiran.folio" )
+ column=(type=char(10) updatewhereclause=yes name=status_nombre dbname="status.nombre" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_carr dbname="aspiran.clv_carr" )
+ column=(type=char(1) updatewhereclause=yes name=general_sexo dbname="general.sexo" )
+ column=(type=long updatewhereclause=yes name=general_transporte dbname="general.transporte" )
+ column=(type=long updatewhereclause=yes name=general_bachillera dbname="general.bachillera" )
+ column=(type=real updatewhereclause=yes name=aspiran_promedio dbname="aspiran.promedio" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"aspiran~" )  TABLE(NAME=~"general~" )  TABLE(NAME=~"status~" )  TABLE(NAME=~"version~" )  TABLE(NAME=~"periodo~" ) COLUMN(NAME=~"version.version~") COLUMN(NAME=~"periodo.periodo~") COLUMN(NAME=~"aspiran.anio~") COLUMN(NAME=~"aspiran.folio~") COLUMN(NAME=~"status.nombre~") COLUMN(NAME=~"aspiran.clv_carr~") COLUMN(NAME=~"general.sexo~") COLUMN(NAME=~"general.transporte~") COLUMN(NAME=~"general.bachillera~") COLUMN(NAME=~"aspiran.promedio~")    JOIN (LEFT=~"aspiran.folio~"    OP =~"=~"RIGHT=~"general.folio~" )    JOIN (LEFT=~"aspiran.clv_ver~"    OP =~"=~"RIGHT=~"general.clv_ver~" )    JOIN (LEFT=~"aspiran.clv_per~"    OP =~"=~"RIGHT=~"general.clv_per~" )    JOIN (LEFT=~"aspiran.anio~"    OP =~"=~"RIGHT=~"general.anio~" )    JOIN (LEFT=~"aspiran.status~"    OP =~"=~"RIGHT=~"status.status~" )    JOIN (LEFT=~"aspiran.clv_ver~"    OP =~"=~"RIGHT=~"version.clv_ver~" )    JOIN (LEFT=~"aspiran.clv_per~"    OP =~"=~"RIGHT=~"periodo.clv_per~" )WHERE(    EXP1 =~"(:ver~"   OP =~"=~"    EXP2 =~"99~"    LOGIC =~"or~" ) WHERE(    EXP1 =~"aspiran.clv_ver~"   OP =~"=~"    EXP2 =~":ver)~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"aspiran.clv_per~"   OP =~"=~"    EXP2 =~":per~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"aspiran.anio~"   OP =~"=~"    EXP2 =~":ani~" ) ) ARG(NAME = ~"ver~" TYPE = number)  ARG(NAME = ~"per~" TYPE = number)  ARG(NAME = ~"ani~" TYPE = number) " arguments=(("ver", number),("per", number),("ani", number)) )
+text(band=header alignment="2" text="Aspiran
+Anio"border="0" color="0" x="673" y="3" height="131" width="329"  name=aspiran_anio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Folio"border="0" color="0" x="1006" y="3" height="131" width="333"  name=aspiran_folio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Clv Carr"border="0" color="0" x="1679" y="3" height="131" width="329"  name=aspiran_clv_carr_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Transporte"border="0" color="0" x="2224" y="3" height="131" width="333"  name=general_transporte_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Bachillera"border="0" color="0" x="2560" y="3" height="131" width="333"  name=general_bachillera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Sexo"border="0" color="0" x="2011" y="3" height="131" width="205"  name=general_sexo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Status"border="0" color="0" x="1346" y="3" height="131" width="329"  name=aspiran_status_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Clv Ver"border="0" color="0" x="4" y="3" height="131" width="333"  name=aspiran_clv_ver_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Clv Per"border="0" color="0" x="340" y="3" height="131" width="329"  name=aspiran_clv_per_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Promedio"border="0" color="0" x="2929" y="3" height="131" width="252"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="1679" y="3" height="77" width="329" format="[general]"  name=aspiran_clv_carr edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="2224" y="3" height="77" width="333" format="[general]"  name=general_transporte edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="2085" y="3" height="77" width="55" format="[general]"  name=general_sexo edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="1006" y="3" height="77" width="333" format="[general]"  name=aspiran_folio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="1346" y="3" height="77" width="329" format="[general]"  name=status_nombre edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="673" y="3" height="77" width="329" format="[general]"  name=aspiran_anio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="340" y="3" height="77" width="329" format="[general]"  name=periodo_periodo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="4" y="3" height="77" width="333" format="[general]"  name=version_version edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="0" x="2560" y="3" height="77" width="333" format="[general]"  name=general_bachillera edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="0" x="2893" y="3" height="77" width="333" format="[general]"  name=aspiran_promedio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="count(aspiran_folio for all)"border="0" color="0" x="1006" y="4" height="80" width="333" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="<dw_datos_globales>"border="0" color="33554432" x="7" y="0" height="42" width="629"  font.face="Arial" font.height="-6" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

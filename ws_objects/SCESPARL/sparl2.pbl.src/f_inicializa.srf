@@ -1,0 +1,26 @@
+﻿$PBExportHeader$f_inicializa.srf
+global type f_inicializa from function_object
+end type
+
+forward prototypes
+global subroutine f_inicializa ()
+end prototypes
+
+global subroutine f_inicializa ();//NOMBRE
+//f_inicializa
+//
+//REGRESA
+//integer
+//
+//RECIBE
+
+f_borra_criterio(gi_periodo, gi_anio)
+f_establece_criterio(gi_periodo, gi_anio, "LP")
+f_establece_criterio(gi_periodo, gi_anio, "LNP")
+f_establece_criterio(gi_periodo, gi_anio, "PP")
+f_establece_criterio(gi_periodo, gi_anio, "PNP")
+f_establece_criterio(gi_periodo, gi_anio, "I")
+
+
+end subroutine
+

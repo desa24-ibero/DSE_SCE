@@ -1,0 +1,110 @@
+﻿$PBExportHeader$dw_cons_rest.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=141 color="536870912" )
+summary(height=121 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=77 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=aspiran_folio dbname="aspiran.folio" )
+ column=(type=long updatewhereclause=yes name=general_cuenta dbname="general.cuenta" )
+ column=(type=char(50) updatewhereclause=yes name=general_nombre dbname="general.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=general_apaterno dbname="general.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=general_amaterno dbname="general.amaterno" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_carr dbname="aspiran.clv_carr" )
+ column=(type=decimal(1) updatewhereclause=yes name=rest_etapa_2 dbname="rest.etapa_2" )
+ column=(type=decimal(1) updatewhereclause=yes name=rest_etapa_3 dbname="rest.etapa_3" )
+ column=(type=decimal(1) updatewhereclause=yes name=rest_etapa_4 dbname="rest.etapa_4" )
+ column=(type=decimal(1) updatewhereclause=yes name=rest_etapa_5a dbname="rest.etapa_5a" )
+ column=(type=decimal(1) updatewhereclause=yes name=rest_etapa_5b dbname="rest.etapa_5b" )
+ column=(type=decimal(1) updatewhereclause=yes name=rest_etapa_6 dbname="rest.etapa_6" )
+ column=(type=decimal(1) updatewhereclause=yes name=rest_etapa_a dbname="rest.etapa_a" )
+ column=(type=decimal(1) updatewhereclause=yes name=rest_etapa_m dbname="rest.etapa_m" )
+ column=(type=decimal(1) updatewhereclause=yes name=rest_etapa_p dbname="rest.etapa_p" )
+ column=(type=decimal(3) updatewhereclause=yes name=rest_indice_d dbname="rest.indice_d" )
+ column=(type=decimal(4) updatewhereclause=yes name=rest_indice_u dbname="rest.indice_u" )
+ retrieve="  SELECT aspiran.folio,   
+         general.cuenta,   
+         general.nombre,   
+         general.apaterno,   
+         general.amaterno,   
+         aspiran.clv_carr,   
+         rest.etapa_2,   
+         rest.etapa_3,   
+         rest.etapa_4,   
+         rest.etapa_5a,   
+         rest.etapa_5b,   
+         rest.etapa_6,   
+         rest.etapa_a,   
+         rest.etapa_m,   
+         rest.etapa_p,   
+         rest.indice_d,   
+         rest.indice_u  
+    FROM aspiran,   
+         general,   
+         rest  
+   WHERE ( aspiran.folio = general.folio ) and  
+         ( aspiran.clv_ver = general.clv_ver ) and  
+         ( aspiran.clv_per = general.clv_per ) and  
+         ( aspiran.anio = general.anio ) and  
+         ( general.folio = rest.folio ) and  
+         ( general.clv_ver = rest.clv_ver ) and  
+         ( general.clv_per = rest.clv_per ) and  
+         ( general.anio = rest.anio ) and  
+         ( ( (aspiran.clv_ver = :ver) OR 
+             (:ver =99)              ) AND  
+         ( aspiran.clv_per = :per ) AND  
+         ( aspiran.anio = :ani ) )    
+" arguments=(("ver", number),("per", number),("ani", number)) )
+text(band=header alignment="2" text="Folio"border="0" color="0" x="51" y="4" height="57" width="101"  name=aspiran_folio_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cuenta"border="0" color="0" x="229" y="4" height="57" width="156"  name=general_cuenta_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Etapa
+4"border="0" color="0" x="1925" y="4" height="113" width="161"  name=rest_etapa_6_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Etapa
+5a"border="0" color="0" x="2099" y="4" height="113" width="161"  name=rest_etapa_a_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Etapa
+5b"border="0" color="0" x="2273" y="4" height="113" width="161"  name=rest_etapa_m_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Etapa
+6"border="0" color="0" x="2446" y="4" height="113" width="161"  name=rest_etapa_p_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Etapa
+a"border="0" color="0" x="2620" y="4" height="113" width="161"  name=rest_indice_d_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Etapa
+p"border="0" color="0" x="2967" y="4" height="113" width="161"  name=rest_etapa_4_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Etapa
+m"border="0" color="0" x="2794" y="4" height="113" width="161"  name=rest_indice_u_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Índice
+d"border="0" color="0" x="3141" y="4" height="113" width="174"  name=rest_etapa_5a_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Índice
+u"border="0" color="0" x="3329" y="4" height="113" width="174"  name=rest_etapa_5b_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Etapa
+2"border="0" color="0" x="1578" y="4" height="113" width="161"  name=rest_etapa_2_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Etapa
+3"border="0" color="0" x="1751" y="4" height="113" width="161"  name=rest_etapa_3_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Carr"border="0" color="0" x="1450" y="4" height="57" width="97"  name=aspiran_clv_carr_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Nombre"border="0" color="0" x="837" y="4" height="57" width="170"  name=general_nombre_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="5" y="4" height="65" width="197" format="[general]"  name=aspiran_folio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression=" general_cuenta +'-'+obten_digito( general_cuenta )"border="0" color="0" x="211" y="4" height="65" width="197" format="[general]"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="0" x="1751" y="4" height="65" width="161" format="[General]"  name=rest_etapa_3  tag=" " edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="0" x="1925" y="4" height="65" width="161" format="[General]"  name=rest_etapa_4  tag=" " edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="0" x="2099" y="4" height="65" width="161" format="[General]"  name=rest_etapa_5a  tag=" " edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="1" tabsequence=32766 border="0" color="0" x="2273" y="4" height="65" width="161" format="[General]"  name=rest_etapa_5b  tag=" " edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="1" tabsequence=32766 border="0" color="0" x="2446" y="4" height="65" width="161" format="[General]"  name=rest_etapa_6  tag=" " edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="1" tabsequence=32766 border="0" color="0" x="2620" y="4" height="65" width="161" format="[General]"  name=rest_etapa_a  tag=" " edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="1" tabsequence=32766 border="0" color="0" x="2967" y="4" height="65" width="161" format="[General]"  name=rest_etapa_p  tag=" " edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="1" tabsequence=32766 border="0" color="0" x="2794" y="4" height="65" width="161" format="[General]"  name=rest_etapa_m  tag=" " edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="1578" y="4" height="65" width="161" format="[General]"  name=rest_etapa_2  tag=" " edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="1" tabsequence=32766 border="0" color="0" x="3141" y="4" height="65" width="174" format="[General]"  name=rest_indice_d  tag=" " edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="1" tabsequence=32766 border="0" color="0" x="3329" y="4" height="65" width="174" format="[General]"  name=rest_indice_u  tag=" " edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="1427" y="4" height="65" width="142" format="[general]"  name=aspiran_clv_carr edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression=" general_apaterno +' '+ general_amaterno +' '+ general_nombre "border="0" color="0" x="430" y="4" height="65" width="988" format="[general]"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="avg(rest_etapa_4 for all)"border="0" color="0" x="1925" y="44" height="69" width="161" format="#,#0.0"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="avg(rest_etapa_5a for all)"border="0" color="0" x="2099" y="44" height="69" width="161" format="#,#0.0"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="avg(rest_etapa_5b for all)"border="0" color="0" x="2273" y="44" height="69" width="161" format="#,#0.0"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="avg(rest_etapa_6 for all)"border="0" color="0" x="2446" y="44" height="69" width="161" format="#,#0.0"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="avg(rest_etapa_a for all)"border="0" color="0" x="2620" y="44" height="69" width="161" format="#,#0.0"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="avg(rest_etapa_p for all)"border="0" color="0" x="2967" y="44" height="69" width="161" format="#,#0.0"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="avg(rest_etapa_m for all)"border="0" color="0" x="2794" y="44" height="69" width="161" format="#,#0.0"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="avg(rest_etapa_3 for all)"border="0" color="0" x="1751" y="44" height="69" width="161" format="#,#0.0"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="avg(rest_indice_d for all)"border="0" color="0" x="3141" y="44" height="69" width="174" format="#,###0.000"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="avg(rest_indice_u for all)"border="0" color="0" x="3329" y="44" height="69" width="174" format="#,####0.0000"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="avg(rest_etapa_2 for all)"border="0" color="0" x="1578" y="44" height="69" width="161" format="#,#0.0"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="count(aspiran_folio for all)"border="0" color="0" x="5" y="44" height="69" width="197" format="[general]"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

@@ -1,0 +1,24 @@
+﻿$PBExportHeader$dw_salon_cupo.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=31172699 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=77 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=81 color="536870912" )
+table(column=(type=char(16) update=yes updatewhereclause=yes key=yes name=cve_salon dbname="salon.cve_salon" )
+ column=(type=long update=yes updatewhereclause=yes name=bloqueado dbname="salon.bloqueado" )
+ column=(type=long update=yes updatewhereclause=yes name=cupo_max dbname="salon.cupo_max" )
+ retrieve="  SELECT salon.cve_salon,   
+         salon.bloqueado,   
+         salon.cupo_max  
+    FROM salon   
+	WHERE	(salon.bloqueado = 0 AND salon.cupo_max = :cupo and clase_aula= ~"SALON~") AND
+         ((salon.cve_salon >= :Letra1 And salon.cve_salon < :Letra2) 
+			OR (salon.cve_salon LIKE ~"B0%~"))
+         " update="salon" updatewhere=1 updatekeyinplace=no arguments=(("cupo", number),("letra1", string),("letra2", string)) )
+text(band=header alignment="2" text="Cupo Max"border="0" color="16777215" x="622" y="4" height="65" width="270"  name=cupo_max_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="8421376" )
+text(band=header alignment="2" text="Cve Salon"border="0" color="16777215" x="46" y="4" height="65" width="270"  name=cve_salon_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="8421376" )
+text(band=header alignment="2" text="Bloqueado"border="0" color="16777215" x="330" y="4" height="65" width="279"  name=bloqueado_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="8421376" )
+column(band=detail id=1 alignment="0" tabsequence=10 border="0" color="0" x="46" y="4" height="77" width="270" format="[general]"  name=cve_salon edit.limit=16 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=2 alignment="1" tabsequence=20 border="0" color="0" x="325" y="4" height="77" width="279" format="[general]"  name=bloqueado edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=3 alignment="1" tabsequence=30 border="0" color="0" x="613" y="4" height="77" width="270" format="[general]"  name=cupo_max edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )

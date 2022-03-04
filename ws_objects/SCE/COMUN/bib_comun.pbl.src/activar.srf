@@ -1,0 +1,23 @@
+﻿$PBExportHeader$activar.srf
+$PBExportComments$Función que utiliza la pulsación del "enter" como equivalente al "clicked" sobre un Command Button.
+global type activar from function_object
+end type
+
+forward prototypes
+global subroutine activar (commandbutton cb)
+end prototypes
+
+global subroutine activar (commandbutton cb);/*
+DESCRIPCIÓN: Función que utiliza la pulsación del "enter" como equivalente al "clicked" sobre un Command Button.
+PARÁMETROS: Un Command Button
+REGRESA: Nada
+AUTOR: CAMP(DkWf)
+FECHA: Algún día en el transcurso de 1996
+MODIFICACIÓN:
+*/
+IF KeyDown (keyEnter!) THEN
+	cb.triggerevent(clicked!)
+END IF
+
+end subroutine
+

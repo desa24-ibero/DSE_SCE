@@ -1,0 +1,49 @@
+﻿$PBExportHeader$f_obten_nombre_profesor.srf
+global type f_obten_nombre_profesor from function_object
+end type
+
+forward prototypes
+global function string f_obten_nombre_profesor (long al_cve_profesor, ref string as_apaterno, ref string as_amaterno, ref string as_nombre)
+end prototypes
+
+global function string f_obten_nombre_profesor (long al_cve_profesor, ref string as_apaterno, ref string as_amaterno, ref string as_nombre);// Regresa el nombre de una profesor o null si no existe
+// Antonio Pica
+
+string ls_nombre_completo, ls_apaterno, ls_amaterno, ls_nombre, ls_mensaje
+integer li_codigo
+
+Select nombre_completo,
+		 apaterno,
+		 amaterno,
+		 nombre
+Into	:ls_nombre_completo,
+		:ls_apaterno,
+		:ls_amaterno,
+		:ls_nombre
+From	profesor
+Where	cve_profesor = :al_cve_profesor 
+using gtr_sce;
+
+li_codigo= gtr_sce.sqlcode 
+ls_mensaje= gtr_sce.sqlerrtext
+
+IF li_codigo = -1 then
+	Messagebox("Error",ls_mensaje)
+	ls_nombre_completo= ""
+	ls_apaterno= ""
+	ls_amaterno= ""
+	ls_nombre= ""
+Elseif li_codigo = 100 then
+	ls_nombre_completo= ""
+	ls_apaterno= ""
+	ls_amaterno= ""
+	ls_nombre= ""
+End IF
+as_apaterno = ls_apaterno
+as_amaterno= ls_amaterno
+as_nombre = ls_nombre
+
+return ls_nombre_completo
+
+end function
+

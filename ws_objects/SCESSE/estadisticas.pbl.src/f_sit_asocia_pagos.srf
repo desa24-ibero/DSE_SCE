@@ -1,0 +1,97 @@
+﻿$PBExportHeader$f_sit_asocia_pagos.srf
+global type f_sit_asocia_pagos from function_object
+end type
+
+forward prototypes
+global function integer f_sit_asocia_pagos (long al_cuenta, integer ai_periodo, integer ai_anio, integer ai_cve_concepto, integer ai_num_horas, ref transaction atr_transaction, ref integer ai_codigo_sp, ref string as_mensaje_sp, string as_vpos_cc_ordernum, long al_cve_mat)
+end prototypes
+
+global function integer f_sit_asocia_pagos (long al_cuenta, integer ai_periodo, integer ai_anio, integer ai_cve_concepto, integer ai_num_horas, ref transaction atr_transaction, ref integer ai_codigo_sp, ref string as_mensaje_sp, string as_vpos_cc_ordernum, long al_cve_mat);//f_sit_asocia_pagos
+//Recibe: al_cuenta				long
+//			ai_periodo				int
+//			ai_anio					int
+//			ai_cve_concepto		int
+//			ai_num_horas			int
+//Recibe y devuelve:
+//			atr_transaction		transaction
+//			ai_codigo_sp			int
+//			as_mensaje_sp			int
+
+
+int li_existe_alumno, li_codigo_error, li_codigo_error_exec, li_exito, li_res_admision, li_res_control
+string ls_mensaje, ls_mensaje_exec, ls_mensaje_titulo, ls_periodo_pago, ls_periodo_apartado
+int li_anio_pago_cob, li_anio_apartado_cob, li_trncnt_out, li_anio_aportacion_out, li_anio_inscripcion_out
+string ls_mensaje_control, ls_mensaje_admision, ls_mensaje_out, ls_periodo_aportacion_out, ls_periodo_inscripcion_out
+string ls_mensaje_aportacion, ls_mensaje_inscripcion, ls_mensaje_sp, ls_error = 'Error'
+int li_periodo_pago, li_periodo_apartado
+int li_return_sp, li_codigo_sp
+long ll_return_value
+int  li_resultado = -1
+
+ls_mensaje_titulo = "Cuenta: ["+string(al_cuenta)+"] ~n" +&
+						  	"Periodo : ["+string(ai_periodo)+"] ~n"+&
+							"Anio : ["+string(ai_anio)+"] ~n"+&
+					  		"Concepto: ["+string(ai_cve_concepto)+"] ~n"+&
+							"Num Horas: ["+string(ai_num_horas)+"] ~n"
+											
+IF NOT isvalid(atr_transaction) THEN
+	MessageBox("Transaccion Inexistente", "Es necesario tener un objeto de transacción para ejecutar la función del sp", StopSign!)
+	RETURN -1
+END IF
+
+//Deja el manejo transaccional al stored procedure
+//		atr_transaction.Autocommit = true
+
+		DECLARE spsitasocia PROCEDURE FOR 
+			dbo.sp_sit_aplica_asocia_pagos
+			@cuenta = :al_cuenta,
+			@anio = :ai_anio,
+			@periodo = :ai_periodo,
+			@cve_concepto = :ai_cve_concepto,
+			@HorasMateria = :ai_num_horas,
+			@resultado = :li_resultado OUTPUT,
+			@texto_error = :ls_error OUTPUT,
+			@vpos_cc_ordernum = :as_vpos_cc_ordernum,
+			@cve_mat = :al_cve_mat
+
+		using atr_transaction;	
+		
+		EXECUTE spsitasocia;
+		
+//Obtiene los valores de la ejecución, si los hubo
+		
+		li_codigo_error_exec= atr_transaction.SQLCode
+		ls_mensaje_exec= atr_transaction.SQLErrText
+		IF li_codigo_error_exec= -1 THEN
+			CLOSE spsitasocia;
+			MessageBox("Error al ejecutar sp_sit_aplica_asocia_pagos: ", ls_mensaje_titulo+"~n"+ls_mensaje_exec, StopSign!)		
+			RETURN -1			
+		END IF
+
+////Recupera los valores del ResultSet
+//		do while atr_transaction.sqlcode = 0
+//			FETCH spsitasocia 	INTO 	:li_resultado, :ls_error;
+//			if atr_transaction.SQLCode= 0 then
+//				MessageBox( "Saldo", li_resultado)
+//			end if
+//		loop
+
+		
+		FETCH spsitasocia 	INTO 	:li_resultado, :ls_error;
+
+//		FETCH spsitasocia 	INTO 	:ll_return_value, :li_resultado, :ls_error;
+
+
+//Libera el manejo transaccional del stored procedure
+//		atr_transaction.Autocommit = false
+//Cierra el stored procedure
+		CLOSE spsitasocia;
+
+ai_codigo_sp = li_resultado 
+as_mensaje_sp = ls_error
+
+return ai_codigo_sp
+
+
+end function
+

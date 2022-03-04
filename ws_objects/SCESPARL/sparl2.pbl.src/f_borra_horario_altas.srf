@@ -1,0 +1,41 @@
+﻿$PBExportHeader$f_borra_horario_altas.srf
+global type f_borra_horario_altas from function_object
+end type
+
+forward prototypes
+global function long f_borra_horario_altas (integer ai_periodo, integer ai_anio)
+end prototypes
+
+global function long f_borra_horario_altas (integer ai_periodo, integer ai_anio);//NOMBRE
+//f_borra_horario_altas
+//
+//REGRESA
+//long
+//
+//RECIBE
+//ai_periodo				int
+//ai_anio					int
+
+integer li_codigo_sql
+string ls_criterio, ls_mensaje_sql
+long	ll_cuenta, ll_rows
+
+
+DELETE FROM horario_altas
+WHERE periodo = :ai_periodo
+AND	anio = :ai_anio
+USING gtr_sce;
+
+li_codigo_sql =gtr_sce.SqlCode
+ls_mensaje_sql =gtr_sce.SqlErrText
+ll_rows =gtr_sce.SqlNRows
+
+if li_codigo_sql = -1 then
+	MessageBox("Error al borrar horario de altas", ls_mensaje_sql)		
+end if
+
+return li_codigo_sql
+	
+
+end function
+

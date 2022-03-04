@@ -1,0 +1,14 @@
+﻿$PBExportHeader$d_banderas_adeuda3.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=81 color="536870912" )
+summary(height=5 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=93 color="536870912" )
+table(column=(type=long updatewhereclause=yes key=yes name=cuenta dbname="banderas.cuenta" )
+ column=(type=long update=yes updatewhereclause=yes name=adeuda_finanzas dbname="banderas.adeuda_finanzas" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"banderas~" )  TABLE(NAME=~"hist_reingreso~" ) COLUMN(NAME=~"banderas.cuenta~") COLUMN(NAME=~"banderas.adeuda_finanzas~")    JOIN (LEFT=~"banderas.cuenta~"    OP =~"=~"RIGHT=~"hist_reingreso.cuenta~" )WHERE(    EXP1 =~"( banderas.adeuda_finanzas~"   OP =~"=~"    EXP2 =~"1 )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"hist_reingreso.periodo_ing~"   OP =~"=~"    EXP2 =~"1~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"hist_reingreso.anio_ing~"   OP =~"=~"    EXP2 =~"1998~" ) ) " update="banderas" updatewhere=0 updatekeyinplace=yes  sort="cuenta A " )
+text(band=header alignment="1" text="Cuenta"border="0" color="33554432" x="334" y="8" height="65" width="188"  name=cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="1" text="Adeuda Finanzas"border="0" color="33554432" x="682" y="8" height="65" width="462"  name=adeuda_finanzas_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=2 alignment="1" tabsequence=20 border="0" color="33554432" x="746" y="4" height="77" width="330" format="[general]"  name=adeuda_finanzas edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=1 alignment="1" tabsequence=10 border="0" color="33554432" x="261" y="4" height="77" width="330" format="[general]"  name=cuenta edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )

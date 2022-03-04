@@ -1,0 +1,24 @@
+﻿$PBExportHeader$sacaperiodo.srf
+global type sacaperiodo from function_object
+end type
+
+forward prototypes
+global function string sacaperiodo (integer anio, integer peri, integer obs)
+end prototypes
+
+global function string sacaperiodo (integer anio, integer peri, integer obs);if obs <> 5 and obs <> 7 then
+	CHOOSE CASE peri
+		CASE 0
+			return Right(string(anio),2) + "P"
+		CASE 1
+			return Right(string(anio),2) + "V"
+		CASE 2
+			return Right(string(anio),2) + "O"
+	END CHOOSE
+elseif obs = 7 then
+	return "R.G."
+end if
+return ("---")
+
+end function
+

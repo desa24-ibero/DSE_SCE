@@ -1,0 +1,53 @@
+﻿$PBExportHeader$f_actual_mi_hijos_asimil.srf
+global type f_actual_mi_hijos_asimil from function_object
+end type
+
+forward prototypes
+global function integer f_actual_mi_hijos_asimil (long al_cve_mat, string as_gpo, integer ai_periodo, integer ai_anio)
+end prototypes
+
+global function integer f_actual_mi_hijos_asimil (long al_cve_mat, string as_gpo, integer ai_periodo, integer ai_anio);//Esta funcion actualiza los inscritos del grupo recibido como parametro
+//para poder reflejar el cambio en los hijos
+
+long ll_mat_insc_totales, ll_mat_insc_gpo, ll_mat_insc_padre, ll_row_actual
+long ll_cve_mat
+string ls_gpo
+int li_res, li_ret
+
+DataStore lds_grupos_asimilados
+lds_grupos_asimilados = Create DataStore
+lds_grupos_asimilados.DataObject = "d_grupos_hijos_asim"
+lds_grupos_asimilados.SetTransObject(gtr_sce)
+li_res = lds_grupos_asimilados.Retrieve(al_cve_mat, as_gpo, ai_periodo, ai_anio)
+
+ll_mat_insc_padre = f_cuenta_mat_insc(al_cve_mat, as_gpo, ai_periodo, ai_anio)
+
+if isnull(ll_mat_insc_padre) then
+	ll_mat_insc_padre= 0
+end if
+
+ll_mat_insc_totales= 0
+ll_mat_insc_totales= ll_mat_insc_totales + ll_mat_insc_padre
+
+//Existen grupos asimilados dependientes
+if li_res >= 0 then
+	for ll_row_actual = 1 to li_res
+			ll_cve_mat = lds_grupos_asimilados.GetItemNumber(ll_row_actual, "cve_mat" )		
+			ls_gpo = lds_grupos_asimilados.GetItemString(ll_row_actual, "gpo" )		
+			ll_mat_insc_gpo = f_cuenta_mat_insc(ll_cve_mat, ls_gpo, ai_periodo, ai_anio)
+			if isnull(ll_mat_insc_gpo) then
+				ll_mat_insc_gpo= 0
+			end if
+			ll_mat_insc_totales= ll_mat_insc_totales + ll_mat_insc_gpo			
+	next
+	li_ret = ll_mat_insc_totales
+else
+	li_ret = -1
+	messagebox("Error de Comunicación","Error con la consulta de grupos hijos asimilados", StopSign!)
+end if
+Destroy lds_grupos_asimilados
+return li_ret
+
+
+end function
+

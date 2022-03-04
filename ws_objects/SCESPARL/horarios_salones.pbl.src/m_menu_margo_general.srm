@@ -1,0 +1,270 @@
+﻿$PBExportHeader$m_menu_margo_general.srm
+forward
+global type m_menu_margo_general from menu
+end type
+type m_horarios from menu within m_menu_margo_general
+end type
+type m_asignacióndesalones from menu within m_menu_margo_general
+end type
+type m_2 from menu within m_menu_margo_general
+end type
+type m_3 from menu within m_menu_margo_general
+end type
+type m_salir from menu within m_menu_margo_general
+end type
+type m_1 from menu within m_menu_margo_general
+end type
+global type m_menu_margo_general from menu
+m_horarios m_horarios
+m_asignacióndesalones m_asignacióndesalones
+m_2 m_2
+m_3 m_3
+m_salir m_salir
+m_1 m_1
+end type
+end forward
+
+global type m_menu_margo_general from menu
+m_horarios m_horarios
+m_asignacióndesalones m_asignacióndesalones
+m_2 m_2
+m_3 m_3
+m_salir m_salir
+m_1 m_1
+end type
+global m_menu_margo_general m_menu_margo_general
+
+on m_menu_margo_general.create
+m_menu_margo_general=this
+call super::create
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = -8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_horarios=create m_horarios
+this.m_asignacióndesalones=create m_asignacióndesalones
+this.m_2=create m_2
+this.m_3=create m_3
+this.m_salir=create m_salir
+this.m_1=create m_1
+this.Item[UpperBound(this.Item)+1]=this.m_horarios
+this.Item[UpperBound(this.Item)+1]=this.m_asignacióndesalones
+this.Item[UpperBound(this.Item)+1]=this.m_2
+this.Item[UpperBound(this.Item)+1]=this.m_3
+this.Item[UpperBound(this.Item)+1]=this.m_salir
+this.Item[UpperBound(this.Item)+1]=this.m_1
+end on
+
+on m_menu_margo_general.destroy
+call super::destroy
+destroy(this.m_horarios)
+destroy(this.m_asignacióndesalones)
+destroy(this.m_2)
+destroy(this.m_3)
+destroy(this.m_salir)
+destroy(this.m_1)
+end on
+
+type m_horarios from menu within m_menu_margo_general
+end type
+
+on m_horarios.create
+call super::create
+this.text = "Horarios"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = -8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_horarios.destroy
+call super::destroy
+end on
+
+event clicked;//opensheet(w_consulta_horarios,w_marco_general,0,original!)
+
+open(w_consulta_horarios)
+end event
+
+type m_asignacióndesalones from menu within m_menu_margo_general
+end type
+
+on m_asignacióndesalones.create
+call super::create
+this.text = "Asignación de Salones"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = -8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_asignacióndesalones.destroy
+call super::destroy
+end on
+
+event clicked;opensheet(w_asigna_salones,w_marco_general,6,Layered!)
+end event
+
+type m_2 from menu within m_menu_margo_general
+end type
+
+event clicked;open(w_horario_salones_cd_mexico)
+end event
+
+on m_2.create
+call super::create
+this.text = "Reporte Matricial de Salones"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = -8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_2.destroy
+call super::destroy
+end on
+
+type m_3 from menu within m_menu_margo_general
+end type
+
+event clicked;opensheet(w_empalme_horarios,w_marco_general,6,Layered!)
+end event
+
+on m_3.create
+call super::create
+this.text = "Reporte de Empalme de Horarios"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = -8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_3.destroy
+call super::destroy
+end on
+
+type m_salir from menu within m_menu_margo_general
+end type
+
+on m_salir.create
+call super::create
+this.text = "Salir"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = -8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_salir.destroy
+call super::destroy
+end on
+
+event Clicked;close(w_marco_general)
+end event
+
+type m_1 from menu within m_menu_margo_general
+end type
+
+on m_1.create
+call super::create
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = -8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_1.destroy
+call super::destroy
+end on
+

@@ -1,0 +1,44 @@
+﻿$PBExportHeader$f_obten_fechahora_evento.srf
+global type f_obten_fechahora_evento from function_object
+end type
+
+forward prototypes
+global function datetime f_obten_fechahora_evento (integer ai_periodo, integer ai_anio, integer ai_evento)
+end prototypes
+
+global function datetime f_obten_fechahora_evento (integer ai_periodo, integer ai_anio, integer ai_evento);//	Obtiene la fecha de los eventos
+//
+// f_obten_fecha_evento
+//
+// Parámetros:
+// ai_periodo	integer
+// ai_anio		integer
+// ai_evento	integer
+//
+
+
+DataStore lds_calendario_eventos
+string ls_fecha
+int li_ret
+date ldt_fecha
+datetime ldttm_fecha
+lds_calendario_eventos = Create DataStore
+lds_calendario_eventos.DataObject = "d_calendario_anioperiodoevento"
+lds_calendario_eventos.SetTransObject(gtr_sce)
+li_ret =  lds_calendario_eventos.Retrieve(ai_periodo, ai_anio, ai_evento)
+if li_ret = 1 then
+	ldttm_fecha = lds_calendario_eventos.GetItemDateTime(1,"fecha")
+else
+	SetNull(ldttm_fecha)
+end if
+
+Destroy  lds_calendario_eventos
+
+return ldttm_fecha
+
+
+
+
+
+end function
+

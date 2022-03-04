@@ -1,0 +1,42 @@
+﻿$PBExportHeader$dw_bita_carr.srd
+$PBExportComments$Lista de cambios de carrera, se hace en esta tabla porque no se debe modificar la tabla aspiran
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=169 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=datetime update=yes updatewhereclause=yes key=yes name=fecha dbname="bita_carr.fecha" )
+ column=(type=long update=yes updatewhereclause=yes name=carr_ant dbname="bita_carr.carr_ant" )
+ column=(type=long update=yes updatewhereclause=yes name=carr_act dbname="bita_carr.carr_act" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=usuario dbname="bita_carr.usuario" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=folio dbname="bita_carr.folio" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=clv_ver dbname="bita_carr.clv_ver" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=clv_per dbname="bita_carr.clv_per" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=anio dbname="bita_carr.anio" )
+ retrieve="  SELECT bita_carr.fecha,   
+         bita_carr.carr_ant,   
+         bita_carr.carr_act,   
+         bita_carr.usuario,   
+         bita_carr.folio,   
+         bita_carr.clv_ver,   
+         bita_carr.clv_per,   
+         bita_carr.anio  
+    FROM bita_carr  
+   WHERE ( :fol = 1 OR  
+         bita_carr.folio = :fol ) AND  
+         ( :ver=99 or bita_carr.clv_ver = :ver ) AND  
+         ( bita_carr.clv_per = :per ) AND  
+         ( bita_carr.anio = :anio )    
+" update="bita_carr" updatewhere=1 updatekeyinplace=yes arguments=(("fol", number),("ver", number),("per", number),("anio", number)) )
+text(band=header alignment="2" text=""border="0" color="0" x="5" y="16" height="65" width="3415"  name=st_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Folio"border="0" color="0" x="97" y="96" height="65" width="129"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Fecha"border="0" color="0" x="494" y="96" height="65" width="165"  name=fecha_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Usuario"border="0" color="0" x="3173" y="100" height="65" width="247"  name=usuario_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Carr Ant"border="0" color="0" x="1253" y="96" height="65" width="330"  name=carr_ant_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Carr Act"border="0" color="0" x="2423" y="92" height="65" width="330"  name=carr_act_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="3178" y="4" height="77" width="247" format="[general]"  name=usuario edit.limit=8 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=10 border="0" color="0" x="837" y="4" height="77" width="1162" format="[general]"  name=carr_ant dddw.name=dw_carrera dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="2007" y="4" height="77" width="1162" format="[general]"  name=carr_act dddw.name=dw_carrera dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="folio"border="0" color="0" x="5" y="4" height="77" width="311" format="[general]"  name=fol  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="325" y="4" height="77" width="503" format="[shortdate] [time]"  name=fecha edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

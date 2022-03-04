@@ -1,0 +1,38 @@
+﻿$PBExportHeader$tiene_beca_n_tr.srf
+global type tiene_beca_n_tr from function_object
+end type
+
+forward prototypes
+global function integer tiene_beca_n_tr (long al_cuenta, integer ai_anio, integer ai_periodo, n_tr atr_trans)
+end prototypes
+
+global function integer tiene_beca_n_tr (long al_cuenta, integer ai_anio, integer ai_periodo, n_tr atr_trans);//
+// 		Nombre	tiene_beca
+// 		Recibe	al_cuenta, ai_anio, ai_periodo, atr_trans
+// 		Regresa	el porcetanje de apoyo con el que cuenta el alumno
+// 					-1	error de comunicacion
+// 					FMC06051999
+// 		Modificación para que reciba una transacción de PFC
+// 
+ 
+DataStore lds_beca_financiamiento
+int li_res, li_ret, li_porcentaje
+lds_beca_financiamiento = Create DataStore
+lds_beca_financiamiento.DataObject = "d_beca_financiamiento_combina"
+lds_beca_financiamiento.SetTransObject(atr_trans)
+li_res = lds_beca_financiamiento.Retrieve(al_cuenta,ai_anio,ai_periodo)
+choose case li_res
+	case 1
+		li_porcentaje = lds_beca_financiamiento.GetItemNumber(1,"apoyos_porcentaje")
+		li_ret = li_porcentaje
+	case 0
+		li_ret = 0
+	case else
+		messagebox("Error de Comunicación","Error con la consulta de becas BD. Favor de intentar nuevamente", None!)
+		li_ret = -1
+end choose
+Destroy lds_beca_financiamiento
+if li_ret <-1 OR li_ret > 100 then li_ret = -1
+return li_ret
+end function
+

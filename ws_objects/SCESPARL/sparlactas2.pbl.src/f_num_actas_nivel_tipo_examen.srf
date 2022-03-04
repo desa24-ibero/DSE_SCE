@@ -1,0 +1,52 @@
+﻿$PBExportHeader$f_num_actas_nivel_tipo_examen.srf
+global type f_num_actas_nivel_tipo_examen from function_object
+end type
+
+forward prototypes
+global function long f_num_actas_nivel_tipo_examen (integer ai_periodo, integer ai_anio, string as_nivel, integer ai_cve_tipo_examen, transaction atr_transaction)
+end prototypes
+
+global function long f_num_actas_nivel_tipo_examen (integer ai_periodo, integer ai_anio, string as_nivel, integer ai_cve_tipo_examen, transaction atr_transaction);//f_num_actas_nivel_tipo_examen
+//
+//Recibe:
+//ai_periodo			integer
+//ai_anio				integer
+//as_nivel				string
+//ai_cve_tipo_examen 	integer
+//Devuelve:
+//				-1		Error de consulta
+//				 0		No existen Actas
+//ll_num_actas>0		El número de actas
+
+integer li_codigo_sql
+long li_no_acta, ll_num_actas
+string ls_mensaje_sql
+
+
+SELECT count(dbo.acta_evaluacion_preeliminar.no_acta)
+INTO	:ll_num_actas
+FROM	dbo.acta_evaluacion_preeliminar
+//WHERE (dbo.acta_evaluacion_preeliminar.nivel = :as_nivel OR :as_nivel = 'T')
+WHERE (dbo.acta_evaluacion_preeliminar.nivel = :as_nivel OR :as_nivel = 'A')
+AND	dbo.acta_evaluacion_preeliminar.periodo = :ai_periodo
+AND	dbo.acta_evaluacion_preeliminar.anio = :ai_anio
+AND	dbo.acta_evaluacion_preeliminar.cve_tipo_examen = :ai_cve_tipo_examen
+USING atr_transaction;
+
+li_codigo_sql = atr_transaction.SqlCode
+ls_mensaje_sql = atr_transaction.SqlErrText
+
+if li_codigo_sql = 100 or isnull(ll_num_actas) then	
+//No existen actas de ese nivel y periodo
+	return 0
+elseif li_codigo_sql = -1 then
+//No fue posible consultar
+	MessageBox("Error al consultar acta_evaluacion_preeliminar: tipo_examen", ls_mensaje_sql)
+	return -1
+end if
+
+
+return ll_num_actas
+
+end function
+

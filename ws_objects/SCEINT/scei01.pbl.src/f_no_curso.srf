@@ -1,0 +1,39 @@
+﻿$PBExportHeader$f_no_curso.srf
+global type f_no_curso from function_object
+end type
+
+forward prototypes
+global function integer f_no_curso (long al_cuenta, long al_materia)
+end prototypes
+
+global function integer f_no_curso (long al_cuenta, long al_materia);/*
+DESCRIPCIÓN: Verifica si el alumno ha pasado una materia dada
+PARÁMETROS: al_cuenta,al_materia
+REGRESA: 8 si la materia no ha sido pasada o cursada, 0 si sí
+AUTOR: Víctor Manuel Iniestra Álvarez
+FECHA: 18 Junio 1998
+MODIFICACIÓN:
+*/
+string ls_calificacion
+
+	SELECT historico.calificacion
+	INTO :ls_calificacion
+	FROM historico
+	WHERE ( historico.cuenta = :al_cuenta ) AND
+		( historico.cve_mat = :al_materia )
+	USING gtr_sce;
+
+if isnull(ls_calificacion) then
+	ls_calificacion='NA'
+end if
+
+ls_calificacion=trim(ls_calificacion)
+
+CHOOSE CASE ls_calificacion
+	CASE '6','7','8','9','10','AC','MB','B','S','RE','E','IN'
+		return 0
+	CASE ELSE
+		return 8
+END CHOOSE
+end function
+

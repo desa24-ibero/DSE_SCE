@@ -1,0 +1,154 @@
+﻿$PBExportHeader$revisaadeudosinscripcion.srf
+global type revisaadeudosinscripcion from function_object
+end type
+
+forward prototypes
+global function integer revisaadeudosinscripcion (long al_cuenta, ref string as_respuesta, integer ai_revisa_reingresos)
+end prototypes
+
+global function integer revisaadeudosinscripcion (long al_cuenta, ref string as_respuesta, integer ai_revisa_reingresos);//Recibe:
+//long 		al_cuenta				 value	
+//string 	as_respuesta			 reference
+//integer	ai_revisa_reingresos	 value   	0: No revisa
+//											 	 			1: Revisa
+
+int li_err  
+/*li_err = 8 Bloqueos,li_err = 5 Avisos, li_err = 1 BaseDatos, li_err = 0 sin problemas*/
+int li_pasa, li_pago_inscripcion, li_tiene_beca, li_file_number, li_res_close
+string ls_respuesta
+string ls_periodo, ls_fecha_servidor, ls_nombre_archivo, ls_cuenta_file, ls_error_file
+datetime ldttm_fecha_servidor
+
+uo_periodo_servicios luo_periodo_servicios
+luo_periodo_servicios = CREATE uo_periodo_servicios
+
+ls_nombre_archivo = "adeudos.log"
+ls_cuenta_file = string(al_cuenta)
+
+ls_periodo = luo_periodo_servicios.f_recupera_desc_periodo(gtr_sce, gi_periodo)
+
+IF luo_periodo_servicios.ierror = -1 THEN 
+	MessageBox(luo_periodo_servicios.ititulo, luo_periodo_servicios.imensaje, StopSign!)
+	RETURN luo_periodo_servicios.ierror
+END IF		
+
+//choose case gi_periodo
+//	case 0
+//		ls_periodo = "Primavera"
+//	case 1
+//		ls_periodo = "Verano"
+//	case 2
+//		ls_periodo = "Otoño"
+//end choose
+
+li_err = 0
+li_pasa = tiene_adeudos_n_tr(al_cuenta, gtr_scob)   // Verifica adeudos del alumno
+ls_error_file= ""
+			
+if li_pasa < 0 then
+	//Error en la consulta
+	li_err = 1
+	ls_error_file = ls_error_file+" TIENE ADEUDOS     "
+	MessageBox("Error: Problemas al revisar si Tiene Adeudos",&
+					  "Es necesario reiniciar la aplicacion~n"+&
+					  "Revise la conexion a la base db_cobranzas", StopSign!)
+elseif li_pasa = 1 then
+	//Tiene saldo pendiente de pago
+	li_err = 2
+elseif li_pasa = 0 then
+	if ai_revisa_reingresos = 1 then
+		li_pago_inscripcion = pago_inscripcion_n_tr(al_cuenta, gi_anio ,gi_periodo, gtr_scob)
+		li_tiene_beca = tiene_beca_n_tr(al_cuenta,gi_anio,gi_periodo, gtr_sfeb)
+		
+		if li_pago_inscripcion = -1 then
+			ls_error_file = ls_error_file+" PAGO INSCRIPCION  "
+	  		MessageBox("Error: Problemas al revisar el Pago de la Inscripcion",&
+							"Es necesario reiniciar la aplicacion~n"+&
+				  			"Revise la conexion a la base db_cobranzas", StopSign!)
+		end if
+		
+		if li_tiene_beca = -1 then
+			ls_error_file = ls_error_file+" TIENE BECA        "
+			MessageBox("Error: Problemas al revisar si Tiene Beca",&
+							"Es necesario reiniciar la aplicacion~n"+&
+							"Revise la conexion a la base becas_fin_bd", StopSign!)	
+		end if
+		
+		if ((li_pago_inscripcion <> 1) AND (li_tiene_beca <> 100)) then
+			li_err = 3					
+		end if
+	end if
+end if
+
+if li_pasa = -1 or li_pago_inscripcion = -1 or li_tiene_beca = -1 then
+	ldttm_fecha_servidor = fecha_servidor(gtr_sce)
+	ls_fecha_servidor = string(ldttm_fecha_servidor)
+	li_file_number = FileOpen(ls_nombre_archivo, LineMode!, Write!, LockReadWrite!, Append!)
+	
+	if li_file_number<>-1 then
+		FileWrite(li_file_number, ls_cuenta_file +" "+ls_error_file +" "+ls_fecha_servidor)
+		li_res_close = FileClose(li_file_number)
+	end if
+	HALT CLOSE
+end if
+
+If li_err <> 0 then
+	CHOOSE CASE li_err
+		CASE 1
+			ls_respuesta = "~nProblemas con tu preinscripción intenta mas tarde o acude a Servicios Escolares(BDC)  "
+		CASE 2
+			ls_respuesta = "~n~t+Tienes adeudos en finanzas. Acude a Cobranzas para aclararlos."
+			li_err = 5
+		CASE 3
+			ls_respuesta = "~n~t+No se encuentra registrado tu pago de reinscripción del periodo "+&
+			ls_periodo+" "+string(gi_anio)+" Recuerda que si realizaste tu pago en bancos este tarda un día en pasar."+&
+					" Es necesario que acudas a Cobranzas para cualquier aclaración."
+			li_err = 5
+	END CHOOSE	
+end if
+
+if li_err <> 1 then
+	DataStore lds_banderas
+	int li_res
+	lds_banderas = Create DataStore
+	lds_banderas.DataObject = "d_banderascuenta"
+	lds_banderas.SetTransObject(gtr_sce)
+
+	if (lds_banderas.Retrieve(al_cuenta) = 1) then
+		if lds_banderas.GetItemNumber(1,"baja_documentos") = 1 then
+			ls_respuesta += "~n~t+Adeudas algún documento, pasa a Servicios Escolares para aclararlo"
+			li_err = 8
+		end if
+		
+		choose case lds_banderas.GetItemNumber(1,"cve_flag_biblioteca")
+			case 1
+				ls_respuesta += "~n~t+Estas amonestado por Biblioteca. Resuelve tu situación en Bliblioteca"
+				li_err = 8
+			case 2
+				ls_respuesta += "~n~t+Estas suspendido por Biblioteca. Resuelve tu situación en Bliblioteca"
+				li_err = 8
+			case 3
+				ls_respuesta += "~n~t+Estas dado de baja por Biblioteca. Resuelve tu situación en Bliblioteca"
+				li_err = 8
+		end choose
+	else
+		ls_respuesta = "~nProblemas con tu preinscripción intenta mas tarde o acude a Servicios Escolares(BDSE)  "
+		li_err = 1
+	end if
+	Destroy lds_banderas
+end if
+
+if li_err = 1 or li_err = 5 or li_err = 8 then
+	as_respuesta = "          "+string(al_cuenta)+'-'+obten_digito(al_cuenta)
+	if li_err = 5 then
+		as_respuesta += "   Atención para que tu trámite se complete exitosamente es necesario que revises tu situación:"
+		//				li_err = 0 //convierte el warning en sin problemas
+	elseif li_err = 8 then
+		as_respuesta += "~nTu preinscripción NO procedió debido a:"
+	end if
+	as_respuesta += ls_respuesta
+end if
+
+return li_err	
+end function
+

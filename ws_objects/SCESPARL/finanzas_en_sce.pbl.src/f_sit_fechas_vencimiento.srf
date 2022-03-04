@@ -1,0 +1,63 @@
+﻿$PBExportHeader$f_sit_fechas_vencimiento.srf
+global type f_sit_fechas_vencimiento from function_object
+end type
+
+forward prototypes
+global function integer f_sit_fechas_vencimiento (long ld_cuenta, integer ai_cve_concepto, integer ai_periodo_pro, integer ai_anio_pro, integer ai_clv_vento, integer ai_clv_version, ref datetime adt_fecha_vento, ref double ad_tasa_vento, ref string as_mensaje_err)
+end prototypes
+
+global function integer f_sit_fechas_vencimiento (long ld_cuenta, integer ai_cve_concepto, integer ai_periodo_pro, integer ai_anio_pro, integer ai_clv_vento, integer ai_clv_version, ref datetime adt_fecha_vento, ref double ad_tasa_vento, ref string as_mensaje_err);//////////////////////////////////////////////////////////////////////
+//
+// Function : f_fechas_vencimiento
+//
+// Purpose  : Obtiene la fecha de vencimiento y la tasa del concepto deseado 
+//
+//	Scope    : public
+//
+//	Arguments:
+//
+// Entrada  : cuenta alumno, clave concepto, periodo, año, clave de vencimiento
+//            
+//
+// Salida   : fecha de vencimiento , tasa de vencimiento y mensaje de error.
+//
+//	Returns  : interger	 1 operacion exitosa 
+//					   		 0 ninguna accion tomada
+//                      -1 si un error fue encontrado
+//
+// Author   : Raul Hdez. V.
+// fecha    : SEP/2001
+// Fecha modificación : 
+////////////////////////////////////////////////////////////////////////
+
+uo_datastore lds_fecha_vento
+lds_fecha_vento = CREATE uo_datastore
+lds_fecha_vento.Dataobject = "d_fecha_vento"
+lds_fecha_vento.settransobject(gtr_sit)
+
+long 	ll_recupera
+int 	li_status
+string ls_mensaje_err
+li_status = 1
+
+ll_recupera = lds_fecha_vento.retrieve(ai_cve_concepto, ai_periodo_pro, ai_anio_pro, &
+                                       ai_clv_vento,ai_clv_version)
+choose case ll_recupera
+	case is <= 0
+		as_mensaje_err = " fechas_tasas_vencimiento, al recuperar fecha del "+ &
+							  " concepto:"+ string(ai_cve_concepto) + &
+							  " vento: "+ string(ai_clv_vento) + &
+							  " version: "+ string(ai_clv_version) + &
+							  " anio: "+ string(ai_anio_pro) + &
+							  " periodo: "+ string(ai_periodo_pro) + &
+							  " Error db: " + lds_fecha_vento.ds_sqlerrtext
+		li_status = - 1
+	case else 
+		adt_fecha_vento = lds_fecha_vento.GetItemDateTime(ll_recupera,"fecha_vencimiento")
+		ad_tasa_vento   = lds_fecha_vento.GetItemNumber(ll_recupera,"tasa_vencimiento")
+end choose
+	
+destroy lds_fecha_vento
+
+RETURN li_status
+end function

@@ -1,0 +1,101 @@
+﻿$PBExportHeader$d_rep_holograma_plant_jul.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 HTMLDW=no print.documentname="" print.orientation = 2 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=1056 color="536870912" )
+summary(height=3 color="536870912" )
+footer(height=906 color="536870912" )
+detail(height=67 color="553648127" )
+table(column=(type=char(12) updatewhereclause=yes name=control_sep_orden_cobro dbname="control_sep_orden_cobro" )
+ column=(type=long updatewhereclause=yes name=control_sep_cuenta dbname="control_sep_cuenta" )
+ column=(type=char(100) updatewhereclause=yes name=control_sep_carrera dbname="control_sep_carrera" )
+ column=(type=long updatewhereclause=yes name=control_sep_numero dbname="control_sep_numero" )
+ column=(type=long updatewhereclause=yes name=control_sep_ciclos_cursados dbname="control_sep_ciclos_cursados" )
+ column=(type=long updatewhereclause=yes name=control_sep_cancelado dbname="control_sep_cancelado" )
+ column=(type=long updatewhereclause=yes name=control_sep_planteles_cve_doc_control_se dbname="control_sep_planteles.cve_doc_control_sep" )
+ column=(type=long updatewhereclause=yes name=control_sep_num_holograma dbname="control_sep_num_holograma" )
+ column=(type=long updatewhereclause=yes name=control_sep_folio_acta dbname="control_sep_folio_acta" )
+ column=(type=char(30) updatewhereclause=yes name=doc_control_sep_doc_control_sep dbname="doc_control_sep.doc_control_sep" )
+ column=(type=char(150) updatewhereclause=yes name=alumnos_nombre_completo dbname="alumnos_nombre_completo" )
+ column=(type=char(52) updatewhereclause=yes name=planteles_plantel dbname="planteles_plantel" )
+ column=(type=char(1) updatewhereclause=yes name=digito dbname="digito" )
+ column=(type=char(20) updatewhereclause=yes name=control_sep_planteles_nacionalidad dbname="control_sep_planteles.nacionalidad" )
+ column=(type=char(1) updatewhereclause=yes name=control_sep_planteles_sexo dbname="control_sep_planteles.sexo" )
+ column=(type=long updatewhereclause=yes name=control_sep_planteles_carrera_num dbname="control_sep_planteles.carrera_num" )
+ column=(type=long updatewhereclause=yes name=control_sep_planteles_modalidad_num dbname="control_sep_planteles.modalidad_num" )
+ retrieve="  SELECT  control_sep_orden_cobro= 			control_sep_planteles.orden_cobro,   
+         control_sep_cuenta= 					control_sep_planteles.cuenta,   
+         control_sep_carrera= 			control_sep_planteles.carrera,   
+         control_sep_numero= 					control_sep_planteles.numero,   
+         control_sep_ciclos_cursados= 		control_sep_planteles.ciclos_cursados,   
+         control_sep_cancelado= 				control_sep_planteles.cancelado,   
+         control_sep_planteles.cve_doc_control_sep,   
+         control_sep_num_holograma= 		control_sep_planteles.num_holograma,   
+         control_sep_folio_acta= 			control_sep_planteles.folio_acta,     
+         doc_control_sep.doc_control_sep, 
+         alumnos_nombre_completo = 			control_sep_planteles.nombre_completo,
+			planteles_plantel = ~"UNIVERSIDAD IBEROAMERICANA ~"+UPPER(planteles.plantel),
+			digito = ~" ~",
+			control_sep_planteles.nacionalidad,  
+			control_sep_planteles.sexo,
+			control_sep_planteles.carrera_num, 
+			control_sep_planteles.modalidad_num
+    FROM control_sep_planteles,   
+         doc_control_sep,
+			planteles  
+   WHERE ( control_sep_planteles.cve_doc_control_sep = doc_control_sep.cve_doc_control_sep ) and  
+         ( ( control_sep_planteles.orden_cobro = :as_orden_cobro ) AND  
+         ( control_sep_planteles.cve_doc_control_sep in (3,4,5,6) ) AND  
+         ( control_sep_planteles.cancelado = 0 ) )    AND
+         ( control_sep_planteles.cve_plantel = planteles.cve_plantel ) AND
+			(datepart(yy,fecha_emision) = datepart(yy,getdate()) OR folio_acta = 1)
+" arguments=(("as_orden_cobro", string),("as_fecha_texto", string))  sort="control_sep_num_holograma A control_sep_cuenta A " )
+rectangle(band=header x="128" y="915" height="154" width="3302"  name=r_1 brush.hatch="6" brush.color="79741120" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="79741120" )
+column(band=header id=1 alignment="0" tabsequence=32766 border="0" color="0" x="987" y="682" height="54" width="219" format="[general]"  name=control_sep_orden_cobro edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Times New Roman" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="SUBSECRETARIA DE EDUCACION SUPERIOR E INVESTIGACION CIENTIFICA" border="0" color="0" x="625" y="179" height="160" width="2245"  name=t_1  font.face="Times New Roman" font.height="-14" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=header alignment="0" expression="~"QUE AMPARA LA AUTENTICACIÓN DE ~"+string(rowcount())+ ~" TITULO(S)~""border="0" color="0" x="132" y="800" height="51" width="2761" format="[general]"  name=cf_ampara  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="0" text="EXPEDIDOS EN FAVOR DE:" border="0" color="0" x="132" y="858" height="54" width="673"  name=t_4  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="ACTA DE AUTENTICACIÓN NÚM." border="0" color="0" x="132" y="739" height="58" width="823"  name=t_5  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=9 alignment="0" tabsequence=32766 border="0" color="0" x="987" y="739" height="58" width="219" format="0000"  name=control_sep_folio_acta edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Times New Roman" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="0" text="NÚM. DE LA ORDEN DE COBRO" border="0" color="0" x="132" y="682" height="54" width="830"  name=t_6  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=12 alignment="0" tabsequence=32766 border="0" color="0" x="132" y="621" height="54" width="2187" format="[general]"  name=planteles_plantel edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="SEXO" border="0" color="0" x="1894" y="960" height="51" width="121"  name=t_7  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="NÚMERO DE HOLOGRAMA" border="0" color="0" x="3079" y="931" height="106" width="325"  name=t_8  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=header x1="3061" y1="915" x2="3061" y2="1069"  name=l_1 pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Núm." border="0" color="0" x="143" y="960" height="51" width="102"  name=t_9  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=header x1="263" y1="915" x2="263" y2="1069"  name=l_2 pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="NÚMERO DE CUENTA" border="0" color="0" x="285" y="938" height="106" width="282"  name=control_sep_cuenta_t  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=header x1="581" y1="915" x2="581" y2="1069"  name=l_3 pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="NOMBRE DEL ALUMNO" border="0" color="0" x="739" y="960" height="51" width="688"  name=control_sep_cve_carrera_t  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=header x1="2033" y1="915" x2="2033" y2="1069"  name=l_4 pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1872" y1="915" x2="1872" y2="1069"  name=l_5 pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2366" y1="915" x2="2366" y2="1069"  name=l_6 pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2655" y1="915" x2="2655" y2="1069"  name=l_7 pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="NACIO-
+NALIDAD" border="0" color="0" x="2059" y="931" height="106" width="282"  name=t_10  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="PLAN DE ESTUDIOS" border="0" color="0" x="2392" y="931" height="106" width="245"  name=t_11  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="MODALIDAD DE TITULACION" border="0" color="0" x="2677" y="931" height="106" width="369"  name=t_12  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="128" y1="64" x2="128" y2="0"  name=l_8 pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3430" y1="64" x2="3430" y2="0"  name=l_9 pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="128" y1="64" x2="3430" y2="64"  name=l_10 pen.style="0" pen.width="4" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="3061" y1="64" x2="3061" y2="0"  name=l_11 pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=detail alignment="1" expression="getrow()"border="0" color="0" x="143" y="0" height="61" width="102" format="#,##0"  name=num  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+line(band=detail x1="263" y1="64" x2="263" y2="0"  name=l_12 pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=detail alignment="0" expression="string( control_sep_cuenta )+ ~"-~"+obten_digito( control_sep_cuenta )"border="0" color="0" x="285" y="0" height="61" width="282" format="[general]"  name=cuenta_digito  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+line(band=detail x1="581" y1="64" x2="581" y2="0"  name=l_13 pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="0" x="596" y="0" height="61" width="1265" format="[general]"  name=alumnos_nombre_completo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+line(band=detail x1="2033" y1="64" x2="2033" y2="0"  name=l_14 pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1872" y1="64" x2="1872" y2="0"  name=l_15 pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2366" y1="64" x2="2366" y2="0"  name=l_16 pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="0" x="1916" y="0" height="61" width="84" format="[general]"  name=control_sep_planteles_sexo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="3079" y="0" height="61" width="325" format="[general]"  name=control_sep_num_holograma edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+line(band=detail x1="2655" y1="64" x2="2655" y2="0"  name=l_17 pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="2041" y="0" height="61" width="315" format="[general]"  name=control_sep_planteles_nacionalidad edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=16 alignment="1" tabsequence=32766 border="0" color="0" x="2406" y="0" height="61" width="216" format="[general]"  name=control_sep_planteles_carrera_num edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=17 alignment="1" tabsequence=32766 border="0" color="0" x="2754" y="0" height="61" width="216" format="[general]"  name=control_sep_planteles_modalidad_num edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=footer alignment="0" expression="~"LA PRESENTE ACTA SE LEVANTA CON FUNDAMENTO EN LO ESTABLECIDO EN EL ARTICULO 18 DE LA LEY PARA LA COORDINACION DE LA EDUCACION SUPERIOR EN MEXICO, D.F. A ~" +  as_fecha_texto "border="0" color="0" x="135" y="730" height="163" width="1891" format="[general]"  name=cf_leyenda_fecha  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=footer alignment="2" expression="f_obten_nombre_certificado(5)"border="0" color="0" x="2063" y="756" height="64" width="1368" format="[general]"  name=cf_nombre_certificado  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=footer alignment="2" expression="f_obten_puesto_certificado(5)"border="0" color="0" x="2063" y="829" height="64" width="1368" format="[general]"  name=puesto_certificado  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="DIRECCION GENERAL DE EDUCACION SUPERIOR" border="0" color="0" x="914" y="403" height="80" width="1668"  name=t_2  font.face="Times New Roman" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="DIRECCION DE INSTITUCIONES PARTICULARES DE EDUCACION SUPERIOR" border="0" color="0" x="505" y="490" height="74" width="2487"  name=t_3  font.face="Times New Roman" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

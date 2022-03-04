@@ -1,0 +1,290 @@
+﻿$PBExportHeader$m_reporte_sep_planteles.srm
+forward
+global type m_reporte_sep_planteles from menu
+end type
+type m_archivo from menu within m_reporte_sep_planteles
+end type
+type m_nuevaorden from menu within m_archivo
+end type
+type m_nuevaorden from menu within m_archivo
+end type
+type m_imprimirreporte from menu within m_archivo
+end type
+type m_guardarreporte from menu within m_archivo
+end type
+type m_- from menu within m_archivo
+end type
+type m_salir from menu within m_archivo
+end type
+type m_archivo from menu within m_reporte_sep_planteles
+m_nuevaorden m_nuevaorden
+m_imprimirreporte m_imprimirreporte
+m_guardarreporte m_guardarreporte
+m_- m_-
+m_salir m_salir
+end type
+type m_registro from menu within m_reporte_sep_planteles
+end type
+type m_agregar from menu within m_registro
+end type
+type m_eliminar from menu within m_registro
+end type
+type m_registro from menu within m_reporte_sep_planteles
+m_agregar m_agregar
+m_eliminar m_eliminar
+end type
+type m_ventana from menu within m_reporte_sep_planteles
+end type
+type m_horizontal from menu within m_ventana
+end type
+type m_vertical from menu within m_ventana
+end type
+type m_mosaico from menu within m_ventana
+end type
+type m_cascada from menu within m_ventana
+end type
+type m_ventana from menu within m_reporte_sep_planteles
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_mosaico m_mosaico
+m_cascada m_cascada
+end type
+end forward
+
+global type m_reporte_sep_planteles from menu
+m_archivo m_archivo
+m_registro m_registro
+m_ventana m_ventana
+end type
+global m_reporte_sep_planteles m_reporte_sep_planteles
+
+on m_reporte_sep_planteles.create
+m_reporte_sep_planteles=this
+this.m_archivo=create m_archivo
+this.m_registro=create m_registro
+this.m_ventana=create m_ventana
+this.Item[]={this.m_archivo, &
+this.m_registro, &
+this.m_ventana}
+end on
+
+on m_reporte_sep_planteles.destroy
+destroy(this.m_archivo)
+destroy(this.m_registro)
+destroy(this.m_ventana)
+end on
+
+type m_archivo from menu within m_reporte_sep_planteles
+m_nuevaorden m_nuevaorden
+m_imprimirreporte m_imprimirreporte
+m_guardarreporte m_guardarreporte
+m_- m_-
+m_salir m_salir
+end type
+
+on m_archivo.create
+this.Text="Archivo"
+this.m_nuevaorden=create m_nuevaorden
+this.m_imprimirreporte=create m_imprimirreporte
+this.m_guardarreporte=create m_guardarreporte
+this.m_-=create m_-
+this.m_salir=create m_salir
+this.Item[]={this.m_nuevaorden, &
+this.m_imprimirreporte, &
+this.m_guardarreporte, &
+this.m_-, &
+this.m_salir}
+end on
+
+on m_archivo.destroy
+destroy(this.m_nuevaorden)
+destroy(this.m_imprimirreporte)
+destroy(this.m_guardarreporte)
+destroy(this.m_-)
+destroy(this.m_salir)
+end on
+
+type m_nuevaorden from menu within m_archivo
+end type
+
+on m_nuevaorden.create
+this.Text="Nueva Orden"
+this.Microhelp="Nueva orden cobro"
+this.ToolBarItemName="SelectScript!"
+this.ToolBarItemText="Nueva orden cobro"
+this.ToolBarItemOrder=10
+end on
+
+event clicked;w_reporte_sep_planteles.cb_nuevo.event clicked()
+end event
+
+on m_nuevaorden.destroy
+end on
+
+type m_imprimirreporte from menu within m_archivo
+end type
+
+on m_imprimirreporte.create
+this.Text="Imprimir Reporte"
+this.Microhelp="Imprime Reporte SEP"
+this.ToolBarItemName="Print!"
+this.ToolBarItemText="Imprime Reporte SEP"
+this.ToolBarItemOrder=15
+end on
+
+event clicked;w_reporte_sep_planteles.cb_imprimir.event clicked()
+end event
+
+type m_guardarreporte from menu within m_archivo
+end type
+
+on m_guardarreporte.create
+this.Text="Guardar Reporte"
+this.Microhelp="Guarda en archivos la orden de cobro"
+this.ToolBarItemName="Save!"
+this.ToolBarItemText="Guarda en archivos la orden de cobro"
+this.ToolBarItemOrder=20
+end on
+
+event clicked;w_reporte_sep_planteles.cb_guardar.event clicked()
+end event
+
+type m_- from menu within m_archivo
+end type
+
+on m_-.create
+this.Text="-"
+end on
+
+type m_salir from menu within m_archivo
+end type
+
+event clicked;Close(ParentWindow)
+end event
+
+on m_salir.create
+this.Text="Salir"
+this.Microhelp="Cierra la ventana de reporte SEP"
+this.ToolBarItemName="Exit!"
+this.ToolBarItemText="Cierra la ventana de reporte SEP"
+this.MenuItemType=MenuItemTypeExit!
+this.ToolBarItemOrder=100
+this.ToolBarItemSpace=5
+end on
+
+type m_registro from menu within m_reporte_sep_planteles
+m_agregar m_agregar
+m_eliminar m_eliminar
+end type
+
+on m_registro.create
+this.Text="Registro"
+this.m_agregar=create m_agregar
+this.m_eliminar=create m_eliminar
+this.Item[]={this.m_agregar, &
+this.m_eliminar}
+end on
+
+on m_registro.destroy
+destroy(this.m_agregar)
+destroy(this.m_eliminar)
+end on
+
+type m_agregar from menu within m_registro
+end type
+
+on m_agregar.create
+this.Text="Agregar"
+this.Microhelp="Agregar un folio"
+this.ToolBarItemName="Next5!"
+this.ToolBarItemText="Agregar un folio"
+this.ToolBarItemOrder=25
+this.ToolBarItemSpace=5
+end on
+
+event clicked;w_reporte_sep_planteles.cb_agregar.event clicked()
+end event
+
+type m_eliminar from menu within m_registro
+end type
+
+on m_eliminar.create
+this.Text="Eliminar"
+this.Microhelp="Eliminar un folio"
+this.ToolBarItemName="Prior5!"
+this.ToolBarItemText="Eliminar un folio"
+this.ToolBarItemOrder=30
+end on
+
+event clicked;w_reporte_sep_planteles.cb_eliminar.event clicked()
+end event
+
+type m_ventana from menu within m_reporte_sep_planteles
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_mosaico m_mosaico
+m_cascada m_cascada
+end type
+
+on m_ventana.create
+this.Text="Ventana"
+this.m_horizontal=create m_horizontal
+this.m_vertical=create m_vertical
+this.m_mosaico=create m_mosaico
+this.m_cascada=create m_cascada
+this.Item[]={this.m_horizontal, &
+this.m_vertical, &
+this.m_mosaico, &
+this.m_cascada}
+end on
+
+on m_ventana.destroy
+destroy(this.m_horizontal)
+destroy(this.m_vertical)
+destroy(this.m_mosaico)
+destroy(this.m_cascada)
+end on
+
+type m_horizontal from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Tilehorizontal!)
+
+end event
+
+on m_horizontal.create
+this.Text="Horizontal"
+end on
+
+type m_vertical from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Tile!)
+
+end event
+
+on m_vertical.create
+this.Text="Vertical"
+end on
+
+type m_mosaico from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Layer!)
+end event
+
+on m_mosaico.create
+this.Text="Primer Plano"
+end on
+
+type m_cascada from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Cascade!)
+
+end event
+
+on m_cascada.create
+this.Text="Cascada"
+end on
+

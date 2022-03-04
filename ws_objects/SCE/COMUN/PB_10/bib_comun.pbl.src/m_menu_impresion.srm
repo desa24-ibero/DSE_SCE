@@ -1,0 +1,740 @@
+﻿$PBExportHeader$m_menu_impresion.srm
+forward
+global type m_menu_impresion from menu
+end type
+type m_archivo from menu within m_menu_impresion
+end type
+type m_leer from menu within m_archivo
+end type
+type m_salvar from menu within m_archivo
+end type
+type m_configurarimpresora from menu within m_archivo
+end type
+type m_imprimir from menu within m_archivo
+end type
+type m_- from menu within m_archivo
+end type
+type m_salir from menu within m_archivo
+end type
+type m_archivo from menu within m_menu_impresion
+m_leer m_leer
+m_salvar m_salvar
+m_configurarimpresora m_configurarimpresora
+m_imprimir m_imprimir
+m_- m_-
+m_salir m_salir
+end type
+type m_edicion from menu within m_menu_impresion
+end type
+type m_deshacer from menu within m_edicion
+end type
+type m_cortar from menu within m_edicion
+end type
+type m_copiar from menu within m_edicion
+end type
+type m_pegar from menu within m_edicion
+end type
+type m_edicion from menu within m_menu_impresion
+m_deshacer m_deshacer
+m_cortar m_cortar
+m_copiar m_copiar
+m_pegar m_pegar
+end type
+type m_registro from menu within m_menu_impresion
+end type
+type m_nuevo from menu within m_registro
+end type
+type m_actualiza from menu within m_registro
+end type
+type m_borraregistro from menu within m_registro
+end type
+type m_cargaregistro from menu within m_registro
+end type
+type m_-1 from menu within m_registro
+end type
+type m_primero from menu within m_registro
+end type
+type m_anterior from menu within m_registro
+end type
+type m_siguiente from menu within m_registro
+end type
+type m_ltimo from menu within m_registro
+end type
+type m_-2 from menu within m_registro
+end type
+type m_filtrar from menu within m_registro
+end type
+type m_ordenar from menu within m_registro
+end type
+type m_registro from menu within m_menu_impresion
+m_nuevo m_nuevo
+m_actualiza m_actualiza
+m_borraregistro m_borraregistro
+m_cargaregistro m_cargaregistro
+m_-1 m_-1
+m_primero m_primero
+m_anterior m_anterior
+m_siguiente m_siguiente
+m_ltimo m_ltimo
+m_-2 m_-2
+m_filtrar m_filtrar
+m_ordenar m_ordenar
+end type
+type m_ventana from menu within m_menu_impresion
+end type
+type m_horizontal from menu within m_ventana
+end type
+type m_vertical from menu within m_ventana
+end type
+type m_primerplano from menu within m_ventana
+end type
+type m_cascada from menu within m_ventana
+end type
+type m_ventana from menu within m_menu_impresion
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+type m_ayuda from menu within m_menu_impresion
+end type
+type m_ayuda from menu within m_menu_impresion
+end type
+end forward
+
+global type m_menu_impresion from menu
+m_archivo m_archivo
+m_edicion m_edicion
+m_registro m_registro
+m_ventana m_ventana
+m_ayuda m_ayuda
+end type
+global m_menu_impresion m_menu_impresion
+
+type variables
+datawindow dw, dw_2
+userobject objeto
+end variables
+
+on m_menu_impresion.create
+m_menu_impresion=this
+this.m_archivo=create m_archivo
+this.m_edicion=create m_edicion
+this.m_registro=create m_registro
+this.m_ventana=create m_ventana
+this.m_ayuda=create m_ayuda
+this.Item[]={this.m_archivo, &
+this.m_edicion, &
+this.m_registro, &
+this.m_ventana, &
+this.m_ayuda}
+end on
+
+on m_menu_impresion.destroy
+destroy(this.m_archivo)
+destroy(this.m_edicion)
+destroy(this.m_registro)
+destroy(this.m_ventana)
+destroy(this.m_ayuda)
+end on
+
+type m_archivo from menu within m_menu_impresion
+m_leer m_leer
+m_salvar m_salvar
+m_configurarimpresora m_configurarimpresora
+m_imprimir m_imprimir
+m_- m_-
+m_salir m_salir
+end type
+
+on m_archivo.create
+this.Text="Archivo"
+this.m_leer=create m_leer
+this.m_salvar=create m_salvar
+this.m_configurarimpresora=create m_configurarimpresora
+this.m_imprimir=create m_imprimir
+this.m_-=create m_-
+this.m_salir=create m_salir
+this.Item[]={this.m_leer, &
+this.m_salvar, &
+this.m_configurarimpresora, &
+this.m_imprimir, &
+this.m_-, &
+this.m_salir}
+end on
+
+on m_archivo.destroy
+destroy(this.m_leer)
+destroy(this.m_salvar)
+destroy(this.m_configurarimpresora)
+destroy(this.m_imprimir)
+destroy(this.m_-)
+destroy(this.m_salir)
+end on
+
+type m_leer from menu within m_archivo
+end type
+
+event clicked;string nulo
+
+setnull(nulo)
+
+if isvalid(dw) then
+	SetPointer(HourGlass!)
+	if dw.ImportFile(nulo)<1 then
+		messagebox("No se pudo leer el archivo","")
+	end if
+end if
+end event
+
+on m_leer.create
+this.Text="Leer"
+this.ToolBarItemName="Custom050!"
+this.ToolBarItemText="Leer"
+end on
+
+type m_salvar from menu within m_archivo
+end type
+
+event clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	if dw.SaveAs("",Excel!, TRUE)<>1 then
+		dw.SaveAs("",Clipboard!, TRUE)
+		messagebox("No se pudo guardar el archivo","La información se encuentra en el Clipboard")	
+	end if
+end if
+end event
+
+on m_salvar.create
+this.Text="Salvar"
+this.ToolBarItemName="Save!"
+this.ToolBarItemText="Salvar"
+this.ToolBarItemOrder=1
+end on
+
+type m_configurarimpresora from menu within m_archivo
+end type
+
+event clicked;printsetup()
+
+end event
+
+on m_configurarimpresora.create
+this.Text="C&onfigurar Impresora"
+this.ToolBarItemOrder=2
+end on
+
+type m_imprimir from menu within m_archivo
+end type
+
+on m_imprimir.create
+this.Text="&Imprimir~tCtrl+I"
+this.Microhelp="Imprimir "
+this.ToolBarItemName="Print!"
+this.ToolBarItemText="Imprimir"
+this.ToolBarItemOrder=3
+this.Shortcut=329
+end on
+
+event clicked;if isvalid(dw) then
+	dw.modify("Datawindow.print.preview = Yes")
+	SetPointer(HourGlass!)
+	openwithparm(conf_impr,dw)
+end if
+end event
+
+type m_- from menu within m_archivo
+end type
+
+on m_-.create
+this.Text="-"
+end on
+
+type m_salir from menu within m_archivo
+end type
+
+event clicked;Close(ParentWindow)
+end event
+
+on m_salir.create
+this.Text="Salir"
+this.Microhelp="Salir de la Ventana Actual"
+this.ToolBarItemName="Exit!"
+this.ToolBarItemText="Salir"
+this.ToolBarItemOrder=99
+this.ToolBarItemSpace=3
+end on
+
+type m_edicion from menu within m_menu_impresion
+m_deshacer m_deshacer
+m_cortar m_cortar
+m_copiar m_copiar
+m_pegar m_pegar
+end type
+
+on m_edicion.create
+this.Text="Editar"
+this.Visible=false
+this.Enabled=false
+this.m_deshacer=create m_deshacer
+this.m_cortar=create m_cortar
+this.m_copiar=create m_copiar
+this.m_pegar=create m_pegar
+this.Item[]={this.m_deshacer, &
+this.m_cortar, &
+this.m_copiar, &
+this.m_pegar}
+end on
+
+on m_edicion.destroy
+destroy(this.m_deshacer)
+destroy(this.m_cortar)
+destroy(this.m_copiar)
+destroy(this.m_pegar)
+end on
+
+type m_deshacer from menu within m_edicion
+end type
+
+on m_deshacer.create
+this.Text="Deshacer~tCtrl+U"
+this.Microhelp="Deshacer la última edición"
+this.ToolBarItemName="Undo!"
+this.ToolBarItemText="Deshacer"
+this.Visible=false
+this.ToolBarItemOrder=4
+this.ToolBarItemSpace=3
+this.Enabled=false
+this.Shortcut=341
+end on
+
+event clicked;if isvalid(dw) then
+	dw.undo()
+end if
+end event
+
+type m_cortar from menu within m_edicion
+end type
+
+on m_cortar.create
+this.Text="C&ortar~tCtrl+X"
+this.Microhelp="Borra la selección actual y la pone en el portapapeles"
+this.ToolBarItemName="Cut!"
+this.ToolBarItemText="Cortar"
+this.Visible=false
+this.ToolBarItemOrder=5
+this.Enabled=false
+this.Shortcut=344
+end on
+
+event clicked;if isvalid(dw) then
+	dw.cut()
+end if
+end event
+
+type m_copiar from menu within m_edicion
+end type
+
+on m_copiar.create
+this.Text="&Copiar~tCtrl+C"
+this.Microhelp="Copia la selección actual en el portapapeles"
+this.ToolBarItemName="Copy!"
+this.ToolBarItemText="Copiar"
+this.Visible=false
+this.ToolBarItemOrder=6
+this.Enabled=false
+this.Shortcut=323
+end on
+
+event clicked;if isvalid(dw) then
+	dw.copy()
+end if
+end event
+
+type m_pegar from menu within m_edicion
+end type
+
+on m_pegar.create
+this.Text="&Pegar~tCtrl+V"
+this.Microhelp="Pega el contenido del portapapeles en el campo actual"
+this.ToolBarItemName="Paste!"
+this.ToolBarItemText="Pegar"
+this.Visible=false
+this.ToolBarItemOrder=7
+this.Enabled=false
+this.Shortcut=342
+end on
+
+event clicked;if isvalid(dw) then
+	dw.paste()
+end if
+end event
+
+type m_registro from menu within m_menu_impresion
+m_nuevo m_nuevo
+m_actualiza m_actualiza
+m_borraregistro m_borraregistro
+m_cargaregistro m_cargaregistro
+m_-1 m_-1
+m_primero m_primero
+m_anterior m_anterior
+m_siguiente m_siguiente
+m_ltimo m_ltimo
+m_-2 m_-2
+m_filtrar m_filtrar
+m_ordenar m_ordenar
+end type
+
+on m_registro.create
+this.Text="Registro"
+this.m_nuevo=create m_nuevo
+this.m_actualiza=create m_actualiza
+this.m_borraregistro=create m_borraregistro
+this.m_cargaregistro=create m_cargaregistro
+this.m_-1=create m_-1
+this.m_primero=create m_primero
+this.m_anterior=create m_anterior
+this.m_siguiente=create m_siguiente
+this.m_ltimo=create m_ltimo
+this.m_-2=create m_-2
+this.m_filtrar=create m_filtrar
+this.m_ordenar=create m_ordenar
+this.Item[]={this.m_nuevo, &
+this.m_actualiza, &
+this.m_borraregistro, &
+this.m_cargaregistro, &
+this.m_-1, &
+this.m_primero, &
+this.m_anterior, &
+this.m_siguiente, &
+this.m_ltimo, &
+this.m_-2, &
+this.m_filtrar, &
+this.m_ordenar}
+end on
+
+on m_registro.destroy
+destroy(this.m_nuevo)
+destroy(this.m_actualiza)
+destroy(this.m_borraregistro)
+destroy(this.m_cargaregistro)
+destroy(this.m_-1)
+destroy(this.m_primero)
+destroy(this.m_anterior)
+destroy(this.m_siguiente)
+destroy(this.m_ltimo)
+destroy(this.m_-2)
+destroy(this.m_filtrar)
+destroy(this.m_ordenar)
+end on
+
+type m_nuevo from menu within m_registro
+end type
+
+on m_nuevo.create
+this.Text="&Nuevo~tCtrl+N"
+this.Microhelp="Inserta un renglon al final para agregar un dato"
+this.ToolBarItemDownName="Nuevo"
+this.ToolBarItemName="SelectScript!"
+this.ToolBarItemText="Nuevo"
+this.ToolBarItemOrder=8
+this.ToolBarItemSpace=3
+this.Shortcut=334
+end on
+
+event clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	dw.triggerevent("nuevo")
+end if
+
+end event
+
+type m_actualiza from menu within m_registro
+end type
+
+on m_actualiza.create
+this.Text="&Actualizar~tCtrl+A"
+this.Microhelp="Guarda los cambios en la base de datos"
+this.ToolBarItemDownName="Actualizar"
+this.ToolBarItemName="Custom044!"
+this.ToolBarItemText="Actualizar"
+this.ToolBarItemOrder=9
+this.Shortcut=321
+end on
+
+event clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	dw.triggerevent("actualiza")
+end if
+end event
+
+type m_borraregistro from menu within m_registro
+end type
+
+on m_borraregistro.create
+this.Text="&Borra registro~tCtrl+B"
+this.Microhelp="Borra el renglón actual"
+this.ToolBarItemDownName="Borrar"
+this.ToolBarItemName="Clear!"
+this.ToolBarItemText="Borrar"
+this.ToolBarItemOrder=10
+this.Shortcut=322
+end on
+
+event clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	dw.triggerevent("borra")
+end if
+end event
+
+type m_cargaregistro from menu within m_registro
+end type
+
+event clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	dw.triggerevent("carga")
+end if
+end event
+
+on m_cargaregistro.create
+this.Text="&Carga registro~tCtrl+C"
+this.ToolBarItemName="Update!"
+this.ToolBarItemText="Cargar"
+this.ToolBarItemOrder=11
+this.Shortcut=323
+end on
+
+type m_-1 from menu within m_registro
+end type
+
+on m_-1.create
+this.Text="-"
+end on
+
+type m_primero from menu within m_registro
+end type
+
+on m_primero.create
+this.Text="Primero~tAlt+P"
+this.ToolBarItemDownName="Primero"
+this.ToolBarItemName="VCRFirst!"
+this.ToolBarItemText="Primero"
+this.ToolBarItemOrder=12
+this.ToolBarItemSpace=3
+this.Shortcut=592
+end on
+
+event clicked;if isvalid(dw) then
+	dw.triggerevent("primero")
+end if
+
+if isvalid(objeto) then
+	objeto.triggerevent("primero")
+end if
+
+//dw.scrolltorow(1)
+
+end event
+
+type m_anterior from menu within m_registro
+end type
+
+on m_anterior.create
+this.Text="Anterior~tAlt+A"
+this.ToolBarItemDownName="Anterior"
+this.ToolBarItemName="VCRPrior!"
+this.ToolBarItemText="Anterior"
+this.ToolBarItemOrder=13
+this.Shortcut=577
+end on
+
+event clicked;if isvalid(dw) then
+	dw.triggerevent("anterior")
+end if
+
+if isvalid(objeto) then
+	objeto.triggerevent("anterior")
+end if
+
+//dw.scrollpriorpage ( )
+end event
+
+type m_siguiente from menu within m_registro
+end type
+
+on m_siguiente.create
+this.Text="Siguiente~tAlt+S"
+this.ToolBarItemDownName="Siguiente"
+this.ToolBarItemName="VCRNext!"
+this.ToolBarItemText="Siguiente"
+this.ToolBarItemOrder=14
+this.Shortcut=595
+end on
+
+event clicked;if isvalid(dw) then
+	dw.triggerevent("siguiente")
+end if
+
+if isvalid(objeto) then
+	objeto.triggerevent("siguiente")
+end if
+
+//dw.scrollnextpage ( )
+end event
+
+type m_ltimo from menu within m_registro
+end type
+
+on m_ltimo.create
+this.Text="Último~tAlt+U"
+this.ToolBarItemDownName="Ultimo"
+this.ToolBarItemName="VCRLast!"
+this.ToolBarItemText="Último"
+this.ToolBarItemOrder=15
+this.Shortcut=597
+end on
+
+event clicked;if isvalid(dw) then
+	dw.triggerevent("ultimo")
+end if
+
+if isvalid(objeto) then
+	objeto.triggerevent("ultimo")
+end if
+
+//dw.scrolltorow(dw.rowcount())
+end event
+
+type m_-2 from menu within m_registro
+end type
+
+on m_-2.create
+this.Text="-"
+end on
+
+type m_filtrar from menu within m_registro
+end type
+
+event clicked;string filtro
+
+if isvalid(dw) then
+	SetPointer(HourGlass!)
+	SetNull(filtro)
+	dw.SetFilter(filtro)
+	dw.Filter( )
+	dw.sort()
+	dw.groupcalc()
+end if
+end event
+
+on m_filtrar.create
+this.Text="Filtrar~tAlt+F"
+this.ToolBarItemName="Custom096!"
+this.ToolBarItemText="Filtrar"
+this.ToolBarItemOrder=16
+this.ToolBarItemSpace=3
+this.Shortcut=582
+end on
+
+type m_ordenar from menu within m_registro
+end type
+
+event clicked;string orden
+
+if isvalid(dw) then
+	SetPointer(HourGlass!)
+	SetNull(orden)
+	dw.setsort(orden)
+	SetPointer(HourGlass!)
+	dw.sort()
+	dw.groupcalc()
+end if
+end event
+
+on m_ordenar.create
+this.Text="Ordenar~tAlt+O"
+this.ToolBarItemName="RichTextEdit!"
+this.ToolBarItemText="Ordenar"
+this.ToolBarItemOrder=17
+this.Shortcut=591
+end on
+
+type m_ventana from menu within m_menu_impresion
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+
+on m_ventana.create
+this.Text="Ventana"
+this.m_horizontal=create m_horizontal
+this.m_vertical=create m_vertical
+this.m_primerplano=create m_primerplano
+this.m_cascada=create m_cascada
+this.Item[]={this.m_horizontal, &
+this.m_vertical, &
+this.m_primerplano, &
+this.m_cascada}
+end on
+
+on m_ventana.destroy
+destroy(this.m_horizontal)
+destroy(this.m_vertical)
+destroy(this.m_primerplano)
+destroy(this.m_cascada)
+end on
+
+type m_horizontal from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Tilehorizontal!)
+end event
+
+on m_horizontal.create
+this.Text="Horizontal"
+this.Microhelp="Organiza las ventanas horizontalmente"
+end on
+
+type m_vertical from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Tile!)
+end event
+
+on m_vertical.create
+this.Text="Vertical"
+this.Microhelp="Organiza las ventanas verticalmente"
+end on
+
+type m_primerplano from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Layer!)
+end event
+
+on m_primerplano.create
+this.Text="Primer Plano"
+end on
+
+type m_cascada from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Cascade!)
+end event
+
+on m_cascada.create
+this.Text="Cascada"
+this.Microhelp="Organiza las ventanas en cascada"
+end on
+
+type m_ayuda from menu within m_menu_impresion
+end type
+
+on m_ayuda.create
+this.Text="Ayuda"
+end on
+
+on m_ayuda.destroy
+end on
+

@@ -1,0 +1,57 @@
+﻿$PBExportHeader$convierteobservacion_plantel.srf
+global type convierteobservacion_plantel from function_object
+end type
+
+forward prototypes
+global function string convierteobservacion_plantel (integer obs, ref boolean rev)
+end prototypes
+
+global function string convierteobservacion_plantel (integer obs, ref boolean rev);
+
+integer li_plantel_vigente
+string ls_acreditacion
+
+li_plantel_vigente = f_obten_cve_plantel_vigente()
+
+if li_plantel_vigente = -1 then
+	MessageBox("Error en consulta de plantel", "No es posible consultar el plantel vigente", StopSign!)
+	return ""
+end if
+
+IF li_plantel_vigente = 17 THEN
+	CHOOSE CASE obs
+		CASE 2
+			return "EX"
+		CASE 3
+			return "--"
+		CASE 5
+			rev = true
+			return "EQ"
+		CASE 6
+			return "TS"
+		CASE 7
+			return " *"
+		case else
+			return ""
+	END CHOOSE
+ELSE
+	CHOOSE CASE obs
+		CASE 2
+			return "EX"
+		CASE 3
+			return "--"
+		CASE 5
+			rev = true
+			return "EQ"
+		CASE 6
+			return "TS"		
+		case else
+			ls_acreditacion = f_obten_acreditacion(obs)
+			return ls_acreditacion
+	END CHOOSE
+
+END IF
+
+
+end function
+

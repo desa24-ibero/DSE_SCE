@@ -1,0 +1,133 @@
+﻿$PBExportHeader$f_obten_texto_carrera_2013.srf
+global type f_obten_texto_carrera_2013 from function_object
+end type
+
+forward prototypes
+global function string f_obten_texto_carrera_2013 (long a_cuenta)
+global function string f_obten_texto_carrera_2013 (long a_cuenta, long a_carrera)
+end prototypes
+
+global function string f_obten_texto_carrera_2013 (long a_cuenta);//Función que regresa el nombre de la carrera que cursa un alumno en base
+//al nivel de la carrera
+//
+//f_obten_texto_carrera
+//
+//Parámetros:		a_cuenta		
+
+int li_cve_carrera, li_codigo_sql
+long ll_cuenta
+string ls_carrera, ls_nivel, ls_mensaje_sql
+
+ll_cuenta = a_cuenta
+
+SELECT 	dbo.carreras.cve_carrera,
+			dbo.carreras.carrera,
+			dbo.carreras.nivel
+INTO		:li_cve_carrera,
+			:ls_carrera,
+			:ls_nivel
+FROM	dbo.carreras, dbo.academicos
+WHERE	dbo.carreras.cve_carrera = dbo.academicos.cve_carrera
+AND	dbo.academicos.cuenta = :ll_cuenta
+USING gtr_sce;
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	rollback using gtr_sce;
+	MessageBox("Error al recuperar la carrera del alumno:"+string(ll_cuenta),  ls_mensaje_sql)
+	ls_carrera = ""
+else
+	commit using gtr_sce;
+	if ls_nivel = "L" then
+		ls_carrera = "LICENCIATURA EN "+ls_carrera
+	else
+		ls_carrera = "POSGRADO EN "+ls_carrera
+	end if
+		
+end if
+
+
+return ls_carrera
+
+
+end function
+
+global function string f_obten_texto_carrera_2013 (long a_cuenta, long a_carrera);//Función que regresa el nombre de la carrera que cursa un alumno en base
+//al nivel de la carrera
+//
+//f_obten_texto_carrera
+//
+//Parámetros:		a_cuenta, a_carrera
+
+int li_cve_carrera, li_codigo_sql
+long ll_cuenta
+string ls_carrera, ls_nivel, ls_mensaje_sql,ls_desc_nivel
+
+ll_cuenta = a_cuenta
+
+SELECT 	dbo.carreras.cve_carrera,
+			dbo.carreras.carrera,
+			dbo.carreras.nivel
+INTO		:li_cve_carrera,
+			:ls_carrera,
+			:ls_nivel
+FROM	dbo.carreras, dbo.v_sce_carreras_cursadas
+WHERE	dbo.carreras.cve_carrera = dbo.v_sce_carreras_cursadas.cve_carrera
+AND	dbo.v_sce_carreras_cursadas.cuenta = :a_cuenta
+AND	dbo.v_sce_carreras_cursadas.cve_carrera = :a_carrera
+USING gtr_sce;
+
+// Si no la encuenta verifica que exista en la tabla de carreras simultáneas. 
+IF gtr_sce.SQLCODE = 100 THEN 
+
+	SELECT 	dbo.carreras.cve_carrera,
+				dbo.carreras.carrera,
+				dbo.carreras.nivel
+	INTO		:li_cve_carrera,
+				:ls_carrera,
+				:ls_nivel
+	FROM	dbo.carreras, dbo.mat_insc_carrera_simul
+	WHERE	dbo.carreras.cve_carrera = dbo.mat_insc_carrera_simul.cve_carrera
+	AND	dbo.mat_insc_carrera_simul.cuenta = :a_cuenta
+	AND	dbo.mat_insc_carrera_simul.cve_carrera = :a_carrera
+	USING gtr_sce;
+
+END IF 
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	MessageBox("Error al recuperar la carrera del alumno:"+string(ll_cuenta),  ls_mensaje_sql)
+	ls_carrera = ""
+else
+	
+	IF ls_nivel <> 'L' AND ls_nivel <> 'P' THEN 
+		
+		ls_desc_nivel = " estudios en "
+		
+		ls_carrera = ls_desc_nivel + "" + ls_carrera
+		
+	ELSE	
+	
+		SELECT upper(nivel.desc_corta  )
+		 into :ls_desc_nivel
+		 FROM nivel   
+		WHERE nivel.cve_nivel = :ls_nivel 
+		USING gtr_sce;
+		
+		ls_carrera = ls_desc_nivel + " EN "+ls_carrera
+		
+	END IF
+
+	
+	
+end if
+
+return ls_carrera
+
+
+end function
+

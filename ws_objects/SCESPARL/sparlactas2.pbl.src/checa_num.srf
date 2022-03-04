@@ -1,0 +1,27 @@
+﻿$PBExportHeader$checa_num.srf
+global type checa_num from function_object
+end type
+
+forward prototypes
+global function string checa_num (string calif_num, integer inscritos)
+end prototypes
+
+global function string checa_num (string calif_num, integer inscritos);long indice
+string corregida
+
+FOR indice=inscritos -len(calif_num) TO inscritos
+	calif_num=calif_num+'*'
+NEXT
+
+FOR indice=1 TO inscritos
+	IF mid(calif_num,indice,1)<>' ' and &
+		mid(calif_num,indice,1)<>'' THEN
+		corregida=corregida+mid(calif_num,indice,1)
+	ELSE
+		corregida=corregida+'*'
+	END IF
+NEXT
+
+return corregida
+end function
+

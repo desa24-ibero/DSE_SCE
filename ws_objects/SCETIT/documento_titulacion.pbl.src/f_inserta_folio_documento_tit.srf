@@ -1,0 +1,90 @@
+﻿$PBExportHeader$f_inserta_folio_documento_tit.srf
+global type f_inserta_folio_documento_tit from function_object
+end type
+
+forward prototypes
+global function long f_inserta_folio_documento_tit (long al_cuenta, integer ai_cve_documento)
+end prototypes
+
+global function long f_inserta_folio_documento_tit (long al_cuenta, integer ai_cve_documento);//Función que registra el documento generado
+//
+//f_inserta_folio_documento_tit
+//
+//Parámetros:		al_cuenta		
+//						ai_cve_documento
+
+int li_codigo_sql, li_cve_documento
+long ll_cuenta, ll_max_folio, ll_folio_siguiente
+string ls_carrera, ls_nivel, ls_mensaje_sql, ls_sexo, ls_mensaje_aux
+boolean 	lb_nueva_insercion 
+
+
+gtr_sce.AutoCommit = true
+lb_nueva_insercion = false
+	
+ll_cuenta = al_cuenta
+li_cve_documento = ai_cve_documento
+
+SELECT max(dbo.folio_documento_tit.folio)
+INTO	:ll_max_folio
+FROM	dbo.folio_documento_tit
+USING gtr_sce;
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	rollback using gtr_sce;
+	MessageBox("Error al recuperar el folio máximo en la constancia:"+string(ai_cve_documento),  ls_mensaje_sql)
+elseif li_codigo_sql=100 then
+	commit using gtr_sce;
+	ll_max_folio = 0
+else
+	commit using gtr_sce;
+end if
+
+if isnull(ll_max_folio) then
+	lb_nueva_insercion = true
+	ll_max_folio = 0
+end if
+
+ll_folio_siguiente= ll_max_folio +1
+
+if lb_nueva_insercion then
+
+	ls_mensaje_aux="Error al insertar en folio_documento_tit en la constancia: "
+
+	INSERT INTO	dbo.folio_documento_tit
+	(dbo.folio_documento_tit.folio, dbo.folio_documento_tit.cuenta, dbo.folio_documento_tit.cve_documento)
+	VALUES
+	(:ll_folio_siguiente, :ll_cuenta, :li_cve_documento)
+	USING gtr_sce;
+else
+
+	ls_mensaje_aux="Error al actualizar en folio_documento_tit en la constancia: "
+
+	UPDATE dbo.folio_documento_tit
+	SET dbo.folio_documento_tit.folio = :ll_folio_siguiente,
+	    dbo.folio_documento_tit.cuenta = :ll_cuenta,
+		 dbo.folio_documento_tit.cve_documento = :li_cve_documento
+	FROM dbo.folio_documento_tit
+	USING gtr_sce;
+end if
+
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	rollback using gtr_sce;
+	MessageBox(ls_mensaje_aux+string(ai_cve_documento),  ls_mensaje_sql)
+else
+	commit using gtr_sce;
+end if
+
+
+return ll_folio_siguiente
+
+
+end function
+

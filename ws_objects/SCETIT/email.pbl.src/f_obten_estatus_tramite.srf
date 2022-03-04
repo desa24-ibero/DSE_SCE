@@ -1,0 +1,213 @@
+﻿$PBExportHeader$f_obten_estatus_tramite.srf
+global type f_obten_estatus_tramite from function_object
+end type
+
+forward prototypes
+global function long f_obten_estatus_tramite (long al_cuenta, long al_cve_carrera, long al_cve_plan, integer ai_cve_tramite, datetime adttm_fecha, ref integer ai_cve_estado, ref integer ai_cve_sub_estado)
+end prototypes
+
+global function long f_obten_estatus_tramite (long al_cuenta, long al_cve_carrera, long al_cve_plan, integer ai_cve_tramite, datetime adttm_fecha, ref integer ai_cve_estado, ref integer ai_cve_sub_estado);//f_obten_estatus_tramite
+//Obtiene el numero de tramites solicitados
+//Recibe			al_cuenta			long
+//					al_cve_carrera		long
+//					al_cve_plan			long
+//					ai_cve_tramite		int
+//					adttm_fecha			datetime
+//ref				ai_cve_estado		int
+//ref				ai_cve_sub_estado	int
+//Devuelve		long
+
+integer li_codigo_sql
+string ls_mensaje_sql, ls_nivel,ls_grado
+long ll_num_tramites, ll_null
+integer li_parcial, li_entrada_arch, li_en_archivo, li_cve_estado_titulo
+integer li_dia, li_mes, li_anio, li_hora, li_minuto, li_segundo
+date ldt_fecha
+time ltm_fecha
+
+ldt_fecha = date(adttm_fecha)
+ltm_fecha = time(adttm_fecha)
+
+li_dia = day(ldt_fecha)
+li_mes = month(ldt_fecha)
+li_anio = year(ldt_fecha)
+
+li_hora = hour(ltm_fecha)
+li_minuto = minute(ltm_fecha)
+li_segundo = second(ltm_fecha)
+
+SetNull(ll_null)
+
+IF ai_cve_tramite= 2 OR ai_cve_tramite = 3 THEN
+
+	IF ai_cve_tramite= 2 THEN
+		SELECT parcial,
+			 isnull(entrada_arch,0)
+		INTO :li_parcial,
+		     :li_entrada_arch
+		FROM certificado
+		WHERE cuenta = :al_cuenta
+		AND cve_carrera = :al_cve_carrera
+		AND cve_plan = :al_cve_plan
+		AND parcial = 0
+		USING gtr_sce;
+	ELSEIF  ai_cve_tramite = 3 THEN	
+		SELECT parcial,
+			 isnull(entrada_arch,0)
+		INTO :li_parcial,
+		     :li_entrada_arch
+		FROM certificado
+		WHERE cuenta = :al_cuenta
+		AND cve_carrera = :al_cve_carrera
+		AND cve_plan = :al_cve_plan
+		AND parcial = 1
+		AND datepart(ss,fecha_inicio) = :li_segundo
+		AND datepart(mi,fecha_inicio) = :li_minuto
+		AND datepart(hh,fecha_inicio) = :li_hora
+		AND datepart(dd,fecha_inicio) = :li_dia
+		AND datepart(mm,fecha_inicio) = :li_mes
+		AND datepart(yy,fecha_inicio) = :li_anio
+		USING gtr_sce;
+
+	END IF
+
+	li_codigo_sql = gtr_sce.SqlCode
+	ls_mensaje_sql = gtr_sce.SqlErrText
+	
+	if li_codigo_sql = 100 then
+//Si el certificado no ha sido insertado
+//el certificado estará EN PROCESO
+		ai_cve_estado=1
+		ai_cve_sub_estado=1
+	elseif isnull(li_entrada_arch) then
+//No debería entrar en cero
+//el certificado estará EN PROCESO
+		ai_cve_estado=1
+		ai_cve_sub_estado=1
+	elseif li_codigo_sql = -1 then
+		MessageBox("Error al consultar trámite ["+string(ai_cve_tramite)+"]", ls_mensaje_sql,StopSign!)
+		return  0
+	end if
+	//Si es un certificado TOTAL LEGALIZADO
+	IF ai_cve_tramite= 2 THEN
+		IF li_parcial=0 THEN
+		//Si ya entro a archivo ya esta LISTO PARA RECOGER
+			IF li_entrada_arch = 1 THEN
+				ai_cve_estado=1
+				ai_cve_sub_estado=2
+			ELSEIF li_entrada_arch = 0 THEN
+		//Si no ha entrado a archivo ya esta en proceso
+				ai_cve_estado=1
+				ai_cve_sub_estado=1				
+			END IF			
+		END IF
+	END IF
+	
+	ls_grado= f_obten_grado_carrera(al_cve_carrera)
+	
+	IF ls_grado = "L" THEN
+		SELECT isnull(d.en_archivo,1)
+		INTO   :li_en_archivo
+		FROM dbo.documentos d
+		WHERE d.cuenta = :al_cuenta
+		AND d.cve_flag_documento in (1,2,10,12)
+		AND d.cve_documento in (9,55)
+		USING gtr_sce;
+		li_codigo_sql = gtr_sce.SqlCode
+		ls_mensaje_sql = gtr_sce.SqlErrText
+	ELSEIF ls_grado = "M" THEN
+		SELECT isnull(d.en_archivo,1)
+		INTO   :li_en_archivo
+		FROM dbo.documentos d
+		WHERE d.cuenta = :al_cuenta
+		AND d.cve_flag_documento in (1,2,10,12)
+		AND d.cve_documento in (24,56)
+		USING gtr_sce;
+		li_codigo_sql = gtr_sce.SqlCode
+		ls_mensaje_sql = gtr_sce.SqlErrText
+		
+	ELSEIF ls_grado = "D" THEN
+		SELECT isnull(d.en_archivo,1)
+		INTO   :li_en_archivo
+		FROM dbo.documentos d
+		WHERE d.cuenta = :al_cuenta
+		AND d.cve_flag_documento in (1,2,10,12)
+		AND d.cve_documento in (41)
+		USING gtr_sce;
+		li_codigo_sql = gtr_sce.SqlCode
+		ls_mensaje_sql = gtr_sce.SqlErrText		
+	END IF
+	
+	if li_codigo_sql = 100 then
+//Si el certificado no ha sido cargado en archivo
+//el certificado estará EN PROCESO
+		ai_cve_estado=1
+		ai_cve_sub_estado=1
+	elseif isnull(li_en_archivo) then
+//No debería entrar en cero
+//el certificado estará EN PROCESO
+		ai_cve_estado=1
+		ai_cve_sub_estado=1
+	elseif li_codigo_sql = -1 then
+		MessageBox("Error al consultar documentos de tramite ["+string(ai_cve_tramite)+"]", ls_mensaje_sql,StopSign!)
+		return  -1
+	end if
+
+//Si ya esta en archivo	
+	if li_en_archivo=0 then
+//El certificado estará LISTO PARA RECOGER
+		ai_cve_estado=1
+		ai_cve_sub_estado=2
+	elseif li_en_archivo=1 then
+//El certificado estará ENTREGADO
+		ai_cve_estado=1
+		ai_cve_sub_estado=3		
+	end if
+	
+ELSEIF ai_cve_tramite= 1 THEN
+	
+	SELECT cve_estado_titulo
+	INTO :li_cve_estado_titulo	     
+	FROM entrega_titulo
+	WHERE cuenta = :al_cuenta
+	AND cve_carrera = :al_cve_carrera
+	AND cve_plan = :al_cve_plan
+	USING gtr_sce;
+
+	li_codigo_sql = gtr_sce.SqlCode
+	ls_mensaje_sql = gtr_sce.SqlErrText
+	
+	if li_codigo_sql = 100 then
+//Si el título no ha sido cargado en archivo
+//el título estará EN PROCESO
+		ai_cve_estado=6
+		ai_cve_sub_estado=0
+	elseif isnull(li_cve_estado_titulo) then
+//No debería estar nulo
+//el título estará EN PROCESO
+		ai_cve_estado=6
+		ai_cve_sub_estado=0
+	elseif li_codigo_sql = -1 then
+		MessageBox("Error al consultar entrega_titulo tramite ["+string(ai_cve_tramite)+"]", ls_mensaje_sql,StopSign!)
+		return  -1
+	end if
+
+	//El título estará EN PROCESO
+	if li_cve_estado_titulo =0 then
+		ai_cve_estado=6
+		ai_cve_sub_estado=0		
+	//El título estará LISTO
+	elseif li_cve_estado_titulo =1 then
+		ai_cve_estado=7
+		ai_cve_sub_estado=0		
+	//El título estará ENTREGADO
+	elseif li_cve_estado_titulo =2 then
+		ai_cve_estado=9
+		ai_cve_sub_estado=0
+	end if
+END IF
+
+RETURN 0
+
+end function
+

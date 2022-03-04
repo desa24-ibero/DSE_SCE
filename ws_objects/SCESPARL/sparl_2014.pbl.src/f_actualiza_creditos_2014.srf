@@ -1,0 +1,49 @@
+﻿$PBExportHeader$f_actualiza_creditos_2014.srf
+global type f_actualiza_creditos_2014 from function_object
+end type
+
+forward prototypes
+global function long f_actualiza_creditos_2014 (string as_nivel, integer ai_creditos)
+end prototypes
+
+global function long f_actualiza_creditos_2014 (string as_nivel, integer ai_creditos);//f_actualiza_creditos_2014
+//Actualiza los créditos de los alumnos correspondientes a un nivel
+//
+//Recibe		as_nivel		L,T	Licenciatura y TSU
+//								P	Posgrado
+//								*	Todos 
+//				ai_creditos	
+
+Integer  li_codigo_sql
+String ls_mensaje_sql
+long ll_cant_alumnos
+
+IF ai_creditos < 0 THEN 
+	Messagebox("Valor no permitido","No es posible poner asignar ["+string(ai_creditos)+"] a los creditos",StopSign!)
+	RETURN -1
+END IF
+
+UPDATE banderas
+SET exten_cred = :ai_creditos
+FROM banderas b, v_sce_carreras_cursadas a
+WHERE b.cuenta = a.cuenta
+and a.vigente = 1
+AND   (a.nivel in (:as_nivel)
+OR		:as_nivel = "*")
+USING gtr_sce;
+
+ls_mensaje_sql= gtr_sce.SqlErrtext
+li_codigo_sql= gtr_sce.SqlCode
+
+IF li_codigo_sql <>0 THEN
+	ROLLBACK USING gtr_sce;
+	Messagebox("Error al actualizar la bandera de adeuda finanzas en f_actualiza_creditos_2014",ls_mensaje_sql,StopSign!)
+ELSE 
+	COMMIT USING gtr_sce;
+END IF
+
+RETURN li_codigo_sql
+
+
+end function
+

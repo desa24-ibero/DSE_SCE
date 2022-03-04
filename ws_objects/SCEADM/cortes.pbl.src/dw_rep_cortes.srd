@@ -1,0 +1,78 @@
+﻿$PBExportHeader$dw_rep_cortes.srd
+$PBExportComments$DataWindow que saca el reporte de lugares por carrera
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=218 color="536870912" )
+summary(height=96 color="536870912" )
+footer(height=74 color="536870912" )
+detail(height=90 color="536870912"  height.autosize=yes)
+table(column=(type=real updatewhereclause=yes name=promedio dbname="aspiran.promedio" )
+ column=(type=real updatewhereclause=yes name=puntaje dbname="aspiran.puntaje" )
+ column=(type=long updatewhereclause=yes name=lugar_gen dbname="aspiran.lugar_gen" )
+ column=(type=long updatewhereclause=yes name=lugar_car dbname="aspiran.lugar_car" )
+ column=(type=long updatewhereclause=yes name=folio dbname="aspiran.folio" )
+ column=(type=long updatewhereclause=yes name=clv_carr dbname="aspiran.clv_carr" )
+ column=(type=long updatewhereclause=yes name=clv_ver dbname="aspiran.clv_ver" )
+ column=(type=long updatewhereclause=yes name=status dbname="aspiran.status" )
+ retrieve="  SELECT aspiran.promedio,   
+         aspiran.puntaje,   
+         aspiran.lugar_gen,   
+         aspiran.lugar_car,   
+         aspiran.folio,   
+         aspiran.clv_carr,   
+         aspiran.clv_ver,
+         aspiran.status  
+    FROM aspiran  
+   WHERE ( aspiran.clv_per = :per ) AND  
+         ( aspiran.anio = :ani ) AND  
+         ( aspiran.pago_exam = 1 ) AND  
+         ( ( :opcion = 0 AND aspiran.status = 0 AND  (aspiran.clv_ver = :ver)  ) OR
+         ( :opcion = 1 AND (( aspiran.status = 0 AND (aspiran.clv_ver = :ver)  ) OR
+                            aspiran.status = 3 ) ) )" arguments=(("ver", number),("per", number),("ani", number),("opcion", number))  sort="clv_carr A puntaje D " )
+group(level=1 header.height=272 trailer.height=93 by=("clv_carr" ) newpage=yes resetpagecount=yes header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="2" text=""border="0" color="0" x="15" y="42" height="64" width="3438"  name=st_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=6 alignment="2" tabsequence=32766 border="0" color="0" x="15" y="122" height="64" width="3438" format="[general]"  name=clv_carr dddw.name=dw_carrera dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+report(band=header dataobject="dw_area" x="1298" y="272" height="77" width="380" border="0" criteria="" nest_arguments=(("1")) trail_footer = yes  slideup=directlyabove )
+text(band=header.1 alignment="2" text="Lugar General"border="0" color="0" x="0" y="3" height="70" width="373"  name=lugar_gen_t  hidesnaked=1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="2" text="Lugar Carrera"border="0" color="0" x="212" y="96" height="70" width="355"  name=lugar_car_t  hidesnaked=1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="2" text="Puntaje Total"border="0" color="0" x="443" y="3" height="67" width="391"  name=puntaje_t  hidesnaked=1  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="2" text="Promedio Bachillerato"border="0" color="0" x="571" y="96" height="70" width="581"  name=promedio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="2" text="Conocimientos"border="0" color="0" x="2450" y="3" height="70" width="395"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="2" text="Prom"border="0" color="0" x="1401" y="188" height="67" width="388"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="2" text="Prom"border="0" color="0" x="2845" y="188" height="67" width="388"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="2" text="Verbal"border="0" color="0" x="980" y="188" height="67" width="245"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="2" text="Numérico"border="0" color="0" x="1225" y="92" height="67" width="249"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="2" text="Mundo Contemp."border="0" color="0" x="1613" y="96" height="70" width="453"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="2" text="Español"border="0" color="0" x="2227" y="96" height="70" width="216"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="2" text="Ciencias Nat."border="0" color="0" x="1913" y="188" height="67" width="355"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="2" text="Matemáticas"border="0" color="0" x="2410" y="188" height="67" width="344"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="2" text="Razonamiento"border="0" color="0" x="1126" y="3" height="70" width="380"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="2" text="Ciencias Soc."border="0" color="0" x="2644" y="96" height="70" width="369"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="2" text="Examen"border="0" color="0" x="3200" y="96" height="70" width="219"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="0" y="3" height="77" width="260" format="[general]"  name=lugar_gen edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0"font.italic="0~tif(  status =3 , 1, 0 )"  background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="267" y="3" height="77" width="252" format="[general]"  name=lugar_car edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="527" y="3" height="77" width="219" format="#0"  name=puntaje edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="753" y="3" height="77" width="223" format="#0"  name=promedio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+report(band=detail dataobject="dw_cal_sec" x="980" y="3" height="77" width="245" border="0"  height.autosize=yes criteria="" nest_arguments=(("folio"),("clv_ver"),("per"),("ani"),("1"),("1")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_cal_sec" x="1225" y="3" height="77" width="249" border="0"  height.autosize=yes criteria="" nest_arguments=(("folio"),("clv_ver"),("per"),("ani"),("1"),("2")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_cal_sec" x="1715" y="3" height="77" width="245" border="0"  height.autosize=yes criteria="" nest_arguments=(("folio"),("clv_ver"),("per"),("ani"),("2"),("1")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_cal_sec" x="2205" y="3" height="77" width="245" border="0"  height.autosize=yes criteria="" nest_arguments=(("folio"),("clv_ver"),("per"),("ani"),("2"),("5")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_cal_sec" x="1960" y="3" height="77" width="245" border="0"  height.autosize=yes criteria="" nest_arguments=(("folio"),("clv_ver"),("per"),("ani"),("2"),("2")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_cal_sec" x="2450" y="3" height="77" width="252" border="0"  height.autosize=yes criteria="" nest_arguments=(("folio"),("clv_ver"),("per"),("ani"),("2"),("4")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_cal_sec" x="2703" y="3" height="77" width="252" border="0"  height.autosize=yes criteria="" nest_arguments=(("folio"),("clv_ver"),("per"),("ani"),("2"),("3")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_cal_are" x="1474" y="3" height="77" width="241" border="0"  height.autosize=yes criteria="" nest_arguments=(("folio"),("clv_ver"),("per"),("ani"),("1")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_cal_are" x="2955" y="3" height="77" width="241" border="0"  height.autosize=yes criteria="" nest_arguments=(("folio"),("clv_ver"),("per"),("ani"),("2")) trail_footer = yes  slideup=directlyabove )
+compute(band=detail alignment="2" expression="if(puntaje - promedio  *40.0=0,0/0,( puntaje - promedio  *40.0)/.6)"border="0" color="0" x="3200" y="9" height="64" width="227" format="#0"  name=examen  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="2" expression="avg(puntaje for group 1)"border="0" color="0" x="417" y="3" height="83" width="271" format="#0"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="2" expression="stdev(puntaje for group 1)"border="0" color="0" x="699" y="3" height="83" width="271" format="#,##0.00"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="2" expression="stdev( if(puntaje - promedio  *40.0=0,0/0,( puntaje - promedio  *40.0)/.6) for group 1)"border="0" color="0" x="3218" y="3" height="70" width="227" format="#,##0.00"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="2" expression="avg(  if(puntaje - promedio  *40.0=0,0/0,( puntaje - promedio  *40.0)/.6) for group 1)"border="0" color="0" x="2984" y="3" height="70" width="227" format="#0"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="2" expression="count(puntaje for group 1)"border="0" color="0" x="1006" y="3" height="83" width="219" format="#0"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="avg(  if(puntaje - promedio  *40.0=0,0/0,( puntaje - promedio  *40.0)/.6) for all)"border="0" color="0" x="2995" y="3" height="70" width="223" format="#0"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="stdev( if(puntaje - promedio  *40.0=0,0/0,( puntaje - promedio  *40.0)/.6) for all)"border="0" color="0" x="3229" y="3" height="70" width="223" format="#,##0.00"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="stdev(puntaje for all)"border="0" color="0" x="709" y="3" height="83" width="271" format="#,##0.00"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="avg(puntaje for all)"border="0" color="0" x="424" y="3" height="83" width="271" format="#0"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=summary alignment="0" text="Universidad:"border="0" color="0" x="59" y="3" height="83" width="322"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="count(puntaje for all)"border="0" color="0" x="1006" y="3" height="83" width="219" format="#0"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=footer alignment="0" expression="'Página ' + page() + ' de ' + pageCount()"border="0" color="0" x="0" y="3" height="64" width="688" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

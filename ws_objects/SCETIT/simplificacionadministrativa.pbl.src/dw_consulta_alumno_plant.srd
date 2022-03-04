@@ -1,0 +1,14 @@
+﻿$PBExportHeader$dw_consulta_alumno_plant.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=122 color="536870912" )
+summary(height=3 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=90 color="536870912" )
+table(column=(type=char(150) updatewhereclause=yes name=nombre_completo dbname="v_alumnos_planteles.nombre_completo" )
+ column=(type=long updatewhereclause=yes name=cuenta dbname="v_alumnos_planteles.cuenta" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"v_alumnos_planteles~" ) COLUMN(NAME=~"v_alumnos_planteles.nombre_completo~") COLUMN(NAME=~"v_alumnos_planteles.cuenta~")WHERE(    EXP1 =~"v_alumnos_planteles.nombre_completo~"   OP =~"like~"    EXP2 =~":nombre_completo~" ) ) ARG(NAME = ~"nombre_completo~" TYPE = string) " arguments=(("nombre_completo", string)) )
+compute(band=detail alignment="0" expression="/* ~"-~"+obten_digito(cuenta) */"border="0" color="33554432" x="2311" y="6" height="77" width="95" format="[general]"  name=cf_digito  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=2 alignment="0" tabsequence=0 border="0" color="33554432" x="1989" y="6" height="77" width="318"  name=cuenta  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=1 alignment="0" tabsequence=0 border="0" color="33554432" x="33" y="6" height="77" width="1924"  name=nombre_completo  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

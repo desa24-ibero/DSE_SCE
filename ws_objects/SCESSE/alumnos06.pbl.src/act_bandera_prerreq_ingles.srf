@@ -1,0 +1,58 @@
+﻿$PBExportHeader$act_bandera_prerreq_ingles.srf
+$PBExportComments$Actualiza la bandera prerrequisito de ingles segun la calificación y semestres cursados. Recibe 2 parametros, cuenta y calificación. Regresa "true" si la modificacion es correcta~r~nJuan campos. febrero-1997.
+global type act_bandera_prerreq_ingles from function_object
+end type
+
+forward prototypes
+global function boolean act_bandera_prerreq_ingles (long cuenta, string calificacion)
+end prototypes
+
+global function boolean act_bandera_prerreq_ingles (long cuenta, string calificacion);// Actualiza la bandera prerrequisito de ingles segun la calificación y semestres cursados
+// recibe 2 parametros, cuenta y calificación. Regresa "true" si la modificacion es correcta
+// Juan campos. febrero-1997.
+
+Int     semestres, Flag_prerreq_ingles
+Boolean BanderaOk
+
+SELECT sem_cursados
+  INTO :semestres
+  FROM academicos
+ WHERE cuenta = :cuenta
+ USING gtr_sce;
+ 
+ 
+IF gtr_sce.sqlcode = 0  Then
+  IF semestres >= 2 Then 
+    IF calificacion = "NA" Then 
+	   Flag_prerreq_ingles = 1
+    End IF
+    IF calificacion = "AC" Then 
+	   Flag_prerreq_ingles = 0
+    End IF
+  Else
+    IF calificacion = "NA" Then 
+	   Flag_prerreq_ingles = 2
+    End IF
+    IF calificacion = "AC" Then 
+	   Flag_prerreq_ingles = 0
+    End IF 
+  End IF
+
+  UPDATE banderas
+     SET cve_flag_prerreq_ingles = :Flag_prerreq_ingles
+   WHERE cuenta = :cuenta
+   USING gtr_sce;
+
+  IF gtr_sce.sqlcode = 0  Then
+    Return True
+  Else
+  	 Messagebox("Error","Al actualizar banderas "+gtr_sce.sqlerrtext)	
+    Return False
+  End If	
+  
+Else
+  Messagebox("Error","Semestres cursados "+gtr_sce.sqlerrtext)	
+  Return false
+End If
+end function
+

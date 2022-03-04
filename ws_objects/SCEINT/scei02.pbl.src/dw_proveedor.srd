@@ -1,0 +1,17 @@
+﻿$PBExportHeader$dw_proveedor.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=77 color="536870912" )
+summary(height=121 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=1 color="536870912" )
+table(column=(type=char(50) updatewhereclause=yes name=fotografia dbname="alumnos.fotografia" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"dbo.alumnos~" ) COLUMN(NAME=~"dbo.alumnos.fotografia~")WHERE(    EXP1 =~"dbo.alumnos.fotografia~"   OP =~"<>~"    EXP2 =~"null~" ) ) "  sort="mid(fotografia,pos(fotografia, '@')+1) A numerin A " )
+group(level=1 header.height=1 trailer.height=93 by=("mid(fotografia,pos(fotografia, '@')+1)" ) header.color="536870912" trailer.color="536870912"  sort="count(fotografia for group 1) D " )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="1399" format="[general]"  name=fotografia edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="2" expression="count(fotografia for group 1)"border="0" color="0" x="5" y="4" height="81" width="266" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Usuarios"border="0" color="0" x="19" y="0" height="65" width="234"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Proveedor de E-Mail"border="0" color="0" x="526" y="4" height="65" width="531"  name=fotografia_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="0" expression="mid(fotografia,pos(fotografia, '@')+1)"border="0" color="0" x="353" y="4" height="77" width="883" format="[general]"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="count(fotografia for all)"border="0" color="0" x="5" y="28" height="81" width="266" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=summary alignment="2" text="TOTAL"border="0" color="0" x="700" y="36" height="65" width="183"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

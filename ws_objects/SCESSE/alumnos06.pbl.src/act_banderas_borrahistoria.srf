@@ -1,0 +1,62 @@
+﻿$PBExportHeader$act_banderas_borrahistoria.srf
+$PBExportComments$Actualiza Banderas para servicios escolares y academicos. Ver codigo para localizar las banderas modificadas. Recibe el numero de cuenta y regresa "true" si hay exito en la actualización.  Juan Campos . Febrero-1997.
+global type act_banderas_borrahistoria from function_object
+end type
+
+forward prototypes
+global function boolean act_banderas_borrahistoria (long cuenta)
+end prototypes
+
+global function boolean act_banderas_borrahistoria (long cuenta);// Actualiza Banderas para servicios escolares y academicos.
+// Ver codigo para localizar las banderas modificadas.
+// recibe el numero de cuenta y regresa "true" si hay exito en la actualización
+// Juan Campos . Febrero-1997.
+
+boolean BanderasOk, AcademicosOk
+
+BanderasOk 		= False
+AcademicosOk 	= False
+
+UPDATE banderas
+SET 	cve_flag_promedio = 0,
+    		baja_3_reprob = 0,
+	 	baja_4_insc = 0,
+	 	cve_flag_serv_social = 0,
+	 	puede_integracion = 0,
+	 	tema_fundamental_1 = 0,
+		tema_fundamental_2 = 0,
+	 	tema_1 = 0,
+	 	tema_2 = 0,
+	 	tema_3 = 0,
+	 	tema_4 = 0,
+	 	creditos_integ = 0,
+	 	verano = 0
+WHERE cuenta = :cuenta
+Using gtr_sce;
+if gtr_sce.sqlcode = 0 Then
+ 	BanderasOk = True
+Else
+ 	MessageBox("Error al actualizar Banderas",gtr_sce.sqlerrtext)
+End if
+
+If BanderasOk Then
+  	UPDATE academicos
+  	SET 	promedio = 0,
+      		sem_cursados = 0,
+			creditos_cursados = 0
+  	WHERE cuenta = :cuenta
+  	USING gtr_sce;
+  	IF gtr_sce.sqlcode = 0  Then
+	 	AcademicosOk = True
+  	Else
+	 	MessageBox("Error al actualizar datos Académicos",gtr_sce.sqlerrtext)
+  	End if
+End if
+
+If BanderasOk And AcademicosOk Then
+  	Return True
+Else
+  	Return False	
+End if
+end function
+

@@ -1,0 +1,510 @@
+﻿$PBExportHeader$f_transfiere_mov_estac.srf
+global type f_transfiere_mov_estac from function_object
+end type
+
+forward prototypes
+global function integer f_transfiere_mov_estac (long al_cuenta)
+end prototypes
+
+global function integer f_transfiere_mov_estac (long al_cuenta);//f_transfiere_mov_estac
+//Recibe:
+//long		al_cuenta
+//
+//Regresa:
+//long 		integer
+
+
+string 		ls_error, ls_instruccion, ls_consulta, ls_error_exec, ls_error_sin
+integer 		li_detenido, li_estatus, li_regresa
+integer 		mov_alumnos_sql
+datetime 	fecha_vencimiento, fecha
+long 			ll_total_leidos, ll_total_procesados, ll_renglon_nvo, ll_movalumnos_sql
+transaction 	ltr_sit, ltr_esta, ltr_bus
+u_datastore 	lds_mov_alumnos, lds_movalumnos_sql, lds_info
+
+//Añadidos 2012-09-11 para determinar si alguien está deteniendo el proceso de transferencias
+string ls_usuario, ls_usuario_null = "", ls_nomb_usu_detiene, ls_proceso_que_detiene, ls_nomb_usu_detiene_null = ""
+//
+ls_usuario = gs_usuario
+
+
+
+
+//if conecta_bd(ltr_esta,"ESTA",gs_usuario,gs_password) =0 then
+//	messagebox("Atención...", "Problemas al conectarse a la bd de estacionamiento")
+//	return -1
+//end if 
+//
+//if conecta_bd(ltr_sit,"SIT",gs_usuario,gs_password) =0 then
+//	messagebox("Atención...", "Problemas al conectarse a la bd de tesoreria")
+//	return -1
+//end if 
+
+
+if f_conecta_con_parametros_bd(gtr_sce, ltr_esta, 3 )=0 then
+	messagebox("Atención...", "Problemas al conectarse a la bd de estacionamiento")
+	return -1
+end if 
+
+if f_conecta_con_parametros_bd(gtr_sce, ltr_bus, 4 )=0 then
+	messagebox("Atención...", "Problemas al conectarse a la bd de Iberobus")
+	return -1
+end if 
+
+if f_conecta_pas_parametros_bd(gtr_sce, ltr_sit, 2, gs_usuario, gs_password )=0 then
+	messagebox("Atención...", "Problemas al conectarse a la bd de tesoreria")
+	return -1
+else
+	gtr_sit = ltr_sit
+end if 
+
+// DATASTORE PARA LA TABLA MOV_ALUMNOS
+lds_mov_alumnos = CREATE u_datastore
+lds_mov_alumnos.dataobject = "d_gral_graba_movalumnos"
+lds_mov_alumnos.settransobject( ltr_sit )
+
+lds_movalumnos_sql = CREATE u_datastore
+
+//Comentado y Añadidos 2012-09-11 para determinar si alguien está deteniendo el proceso de transferencias
+//li_detenido = f_trans_sql_syb_detenido(ls_error)
+li_detenido = f_trans_sql_syb_detenido(ls_error,ls_usuario,ls_nomb_usu_detiene, ls_proceso_que_detiene)
+choose case li_detenido
+	case 0									
+		// DETIENE EL PROCESO DE TRANSFERENCIA
+		li_estatus = 1
+		// El proceso NO esta DETENIDO lo DETIENE
+		//Sustituye la invocación
+		//if f_trans_sql_syb_detenido_update(li_estatus,ls_error) <> 1 then
+		int li_res_nombre
+		//obtiene el nombre del usuario firmado
+		li_res_nombre = f_obten_nombre_usuario(gs_usuario, ls_nomb_usu_detiene)
+		if li_res_nombre = -1 then
+			Messagebox("Error de usuario","El nombre irá en blanco", Information!)			
+		end if
+		
+		ls_proceso_que_detiene = "Baja Total en Ventanilla (1-INICIO)"
+		
+		if f_trans_sql_syb_detenido_update(li_estatus,ls_proceso_que_detiene,gs_usuario,ls_nomb_usu_detiene, ls_error) <> 1 then
+			Messagebox("Error",ls_error)
+			return -1
+		end if
+								
+		/**************** Estacionamiento***************/
+		
+		/*generacion de consolidados estacionamiento*/
+		ls_instruccion = "sp_GenerarConsolidadosXcta "+ string(al_cuenta)
+		ls_consulta = ltr_esta.SyntaxFromSQL(ls_instruccion,'Style(Type=Grid)', ls_error_exec)
+		if  len(ls_error_exec) > 0 then
+			MessageBox("Control de Estacionamiento ", ls_error_exec )
+			//Sustituye la invocación
+			//if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then	
+			ls_proceso_que_detiene = "Baja Total en Ventanilla (2-ESTACIONAMIENTO)"
+//			ls_proceso_que_detiene = ""
+			li_estatus = 1 // Proceso de Transferencia Detenido
+			ls_error = ""
+			ls_usuario = ""
+			ls_nomb_usu_detiene = ""
+			if f_trans_sql_syb_detenido_update(li_estatus,ls_proceso_que_detiene,gs_usuario,ls_nomb_usu_detiene, ls_error) <> 1 then
+				Messagebox("Error",ls_error)
+				return -1
+			end if
+			return -1
+		else
+			lds_info = CREATE u_datastore
+			lds_info.Create(ls_consulta, ls_error_sin)
+			lds_info.settransobject( ltr_esta)
+			li_regresa = lds_info.retrieve()
+			if li_regresa <> 0 then
+				MessageBox("Advertencia","Error al generar los consolidados de los movimientos de estacionamiento")
+				//Sustituye la invocación
+				//if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then
+				//ls_proceso_que_detiene = "Baja Total en Ventanilla (3-ESTACIONAMIENTO)"
+				ls_proceso_que_detiene = ""
+				li_estatus = 0 // Proceso de Transferencia no detenido
+				ls_error = ""
+				ls_usuario = ""
+				ls_nomb_usu_detiene = ""
+				if f_trans_sql_syb_detenido_update(li_estatus,ls_proceso_que_detiene,ls_usuario_null,ls_nomb_usu_detiene_null, ls_error) <> 1 then
+					Messagebox("Error",ls_error)
+					return -1
+				end if
+				return -1
+			end if
+		end if
+		commit using ltr_esta;
+		
+		/*procesamiento de consolidados estacionamiento */
+		ls_instruccion = "sp_ProcesarConsolidadoxcta "+ string(al_cuenta)
+		ls_consulta = ltr_esta.SyntaxFromSQL(ls_instruccion,'Style(Type=Grid)', ls_error_exec)
+		if  len(ls_error_exec) > 0 then
+			MessageBox("Control de Estacionamiento ", ls_error_exec )
+			//Sustituye la invocación
+			//if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then
+			ls_proceso_que_detiene = "Baja Total en Ventanilla (4-ESTACIONAMIENTO)"
+			//ls_proceso_que_detiene = ""
+			li_estatus = 1 // Proceso de Transferencia no detenido
+			ls_error = ""
+			ls_usuario = ""
+			ls_nomb_usu_detiene = ""
+			if f_trans_sql_syb_detenido_update(li_estatus,ls_proceso_que_detiene,gs_usuario,ls_nomb_usu_detiene, ls_error) <> 1 then
+				Messagebox("Error",ls_error)
+				return -1
+			end if
+			return -1
+		else
+			lds_info = CREATE u_datastore
+			lds_info.Create(ls_consulta, ls_error_sin)
+			lds_info.settransobject( ltr_esta)
+			li_regresa = lds_info.retrieve()
+			if li_regresa <> 0 then
+				MessageBox("Advertencia","Error al generar los consolidados de los movimientos de estacionamiento")
+				//Sustituye la invocación
+				//if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then
+				//ls_proceso_que_detiene = "Baja Total en Ventanilla (5-ESTACIONAMIENTO)"
+				ls_proceso_que_detiene = ""
+				li_estatus = 0 // Proceso de Transferencia no detenido
+				ls_error = ""
+				ls_usuario = ""
+				ls_nomb_usu_detiene = ""
+				if f_trans_sql_syb_detenido_update(li_estatus,ls_proceso_que_detiene,ls_usuario_null,ls_nomb_usu_detiene_null, ls_error) <> 1 then
+					Messagebox("Error",ls_error)
+					return -1
+				end if
+				return -1
+			end if
+		end if
+		
+		commit using ltr_esta;
+		
+
+		lds_movalumnos_sql.dataobject = "dw_consolidadoxcta"
+		lds_movalumnos_sql.settransobject( ltr_esta )
+		ll_movalumnos_sql = lds_movalumnos_sql.retrieve(al_cuenta)
+		
+		ll_total_leidos = lds_movalumnos_sql.RowCount()
+		ll_total_procesados = 1
+		
+//		if ll_total_leidos = 0 then
+//			MessageBox( "Aviso","No hay registros de estacionamiento por transferir" )
+//			if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then
+//				Messagebox("Error",ls_error)
+//				return -1
+//			end if
+////			return 1
+//		end if	
+		
+		for ll_total_procesados = 1 to ll_total_leidos
+			// OBTIENE LOS DATOS E INSERTA EN SyBase: tesoreria_bd.mov_alumnos
+			fecha = lds_movalumnos_sql.getitemdatetime(ll_total_procesados,"fecha")
+			fecha_vencimiento = lds_movalumnos_sql.getitemdatetime(ll_total_procesados,"fecha_vencimiento")
+			
+			ll_renglon_nvo = lds_mov_alumnos.insertrow(0)
+			
+			lds_mov_alumnos.object.cve_concepto 			[ll_renglon_nvo]	= 47
+			lds_mov_alumnos.object.cve_subconcepto 		[ll_renglon_nvo]	= 1
+			lds_mov_alumnos.object.cve_descripcion 		[ll_renglon_nvo]	= 14
+			lds_mov_alumnos.object.cve_caja					[ll_renglon_nvo]	= 163
+			lds_mov_alumnos.object.cuenta 					[ll_renglon_nvo]	= lds_movalumnos_sql.GetItemNumber(ll_total_procesados,"cuenta")
+			lds_mov_alumnos.object.periodo 					[ll_renglon_nvo]	= lds_movalumnos_sql.GetItemNumber(ll_total_procesados,"periodo")
+			lds_mov_alumnos.object.anio 						[ll_renglon_nvo]	= lds_movalumnos_sql.GetItemNumber(ll_total_procesados,"anio")
+			lds_mov_alumnos.object.fecha						[ll_renglon_nvo]	= fecha
+			lds_mov_alumnos.object.fecha_vencimiento		[ll_renglon_nvo]	= fecha_vencimiento
+			lds_mov_alumnos.object.importe					[ll_renglon_nvo]	= lds_movalumnos_sql.GetItemNumber(ll_total_procesados,"importe")
+			lds_mov_alumnos.object.corte						[ll_renglon_nvo]	= lds_movalumnos_sql.GetItemNumber(ll_total_procesados,"corte")
+			lds_mov_alumnos.object.operacion				[ll_renglon_nvo]	= 0
+			lds_mov_alumnos.object.folio_mov_alumnos 	[ll_renglon_nvo]	= 0
+			
+			lds_movalumnos_sql.object.traspasado[ll_total_procesados] = 1
+			
+			if lds_movalumnos_sql.update() = 1 then
+				if lds_mov_alumnos.update() = 1 then
+					
+				else
+					MessageBox("Error","Error al insertar los movimientos de estacionamiento en Sybase en la cuenta: "+string(lds_movalumnos_sql.GetItemNumber(ll_total_procesados,"cuenta")) )
+					Rollback using ltr_sit;
+					//Sustituye la invocación
+					//if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then
+					//ls_proceso_que_detiene = "Baja Total en Ventanilla (6-ESTACIONAMIENTO)"
+					ls_proceso_que_detiene = ""
+					li_estatus = 0 // Proceso de Transferencia no detenido
+					ls_error = ""
+					ls_usuario = ""
+					ls_nomb_usu_detiene = ""
+					if f_trans_sql_syb_detenido_update(li_estatus,ls_proceso_que_detiene,ls_usuario_null,ls_nomb_usu_detiene_null, ls_error) <> 1 then
+						Messagebox("Error",ls_error)
+						return -1
+					end if
+					return -1
+				end if
+			else
+				MessageBox("Error","Error al actualizar el status de traspasado a los movimientos de estacionamiento: ")
+				Rollback using ltr_sit;
+				//Sustituye la invocación
+				//if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then
+				//ls_proceso_que_detiene = "Baja Total en Ventanilla (7-ESTACIONAMIENTO)"
+				ls_proceso_que_detiene = ""
+				li_estatus = 0 // Proceso de Transferencia no detenido
+				ls_error = ""
+				ls_usuario = ""
+				ls_nomb_usu_detiene = ""
+				if f_trans_sql_syb_detenido_update(li_estatus,ls_proceso_que_detiene,ls_usuario_null,ls_nomb_usu_detiene_null, ls_error) <> 1 then
+					Messagebox("Error",ls_error)
+					return -1
+				end if
+				return -1
+			end if
+			
+		next
+		
+		commit using ltr_esta;		
+		Commit using ltr_sit;
+				
+		
+		/**************** Iberobus***************/		
+
+//		/*generacion de consolidados Iberobus*/
+//		ls_instruccion = "sp_GeneraConsolidadosBusxCta "+ string(al_cuenta)
+//		ls_consulta = ltr_bus.SyntaxFromSQL(ls_instruccion,'Style(Type=Grid)', ls_error_exec)
+//		if  len(ls_error_exec) > 0 then
+//			MessageBox(" Iberobus ", ls_error_exec )
+//			//Sustituye la invocación
+//			//if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then
+//			ls_proceso_que_detiene = "Baja Total en Ventanilla (8-IBEROBUS)"
+////			ls_proceso_que_detiene = ""
+//			li_estatus = 1 // Proceso de Transferencia Detenido
+//			ls_error = ""
+//			ls_usuario = ""
+//			ls_nomb_usu_detiene = ""
+//			if f_trans_sql_syb_detenido_update(li_estatus,ls_proceso_que_detiene,gs_usuario,ls_nomb_usu_detiene, ls_error) <> 1 then
+//				Messagebox("Error",ls_error)
+//				return -1
+//			end if
+//			return -1
+//		else
+//			lds_info = CREATE u_datastore
+//			lds_info.Create(ls_consulta, ls_error_sin)
+//			lds_info.settransobject( ltr_bus)
+//			li_regresa = lds_info.retrieve()
+//			if li_regresa <> 0 then
+//				MessageBox("Advertencia","Error al generar los consolidados de los movimientos de Iberobus")
+//				//Sustituye la invocación
+//				//if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then
+//				//ls_proceso_que_detiene = "Baja Total en Ventanilla (9-IBEROBUS)"
+//				ls_proceso_que_detiene = ""
+//				li_estatus = 0 // Proceso de Transferencia no detenido
+//				ls_error = ""
+//				ls_usuario = ""
+//				ls_nomb_usu_detiene = ""
+//				if f_trans_sql_syb_detenido_update(li_estatus,ls_proceso_que_detiene,ls_usuario_null,ls_nomb_usu_detiene_null, ls_error) <> 1 then
+//					Messagebox("Error",ls_error)
+//					return -1
+//				end if
+//				return -1
+//			end if
+//		end if
+//		commit using ltr_bus;
+		
+//		/*procesamiento de consolidados Iberobus */
+//		ls_instruccion = "sp_ProcesarConsolidadoBusxCta "+ string(al_cuenta)
+//		ls_consulta = ltr_bus.SyntaxFromSQL(ls_instruccion,'Style(Type=Grid)', ls_error_exec)
+//		if  len(ls_error_exec) > 0 then
+//			MessageBox("Iberobus ", ls_error_exec )
+//			//Sustituye la invocación
+//			//if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then
+//			ls_proceso_que_detiene = "Baja Total en Ventanilla (10-IBEROBUS)"
+////			ls_proceso_que_detiene = ""
+//			li_estatus = 1 // Proceso de Transferencia no detenido
+//			ls_error = ""
+//			ls_usuario = ""
+//			ls_nomb_usu_detiene = ""
+//			if f_trans_sql_syb_detenido_update(li_estatus,ls_proceso_que_detiene,gs_usuario,ls_nomb_usu_detiene, ls_error) <> 1 then
+//				Messagebox("Error",ls_error)
+//				return -1
+//			end if
+//			return -1
+//		else
+//			lds_info = CREATE u_datastore
+//			lds_info.Create(ls_consulta, ls_error_sin)
+//			lds_info.settransobject( ltr_bus)
+//			li_regresa = lds_info.retrieve()
+//			if li_regresa <> 0 then
+//				MessageBox("Advertencia","Error al generar los consolidados de los movimientos de Iberobus")
+//				//Sustituye la invocación
+//				//if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then
+//				//ls_proceso_que_detiene = "Baja Total en Ventanilla (11-IBEROBUS)"
+//				ls_proceso_que_detiene = ""
+//				li_estatus = 0 // Proceso de Transferencia no detenido
+//				ls_error = ""
+//				ls_usuario = ""
+//				ls_nomb_usu_detiene = ""
+//				if f_trans_sql_syb_detenido_update(li_estatus,ls_proceso_que_detiene,ls_usuario_null,ls_nomb_usu_detiene_null, ls_error) <> 1 then
+//					Messagebox("Error",ls_error)
+//					return -1
+//				end if
+//				return -1
+//			end if
+//		end if
+//		
+//		commit using ltr_bus;
+		
+
+		// ****** LLAMADO A NUEVA VALIDACIÓN DE IBEROBÚS. *******
+		// ****** LLAMADO A NUEVA VALIDACIÓN DE IBEROBÚS. *******
+
+	
+		INTEGER RC
+		INTEGER li_status_process
+		STRING ls_mensaje 
+		INTEGER le_corte 
+		
+		SETNULL(le_corte)
+		
+		DECLARE procesa PROCEDURE FOR sp_process_of_paid_iberobus 
+													@iAnio = :gi_anio, 
+													@iPeriodo = :gi_periodo, 
+													@iCorte = :le_corte, 
+													@iAccount = :al_cuenta, 
+													@status_process = :li_status_process OUTPUT,
+													@mensaje = :ls_mensaje OUTPUT
+		USING ltr_bus ; 
+		
+		EXECUTE procesa;
+		FETCH procesa INTO :li_status_process, :ls_mensaje;
+		IF ltr_bus.SQLCODE < 0 OR li_status_process < 0 THEN 
+			ls_mensaje = ls_mensaje +  '  ' + ltr_bus.SQLERRTEXT 
+			ROLLBACK USING ltr_bus;
+			CLOSE procesa;
+			MESSAGEBOX("Error", ls_mensaje)
+			RETURN -1
+		END IF
+		
+		commit using ltr_bus;
+		CLOSE procesa;
+		
+		// ****** LLAMADO A NUEVA VALIDACIÓN DE IBEROBÚS. *******
+		// ****** LLAMADO A NUEVA VALIDACIÓN DE IBEROBÚS. *******		
+		
+		
+		lds_movalumnos_sql.reset()
+		lds_movalumnos_sql.dataobject = "dw_consolidadoxcta"
+		lds_movalumnos_sql.settransobject( ltr_bus )
+		ll_movalumnos_sql = lds_movalumnos_sql.retrieve(al_cuenta)
+		
+		ll_total_leidos = lds_movalumnos_sql.RowCount()
+		ll_total_procesados = 1
+		
+		if ll_total_leidos = 0 then
+			MessageBox( "Aviso","No hay registros de Iberobus por transferir" )
+			//Sustituye la invocación
+			//if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then
+			//ls_proceso_que_detiene = "Baja Total en Ventanilla (12-IBEROBUS)"
+			ls_proceso_que_detiene = ""
+			li_estatus = 0 // Proceso de Transferencia no detenido
+			ls_error = ""
+			ls_usuario = ""
+			ls_nomb_usu_detiene = ""
+			if f_trans_sql_syb_detenido_update(li_estatus,ls_proceso_que_detiene,ls_usuario_null,ls_nomb_usu_detiene_null, ls_error) <> 1 then
+				Messagebox("Error",ls_error)
+				return -1
+			end if
+			return 1
+		end if
+		
+		for ll_total_procesados = 1 to ll_total_leidos
+			// OBTIENE LOS DATOS E INSERTA EN SyBase: tesoreria_bd.mov_alumnos
+			fecha = lds_movalumnos_sql.getitemdatetime(ll_total_procesados,"fecha")
+			fecha_vencimiento = lds_movalumnos_sql.getitemdatetime(ll_total_procesados,"fecha_vencimiento")
+			
+			ll_renglon_nvo = lds_mov_alumnos.insertrow(0)
+			
+			lds_mov_alumnos.object.cve_concepto 			[ll_renglon_nvo]	= 51
+			lds_mov_alumnos.object.cve_subconcepto 		[ll_renglon_nvo]	= 1
+			lds_mov_alumnos.object.cve_descripcion 		[ll_renglon_nvo]	= 15
+			lds_mov_alumnos.object.cve_caja					[ll_renglon_nvo]	= 171
+			lds_mov_alumnos.object.cuenta 					[ll_renglon_nvo]	= lds_movalumnos_sql.GetItemNumber(ll_total_procesados,"cuenta")
+			lds_mov_alumnos.object.periodo 					[ll_renglon_nvo]	= lds_movalumnos_sql.GetItemNumber(ll_total_procesados,"periodo")
+			lds_mov_alumnos.object.anio 						[ll_renglon_nvo]	= lds_movalumnos_sql.GetItemNumber(ll_total_procesados,"anio")
+			lds_mov_alumnos.object.fecha						[ll_renglon_nvo]	= fecha
+			lds_mov_alumnos.object.fecha_vencimiento		[ll_renglon_nvo]	= fecha_vencimiento
+			lds_mov_alumnos.object.importe					[ll_renglon_nvo]	= lds_movalumnos_sql.GetItemNumber(ll_total_procesados,"importe")
+			lds_mov_alumnos.object.corte						[ll_renglon_nvo]	= lds_movalumnos_sql.GetItemNumber(ll_total_procesados,"corte")
+			lds_mov_alumnos.object.operacion				[ll_renglon_nvo]	= 0
+			lds_mov_alumnos.object.folio_mov_alumnos 	[ll_renglon_nvo]	= 0
+			
+			lds_movalumnos_sql.object.traspasado[ll_total_procesados] = 1
+			
+			if lds_movalumnos_sql.update() = 1 then
+				if lds_mov_alumnos.update() = 1 then
+					//
+				else
+					MessageBox("Error","Error al insertar los movimientos de Iberobus en Sybase en la cuenta: "+string(lds_movalumnos_sql.GetItemNumber(ll_total_procesados,"cuenta")) )
+					Rollback using ltr_sit;
+					//Sustituye la invocación
+					//if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then
+					//ls_proceso_que_detiene = "Baja Total en Ventanilla (13-IBEROBUS)"
+					ls_proceso_que_detiene = ""
+					li_estatus = 0 // Proceso de Transferencia no detenido
+					ls_error = ""
+					ls_usuario = ""
+					ls_nomb_usu_detiene = ""
+					if f_trans_sql_syb_detenido_update(li_estatus,ls_proceso_que_detiene,ls_usuario_null,ls_nomb_usu_detiene_null, ls_error) <> 1 then
+						Messagebox("Error",ls_error)
+						return -1
+					end if
+					return -1
+				end if
+			else
+				MessageBox("Error","Error al actualizar el status de traspasado a los movimientos de Iberobus: ")
+				Rollback using ltr_sit;
+				//Sustituye la invocación
+				//if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then
+				//ls_proceso_que_detiene = "Baja Total en Ventanilla (14-IBEROBUS)"
+				ls_proceso_que_detiene = ""
+				li_estatus = 0 // Proceso de Transferencia no detenido
+				ls_error = ""
+				ls_usuario = ""
+				ls_nomb_usu_detiene = ""
+				if f_trans_sql_syb_detenido_update(li_estatus,ls_proceso_que_detiene,ls_usuario_null,ls_nomb_usu_detiene_null, ls_error) <> 1 then
+					Messagebox("Error",ls_error)
+					return -1
+				end if
+				return -1
+			end if
+			
+		next		
+
+		commit using ltr_bus;
+		Commit using ltr_sit;
+				
+		// LIBERA EL PROCESO DE TRANSFERENCIA
+		li_estatus = 0
+		//Sustituye la invocación
+		//if f_trans_sql_syb_detenido_update(li_estatus,ls_error) <> 1 then
+		//ls_proceso_que_detiene = "Baja Total en Ventanilla (15-IBEROBUS)"		
+		ls_proceso_que_detiene = ""
+		li_estatus = 0 // Proceso de Transferencia no detenido
+		ls_error = ""
+		ls_usuario = ""
+		ls_nomb_usu_detiene = ""
+		if f_trans_sql_syb_detenido_update(li_estatus,ls_proceso_que_detiene,ls_usuario_null,ls_nomb_usu_detiene_null, ls_error) <> 1 then
+			Messagebox("Error",ls_error)
+			return -1
+		end if		
+		
+		
+	// PROCESO DE TRANSFERENCIA NO DISPONIBLE	
+	//li_detenido = f_trans_sql_syb_detenido(ls_error,ls_usuario,ls_nomb_usu_detiene, ls_proceso_que_detiene)
+	case 1
+		//Messagebox("Aviso","El proceso de tranferencia de movimientos esta detenido actualmente por otro proceso, intente mas tarde...")
+		Messagebox("Aviso","El proceso de tranferencia de movimientos de estacionamiento esta detenido actualmente por ["+ ls_nomb_usu_detiene+"] Proceso: ["+ ls_proceso_que_detiene+"]")
+		return -1
+	// ERROR AL ls_consultaR EL ESTATUS DEL PROCESO DE TRANSFERENCIA
+	case else
+		Messagebox("Error", "Error al consultar estatus de proceso de transferencia de movimientos ~n" + ls_error)
+		return -1
+end choose
+
+return 1
+
+end function
+

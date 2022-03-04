@@ -1,0 +1,31 @@
+﻿$PBExportHeader$d_reporte_errores.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=129 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=77 color="553648127" )
+table(column=(type=long update=yes updatewhereclause=yes name=cuenta dbname="mat_preinsc.cuenta" )
+ column=(type=long update=yes updatewhereclause=yes name=cve_mat dbname="mat_preinsc.cve_mat" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=gpo dbname="mat_preinsc.gpo" )
+ column=(type=long update=yes updatewhereclause=yes name=status dbname="mat_preinsc.status" )
+ column=(type=char(70) updatewhereclause=yes name=alumnos_nombre_completo dbname="alumnos.nombre_completo" )
+ column=(type=char(42) updatewhereclause=yes name=materias_materia dbname="materias.materia" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_carrera dbname="academicos.cve_carrera" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_plan dbname="academicos.cve_plan" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"dbo.mat_preinsc~" )  TABLE(NAME=~"dbo.alumnos~" )  TABLE(NAME=~"dbo.materias~" )  TABLE(NAME=~"dbo.academicos~" ) COLUMN(NAME=~"dbo.mat_preinsc.cuenta~") COLUMN(NAME=~"dbo.mat_preinsc.cve_mat~") COLUMN(NAME=~"dbo.mat_preinsc.gpo~") COLUMN(NAME=~"dbo.mat_preinsc.status~") COLUMN(NAME=~"dbo.alumnos.nombre_completo~") COLUMN(NAME=~"dbo.materias.materia~") COLUMN(NAME=~"dbo.academicos.cve_carrera~") COLUMN(NAME=~"dbo.academicos.cve_plan~")    JOIN (LEFT=~"dbo.mat_preinsc.cve_mat~"    OP =~"=~"RIGHT=~"dbo.materias.cve_mat~"    OUTER1 =~"dbo.mat_preinsc.cve_mat~" )    JOIN (LEFT=~"dbo.mat_preinsc.cuenta~"    OP =~"=~"RIGHT=~"dbo.alumnos.cuenta~" )    JOIN (LEFT=~"dbo.alumnos.cuenta~"    OP =~"=~"RIGHT=~"dbo.academicos.cuenta~" )WHERE(    EXP1 =~"( dbo.mat_preinsc.periodo~"   OP =~"=~"    EXP2 =~":per )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( dbo.mat_preinsc.anio~"   OP =~"=~"    EXP2 =~":ani )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( dbo.mat_preinsc.status~"   OP =~"<~"    EXP2 =~"63 )~" ) ) ARG(NAME = ~"per~" TYPE = number)  ARG(NAME = ~"ani~" TYPE = number) " arguments=(("per", number),("ani", number))  sort="cuenta A " )
+group(level=1 header.height=129 trailer.height=1 by=("cuenta" ) header.color="536870912" trailer.color="536870912" )
+compute(band=header.1 alignment="0" expression=" cuenta +'-'+obten_digito( cuenta )"border="0" color="33554432" x="618" y="24" height="65" width="316" format="[general]"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=header.1 id=5 alignment="0" tabsequence=32766 border="0" color="33554432" x="942" y="24" height="65" width="1235" format="[general]"  name=alumnos_nombre_completo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=header.1 id=7 alignment="0" tabsequence=32766 border="0" color="33554432" x="2195" y="24" height="65" width="357" format="[general]"  name=academicos_cve_carrera edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=header.1 id=8 alignment="0" tabsequence=32766 border="0" color="33554432" x="2570" y="24" height="65" width="225" format="[general]"  name=academicos_cve_plan edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=2 alignment="2" tabsequence=10 border="0" color="33554432" x="1061" y="4" height="65" width="229" format="[general]"  name=cve_mat edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=3 alignment="2" tabsequence=20 border="0" color="33554432" x="1303" y="4" height="65" width="65" format="[general]"  name=gpo edit.limit=2 edit.case=upper edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=detail alignment="0" expression="if ( truncate(status/32,0) = 1 ,'', 'Falta Prerreq. ')+
+if ( mod(truncate(status/16,0),2) = 1 ,'', 'No Puede Integración ')+
+if ( mod(truncate(status/8,0),2) = 1 ,'', 'Ya la cursó ')+
+if ( mod(truncate(status/4,0),2) = 1 ,'', 'No Pert. Plan ')+
+if ( mod(truncate(status/2,0),2) = 1 ,'', 'No Existe Grupo ')+
+if ( mod(status,2) = 1 ,'', 'No Existe Materia')"border="0" color="33554432" x="1381" y="4" height="65" width="2103" format="[general]"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="33554432" x="10" y="4" height="65" width="1038" format="[general]"  name=materias_materia edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=header alignment="0" expression="'Página ' + page() + ' de ' + pageCount()"border="0" color="0" x="2638" y="8" height="89" width="823" format="[general]"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

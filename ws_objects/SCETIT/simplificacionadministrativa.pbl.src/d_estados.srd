@@ -1,0 +1,14 @@
+﻿$PBExportHeader$d_estados.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=65 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cve_estado dbname="estados.cve_estado" )
+ column=(type=char(31) update=yes updatewhereclause=yes name=estado dbname="estados.estado" )
+ column=(type=long update=yes updatewhereclause=yes name=cve_sep dbname="estados.cve_sep" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"estados~" ) COLUMN(NAME=~"estados.cve_estado~") COLUMN(NAME=~"estados.estado~") COLUMN(NAME=~"estados.cve_sep~")) " update="estados" updatewhere=1 updatekeyinplace=no )
+column(band=detail id=1 alignment="1" tabsequence=10 border="0" color="0" x="5" y="4" height="57" width="55" format="[general]"  name=cve_estado edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="0" color="0" x="74" y="4" height="57" width="805" format="[general]"  name=estado edit.limit=31 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=30 border="0" color="0" x="892" y="4" height="57" width="65" format="[general]"  name=cve_sep edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

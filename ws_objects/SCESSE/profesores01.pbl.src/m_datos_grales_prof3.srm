@@ -1,0 +1,168 @@
+﻿$PBExportHeader$m_datos_grales_prof3.srm
+forward
+global type m_datos_grales_prof3 from m_catalogo
+end type
+type m_primero from menu within m_registro
+end type
+type m_anterior from menu within m_registro
+end type
+type m_siguiente from menu within m_registro
+end type
+type m_ultimo from menu within m_registro
+end type
+end forward
+
+global type m_datos_grales_prof3 from m_catalogo
+end type
+global m_datos_grales_prof3 m_datos_grales_prof3
+
+type variables
+window ventana
+end variables
+
+on m_datos_grales_prof3.create
+m_datos_grales_prof3=this
+call super::create
+end on
+
+on m_datos_grales_prof3.destroy
+call super::destroy
+end on
+
+on m_archivo.create
+call super::create
+this.ToolBarItemOrder=1
+end on
+
+on m_salvar.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+event m_imprimir::clicked;Messagebox("proceso en contrucción","Juan campos. Noviembre-1997.")
+end event
+
+on m_imprimir.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_edicion.create
+call super::create
+this.ToolBarItemOrder=2
+end on
+
+type m_registro from m_catalogo`m_registro within m_datos_grales_prof3
+m_primero m_primero
+m_anterior m_anterior
+m_siguiente m_siguiente
+m_ultimo m_ultimo
+end type
+
+on m_registro.create
+call super::create
+this.ToolBarItemOrder=3
+this.m_primero=create m_primero
+this.m_anterior=create m_anterior
+this.m_siguiente=create m_siguiente
+this.m_ultimo=create m_ultimo
+this.Item[UpperBound(this.item)+1]=this.m_primero
+this.Item[UpperBound(this.item)+1]=this.m_anterior
+this.Item[UpperBound(this.item)+1]=this.m_siguiente
+this.Item[UpperBound(this.item)+1]=this.m_ultimo
+end on
+
+on m_registro.destroy
+call super::destroy
+destroy(this.m_primero)
+destroy(this.m_anterior)
+destroy(this.m_siguiente)
+destroy(this.m_ultimo)
+end on
+
+event m_nuevo::clicked;call super::clicked;dw.TriggerEvent("nuevo")
+end event
+
+event m_actualiza::clicked;call super::clicked;dw.SetItem(dw.getrow(),"nombre_completo","aaa")
+dw.TriggerEvent("actualiza")
+end event
+
+event m_borraregistro::clicked;call super::clicked;dw.TriggerEvent("borra")
+end event
+
+on m_ordenarporclave.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_ordenarpordescripcin.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_ventana.create
+call super::create
+this.ToolBarItemOrder=4
+end on
+
+on m_ayuda.create
+call super::create
+this.ToolBarItemOrder=5
+end on
+
+on m_salir.create
+call super::create
+this.ToolBarItemOrder=10
+end on
+
+type m_primero from menu within m_registro
+end type
+
+event clicked;dw.TriggerEvent("primero")
+
+
+end event
+
+on m_primero.create
+this.Text="Primero"
+this.ToolBarItemName="VCRFirst!"
+this.ToolBarItemSpace=3
+end on
+
+type m_anterior from menu within m_registro
+end type
+
+on m_anterior.create
+this.Text="Anterior"
+this.ToolBarItemName="VCRPrior!"
+end on
+
+event clicked;dw.TriggerEvent("Anterior")
+end event
+
+type m_siguiente from menu within m_registro
+end type
+
+on m_siguiente.create
+this.Text="Siguiente"
+this.ToolBarItemName="VCRNext!"
+end on
+
+event clicked;dw.TriggerEvent("Siguiente")
+end event
+
+type m_ultimo from menu within m_registro
+end type
+
+on m_ultimo.create
+this.Text="Ultimo"
+this.ToolBarItemName="VCRLast!"
+end on
+
+event clicked;dw.TriggerEvent("ultimo")
+end event
+

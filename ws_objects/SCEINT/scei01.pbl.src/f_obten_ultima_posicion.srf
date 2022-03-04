@@ -1,0 +1,35 @@
+﻿$PBExportHeader$f_obten_ultima_posicion.srf
+global type f_obten_ultima_posicion from function_object
+end type
+
+forward prototypes
+global function long f_obten_ultima_posicion (string as_cadena, string as_cadena_buscada)
+end prototypes
+
+global function long f_obten_ultima_posicion (string as_cadena, string as_cadena_buscada);//f_obten_ultima_posicion
+//
+//as_cadena				string
+//as_cadena_buscada	string
+//Devuelve
+//					long
+
+
+long ll_posicion, ll_ultima_posicion
+
+string ls_mensaje_error, ls_cve_criterio
+
+ll_posicion = Pos(as_cadena, as_cadena_buscada, 1)
+ll_ultima_posicion = ll_posicion
+
+DO WHILE ll_posicion > 0
+	ll_ultima_posicion = ll_posicion
+	ll_posicion = Pos(as_cadena, as_cadena_buscada, ll_ultima_posicion + 1)
+LOOP
+
+
+return ll_ultima_posicion	
+
+
+
+end function
+

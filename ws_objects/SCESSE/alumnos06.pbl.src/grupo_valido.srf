@@ -1,0 +1,39 @@
+﻿$PBExportHeader$grupo_valido.srf
+$PBExportComments$Regresa "True" si el valor de la captura de un grupo es valido.~r~n Juan Campos. Marzo.1997.
+global type grupo_valido from function_object
+end type
+
+forward prototypes
+global function boolean grupo_valido (string grupo)
+end prototypes
+
+global function boolean grupo_valido (string grupo);// Regresa "True" si el valor de la captura de un grupo es valido.
+// Juan Campos. Marzo.1997.
+
+
+Boolean Digito1= False ,Digito2 = False
+
+CHOOSE CASE Asc(Mid(grupo,1,1))
+
+CASE 65 to 90
+  Digito1= True	
+CASE ELSE
+  Digito1= False	
+END CHOOSE
+
+CHOOSE CASE Asc(Mid(grupo,2,1))
+
+CASE 48
+  Digito2 = False
+CASE ELSE
+  Digito2 = True
+END CHOOSE
+
+If Digito1 And Digito2 Then
+  Return True
+Else
+//  MessageBox("Grupo Invalido","Grupos validos, [A a la Z] , [AN a la ZN], Donde N = 1 al 9")	
+  Return False  
+End If
+end function
+

@@ -1,0 +1,41 @@
+﻿$PBExportHeader$elimina_cursadas.srf
+global type elimina_cursadas from function_object
+end type
+
+forward prototypes
+global function decimal elimina_cursadas (integer area, ref datastore dw_materiasxcursar, ref datastore dw_historico)
+end prototypes
+
+global function decimal elimina_cursadas (integer area, ref datastore dw_materiasxcursar, ref datastore dw_historico);long ll_cont_1,ll_cont_2,ll_found
+decimal creditos
+long mat_borrable
+
+if isnull(area) then
+	area=0
+end if
+dw_materiasxcursar.SetFilter("area_mat_cve_area="+string(area))
+dw_materiasxcursar.Filter( )
+dw_historico.SetFilter('historico_calificacion in ("6","7","8","9","10","AC","RE","E","MB","B","S")')
+dw_historico.Filter( )
+creditos=0
+FOR ll_cont_1=dw_historico.rowcount() TO 1 STEP -1
+	ll_cont_2 = dw_materiasxcursar.Find("cve_mat="+string(dw_historico.object.historico_cve_mat[ll_cont_1]),&
+		1, dw_materiasxcursar.RowCount( ))
+	if ll_cont_2>0 then
+		creditos=creditos+dw_materiasxcursar.object.creditos[ll_cont_2]
+		mat_borrable=dw_materiasxcursar.object.cve_mat[ll_cont_2]
+		ll_found=1
+		DO UNTIL ll_found=0
+			ll_found = dw_materiasxcursar.Find("cve_mat="+string(mat_borrable),&
+				1, dw_materiasxcursar.RowCount( ))
+			if ll_found>0 then
+				dw_materiasxcursar.deleterow(ll_found)
+			end if
+		LOOP
+		dw_historico.deleterow(ll_cont_1)
+		ll_cont_2=0
+	end if
+NEXT
+return creditos
+end function
+

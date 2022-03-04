@@ -1,0 +1,2 @@
+﻿$PBExportHeader$qy_dw_nombre_alumno_2013.srq
+PBSELECT( VERSION(400) TABLE(NAME="alumnos" ) COLUMN(NAME="alumnos.nombre") COLUMN(NAME="alumnos.apaterno") COLUMN(NAME="alumnos.amaterno") COLUMN(NAME="alumnos.cuenta")WHERE(    EXP1 ="alumnos.cuenta"   OP ="="    EXP2 =":cuenta" ) ) ARG(NAME = "cuenta" TYPE = number) 

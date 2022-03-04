@@ -1,0 +1,56 @@
+﻿$PBExportHeader$f_doble_presencia_horario_prof.srf
+global type f_doble_presencia_horario_prof from function_object
+end type
+
+forward prototypes
+global function boolean f_doble_presencia_horario_prof (long al_cve_mat, string as_gpo, integer ai_periodo, integer ai_anio, long al_cve_profesor, ref string as_grupos_encimados)
+end prototypes
+
+global function boolean f_doble_presencia_horario_prof (long al_cve_mat, string as_gpo, integer ai_periodo, integer ai_anio, long al_cve_profesor, ref string as_grupos_encimados);//f_doble_presencia_horario_prof
+//Recibe		al_cve_mat
+//				as_gpo
+//				ai_periodo
+//				ai_anio
+//				as_grupos_encimados
+
+
+long ll_cve_mat
+string ls_mensaje_grupos, ls_gpo
+long ll_rows, ll_row, ll_cve_profesor
+integer li_cve_dia, li_hora_inicio, li_hora_final
+boolean lb_doble_presencia = TRUE
+uds_datastore lds_datastore
+
+lds_datastore = CREATE uds_datastore
+
+lds_datastore.dataobject = "d_horario_grupo_profesor"
+lds_datastore.SetTransObject(gtr_sce)
+ll_rows = lds_datastore.Retrieve(al_cve_mat, as_gpo, ai_periodo, ai_anio)
+
+ls_mensaje_grupos = ""
+IF ll_rows= -1 THEN
+	RETURN TRUE
+ELSEIF ll_rows=0 THEN
+	as_grupos_encimados= ls_mensaje_grupos
+	RETURN FALSE
+ELSE
+	lb_doble_presencia = FALSE
+	ll_cve_profesor = al_cve_profesor
+	FOR ll_row = 1 TO ll_rows
+		li_cve_dia = lds_datastore.GetItemNumber(ll_row, "cve_dia")
+		li_hora_inicio = lds_datastore.GetItemNumber(ll_row, "hora_inicio")
+		li_hora_final = lds_datastore.GetItemNumber(ll_row, "hora_final")
+		if f_doble_presencia_profesor( al_cve_mat, as_gpo, ai_periodo, ai_anio, &
+					ll_cve_profesor, li_cve_dia, li_hora_inicio, li_hora_final,ls_mensaje_grupos) then
+			lb_doble_presencia = TRUE
+			ll_row = ll_row + ll_rows
+		end if
+	NEXT
+END IF
+as_grupos_encimados= ls_mensaje_grupos
+RETURN lb_doble_presencia
+
+
+
+end function
+

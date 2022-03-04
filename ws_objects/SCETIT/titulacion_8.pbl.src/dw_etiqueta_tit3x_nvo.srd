@@ -1,0 +1,38 @@
+﻿$PBExportHeader$dw_etiqueta_tit3x_nvo.srd
+release 6;
+datawindow(units=2 timer_interval=0 color=16777215 processing=2 print.documentname="" print.orientation = 0 print.margin.left = 156 print.margin.right = 156 print.margin.top = 833 print.margin.bottom = 836 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no label.name="Laser Address 1.33 x 4.00 5162,5262" label.width=4000 label.height=1333 label.rows=7 label.rows.spacing=0 label.columns=2 label.columns.spacing=188 label.topdown=no label.sheet=yes label.shape=roundrectangle label.ellipse_height=130 label.ellipse_width=130 )
+detail(height=1333 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=titulacion_cve_carrera dbname="cve_carrera" )
+ column=(type=long updatewhereclause=yes name=titulacion_mencion dbname="mencion" values="Titulación Completa con Mención Honorífica	1/ 	2/" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_nombre dbname="nombre" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_apaterno dbname="apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_amaterno dbname="amaterno" )
+ column=(type=long updatewhereclause=yes name=titulacion_cuenta dbname="cuenta" )
+ column=(type=long updatewhereclause=yes name=titulacion_reconocimiento dbname="reconocimiento" values="Titulación Completa con Reconocimiento Especial	1/ 	2/" )
+ column=(type=datetime updatewhereclause=yes name=cfecha_examen dbname="fecha_examen" )
+ column=(type=char(100) updatewhereclause=yes name=ccarrera dbname="carrera" )
+ retrieve="  SELECT  titulacion.cve_carrera ,
+           titulacion.mencion ,
+           alumnos.nombre ,
+           alumnos.apaterno ,
+           alumnos.amaterno ,
+           titulacion.cuenta ,
+           titulacion.reconocimiento,
+           titulacion.fecha_examen,
+           carreras.carrera     
+        FROM titulacion ,  
+         alumnos,
+         carreras     
+        WHERE ( titulacion.cuenta = alumnos.cuenta ) AND
+          ( titulacion.cuenta in ( :cuenta ) ) AND
+          ( titulacion.aprobado = 1 )   AND
+          ( titulacion.cve_carrera = carreras.cve_carrera)" arguments=(("cuenta", numberlist)) )
+compute(band=detail alignment="0" expression=" titulacion_cuenta +~" - ~"+obten_digito( titulacion_cuenta )"border="0" color="0" x="166" y="156" height="156" width="1125" format="[general]"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="0" expression="  alumnos_apaterno +~"  ~"+ alumnos_amaterno +~"  ~"+ alumnos_nombre "border="0" color="0" x="166" y="385" height="156" width="3489" format="[general]"  font.face="Arial" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="31" y="625" height="156" width="3937" format="[General]"  name=titulacion_cve_carrera  tag=" " dddw.name=dw_carrera dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="479" y="854" height="156" width="3031" format="[general]"  name=titulacion_reconocimiento ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="if(  titulacion_mencion =1 or  titulacion_reconocimiento =1, ~" ~", ~"Titulación Completa~" )"border="0" color="0" x="479" y="854" height="156" width="3031" format="[general]"  font.face="Arial" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="479" y="854" height="156" width="3031" format=""  name=titulacion_mencion ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="16777215" x="187" y="1083" height="156" width="3552" format="[general]"  name=ccarrera edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="16777215" x="1281" y="1083" height="156" width="989" format="[shortdate] [time]"  name=cfecha_examen edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

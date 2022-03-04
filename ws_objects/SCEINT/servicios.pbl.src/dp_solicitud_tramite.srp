@@ -1,0 +1,13 @@
+﻿$PBExportHeader$dp_solicitud_tramite.srp
+PIPELINE(source_connect=CE Desarollo 2,destination_connect=WEB uiant12 controlescolar_bd,type=refresh,commit=100,errors=100,keyname="solicitud_tramite")
+SOURCE(name="dbo.solicitud_tramite",COLUMN(type=long,name="cuenta",dbtype="int",key=yes,nulls_allowed=no)
+ COLUMN(type=long,name="cve_carrera",dbtype="int",key=yes,nulls_allowed=no)
+ COLUMN(type=long,name="cve_plan",dbtype="int",key=yes,nulls_allowed=no)
+ COLUMN(type=int,name="cve_tramite",dbtype="tinyint",key=yes,nulls_allowed=no)
+ COLUMN(type=datetime,name="fecha",dbtype="datetime",key=yes,nulls_allowed=yes))
+RETRIEVE(statement="PBSELECT( VERSION(400) TABLE(NAME=~"solicitud_tramite~" ) COLUMN(NAME=~"solicitud_tramite.cuenta~") COLUMN(NAME=~"solicitud_tramite.cve_carrera~") COLUMN(NAME=~"solicitud_tramite.cve_plan~") COLUMN(NAME=~"solicitud_tramite.cve_tramite~") COLUMN(NAME=~"solicitud_tramite.fecha~")) ")
+DESTINATION(name="dbo.solicitud_tramite",COLUMN(type=long,name="cuenta",dbtype="int",key=yes,nulls_allowed=no,initial_value="0")
+ COLUMN(type=long,name="cve_carrera",dbtype="int",key=yes,nulls_allowed=no,initial_value="0")
+ COLUMN(type=long,name="cve_plan",dbtype="int",key=yes,nulls_allowed=no,initial_value="0")
+ COLUMN(type=int,name="cve_tramite",dbtype="tinyint",key=yes,nulls_allowed=no,initial_value="0")
+ COLUMN(type=datetime,name="fecha",dbtype="datetime",key=yes,nulls_allowed=no,initial_value="today"))

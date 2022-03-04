@@ -1,0 +1,32 @@
+﻿$PBExportHeader$d_periodos_historico_cta_carr.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=74 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=83 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cuenta dbname="historico.cuenta" )
+ column=(type=long updatewhereclause=yes name=periodo dbname="historico.periodo" )
+ column=(type=long updatewhereclause=yes name=anio dbname="historico.anio" )
+ retrieve="  SELECT DISTINCT dbo.historico.cuenta,   
+         dbo.historico.periodo,   
+         dbo.historico.anio  
+    FROM dbo.historico,   
+         dbo.materias  
+   WHERE ( dbo.historico.cve_mat = dbo.materias.cve_mat ) and  
+         ( dbo.historico.periodo <> 1 ) AND  
+         ( dbo.historico.cuenta = :al_cuenta ) AND  
+         (dbo.materias.creditos > 0) AND  
+         (dbo.historico.cve_carrera = :ai_cve_carrera) AND  
+         (dbo.historico.cve_plan = :ai_cve_plan)   
+ORDER BY dbo.historico.anio ASC,   
+         dbo.historico.periodo ASC,   
+         dbo.historico.cuenta ASC   
+" arguments=(("al_cuenta", number),("ai_cve_carrera", number),("ai_cve_plan", number)) )
+text(band=header alignment="2" text="Cuenta"border="0" color="0" x="4" y="3" height="64" width="329"  name=cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Periodo"border="0" color="0" x="336" y="3" height="64" width="329"  name=periodo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Anio"border="0" color="0" x="673" y="3" height="64" width="329"  name=anio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="4" y="3" height="77" width="329" format="[general]"  name=cuenta edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="336" y="3" height="77" width="329" format="[general]"  name=periodo edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="673" y="3" height="77" width="329" format="[general]"  name=anio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

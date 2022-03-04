@@ -1,0 +1,31 @@
+﻿$PBExportHeader$calificacion_materia.srf
+$PBExportComments$Regresa "true" y la calificación obtenida de la tabla de historico,~r~nsi la consulta es exitosa.~r~n Juan Campos.  Marzo-1997.
+global type calificacion_materia from function_object
+end type
+
+forward prototypes
+global function boolean calificacion_materia (long cuenta, long materia, ref string calif)
+end prototypes
+
+global function boolean calificacion_materia (long cuenta, long materia, ref string calif);// Regresa "true" y la calificación obtenida de la tabla de historico
+// si la consulta es exitosa.
+// Juan Campos.  Marzo-1997.
+
+select calificacion 
+  into :calif
+  from historico
+ where (cuenta  = :cuenta) and
+       (cve_mat = :materia) and 
+		 (calificacion <> "BA")
+using gtr_sce;
+
+if gtr_sce.sqlcode = 0 Then
+   Return  True
+else
+	Messagebox("Error",gtr_sce.sqlerrtext)
+	Calif = ""
+	Return False
+end if
+
+end function
+

@@ -1,0 +1,68 @@
+﻿$PBExportHeader$f_existe_folio_test_vocacional.srf
+global type f_existe_folio_test_vocacional from function_object
+end type
+
+forward prototypes
+global function integer f_existe_folio_test_vocacional (long al_folio_test_vocacional, long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio, ref long al_ref_folio, ref integer ai_ref_clv_ver, ref integer ai_ref_clv_per, ref integer ai_ref_anio, ref string as_ref_apaterno, ref string as_ref_amaterno, ref string as_ref_nombre)
+end prototypes
+
+global function integer f_existe_folio_test_vocacional (long al_folio_test_vocacional, long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio, ref long al_ref_folio, ref integer ai_ref_clv_ver, ref integer ai_ref_clv_per, ref integer ai_ref_anio, ref string as_ref_apaterno, ref string as_ref_amaterno, ref string as_ref_nombre);//f_existe_folio_test_vocacional
+//al_folio_test_vocacional
+//al_folio				long
+//ai_clv_ver			integer
+//ai_clv_per			integer
+//ai_anio				integer
+//al_ref_folio			long
+//ai_ref_clv_ver		integer
+//ai_ref_clv_per		integer
+//ai_ref_anio			integer
+//as_ref_apaterno		string
+//as_ref_amaterno		string
+//as_ref_nombre		string
+
+long ll_folio
+integer li_clv_ver, li_clv_per, li_anio
+int li_codigo_sql, li_SQLNRows
+string ls_mensaje
+
+
+  SELECT aspiran_pago_examen_especial.folio,   
+         aspiran_pago_examen_especial.clv_ver,   
+         aspiran_pago_examen_especial.clv_per,   
+         aspiran_pago_examen_especial.anio,
+			general.apaterno,
+			general.amaterno,
+			general.nombre			
+	INTO  :al_ref_folio,
+			:ai_ref_clv_ver, 
+			:ai_ref_clv_per, 
+			:ai_ref_anio,	
+			:as_ref_apaterno,
+			:as_ref_amaterno,
+			:as_ref_nombre			
+    FROM aspiran_pago_examen_especial, general
+   WHERE ( aspiran_pago_examen_especial.folio_test_vocacional = :al_folio_test_vocacional ) 
+	AND NOT (( aspiran_pago_examen_especial.folio = :al_folio )   
+			   AND ( aspiran_pago_examen_especial.clv_ver = :ai_clv_ver )   
+     			AND ( aspiran_pago_examen_especial.clv_per = :ai_clv_per )   
+	         AND ( aspiran_pago_examen_especial.anio = :ai_anio )) 
+	AND ( aspiran_pago_examen_especial.folio = general.folio )   
+   AND ( aspiran_pago_examen_especial.clv_ver = general.clv_ver )   
+	AND ( aspiran_pago_examen_especial.clv_per = general.clv_per )   
+   AND ( aspiran_pago_examen_especial.anio = general.anio )
+						
+	USING gtr_sadm;
+	li_codigo_sql = gtr_sadm.SqlCode
+	ls_mensaje = gtr_sadm.SqlErrText
+	li_SQLNRows = gtr_sadm.SQLNRows	
+
+	IF li_codigo_sql = -1 THEN
+		MessageBox("Error al consultar aspiran_pago_examen_especial", ls_mensaje, StopSign!)
+	else
+		li_codigo_sql = li_SQLNRows
+	END IF
+
+RETURN li_codigo_sql
+
+end function
+

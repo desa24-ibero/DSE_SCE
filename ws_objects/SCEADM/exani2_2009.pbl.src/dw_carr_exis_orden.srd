@@ -1,0 +1,21 @@
+﻿$PBExportHeader$dw_carr_exis_orden.srd
+$PBExportComments$Da las carreras en las que se hicieron exámenes en el periodo
+release 10;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=88 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=clv_carr dbname="aspiran.clv_carr" )
+ retrieve="PBSELECT( VERSION(400) DISTINCT ()TABLE(NAME=~"aspiran~" ) COLUMN(NAME=~"aspiran.clv_carr~")WHERE(    EXP1 =~"aspiran.clv_ver~"   OP =~"=~"    EXP2 =~":ver~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"aspiran.clv_per~"   OP =~"=~"    EXP2 =~":per~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"aspiran.anio~"   OP =~"=~"    EXP2 =~":ani~" ) ) ORDER(NAME=~"aspiran.clv_carr~" ASC=yes ) ARG(NAME = ~"ver~" TYPE = number)  ARG(NAME = ~"per~" TYPE = number)  ARG(NAME = ~"ani~" TYPE = number) " arguments=(("ver", number),("per", number),("ani", number)) )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=clv_carr visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="0" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

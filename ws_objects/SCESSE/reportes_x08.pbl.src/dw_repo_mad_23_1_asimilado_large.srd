@@ -1,0 +1,21 @@
+﻿$PBExportHeader$dw_repo_mad_23_1_asimilado_large.srd
+$PBExportComments$Datawindow para los Horarios, recibe como parámetros Cve_mat, grupo,periodo,anio y regresa el Horario
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=53 color="536870912" )
+table(column=(type=char(9) updatewhereclause=yes name=dias_dia dbname="dias.dia" )
+ column=(type=long updatewhereclause=yes name=horario_hora_inicio dbname="horario.hora_inicio" )
+ column=(type=long updatewhereclause=yes name=horario_hora_final dbname="horario.hora_final" )
+ column=(type=char(12) updatewhereclause=yes name=clase_aula_nombre_aula dbname="clase_aula.nombre_aula" )
+ column=(type=char(16) updatewhereclause=yes name=horario_cve_salon dbname="horario.cve_salon" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"horario~" )  TABLE(NAME=~"clase_aula~" )  TABLE(NAME=~"dias~" ) COLUMN(NAME=~"dias.dia~") COLUMN(NAME=~"horario.hora_inicio~") COLUMN(NAME=~"horario.hora_final~") COLUMN(NAME=~"clase_aula.nombre_aula~") COLUMN(NAME=~"horario.cve_salon~")    JOIN (LEFT=~"horario.cve_dia~"    OP =~"=~"RIGHT=~"dias.cve_dia~" )    JOIN (LEFT=~"horario.clase_aula~"    OP =~"=~"RIGHT=~"clase_aula.clase~" )WHERE(    EXP1 =~"( ( horario.cve_mat~"   OP =~"=~"    EXP2 =~":cve_mat )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( horario.gpo~"   OP =~"=~"    EXP2 =~":grupo )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( horario.periodo~"   OP =~"=~"    EXP2 =~":periodo )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( horario.anio~"   OP =~"=~"    EXP2 =~":anio ) )~" ) ) ARG(NAME = ~"cve_mat~" TYPE = number)  ARG(NAME = ~"grupo~" TYPE = string)  ARG(NAME = ~"periodo~" TYPE = number)  ARG(NAME = ~"anio~" TYPE = number) " arguments=(("cve_mat", number),("grupo", string),("periodo", number),("anio", number)) )
+text(band=footer alignment="0" text="Cupo"border="0" color="0" x="4010" y="104" height="65" width="151"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="Tipo"border="0" color="0" x="4334" y="104" height="65" width="129"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="Horario"border="0" color="0" x="3292" y="104" height="65" width="215"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="Día"border="0" color="0" x="2908" y="104" height="65" width="97"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="Salon"border="0" color="0" x="3745" y="104" height="65" width="170"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="5111" y="4" height="57" width="302" format="[general]"  name=dias_dia edit.limit=9 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression=" horario_hora_inicio+~" Hrs.~" +~"  -  ~"+ horario_hora_final +~" Hrs.~""border="0" color="0" x="5450" y="4" height="57" width="394" format="[general]"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

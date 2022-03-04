@@ -1,0 +1,23 @@
+﻿$PBExportHeader$dw_#bachille.srd
+$PBExportComments$Perfil de prom. de bachillerato
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=77 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=1 color="536870912" )
+table(column=(type=real updatewhereclause=yes name=promedio dbname="promedio" )
+ retrieve="  SELECT aspiran.promedio  
+    FROM aspiran  
+   WHERE ( :ver=99 or aspiran.clv_ver = :ver ) AND  
+         ( aspiran.clv_per = :per ) AND  
+         ( aspiran.anio = :ani ) AND  
+         ( :carr = 9999 OR  
+         aspiran.clv_carr = :carr ) AND  
+         :status like ~"%~"+convert(varchar(1),aspiran.status)+~"%~" AND  
+         aspiran.pago_exam = 1    
+" arguments=(("ver", number),("per", number),("ani", number),("carr", number),("status", string)) )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="10" y="4" height="77" width="526" format="[general]"  name=promedio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=summary alignment="0" text="P. Bachillerato"border="0" color="0" x="1" y="4" height="65" width="389"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="avg(promedio for all)"border="0" color="0" x="686" y="4" height="65" width="430" format="#0"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="stdev(  promedio  for all )"border="0" color="0" x="1125" y="4" height="65" width="430" format="##0.00"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

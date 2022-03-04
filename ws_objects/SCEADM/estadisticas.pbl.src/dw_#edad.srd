@@ -1,0 +1,31 @@
+﻿$PBExportHeader$dw_#edad.srd
+$PBExportComments$Perfil de edades
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=61 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=1 color="536870912" )
+table(column=(type=datetime updatewhereclause=yes name=general_fecha_nac dbname="fecha_nac" )
+ retrieve="  SELECT general.fecha_nac  
+    FROM aspiran,   
+         general  
+   WHERE ( general.folio = aspiran.folio ) and  
+         ( general.clv_ver = aspiran.clv_ver ) and  
+         ( general.clv_per = aspiran.clv_per ) and  
+         ( general.anio = aspiran.anio ) and  
+         ( :ver=99 or aspiran.clv_ver = :ver ) AND  
+         ( aspiran.clv_per = :per ) AND  
+         ( aspiran.anio = :ani ) AND  
+         ( :carr = 9999 OR  
+         aspiran.clv_carr = :carr ) AND  
+         :status like ~"%~"+convert(varchar(1),aspiran.status)+~"%~" AND  
+         aspiran.pago_exam = 1    
+" arguments=(("ver", number),("per", number),("ani", number),("carr", number),("status", string))  sort="int((year(today())-year( general_fecha_nac ))*2/10) A " )
+group(level=1 header.height=1 trailer.height=69 by=("int((year(today())-year( general_fecha_nac ))*2/10)" ) header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="0" text="Edad:"border="0" color="0" x="1" y="0" height="65" width="156"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="5" y="16" height="77" width="627" format="[shortdate] [time]"  name=general_fecha_nac edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="0" expression="case(int((year(today())-year( general_fecha_nac ))*2/10) when 0 then '0 a 4 años' when 1 then '5 a 9 años' when 2 then '10 a 14 años' when 3 then '15 a 19 años' when 4 then '20 a 24 años' when 5 then '25 a 29 años' when 6 then '30 a 34 años' when 7 then '35 a 39 años' when 8 then '40 a 44 años' when 9 then '45 a 49 años' when 10 then '50 a 54 años' when 11 then '55 a 59 años' when 12 then '60 a 64 años' when 13 then '65 a 69 años' else 'Mayor de 70 años')"border="0" color="0" x="1" y="4" height="77" width="577" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="2" expression="count( year(  general_fecha_nac ) for group 1 )"border="0" color="0" x="691" y="4" height="85" width="426" format="[general]"  name=cuenta  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="2" expression="round((cuenta/total)*100,2)+'%'"border="0" color="0" x="1125" y="4" height="77" width="430" format="[general]"  name=porcentaje  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="0" expression="count(  year( general_fecha_nac ) for all )"border="0" color="0" x="1" y="4" height="81" width="247" format="[general]"  name=total  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

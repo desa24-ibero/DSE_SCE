@@ -1,0 +1,46 @@
+﻿$PBExportHeader$f_obten_num_actas_estatus.srf
+global type f_obten_num_actas_estatus from function_object
+end type
+
+forward prototypes
+global function long f_obten_num_actas_estatus (string as_nivel, integer ai_periodo, integer ai_anio, integer ai_cve_estatus_acta, transaction atr_transaction)
+end prototypes
+
+global function long f_obten_num_actas_estatus (string as_nivel, integer ai_periodo, integer ai_anio, integer ai_cve_estatus_acta, transaction atr_transaction);//f_obten_num_actas_estatus
+//
+//Recibe:
+//as_nivel							string
+//ai_periodo						integer
+//ai_anio							integer
+//ai_cve_estatus_acta			integer
+//atr_transaction					transaction
+
+integer li_codigo_sql
+long li_no_acta
+string ls_mensaje_sql
+long ll_rows
+
+SELECT count(acta_evaluacion_preeliminar.no_acta)
+INTO	:ll_rows
+FROM	acta_evaluacion_preeliminar
+WHERE acta_evaluacion_preeliminar.nivel = :as_nivel
+AND	acta_evaluacion_preeliminar.periodo = :ai_periodo
+AND	acta_evaluacion_preeliminar.anio = :ai_anio
+AND	acta_evaluacion_preeliminar.cve_estatus_acta = :ai_cve_estatus_acta
+USING atr_transaction;
+
+li_codigo_sql = atr_transaction.SqlCode
+ls_mensaje_sql = atr_transaction.SqlErrText
+
+if li_codigo_sql = 100 or isnull(ll_rows) or ll_rows = 0 then
+	return 0
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar acta_evaluacion_preeliminar", ls_mensaje_sql)
+	return li_codigo_sql
+end if
+
+
+return ll_rows
+
+end function
+

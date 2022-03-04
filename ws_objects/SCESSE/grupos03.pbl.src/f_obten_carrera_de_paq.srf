@@ -1,0 +1,57 @@
+﻿$PBExportHeader$f_obten_carrera_de_paq.srf
+global type f_obten_carrera_de_paq from function_object
+end type
+
+forward prototypes
+global function integer f_obten_carrera_de_paq (integer ai_num_paq, ref integer ai_cve_carrera, ref integer ai_cve_plan, ref string as_carrera, ref string as_nombre_plan)
+end prototypes
+
+global function integer f_obten_carrera_de_paq (integer ai_num_paq, ref integer ai_cve_carrera, ref integer ai_cve_plan, ref string as_carrera, ref string as_nombre_plan);//f_obten_carrera_de_paq
+//Recibe:
+//		ai_num_paq		integer
+//		ai_cve_carrera	integer
+//		ai_cve_plan		integer
+//		as_carrera		string
+//		as_plan			string
+
+integer li_num_paq, li_cve_carrera, li_cve_plan, li_codigo_sql
+string ls_mensaje_sql, ls_carrera= "", ls_nombre_plan = ""
+
+
+
+SELECT 
+paquetes.num_paq,
+carreras.cve_carrera, 
+carreras.carrera,
+nombre_plan.cve_plan,
+nombre_plan.nombre_plan
+INTO	
+:li_num_paq,
+:li_cve_carrera,
+:ls_carrera,
+:li_cve_plan,
+:ls_nombre_plan
+FROM	paquetes, carreras, nombre_plan
+WHERE paquetes.num_paq = :ai_num_paq
+AND	paquetes.clv_carr = carreras.cve_carrera
+AND	paquetes.clv_plan = nombre_plan.cve_plan
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 or isnull(li_cve_carrera) then
+	as_carrera= ""
+	return 100
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar carreras de paquetes", ls_mensaje_sql)
+	return -1
+end if
+ai_cve_carrera = li_cve_carrera
+ai_cve_plan = li_cve_plan
+as_carrera = ls_carrera
+as_nombre_plan = ls_nombre_plan
+
+return li_codigo_sql
+end function
+

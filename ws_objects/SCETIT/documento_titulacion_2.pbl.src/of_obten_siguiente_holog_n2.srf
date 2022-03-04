@@ -1,0 +1,92 @@
+﻿$PBExportHeader$of_obten_siguiente_holog_n2.srf
+global type of_obten_siguiente_holog_n2 from function_object
+end type
+
+forward prototypes
+global function long of_obten_siguiente_holog_n2 (integer ai_cve_doc_control_sep, integer ai_num_hologramas, ref long al_hologramas[], long al_num_holograma)
+end prototypes
+
+global function long of_obten_siguiente_holog_n2 (integer ai_cve_doc_control_sep, integer ai_num_hologramas, ref long al_hologramas[], long al_num_holograma);//of_obten_siguiente_holog_n2
+//Obtiene el siguiente folio para insercion en la tabla control_sep
+//Recibe	ai_cve_doc_control_sep	integer
+//			ai_num_hologramas integer
+//			al_hologramas[]	long
+//			al_num_holograma long
+
+long ll_maximo_folio, ll_folio_siguiente, ll_indice_actual
+int li_cves[4], li_tipo
+long ll_numero_inicial, ll_numero_final, ll_row, ll_rows
+U_DataStore lds_hologramas_disponibles
+boolean lb_continua_ciclo = true, lb_continua_ciclo2 = true
+choose case ai_cve_doc_control_sep
+	case 1
+		li_cves = {1,2}
+	case 2
+		li_cves = {1,2}
+	case 3
+		li_cves = {3}
+	case else
+		li_cves = {4,5,6}
+end choose
+
+	
+lds_hologramas_disponibles = Create U_DataStore
+lds_hologramas_disponibles.dataobject = "d_hologramas_disponibles_doc"
+lds_hologramas_disponibles.SetTrans(gtr_sce)
+ll_rows = lds_hologramas_disponibles.Retrieve(li_cves)
+ll_row = 1
+
+DO WHILE ll_row <= ll_rows and lb_continua_ciclo
+	ll_numero_inicial = lds_hologramas_disponibles.getitemnumber(ll_row,"numero_inicial")
+	ll_numero_final = lds_hologramas_disponibles.getitemnumber(ll_row,"numero_final")
+	IF ll_numero_inicial<=al_num_holograma and al_num_holograma<=ll_numero_final THEN
+		lb_continua_ciclo= false
+	ELSE
+		ll_row = ll_row  + 1		
+	END IF	
+LOOP
+
+
+ll_folio_siguiente = al_num_holograma 
+
+
+IF of_holograma_disponible(ll_folio_siguiente, ai_cve_doc_control_sep) = 0 THEN
+	MessageBox("Hologramas Faltantes","No existen hologramas disponibles registrados", StopSign!)
+	return -1
+END IF
+
+FOR ll_indice_actual= 1 TO ai_num_hologramas
+	DO WHILE ll_row <= ll_rows and lb_continua_ciclo2
+	
+		DO WHILE of_hologramas_asignados(ll_folio_siguiente, ll_folio_siguiente, ai_cve_doc_control_sep)>0 
+			ll_folio_siguiente = ll_folio_siguiente + 1
+		LOOP
+		IF of_holograma_disponible(ll_folio_siguiente, ai_cve_doc_control_sep) = 0 THEN
+			ll_row = ll_row  + 1		
+			IF ll_row <= ll_rows THEN
+				ll_numero_inicial = lds_hologramas_disponibles.getitemnumber(ll_row,"numero_inicial")
+				ll_numero_final = lds_hologramas_disponibles.getitemnumber(ll_row,"numero_final")
+				ll_folio_siguiente = ll_numero_inicial 
+			ELSE 
+				lb_continua_ciclo2= FALSE
+			END IF
+		ELSE
+			lb_continua_ciclo2= FALSE
+		END IF 
+	LOOP	
+	IF ll_row > ll_rows THEN
+		MessageBox("Hologramas Faltantes","No existen hologramas disponibles registrados", StopSign!)
+		return -1		
+	ELSE
+		lb_continua_ciclo2= TRUE
+	END IF
+	al_hologramas[ll_indice_actual]= ll_folio_siguiente
+	ll_folio_siguiente = ll_folio_siguiente + 1
+NEXT
+
+
+return ll_folio_siguiente
+
+
+end function
+

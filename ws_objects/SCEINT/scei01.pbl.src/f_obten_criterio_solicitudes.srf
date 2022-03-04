@@ -1,0 +1,38 @@
+﻿$PBExportHeader$f_obten_criterio_solicitudes.srf
+global type f_obten_criterio_solicitudes from function_object
+end type
+
+forward prototypes
+global function string f_obten_criterio_solicitudes (integer ai_periodo, integer ai_anio)
+end prototypes
+
+global function string f_obten_criterio_solicitudes (integer ai_periodo, integer ai_anio);//f_obten_criterio_solicitudes
+//ai_periodo	integer
+//ai_anio		integer
+//Devuelve
+//					string
+
+
+integer li_codigo
+string ls_mensaje_error, ls_cve_criterio
+
+select dbo.criterio_folio_solicitudes.cve_criterio
+into :ls_cve_criterio
+from dbo.criterio_folio_solicitudes
+where dbo.criterio_folio_solicitudes.periodo = :ai_periodo
+and   dbo.criterio_folio_solicitudes.anio = :ai_anio
+using gtr_sce;
+
+li_codigo= gtr_sce.SqlCode
+ls_mensaje_error= gtr_sce.SqlErrText
+
+if li_codigo = -1 or li_codigo = 100 then
+	MessageBox("Error al recuperar el criterio de las solicitudes ["+string(ai_periodo)+"] ["+string(ai_anio)+"] ",ls_mensaje_error, StopSign!)
+	return ""
+else
+	return ls_cve_criterio	
+end if
+
+
+end function
+

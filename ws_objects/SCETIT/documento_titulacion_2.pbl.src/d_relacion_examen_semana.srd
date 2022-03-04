@@ -1,0 +1,117 @@
+﻿$PBExportHeader$d_relacion_examen_semana.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=810 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=77 color="536870912" )
+detail(height=173 color="536870912" )
+table(column=(type=char(113) updatewhereclause=yes name=carrera dbname="carrera" )
+ column=(type=char(37) updatewhereclause=yes name=cuenta_digito dbname="cuenta_digito" )
+ column=(type=char(152) updatewhereclause=yes name=nombre_completo dbname="nombre_completo" )
+ column=(type=char(26) updatewhereclause=yes name=fecha_examen dbname="fecha_examen" )
+ column=(type=char(7) updatewhereclause=yes name=horas dbname="horas" )
+ column=(type=char(26) updatewhereclause=yes name=fecha_inicial dbname="fecha_inicial" )
+ column=(type=char(26) updatewhereclause=yes name=fecha_final dbname="fecha_final" )
+ column=(type=long updatewhereclause=yes name=monedas dbname="monedas" )
+ retrieve="SELECT 
+carrera = CASE 
+						WHEN ac.nivel=~"L~" THEN c.carrera
+						WHEN ac.nivel=~"P~" and al.sexo=~"M~" and charindex(~"MAESTR~",c.carrera)>0 THEN c.carrera
+						WHEN ac.nivel=~"P~" and al.sexo=~"F~" and charindex(~"MAESTR~",c.carrera)>0 THEN c.carrera
+						WHEN ac.nivel=~"P~" and al.sexo=~"M~" and charindex(~"DOCT~",c.carrera)>0 THEN c.carrera
+						WHEN ac.nivel=~"P~" and al.sexo=~"F~" and charindex(~"DOCT~",c.carrera)>0 THEN c.carrera
+						WHEN ac.nivel=~"P~" and al.sexo=~"M~" and charindex(~"ESPECIAL~",c.carrera)>0 AND charindex(~".~", c.carrera) >0 THEN ~"ESPECIALIDAD ~"+substring(c.carrera, charindex(~".~", c.carrera) + 1, char_length(c.carrera))
+						WHEN ac.nivel=~"P~" and al.sexo=~"F~" and charindex(~"ESPECIAL~",c.carrera)>0 AND charindex(~".~", c.carrera) >0 THEN ~"ESPECIALIDAD ~"+substring(c.carrera, charindex(~".~", c.carrera) + 1, char_length(c.carrera))
+						WHEN ac.nivel=~"P~" and al.sexo=~"M~" and charindex(~"ESPECIAL~",c.carrera)>0 AND charindex(~" ~", c.carrera) >0 THEN ~"ESPECIALIDAD ~"+substring(c.carrera, charindex(~" ~", c.carrera) + 1, char_length(c.carrera))
+						WHEN ac.nivel=~"P~" and al.sexo=~"F~" and charindex(~"ESPECIAL~",c.carrera)>0 AND charindex(~" ~", c.carrera) >0 THEN ~"ESPECIALIDAD ~"+substring(c.carrera, charindex(~" ~", c.carrera) + 1, char_length(c.carrera))
+						ELSE ~"~" 
+					END,
+
+cuenta_digito = convert(varchar(6),al.cuenta)+~"-~"+ ad.digito, 
+nombre_completo = al.nombre +~" ~"+al.apaterno+~" ~"+al.amaterno,
+fecha_examen = CASE datepart(mm, t.fecha_examen) 
+                             WHEN 1 THEN convert(varchar(2),datepart(dd,t.fecha_examen))+~" DE ENERO DE ~"+convert(varchar(6),datepart(yy,t.fecha_examen))
+                             WHEN 2 THEN convert(varchar(2),datepart(dd,t.fecha_examen))+~" DE FEBRERO DE ~"+convert(varchar(6),datepart(yy,t.fecha_examen))
+                             WHEN 3 THEN convert(varchar(2),datepart(dd,t.fecha_examen))+~" DE MARZO DE ~"+convert(varchar(6),datepart(yy,t.fecha_examen)) 
+                             WHEN 4 THEN convert(varchar(2),datepart(dd,t.fecha_examen))+~" DE ABRIL DE ~"+convert(varchar(6),datepart(yy,t.fecha_examen))
+                             WHEN 5 THEN convert(varchar(2),datepart(dd,t.fecha_examen))+~" DE MAYO DE ~"+convert(varchar(6),datepart(yy,t.fecha_examen))
+                             WHEN 6 THEN convert(varchar(2),datepart(dd,t.fecha_examen))+~" DE JUNIO DE ~"+convert(varchar(6),datepart(yy,t.fecha_examen))
+                             WHEN 7 THEN convert(varchar(2),datepart(dd,t.fecha_examen))+~" DE JULIO DE ~"+convert(varchar(6),datepart(yy,t.fecha_examen))
+                             WHEN 8 THEN convert(varchar(2),datepart(dd,t.fecha_examen))+~" DE AGOSTO DE ~"+convert(varchar(6),datepart(yy,t.fecha_examen))
+                             WHEN 9 THEN convert(varchar(2),datepart(dd,t.fecha_examen))+~" DE SEPTIEMBRE DE ~"+convert(varchar(6),datepart(yy,t.fecha_examen))
+                             WHEN 10 THEN convert(varchar(2),datepart(dd,t.fecha_examen))+~" DE OCTUBRE DE ~"+convert(varchar(6),datepart(yy,t.fecha_examen))
+                             WHEN 11 THEN convert(varchar(2),datepart(dd,t.fecha_examen))+~" DE NOVIEMBRE DE ~"+convert(varchar(6),datepart(yy,t.fecha_examen))
+                             WHEN 12 THEN convert(varchar(2),datepart(dd,t.fecha_examen))+~" DE DICIEMBRE DE ~"+convert(varchar(6),datepart(yy,t.fecha_examen))
+                             ELSE ~"~" END,
+horas = CASE 	WHEN datepart(hh,t.fecha_examen)< 10 AND datepart(mm, t.fecha_examen) <10 
+						THEN ~"0~"+convert(varchar(2),datepart(hh,t.fecha_examen)) + ~":0~"+ convert(varchar(2),datepart(mi,t.fecha_examen)) 
+					WHEN datepart(hh,t.fecha_examen)< 10 AND datepart(mm, t.fecha_examen) >=10 
+						THEN ~"0~"+convert(varchar(2),datepart(hh,t.fecha_examen)) + ~":~"+ convert(varchar(2),datepart(mi,t.fecha_examen)) 
+					WHEN datepart(hh,t.fecha_examen)>= 10 AND datepart(mm, t.fecha_examen) <10 
+						THEN convert(varchar(2),datepart(hh,t.fecha_examen)) + ~":0~"+ convert(varchar(2),datepart(mi,t.fecha_examen)) 
+					WHEN datepart(hh,t.fecha_examen)>= 10 AND datepart(mm, t.fecha_examen) >=10 
+						THEN convert(varchar(2),datepart(hh,t.fecha_examen)) + ~":~"+ convert(varchar(2),datepart(mi,t.fecha_examen)) 
+					ELSE ~"~" END, 
+fecha_inicial = CASE datepart(mm, :adttm_fecha_inicial) 
+                             WHEN 1 THEN convert(varchar(2),datepart(dd,:adttm_fecha_inicial))+~" DE ENERO DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_inicial))
+                             WHEN 2 THEN convert(varchar(2),datepart(dd,:adttm_fecha_inicial))+~" DE FEBRERO DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_inicial))
+                             WHEN 3 THEN convert(varchar(2),datepart(dd,:adttm_fecha_inicial))+~" DE MARZO DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_inicial)) 
+                             WHEN 4 THEN convert(varchar(2),datepart(dd,:adttm_fecha_inicial))+~" DE ABRIL DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_inicial))
+                             WHEN 5 THEN convert(varchar(2),datepart(dd,:adttm_fecha_inicial))+~" DE MAYO DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_inicial))
+                             WHEN 6 THEN convert(varchar(2),datepart(dd,:adttm_fecha_inicial))+~" DE JUNIO DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_inicial))
+                             WHEN 7 THEN convert(varchar(2),datepart(dd,:adttm_fecha_inicial))+~" DE JULIO DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_inicial))
+                             WHEN 8 THEN convert(varchar(2),datepart(dd,:adttm_fecha_inicial))+~" DE AGOSTO DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_inicial))
+                             WHEN 9 THEN convert(varchar(2),datepart(dd,:adttm_fecha_inicial))+~" DE SEPTIEMBRE DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_inicial))
+                             WHEN 10 THEN convert(varchar(2),datepart(dd,:adttm_fecha_inicial))+~" DE OCTUBRE DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_inicial))
+                             WHEN 11 THEN convert(varchar(2),datepart(dd,:adttm_fecha_inicial))+~" DE NOVIEMBRE DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_inicial))
+                             WHEN 12 THEN convert(varchar(2),datepart(dd,:adttm_fecha_inicial))+~" DE DICIEMBRE DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_inicial))
+                             ELSE ~"~" END,
+fecha_final = CASE datepart(mm, :adttm_fecha_final) 
+                             WHEN 1 THEN convert(varchar(2),datepart(dd,:adttm_fecha_final))+~" DE ENERO DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_final))
+                             WHEN 2 THEN convert(varchar(2),datepart(dd,:adttm_fecha_final))+~" DE FEBRERO DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_final))
+                             WHEN 3 THEN convert(varchar(2),datepart(dd,:adttm_fecha_final))+~" DE MARZO DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_final)) 
+                             WHEN 4 THEN convert(varchar(2),datepart(dd,:adttm_fecha_final))+~" DE ABRIL DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_final))
+                             WHEN 5 THEN convert(varchar(2),datepart(dd,:adttm_fecha_final))+~" DE MAYO DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_final))
+                             WHEN 6 THEN convert(varchar(2),datepart(dd,:adttm_fecha_final))+~" DE JUNIO DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_final))
+                             WHEN 7 THEN convert(varchar(2),datepart(dd,:adttm_fecha_final))+~" DE JULIO DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_final))
+                             WHEN 8 THEN convert(varchar(2),datepart(dd,:adttm_fecha_final))+~" DE AGOSTO DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_final))
+                             WHEN 9 THEN convert(varchar(2),datepart(dd,:adttm_fecha_final))+~" DE SEPTIEMBRE DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_final))
+                             WHEN 10 THEN convert(varchar(2),datepart(dd,:adttm_fecha_final))+~" DE OCTUBRE DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_final))
+                             WHEN 11 THEN convert(varchar(2),datepart(dd,:adttm_fecha_final))+~" DE NOVIEMBRE DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_final))
+                             WHEN 12 THEN convert(varchar(2),datepart(dd,:adttm_fecha_final))+~" DE DICIEMBRE DE ~"+convert(varchar(6),datepart(yy,:adttm_fecha_final))
+                             ELSE ~"~" END,
+monedas = 3
+FROM alumnos al, academicos ac, carreras c, titulacion t, v_sce_alumno_digito ad, opc_titulacion ot
+WHERE al.cuenta = ac.cuenta
+AND al.cuenta = t.cuenta
+AND al.cuenta = ad.cuenta
+AND ac.cve_carrera = c.cve_carrera
+AND t.opcion_titulacion=ot.cve_titulacion
+AND t.fecha_examen >= :adttm_fecha_inicial
+AND t.fecha_examen <= :adttm_fecha_final
+ORDER BY t.fecha_examen" arguments=(("adttm_fecha_inicial", datetime),("adttm_fecha_final", datetime))  sort="fecha_examen A carrera A " )
+group(level=1 header.height=192 trailer.height=96 by=("fecha_examen" ) header.color="536870912" trailer.color="536870912" )
+bitmap(band=header filename="logo_uia.bmp" x="128" y="29" height="438" width="508" border="0"  name=p_1 )
+text(band=header alignment="1" text="TRAMITACION ESCOLAR" border="0" color="0" x="2242" y="323" height="64" width="1028"  name=t_6  font.face="Times New Roman" font.height="-10" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="1" text="DIRECCION DE SERVICIOS ESCOLARES" border="0" color="0" x="1693" y="256" height="64" width="1576"  name=t_5  font.face="Times New Roman" font.height="-10" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=header alignment="0" expression="~"RELACION DE EXAMENES QUE SE REALIZARAN DEL ~" +fecha_inicial +~" AL ~"+ fecha_final "border="0" color="33554432" x="139" y="486" height="64" width="3145" format="[GENERAL]"  name=compute_1  font.face="Times New Roman" font.height="-10" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="EN LA CUAL SE ADJUNTA  EL LIBRO DE ACTAS DE SAMEN PROFESIONAL, LA DOCUMENTACION DEL EXAMEN" border="0" color="33554432" x="139" y="554" height="64" width="3145"  name=t_2  font.face="Times New Roman" font.height="-10" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Y LAS MONEDAS CORRESPONDIENTES POR EXAMEN PARA LOS SINODALES, MISMOS QUE SE ENTREGAN EN" border="0" color="33554432" x="139" y="621" height="64" width="3145"  name=t_3  font.face="Times New Roman" font.height="-10" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="EL DEPARTAMENTO CORRESPONDIENTE." border="0" color="33554432" x="139" y="691" height="64" width="3145"  name=t_4  font.face="Times New Roman" font.height="-10" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=header x1="132" y1="790" x2="3277" y2="790"  name=l_1 pen.style="0" pen.width="11" pen.color="0"  background.mode="1" background.color="553648127" )
+column(band=header.1 id=4 alignment="2" tabsequence=32766 border="2" color="33554432" x="1335" y="22" height="90" width="1064" format="[general]"  name=fecha_examen edit.limit=26 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header.1 id=8 alignment="1" tabsequence=32766 border="0" color="33554432" x="2582" y="195" height="74" width="351" format="[general]"  name=monedas edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="530" y="96" height="74" width="1829" format="[general]"  name=nombre_completo edit.limit=152 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="157" y="96" height="74" width="358" format="[general]"  name=cuenta_digito edit.limit=37 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="289" y="9" height="74" width="2059" format="[general]"  name=carrera edit.limit=113 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="string(getrow())+~".-~""border="0" color="33554432" x="157" y="9" height="74" width="110" format="[General]"  name=compute_5  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression="sum(monedas for all)"border="0" color="33554432" x="2582" y="138" height="74" width="351" format="[general]"  name=compute_3  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="2" text="Hora del Examen" border="0" color="33554432" x="2352" y="128" height="54" width="501"  name=horas_t  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="33554432" x="2483" y="9" height="74" width="234" format="[general]"  name=horas edit.limit=7 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=trailer.1 alignment="1" text="Total del día:" border="0" color="0" x="2622" y="10" height="64" width="369"  name=t_1  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="33554432" x="3035" y="9" height="74" width="117" format="[general]"  name=monedas_1 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression="sum(monedas for group 1)"border="0" color="33554432" x="3035" y="13" height="74" width="117" format="[general]"  name=compute_2  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="2" text="Monedas" border="0" color="33554432" x="2918" y="128" height="54" width="351"  name=monedas_t  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=footer alignment="0" expression="'Pag ' + page() + ' de ' + pagecount()"border="0" color="33554432" x="2695" y="7" height="64" width="574" format="[general]"  name=compute_4  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

@@ -1,0 +1,55 @@
+﻿$PBExportHeader$revisa_adeudos.srf
+global type revisa_adeudos from function_object
+end type
+
+forward prototypes
+global function integer revisa_adeudos (long cta)
+end prototypes
+
+global function integer revisa_adeudos (long cta);//Función que revisa si el alumno tiene adeudos
+//Regresa 0 si no debe
+//Regresa 1 si debe
+//Mayo 1998
+//CAMP (DkWf)
+
+//fecha = datetime(today(),now())
+uo_administrador_liberacion luo_administrador_liberacion
+
+if not isvalid(luo_administrador_liberacion) then
+	luo_administrador_liberacion = CREATE uo_administrador_liberacion	
+end if
+
+//IF luo_administrador_liberacion.of_liberacion_vigente("SIT") THEN
+
+	SELECT v_saldos_mov_alumnos.cuenta 
+   INTO :cta
+	FROM v_saldos_mov_alumnos
+	WHERE   v_saldos_mov_alumnos.cuenta = :cta  
+	AND  v_saldos_mov_alumnos.saldo > 5 AND 
+	(dateadd(day, 1,v_saldos_mov_alumnos.fecha_vencimiento) <= getdate() OR v_saldos_mov_alumnos.cve_concepto = 33) AND
+	(cve_concepto <100)
+	USING cobra;
+//ELSE
+//  	SELECT dbo.saldos.cuenta 
+//   INTO :cta
+//   FROM dbo.saldos  
+//   WHERE ( dbo.saldos.cuenta = :cta ) AND  
+//         ( dbo.saldos.status = 0 ) AND  
+//         ( dateadd(day, 1, dbo.saldos.fecha_ven) < getdate() )   
+//	GROUP BY dbo.saldos.cuenta  
+// 	HAVING ( sum( dbo.saldos.importe) > 0 )    
+//	USING cobra;
+//END IF
+
+revisa_rows_cob()
+
+ if cobra.sqlcode = 0 then//Tiene adeudos
+	commit using cobra;
+	return 1
+ elseif cobra.sqlcode = 100 then// No tiene adeudos
+	commit using cobra;
+	return 0
+ end if
+ return 1
+end function
+

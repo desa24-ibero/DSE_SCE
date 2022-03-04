@@ -1,0 +1,45 @@
+﻿$PBExportHeader$of_existe_alumno_certificado_total.srf
+global type of_existe_alumno_certificado_total from function_object
+end type
+
+forward prototypes
+global function long of_existe_alumno_certificado_total (long al_cuenta, long al_cve_carrera)
+end prototypes
+
+global function long of_existe_alumno_certificado_total (long al_cuenta, long al_cve_carrera);//of_existe_alumno_certificado_total
+//Recibe	al_cuenta			long
+//			al_cve_carrera		long
+//Devuelve el numero de registros en titulación para la carrera
+
+long ll_cve_concepto, ll_cve_subconcepto, ll_num_registros, ll_folio_mov_alumnos
+string ls_mensaje
+integer li_codigo_sql
+
+	SELECT
+	COUNT(*)
+	INTO
+	:ll_num_registros
+	FROM dbo.certificado 
+	WHERE dbo.certificado.cuenta = :al_cuenta
+	AND dbo.certificado.cve_carrera = :al_cve_carrera
+	AND dbo.certificado.parcial = 0
+	USING gtr_sce;
+
+	li_codigo_sql = gtr_sce.SqlCode
+	ls_mensaje = gtr_sce.SqlErrText
+	
+	IF li_codigo_sql= -1 THEN
+		MessageBox("Error al consultar certificado",ls_mensaje,StopSign! )
+		return  -1
+	ELSE
+		IF ll_num_registros = 0 THEN
+			return 0
+		END IF		
+	END IF
+
+
+return ll_num_registros
+
+			
+end function
+

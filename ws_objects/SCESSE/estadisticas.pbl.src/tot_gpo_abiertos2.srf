@@ -1,0 +1,22 @@
+﻿$PBExportHeader$tot_gpo_abiertos2.srf
+global type tot_gpo_abiertos2 from function_object
+end type
+
+forward prototypes
+global function string tot_gpo_abiertos2 (integer año, integer periodo, long materia, integer tipo)
+end prototypes
+
+global function string tot_gpo_abiertos2 (integer año, integer periodo, long materia, integer tipo);
+Long Cont = 0
+
+Select count(cve_mat) Into :Cont From hist_grupos     
+Where anio = :año And       
+  		periodo = :periodo and        
+  		cve_mat = :materia and      
+  		cond_gpo = 1 and
+		tipo = :tipo using gtr_sce;           // 1=Abierto
+if isnull(Cont) then Cont = 0
+Return String(Cont) 
+
+end function
+

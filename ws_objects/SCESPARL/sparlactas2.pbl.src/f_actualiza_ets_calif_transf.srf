@@ -1,0 +1,68 @@
+﻿$PBExportHeader$f_actualiza_ets_calif_transf.srf
+global type f_actualiza_ets_calif_transf from function_object
+end type
+
+forward prototypes
+global function integer f_actualiza_ets_calif_transf (integer ai_periodo, integer ai_anio, integer ai_cve_estatus_acta, ref long al_num_rows, transaction atr_transaction)
+end prototypes
+
+global function integer f_actualiza_ets_calif_transf (integer ai_periodo, integer ai_anio, integer ai_cve_estatus_acta, ref long al_num_rows, transaction atr_transaction);//f_actualiza_ets_calif_transf
+//
+//Recibe:
+//ai_periodo				integer
+//ai_anio					integer
+//ai_cve_estatus_acta	integer
+//al_num_rows				long
+//atr_transaction			transaction
+
+integer li_codigo_sql
+long li_no_acta
+string ls_mensaje_sql
+
+UPDATE examen_extrao_titulo
+SET calificacion = alumno_acta_evaluacion_preelim.calificacion_confirmada 
+FROM alumno_acta_evaluacion_preelim,   
+     examen_extrao_titulo,   
+     acta_evaluacion_preeliminar  
+WHERE ( alumno_acta_evaluacion_preelim.cve_mat = examen_extrao_titulo.cve_mat ) and  
+      ( alumno_acta_evaluacion_preelim.gpo = examen_extrao_titulo.gpo ) and  
+      ( alumno_acta_evaluacion_preelim.periodo = examen_extrao_titulo.periodo ) and  
+      ( alumno_acta_evaluacion_preelim.anio = examen_extrao_titulo.anio ) and  
+      ( alumno_acta_evaluacion_preelim.cuenta = examen_extrao_titulo.cuenta ) and  
+      ( alumno_acta_evaluacion_preelim.cve_tipo_examen = examen_extrao_titulo.tipo_examen ) and  
+      ( examen_extrao_titulo.cve_mat = acta_evaluacion_preeliminar.cve_mat ) and  
+      ( alumno_acta_evaluacion_preelim.cve_mat = acta_evaluacion_preeliminar.cve_mat ) and  		
+      ( alumno_acta_evaluacion_preelim.gpo = acta_evaluacion_preeliminar.gpo ) and  
+      ( alumno_acta_evaluacion_preelim.periodo = acta_evaluacion_preeliminar.periodo ) and  
+      ( alumno_acta_evaluacion_preelim.anio = acta_evaluacion_preeliminar.anio ) and  
+      ( alumno_acta_evaluacion_preelim.no_acta = acta_evaluacion_preeliminar.no_acta ) and  
+      ( alumno_acta_evaluacion_preelim.nivel = acta_evaluacion_preeliminar.nivel ) and  
+      ( alumno_acta_evaluacion_preelim.cve_tipo_examen = acta_evaluacion_preeliminar.cve_tipo_examen )  and
+      ( alumno_acta_evaluacion_preelim.cve_tipo_examen in (2,6) )  and
+      ( acta_evaluacion_preeliminar.cve_tipo_examen in (2,6) )  and
+      ( acta_evaluacion_preeliminar.periodo = :ai_periodo )  AND
+	   ( acta_evaluacion_preeliminar.anio = :ai_anio )  AND		
+  		( acta_evaluacion_preeliminar.cve_estatus_acta >= :ai_cve_estatus_acta )	AND
+		( examen_extrao_titulo.cve_condicion=0 ) 
+USING atr_transaction;
+
+li_codigo_sql = atr_transaction.SqlCode
+ls_mensaje_sql = atr_transaction.SqlErrText
+al_num_rows   = atr_transaction.SQLNRows	
+
+if li_codigo_sql = 100  then	
+	return li_codigo_sql
+elseif li_codigo_sql = -1 then
+	rollback using atr_transaction;
+	MessageBox("Error al actualizar en examen_extrao_titulo", ls_mensaje_sql)
+	return li_codigo_sql
+elseif li_codigo_sql = 0 then
+	commit using atr_transaction;
+end if
+
+
+
+return li_codigo_sql
+
+end function
+

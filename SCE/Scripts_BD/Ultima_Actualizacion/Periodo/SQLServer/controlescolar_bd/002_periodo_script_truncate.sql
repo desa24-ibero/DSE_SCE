@@ -1,0 +1,12 @@
+USE controlescolar_bd
+GO
+
+TRUNCATE TABLE periodo 
+GO
+
+IF @@ERROR = 0 BEGIN
+	PRINT 'EXITO: TRUNCATE TABLE periodo'
+END ELSE BEGIN
+	PRINT 'ERROR: TRUNCATE TABLE periodo'
+END          
+GO

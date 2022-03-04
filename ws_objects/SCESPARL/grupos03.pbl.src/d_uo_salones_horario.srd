@@ -1,0 +1,14 @@
+﻿$PBExportHeader$d_uo_salones_horario.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=74 color="536870912" )
+table(column=(type=char(16) updatewhereclause=yes name=cve_salon dbname="salon.cve_salon" )
+ retrieve="SELECT cve_salon 
+FROM salon
+WHERE cve_salon is not null
+AND cve_salon in (select cve_salon from horario)
+ORDER BY cve_salon" )
+column(band=detail id=1 alignment="0" tabsequence=10 border="2" color="0" x="4" y="0" height="74" width="318" format=""  name=cve_salon dddw.name=dddw_uo_salones_horario dddw.displaycolumn=cve_salon dddw.datacolumn=cve_salon dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

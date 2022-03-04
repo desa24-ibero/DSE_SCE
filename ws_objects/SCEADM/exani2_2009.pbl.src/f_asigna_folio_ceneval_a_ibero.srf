@@ -1,0 +1,69 @@
+﻿$PBExportHeader$f_asigna_folio_ceneval_a_ibero.srf
+global type f_asigna_folio_ceneval_a_ibero from function_object
+end type
+
+forward prototypes
+global function integer f_asigna_folio_ceneval_a_ibero (integer ai_clv_ver, integer ai_clv_per, integer ai_anio, boolean ab_matricula_es_folio)
+end prototypes
+
+global function integer f_asigna_folio_ceneval_a_ibero (integer ai_clv_ver, integer ai_clv_per, integer ai_anio, boolean ab_matricula_es_folio);//f_asigna_folio_ceneval_a_ibero
+//DADO QUE EL CENEVAL UTILIZA UN FOLIO DISTINTO A LA IBERO, ES NECESARIO REASIGNAR EL FOLIO CORRECTO EN LAS CALIFICACIONES
+//Recibe: 
+// ai_clv_ver
+// ai_clv_per
+//	ai_anio
+//Devuelve:
+//	integer (SqlCode - en función a la operación de actualización)
+
+string ls_cve_opcion_aplicacion 
+integer li_cve_tipo_examen, li_cve_modulo_examen    
+int li_codigo_sql, li_SQLNRows
+string ls_mensaje
+integer li_clv_ver, li_clv_per, li_anio, li_criterios_absolutos
+
+IF ab_matricula_es_folio THEN
+	UPDATE resultado_archivo_exani_2_2014
+	set folio = CONVERT(VARCHAR(6), aspiran.folio)
+	from aspiran, resultado_archivo_exani_2_2014
+	where aspiran.clv_ver= :ai_clv_ver
+	and aspiran.clv_per =  :ai_clv_per
+	and aspiran.anio = :ai_anio
+	and aspiran.clv_ver=resultado_archivo_exani_2_2014.clv_ver
+	and aspiran.clv_per =resultado_archivo_exani_2_2014.clv_per
+	and aspiran.anio = resultado_archivo_exani_2_2014.anio
+	and  aspiran.folio = CONVERT(INTEGER,resultado_archivo_exani_2_2014.MATRICULA)
+	USING gtr_sadm;	
+ELSE 
+	UPDATE resultado_archivo_exani_2_2014
+	set folio = aspiran.folio
+	from aspiran, resultado_archivo_exani_2_2014
+	where aspiran.clv_ver= :ai_clv_ver
+	and aspiran.clv_per =  :ai_clv_per
+	and aspiran.anio = :ai_anio
+	and aspiran.clv_ver=resultado_archivo_exani_2_2014.clv_ver
+	and aspiran.clv_per =resultado_archivo_exani_2_2014.clv_per
+	and aspiran.anio = resultado_archivo_exani_2_2014.anio
+	and  CONVERT(INTEGER,substring(aspiran.folioCeneval,2,6)) = resultado_archivo_exani_2_2014.folio
+	USING gtr_sadm;
+END IF
+
+li_codigo_sql = gtr_sadm.SqlCode
+ls_mensaje = gtr_sadm.SqlErrText
+li_SQLNRows = gtr_sadm.SQLNRows	
+
+IF li_codigo_sql = -1 THEN
+	ROLLBACK USING gtr_sadm;
+	MessageBox("Error al actualizar resultado_archivo_exani_2", ls_mensaje, StopSign!)
+ELSEIF li_codigo_sql = 100 THEN
+	ROLLBACK USING gtr_sadm;
+	MessageBox("Error al actualizar resultado_archivo_exani_2", ls_mensaje, StopSign!)
+ELSEIF li_codigo_sql = 0 THEN
+	COMMIT USING gtr_sadm;
+END IF
+	
+	
+return li_codigo_sql
+
+
+end function
+

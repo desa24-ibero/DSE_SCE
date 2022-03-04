@@ -1,0 +1,114 @@
+﻿$PBExportHeader$f_valida_sem_tit_opc_term.srf
+global type f_valida_sem_tit_opc_term from function_object
+end type
+
+forward prototypes
+global function boolean f_valida_sem_tit_opc_term (long al_cuenta, long al_cve_mat, integer al_cve_carrera, integer al_cve_plan)
+end prototypes
+
+global function boolean f_valida_sem_tit_opc_term (long al_cuenta, long al_cve_mat, integer al_cve_carrera, integer al_cve_plan);//f_valida_sem_tit_opc_term
+//Recibe:	al_cuenta			long
+//				al_cve_mat			long
+//				al_cve_carrera		integer
+//				al_cve_plan			integer
+
+long ll_cve_area_opcion_terminal,  ll_cve_proyecto_opc_term, ll_cve_seminario_tit
+integer li_codigo_sql, li_num_aprobadas
+string ls_mensaje_sql, ls_nivel
+
+IF al_cve_plan <> 3 and al_cve_plan <> 4 THEN
+	return true	
+END IF
+
+SELECT isnull(nivel,"")
+INTO :ls_nivel 
+FROM academicos 
+WHERE cuenta = :al_cuenta
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 or ls_nivel="" then
+	MessageBox("No se encuentra el nivel en academicos", ls_mensaje_sql)
+	return false
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar nivel de academicos", ls_mensaje_sql)
+	return false
+end if
+
+IF ls_nivel= "P" THEN
+	return true
+END IF
+
+
+SELECT isnull(cve_area_opcion_terminal,0)
+INTO :ll_cve_area_opcion_terminal 
+FROM plan_estudios 
+WHERE cve_carrera = :al_cve_carrera
+AND	cve_plan = :al_cve_plan
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 or ll_cve_area_opcion_terminal=0 then
+	return false
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar plan de estudios", ls_mensaje_sql)
+	return false
+end if
+
+
+SELECT isnull(cve_proyecto_opc_term,0), 
+		isnull(cve_seminario_tit,0)
+INTO :ll_cve_proyecto_opc_term, 
+	  :ll_cve_seminario_tit 
+FROM aux_opcion_terminal
+WHERE cve_area = :ll_cve_area_opcion_terminal
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 or ll_cve_proyecto_opc_term=0 or ll_cve_seminario_tit= 0 then
+	return false
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar aux_opcion_terminal", ls_mensaje_sql)
+	return false
+end if
+
+
+if al_cve_mat = ll_cve_proyecto_opc_term then
+	select count(*)
+	into :li_num_aprobadas
+	from historico
+	where (cuenta		= :al_cuenta)  and 
+      (cve_mat		= :ll_cve_seminario_tit) and
+		(cve_carrera= :al_cve_carrera) and
+		(cve_plan 	= :al_cve_plan) and
+		(calificacion = "6" or
+		calificacion = "7" or
+		calificacion = "8" or
+		calificacion = "9" or
+		calificacion = "10" or
+		calificacion = "AC" )			
+	 Using gtr_sce;
+	if li_codigo_sql = 100 then
+		return false
+	elseif li_codigo_sql = -1 then
+		MessageBox("Error al consultar aux_opcion_terminal", ls_mensaje_sql)
+		return false
+	end if
+	if li_num_aprobadas >0 then
+		return true
+	elseif li_num_aprobadas =0 then
+		return false
+	end if
+
+end if
+
+return true				
+
+end function
+

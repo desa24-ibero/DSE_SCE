@@ -1,0 +1,39 @@
+﻿$PBExportHeader$f_sit_periodo_actual.srf
+$PBExportComments$Periodo Actual para el sistema de Tesorería.
+global type f_sit_periodo_actual from function_object
+end type
+
+forward prototypes
+global subroutine f_sit_periodo_actual (ref integer ai_anio, ref integer ai_periodo)
+end prototypes
+
+global subroutine f_sit_periodo_actual (ref integer ai_anio, ref integer ai_periodo);/*
+	Periodo Actual para el sistema de tesoreria
+	Juan Campos Sánchez. Junio-2001.
+*/
+
+date ldt_fecha_servidor
+
+ldt_fecha_servidor = date(f_fecha_hora_servidor())
+
+ai_anio = integer(string(ldt_fecha_servidor,'yyyy'))
+ai_periodo = integer(string(ldt_fecha_servidor,'mm'))
+
+CHOOSE CASE ai_periodo
+	CASE 1 TO 5
+		ai_periodo = 0
+	CASE 6 TO 7
+		ai_periodo = 1
+	CASE 8 TO 12
+		ai_periodo = 2
+	CASE ELSE
+		ai_periodo = -1
+		Messagebox("Error","Al obtener el periodo actual")
+END CHOOSE
+
+if ai_anio < 2000 then 
+	Messagebox("Error","Al obtener el periodo actual")
+	ai_anio = -1
+end if
+
+end subroutine

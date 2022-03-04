@@ -1,0 +1,74 @@
+﻿$PBExportHeader$f_actualiza_estatus_acta.srf
+global type f_actualiza_estatus_acta from function_object
+end type
+
+forward prototypes
+global function integer f_actualiza_estatus_acta (long al_no_acta, string as_nivel, integer ai_periodo, integer ai_anio, integer ai_cve_estatus_acta, integer ai_tipo_recepcion, transaction atr_transaction)
+end prototypes
+
+global function integer f_actualiza_estatus_acta (long al_no_acta, string as_nivel, integer ai_periodo, integer ai_anio, integer ai_cve_estatus_acta, integer ai_tipo_recepcion, transaction atr_transaction);//f_actualiza_estatus_acta
+//
+//Recibe:
+//al_no_acta				long
+//as_nivel					string
+//ai_periodo				integer
+//ai_anio					integer
+//ai_cve_estatus_acta	integer
+//ai_tipo_recepcion		integer
+//atr_transaction			transaction
+
+integer li_codigo_sql
+long li_no_acta
+string ls_mensaje_sql
+
+
+SELECT dbo.acta_evaluacion_preeliminar.no_acta 
+INTO	:li_no_acta
+FROM	dbo.acta_evaluacion_preeliminar
+WHERE dbo.acta_evaluacion_preeliminar.no_acta = :al_no_acta
+AND	dbo.acta_evaluacion_preeliminar.nivel = :as_nivel
+AND	dbo.acta_evaluacion_preeliminar.periodo = :ai_periodo
+AND	dbo.acta_evaluacion_preeliminar.anio = :ai_anio
+USING atr_transaction;
+
+li_codigo_sql = atr_transaction.SqlCode
+ls_mensaje_sql = atr_transaction.SqlErrText
+
+if li_codigo_sql = 100 or isnull(li_no_acta) or li_no_acta= 0 then
+	MessageBox("No existe el acta ["+string(al_no_acta)+"-"+as_nivel+"] ", ls_mensaje_sql)
+	return li_codigo_sql
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar acta_evaluacion_preeliminar", ls_mensaje_sql)
+	return li_codigo_sql
+end if
+
+UPDATE acta_evaluacion_preeliminar 
+SET cve_estatus_acta = :ai_cve_estatus_acta,
+	 cve_tipo_recepcion = :ai_tipo_recepcion
+FROM	acta_evaluacion_preeliminar
+WHERE acta_evaluacion_preeliminar.no_acta = :al_no_acta
+AND	acta_evaluacion_preeliminar.nivel = :as_nivel
+AND	acta_evaluacion_preeliminar.periodo = :ai_periodo
+AND	acta_evaluacion_preeliminar.anio = :ai_anio
+USING atr_transaction;
+
+li_codigo_sql = atr_transaction.SqlCode
+ls_mensaje_sql = atr_transaction.SqlErrText
+
+if li_codigo_sql = 100  then
+	MessageBox("No existe el acta ["+string(al_no_acta)+"-"+as_nivel+"] ", ls_mensaje_sql)
+	return li_codigo_sql
+elseif li_codigo_sql = -1 then
+	rollback using atr_transaction;
+	MessageBox("Error al actualizar en acta_evaluacion_preeliminar", ls_mensaje_sql)
+	return li_codigo_sql
+else
+	commit using atr_transaction;
+end if
+
+
+
+return li_codigo_sql
+
+end function
+

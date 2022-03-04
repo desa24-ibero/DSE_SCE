@@ -1,0 +1,254 @@
+﻿$PBExportHeader$f_cambio_version_aspirante2.srf
+global type f_cambio_version_aspirante2 from function_object
+end type
+
+forward prototypes
+global function integer f_cambio_version_aspirante2 (long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio, integer ai_clv_ver_destino, integer ai_clv_per_destino, integer ai_anio_destino, ref transaction atr_conexion, ref transaction atr_conexion_destino, integer ai_confirma_tesoreria, integer al_id_fecha_examen, integer ai_periodo_saldo, integer ai_anio_saldo)
+end prototypes
+
+global function integer f_cambio_version_aspirante2 (long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio, integer ai_clv_ver_destino, integer ai_clv_per_destino, integer ai_anio_destino, ref transaction atr_conexion, ref transaction atr_conexion_destino, integer ai_confirma_tesoreria, integer al_id_fecha_examen, integer ai_periodo_saldo, integer ai_anio_saldo);//f_cambio_version_aspirante
+///Recibe :	al_folio	long
+//		ai_clv_ver				integer
+//		ai_clv_per				integer
+//		ai_anio					integer
+//		ai_clv_ver_destino		integer
+//		ai_clv_per_destino		integer
+//		ai_anio_destino		 	integer
+//		atr_conexion			transaction.
+//		ai_confirma_tesoreria integer
+
+int li_existe_aspirante, li_codigo_error, li_codigo_error_exec, li_exito, li_res_admision, li_res_control
+string LS_MENSAJE, ls_mensaje_exec, ls_mensaje_titulo, ls_periodo_pago, ls_periodo_apartado
+int li_anio_pago_cob, li_anio_apartado_cob, li_trncnt_out, li_anio_aportacion_out, li_anio_inscripcion_out
+string ls_mensaje_control, ls_mensaje_admision, ls_mensaje_out, ls_periodo_aportacion_out, ls_periodo_inscripcion_out
+string ls_mensaje_aportacion, ls_mensaje_inscripcion, ls_cve_salon, ls_inva_salon = "INVA"
+int li_periodo_pago, li_periodo_apartado, li_cancelado = 2
+
+int li_num_aspiran, li_num_general, li_num_padres, li_res_aspiran, li_res_general, li_res_padres
+boolean lb_ejecuta_cobranzas= true
+int li_clv_carr, li_res_salon, li_bachi
+real lr_promedio
+string ls_cve_salon_anterior
+long LL_FOLIO
+
+u_datastore lds_origen, lds_destino, lds_origen2, lds_destino2,  lds_origen3, lds_destino3
+string  ls_dataobject_aspiran, ls_dataobject_general, ls_dataobject_padres
+long ll_actualiza_datastore, ll_actualiza_datastore2, ll_actualiza_datastore3,ll_rows1, ll_rows2, ll_rows3,  ll_rows4, ll_rows5, ll_rows6
+integer li_inserta_aspiran, li_inserta_general, li_inserta_padres
+n_transfiere_sybase_sql ln_transfiere_sybase_sql
+integer li_cambio_version_examen_sit_2013
+
+ls_dataobject_aspiran = 'd_aspiran_sql_sybase'
+ls_dataobject_general = 'd_general_sql_sybase'
+ls_dataobject_padres  = 'd_padres_sql_sybase'
+
+li_exito= 0
+
+li_existe_aspirante= f_existe_aspirante(al_folio, ai_clv_ver, ai_clv_per, ai_anio) 
+
+IF li_existe_aspirante=0 THEN
+
+				ls_mensaje_titulo = "Folio: ["+string(al_folio)+"] ~n" +&
+										  	"Version Orig: ["+string(ai_clv_ver)+"] ~n"+&
+									  		"Periodo Orig: ["+string(ai_clv_per)+"] ~n"+&
+											"Anio Orig: ["+string(ai_anio)+"] ~n"+&
+										  	"Version Dest: ["+string(ai_clv_ver_destino)+"] ~n"+&
+									  		"Periodo Dest: ["+string(ai_clv_per_destino)+"] ~n"+&
+											"Anio Dest: ["+string(ai_anio_destino)+"] ~n"
+
+ 
+		DECLARE spcambpering procedure for sp_cambio_periodo_ingreso
+		@a_folio 				= :al_folio,
+		@a_clv_ver  			= :ai_clv_ver,
+		@a_clv_per				= :ai_clv_per,
+		@a_anio  				= :ai_anio,
+		@a_clv_ver_destino 	= :ai_clv_ver_destino,
+		@a_clv_per_destino	= :ai_clv_per_destino,
+		@a_anio_destino 		= :ai_anio_destino, 
+		@a_id_fecha_ingreso = :al_id_fecha_examen 
+		using atr_conexion;	
+		
+		EXECUTE spcambpering;
+		li_codigo_error_exec= atr_conexion.SQLCode
+		ls_mensaje_exec= atr_conexion.SQLErrText
+
+		IF li_codigo_error_exec= -1 THEN
+			CLOSE spcambpering;
+			MessageBox("Error al ejecutar sp_cambio_periodo_ingreso: ", ls_mensaje_titulo+"~n"+ls_mensaje_exec, StopSign!)		
+//			desconecta_bd(atr_conexion)
+//			Goto ActualizaControl
+			RETURN -1			
+		END IF
+
+		FETCH spcambpering INTO :LL_FOLIO, :LS_MENSAJE;
+			
+		CLOSE spcambpering;
+
+
+//Si se pudo realizar la INSERCIÓN
+	IF LL_FOLIO>= 0 THEN
+		//Actualiza en SYBASE la información
+		ls_dataobject_aspiran = 'd_aspiran_sql_sybase'
+		ls_dataobject_general = 'd_general_sql_sybase'
+		ls_dataobject_padres  = 'd_padres_sql_sybase'
+
+		lds_origen = create u_datastore
+		lds_origen2 = create u_datastore
+		lds_origen3 = create u_datastore
+
+		lds_destino = create u_datastore
+		lds_destino2 = create u_datastore
+		lds_destino3 = create u_datastore
+		
+		lds_origen.dataobject    = ls_dataobject_aspiran
+		lds_origen2.dataobject  = ls_dataobject_general
+		lds_origen3.dataobject 	 = ls_dataobject_padres
+		
+		lds_destino.dataobject   = ls_dataobject_aspiran
+		lds_destino2.dataobject = ls_dataobject_general  
+		lds_destino3.dataobject = ls_dataobject_padres
+		
+		lds_origen.SetTransObject(atr_conexion)
+		lds_origen2.SetTransObject(atr_conexion)
+		lds_origen3.SetTransObject(atr_conexion)
+		
+		lds_destino.SetTransObject(atr_conexion_destino)
+		lds_destino2.SetTransObject(atr_conexion_destino)
+		lds_destino3.SetTransObject(atr_conexion_destino)
+
+		ll_rows1 = lds_origen.Retrieve(LL_FOLIO, ai_clv_ver_destino, ai_clv_per_destino, ai_anio_destino)
+		
+//		lds_origen.SetItem(ll_rows1,"status_reg",1)
+		lds_origen.SetItem(ll_rows1,"tiporegistro",1)
+		if lds_origen.Update() = 1 then
+			commit using atr_conexion;
+		end if
+		
+		ll_rows2 = lds_origen2.Retrieve(LL_FOLIO, ai_clv_ver_destino, ai_clv_per_destino, ai_anio_destino)
+		ll_rows3 = lds_origen3.Retrieve(LL_FOLIO, ai_clv_ver_destino, ai_clv_per_destino, ai_anio_destino)
+		ll_rows4 = lds_destino.Retrieve(LL_FOLIO, ai_clv_ver_destino, ai_clv_per_destino, ai_anio_destino)
+		ll_rows5 = lds_destino2.Retrieve(LL_FOLIO, ai_clv_ver_destino, ai_clv_per_destino, ai_anio_destino)
+
+		ln_transfiere_sybase_sql =  create n_transfiere_sybase_sql
+
+		//Inserta en la tabla de aspiran
+		if ll_rows1<> -1 then
+			ll_actualiza_datastore = ln_transfiere_sybase_sql.of_delete_insert_datastore(lds_origen, lds_destino, atr_conexion, atr_conexion_destino)
+		
+			if ll_actualiza_datastore= -1 then
+				MessageBox("Error de Actualización","No es posible realizar la inserción en SYBCESPRO.admision_bd.aspiran",StopSign!)
+				return -1 
+			end if
+		else
+			MessageBox("Error de Actualización","No es posible realizar la consulta en SQLWEBPRO.admision_bd.aspiran",StopSign!)
+			return -1
+		end if
+
+		//Inserta en la tabla de general
+		if ll_rows2<> -1 then
+			ll_actualiza_datastore2 = ln_transfiere_sybase_sql.of_delete_insert_datastore(lds_origen2, lds_destino2, atr_conexion, atr_conexion_destino)
+		
+			if ll_actualiza_datastore2= -1 then
+				MessageBox("Error de Actualización","No es posible realizar la inserción en SYBCESPRO.admision_bd.general",StopSign!)
+				return -1 
+			end if
+		else
+			MessageBox("Error de Actualización","No es posible realizar la consulta en SQLWEBPRO.admision_bd.general",StopSign!)
+			return -1
+		end if
+
+		//Actualiza la tabla de padres
+		//Debido a que después de insertar en general, el trigger inserta en padres, se requiere volver a consultar padres, para que no envíe el error:
+		//Rows Changed Between Retrieve and Update
+		ll_rows6 = lds_destino3.Retrieve(LL_FOLIO, ai_clv_ver_destino, ai_clv_per_destino, ai_anio_destino)
+
+		if ll_rows3<> -1 then
+			ll_actualiza_datastore3 = ln_transfiere_sybase_sql.of_update_datastore(lds_origen3, lds_destino3, atr_conexion, atr_conexion_destino)
+		
+			if ll_actualiza_datastore3= -1 then
+				MessageBox("Error de Actualización","No es posible realizar la inserción en SYBCESPRO.admision_bd.padres",StopSign!)
+				return -1 
+			end if
+		else
+			MessageBox("Error de Actualización","No es posible realizar la consulta en SQLWEBPRO.admision_bd.padres",StopSign!)
+			return -1
+		end if		
+
+
+		//Consulta el folio original
+		ll_rows1 = lds_origen.Retrieve(al_folio, ai_clv_ver, ai_clv_per, ai_anio)
+
+		//Cambia el estatus del folio para que ya no pueda realizar modificaciones
+		lds_origen.SetItem(ll_rows1,"status_reg",0)
+		if lds_origen.Update() = 1 then
+			commit using atr_conexion;
+		end if
+
+		//Si el parametro de confirma tesorería está en 1, entonces preguntar si se desean cambiar los folios de versión
+		if ai_confirma_tesoreria= 1 then
+			ok = messagebox("Desea Cambiar los pagos del Examen?", "Folio Actual: "+string(al_folio)+' ~n'+&
+				" Folio Nuevo: "+string(LL_FOLIO),Exclamation!, YesNo!, 2)
+		else
+			 ok = 0 				
+		end if
+		
+		//
+		IF ai_confirma_tesoreria =0  OR ok = 1  THEN 
+		
+			integer li_periodo, li_anio, ai_periodo_sit ,ai_anio_sit, li_obten_periodo_sit		
+			li_periodo = gi_periodo
+			li_anio = gi_anio 
+
+			// 07/02/2018 SE SUSTITUYE ESTA VALIDACION PARA QUE EL USUARIO SELECCIONE EL PERIODO DE TRASPASO DE SALDOS
+			// 07/02/2018 SE SUSTITUYE ESTA VALIDACION PARA QUE EL USUARIO SELECCIONE EL PERIODO DE TRASPASO DE SALDOS			
+			//DADO QUE EN TESORERIA HAY UN PERIODO ANTERIOR AL REGISTRO DE ADMISION OBTIENE LOS PERIODOS CORRESPONDIENTES
+			li_obten_periodo_sit = f_obten_periodo_sit(li_periodo, li_anio, ai_periodo_sit, ai_anio_sit )
+			IF  li_obten_periodo_sit=-1  THEN
+				MessageBox("Error al consultar periodo","No es posible cambiar su versión de examen",StopSign!)				
+				RETURN -1
+			END IF		
+			// 07/02/2018 SE SUSTITUYE ESTA VALIDACION PARA QUE EL USUARIO SELECCIONE EL PERIODO DE TRASPASO DE SALDOS
+			// 07/02/2018 SE SUSTITUYE ESTA VALIDACION PARA QUE EL USUARIO SELECCIONE EL PERIODO DE TRASPASO DE SALDOS									
+						
+			//ORIGINAL	li_cambio_version_examen_sit_2013 = f_cambio_version_examen_sit_2013(al_folio, ai_clv_ver, ai_clv_per, ai_anio, LL_FOLIO,ai_clv_ver_destino )
+
+			//li_cambio_version_examen_sit_2013= f_cambio_version_examen_sit_2013(al_folio, gi_version, ai_periodo_sit, ai_anio_sit, LL_FOLIO, ai_clv_ver_destino)	
+			
+			// 07/02/2018 SE SUSTITUYE ESTA VALIDACION PARA QUE EL USUARIO SELECCIONE EL PERIODO DE TRASPASO DE SALDOS
+			li_cambio_version_examen_sit_2013= f_cambio_version_examen_sit_2013(al_folio, gi_version, ai_periodo_saldo, ai_anio_saldo, LL_FOLIO, ai_clv_ver_destino)	
+			
+
+			
+			IF  li_cambio_version_examen_sit_2013=-1  THEN
+				MessageBox("Error al intentar cambio de pagos","No es posible cambiar de versión los pagos de examen",StopSign!)				
+				RETURN -1
+			END IF		
+		
+			if li_cambio_version_examen_sit_2013 = 1 then					
+				MessageBox("Cambio de versión exitoso","El aspirante ha sido modificado de versión, su nuevo folio es el número ["+string(LL_FOLIO)+"]", Information!)		
+			else
+				MessageBox("Cambio de versión incompleto","El aspirante ha sido modificado de versión, pero sus pagos no han podido transferirse al folio ["+string(LL_FOLIO)+"]", StopSign!)					
+			
+			end if
+		ELSE 
+				MessageBox("Cambio de versión exitoso","El aspirante ha sido modificado de versión, su nuevo folio es el número ["+string(LL_FOLIO)+"]", Information!)					
+		END IF
+		return 0
+	ELSE
+		IF LL_FOLIO= -2 THEN LS_MENSAJE= "El aspirante con folio ["+string(al_folio)+"] ya cuenta con un cambio de versión anterior"
+		
+		
+//SIN FUNCION MIENTRAS SE ESTABILIZA EL NUEVO SISTEMA DE COBRANZAS
+		MessageBox("Error al ejecutar sp_transf_pago_admision_lic: ", ls_mensaje_titulo+"~n"+LS_MENSAJE+"~n", StopSign!)		
+//		desconecta_bd(atr_conexion)
+		RETURN -1
+	END IF
+ELSEIF  li_existe_aspirante= -1 THEN
+	RETURN -1
+ELSEIF  li_existe_aspirante= 100 THEN
+	MessageBox("Alumno Inexistente","No existe el alumno con el folio["+string(al_folio)+"]",StopSign!)		
+	return 100
+END IF
+
+end function
+

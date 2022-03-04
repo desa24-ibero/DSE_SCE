@@ -1,0 +1,49 @@
+﻿$PBExportHeader$m_vigenciaplanestudios.srm
+forward
+global type m_vigenciaplanestudios from m_titulacion
+end type
+end forward
+
+global type m_vigenciaplanestudios from m_titulacion
+end type
+global m_vigenciaplanestudios m_vigenciaplanestudios
+
+type variables
+
+
+end variables
+
+on m_vigenciaplanestudios.create
+m_vigenciaplanestudios=this
+call super::create
+end on
+
+on m_vigenciaplanestudios.destroy
+call super::destroy
+end on
+
+on m_nuevo.create
+call super::create
+this.Text="&Nuevo"
+this.Microhelp=""
+this.ToolBarItemName=""
+this.ToolBarItemText=""
+this.Visible=false
+this.Enabled=false
+this.ToolBarItemOrder=0
+this.ToolBarItemSpace=0
+this.Shortcut=0
+end on
+
+on m_borraregistro.create
+call super::create
+this.Text="&Borra registro"
+this.Microhelp=""
+this.ToolBarItemName=""
+this.ToolBarItemText=""
+this.Visible=false
+this.Enabled=false
+this.ToolBarItemOrder=0
+this.Shortcut=0
+end on
+

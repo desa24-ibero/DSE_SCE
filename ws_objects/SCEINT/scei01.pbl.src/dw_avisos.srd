@@ -1,0 +1,13 @@
+﻿$PBExportHeader$dw_avisos.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=15793151 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=2077 color="536870912" )
+table(column=(type=long updatewhereclause=yes key=yes name=id dbname="aviso_sol_mat.id" )
+ column=(type=char(32771) update=yes updatewhereclause=no name=texto dbname="aviso_sol_mat.texto" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"aviso_sol_mat~" ) COLUMN(NAME=~"aviso_sol_mat.id~") COLUMN(NAME=~"aviso_sol_mat.texto~")WHERE(    EXP1 =~"aviso_sol_mat.id~"   OP =~"=~"    EXP2 =~":id~" ) ) ARG(NAME = ~"id~" TYPE = number) " update="aviso_sol_mat" updatewhere=0 updatekeyinplace=yes arguments=(("id", number)) )
+column(band=header id=1 alignment="1" tabsequence=10 border="0" color="16777215" x="156" y="20" height="77" width="69" format="[general]"  name=id edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="AVISOS Y NOTAS"border="0" color="0" x="1180" y="12" height="65" width="508"  name=texto_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="0" color="0" x="55" y="96" height="1973" width="3210" format="[general]"  name=texto edit.limit=32000 edit.case=any edit.autoselect=yes edit.autovscroll=yes edit.vscrollbar=yes criteria.required=yes criteria.override_edit=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )

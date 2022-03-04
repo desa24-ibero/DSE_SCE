@@ -1,0 +1,715 @@
+﻿$PBExportHeader$m_historico.srm
+$PBExportComments$Este menu fija el orden de busqueda para historico, envia los parametros de calificaciones con las que se desea la busqueda. ejecuta los procesos de primero.ultimo,siguiente, anterior.. Ver descripción detallada en cada script_cliked del menu. Juan ca䅄⩔踀3
+forward
+global type m_historico from menu
+end type
+type m_elijaunorden from menu within m_historico
+end type
+type m_por_clave from menu within m_elijaunorden
+end type
+type m_por_periodo from menu within m_elijaunorden
+end type
+type m_elijaunorden from menu within m_historico
+m_por_clave m_por_clave
+m_por_periodo m_por_periodo
+end type
+type m_tipodeconsulta from menu within m_historico
+end type
+type m_historico1 from menu within m_tipodeconsulta
+end type
+type m_reprobadas from menu within m_tipodeconsulta
+end type
+type m_revalidadas from menu within m_tipodeconsulta
+end type
+type m_incompletas from menu within m_tipodeconsulta
+end type
+type m_acreditadas from menu within m_tipodeconsulta
+end type
+type m_bajas from menu within m_tipodeconsulta
+end type
+type m_tipodeconsulta from menu within m_historico
+m_historico1 m_historico1
+m_reprobadas m_reprobadas
+m_revalidadas m_revalidadas
+m_incompletas m_incompletas
+m_acreditadas m_acreditadas
+m_bajas m_bajas
+end type
+type m_revision from menu within m_historico
+end type
+type m_primero from menu within m_revision
+end type
+type m_anterior from menu within m_revision
+end type
+type m_siguiente from menu within m_revision
+end type
+type m_ultimo from menu within m_revision
+end type
+type m_revision from menu within m_historico
+m_primero m_primero
+m_anterior m_anterior
+m_siguiente m_siguiente
+m_ultimo m_ultimo
+end type
+type m_ventana from menu within m_historico
+end type
+type m_horizontal from menu within m_ventana
+end type
+type m_vertical from menu within m_ventana
+end type
+type m_primerplano from menu within m_ventana
+end type
+type m_cascada from menu within m_ventana
+end type
+type m_ventana from menu within m_historico
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+type m_impresionx from menu within m_historico
+end type
+type m_configurarimpresora1 from menu within m_impresionx
+end type
+type m_imprimir1 from menu within m_impresionx
+end type
+type m_impresionx from menu within m_historico
+m_configurarimpresora1 m_configurarimpresora1
+m_imprimir1 m_imprimir1
+end type
+type m_fin from menu within m_historico
+end type
+type m_fin from menu within m_historico
+end type
+end forward
+
+global type m_historico from menu
+m_elijaunorden m_elijaunorden
+m_tipodeconsulta m_tipodeconsulta
+m_revision m_revision
+m_ventana m_ventana
+m_impresionx m_impresionx
+m_fin m_fin
+end type
+global m_historico m_historico
+
+type variables
+datawindow dw
+end variables
+
+on m_historico.create
+m_historico=this
+this.m_elijaunorden=create m_elijaunorden
+this.m_tipodeconsulta=create m_tipodeconsulta
+this.m_revision=create m_revision
+this.m_ventana=create m_ventana
+this.m_impresionx=create m_impresionx
+this.m_fin=create m_fin
+this.Item[]={this.m_elijaunorden, &
+this.m_tipodeconsulta, &
+this.m_revision, &
+this.m_ventana, &
+this.m_impresionx, &
+this.m_fin}
+end on
+
+on m_historico.destroy
+destroy(this.m_elijaunorden)
+destroy(this.m_tipodeconsulta)
+destroy(this.m_revision)
+destroy(this.m_ventana)
+destroy(this.m_impresionx)
+destroy(this.m_fin)
+end on
+
+type m_elijaunorden from menu within m_historico
+m_por_clave m_por_clave
+m_por_periodo m_por_periodo
+end type
+
+on m_elijaunorden.create
+this.Text="Elija un orden"
+this.m_por_clave=create m_por_clave
+this.m_por_periodo=create m_por_periodo
+this.Item[]={this.m_por_clave, &
+this.m_por_periodo}
+end on
+
+on m_elijaunorden.destroy
+destroy(this.m_por_clave)
+destroy(this.m_por_periodo)
+end on
+
+type m_por_clave from menu within m_elijaunorden
+end type
+
+event clicked;// Fija el orden con el cual apareceran los datos en el dw_historico
+// Juan campos Nov-1997.
+
+w_historico.dw_historico.SetSort("Historico_cve_mat")
+w_historico.dw_1.SetSort("Historico_cve_mat")
+
+if w_historico.uo_nombre.em_cuenta.text <> '' then
+	w_historico.TriggerEvent(DoubleClicked!) 
+	m_por_clave.Checked = True
+	m_por_periodo.Checked = False
+end if
+
+
+end event
+
+on m_por_clave.create
+this.Text="Por_Clave"
+this.Microhelp="Fija el orden de despliege en clave de materia"
+this.ToolBarItemText="ordena por clave de materia"
+this.ShiftToRight=true
+end on
+
+type m_por_periodo from menu within m_elijaunorden
+end type
+
+event clicked;// Fija el orden con el cual apareceran los datos en el dw_historico
+// Juan campos Nov-1997.
+
+w_historico.dw_historico.SetSort("Historico_anio,historico_periodo")
+w_historico.dw_1.SetSort("Historico_anio,historico_periodo")
+
+if w_historico.uo_nombre.em_cuenta.text <> '' then
+	w_historico.TriggerEvent(DoubleClicked!) 
+	m_por_clave.Checked = False
+	m_por_periodo.Checked = True
+end if
+end event
+
+on m_por_periodo.create
+this.Text="Por_Periodo"
+this.Microhelp="Fija el orden de despliegue en periodo y año"
+this.ToolBarItemText="Ordena por año y periodo"
+this.ShiftToRight=true
+this.ToolBarItemDown=true
+end on
+
+type m_tipodeconsulta from menu within m_historico
+m_historico1 m_historico1
+m_reprobadas m_reprobadas
+m_revalidadas m_revalidadas
+m_incompletas m_incompletas
+m_acreditadas m_acreditadas
+m_bajas m_bajas
+end type
+
+on m_tipodeconsulta.create
+this.Text="Tipo de Consulta"
+this.ToolBarItemText="Busqueda  de todas las calificaciones"
+this.Enabled=false
+this.m_historico1=create m_historico1
+this.m_reprobadas=create m_reprobadas
+this.m_revalidadas=create m_revalidadas
+this.m_incompletas=create m_incompletas
+this.m_acreditadas=create m_acreditadas
+this.m_bajas=create m_bajas
+this.Item[]={this.m_historico1, &
+this.m_reprobadas, &
+this.m_revalidadas, &
+this.m_incompletas, &
+this.m_acreditadas, &
+this.m_bajas}
+end on
+
+on m_tipodeconsulta.destroy
+destroy(this.m_historico1)
+destroy(this.m_reprobadas)
+destroy(this.m_revalidadas)
+destroy(this.m_incompletas)
+destroy(this.m_acreditadas)
+destroy(this.m_bajas)
+end on
+
+type m_historico1 from menu within m_tipodeconsulta
+end type
+
+event clicked;// Se envian los parametros de numero de cuenta y las calificaciones a el dw_historico 
+// con las cuales se hace la busqueda de los datos .
+// Juan Campos Nov-1996.
+
+m_historico.m_tipodeconsulta.m_acreditadas.Checked = false
+m_historico.m_tipodeconsulta.m_bajas.Checked = false
+m_historico.m_tipodeconsulta.m_historico1.Checked = True
+m_historico.m_tipodeconsulta.m_incompletas.Checked = false
+m_historico.m_tipodeconsulta.m_reprobadas.Checked = false
+m_historico.m_tipodeconsulta.m_revalidadas.Checked = false
+
+if w_historico.dw_historico.retrieve(long(w_historico.uo_nombre.em_cuenta.text),"5","9","10","AC","NA","RE","IN","BA","BJ","E","B","MB","S") = 0 then
+  MessageBox("Aviso","No se encontró información con esta cuenta")
+else
+	w_historico.dw_1.retrieve(long(w_historico.uo_nombre.em_cuenta.text),"5","9","10","AC","NA","RE","IN","BA","BJ","E","B","MB","S")
+end if  
+
+ 
+end event
+
+on m_historico1.create
+this.Text="Histórico"
+this.Microhelp="Busqueda de todas las  materias y calificaciones"
+this.ToolBarItemText="Busqueda de todas las  materias y calificaciones"
+end on
+
+type m_reprobadas from menu within m_tipodeconsulta
+end type
+
+event clicked;// Se envian los parametros de numero de cuenta y las calificaciones a el dw_historico 
+// con las cuales se hace la busqueda de los datos .
+// Juan Campos Nov-1996.
+
+m_historico.m_tipodeconsulta.m_acreditadas.Checked = false
+m_historico.m_tipodeconsulta.m_bajas.Checked = false
+m_historico.m_tipodeconsulta.m_historico1.Checked = false
+m_historico.m_tipodeconsulta.m_incompletas.Checked = false
+m_historico.m_tipodeconsulta.m_reprobadas.Checked = true
+m_historico.m_tipodeconsulta.m_revalidadas.Checked = false
+
+
+if w_historico.dw_historico.retrieve(long(w_historico.uo_nombre.em_cuenta.text),"5","5","NA","BA","BJ","+","+","+","+","+","+","+","+") = 0 then
+  MessageBox("Aviso","No se encontró información de materias reprobadas")
+else
+	w_historico.dw_1.retrieve(long(w_historico.uo_nombre.em_cuenta.text),"5","5","NA","BA","BJ","+","+","+","+","+","+","+","+") 
+end if  
+end event
+
+on m_reprobadas.create
+this.Text="Reprobadas"
+this.Microhelp="Busqueda de materias Reprobedas"
+this.ToolBarItemText="Busqueda de materias Reprobedas"
+end on
+
+on m_reprobadas.destroy
+end on
+
+type m_revalidadas from menu within m_tipodeconsulta
+end type
+
+event clicked;// Se envian los parametros de numero de cuenta y las calificaciones a el dw_historico 
+// con las cuales se hace la busqueda de los datos .
+// Juan Campos Nov-1996.
+
+m_historico.m_tipodeconsulta.m_acreditadas.Checked = false
+m_historico.m_tipodeconsulta.m_bajas.Checked = false
+m_historico.m_tipodeconsulta.m_historico1.Checked = false
+m_historico.m_tipodeconsulta.m_incompletas.Checked = false
+m_historico.m_tipodeconsulta.m_reprobadas.Checked = false
+m_historico.m_tipodeconsulta.m_revalidadas.Checked = true
+
+if w_historico.dw_historico.retrieve(long(w_historico.uo_nombre.em_cuenta.text),"RE","RE","+","+","+","+","+","+","+","+","+","+","+") = 0 then
+  MessageBox("Aviso","No se encontró información de materias revalidadas")
+else
+	w_historico.dw_1.retrieve(long(w_historico.uo_nombre.em_cuenta.text),"RE","RE","+","+","+","+","+","+","+","+","+","+","+")
+end if  
+end event
+
+on m_revalidadas.create
+this.Text="Revalidadas"
+this.Microhelp="Busqueda de materias revalidadas"
+this.ToolBarItemText="Busqueda de materias revalidadas"
+end on
+
+type m_incompletas from menu within m_tipodeconsulta
+end type
+
+event clicked;// Se envian los parametros de numero de cuenta y las calificaciones a el dw_historico 
+// con las cuales se hace la busqueda de los datos .
+// Juan Campos Nov-1996.
+
+m_historico.m_tipodeconsulta.m_acreditadas.Checked = false
+m_historico.m_tipodeconsulta.m_bajas.Checked = false
+m_historico.m_tipodeconsulta.m_historico1.Checked = false
+m_historico.m_tipodeconsulta.m_incompletas.Checked = true
+m_historico.m_tipodeconsulta.m_reprobadas.Checked = false
+m_historico.m_tipodeconsulta.m_revalidadas.Checked = false
+
+if w_historico.dw_historico.retrieve(long(w_historico.uo_nombre.em_cuenta.text),"IN","IN","+","+","+","+","+","+","+","+","+","+","+") = 0 then
+  MessageBox("Aviso","No se encontró información de materias incompletas")
+else
+	w_historico.dw_1.retrieve(long(w_historico.uo_nombre.em_cuenta.text),"IN","IN","+","+","+","+","+","+","+","+","+","+","+")
+end if  
+end event
+
+on m_incompletas.create
+this.Text="Incompletas"
+this.Microhelp="Busqueda de materias incompletas"
+this.ToolBarItemText="Busqueda de materias incompletas"
+end on
+
+type m_acreditadas from menu within m_tipodeconsulta
+end type
+
+event clicked;// Se envian los parametros de numero de cuenta y las calificaciones a el dw_historico 
+// con las cuales se hace la busqueda de los datos .
+// Juan Campos Nov-1996.
+
+m_historico.m_tipodeconsulta.m_acreditadas.Checked = true
+m_historico.m_tipodeconsulta.m_bajas.Checked = false
+m_historico.m_tipodeconsulta.m_historico1.Checked = false
+m_historico.m_tipodeconsulta.m_incompletas.Checked = false
+m_historico.m_tipodeconsulta.m_reprobadas.Checked = false
+m_historico.m_tipodeconsulta.m_revalidadas.Checked = false
+
+if w_historico.dw_historico.retrieve(long(w_historico.uo_nombre.em_cuenta.text),"6","9","10","AC","E","MB","B","S","+","+","+","+","+") = 0 then
+  MessageBox("Aviso","No se encontró información de materias acreditadas")
+else
+	w_historico.dw_1.retrieve(long(w_historico.uo_nombre.em_cuenta.text),"6","9","10","AC","E","MB","B","S","+","+","+","+","+")
+end if  
+end event
+
+on m_acreditadas.create
+this.Text="Acreditadas"
+this.Microhelp="Busqueda de materias Acreditadas"
+this.ToolBarItemText="Busqueda de materias Acreditadas"
+end on
+
+on m_acreditadas.destroy
+end on
+
+type m_bajas from menu within m_tipodeconsulta
+end type
+
+event clicked;// Se envian los parametros de numero de cuenta y las calificaciones a el dw_historico 
+// con las cuales se hace la busqueda de los datos .
+// Juan Campos Nov-1996.
+
+m_historico.m_tipodeconsulta.m_acreditadas.Checked = false
+m_historico.m_tipodeconsulta.m_bajas.Checked = true
+m_historico.m_tipodeconsulta.m_historico1.Checked = false
+m_historico.m_tipodeconsulta.m_incompletas.Checked = false
+m_historico.m_tipodeconsulta.m_reprobadas.Checked = false
+m_historico.m_tipodeconsulta.m_revalidadas.Checked = false
+
+if w_historico.dw_historico.retrieve(long(w_historico.uo_nombre.em_cuenta.text),"BA","BA","BJ","+","+","+","+","+","+","+","+","+","+") = 0 then
+  MessageBox("Aviso","No se encontró información de materias de Baja")
+else
+	w_historico.dw_1.retrieve(long(w_historico.uo_nombre.em_cuenta.text),"BA","BA","BJ","+","+","+","+","+","+","+","+","+","+")
+end if  
+end event
+
+on m_bajas.create
+this.Text="Bajas"
+this.Microhelp="Busqueda de materias con baja"
+this.ToolBarItemText="Busqueda de materias con baja"
+end on
+
+type m_revision from menu within m_historico
+m_primero m_primero
+m_anterior m_anterior
+m_siguiente m_siguiente
+m_ultimo m_ultimo
+end type
+
+on m_revision.create
+this.Text="Registro"
+this.Enabled=false
+this.m_primero=create m_primero
+this.m_anterior=create m_anterior
+this.m_siguiente=create m_siguiente
+this.m_ultimo=create m_ultimo
+this.Item[]={this.m_primero, &
+this.m_anterior, &
+this.m_siguiente, &
+this.m_ultimo}
+end on
+
+on m_revision.destroy
+destroy(this.m_primero)
+destroy(this.m_anterior)
+destroy(this.m_siguiente)
+destroy(this.m_ultimo)
+end on
+
+type m_primero from menu within m_revision
+end type
+
+event clicked;// Juan Campos. Nov-1996.
+
+ 
+long cuenta
+
+setpointer(hourglass!) 
+  
+w_historico.uo_nombre.cbx_nuevo.checked = False
+ 
+SELECT min(cuenta)  
+INTO :cuenta  
+FROM historico using gtr_sce;
+
+if gtr_sce.sqlcode <> 100 then
+	w_historico.uo_nombre.em_cuenta.text = string(cuenta)		 
+	w_historico.em_cuentaaux.text = String(Cuenta)
+ 	w_historico.uo_nombre.em_cuenta.text = string(cuenta) + obten_digito(cuenta)		 
+	w_historico.uo_nombre.em_cuenta.triggerevent("activarbusq")
+end if	
+
+ 
+end event
+
+on m_primero.create
+this.Text="Primero~tAlt+P"
+this.Microhelp="Posicion  en el primer renglon de la tabla de historico"
+this.ToolBarItemName="VCRFirst!"
+this.ToolBarItemText="Primero"
+this.ToolBarItemSpace=3
+this.Shortcut=592
+end on
+
+type m_anterior from menu within m_revision
+end type
+
+event clicked;// Juan campos Nov-1996.
+ 
+Long cuenta
+Char digito
+
+Setpointer(hourglass!) 
+  
+w_historico.uo_nombre.cbx_nuevo.checked = False
+
+//Cuenta = long(Mid(w_historico.uo_nombre.em_cuenta.text,1,Len(w_historico.uo_nombre.em_cuenta.text)-1))
+Cuenta =long( w_historico.em_cuentaaux.text)
+
+If w_historico.uo_nombre.em_cuenta.text <> "" Then     
+	SELECT max(cuenta)  
+	INTO :cuenta  
+	FROM historico 
+	WHERE cuenta < :cuenta using gtr_sce;
+
+	if Not isnull(cuenta)  then	
+		w_historico.uo_nombre.em_cuenta.text = string(cuenta)		 
+		w_historico.em_cuentaaux.text = String(Cuenta)
+ 		w_historico.uo_nombre.em_cuenta.text = string(cuenta) + obten_digito(cuenta)		 
+		w_historico.uo_nombre.em_cuenta.triggerevent("activarbusq")
+	else
+		Messagebox("Información","Este es el primer alumno")
+	end if	
+Else
+	MessageBox("Aviso","No hay un número de cuenta preestablecido")
+End If
+
+end event
+
+on m_anterior.create
+this.Text="Anterior~tAlt+A"
+this.Microhelp="Posición en el anterior renglon de la tabla de historico, con respecto a el numero de cuenta actual"
+this.ToolBarItemName="VCRPrior!"
+this.ToolBarItemText="Anterior"
+this.Shortcut=577
+end on
+
+on m_anterior.destroy
+end on
+
+type m_siguiente from menu within m_revision
+end type
+
+on m_siguiente.create
+this.Text="Siguiente~tAlt+S"
+this.Microhelp="Posición en el siguiente renglon de la tabla de historico, con respecto a el numero de cuenta actual"
+this.ToolBarItemName="VCRNext!"
+this.ToolBarItemText="Siguiente"
+this.Shortcut=595
+end on
+
+event clicked;// Juan campos Nov-1997.
+
+ 
+Long 		Cuenta
+Char 		Digito
+
+SetPointer(HourGlass!) 
+  
+w_historico.uo_nombre.cbx_nuevo.checked = False
+
+//Cuenta = long(Mid(w_historico.uo_nombre.em_cuenta.text,1,Len(w_historico.uo_nombre.em_cuenta.text)-1))
+Cuenta =long( w_historico.em_cuentaaux.text)
+ 
+If w_historico.uo_nombre.em_cuenta.text <> "" Then   
+ 
+SELECT min(cuenta)  
+INTO :cuenta  
+FROM historico 
+WHERE cuenta > :cuenta using gtr_sce;
+
+if Not isnull(cuenta)  then
+	w_historico.uo_nombre.em_cuenta.text = string(cuenta)
+//	w_historico.TriggerEvent(DoubleClicked!) 
+     w_historico.em_cuentaaux.text = String(Cuenta)
+	w_historico.uo_nombre.em_cuenta.text = string(cuenta) + obten_digito(cuenta)		  
+	w_historico.uo_nombre.em_cuenta.triggerevent("activarbusq")
+else
+	Messagebox("Información","Este es el último alumno")
+end if	
+
+Else
+  MessageBox("Aviso","No hay un número de cuenta en la ventana")
+End If
+
+end event
+
+type m_ultimo from menu within m_revision
+end type
+
+event clicked;// Juan campos Nov-1997.
+ 
+long cuenta
+char digito
+
+setpointer(hourglass!) 
+  
+w_historico.uo_nombre.cbx_nuevo.checked = False
+ 
+SELECT max(cuenta)  
+INTO :cuenta  
+FROM historico using gtr_sce;
+  
+if gtr_sce.sqlcode <> 100 then	
+	w_historico.uo_nombre.em_cuenta.text = string(cuenta)		 
+	w_historico.em_cuentaaux.text = String(Cuenta)
+	w_historico.uo_nombre.em_cuenta.text = string(cuenta) + obten_digito(cuenta)		 
+	w_historico.uo_nombre.em_cuenta.triggerevent("activarbusq")
+End if	
+
+
+end event
+
+on m_ultimo.create
+this.Text="Último~tAlt+U"
+this.Microhelp="Posicion  en el ultimo renglon de la tabla de historico"
+this.ToolBarItemName="VCRLast!"
+this.ToolBarItemText="Último"
+this.Shortcut=597
+end on
+
+type m_ventana from menu within m_historico
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+
+on m_ventana.create
+this.Text="Ventana"
+this.Microhelp="cambio de vista y posición de las ventanas"
+this.m_horizontal=create m_horizontal
+this.m_vertical=create m_vertical
+this.m_primerplano=create m_primerplano
+this.m_cascada=create m_cascada
+this.Item[]={this.m_horizontal, &
+this.m_vertical, &
+this.m_primerplano, &
+this.m_cascada}
+end on
+
+on m_ventana.destroy
+destroy(this.m_horizontal)
+destroy(this.m_vertical)
+destroy(this.m_primerplano)
+destroy(this.m_cascada)
+end on
+
+type m_horizontal from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(tilehorizontal!)
+end event
+
+on m_horizontal.create
+this.Text="Horizontal"
+end on
+
+type m_vertical from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(tile!)
+end event
+
+on m_vertical.create
+this.Text="Vertical"
+end on
+
+type m_primerplano from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(layer!)
+end event
+
+on m_primerplano.create
+this.Text="Primer Plano"
+end on
+
+type m_cascada from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(cascade!)
+end event
+
+on m_cascada.create
+this.Text="Cascada"
+end on
+
+type m_impresionx from menu within m_historico
+m_configurarimpresora1 m_configurarimpresora1
+m_imprimir1 m_imprimir1
+end type
+
+on m_impresionx.create
+this.Text="Impresion"
+this.Visible=false
+this.Enabled=false
+this.m_configurarimpresora1=create m_configurarimpresora1
+this.m_imprimir1=create m_imprimir1
+this.Item[]={this.m_configurarimpresora1, &
+this.m_imprimir1}
+end on
+
+on m_impresionx.destroy
+destroy(this.m_configurarimpresora1)
+destroy(this.m_imprimir1)
+end on
+
+type m_configurarimpresora1 from menu within m_impresionx
+end type
+
+event clicked;printsetup()
+end event
+
+on m_configurarimpresora1.create
+this.Text="C&onfigurar Impresora"
+end on
+
+type m_imprimir1 from menu within m_impresionx
+end type
+
+event clicked;//openwithparm(conf_impr,dw)
+end event
+
+on m_imprimir1.create
+this.Text="&Imprimir...."
+this.ToolBarItemName="Print!"
+this.Visible=false
+this.ToolBarItemSpace=4
+this.Enabled=false
+end on
+
+type m_fin from menu within m_historico
+end type
+
+event clicked;Close(W_historico)
+end event
+
+on m_fin.create
+this.Text="Salir"
+this.Microhelp="Cierra la ventana actual"
+this.ToolBarItemName="Exit!"
+this.ToolBarItemText="Salir  Consultas Histórico"
+this.ToolBarItemSpace=4
+end on
+
+on m_fin.destroy
+end on
+

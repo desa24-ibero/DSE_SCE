@@ -1,0 +1,108 @@
+﻿$PBExportHeader$of_valida_pago.srf
+global type of_valida_pago from function_object
+end type
+
+forward prototypes
+global function long of_valida_pago (long al_cuenta, long al_cve_carrera, long al_cve_plan, long al_cve_documento)
+end prototypes
+
+global function long of_valida_pago (long al_cuenta, long al_cve_carrera, long al_cve_plan, long al_cve_documento);//of_valida_pago
+//Recibe	al_cuenta			long
+//			al_cve_carrera		long
+//			al_cve_plan			long
+//			al_cve_documento	long
+
+long ll_cve_concepto, ll_cve_subconcepto, ll_num_movs, ll_folio_mov_alumnos
+string ls_mensaje
+integer li_codigo_sql
+
+SELECT 
+ISNULL(cve_concepto,0),
+ISNULL(cve_subconcepto,0)
+INTO
+:ll_cve_concepto, 
+:ll_cve_subconcepto
+FROM documento_titulacion
+WHERE cve_documento = :al_cve_documento
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje = gtr_sce.SqlErrText
+IF li_codigo_sql= -1 THEN
+	MessageBox("Error al consultar documento titulacion",ls_mensaje,StopSign! )	
+	return  -1
+ELSEIF li_codigo_sql=100 THEN 
+	return 0
+ELSEIF li_codigo_sql=0 THEN 
+	IF ll_cve_concepto= 0 AND ll_cve_subconcepto= 0 THEN
+		return 0
+	ELSEIF isnull(ll_cve_concepto) AND isnull(ll_cve_subconcepto) THEN
+		return 0
+	END IF
+END IF
+
+if conecta_bd(gtr_scob,gs_scob,gs_usuario,gs_password)= 1 then
+
+	SELECT
+	COUNT(*)
+	INTO
+	:ll_num_movs
+	FROM v_saldos_mov_alumnos 
+	WHERE cuenta = :al_cuenta
+	AND saldo < 0 
+	AND cve_concepto = :ll_cve_concepto
+	USING gtr_scob;
+	li_codigo_sql = gtr_scob.SqlCode
+	ls_mensaje = gtr_scob.SqlErrText
+	IF li_codigo_sql= -1 THEN
+		desconecta_bd (gtr_scob)
+		MessageBox("Error al consultar v_saldos_mov_alumnos",ls_mensaje,StopSign! )
+		return  -1
+	ELSE
+		IF ll_num_movs = 0 THEN
+			desconecta_bd (gtr_scob)
+			return 0
+		END IF		
+	END IF
+
+
+	SELECT 
+	min(folio_mov_alumnos)
+	INTO
+	:ll_folio_mov_alumnos
+	FROM mov_alumnos 
+	WHERE cuenta = :al_cuenta
+	AND cve_concepto = :ll_cve_concepto
+	AND cve_subconcepto not in (2,4)
+	USING gtr_scob;
+	li_codigo_sql = gtr_scob.SqlCode
+	ls_mensaje = gtr_scob.SqlErrText
+	IF li_codigo_sql= -1 THEN
+		desconecta_bd (gtr_scob)
+		MessageBox("Error al consultar mov_alumnos",ls_mensaje,StopSign! )	
+		return  -1
+	ELSE
+		IF ISNULL(ll_folio_mov_alumnos) THEN
+			desconecta_bd (gtr_scob)
+			return 0
+		ELSE
+			desconecta_bd (gtr_scob)
+			return ll_folio_mov_alumnos
+		END IF		
+	END IF
+
+
+else
+	desconecta_bd (gtr_scob)
+	MessageBox("Error de consulta","No es posible Revisar Movimientos en Cobranzas",StopSign!)
+	return -1
+end if
+
+
+
+desconecta_bd (gtr_scob)
+return 0
+
+			
+end function
+

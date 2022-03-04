@@ -1,0 +1,45 @@
+﻿$PBExportHeader$of_obten_siguiente_holog_num.srf
+global type of_obten_siguiente_holog_num from function_object
+end type
+
+forward prototypes
+global function long of_obten_siguiente_holog_num (integer ai_cve_doc_control_sep, integer ai_num_hologramas, ref long al_hologramas[], long al_num_holograma)
+end prototypes
+
+global function long of_obten_siguiente_holog_num (integer ai_cve_doc_control_sep, integer ai_num_hologramas, ref long al_hologramas[], long al_num_holograma);//of_obten_siguiente_holog_num
+//Obtiene el siguiente folio para insercion en la tabla control_sep
+//Recibe	ai_cve_doc_control_sep	integer
+//			ai_num_hologramas integer
+//			al_hologramas[]	long
+//			al_num_holograma long
+
+long ll_maximo_folio, ll_folio_siguiente, ll_indice_actual
+
+
+
+
+ll_folio_siguiente = al_num_holograma 
+
+IF of_holograma_disponible(ll_folio_siguiente, ai_cve_doc_control_sep) = 0 THEN
+	MessageBox("Hologramas Faltantes","No existen hologramas disponibles registrados", StopSign!)
+	return -1
+END IF
+
+FOR ll_indice_actual= 1 TO ai_num_hologramas
+	DO WHILE of_hologramas_asignados(ll_folio_siguiente, ll_folio_siguiente, ai_cve_doc_control_sep)>0 
+		ll_folio_siguiente = ll_folio_siguiente + 1
+	LOOP
+	IF of_holograma_disponible(ll_folio_siguiente, ai_cve_doc_control_sep) = 0 THEN
+		MessageBox("Hologramas Faltantes","No existen hologramas disponibles registrados", StopSign!)
+		return -1
+	END IF 
+	al_hologramas[ll_indice_actual]= ll_folio_siguiente
+	ll_folio_siguiente = ll_folio_siguiente + 1
+NEXT
+
+
+return ll_folio_siguiente
+
+
+end function
+

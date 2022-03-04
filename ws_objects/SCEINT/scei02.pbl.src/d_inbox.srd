@@ -1,0 +1,17 @@
+﻿$PBExportHeader$d_inbox.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=77 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=char(100) updatewhereclause=no name=msgid dbname="msgid" )
+ column=(type=char(100) updatewhereclause=no name=msgdate dbname="msgdate" )
+ column=(type=char(100) updatewhereclause=no name=msgsubject dbname="msgsubject" )
+ )
+text(band=header alignment="2" text="Msgdate"border="0" color="33554432" x="284" y="4" height="65" width="229"  name=msgdate_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="Msgsubject"border="0" color="33554432" x="1171" y="4" height="65" width="307"  name=msgsubject_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="Msgid"border="0" color="33554432" x="5" y="4" height="65" width="275"  name=msgid_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=1 alignment="0" tabsequence=10 border="0" color="33554432" x="5" y="4" height="77" width="275" format="[general]"  name=msgid edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="0" color="33554432" x="284" y="4" height="77" width="220" format="[general]"  name=msgdate edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=3 alignment="0" tabsequence=30 border="0" color="33554432" x="517" y="4" height="77" width="1614" format="[general]"  name=msgsubject edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )

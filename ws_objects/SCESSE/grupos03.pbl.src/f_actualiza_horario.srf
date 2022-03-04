@@ -1,0 +1,95 @@
+﻿$PBExportHeader$f_actualiza_horario.srf
+global type f_actualiza_horario from function_object
+end type
+
+forward prototypes
+global function integer f_actualiza_horario (integer ai_periodo, integer ai_anio, integer ai_num_paq, ref datawindow dw_horario_paquete_visual, boolean ab_imprimible)
+end prototypes
+
+global function integer f_actualiza_horario (integer ai_periodo, integer ai_anio, integer ai_num_paq, ref datawindow dw_horario_paquete_visual, boolean ab_imprimible);//f_actualiza_horario
+//Actualiza el horario visual
+//ai_periodo						integer
+//ai_anio							integer
+//ai_num_paq						integer
+//dw_horario_paquete_visual	datawindow
+//ab_imprimible					boolean
+
+integer li_periodo, li_anio, li_num_paq
+string ls_array_horario[7,15], ls_elemento_array, ls_horario, ls_carrera, ls_nombre_plan
+long ll_currentrow, ll_rowcount
+long ll_dia_actual
+long ll_hora_actual, ll_hora_sig
+long ll_row_actual, ll_hora_relativa, ll_factor_hora, ll_dia_relativo, ll_factor_dia
+long  ll_hora_menor = 7, ll_hora_mayor = 21, ll_cve_dia_menor = 1, ll_cve_dia_mayor =6, ll_indice_horario =7, ll_indice_dia =1 
+integer li_cve_carrera, li_cve_plan
+integer li_carrera_paq
+
+li_anio = ai_anio
+li_periodo = ai_periodo
+if ab_imprimible then
+	dw_horario_paquete_visual.dataobject = 'd_horario_visual_paquete_ext_2'
+else
+	dw_horario_paquete_visual.dataobject = 'd_horario_visual_paquete_ext'	
+end if
+dw_horario_paquete_visual.SetTransObject(gtr_sce)
+
+
+
+//ll_rowcount = dw_1.RowCount()
+
+//if  ll_rowcount > 0 then
+
+//	ll_currentrow = dw_1.GetRow()
+
+//	if ll_currentrow >0 then
+
+//if (ll_currentrow>0 and ll_rowcount>0) then
+//	dw_3.event carga(dw_1.object.clv_carr[ll_currentrow],dw_1.object.clv_plan[ll_currentrow], li_periodo, li_anio, ii_semestre_ideal)
+//	dw_4.event carga(dw_1.object.clv_carr[ll_currentrow],dw_1.object.clv_plan[ll_currentrow])
+//	dw_2.event carga(9999,dw_1.object.num_paq[ll_currentrow])
+//end if
+
+		li_num_paq = ai_num_paq
+		li_carrera_paq =  f_obten_carrera_de_paq(li_num_paq, li_cve_carrera, li_cve_plan, ls_carrera, ls_nombre_plan )
+
+//dw_horario_paquete_visual.Reset()
+		f_genera_horario_paquete(li_num_paq, li_periodo, li_anio, false, ls_array_horario)
+
+		  ll_hora_menor = 7 
+		  ll_hora_mayor = 21  
+		  ll_cve_dia_menor = 1 
+		  ll_cve_dia_mayor =6 
+		  ll_indice_horario =7  
+		  ll_indice_dia =1 
+		
+		  ll_hora_relativa = 7  
+		  	ll_factor_hora = 6  			
+		  	ll_factor_dia = 1
+
+
+
+		for ll_dia_actual=ll_cve_dia_menor to ll_cve_dia_mayor
+//	ll_row_actual = dw_horario_paquete_visual.InsertRow(0)
+			for ll_hora_actual=ll_hora_menor to ll_hora_mayor
+				  ll_hora_relativa = ll_hora_actual - ll_factor_hora  
+				  ll_dia_relativo = ll_dia_actual + ll_factor_dia
+				  ll_hora_sig = ll_hora_actual +1
+				  ls_elemento_array = ls_array_horario[ll_dia_actual,ll_hora_relativa]
+				   if ll_hora_relativa > dw_horario_paquete_visual.RowCount() then
+						ll_row_actual = dw_horario_paquete_visual.InsertRow(0)			
+					end if	
+					if (ll_dia_actual = ll_cve_dia_menor) then
+						ls_horario = string(ll_hora_actual)+'-'+string(ll_hora_sig)
+					  dw_horario_paquete_visual.SetItem( ll_hora_relativa, ll_dia_actual,ls_horario)
+					end if
+				  dw_horario_paquete_visual.SetItem( ll_hora_relativa, ll_dia_relativo,ls_elemento_array)
+			next
+		next
+		dw_horario_paquete_visual.Title = "Horario del paquete ["+string(li_num_paq)+"] - "+ls_carrera
+		
+//	end if
+//end if
+return 0
+
+end function
+

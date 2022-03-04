@@ -1,0 +1,33 @@
+﻿$PBExportHeader$tiene_reingreso.srf
+$PBExportComments$Regresa "true" si el alumno tiene un reingreso registrado~r~nJuan Campos.  Abril-1997.
+global type tiene_reingreso from function_object
+end type
+
+forward prototypes
+global function boolean tiene_reingreso (long cuenta)
+end prototypes
+
+global function boolean tiene_reingreso (long cuenta);// Regresa "true" si el alumno tiene un reingreso registrado
+// Juan Campos.  Abril-1997.
+
+Integer TieneReIngreso
+
+select count(*) 
+  into :TieneReIngreso
+  from hist_reingreso
+ where cuenta = :cuenta using gtr_sce;
+ 
+if gtr_sce.sqlcode = -1 Then
+	Messagebox("Error al obtener reingresos",gtr_sce.sqlerrtext)
+	TieneReIngreso = 0
+end if
+
+if TieneReIngreso > 0 then
+	Return True
+else
+	Return False
+end if
+	
+	
+end function
+

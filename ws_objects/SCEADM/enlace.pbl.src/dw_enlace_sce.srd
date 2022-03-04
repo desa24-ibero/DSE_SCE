@@ -1,0 +1,32 @@
+﻿$PBExportHeader$dw_enlace_sce.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=141 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=academicos_cuenta dbname="academicos.cuenta" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_nombre dbname="alumnos.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_apaterno dbname="alumnos.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_amaterno dbname="alumnos.amaterno" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_carrera dbname="academicos.cve_carrera" )
+ column=(type=char(1) updatewhereclause=yes name=academicos_nivel dbname="academicos.nivel" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"dbo.academicos~" )  TABLE(NAME=~"dbo.alumnos~" ) COLUMN(NAME=~"dbo.academicos.cuenta~") COLUMN(NAME=~"dbo.alumnos.nombre~") COLUMN(NAME=~"dbo.alumnos.apaterno~") COLUMN(NAME=~"dbo.alumnos.amaterno~") COLUMN(NAME=~"dbo.academicos.cve_carrera~") COLUMN(NAME=~"dbo.academicos.nivel~")    JOIN (LEFT=~"dbo.alumnos.cuenta~"    OP =~"=~"RIGHT=~"dbo.academicos.cuenta~" )WHERE(    EXP1 =~"dbo.academicos.cuenta~"   OP =~">=~"    EXP2 =~":min~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"dbo.academicos.cuenta~"   OP =~"<=~"    EXP2 =~":max~" ) ) ARG(NAME = ~"min~" TYPE = number)  ARG(NAME = ~"max~" TYPE = number) " arguments=(("min", number),("max", number)) )
+text(band=header alignment="2" text="Academicos
+Cuenta"border="0" color="0" x="5" y="4" height="129" width="330"  name=academicos_cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Alumnos
+Nombre"border="0" color="0" x="339" y="4" height="129" width="1399"  name=alumnos_nombre_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Alumnos
+Apaterno"border="0" color="0" x="1742" y="4" height="129" width="1399"  name=alumnos_apaterno_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Alumnos
+Amaterno"border="0" color="0" x="3146" y="4" height="129" width="1399"  name=alumnos_amaterno_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Academicos
+Cve Carrera"border="0" color="0" x="4549" y="4" height="129" width="330"  name=academicos_cve_carrera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="330" format="[general]"  name=academicos_cuenta edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="339" y="4" height="77" width="1399" format="[general]"  name=alumnos_nombre edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1742" y="4" height="77" width="1399" format="[general]"  name=alumnos_apaterno edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="3146" y="4" height="77" width="1399" format="[general]"  name=alumnos_amaterno edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="4549" y="4" height="77" width="330" format="[general]"  name=academicos_cve_carrera edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Academicos
+Nivel"border="0" color="0" x="4887" y="4" height="129" width="330"  name=academicos_nivel_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="5025" y="4" height="77" width="55" format="[general]"  name=academicos_nivel edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

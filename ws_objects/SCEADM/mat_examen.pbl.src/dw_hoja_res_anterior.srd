@@ -1,0 +1,45 @@
+﻿$PBExportHeader$dw_hoja_res_anterior.srd
+$PBExportComments$Hoja de Respuestas
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=1284 color="536870912"  height.autosize=yes)
+table(column=(type=long updatewhereclause=yes name=folio dbname="aspiran.folio" )
+ column=(type=long updatewhereclause=yes name=anio dbname="aspiran.anio" )
+ column=(type=char(16) updatewhereclause=yes name=salon dbname="aspiran.salon" )
+ column=(type=long updatewhereclause=yes name=clv_ver dbname="aspiran.clv_ver" )
+ column=(type=long updatewhereclause=yes name=clv_per dbname="aspiran.clv_per" )
+ column=(type=long updatewhereclause=yes name=clv_carr dbname="aspiran.clv_carr" )
+ column=(type=char(50) updatewhereclause=yes name=general_nombre dbname="general.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=general_apaterno dbname="general.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=general_amaterno dbname="general.amaterno" )
+ retrieve="  SELECT aspiran.folio,   
+         aspiran.anio,   
+         aspiran.salon,   
+         aspiran.clv_ver,   
+         aspiran.clv_per,   
+         aspiran.clv_carr,   
+         general.nombre,   
+         general.apaterno,   
+         general.amaterno  
+    FROM aspiran,   
+         general  
+   WHERE ( aspiran.folio = general.folio ) and  
+         ( aspiran.clv_ver = general.clv_ver ) and  
+         ( aspiran.clv_per = general.clv_per ) and  
+         ( aspiran.anio = general.anio ) and  
+         ( (aspiran.clv_ver = :ver) OR  
+           (:ver =99)              ) AND  
+         ( aspiran.clv_per = :per ) AND  
+         ( aspiran.anio = :ani ) AND  
+         ( aspiran.folio between :min AND :max) AND  
+         aspiran.pago_exam = 1    
+" arguments=(("ver", number),("per", number),("ani", number),("min", number),("max", number))  sort="salon D nombre A " )
+group(level=1 header.height=0 trailer.height=0 by=("folio" ) newpage=yes header.color="536870912" trailer.color="536870912" )
+compute(band=detail alignment="2" expression="folio"border="0" color="0" x="3026" y="64" height="64" width="411" format="[general]"  name=digito  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="0" expression="general_apaterno+' '+general_amaterno+' '+general_nombre "border="0" color="0" x="1097" y="952" height="64" width="1381" format="[general]"  name=nombre  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="1541" y="788" height="64" width="1225" format=""  name=clv_carr dddw.name=dw_carrera dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="1742" y="504" height="64" width="366" format="[general]"  name=salon editmask.mask="XXXXXXXXXXXXXXXX" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="0" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

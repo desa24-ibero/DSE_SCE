@@ -1,0 +1,65 @@
+﻿$PBExportHeader$d_aspiran_general_version.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=134 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=aspiran_folio dbname="aspiran.folio" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_ver dbname="aspiran.clv_ver" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_per dbname="aspiran.clv_per" )
+ column=(type=long updatewhereclause=yes name=aspiran_anio dbname="aspiran.anio" )
+ column=(type=long updatewhereclause=yes name=aspiran_status dbname="aspiran.status" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_carr dbname="aspiran.clv_carr" )
+ column=(type=long updatewhereclause=yes name=aspiran_pago_exam dbname="aspiran.pago_exam" )
+ column=(type=long updatewhereclause=yes name=aspiran_pago_insc dbname="aspiran.pago_insc" )
+ column=(type=long updatewhereclause=yes name=aspiran_ing_per dbname="aspiran.ing_per" )
+ column=(type=long updatewhereclause=yes name=aspiran_ing_anio dbname="aspiran.ing_anio" )
+ column=(type=long updatewhereclause=yes name=general_cuenta dbname="general.cuenta" )
+ column=(type=char(50) updatewhereclause=yes name=general_nombre dbname="general.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=general_apaterno dbname="general.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=general_amaterno dbname="general.amaterno" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"dbo.aspiran~" )  TABLE(NAME=~"dbo.general~" ) COLUMN(NAME=~"dbo.aspiran.folio~") COLUMN(NAME=~"dbo.aspiran.clv_ver~") COLUMN(NAME=~"dbo.aspiran.clv_per~") COLUMN(NAME=~"dbo.aspiran.anio~") COLUMN(NAME=~"dbo.aspiran.status~") COLUMN(NAME=~"dbo.aspiran.clv_carr~") COLUMN(NAME=~"dbo.aspiran.pago_exam~") COLUMN(NAME=~"dbo.aspiran.pago_insc~") COLUMN(NAME=~"dbo.aspiran.ing_per~") COLUMN(NAME=~"dbo.aspiran.ing_anio~") COLUMN(NAME=~"dbo.general.cuenta~") COLUMN(NAME=~"dbo.general.nombre~") COLUMN(NAME=~"dbo.general.apaterno~") COLUMN(NAME=~"dbo.general.amaterno~")    JOIN (LEFT=~"dbo.aspiran.anio~"    OP =~"=~"RIGHT=~"dbo.general.anio~" )    JOIN (LEFT=~"dbo.aspiran.clv_per~"    OP =~"=~"RIGHT=~"dbo.general.clv_per~" )    JOIN (LEFT=~"dbo.aspiran.clv_ver~"    OP =~"=~"RIGHT=~"dbo.general.clv_ver~" )    JOIN (LEFT=~"dbo.aspiran.folio~"    OP =~"=~"RIGHT=~"dbo.general.folio~" )WHERE(    EXP1 =~"dbo.aspiran.clv_ver~"   OP =~"=~"    EXP2 =~":ai_version~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"dbo.aspiran.clv_per~"   OP =~"=~"    EXP2 =~":ai_periodo~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"dbo.aspiran.anio~"   OP =~"=~"    EXP2 =~":ai_anio~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"(:ai_cuenta~"   OP =~"=~"    EXP2 =~"0~"    LOGIC =~"or~" ) WHERE(    EXP1 =~"dbo.general.cuenta~"   OP =~"=~"    EXP2 =~":ai_cuenta)~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"(dbo.aspiran.status~"   OP =~"in~"    EXP2 =~"(1,4))~" ) ) ARG(NAME = ~"ai_version~" TYPE = number)  ARG(NAME = ~"ai_periodo~" TYPE = number)  ARG(NAME = ~"ai_anio~" TYPE = number)  ARG(NAME = ~"ai_cuenta~" TYPE = number) " arguments=(("ai_version", number),("ai_periodo", number),("ai_anio", number),("ai_cuenta", number)) )
+text(band=header alignment="2" text="Aspiran
+Folio"border="0" color="0" x="4" y="3" height="128" width="351"  name=aspiran_folio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Clv Ver"border="0" color="0" x="358" y="3" height="128" width="351"  name=aspiran_clv_ver_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Clv Per"border="0" color="0" x="713" y="3" height="128" width="351"  name=aspiran_clv_per_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Anio"border="0" color="0" x="1068" y="3" height="128" width="351"  name=aspiran_anio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Status"border="0" color="0" x="1423" y="3" height="128" width="351"  name=aspiran_status_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Clv Carr"border="0" color="0" x="1777" y="3" height="128" width="351"  name=aspiran_clv_carr_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Pago Exam"border="0" color="0" x="2136" y="3" height="128" width="347"  name=aspiran_pago_exam_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Pago Insc"border="0" color="0" x="2491" y="3" height="128" width="351"  name=aspiran_pago_insc_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Ing Per"border="0" color="0" x="2845" y="3" height="128" width="351"  name=aspiran_ing_per_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Ing Anio"border="0" color="0" x="3200" y="3" height="128" width="351"  name=aspiran_ing_anio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Cuenta"border="0" color="0" x="3555" y="3" height="128" width="351"  name=general_cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Nombre"border="0" color="0" x="3909" y="3" height="128" width="1492"  name=general_nombre_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Apaterno"border="0" color="0" x="5405" y="3" height="128" width="1492"  name=general_apaterno_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Amaterno"border="0" color="0" x="6901" y="3" height="128" width="1492"  name=general_amaterno_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="4" y="4" height="74" width="351" format="[general]"  name=aspiran_folio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="358" y="4" height="74" width="351" format="[general]"  name=aspiran_clv_ver edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="713" y="4" height="74" width="351" format="[general]"  name=aspiran_clv_per edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="0" x="1068" y="4" height="74" width="351" format="[general]"  name=aspiran_anio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="1423" y="4" height="74" width="351" format="[general]"  name=aspiran_status edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="1777" y="4" height="74" width="351" format="[general]"  name=aspiran_clv_carr edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="2136" y="4" height="74" width="347" format="[general]"  name=aspiran_pago_exam edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="0" x="2491" y="4" height="74" width="351" format="[general]"  name=aspiran_pago_insc edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="0" x="2845" y="4" height="74" width="351" format="[general]"  name=aspiran_ing_per edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="0" x="3200" y="4" height="74" width="351" format="[general]"  name=aspiran_ing_anio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="1" tabsequence=32766 border="0" color="0" x="3555" y="4" height="74" width="351" format="[general]"  name=general_cuenta edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="3909" y="4" height="74" width="1492" format="[general]"  name=general_nombre edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="0" x="5405" y="4" height="74" width="1492" format="[general]"  name=general_apaterno edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="6901" y="4" height="74" width="1492" format="[general]"  name=general_amaterno edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

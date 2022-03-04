@@ -1,0 +1,82 @@
+﻿$PBExportHeader$d_aspiran_pago_examen.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no grid.lines=0 )
+header(height=80 color="536870912" )
+summary(height=84 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=92 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes name=folio dbname="aspiran.folio" )
+ column=(type=long update=yes updatewhereclause=yes name=clv_ver dbname="aspiran.clv_ver" )
+ column=(type=long update=yes updatewhereclause=yes name=clv_per dbname="aspiran.clv_per" )
+ column=(type=long update=yes updatewhereclause=yes name=anio dbname="aspiran.anio" )
+ column=(type=long updatewhereclause=yes name=cve_carrera dbname="cve_carrera" )
+ column=(type=long updatewhereclause=yes name=cve_tipo_examen dbname="cve_tipo_examen" )
+ column=(type=long updatewhereclause=yes name=cve_modulo_examen dbname="cve_modulo_examen" )
+ column=(type=decimal(4) updatewhereclause=yes name=area_1 dbname="area_1" )
+ column=(type=decimal(4) updatewhereclause=yes name=area_2 dbname="area_2" )
+ column=(type=decimal(4) updatewhereclause=yes name=area_3 dbname="area_3" )
+ column=(type=decimal(4) updatewhereclause=yes name=area_4 dbname="area_4" )
+ column=(type=decimal(4) updatewhereclause=yes name=area_5 dbname="area_5" )
+ retrieve="  SELECT aspiran.folio,   
+         aspiran.clv_ver,   
+         aspiran.clv_per,   
+         aspiran.anio,   
+         cve_carrera = aspiran.clv_carr,   
+         cve_tipo_examen = resultado_archivo_exani_2.cve_tipo_examen,   
+         cve_modulo_examen = resultado_archivo_exani_2.cve_modulo_examen,   
+         area_1 = resultado_archivo_exani_2.IRLM,   
+         area_2 = resultado_archivo_exani_2.IMAT_S,   
+         area_3 = resultado_archivo_exani_2.IRV,   
+         area_4 = resultado_archivo_exani_2.IESP,   
+         area_5 = resultado_archivo_exani_2.ITIC  
+    FROM aspiran,   
+         resultado_archivo_exani_2  
+   WHERE ( aspiran.folio = resultado_archivo_exani_2.folio ) and  
+         ( aspiran.clv_ver = resultado_archivo_exani_2.clv_ver ) and  
+         ( aspiran.clv_per = resultado_archivo_exani_2.clv_per ) and  
+         ( aspiran.anio = resultado_archivo_exani_2.anio ) and  
+         ( aspiran.clv_ver = :ai_clv_ver ) AND  
+         ( aspiran.clv_per = :ai_clv_per ) AND  
+         ( aspiran.anio = :ai_anio ) AND  
+         ( aspiran.pago_exam = 1 ) AND
+			( :an_folio_inicial <= aspiran.folio  AND aspiran.folio <= :an_folio_final ) 
+
+ORDER BY aspiran.folio ASC   
+" arguments=(("ai_clv_ver", number),("ai_clv_per", number),("ai_anio", number),("an_folio_inicial", number),("an_folio_final", number)) )
+text(band=header alignment="2" text="Folio" border="0" color="33554432" x="9" y="8" height="64" width="329" html.valueishtml="0"  name=folio_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Periodo" border="0" color="33554432" x="567" y="8" height="64" width="279" html.valueishtml="0"  name=clv_per_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Año" border="0" color="33554432" x="855" y="8" height="64" width="224" html.valueishtml="0"  name=anio_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Examen" border="0" color="33554432" x="1088" y="8" height="64" width="261" html.valueishtml="0"  name=cve_tipo_e_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="0" text="Módulo" border="0" color="33554432" x="1358" y="8" height="64" width="215" html.valueishtml="0"  name=cve_modulo_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="0" text="Area 1" border="0" color="33554432" x="1582" y="8" height="64" width="251" html.valueishtml="0"  name=area_1_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="0" text="Area 2" border="0" color="33554432" x="1842" y="8" height="64" width="261" html.valueishtml="0"  name=area_2_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="0" text="Area 3" border="0" color="33554432" x="2112" y="8" height="64" width="238" html.valueishtml="0"  name=area_3_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="0" text="Area 4" border="0" color="33554432" x="2359" y="8" height="64" width="251" html.valueishtml="0"  name=area_4_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="0" text="Area 5" border="0" color="33554432" x="2619" y="8" height="64" width="288" html.valueishtml="0"  name=area_5_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="0" text="Cve Carrera" border="0" color="33554432" x="2917" y="8" height="64" width="288" html.valueishtml="0"  name=cve_carrera_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="Versión" border="0" color="33554432" x="347" y="8" height="64" width="210" html.valueishtml="0"  name=clv_ver_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=30 border="0" color="33554432" x="567" y="8" height="76" width="279" format="[general]" html.valueishtml="0"  name=clv_per visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=10 border="0" color="33554432" x="9" y="8" height="76" width="329" format="[general]" html.valueishtml="0"  name=folio visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=40 border="0" color="33554432" x="855" y="8" height="76" width="224" format="[general]" html.valueishtml="0"  name=anio visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=50 border="0" color="33554432" x="1088" y="8" height="76" width="261" format="[general]" html.valueishtml="0"  name=cve_tipo_examen visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=60 border="0" color="33554432" x="1358" y="8" height="76" width="215" format="[general]" html.valueishtml="0"  name=cve_modulo_examen visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=120 border="0" color="33554432" x="2917" y="8" height="76" width="288" format="[general]" html.valueishtml="0"  name=cve_carrera visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=20 border="0" color="33554432" x="347" y="8" height="76" width="210" format="[general]" html.valueishtml="0"  name=clv_ver visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=70 border="0" color="33554432" x="1582" y="8" height="76" width="251" format="###0" html.valueishtml="0"  name=area_1 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=80 border="0" color="33554432" x="1842" y="8" height="76" width="261" format="###0" html.valueishtml="0"  name=area_2 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=90 border="0" color="33554432" x="2112" y="8" height="76" width="238" format="###0" html.valueishtml="0"  name=area_3 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="1" tabsequence=100 border="0" color="33554432" x="2359" y="8" height="76" width="251" format="###0" html.valueishtml="0"  name=area_4 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="1" tabsequence=110 border="0" color="33554432" x="2619" y="8" height="76" width="288" format="###0" html.valueishtml="0"  name=area_5 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=summary alignment="1" text="Total" border="0" color="33554432" x="9" y="4" height="76" width="329" html.valueishtml="0"  name=t_1 visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="count(clv_ver for all)"border="0" color="33554432" x="347" y="4" height="76" width="210" format="[general]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,12 @@
+﻿$PBExportHeader$dw_folioxnocarrera.srd
+$PBExportComments$Catálogo de Folios que No pertenecen a la carrera. Parámetros: Carrera, Salón y Versión
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=69 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=compute_0001 dbname="compute_0001" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"carr_sal~" ) COMPUTE(NAME=~"sum(folios)        ~")WHERE(    EXP1 =~"( carr_sal.clv_per~"   OP =~"=~"    EXP2 =~":per )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( carr_sal.anio~"   OP =~"=~"    EXP2 =~":ani )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( carr_sal.clv_ver~"   OP =~"=~"    EXP2 =~":ver )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( carr_sal.salon~"   OP =~"=~"    EXP2 =~":salon )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( carr_sal.clv_carr~"   OP =~"<>~"    EXP2 =~":carr )~" ) ) ARG(NAME = ~"ver~" TYPE = number)  ARG(NAME = ~"salon~" TYPE = string)  ARG(NAME = ~"carr~" TYPE = number)  ARG(NAME = ~"per~" TYPE = number)  ARG(NAME = ~"ani~" TYPE = number) " arguments=(("ver", number),("salon", string),("carr", number),("per", number),("ani", number)) )
+text(band=header alignment="0" text="Folios dados a otras carreras"border="0" color="0" x="10" y="4" height="65" width="773"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="330" format="[general]"  name=compute_0001 edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )

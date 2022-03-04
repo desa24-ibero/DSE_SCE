@@ -1,0 +1,38 @@
+﻿$PBExportHeader$m_movimiento_prof_aux.srm
+forward
+global type m_movimiento_prof_aux from menu
+end type
+type m_movimientoauxiliar from menu within m_movimiento_prof_aux
+end type
+type m_movimientoauxiliar from menu within m_movimiento_prof_aux
+end type
+end forward
+
+global type m_movimiento_prof_aux from menu
+m_movimientoauxiliar m_movimientoauxiliar
+end type
+global m_movimiento_prof_aux m_movimiento_prof_aux
+
+on m_movimiento_prof_aux.create
+m_movimiento_prof_aux=this
+this.m_movimientoauxiliar=create m_movimientoauxiliar
+this.Item[]={this.m_movimientoauxiliar}
+end on
+
+on m_movimiento_prof_aux.destroy
+destroy(this.m_movimientoauxiliar)
+end on
+
+type m_movimientoauxiliar from menu within m_movimiento_prof_aux
+end type
+
+event clicked;MessageBox("Abrir","Ventana")
+end event
+
+on m_movimientoauxiliar.create
+this.Text="Movimiento Auxiliar"
+end on
+
+on m_movimientoauxiliar.destroy
+end on
+

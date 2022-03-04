@@ -1,0 +1,53 @@
+﻿$PBExportHeader$f_obten_parametros_ceneval_2014.srf
+global type f_obten_parametros_ceneval_2014 from function_object
+end type
+
+forward prototypes
+global function integer f_obten_parametros_ceneval_2014 (ref integer ai_clv_per_ceneval_2014, ref integer ai_anio_ceneval_2014)
+end prototypes
+
+global function integer f_obten_parametros_ceneval_2014 (ref integer ai_clv_per_ceneval_2014, ref integer ai_anio_ceneval_2014);//f_obten_parametros_ceneval_2014
+//
+//Recibe: (ninguno)
+
+//
+//Devuelve:
+//	long  ai_clv_per_ceneval_2014
+// long ai_anio_ceneval_2014
+
+int li_codigo_sql, li_SQLNRows
+string ls_mensaje
+int li_clv_per_ceneval_2014
+int li_anio_ceneval_2014
+
+   SELECT 
+		parametros_admision.clv_per_ceneval_2014,
+		parametros_admision.anio_ceneval_2014
+   INTO :li_clv_per_ceneval_2014, 
+	 		:li_anio_ceneval_2014
+   FROM parametros_admision  
+   USING gtr_sadm;
+	
+	li_codigo_sql = gtr_sadm.SqlCode
+	ls_mensaje = gtr_sadm.SqlErrText
+	li_SQLNRows = gtr_sadm.SQLNRows	
+
+	IF li_codigo_sql = -1 THEN
+		MessageBox("Error al consultar parametros_admision", ls_mensaje, StopSign!)
+		gi_clv_per_ceneval_2014 = -1
+		gi_anio_ceneval_2014 = -1
+	ELSEIF li_codigo_sql = 100 THEN
+		MessageBox("No se encontró información en parametros_admision", ls_mensaje, StopSign!)
+		gi_clv_per_ceneval_2014 = -1
+		gi_anio_ceneval_2014 = -1
+	END IF
+	gi_clv_per_ceneval_2014 = li_clv_per_ceneval_2014
+	gi_anio_ceneval_2014 =li_anio_ceneval_2014
+	
+	ai_clv_per_ceneval_2014 = li_clv_per_ceneval_2014
+	ai_anio_ceneval_2014 =li_anio_ceneval_2014
+	
+
+return li_codigo_sql
+end function
+

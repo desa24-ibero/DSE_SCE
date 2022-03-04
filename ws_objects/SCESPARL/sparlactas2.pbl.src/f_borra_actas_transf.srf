@@ -1,0 +1,60 @@
+﻿$PBExportHeader$f_borra_actas_transf.srf
+global type f_borra_actas_transf from function_object
+end type
+
+forward prototypes
+global function long f_borra_actas_transf (integer ai_periodo, integer ai_anio, integer ai_cve_tipo_examen, transaction atr_transaction)
+end prototypes
+
+global function long f_borra_actas_transf (integer ai_periodo, integer ai_anio, integer ai_cve_tipo_examen, transaction atr_transaction);//f_borra_actas_transf
+//
+//Recibe:
+//ai_periodo		integer
+//ai_anio			integer
+//ai_cve_tipo_examen	integer
+//atr_transaction	transaction
+//Devuelve:
+//				-1		Error de base de datos
+//				 0		Exito
+//				100   No hay registros a borrar
+
+
+integer li_codigo_sql
+long li_no_acta, ll_num_alumnos
+string ls_mensaje_sql
+
+
+if ai_cve_tipo_examen = 3 then
+	 DELETE FROM acta_evaluacion_transf
+	 WHERE periodo = :ai_periodo
+	 AND anio = :ai_anio
+	 AND	cve_tipo_examen in (:ai_cve_tipo_examen)	 
+    USING atr_transaction;
+elseif  ai_cve_tipo_examen = 26 then
+	 DELETE FROM acta_evaluacion_transf
+	 WHERE periodo = :ai_periodo
+	 AND anio = :ai_anio
+	 AND	cve_tipo_examen in (2,6)	 
+    USING atr_transaction;
+end if	
+
+li_codigo_sql = atr_transaction.SqlCode
+ls_mensaje_sql = atr_transaction.SqlErrText
+
+if li_codigo_sql = 100 then	
+//No se eliminaron actas de ese periodo
+	return li_codigo_sql
+elseif li_codigo_sql = -1 then
+//No fue posible eliminar
+	rollback using atr_transaction;
+	MessageBox("Error al eliminar en acta_evaluacion_transf", ls_mensaje_sql)
+	return li_codigo_sql
+elseif li_codigo_sql = 0 then
+	commit using atr_transaction;
+end if
+
+
+return li_codigo_sql
+
+end function
+

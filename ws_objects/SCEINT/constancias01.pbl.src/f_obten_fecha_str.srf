@@ -1,0 +1,20 @@
+﻿$PBExportHeader$f_obten_fecha_str.srf
+global type f_obten_fecha_str from function_object
+end type
+
+forward prototypes
+global function string f_obten_fecha_str ()
+end prototypes
+
+global function string f_obten_fecha_str ();string ls_fecha_servidor
+datetime ldttm_fecha_servidor
+
+ldttm_fecha_servidor= fecha_servidor(gtr_sce)
+
+ls_fecha_servidor = string(ldttm_fecha_servidor, "dd/mm/yyyy hh:mm:ss")
+
+return ls_fecha_servidor
+
+
+end function
+

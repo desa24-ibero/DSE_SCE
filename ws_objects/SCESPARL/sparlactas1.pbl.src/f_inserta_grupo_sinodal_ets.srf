@@ -1,0 +1,80 @@
+﻿$PBExportHeader$f_inserta_grupo_sinodal_ets.srf
+global type f_inserta_grupo_sinodal_ets from function_object
+end type
+
+forward prototypes
+global function integer f_inserta_grupo_sinodal_ets (integer li_periodo, integer li_anio)
+end prototypes
+
+global function integer f_inserta_grupo_sinodal_ets (integer li_periodo, integer li_anio);//f_inserta_grupo_sinodal_ets
+//	Inserta una nueva acta para ser capturada en línea
+//Recibe:
+//			integer li_periodo
+//			integer li_anio
+//Devuelve:
+//El código de la base de datos de la transacción
+//	-1 Error
+//	0  Exito
+
+string ls_mensaje_sql
+integer li_codigo_sql
+
+INSERT INTO grupo_sinodal_ets
+(	cve_mat,
+	gpo,
+	periodo,
+	anio,
+	tipo_examen ,
+	cve_profesor)
+SELECT distinct 
+         examen_extrao_titulo.cve_mat,
+         examen_extrao_titulo.gpo,   
+         examen_extrao_titulo.periodo,   
+         examen_extrao_titulo.anio,            
+			examen_extrao_titulo.tipo_examen,
+			profesor.cve_profesor
+    FROM alumnos,   
+         coordinaciones,   
+         examen_extrao_titulo,   
+         materias, 
+			profesor,
+			periodos_por_procesos
+   WHERE ( coordinaciones.cve_coordinacion = materias.cve_coordinacion ) and  
+		(coordinaciones.tipo_periodo = :gs_tipo_periodo) and 
+         ( materias.cve_mat = examen_extrao_titulo.cve_mat ) and  
+         ( alumnos.cuenta = examen_extrao_titulo.cuenta ) and  
+         ( ( examen_extrao_titulo.periodo = periodos_por_procesos.periodo ) AND  
+         ( examen_extrao_titulo.anio = periodos_por_procesos.anio ) AND  
+         ( periodos_por_procesos.cve_proceso = 12 ) AND  
+         ( examen_extrao_titulo.tipo_examen in ( 2,6)) AND  
+         ( materias.nivel in ( SELECT cve_nivel FROM nivel )) ) AND 	(( materias.creditos > 0 ) OR ( materias.cve_mat NOT IN (SELECT cve_lab FROM teoria_lab))) AND 
+			( coordinaciones.cve_coordinador = profesor.cve_profesor) AND
+			( periodos_por_procesos.periodo = :li_periodo ) AND
+			( periodos_por_procesos.anio = :li_anio ) 
+	ORDER BY coordinaciones.cve_coordinacion,
+			examen_extrao_titulo.cve_mat,   
+         examen_extrao_titulo.gpo,   
+         examen_extrao_titulo.periodo,   
+         examen_extrao_titulo.anio,            
+			materias.evaluacion, 
+			profesor.cve_profesor,
+			profesor.nombre_completo
+	USING gtr_sce;
+	ls_mensaje_sql= gtr_sce.SqlErrtext
+	li_codigo_sql= gtr_sce.SqlCode
+
+	IF li_codigo_sql <> 0 THEN
+			ROLLBACK USING gtr_sce;
+			Messagebox("Error al insertar grupo_sinodal_ets en f_inserta_grupo_sinodal_ets",ls_mensaje_sql,StopSign!)
+	ELSE
+			COMMIT USING gtr_sce;
+	END IF
+return li_codigo_sql
+
+
+
+
+/* ( materias.nivel in ( 'L','P')) ) AND 	(( materias.creditos > 0 ) OR ( materias.cve_mat NOT IN (SELECT cve_lab FROM teoria_lab))) AND*/
+
+end function
+

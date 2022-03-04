@@ -1,0 +1,49 @@
+﻿$PBExportHeader$dw_bita_bachi_ing.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no print.columns=2 print.columns.width=1700 )
+header(height=166 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=51 color="536870912" )
+detail(height=90 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=folio dbname="bita_bachi.folio" )
+ column=(type=datetime updatewhereclause=yes name=fecha dbname="bita_bachi.fecha" )
+ column=(type=real updatewhereclause=yes name=nuevo dbname="bita_bachi.nuevo" )
+ column=(type=real updatewhereclause=yes name=anterior dbname="bita_bachi.anterior" )
+ column=(type=char(8) updatewhereclause=yes name=usuario dbname="bita_bachi.usuario" )
+ column=(type=long updatewhereclause=yes name=clv_ver dbname="bita_bachi.clv_ver" )
+ column=(type=long updatewhereclause=yes name=clv_per dbname="bita_bachi.clv_per" )
+ column=(type=long updatewhereclause=yes name=anio dbname="bita_bachi.anio" )
+ retrieve="  SELECT bita_bachi.folio,   
+         bita_bachi.fecha,   
+         bita_bachi.nuevo,   
+         bita_bachi.anterior,   
+         bita_bachi.usuario,   
+         bita_bachi.clv_ver,   
+         bita_bachi.clv_per,   
+         bita_bachi.anio  
+    FROM bita_bachi,   
+         aspiran  
+   WHERE ( aspiran.folio = bita_bachi.folio ) and  
+         ( aspiran.clv_ver = bita_bachi.clv_ver ) and  
+         ( aspiran.clv_per = bita_bachi.clv_per ) and  
+         ( aspiran.anio = bita_bachi.anio ) and  
+         (
+         ( aspiran.ing_per = :per ) AND  
+         ( aspiran.ing_anio = :ani ) AND  
+         ( aspiran.pago_exam = 1 ) )   
+ORDER BY bita_bachi.folio ASC,   
+         bita_bachi.fecha ASC   
+" arguments=(("ver", number),("per", number),("ani", number)) )
+text(band=header alignment="2" text="Folio"border="0" color="0" x="132" y="93" height="64" width="333"  name=folio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Fecha"border="0" color="0" x="468" y="93" height="64" width="475"  name=fecha_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Usuario"border="0" color="0" x="1624" y="93" height="64" width="245"  name=usuario_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Nuevo"border="0" color="0" x="951" y="93" height="64" width="329"  name=nuevo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Anterior"border="0" color="0" x="1284" y="93" height="64" width="336"  name=anterior_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text=""border="0" color="0" x="143" y="10" height="64" width="1733"  name=st_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="2" expression="folio"border="0" color="0" x="139" y="4" height="77" width="329" format="[general]"  name=fol  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=10 border="0" color="0" x="472" y="4" height="77" width="475" format=""  name=fecha edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="955" y="4" height="77" width="325" format="[general]"  name=nuevo editmask.mask="###.##" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="1291" y="4" height="77" width="333" format="[general]"  name=anterior editmask.mask="###.##" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="1627" y="4" height="77" width="249" format="[general]"  name=usuario edit.limit=8 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="<dw_bita_bachi_ing>"border="0" color="33554432" x="7" y="3" height="42" width="607"  font.face="Arial" font.height="-6" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

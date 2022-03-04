@@ -1,0 +1,39 @@
+﻿$PBExportHeader$f_obten_folio_documento.srf
+global type f_obten_folio_documento from function_object
+end type
+
+forward prototypes
+global function long f_obten_folio_documento ()
+end prototypes
+
+global function long f_obten_folio_documento ();//f_obten_folio_documento
+//	Recibe	
+
+long ll_posicion_coma, ll_indice_arreglo 
+string ls_mensaje
+integer li_resultado
+long ll_max_clave
+
+
+SELECT isnull(MAX(cve_documento),0) 
+INTO :ll_max_clave
+FROM documento_titulacion
+USING gtr_sce;
+
+li_resultado= gtr_sce.SqlCode
+ls_mensaje= gtr_sce.SqlErrText
+
+if li_resultado = -1 then
+	MessageBox("Error de consulta en documento_titulacion", ls_mensaje, StopSign!)
+	return li_resultado
+elseif li_resultado = 100 then
+	MessageBox("Error de consulta en documento_titulacion", "No existen registros a contar", StopSign!)
+	return li_resultado
+else
+	return ll_max_clave
+end if
+
+
+
+end function
+

@@ -1,0 +1,43 @@
+﻿$PBExportHeader$cf_descipcion_nivel.srf
+global type cf_descipcion_nivel from function_object
+end type
+
+forward prototypes
+global function string cf_descipcion_nivel (string as_nivel, long al_cve_carrera, integer ae_segmento)
+end prototypes
+
+global function string cf_descipcion_nivel (string as_nivel, long al_cve_carrera, integer ae_segmento);STRING ls_des_const
+STRING ls_des_const2
+STRING ls_des_const3
+STRING ls_des_const4
+STRING ls_segmento 
+
+
+// Función que regresa el sergemto solicitado para la descripción del nivel de la carrera.
+SELECT descripcion_constancia, descripcion_constancia2, descripcion_constancia3, descripcion_constancia4
+INTO :ls_des_const, :ls_des_const2, :ls_des_const3, :ls_des_const4
+FROM nivel_constancia 
+WHERE cve_nivel = :as_nivel
+AND cve_carrera = :al_cve_carrera
+USING gtr_sce; 
+
+// Se verifica el segmento solicitado.
+CHOOSE CASE ae_segmento 
+	CASE 1
+		ls_segmento = ls_des_const
+	CASE 2
+		ls_segmento = ls_des_const2
+	CASE 3
+		ls_segmento = ls_des_const3
+	CASE 4
+		ls_segmento = ls_des_const4
+END CHOOSE 
+
+RETURN ls_segmento 
+
+
+
+
+
+end function
+

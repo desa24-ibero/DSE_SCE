@@ -1,0 +1,21 @@
+﻿$PBExportHeader$quita_espacios.srf
+global type quita_espacios from function_object
+end type
+
+forward prototypes
+global function string quita_espacios (character ac_cadena[])
+end prototypes
+
+global function string quita_espacios (character ac_cadena[]);string ls_resultado
+long ll_cont
+for ll_cont = 1 to UpperBound (ac_cadena,1)
+	IF ac_cadena[ll_cont]=" " or ac_cadena[ll_cont]="_" THEN
+		ls_resultado=ls_resultado+"%"
+	ELSE
+		ls_resultado=ls_resultado+ac_cadena[ll_cont]
+	END IF
+next
+
+return ls_resultado
+end function
+

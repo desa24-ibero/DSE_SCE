@@ -1,0 +1,44 @@
+﻿$PBExportHeader$of_obten_plan_titulacion.srf
+global type of_obten_plan_titulacion from function_object
+end type
+
+forward prototypes
+global function long of_obten_plan_titulacion (long al_cuenta, long al_cve_carrera)
+end prototypes
+
+global function long of_obten_plan_titulacion (long al_cuenta, long al_cve_carrera);//of_carrera_plan_titulacion
+//Recibe	al_cuenta			long
+//			al_cve_carrera		long
+//Devuelve el plan de estudios de titulación para la carrera
+
+long ll_cve_concepto, ll_cve_subconcepto, ll_cve_plan, ll_folio_mov_alumnos
+string ls_mensaje
+integer li_codigo_sql
+
+	SELECT
+	cve_plan
+	INTO
+	:ll_cve_plan
+	FROM dbo.titulacion 
+	WHERE dbo.titulacion.cuenta = :al_cuenta
+	AND dbo.titulacion.cve_carrera = :al_cve_carrera
+	USING gtr_sce;
+
+	li_codigo_sql = gtr_sce.SqlCode
+	ls_mensaje = gtr_sce.SqlErrText
+	
+	IF li_codigo_sql= -1 THEN
+		MessageBox("Error al consultar titulacion",ls_mensaje,StopSign! )
+		return  -1
+	ELSE
+		IF ll_cve_plan = 0 THEN
+			return 0
+		END IF		
+	END IF
+
+
+return ll_cve_plan
+
+			
+end function
+

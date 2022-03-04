@@ -1,0 +1,21 @@
+﻿$PBExportHeader$periodo_trim_en_texto.srf
+global type periodo_trim_en_texto from function_object
+end type
+
+forward prototypes
+global function string periodo_trim_en_texto (integer periodo_param)
+end prototypes
+
+global function string periodo_trim_en_texto (integer periodo_param);choose case periodo_param
+	case 0
+		return("1er. Trimestre")
+	case 1
+		return("2do. Trimestre")		
+	case 2
+		return("3er. Trimestre")
+	case 3
+		return("4to. Trimestre")		
+end choose
+
+end function
+

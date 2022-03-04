@@ -1,0 +1,35 @@
+﻿$PBExportHeader$f_llena_configuracion_asignacion_salones.srf
+global type f_llena_configuracion_asignacion_salones from function_object
+end type
+
+forward prototypes
+global function integer f_llena_configuracion_asignacion_salones (ref integer ai_limiteinf[5], ref integer ai_limitesup[5], ref integer ai_cupoinsc[5])
+end prototypes
+
+global function integer f_llena_configuracion_asignacion_salones (ref integer ai_limiteinf[5], ref integer ai_limitesup[5], ref integer ai_cupoinsc[5]);datastore lds_conf_asig_salones
+int li_regresa
+lds_conf_asig_salones = CREATE DataStore
+lds_conf_asig_salones.DataObject = "d_conf_asig_salones"
+lds_conf_asig_salones.SetTransObject(gtr_sce)
+li_regresa = lds_conf_asig_salones.retrieve() 
+if li_regresa = 1 then
+	ai_limiteinf[1] = lds_conf_asig_salones.GetItemNumber(1,"limiteinf5")
+	ai_limiteinf[2] = lds_conf_asig_salones.GetItemNumber(1,"limiteinf4")
+	ai_limiteinf[3] = lds_conf_asig_salones.GetItemNumber(1,"limiteinf3")
+	ai_limiteinf[4] = lds_conf_asig_salones.GetItemNumber(1,"limiteinf2")
+	ai_limiteinf[5] = lds_conf_asig_salones.GetItemNumber(1,"limiteinf1")
+	ai_limitesup[1] = lds_conf_asig_salones.GetItemNumber(1,"limitesup5")
+	ai_limitesup[2] = lds_conf_asig_salones.GetItemNumber(1,"limitesup4")
+	ai_limitesup[3] = lds_conf_asig_salones.GetItemNumber(1,"limitesup3")
+	ai_limitesup[4] = lds_conf_asig_salones.GetItemNumber(1,"limitesup2")
+	ai_limitesup[5] = lds_conf_asig_salones.GetItemNumber(1,"limitesup1")
+	ai_cupoinsc[1] = lds_conf_asig_salones.GetItemNumber(1,"cupoinsc5")
+	ai_cupoinsc[2] = lds_conf_asig_salones.GetItemNumber(1,"cupoinsc4")
+	ai_cupoinsc[3] = lds_conf_asig_salones.GetItemNumber(1,"cupoinsc3")
+	ai_cupoinsc[4] = lds_conf_asig_salones.GetItemNumber(1,"cupoinsc2")
+	ai_cupoinsc[5] = lds_conf_asig_salones.GetItemNumber(1,"cupoinsc1")
+end if
+Destroy lds_conf_asig_salones
+return li_regresa
+end function
+

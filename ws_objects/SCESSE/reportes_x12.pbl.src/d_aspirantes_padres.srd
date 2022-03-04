@@ -1,0 +1,144 @@
+﻿$PBExportHeader$d_aspirantes_padres.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no grid.lines=0 )
+header(height=144 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=92 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=aspiran_folio dbname="aspiran.folio" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_ver dbname="aspiran.clv_ver" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_per dbname="aspiran.clv_per" )
+ column=(type=long updatewhereclause=yes name=aspiran_anio dbname="aspiran.anio" )
+ column=(type=long updatewhereclause=yes name=aspiran_ing_per dbname="aspiran.ing_per" )
+ column=(type=long updatewhereclause=yes name=aspiran_ing_anio dbname="aspiran.ing_anio" )
+ column=(type=char(50) updatewhereclause=yes name=aspirante_nombre dbname="aspirante_nombre" )
+ column=(type=char(50) updatewhereclause=yes name=aspirante_amaterno dbname="aspirante_amaterno" )
+ column=(type=char(50) updatewhereclause=yes name=aspirante_nombre dbname="aspirante_nombre" )
+ column=(type=char(1) updatewhereclause=yes name=aspirante_sexo dbname="aspirante_sexo" )
+ column=(type=char(50) updatewhereclause=yes name=aspirante_telefono dbname="aspirante_telefono" )
+ column=(type=char(50) updatewhereclause=yes name=aspirante_telefono_movil dbname="aspirante_telefono_movil" )
+ column=(type=char(50) updatewhereclause=yes name=aspirante_email dbname="aspirante_email" )
+ column=(type=char(50) updatewhereclause=yes name=padre_apaterno dbname="padre_apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=padre_amaterno dbname="padre_amaterno" )
+ column=(type=char(50) updatewhereclause=yes name=padre_nombre dbname="padre_nombre" )
+ column=(type=char(1) updatewhereclause=yes name=padre_sexo dbname="padre_sexo" )
+ column=(type=char(50) updatewhereclause=yes name=padre_telefono dbname="padre_telefono" )
+ column=(type=char(5) updatewhereclause=yes name=padre_ladacasa dbname="padre_ladacasa" )
+ column=(type=char(5) updatewhereclause=yes name=padre_ladaof dbname="padre_ladaof" )
+ column=(type=char(5) updatewhereclause=yes name=padre_ladacel dbname="padre_ladacel" )
+ column=(type=char(10) updatewhereclause=yes name=padre_telefonoof dbname="padre_telefonoof" )
+ column=(type=char(10) updatewhereclause=yes name=padre_telefonocel dbname="padre_telefonocel" )
+ column=(type=char(100) updatewhereclause=yes name=v_carreras_carrera dbname="carrera" )
+ column=(type=char(10) updatewhereclause=yes name=aspirante_estatus dbname="aspirante_estatus" )
+ retrieve="  SELECT aspiran.folio,   
+         aspiran.clv_ver,   
+         aspiran.clv_per,   
+         aspiran.anio,   
+         aspiran.ing_per,   
+         aspiran.ing_anio,   
+         aspirante_nombre = general.apaterno,   
+         aspirante_amaterno =general.amaterno,   
+         aspirante_nombre =general.nombre,   
+         aspirante_sexo = general.sexo,   
+         aspirante_telefono =general.telefono,   
+         aspirante_telefono_movil =general.telefono_movil,   
+         aspirante_email = general.e_mail,   
+         padre_apaterno =padres.apaterno,   
+         padre_amaterno = padres.amaterno,   
+         padre_nombre =padres.nombre,   
+         padre_sexo = padres.sexo,   
+         padre_telefono =padres.telefono,   
+         padre_ladacasa =padres.ladacasa,   
+         padre_ladaof =padres.ladaof,   
+         padre_ladacel =padres.ladacel,   
+         padre_telefonoof = padres.telefonoof,   
+         padre_telefonocel = padres.telefonocel,   
+         carrera = v_carreras.carrera,   
+         aspirante_estatus = status.nombre  
+    FROM aspiran,   
+         general,   
+         padres,   
+         v_carreras,   
+         status  
+   WHERE ( aspiran.folio = general.folio ) and  
+         ( general.folio = padres.folio ) and  
+         ( aspiran.clv_carr = v_carreras.cve_carrera ) and  
+         ( aspiran.clv_ver = general.clv_ver ) and  
+         ( aspiran.clv_per = general.clv_per ) and  
+         ( aspiran.anio = general.anio ) and  
+         ( general.clv_ver = padres.clv_ver ) and  
+         ( general.clv_per = padres.clv_per ) and  
+         ( general.anio = padres.anio ) and  
+         ( aspiran.status = status.status ) and  
+         ( ( aspiran.ing_per = :a_ing_per ) AND  
+         ( aspiran.ing_anio = :a_ing_anio ) AND  
+         ( aspiran.status = 1 ) )    
+" filter=" aspiran_clv_ver =4"arguments=(("a_ing_per", number),("a_ing_anio", number)) )
+text(band=header alignment="2" text="Aspiran
+Folio" border="0" color="33554432" x="9" y="8" height="128" width="329" html.valueishtml="0"  name=aspiran_folio_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Clv Ver" border="0" color="33554432" x="347" y="8" height="128" width="329" html.valueishtml="0"  name=aspiran_clv_ver_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Clv Per" border="0" color="33554432" x="686" y="8" height="128" width="329" html.valueishtml="0"  name=aspiran_clv_per_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Anio" border="0" color="33554432" x="1024" y="8" height="128" width="329" html.valueishtml="0"  name=aspiran_anio_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Ing Per" border="0" color="33554432" x="1362" y="8" height="128" width="329" html.valueishtml="0"  name=aspiran_ing_per_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Ing Anio" border="0" color="33554432" x="1701" y="8" height="128" width="329" html.valueishtml="0"  name=aspiran_ing_anio_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="V Carreras
+Carrera" border="0" color="33554432" x="2039" y="8" height="128" width="2770" html.valueishtml="0"  name=v_carreras_carrera_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Aspirante Nombre" border="0" color="0" x="4818" y="4" height="76" width="1339" html.valueishtml="0"  name=aspirante_nombre_t visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Aspirante Amaterno" border="0" color="0" x="6167" y="4" height="76" width="1339" html.valueishtml="0"  name=aspirante_amaterno_t visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Aspirante Nombre" border="0" color="0" x="7515" y="4" height="76" width="1339" html.valueishtml="0"  name=aspirante_nombre_1_t visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Aspirante Sexo" border="0" color="0" x="8864" y="4" height="76" width="325" html.valueishtml="0"  name=aspirante_sexo_t visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Aspirante Telefono" border="0" color="0" x="9198" y="4" height="76" width="1339" html.valueishtml="0"  name=aspirante_telefono_t visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Aspirante Telefono Movil" border="0" color="0" x="10546" y="4" height="76" width="1339" html.valueishtml="0"  name=aspirante_telefono_movil_t visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Aspirante Email" border="0" color="0" x="11895" y="4" height="76" width="1339" html.valueishtml="0"  name=aspirante_email_t visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Padre Apaterno" border="0" color="0" x="13243" y="4" height="76" width="1339" html.valueishtml="0"  name=padre_apaterno_t visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Padre Amaterno" border="0" color="0" x="14592" y="4" height="76" width="1339" html.valueishtml="0"  name=padre_amaterno_t visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Padre Nombre" border="0" color="0" x="15941" y="4" height="76" width="718" html.valueishtml="0"  name=padre_nombre_t visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Padre Sexo" border="0" color="0" x="16667" y="4" height="76" width="283" html.valueishtml="0"  name=padre_sexo_t visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Padre Telefono" border="0" color="0" x="16960" y="4" height="76" width="1339" html.valueishtml="0"  name=padre_telefono_t visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Padre Ladacasa" border="0" color="0" x="18309" y="4" height="76" width="128" html.valueishtml="0"  name=padre_ladacasa_t visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Padre Ladaof" border="0" color="0" x="18446" y="4" height="76" width="128" html.valueishtml="0"  name=padre_ladaof_t visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Padre Ladacel" border="0" color="0" x="18583" y="4" height="76" width="128" html.valueishtml="0"  name=padre_ladacel_t visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Padre Telefonoof" border="0" color="0" x="18720" y="4" height="76" width="261" html.valueishtml="0"  name=padre_telefonoof_t visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Padre Telefonocel" border="0" color="0" x="18990" y="4" height="76" width="261" html.valueishtml="0"  name=padre_telefonocel_t visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Aspirante Estatus" border="0" color="0" x="19259" y="4" height="76" width="261" html.valueishtml="0"  name=aspirante_estatus_t visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="33554432" x="9" y="8" height="76" width="329" format="[general]" html.valueishtml="0"  name=aspiran_folio visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="33554432" x="347" y="8" height="76" width="329" format="[general]" html.valueishtml="0"  name=aspiran_clv_ver visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="33554432" x="686" y="8" height="76" width="329" format="[general]" html.valueishtml="0"  name=aspiran_clv_per visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="33554432" x="1024" y="8" height="76" width="329" format="[general]" html.valueishtml="0"  name=aspiran_anio visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="33554432" x="1362" y="8" height="76" width="329" format="[general]" html.valueishtml="0"  name=aspiran_ing_per visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="33554432" x="1701" y="8" height="76" width="329" format="[general]" html.valueishtml="0"  name=aspiran_ing_anio visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=24 alignment="0" tabsequence=32766 border="0" color="33554432" x="2039" y="8" height="76" width="2770" format="[general]" html.valueishtml="0"  name=v_carreras_carrera visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="33554432" x="4818" y="0" height="64" width="1339" format="[general]" html.valueishtml="0"  name=aspirante_nombre visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="33554432" x="6167" y="0" height="64" width="1339" format="[general]" html.valueishtml="0"  name=aspirante_amaterno visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="33554432" x="7515" y="0" height="64" width="1339" format="[general]" html.valueishtml="0"  name=aspirante_nombre_1 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="33554432" x="8864" y="0" height="64" width="325" format="[general]" html.valueishtml="0"  name=aspirante_sexo visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="33554432" x="9198" y="0" height="64" width="1339" format="[general]" html.valueishtml="0"  name=aspirante_telefono visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="33554432" x="10546" y="0" height="64" width="1339" format="[general]" html.valueishtml="0"  name=aspirante_telefono_movil visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="33554432" x="11895" y="0" height="64" width="1339" format="[general]" html.valueishtml="0"  name=aspirante_email visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="33554432" x="13243" y="0" height="64" width="1339" format="[general]" html.valueishtml="0"  name=padre_apaterno visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="33554432" x="14592" y="0" height="64" width="1339" format="[general]" html.valueishtml="0"  name=padre_amaterno visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="0" color="33554432" x="15941" y="0" height="64" width="718" format="[general]" html.valueishtml="0"  name=padre_nombre visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="0" color="33554432" x="16667" y="0" height="64" width="283" format="[general]" html.valueishtml="0"  name=padre_sexo visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=18 alignment="0" tabsequence=32766 border="0" color="33554432" x="16960" y="0" height="64" width="1339" format="[general]" html.valueishtml="0"  name=padre_telefono visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=19 alignment="0" tabsequence=32766 border="0" color="33554432" x="18309" y="0" height="64" width="128" format="[general]" html.valueishtml="0"  name=padre_ladacasa visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=20 alignment="0" tabsequence=32766 border="0" color="33554432" x="18446" y="0" height="64" width="128" format="[general]" html.valueishtml="0"  name=padre_ladaof visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=21 alignment="0" tabsequence=32766 border="0" color="33554432" x="18583" y="0" height="64" width="128" format="[general]" html.valueishtml="0"  name=padre_ladacel visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=22 alignment="0" tabsequence=32766 border="0" color="33554432" x="18720" y="0" height="64" width="261" format="[general]" html.valueishtml="0"  name=padre_telefonoof visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=23 alignment="0" tabsequence=32766 border="0" color="33554432" x="18990" y="0" height="64" width="261" format="[general]" html.valueishtml="0"  name=padre_telefonocel visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=25 alignment="0" tabsequence=32766 border="0" color="33554432" x="19259" y="0" height="64" width="261" format="[general]" html.valueishtml="0"  name=aspirante_estatus visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(usetemplate="" headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0  template=(comment="" encoding="UTF-16LE" name="d_aspirantes_padres" xml="<?xml version=~"1.0~" encoding=~"UTF-16LE~" standalone=~"no~"?><d_aspirantes_padres><d_aspirantes_padres_row __pbband=~"detail~"><aspiran_folio>aspiran_folio</aspiran_folio><aspiran_clv_ver>aspiran_clv_ver</aspiran_clv_ver><aspiran_clv_per>aspiran_clv_per</aspiran_clv_per><aspiran_anio>aspiran_anio</aspiran_anio><aspiran_ing_per>aspiran_ing_per</aspiran_ing_per><aspiran_ing_anio>aspiran_ing_anio</aspiran_ing_anio><general_apaterno/><general_amaterno/><general_nombre/><general_sexo/><general_telefono/><general_telefono_movil/><general_e_mail/><padres_apaterno/><padres_amaterno/><padres_nombre/><padres_sexo/><padres_telefono/><padres_ladacasa/><padres_ladaof/><padres_ladacel/><padres_telefonoof/><padres_telefonocel/><v_carreras_carrera>v_carreras_carrera</v_carreras_carrera></d_aspirantes_padres_row></d_aspirantes_padres>"))
+import.xml(usetemplate="" )
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

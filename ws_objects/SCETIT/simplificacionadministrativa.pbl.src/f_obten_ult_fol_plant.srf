@@ -1,0 +1,80 @@
+﻿$PBExportHeader$f_obten_ult_fol_plant.srf
+global type f_obten_ult_fol_plant from function_object
+end type
+
+forward prototypes
+global function long f_obten_ult_fol_plant (integer al_cve_doc_control_sep, integer al_cve_plantel)
+end prototypes
+
+global function long f_obten_ult_fol_plant (integer al_cve_doc_control_sep, integer al_cve_plantel);//f_obten_ult_fol_plant
+//al_cve_doc_control_sep long
+//
+//Devuelve el ultimo folio en base al tipo de documento recibido
+long ll_ultimo_folio, ll_valor_prefijo, ll_factor_anio, ll_factor_mas_un_anio, ll_prefijo_mas_un_anio
+datetime ldttm_fecha_servidor
+date ldt_fecha_servidor
+integer li_anio, li_anio_dos_digitos
+ldttm_fecha_servidor= fecha_servidor(gtr_sce)
+ldt_fecha_servidor= date(ldttm_fecha_servidor)
+li_anio = year(ldt_fecha_servidor)
+if li_anio >=2000 then
+	li_anio_dos_digitos = li_anio - 2000
+else
+	li_anio_dos_digitos = li_anio - 1900
+end if
+ll_factor_anio= li_anio_dos_digitos * 1000000
+ll_factor_mas_un_anio = (li_anio_dos_digitos + 1) * 1000000
+
+if al_cve_doc_control_sep = 1 or al_cve_doc_control_sep = 2 then
+	ll_valor_prefijo= 100000000 + ll_factor_anio
+	ll_prefijo_mas_un_anio = 100000000 + ll_factor_mas_un_anio
+
+	SELECT MAX(dbo.control_sep_planteles.numero)
+	INTO :ll_ultimo_folio
+	FROM dbo.control_sep_planteles
+	WHERE dbo.control_sep_planteles.cve_doc_control_sep in (1,2)
+	AND   dbo.control_sep_planteles.numero  >= :ll_valor_prefijo
+	AND   dbo.control_sep_planteles.numero  < :ll_prefijo_mas_un_anio
+	AND   dbo.control_sep_planteles.cve_plantel  = :al_cve_plantel
+	USING gtr_sce;
+
+elseif al_cve_doc_control_sep = 3 then
+	ll_valor_prefijo= 200000000 + ll_factor_anio
+	ll_prefijo_mas_un_anio = 200000000 + ll_factor_mas_un_anio
+
+	SELECT MAX(dbo.control_sep_planteles.numero)
+	INTO :ll_ultimo_folio
+	FROM dbo.control_sep_planteles
+	WHERE dbo.control_sep_planteles.cve_doc_control_sep in (3)
+	AND   dbo.control_sep_planteles.numero  >= :ll_valor_prefijo
+	AND   dbo.control_sep_planteles.numero  < :ll_prefijo_mas_un_anio
+	AND   dbo.control_sep_planteles.cve_plantel  = :al_cve_plantel
+	USING gtr_sce;
+
+elseif al_cve_doc_control_sep > 3 then
+	ll_valor_prefijo= 300000000 + ll_factor_anio
+	ll_prefijo_mas_un_anio = 300000000 + ll_factor_mas_un_anio
+
+	SELECT MAX(dbo.control_sep_planteles.numero)
+	INTO :ll_ultimo_folio
+	FROM dbo.control_sep_planteles
+	WHERE dbo.control_sep_planteles.cve_doc_control_sep > 3
+	AND   dbo.control_sep_planteles.numero  >= :ll_valor_prefijo
+	AND   dbo.control_sep_planteles.numero  < :ll_prefijo_mas_un_anio
+	AND   dbo.control_sep_planteles.cve_plantel  = :al_cve_plantel
+	USING gtr_sce;
+
+else 
+	ll_ultimo_folio= 0
+end if
+
+if isnull(ll_ultimo_folio) then
+	ll_ultimo_folio= ll_valor_prefijo
+end if
+
+return ll_ultimo_folio
+
+
+
+end function
+

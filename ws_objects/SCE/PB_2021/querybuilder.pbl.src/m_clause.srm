@@ -1,0 +1,223 @@
+﻿$PBExportHeader$m_clause.srm
+forward
+global type m_clause from menu
+end type
+type m_column from menu within m_clause
+end type
+type m_function from menu within m_clause
+end type
+type m_- from menu within m_clause
+end type
+type m_clear from menu within m_clause
+end type
+type m_insertclause from menu within m_clause
+end type
+type m_deleteclause from menu within m_clause
+end type
+global type m_clause from menu
+m_column m_column
+m_function m_function
+m_- m_-
+m_clear m_clear
+m_insertclause m_insertclause
+m_deleteclause m_deleteclause
+end type
+end forward
+
+global type m_clause from menu
+m_column m_column
+m_function m_function
+m_- m_-
+m_clear m_clear
+m_insertclause m_insertclause
+m_deleteclause m_deleteclause
+end type
+global m_clause m_clause
+
+type variables
+DataWindow idw
+end variables
+
+forward prototypes
+public function integer of_setdw (datawindow adw)
+end prototypes
+
+public function integer of_setdw (datawindow adw);idw = adw
+
+RETURN 1
+end function
+
+on m_clause.create
+m_clause=this
+call super::create
+this.m_column=create m_column
+this.m_function=create m_function
+this.m_-=create m_-
+this.m_clear=create m_clear
+this.m_insertclause=create m_insertclause
+this.m_deleteclause=create m_deleteclause
+this.Item[UpperBound(this.Item)+1]=this.m_column
+this.Item[UpperBound(this.Item)+1]=this.m_function
+this.Item[UpperBound(this.Item)+1]=this.m_-
+this.Item[UpperBound(this.Item)+1]=this.m_clear
+this.Item[UpperBound(this.Item)+1]=this.m_insertclause
+this.Item[UpperBound(this.Item)+1]=this.m_deleteclause
+end on
+
+on m_clause.destroy
+call super::destroy
+destroy(this.m_column)
+destroy(this.m_function)
+destroy(this.m_-)
+destroy(this.m_clear)
+destroy(this.m_insertclause)
+destroy(this.m_deleteclause)
+end on
+
+type m_column from menu within m_clause
+end type
+
+on m_column.create
+call super::create
+this.text = "Column"
+end on
+
+on m_column.destroy
+call super::destroy
+end on
+
+event clicked;DataStore lds
+DataWindowChild ldwc
+String ls_return
+String ls_clipboard
+
+lds = CREATE DataStore
+lds.DataObject = 'd_columnlist'
+
+idw.GetChild('column_name', ldwc)
+
+ldwc.RowsCopy(1, ldwc.RowCount(), Primary!, lds, 1, Primary!)
+
+OpenWithParm(w_tablelist, lds)
+
+ls_return = Message.StringParm
+
+IF ls_return = '@@CANCEL@@' OR ls_return = '' OR IsNull(ls_return) THEN
+	RETURN
+END IF
+
+ls_clipboard = ClipBoard()
+
+ClipBoard(Left(ls_return, Len(ls_return) - 1))
+
+idw.Paste()
+
+ClipBoard(ls_clipboard)
+
+end event
+
+type m_function from menu within m_clause
+end type
+
+on m_function.create
+call super::create
+this.text = "Function"
+end on
+
+on m_function.destroy
+call super::destroy
+end on
+
+event clicked;DataStore lds
+DataWindowChild ldwc
+String ls_return
+String ls_clipboard
+
+lds = CREATE DataStore
+lds.DataObject = 'd_functionlist'
+
+OpenWithParm(w_tablelist, lds)
+
+ls_return = Message.StringParm
+
+IF ls_return = '@@CANCEL@@' OR ls_return = '' OR IsNull(ls_return) THEN
+	RETURN
+END IF
+
+ls_clipboard = ClipBoard()
+
+ClipBoard(Left(ls_return, Len(ls_return) - 1))
+
+idw.Paste()
+
+ClipBoard(ls_clipboard)
+end event
+
+type m_- from menu within m_clause
+end type
+
+on m_-.create
+call super::create
+this.text = "-"
+end on
+
+on m_-.destroy
+call super::destroy
+end on
+
+type m_clear from menu within m_clause
+end type
+
+on m_clear.create
+call super::create
+this.text = "Clear"
+end on
+
+on m_clear.destroy
+call super::destroy
+end on
+
+event clicked;idw.Reset()
+idw.InsertRow(0)
+end event
+
+type m_insertclause from menu within m_clause
+end type
+
+on m_insertclause.create
+call super::create
+this.text = "Insert Clause"
+end on
+
+on m_insertclause.destroy
+call super::destroy
+end on
+
+event clicked;idw.InsertRow(idw.GetRow())
+end event
+
+type m_deleteclause from menu within m_clause
+end type
+
+on m_deleteclause.create
+call super::create
+this.text = "Delete Clause"
+end on
+
+on m_deleteclause.destroy
+call super::destroy
+end on
+
+event clicked;IF idw.GetRow() = idw.RowCount() AND &
+   idw.RowCount() > 1 THEN
+	
+	idw.SetItem(idw.GetRow() - 1, 'logical', '')
+END IF
+
+idw.DeleteRow(idw.GetRow())
+
+IF idw.RowCount() = 0 THEN
+	idw.InsertRow(0)
+END IF
+end event
+

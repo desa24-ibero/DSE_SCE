@@ -1,0 +1,31 @@
+﻿$PBExportHeader$dw_#area.srd
+$PBExportComments$Perfil de areas
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=93 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=1 color="536870912" )
+table(column=(type=real updatewhereclause=yes name=cali_are_calif dbname="calif" )
+ column=(type=long updatewhereclause=yes name=cali_are_clv_area dbname="clv_area" )
+ retrieve="  SELECT cali_are.calif,   
+         cali_are.clv_area  
+    FROM aspiran,   
+         cali_are  
+   WHERE ( aspiran.folio = cali_are.folio ) and  
+         ( cali_are.clv_ver = aspiran.clv_ver ) and  
+         ( cali_are.clv_per = aspiran.clv_per ) and  
+         ( cali_are.anio = aspiran.anio ) and  
+         ( :ver=99 or aspiran.clv_ver = :ver ) AND  
+         ( aspiran.clv_per = :per ) AND  
+         ( aspiran.anio = :ani ) AND  
+         ( :carr = 9999 OR  
+         aspiran.clv_carr = :carr ) AND  
+         :status like ~"%~"+convert(varchar(1),aspiran.status)+~"%~" AND  
+         ( cali_are.clv_area = :area ) AND  
+         aspiran.pago_exam = 1    
+" arguments=(("ver", number),("per", number),("ani", number),("carr", number),("area", number),("status", string)) )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="10" y="4" height="77" width="1418" format="[general]"  name=cali_are_calif edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=summary id=2 alignment="0" tabsequence=32766 border="0" color="0" x="1" y="8" height="81" width="686" format="[general]"  name=cali_are_clv_area dddw.name=dw_areas dddw.displaycolumn=area dddw.datacolumn=clv_area dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="avg(  cali_are_calif  for all )"border="0" color="0" x="700" y="8" height="81" width="430" format="#0"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="stdev(   cali_are_calif   for all )"border="0" color="0" x="1139" y="8" height="81" width="403" format="##0.00"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

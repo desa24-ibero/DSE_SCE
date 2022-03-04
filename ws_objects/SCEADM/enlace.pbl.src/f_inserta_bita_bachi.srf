@@ -1,0 +1,72 @@
+﻿$PBExportHeader$f_inserta_bita_bachi.srf
+global type f_inserta_bita_bachi from function_object
+end type
+
+forward prototypes
+global function integer f_inserta_bita_bachi (long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio, long al_folio_apartado, integer ai_clv_ver_apartado, real ar_promedio)
+end prototypes
+
+global function integer f_inserta_bita_bachi (long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio, long al_folio_apartado, integer ai_clv_ver_apartado, real ar_promedio);//f_inserta_bita_bachi
+//Recibe 	:	al_folio	long
+//		ai_clv_ver	integer
+//		ai_clv_per	integer
+//		ai_anio		integer
+//		al_folio_apartado		long
+//		ai_clv_ver_apartado	integer
+//		ar_promedio		real
+//Devuelve : 0 Inserción/Actualización exitosa
+//			100 No existe el registro
+//			 -1 Error al insertar/actualizar
+long ll_cuenta, ll_folio_anterior
+int li_codigo_sql
+string ls_mensaje, ls_operacion
+real lr_null
+
+SetNull(lr_null)
+
+IF al_folio = al_folio_apartado THEN
+	ll_folio_anterior = al_folio
+else
+	ll_folio_anterior = al_folio
+END IF
+
+INSERT INTO bita_bachi(
+	folio,
+	clv_ver,
+	clv_per,
+	anio,
+	fecha,
+	nuevo,
+	anterior,
+	usuario
+	)
+SELECT
+	:al_folio_apartado,
+	:ai_clv_ver_apartado,
+	clv_per,
+	anio,
+	fecha_hora= getdate(),
+	:ar_promedio,
+	:lr_null, 
+	usuario = suser_name() 
+	FROM aspiran
+	WHERE folio = :al_folio
+	AND clv_ver = :ai_clv_ver
+	AND clv_per = :ai_clv_per 
+	AND anio = :ai_anio
+	USING gtr_sadm;
+	ls_operacion = "Insertar"
+
+li_codigo_sql = gtr_sadm.SqlCode
+ls_mensaje = gtr_sadm.SqlErrText
+
+IF li_codigo_sql = -1 THEN
+	MessageBox("Error al "+ls_operacion+" en bita_bachi", ls_mensaje, StopSign!)
+	RETURN -1
+ELSE
+	RETURN 0
+END IF
+
+
+end function
+

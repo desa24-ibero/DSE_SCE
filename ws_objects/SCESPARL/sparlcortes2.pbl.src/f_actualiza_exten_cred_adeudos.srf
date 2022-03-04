@@ -1,0 +1,130 @@
+﻿$PBExportHeader$f_actualiza_exten_cred_adeudos.srf
+global type f_actualiza_exten_cred_adeudos from function_object
+end type
+
+forward prototypes
+global function integer f_actualiza_exten_cred_adeudos (integer ai_valor_extension)
+end prototypes
+
+global function integer f_actualiza_exten_cred_adeudos (integer ai_valor_extension);//f_actualiza_exten_cred_adeudos
+//Actualiza la extensión de créditos de todos los alumnos que adeudan el prerrequisito de ingles
+//
+//Recibe		ai_valor_extension	
+//
+INTEGER le_ext_cred_prim, le_ext_cred_prim_max 
+INTEGER le_ext_cred_ver, le_ext_cred_ver_max 
+INTEGER le_ext_cred_oto, le_ext_cred_oto_max 
+
+SELECT valor_minimo, valor_maximo 
+INTO :le_ext_cred_prim, :le_ext_cred_prim_max
+FROM parametros_banderas 
+WHERE bandera = 'exten_cred_ing' 
+AND periodo = 0 
+USING gtr_sce;
+IF gtr_sce.SQLCODE < 0 THEN 
+	MESSAGEBOX("Error", "Se produjo un error al recuperar la Extensión de Créditos por Prerrequisito de Inglés para Primavera: " + gtr_sce.SQLERRTEXT)
+	MESSAGEBOX("Error", "FAVOR DE VERIFICAR ANTES DE REALIZAR LOS CORTES")
+	le_ext_cred_prim = 20
+END IF
+
+SELECT valor_minimo, valor_maximo 
+INTO :le_ext_cred_ver, :le_ext_cred_ver_max 
+FROM parametros_banderas 
+WHERE bandera = 'exten_cred_ing' 
+AND periodo = 1 
+USING gtr_sce;
+IF gtr_sce.SQLCODE < 0 THEN 
+	MESSAGEBOX("Error", "Se produjo un error al recuperar la Extensión de Créditos por Prerrequisito de Inglés para Verano: " + gtr_sce.SQLERRTEXT)
+	MESSAGEBOX("Error", "FAVOR DE VERIFICAR ANTES DE REALIZAR LOS CORTES")
+	le_ext_cred_ver = 40
+END IF
+
+SELECT valor_minimo, valor_maximo 
+INTO :le_ext_cred_oto, :le_ext_cred_oto_max 
+FROM parametros_banderas 
+WHERE bandera = 'exten_cred_ing' 
+AND periodo = 2
+USING gtr_sce;
+IF gtr_sce.SQLCODE < 0 THEN 
+	MESSAGEBOX("Error", "Se produjo un error al recuperar la Extensión de Créditos por Prerrequisito de Inglés para Otoño: " + gtr_sce.SQLERRTEXT)
+	MESSAGEBOX("Error", "FAVOR DE VERIFICAR ANTES DE REALIZAR LOS CORTES")
+	le_ext_cred_oto = 40
+END IF
+
+
+
+Integer  li_codigo_sql, li_codigo_sql2
+String ls_mensaje_sql, ls_mensaje_sql2
+long ll_cant_alumnos
+
+IF ai_valor_extension <= 0 THEN
+	Messagebox("Valor no permitido","No es posible poner asignar cero o menos a la columna exten_cred",StopSign!)
+	RETURN -1
+END IF
+
+IF ai_valor_extension > 68 THEN
+	Messagebox("Valor no permitido","No es posible poner asignar ["+string(ai_valor_extension)+"] a la columna exten_cred",StopSign!)
+	RETURN -1
+END IF
+
+//IF ai_valor_extension <> 48 and ai_valor_extension <> 20 THEN
+IF ai_valor_extension <> le_ext_cred_oto and ai_valor_extension <> le_ext_cred_ver  and ai_valor_extension <> le_ext_cred_prim THEN
+	Messagebox("Valor no permitido","No es posible poner asignar ["+string(ai_valor_extension)+"] a la columna exten_cred",StopSign!)
+	RETURN -1
+END IF
+
+SetPointer (HourGlass!)
+
+UPDATE banderas
+SET cve_flag_prerreq_ingles = 0
+FROM banderas b, academicos a, plan_estudios pln
+WHERE b.cuenta = a.cuenta
+AND   (a.nivel = "L")
+AND   (b.cuenta IN (SELECT cuenta 
+						FROM historico 
+                			WHERE cve_mat IN( SELECT cve_mat FROM materias_requisito WHERE id_prerrequisito = 'ING')
+		                 							 AND   calificacion = "AC" ))
+AND	(a.cve_carrera = pln.cve_carrera ) 
+AND	(a.cve_plan = pln.cve_plan ) 
+AND	(pln.tipo_periodo =  :gs_tipo_periodo ) 		  
+USING gtr_sce;
+
+
+ls_mensaje_sql= gtr_sce.SqlErrtext
+li_codigo_sql= gtr_sce.SqlCode
+
+UPDATE banderas
+SET exten_cred = :ai_valor_extension
+FROM banderas b, academicos a, plan_estudios pln
+WHERE b.cuenta = a.cuenta
+AND   (a.nivel = "L")
+AND   (b.cve_flag_prerreq_ingles= 1)
+AND   (b.cuenta NOT IN (SELECT cuenta FROM historico 
+                WHERE cve_mat  IN( SELECT cve_mat FROM materias_requisito WHERE id_prerrequisito = 'ING') 
+							                AND   calificacion = "AC" ))
+AND	(a.cve_carrera = pln.cve_carrera ) 
+AND	(a.cve_plan = pln.cve_plan ) 
+AND	(pln.tipo_periodo =  :gs_tipo_periodo ) 		  					 
+USING gtr_sce;
+
+//= 4078
+
+
+ls_mensaje_sql2= gtr_sce.SqlErrtext
+li_codigo_sql2= gtr_sce.SqlCode
+
+
+IF li_codigo_sql <>0 or li_codigo_sql2<>0 THEN
+	ROLLBACK USING gtr_sce;
+	Messagebox("Error al actualizar la bandera de extension de creditos en f_actualiza_exten_cred_adeudos",ls_mensaje_sql,StopSign!)
+ELSE 
+	COMMIT USING gtr_sce;
+END IF
+
+SetPointer (Arrow!)
+
+RETURN li_codigo_sql
+
+
+end function
+

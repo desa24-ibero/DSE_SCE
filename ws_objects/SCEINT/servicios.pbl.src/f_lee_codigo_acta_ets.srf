@@ -1,0 +1,130 @@
+﻿$PBExportHeader$f_lee_codigo_acta_ets.srf
+global type f_lee_codigo_acta_ets from function_object
+end type
+
+forward prototypes
+global function integer f_lee_codigo_acta_ets (string as_codigo_barras, ref integer ai_periodo, ref integer ai_anio, ref integer ai_no_acta, ref string as_nivel, ref integer ai_cve_tipo_examen)
+end prototypes
+
+global function integer f_lee_codigo_acta_ets (string as_codigo_barras, ref integer ai_periodo, ref integer ai_anio, ref integer ai_no_acta, ref string as_nivel, ref integer ai_cve_tipo_examen);//f_lee_codigo_acta_ets
+//Recibe 
+//			as_codigo_barras		string
+//Devuelve:
+//	integer -1  Código Inválido
+//			   0	Lectura Exitosa
+//FORMATO DE CODIGO ESPERADO
+//*PAAAANNNNGT*
+//Descripción del código de 19 caracteres
+//       POSICION   DESCRIPCIÓN
+//*             0   INICIO DEL CODIGO DE BARRAS
+//P  		       1   periodo correspondiente (0-Primavera/1-Verano/2-Otoño)
+//AAAA  	     2-5   año correspondiente en cuatro dígitos
+//NNNN        6-9   no_acta Número de acta asignado en cuatro dígitos
+//G		      10   nivel del grado correspondiente (L-Licenciatura/P-Posgrado)
+//T		      11   tipo de examen correspondiente (2-Extraordinario/6-A Título de Suficiencia)
+//*            12   FIN DEL CODIGO DE BARRAS
+//
+//DEVUELVE:
+//		ai_periodo				integer
+//		ai_anio					integer
+//		ai_no_acta				integer
+//		as_nivel					string
+//		ai_cve_tipo_examen	integer
+		
+
+long		   ll_cve_mat	
+string		ls_gpo		
+integer		li_periodo	
+integer		li_anio		
+integer		li_no_acta		
+string		ls_nivel		
+integer		li_cve_tipo_examen
+string ls_cve_mat, ls_periodo, ls_anio, ls_no_acta, ls_asterisco_inicial, ls_asterisco_final, ls_cve_tipo_examen
+
+
+if len(as_codigo_barras)<>11 then
+	MessageBox("Código Incorrecto","El código leido no corresponde a un código válido",StopSign!)
+	return -1
+end if
+
+//ls_asterisco_inicial = mid(as_codigo_barras,1,1)
+//ls_cve_mat = mid(as_codigo_barras,2,5)
+//ls_gpo     = mid(as_codigo_barras,7,2)
+//
+//if pos(ls_gpo,'_')>0 then
+//	ls_gpo = mid(ls_gpo,1,1)
+//end if
+
+ls_periodo = mid(as_codigo_barras,1,1)
+ls_anio    = mid(as_codigo_barras,2,4)
+ls_no_acta = mid(as_codigo_barras,6,4)
+ls_nivel   = mid(as_codigo_barras,10,1)
+ls_cve_tipo_examen   = mid(as_codigo_barras,11,1)
+
+//ls_asterisco_final = mid(as_codigo_barras,19,1)
+
+//if not isnumber(ls_cve_mat) then
+//	MessageBox("Código Incorrecto","El código de la materia leido ["+ls_cve_mat+"] no corresponde a un código válido",StopSign!)
+//	return -1	
+//end if
+//ll_cve_mat = long(ls_cve_mat)
+//
+//if not f_grupo_valido(ls_gpo) then
+//	MessageBox("Código Incorrecto","El código del grupo leido ["+ls_gpo+"] no corresponde a un código válido",StopSign!)
+//	return -1	
+//end if
+//
+
+if not isnumber(ls_periodo) then
+	MessageBox("Código Incorrecto","El código del periodo leido ["+ls_periodo+"] no corresponde a un código válido",StopSign!)
+	return -1	
+end if
+
+li_periodo = integer(ls_periodo)
+if li_periodo <0 or li_periodo>2 then
+	MessageBox("Código Incorrecto","El código del periodo leido ["+ls_periodo+"] no corresponde a un código válido",StopSign!)
+	return -1	
+end if
+
+if not isnumber(ls_anio) then
+	MessageBox("Código Incorrecto","El código del año leido ["+ls_anio+"] no corresponde a un código válido",StopSign!)
+	return -1	
+end if
+li_anio = integer(ls_anio)
+		
+if not isnumber(ls_no_acta) then
+	MessageBox("Código Incorrecto","El código del numero de acta leido ["+ls_no_acta+"] no corresponde a un código válido",StopSign!)
+	return -1	
+end if		
+li_no_acta = integer(ls_no_acta)	
+
+INTEGER le_registros
+SELECT COUNT(*) 
+INTO :le_registros
+FROM nivel 
+WHERE cve_nivel = :ls_nivel
+USING gtr_sce; 
+IF ISNULL(le_registros) THEN le_registros = 0 
+
+//if ls_nivel <>'L' and ls_nivel<>'P' then
+IF le_registros = 0 THEN 
+	MessageBox("Código Incorrecto","El código del nivel leido ["+ls_nivel+"] no corresponde a un código válido",StopSign!)
+	return -1	
+end if
+
+if not isnumber(ls_cve_tipo_examen) then
+	MessageBox("Código  Incorrecto","El código del tipo de examen de acta leido ["+ls_cve_tipo_examen+"] no corresponde a un código válido",StopSign!)
+	return -1	
+end if		
+li_cve_tipo_examen = integer(ls_cve_tipo_examen)	
+
+
+ai_periodo		 	 = li_periodo
+ai_anio				 = li_anio
+ai_no_acta			 = li_no_acta
+as_nivel				 = ls_nivel
+ai_cve_tipo_examen = li_cve_tipo_examen
+
+RETURN 0
+end function
+

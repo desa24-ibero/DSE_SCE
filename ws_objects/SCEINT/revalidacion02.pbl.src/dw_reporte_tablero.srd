@@ -1,0 +1,77 @@
+﻿$PBExportHeader$dw_reporte_tablero.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=649 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=77 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=examen_extrao_titulo_cve_mat dbname="examen_extrao_titulo.cve_mat" )
+ column=(type=long updatewhereclause=yes name=compute_0002 dbname="compute_0002" )
+ column=(type=long updatewhereclause=yes name=alumnos_cuenta dbname="alumnos.cuenta" )
+ column=(type=char(70) updatewhereclause=yes name=alumnos_nombre_completo dbname="alumnos.nombre_completo" )
+ column=(type=long updatewhereclause=yes name=actanum dbname="compute_0005" )
+ column=(type=char(70) updatewhereclause=yes name=coordinaciones_coordinacion dbname="coordinaciones.coordinacion" )
+ column=(type=char(42) updatewhereclause=yes name=materias_materia dbname="materias.materia" )
+ column=(type=char(2) updatewhereclause=yes name=examen_extrao_titulo_calificacion dbname="examen_extrao_titulo.calificacion" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_carrera dbname="academicos.cve_carrera" )
+ column=(type=long updatewhereclause=yes name=coordinaciones_cve_coordinacion dbname="coordinaciones.cve_coordinacion" )
+ retrieve="  SELECT examen_extrao_titulo.cve_mat,   
+         COUNT(examen_extrao_titulo.cve_mat),   
+         alumnos.cuenta,   
+         alumnos.nombre_completo,
+			1,
+			coordinaciones.coordinacion,materias.materia,
+			examen_extrao_titulo.calificacion,
+			academicos.cve_carrera,
+			coordinaciones.cve_coordinacion
+    FROM alumnos,   
+         coordinaciones,   
+         examen_extrao_titulo,   
+         materias,academicos  
+   WHERE ( alumnos.cuenta = examen_extrao_titulo.cuenta ) and  
+         ( examen_extrao_titulo.cve_mat = materias.cve_mat ) and  
+			( examen_extrao_titulo.periodo = :periodo ) and 
+			( examen_extrao_titulo.anio = :anio ) and 
+         ( coordinaciones.cve_coordinacion = materias.cve_coordinacion ) and  
+			( materias.nivel LIKE :nivel) and
+			( academicos.cuenta = examen_extrao_titulo.cuenta) and
+         ( ( examen_extrao_titulo.tipo_examen = :tipo ) )   
+GROUP BY examen_extrao_titulo.cve_mat,   
+			examen_extrao_titulo.tipo_examen,  
+         coordinaciones.cve_coordinacion,
+			coordinaciones.coordinacion,materias.materia 
+  HAVING ( examen_extrao_titulo.cuenta = alumnos.cuenta  and
+			examen_extrao_titulo.cuenta = academicos.cuenta  and
+			 coordinaciones.cve_coordinacion = materias.cve_coordinacion and
+			 examen_extrao_titulo.cve_mat = materias.cve_mat and
+			 examen_extrao_titulo.periodo = :periodo  and 
+			 examen_extrao_titulo.anio = :anio  and 
+			examen_extrao_titulo.tipo_examen = :tipo)   
+ORDER BY coordinaciones.cve_coordinacion ASC,
+			examen_extrao_titulo.cve_mat ASC,   
+         alumnos.nombre_completo ASC   
+" arguments=(("tipo", number),("nivel", string),("periodo", number),("anio", number)) )
+group(level=1 header.height=361 trailer.height=1 by=("examen_extrao_titulo_cve_mat" ) newpage=yes header.color="536870912" trailer.color="536870912" )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="1134" y="284" height="345" width="1866" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Universidad Iberoamericana"border="0" color="0" x="1463" y="316" height="93" width="1194"  font.face="Arial" font.height="-14" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Direccion de Servicios Escolares"border="0" color="0" x="1633" y="416" height="65" width="869"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+text(band=header alignment="0" text="Plantel : Santa Fe"border="0" color="0" x="471" y="336" height="65" width="522"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="2" expression="~"Reporte de tablero de exámenes ~"+if(tipo=2,~"Extraordinarios ~",~"a Titulo de Suficiencia~") + ~" de ~"+if(nivel = ~"L~",~"Licenciatura~",~"Posgrado~")"border="0" color="0" x="1143" y="496" height="61" width="1843" format="[general]"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+column(band=header.1 id=7 alignment="0" tabsequence=32766 border="0" color="0" x="878" y="108" height="65" width="1409" format="[general]"  name=materias_materia edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header.1 id=1 alignment="0" tabsequence=32766 border="0" color="0" x="490" y="108" height="65" width="371" format="[general]"  name=examen_extrao_titulo_cve_mat edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header.1 alignment="0" text="cuenta"border="0" color="0" x="471" y="228" height="65" width="183"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="0" text="nombre del alumno"border="0" color="0" x="951" y="228" height="65" width="503"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="0" text="carrera"border="0" color="0" x="2423" y="224" height="65" width="183"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="0" text="calificación"border="0" color="0" x="2766" y="228" height="65" width="293"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header.1 id=6 alignment="0" tabsequence=32766 border="0" color="0" x="874" y="20" height="65" width="1962" format="[general]"  name=coordinaciones_coordinacion edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header.1 id=10 alignment="0" tabsequence=32766 border="0" color="0" x="476" y="20" height="65" width="375" format="[general]"  name=coordinaciones_cve_coordinacion edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="476" y1="72" x2="3118" y2="72" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="32567536" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="357" y="8" height="53" width="298" format="[general]"  name=alumnos_cuenta edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="-"border="0" color="0" x="673" y="8" height="65" width="28"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="obten_digito(alumnos_cuenta )"border="0" color="0" x="705" y="8" height="53" width="51" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="951" y="8" height="53" width="1450" format="[general]"  name=alumnos_nombre_completo edit.limit=70 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="2423" y="8" height="53" width="321" format="[general]"  name=academicos_cve_carrera edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="2766" y="8" height="53" width="275" format="[general]"  name=examen_extrao_titulo_calificacion edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=header alignment="0" expression="case( periodo  when 0 then ~"Primavera~" when 1 then ~"VERANO~" when 2 then ~"OTOÑO~")+~" ~"+string( anio , ~"~" )"border="0" color="0" x="1930" y="564" height="61" width="737"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+
+sparse(names="examen_extrao_titulo_cve_mat	materias_materia")

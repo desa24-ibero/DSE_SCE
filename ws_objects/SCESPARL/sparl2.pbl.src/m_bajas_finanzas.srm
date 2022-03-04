@@ -1,0 +1,70 @@
+﻿$PBExportHeader$m_bajas_finanzas.srm
+forward
+global type m_bajas_finanzas from m_menugeneral
+end type
+end forward
+
+global type m_bajas_finanzas from m_menugeneral
+end type
+global m_bajas_finanzas m_bajas_finanzas
+
+on m_bajas_finanzas.create
+m_bajas_finanzas=this
+call super::create
+end on
+
+on m_bajas_finanzas.destroy
+call super::destroy
+end on
+
+on m_nuevo.create
+call super::create
+this.Text="Baja~tCtrl+B"
+this.Microhelp="Da de baja al alumno por finanzas en el periodo seleccionado"
+this.ToolBarItemName="DeleteRow!"
+this.ToolBarItemText="Baja"
+this.Shortcut=322
+end on
+
+event m_nuevo::clicked;w_bajas_finanzas.Baja()
+
+end event
+
+on m_actualiza.create
+call super::create
+this.Text="Reactivar~tCtrl+R"
+this.Microhelp="Reactiva al alumno por finanzas en el periodo seleccionado"
+this.ToolBarItemName="Insert5!"
+this.ToolBarItemText="Reactivar"
+this.Shortcut=338
+end on
+
+event m_actualiza::clicked;w_bajas_finanzas.Reactiva()
+end event
+
+on m_borraregistro.create
+call super::create
+this.Text="Periodo Actual"
+this.Microhelp="Trae las materias inscritas actualmente"
+this.ToolBarItemName="ShowWatch!"
+this.ToolBarItemText="Periodo actual"
+this.Shortcut=0
+end on
+
+event m_borraregistro::clicked;//0 en mat_inscritas 1 en el periodo gi_periodo, gi_anio
+w_bajas_finanzas.CambiaTipoBaja(0)
+end event
+
+on m_cargaregistro.create
+call super::create
+this.Text="Otro Periodo"
+this.Microhelp="Trae materias de otro periodo"
+this.ToolBarItemName="DeleteWatch!"
+this.ToolBarItemText="Otro Periodo"
+this.Shortcut=0
+end on
+
+event m_cargaregistro::clicked;//0 en mat_inscritas 1 en el periodo gi_periodo, gi_anio
+w_bajas_finanzas.CambiaTipoBaja(1)
+end event
+

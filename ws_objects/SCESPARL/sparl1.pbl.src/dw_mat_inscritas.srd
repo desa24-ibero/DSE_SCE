@@ -1,0 +1,58 @@
+﻿$PBExportHeader$dw_mat_inscritas.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=12639424 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=148 color="536870912" )
+summary(height=104 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=72 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=mat_inscritas_cve_mat dbname="cve_mat" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=mat_inscritas_gpo dbname="gpo" )
+ column=(type=char(42) updatewhereclause=yes name=materias_materia dbname="materia" )
+ column=(type=long updatewhereclause=yes name=materias_creditos dbname="creditos" )
+ column=(type=long update=yes updatewhereclause=yes name=mat_inscritas_periodo dbname="periodo" )
+ column=(type=long update=yes updatewhereclause=yes name=mat_inscritas_anio dbname="anio" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=mat_inscritas_cuenta dbname="cuenta" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=mat_inscritas_inscripcion dbname="inscripcion" )
+ column=(type=long update=yes updatewhereclause=yes name=mat_inscritas_cve_condicion dbname="cve_condicion" initial="0" )
+ column=(type=long updatewhereclause=yes name=choras_teoria dbname="horas_teoria" )
+ column=(type=long updatewhereclause=yes name=choras_practica dbname="horas_practica" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=mat_inscritas_calificacion dbname="calificacion" )
+ retrieve="  SELECT  mat_inscritas.cve_mat ,
+           mat_inscritas.gpo ,
+           materias.materia ,
+           materias.creditos ,
+           mat_inscritas.periodo ,
+           mat_inscritas.anio ,
+           mat_inscritas.cuenta ,
+           mat_inscritas.inscripcion ,
+           mat_inscritas.cve_condicion ,
+           materias.horas_teoria,
+			  materias.horas_practica,
+			  mat_inscritas.calificacion     
+        FROM mat_inscritas ,
+           materias     
+        WHERE ( mat_inscritas.cve_mat = materias.cve_mat ) and
+          ( ( mat_inscritas.cuenta = :cta ) )  " update="mat_inscritas" updatewhere=0 updatekeyinplace=yes arguments=(("cta", number)) )
+roundrectangle(band=header ellipseheight="60" ellipsewidth="69"x="14" y="12" height="124" width="2400" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Clave"border="0" color="0" x="37" y="36" height="76" width="251"  name=mat_inscritas_cve_mat_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Materia"border="0" color="0" x="1161" y="36" height="76" width="251"  name=materias_materia_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Grupo"border="0" color="0" x="320" y="36" height="76" width="165"  name=mat_inscritas_gpo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Creditos"border="0" color="0" x="1984" y="36" height="76" width="219"  name=materias_creditos_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Horas"border="0" color="0" x="2226" y="36" height="76" width="155"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=1 alignment="2" tabsequence=10 border="5" color="0~tif( (rowcount() = getrow() AND isRowNew()),  rgb(0,0,0),rgb(/*248*/0,/*31*/0,0) )" x="37" y="8" height="60" width="251" format="[general]" protect="0~tif( (rowcount() = getrow() AND isRowNew()), 0, 1 )"  name=mat_inscritas_cve_mat editmask.mask="#######" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="15793151~tif( (rowcount() = getrow() AND isRowNew()),rgb(255,255,255),rgb(191,223,191 ))" )
+column(band=detail id=3 alignment="0" tabsequence=30 border="5" color="0" x="512" y="8" height="60" width="1550" format="[general]"  name=materias_materia edit.limit=42 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes edit.displayonly=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=2 alignment="2" tabsequence=20 border="5" color="0~tif( (rowcount() = getrow() AND isRowNew()),  rgb(0,0,0),rgb(/*248*/0,/*31*/0,0) )" x="352" y="8" height="60" width="96" format="[general]" protect="0~tif( (rowcount() = getrow() AND isRowNew()), 0, 1 )"  name=mat_inscritas_gpo editmask.mask="!a" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="15793151~tif( (rowcount() = getrow() AND isRowNew()),rgb(255,255,255),rgb(191,223,191 ))" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="30976088" x="2656" y="8" height="60" width="9" format="[general]"  name=mat_inscritas_cve_condicion edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="30976088" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="30976088" x="2875" y="8" height="60" width="178" format="[general]"  name=mat_inscritas_anio edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="30976088" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="30976088" x="2743" y="4" height="60" width="151" format="[general]"  name=mat_inscritas_cuenta edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="30976088" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="30976088" x="2523" y="8" height="60" width="119" format="[general]"  name=mat_inscritas_periodo edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="30976088" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="5" color="0" x="2085" y="8" height="60" width="123" format="[general]"  name=materias_creditos edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+compute(band=detail alignment="2" expression=" choras_teoria + choras_practica "border="5" color="0" x="2231" y="8" height="60" width="123" format="[general]"  name=materias_horas_totales  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="30976088" x="3067" y="8" height="60" width="293" format="[general]"  name=mat_inscritas_inscripcion edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="30976088" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="30976088" x="3378" y="8" height="56" width="114" format="[general]"  name=choras_teoria edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="30976088" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="30976088" x="3511" y="4" height="64" width="73" format="[general]"  name=choras_practica edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="30976088" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="2427" y="4" height="64" width="55" format="[general]"  name=mat_inscritas_calificacion edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+text(band=summary alignment="2" text="Totales"border="2" color="0" x="1865" y="20" height="64" width="192"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+compute(band=summary alignment="2" expression="sum(materias_creditos for all)"border="5" color="0" x="2085" y="20" height="64" width="123" format="[general]"  name=creditos_totales  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+compute(band=summary alignment="2" expression=" sum( materias_horas_totales  for all)"border="5" color="0" x="2231" y="20" height="64" width="123" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

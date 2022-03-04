@@ -1,0 +1,43 @@
+﻿$PBExportHeader$f_obten_nombre_certificado.srf
+global type f_obten_nombre_certificado from function_object
+end type
+
+forward prototypes
+global function string f_obten_nombre_certificado (integer ai_id)
+end prototypes
+
+global function string f_obten_nombre_certificado (integer ai_id);//Función que regresa la cve_plan que  cursa un alumno 
+//
+//f_obten_cve_plan
+//
+//Parámetros:		a_cuenta		
+
+
+int li_codigo_sql, li_id
+string ls_carrera, ls_nivel, ls_mensaje_sql, ls_nombre
+
+li_id = ai_id
+
+SELECT dbo.datos_certificado.nombre
+INTO	:ls_nombre
+FROM	dbo.datos_certificado
+WHERE	dbo.datos_certificado.id = :li_id
+USING gtr_sce;
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	rollback using gtr_sce;
+	MessageBox("Error al recuperar el nombre del certificado:"+string(li_id),  ls_mensaje_sql)
+	setnull(ls_nombre)
+else
+	commit using gtr_sce;
+end if
+
+
+return ls_nombre
+
+
+end function
+

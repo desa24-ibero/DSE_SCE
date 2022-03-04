@@ -1,0 +1,35 @@
+﻿$PBExportHeader$dw_#trabajo.srd
+$PBExportComments$Perfil de trabajo
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=69 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=1 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=general_trabajo dbname="trabajo" )
+ column=(type=long updatewhereclause=yes name=general_trab_hor dbname="trab_hor" )
+ retrieve="  SELECT general.trabajo,   
+         general.trab_hor  
+    FROM aspiran,   
+         general  
+   WHERE ( general.folio = aspiran.folio ) and  
+         ( general.clv_ver = aspiran.clv_ver ) and  
+         ( general.clv_per = aspiran.clv_per ) and  
+         ( general.anio = aspiran.anio ) and  
+         ( :ver=99 or aspiran.clv_ver = :ver ) AND  
+         ( aspiran.clv_per = :per ) AND  
+         ( aspiran.anio = :ani ) AND  
+         ( :carr = 9999 OR  
+         aspiran.clv_carr = :carr ) AND  
+         :status like ~"%~"+convert(char(1),aspiran.status)+~"%~" AND  
+         aspiran.pago_exam = 1    
+" arguments=(("ver", number),("per", number),("ani", number),("carr", number),("status", string))  sort="if(  general_trabajo =0, 0, 1 ) A " )
+group(level=1 header.height=1 trailer.height=85 by=("if(  general_trabajo =0, 0, 1 )" ) header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="0" text="Trabajan:"border="0" color="0" x="1" y="0" height="65" width="243"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="293" y="4" height="77" width="266" format="[general]"  name=general_trab_hor edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="28" y="4" height="77" width="266" format="[general]"  name=general_trabajo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="0" expression="if(  general_trabajo =0, 'No','Si')"border="0" color="0" x="1" y="4" height="77" width="275" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="2" expression="count(  general_trabajo  for group 1 )"border="0" color="0" x="695" y="4" height="77" width="430" format="[general]"  name=cuenta  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="2" expression="round((cuenta/total)*100,2)+'%'"border="0" color="0" x="1134" y="4" height="77" width="417" format="[general]"  name=porcentaje  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="2" expression="round(avg(general_trab_hor for group 1),2)+' HORAS'"border="0" color="0" x="289" y="4" height="77" width="398" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="0" expression="count(  general_trabajo  for all )"border="0" color="0" x="1" y="4" height="81" width="247" format="[general]"  name=total  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

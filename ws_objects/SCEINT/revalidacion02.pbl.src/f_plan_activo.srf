@@ -1,0 +1,38 @@
+﻿$PBExportHeader$f_plan_activo.srf
+global type f_plan_activo from function_object
+end type
+
+forward prototypes
+global function boolean f_plan_activo (long al_cve_carrera, integer ai_cve_plan)
+end prototypes
+
+global function boolean f_plan_activo (long al_cve_carrera, integer ai_cve_plan);integer li_codigo_sql
+string ls_mensaje_sql
+integer li_activo
+
+SELECT dbo.plan_estudios.activo
+INTO	:li_activo
+FROM	dbo.plan_estudios
+WHERE dbo.plan_estudios.cve_carrera = :al_cve_carrera
+AND	dbo.plan_estudios.cve_plan = :ai_cve_plan
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 or isnull(li_activo) then
+	return false
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar plan_estudios", ls_mensaje_sql)
+	return false
+end if
+
+if li_activo= 1 then
+	return true
+else
+	return false	
+end if
+	
+
+end function
+

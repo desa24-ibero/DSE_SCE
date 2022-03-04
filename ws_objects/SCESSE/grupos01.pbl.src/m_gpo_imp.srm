@@ -1,0 +1,807 @@
+﻿$PBExportHeader$m_gpo_imp.srm
+forward
+global type m_gpo_imp from menu
+end type
+type m_archivo from menu within m_gpo_imp
+end type
+type m_configurarimpresora from menu within m_archivo
+end type
+type m_imprimir from menu within m_archivo
+end type
+type m_archivo from menu within m_gpo_imp
+m_configurarimpresora m_configurarimpresora
+m_imprimir m_imprimir
+end type
+type m_edicion from menu within m_gpo_imp
+end type
+type m_deshacer from menu within m_edicion
+end type
+type m_cortar from menu within m_edicion
+end type
+type m_copiar from menu within m_edicion
+end type
+type m_pegar from menu within m_edicion
+end type
+type m_borrar from menu within m_edicion
+end type
+type m_edicion from menu within m_gpo_imp
+m_deshacer m_deshacer
+m_cortar m_cortar
+m_copiar m_copiar
+m_pegar m_pegar
+m_borrar m_borrar
+end type
+type m_registro from menu within m_gpo_imp
+end type
+type m_nuevogrupo from menu within m_registro
+end type
+type m_actualizar from menu within m_registro
+end type
+type m_borraregistro from menu within m_registro
+end type
+type m_-1 from menu within m_registro
+end type
+type m_primero from menu within m_registro
+end type
+type m_anterior from menu within m_registro
+end type
+type m_siguiente from menu within m_registro
+end type
+type m_ltimo from menu within m_registro
+end type
+type m_-2 from menu within m_registro
+end type
+type m_consultarprofesoradjunto from menu within m_registro
+end type
+type m_-3 from menu within m_registro
+end type
+type m_insertarnuevohorario from menu within m_registro
+end type
+type m_borrarhorario from menu within m_registro
+end type
+type m_borrasaln from menu within m_registro
+end type
+type m_registro from menu within m_gpo_imp
+m_nuevogrupo m_nuevogrupo
+m_actualizar m_actualizar
+m_borraregistro m_borraregistro
+m_-1 m_-1
+m_primero m_primero
+m_anterior m_anterior
+m_siguiente m_siguiente
+m_ltimo m_ltimo
+m_-2 m_-2
+m_consultarprofesoradjunto m_consultarprofesoradjunto
+m_-3 m_-3
+m_insertarnuevohorario m_insertarnuevohorario
+m_borrarhorario m_borrarhorario
+m_borrasaln m_borrasaln
+end type
+type m_ventana from menu within m_gpo_imp
+end type
+type m_horizontal from menu within m_ventana
+end type
+type m_vertical from menu within m_ventana
+end type
+type m_primerplano from menu within m_ventana
+end type
+type m_cascada from menu within m_ventana
+end type
+type m_ventana from menu within m_gpo_imp
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+type m_ayuda from menu within m_gpo_imp
+end type
+type m_ayuda from menu within m_gpo_imp
+end type
+type m_cerrar from menu within m_gpo_imp
+end type
+type m_cerrar from menu within m_gpo_imp
+end type
+end forward
+
+shared variables
+ 
+end variables
+
+global type m_gpo_imp from menu
+m_archivo m_archivo
+m_edicion m_edicion
+m_registro m_registro
+m_ventana m_ventana
+m_ayuda m_ayuda
+m_cerrar m_cerrar
+end type
+global m_gpo_imp m_gpo_imp
+
+type variables
+datawindow dw
+window ventana
+ 
+
+end variables
+
+on m_gpo_imp.create
+m_gpo_imp=this
+this.m_archivo=create m_archivo
+this.m_edicion=create m_edicion
+this.m_registro=create m_registro
+this.m_ventana=create m_ventana
+this.m_ayuda=create m_ayuda
+this.m_cerrar=create m_cerrar
+this.Item[]={this.m_archivo, &
+this.m_edicion, &
+this.m_registro, &
+this.m_ventana, &
+this.m_ayuda, &
+this.m_cerrar}
+end on
+
+on m_gpo_imp.destroy
+destroy(this.m_archivo)
+destroy(this.m_edicion)
+destroy(this.m_registro)
+destroy(this.m_ventana)
+destroy(this.m_ayuda)
+destroy(this.m_cerrar)
+end on
+
+type m_archivo from menu within m_gpo_imp
+m_configurarimpresora m_configurarimpresora
+m_imprimir m_imprimir
+end type
+
+on m_archivo.create
+this.Text="Imprimir"
+this.m_configurarimpresora=create m_configurarimpresora
+this.m_imprimir=create m_imprimir
+this.Item[]={this.m_configurarimpresora, &
+this.m_imprimir}
+end on
+
+on m_archivo.destroy
+destroy(this.m_configurarimpresora)
+destroy(this.m_imprimir)
+end on
+
+type m_configurarimpresora from menu within m_archivo
+end type
+
+event clicked;printsetup()
+
+end event
+
+on m_configurarimpresora.create
+this.Text="C&onfigurar Impresora"
+end on
+
+type m_imprimir from menu within m_archivo
+end type
+
+on m_imprimir.create
+this.Text="&Imprimir..."
+this.Microhelp="Imprimir "
+this.ToolBarItemName="Print!"
+this.ToolBarItemText="Imprimir"
+this.ToolBarItemOrder=1
+end on
+
+event clicked;if isvalid(dw) then
+	dw.modify("Datawindow.print.preview = Yes")
+	dw.print(TRUE)	
+end if
+end event
+
+type m_edicion from menu within m_gpo_imp
+m_deshacer m_deshacer
+m_cortar m_cortar
+m_copiar m_copiar
+m_pegar m_pegar
+m_borrar m_borrar
+end type
+
+on m_edicion.create
+this.Text="Editar"
+this.m_deshacer=create m_deshacer
+this.m_cortar=create m_cortar
+this.m_copiar=create m_copiar
+this.m_pegar=create m_pegar
+this.m_borrar=create m_borrar
+this.Item[]={this.m_deshacer, &
+this.m_cortar, &
+this.m_copiar, &
+this.m_pegar, &
+this.m_borrar}
+end on
+
+on m_edicion.destroy
+destroy(this.m_deshacer)
+destroy(this.m_cortar)
+destroy(this.m_copiar)
+destroy(this.m_pegar)
+destroy(this.m_borrar)
+end on
+
+type m_deshacer from menu within m_edicion
+end type
+
+on m_deshacer.create
+this.Text="&Deshacer~tCtrl+U"
+this.Microhelp="Deshacer la última edición"
+this.ToolBarItemName="Undo!"
+this.ToolBarItemText="Deshacer"
+this.ToolBarItemOrder=2
+this.ToolBarItemSpace=3
+this.Shortcut=341
+end on
+
+event clicked;if isvalid(dw) then
+	dw.undo()
+end if
+end event
+
+type m_cortar from menu within m_edicion
+end type
+
+on m_cortar.create
+this.Text="C&ortar~tCtrl+X"
+this.Microhelp="Borra la selección actual y la pone en el portapapeles"
+this.ToolBarItemName="Cut!"
+this.ToolBarItemText="Cortar"
+this.ToolBarItemOrder=3
+this.Shortcut=344
+end on
+
+event clicked;
+if isvalid(dw) then
+	dw.cut()
+end if
+end event
+
+type m_copiar from menu within m_edicion
+end type
+
+on m_copiar.create
+this.Text="&Copiar~tCtrl+C"
+this.Microhelp="Copia la selección actual en el portapapeles"
+this.ToolBarItemName="Copy!"
+this.ToolBarItemText="Copiar"
+this.ToolBarItemOrder=4
+this.Shortcut=323
+end on
+
+event clicked;if isvalid(dw) then
+	dw.copy()
+end if
+end event
+
+type m_pegar from menu within m_edicion
+end type
+
+on m_pegar.create
+this.Text="&Pegar~tCtrl+V"
+this.Microhelp="Pega el contenido del portapapeles en el campo actual"
+this.ToolBarItemName="Paste!"
+this.ToolBarItemText="Pegar"
+this.ToolBarItemOrder=5
+this.Shortcut=342
+end on
+
+event clicked;if isvalid(dw) then
+	dw.paste()
+end if
+end event
+
+type m_borrar from menu within m_edicion
+end type
+
+on m_borrar.create
+this.Text="&Borrar~tDel"
+this.ToolBarItemText="Borrar"
+this.Shortcut=46
+end on
+
+event clicked;if isvalid(dw) then
+	dw.clear()
+end if
+end event
+
+type m_registro from menu within m_gpo_imp
+m_nuevogrupo m_nuevogrupo
+m_actualizar m_actualizar
+m_borraregistro m_borraregistro
+m_-1 m_-1
+m_primero m_primero
+m_anterior m_anterior
+m_siguiente m_siguiente
+m_ltimo m_ltimo
+m_-2 m_-2
+m_consultarprofesoradjunto m_consultarprofesoradjunto
+m_-3 m_-3
+m_insertarnuevohorario m_insertarnuevohorario
+m_borrarhorario m_borrarhorario
+m_borrasaln m_borrasaln
+end type
+
+on m_registro.create
+this.Text="Registro"
+this.m_nuevogrupo=create m_nuevogrupo
+this.m_actualizar=create m_actualizar
+this.m_borraregistro=create m_borraregistro
+this.m_-1=create m_-1
+this.m_primero=create m_primero
+this.m_anterior=create m_anterior
+this.m_siguiente=create m_siguiente
+this.m_ltimo=create m_ltimo
+this.m_-2=create m_-2
+this.m_consultarprofesoradjunto=create m_consultarprofesoradjunto
+this.m_-3=create m_-3
+this.m_insertarnuevohorario=create m_insertarnuevohorario
+this.m_borrarhorario=create m_borrarhorario
+this.m_borrasaln=create m_borrasaln
+this.Item[]={this.m_nuevogrupo, &
+this.m_actualizar, &
+this.m_borraregistro, &
+this.m_-1, &
+this.m_primero, &
+this.m_anterior, &
+this.m_siguiente, &
+this.m_ltimo, &
+this.m_-2, &
+this.m_consultarprofesoradjunto, &
+this.m_-3, &
+this.m_insertarnuevohorario, &
+this.m_borrarhorario, &
+this.m_borrasaln}
+end on
+
+on m_registro.destroy
+destroy(this.m_nuevogrupo)
+destroy(this.m_actualizar)
+destroy(this.m_borraregistro)
+destroy(this.m_-1)
+destroy(this.m_primero)
+destroy(this.m_anterior)
+destroy(this.m_siguiente)
+destroy(this.m_ltimo)
+destroy(this.m_-2)
+destroy(this.m_consultarprofesoradjunto)
+destroy(this.m_-3)
+destroy(this.m_insertarnuevohorario)
+destroy(this.m_borrarhorario)
+destroy(this.m_borrasaln)
+end on
+
+type m_nuevogrupo from menu within m_registro
+end type
+
+on m_nuevogrupo.create
+this.Text="&Nuevo Grupo~tCtrl+N"
+this.Microhelp="Inserta un renglon al final para agregar un dato"
+this.ToolBarItemName="Insert!"
+this.ToolBarItemText="Nuevo"
+this.ToolBarItemOrder=6
+this.ToolBarItemSpace=3
+this.Shortcut=334
+end on
+
+event clicked;// Juan Campos 	Junio-1997.
+
+dw.triggerEvent("Nuevo")
+
+ 
+ 
+
+
+end event
+
+type m_actualizar from menu within m_registro
+end type
+
+on m_actualizar.create
+this.Text="&Actualizar~tCtrl+A"
+this.Microhelp="Guarda los cambios en la base de datos"
+this.ToolBarItemName="Custom044!"
+this.ToolBarItemText="Actualizar"
+this.ToolBarItemOrder=7
+this.Shortcut=321
+end on
+
+event clicked;//// Juan Campos.             Octubre-1997.
+
+dw.TriggerEvent("Actualiza")
+
+//
+//// Variables para grupo
+//Boolean 	GruposOk = False
+//Integer	ExisteGrupo = 0, ExisteHorario = 0, MatDw,PerDw,AñoDw,CupoDw,TipoDw
+//String	GpoDw
+//
+//// Variables para horario
+//Integer 	HorasClase=0, ContHoras = 0 ,i,Renglon,Columna, Dia,HorIni,HorFin,Periodo
+//Boolean	MovimientoOk = False, RengModificado = False, RengNuevo = False,HorarioOk = True,DerechoUsoOK 
+//dwItemStatus status
+//
+//IF isvalid(w_grupos_impartidos) Then // Codigo para la ventana de w_grupos_Impartidos
+//w_grupos_impartidos.setredraw(False) // No se reflejan  los cambios en la ventana. Está Función hace que las modIficaciones sean mas rapidas.
+//MatDw	= w_grupos_impartidos.dw_mat.getitemnumber(w_grupos_impartidos.dw_mat.GetRow(),"cve_mat")
+//GpoDw	= w_grupos_impartidos.dw_mat.getitemstring(w_grupos_impartidos.dw_mat.GetRow(),"gpo")
+//PerDw	= w_grupos_impartidos.dw_mat.getitemnumber(w_grupos_impartidos.dw_mat.GetRow(),"periodo")
+//AñoDw	= w_grupos_impartidos.dw_mat.getitemnumber(w_grupos_impartidos.dw_mat.GetRow(),"anio")
+//CupoDw= w_grupos_impartidos.dw_mat.getitemnumber(w_grupos_impartidos.dw_mat.GetRow(),"cupo")
+//TipoDw= w_grupos_impartidos.dw_mat.getitemnumber(w_grupos_impartidos.dw_mat.GetRow(),"tipo")
+//If w_grupos_impartidos.dw_mat.modIfiedcount() > 0 Then
+//	MessageBox("cont",string(w_grupos_impartidos.dw_mat.modIfiedcount()))
+//	w_grupos_impartidos.dw_mat.SetItem(1,"cve_mat_gpo",String(MatDw)+GpoDw)
+//	If w_grupos_impartidos.dw_mat.Update(True,False) = 1 Then	
+//		GruposOk = True 
+//	Else
+//		GruposOk = False 
+//		Messagebox("Error","Algunos datos son incorrectos, favor de verIficarlos")
+//	End If
+//Else // Si no hay modIficaciones en el dw_mat, se consulta si existe el grupo en la base de datos	  
+//	Select count(*)
+//	Into	:ExisteGrupo
+//	From	grupos
+//	Where	(cve_mat = :MatDw ) and (gpo = :GpoDw ) and (periodo = :PerDw ) and (anio = :AñoDw) using gtr_sce;
+//	If ExisteGrupo > 0 Then
+//		GruposOk = True 
+//	Else
+//		GruposOk = False		
+//		MessageBox("Error","No existe esté Grupo, favor de verIficar los datos.")
+//	End If
+//End If
+//If GruposOk  Then	 	
+//	If	w_grupos_impartidos.dw_horario.modIfiedcount() > 0 Then
+//		w_grupos_impartidos.dw_horario.Accepttext()
+//		For Renglon = 1 To w_grupos_impartidos.dw_horario.RowCount()
+//			For Columna = 1 to 8
+//				status = w_grupos_impartidos.dw_horario.GetItemStatus(Renglon,Columna, primary!)
+//				If status = datamodIfied! Then // Si se modifico alguna columna se Decrementa con los datos primarios y Incrementa con los datos de filtro				                           
+//					RengModificado = True		  
+//				ElseIf status = NewModified! Then
+//					RengNuevo = True		  
+//				End IF
+//			Next // FALTA VALIDAR INCREMENTA Y DECREMENTA SOLO CUANDO LA CLASE_AULA = SALON .OJO.
+//			If RengModificado Then
+//            Dia	=w_grupos_impartidos.dw_horario.GetitemNumber(Renglon,"cve_dia", primary!,True) 
+//				HorIni=w_grupos_impartidos.dw_horario.Getitemnumber(Renglon,"hora_inicio", primary!,True)
+//				HorFin=w_grupos_impartidos.dw_horario.Getitemnumber(Renglon,"hora_final", primary!,True)
+//				if Decrementa_Derecho_y_uso(MatDw,Dia,HorIni,HorFin,CupoDw) Then
+//            	Dia	=w_grupos_impartidos.dw_horario.GetItemNumber(Renglon,"cve_dia")
+//					HorIni=w_grupos_impartidos.dw_horario.GetItemNumber(Renglon,"hora_inicio")
+//					HorFin=w_grupos_impartidos.dw_horario.GetItemNumber(Renglon,"hora_final")
+//					if Incrementa_Derecho_y_uso(MatDw,Dia,HorIni,HorFin,CupoDw) Then
+//						DerechoUsoOK = True	
+//					Else
+//						DerechoUsoOK = False
+//					End if
+//				Else
+//					DerechoUsoOK = False	
+//				End If
+//			End If
+//			If RengNuevo Then
+//            Dia	=w_grupos_impartidos.dw_horario.GetItemNumber(Renglon,"cve_dia")
+//				HorIni=w_grupos_impartidos.dw_horario.GetItemNumber(Renglon,"hora_inicio")
+//				HorFin=w_grupos_impartidos.dw_horario.GetItemNumber(Renglon,"hora_final")
+//				if Incrementa_Derecho_y_uso(MatDw,Dia,HorIni,HorFin,CupoDw) Then
+//					DerechoUsoOK = True		
+//				Else
+//					DerechoUsoOK = False	
+//				End if				
+//			End if				
+//			If (RengModificado or RengNuevo) And DerechoUsoOK Then
+//				w_grupos_impartidos.dw_horario.SetItem(Renglon,"cve_mat",MatDw) 
+//				w_grupos_impartidos.dw_horario.SetItem(Renglon,"gpo", GpoDw)
+//				w_grupos_impartidos.dw_horario.SetItem(Renglon,"periodo",PerDw)
+//				w_grupos_impartidos.dw_horario.SetItem(Renglon,"anio",AñoDw)				
+//			Else
+//				HorarioOk = False
+//			End If
+//			ContHoras =	ContHoras + (w_grupos_impartidos.dw_horario.GetItemNumber(i,"hora_final") - &
+//												w_grupos_impartidos.dw_horario.GetItemNumber(i,"hora_inicio"))
+//			RengModificado = False
+//			RengNuevo = False		  
+//		Next			
+//		If HorarioOk Then
+//			Periodo = Integer(w_grupos_impartidos.em_periodo.text)
+//			If horas_materia(Matdw,Periodo,HorasClase) Then
+//				IF ContHoras = HorasClase Then
+//					If w_grupos_impartidos.dw_horario.Update(True,False) = 1 Then	
+//						HorarioOk = True
+//					Else
+//						HorarioOk = False
+//						MessageBox("Error","Algunos datos son incorrectos.~nFavor de corregirlos")
+//					End If
+//				Elseif ContHoras > HorasClase Then
+//					Messagebox("Error","El total de horas asignadas es mayor a el total de horas para esté Periodo.~nHoras Asignadas = "+string(ContHoras)+"~nTotal de horas para esté Periodo = "+string(horasclase))
+//					HorarioOk = False
+//				Elseif ContHoras < HorasClase Then	
+//					Messagebox("Error","El total de horas asignadas es menor a el total de horas para esté Periodo.~nHoras Asignadas = "+string(ContHoras)+"~nTotal de horas para esté Periodo = "+string(horasclase))
+//					HorarioOk = False					
+// 				End If // Cont_horas 			
+//			End If // Funcion Horas_materia
+//		End If // Horario ok		
+//	Else // Si no hay modIficaciones en el dw_horario, se consulta si existe un horario para un grupo de tipo normal en la base de datos	  
+//		if TipoDw = 0 Then // 0 = Normal
+// 			Select count(*)
+//			Into	:ExisteHorario
+//			From	horario
+//			Where	(cve_mat = :MatDw ) and (gpo = :GpoDw ) and (periodo = :PerDw ) and (anio = :AñoDw) using gtr_sce;
+//			If ExisteHorario > 0 Then
+//				HorarioOk = True
+//			Else
+//				HorarioOk = False		
+//				MessageBox("Error","No existe un horario para esté grupo")
+//			End If // ExisteHorario
+//		End If // TipoDw
+//	End If // dw_horario.modIfiedcount() > 0			
+//End If // GruposOk
+//If GruposOk And HorarioOk Then
+//	w_grupos_impartidos.dw_mat.resetupdate()
+//	w_grupos_impartidos.dw_horario.resetupdate()
+//	Commit using gtr_sce;
+//	MessageBox("Aviso","Se han guardado los cambios")
+//	w_grupos_impartidos.dw_mat.retrieve(MatDw,GpoDw,PerDw,AñoDw)
+//	w_grupos_impartidos.dw_horario.retrieve(MatDw,GpoDw,PerDw,AñoDw)
+//	w_grupos_impartidos.cbx_nuevo.checked = False
+//Else
+//	Rollback using gtr_sce;
+//	MessageBox("Aviso","No se han guardado los cambios",stopsign!)
+//End If
+//w_grupos_impartidos.setredraw(True)  // Se reflejan todos  los cambios echos en la ventana
+
+
+ 
+end event
+
+type m_borraregistro from menu within m_registro
+end type
+
+on m_borraregistro.create
+this.Text="&Borra Grupo~tCtrl+B"
+this.Microhelp="Borra el renglón actual"
+this.ToolBarItemText="Borrar"
+this.ToolBarItemOrder=8
+this.Shortcut=322
+end on
+
+event clicked;// Juan Campos.      Octubre-1997.
+
+dw.TriggerEvent("BorraRegistro")
+
+
+end event
+
+type m_-1 from menu within m_registro
+end type
+
+on m_-1.create
+this.Text="-"
+end on
+
+type m_primero from menu within m_registro
+end type
+
+on m_primero.create
+this.Text="Primero~tAlt+P"
+this.ToolBarItemName="VCRFirst!"
+this.ToolBarItemText="Primero"
+this.ToolBarItemOrder=9
+this.ToolBarItemSpace=3
+this.Shortcut=592
+end on
+
+event clicked;dw.triggerevent("primero")
+
+end event
+
+type m_anterior from menu within m_registro
+end type
+
+on m_anterior.create
+this.Text="Anterior~tAlt+A"
+this.ToolBarItemName="VCRPrior!"
+this.ToolBarItemText="Anterior"
+this.ToolBarItemOrder=10
+this.Shortcut=577
+end on
+
+event clicked;dw.triggerevent("anterior")
+end event
+
+type m_siguiente from menu within m_registro
+end type
+
+on m_siguiente.create
+this.Text="Siguiente~tAlt+S"
+this.ToolBarItemName="VCRNext!"
+this.ToolBarItemText="Siguiente"
+this.ToolBarItemOrder=11
+this.Shortcut=595
+end on
+
+event clicked;dw.triggerevent("siguiente")
+end event
+
+type m_ltimo from menu within m_registro
+end type
+
+on m_ltimo.create
+this.Text="Último~tAlt+U"
+this.ToolBarItemName="VCRLast!"
+this.ToolBarItemText="Último"
+this.ToolBarItemOrder=12
+this.Shortcut=597
+end on
+
+event clicked;dw.triggerevent("ultimo")
+end event
+
+type m_-2 from menu within m_registro
+end type
+
+on m_-2.create
+this.Text="-"
+end on
+
+type m_consultarprofesoradjunto from menu within m_registro
+end type
+
+event clicked;dw.TriggerEvent("ProfAdjunto")
+  
+end event
+
+on m_consultarprofesoradjunto.create
+this.Text="Consultar profesor adjunto"
+end on
+
+type m_-3 from menu within m_registro
+end type
+
+on m_-3.create
+this.Text="-"
+end on
+
+type m_insertarnuevohorario from menu within m_registro
+end type
+
+event clicked;// Juan Campos.     Octubre-1997.
+
+dw.TriggerEvent("InsertaHorario")
+
+  
+end event
+
+on m_insertarnuevohorario.create
+this.Text="Insertar nuevo horario~tShift+H"
+this.Shortcut=1096
+end on
+
+type m_borrarhorario from menu within m_registro
+end type
+
+on m_borrarhorario.create
+this.Text="Borrar Horario~tShift+B"
+this.Shortcut=1090
+end on
+
+event clicked;// Juan Campos.    Octubre-1997.
+
+dw.TriggerEvent("BorraHorario")
+   
+end event
+
+type m_borrasaln from menu within m_registro
+end type
+
+event clicked;// Juan Campos Sánchez.    Mayo-1998.
+
+dw.TriggerEvent("BorraSalon")
+
+end event
+
+on m_borrasaln.create
+this.Text="Borra Salón~tShift+S"
+this.Shortcut=1107
+end on
+
+type m_ventana from menu within m_gpo_imp
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+
+on m_ventana.create
+this.Text="Ventana"
+this.m_horizontal=create m_horizontal
+this.m_vertical=create m_vertical
+this.m_primerplano=create m_primerplano
+this.m_cascada=create m_cascada
+this.Item[]={this.m_horizontal, &
+this.m_vertical, &
+this.m_primerplano, &
+this.m_cascada}
+end on
+
+on m_ventana.destroy
+destroy(this.m_horizontal)
+destroy(this.m_vertical)
+destroy(this.m_primerplano)
+destroy(this.m_cascada)
+end on
+
+type m_horizontal from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Tilehorizontal!)
+end event
+
+on m_horizontal.create
+this.Text="Horizontal"
+this.Microhelp="Organiza las ventanas horizontalmente"
+end on
+
+type m_vertical from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Tile!)
+end event
+
+on m_vertical.create
+this.Text="Vertical"
+this.Microhelp="Organiza las ventanas verticalmente"
+end on
+
+type m_primerplano from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Layer!)
+end event
+
+on m_primerplano.create
+this.Text="Primer Plano"
+this.Microhelp="Coloca la ventana actual en primer plano"
+end on
+
+type m_cascada from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Cascade!)
+end event
+
+on m_cascada.create
+this.Text="Cascada"
+this.Microhelp="Organiza las ventanas en cascada"
+end on
+
+type m_ayuda from menu within m_gpo_imp
+end type
+
+on m_ayuda.create
+this.Text="Ayuda"
+end on
+
+on m_ayuda.destroy
+end on
+
+type m_cerrar from menu within m_gpo_imp
+end type
+
+on m_cerrar.create
+this.Text="Salir"
+this.ToolBarItemName="Exit!"
+this.ToolBarItemOrder=13
+end on
+
+on m_cerrar.destroy
+end on
+
+event clicked;Rollback Using gtr_sce;
+Close(parentwindow)
+end event
+

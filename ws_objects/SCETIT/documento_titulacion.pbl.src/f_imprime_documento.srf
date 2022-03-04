@@ -1,0 +1,39 @@
+﻿$PBExportHeader$f_imprime_documento.srf
+global type f_imprime_documento from function_object
+end type
+
+forward prototypes
+global function integer f_imprime_documento (long al_cuenta, long al_cve_documento)
+end prototypes
+
+global function integer f_imprime_documento (long al_cuenta, long al_cve_documento);//f_imprime_documento
+//Recibe		al_cuenta	long
+//				al_cve_documento long
+
+
+blob lblob_ole
+OLEObject  lole_objeto
+
+SELECT archivo_documento_titulac
+INTO :lblob_ole
+FROM documento_titulacion
+WHERE cve_documento = :al_cve_documento
+USING gtr_sce;
+
+IF not isnull(lblob_ole) THEN
+	lole_objeto = CREATE OLEObject
+	lole_objeto.ObjectData = lblob_ole
+	
+	lole_objeto.ConnectToNewObject("word.basic")
+	lole_objeto.EditGoto("cuenta")
+	lole_objeto.Insert(string(al_cuenta))
+	return 0
+ELSE
+	MessageBox("Archivo sin Documento", "El tipo de archivo no tiene un documento relacionado",StopSign!)
+	return -1
+	
+END IF
+
+
+end function
+

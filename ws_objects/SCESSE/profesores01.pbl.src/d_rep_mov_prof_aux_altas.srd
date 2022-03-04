@@ -1,0 +1,58 @@
+﻿$PBExportHeader$d_rep_mov_prof_aux_altas.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=326 color="536870912" )
+summary(height=3 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=170 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=movimiento_prof_aux_cve_mat dbname="movimiento_prof_aux.cve_mat" )
+ column=(type=char(2) updatewhereclause=yes name=movimiento_prof_aux_gpo dbname="movimiento_prof_aux.gpo" )
+ column=(type=char(42) updatewhereclause=yes name=materias_materia dbname="materias.materia" )
+ column=(type=long updatewhereclause=yes name=movimiento_prof_aux_cve_movimiento dbname="movimiento_prof_aux.cve_movimiento" )
+ column=(type=datetime updatewhereclause=yes name=movimiento_prof_aux_fecha_movimiento dbname="movimiento_prof_aux.fecha_movimiento" )
+ column=(type=long updatewhereclause=yes name=movimiento_prof_aux_cve_profesor dbname="movimiento_prof_aux.cve_profesor" )
+ column=(type=char(20) updatewhereclause=yes name=movimiento_prof_aux_usuario dbname="movimiento_prof_aux.usuario" )
+ column=(type=char(70) updatewhereclause=yes name=profesor_nombre_completo dbname="profesor.nombre_completo" )
+ column=(type=long updatewhereclause=yes name=coordinaciones_cve_coordinacion dbname="coordinaciones.cve_coordinacion" )
+ column=(type=char(70) updatewhereclause=yes name=coordinaciones_coordinacion dbname="coordinaciones.coordinacion" )
+ retrieve="  SELECT movimiento_prof_aux.cve_mat,   
+         movimiento_prof_aux.gpo,   
+         materias.materia,   
+         movimiento_prof_aux.cve_movimiento,   
+         movimiento_prof_aux.fecha_movimiento,   
+         movimiento_prof_aux.cve_profesor,   
+         movimiento_prof_aux.usuario,  
+         profesor.nombre_completo,   
+         coordinaciones.cve_coordinacion,   
+         coordinaciones.coordinacion  
+    FROM coordinaciones,   
+         materias,   
+         movimiento_prof_aux,   
+         profesor  
+   WHERE ( coordinaciones.cve_coordinacion = materias.cve_coordinacion ) and  
+         ( materias.cve_mat = movimiento_prof_aux.cve_mat ) and  
+         ( movimiento_prof_aux.cve_profesor = profesor.cve_profesor ) and
+			( movimiento_prof_aux.fechacaptura > :fecha ) and 
+         ( ( movimiento_prof_aux.cve_movimiento = 1) )   
+ORDER BY coordinaciones.cve_coordinacion ASC,   
+         movimiento_prof_aux.cve_mat ASC   
+" arguments=(("fecha", date)) )
+group(level=1 header.height=106 trailer.height=0 by=("coordinaciones_cve_coordinacion" ) header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="2" text="Reporte de altas de movimientos de profesores Auxiliares"border="0" color="0" x="669" y="26" height="93" width="2384"  font.face="Arial" font.height="-14" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="clave "border="0" color="0" x="121" y="170" height="64" width="150"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="grupo"border="0" color="0" x="461" y="170" height="64" width="157"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="materia"border="0" color="0" x="658" y="170" height="64" width="197"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="fecha"border="0" color="0" x="2845" y="170" height="64" width="179"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="clave profesor"border="0" color="0" x="662" y="250" height="64" width="388"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="nombre profesor"border="0" color="0" x="1053" y="250" height="64" width="439"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header.1 id=9 alignment="1" tabsequence=32766 border="0" color="0" x="135" y="13" height="74" width="351" format="[general]"  name=coordinaciones_cve_coordinacion edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header.1 id=10 alignment="0" tabsequence=32766 border="0" color="0" x="545" y="13" height="74" width="2077" format="[general]"  name=coordinaciones_coordinacion edit.limit=70 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="139" y="3" height="74" width="351" format="[general]"  name=movimiento_prof_aux_cve_mat edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="530" y="3" height="74" width="88" format="[general]"  name=movimiento_prof_aux_gpo edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="640" y="3" height="74" width="2033" format="[general]"  name=materias_materia edit.limit=42 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="2812" y="3" height="74" width="629" format="dd/mm/yyyy hh:mm:ss:ffff"  name=movimiento_prof_aux_fecha_movimiento edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="0" x="132" y="93" height="74" width="351" format="[general]"  name=movimiento_prof_aux_cve_movimiento edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="636" y="93" height="74" width="377" format="[general]"  name=movimiento_prof_aux_cve_profesor edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="1031" y="93" height="74" width="2077" format="[general]"  name=profesor_nombre_completo edit.limit=70 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="3120" y="93" height="74" width="395" format="[general]"  name=movimiento_prof_aux_usuario edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

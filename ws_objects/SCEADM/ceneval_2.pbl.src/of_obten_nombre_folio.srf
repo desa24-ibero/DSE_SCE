@@ -1,0 +1,36 @@
+﻿$PBExportHeader$of_obten_nombre_folio.srf
+global type of_obten_nombre_folio from function_object
+end type
+
+forward prototypes
+global function integer of_obten_nombre_folio (long al_folio, ref string as_nombre)
+end prototypes
+
+global function integer of_obten_nombre_folio (long al_folio, ref string as_nombre);//of_obten_nombre_folio
+//	al_folio	long
+string  ls_error, ls_instruccion_sql
+string ls_apaterno, ls_amaterno, ls_nombre
+integer li_codigo_sql
+
+SELECT apaterno, amaterno, nombre
+INTO :ls_apaterno, :ls_amaterno, :ls_nombre
+FROM 	general
+WHERE general.folio = :al_folio
+USING gtr_sadm;
+
+li_codigo_sql = gtr_sadm.SqlCode
+ls_error = gtr_sadm.SqlErrText
+
+IF li_codigo_sql= -1 THEN
+	MessageBox("of_obten_nombre_folio", ls_error, StopSign!)
+END IF
+
+as_nombre= ls_apaterno + ls_amaterno + ls_nombre
+
+RETURN li_codigo_sql
+
+
+
+
+end function
+

@@ -1,0 +1,92 @@
+﻿$PBExportHeader$f_saldo_admision_sit_2013.srf
+global type f_saldo_admision_sit_2013 from function_object
+end type
+
+forward prototypes
+global function real f_saldo_admision_sit_2013 (long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio, long al_folio_apartado, integer ai_clv_ver_apartado)
+end prototypes
+
+global function real f_saldo_admision_sit_2013 (long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio, long al_folio_apartado, integer ai_clv_ver_apartado);int li_existe_aspirante, li_codigo_error, li_codigo_error_exec,  li_res_admision, li_res_control
+string ls_mensaje, ls_mensaje_exec, ls_mensaje_titulo, ls_periodo_pago, ls_periodo_apartado
+int li_anio_pago_cob, li_anio_apartado_cob, li_trncnt_out, li_anio_aportacion_out, li_anio_inscripcion_out
+string ls_mensaje_control, ls_mensaje_admision, ls_mensaje_out, ls_periodo_aportacion_out, ls_periodo_inscripcion_out
+string ls_mensaje_aportacion, ls_mensaje_inscripcion, ls_cve_salon, ls_inva_salon = "INVA"
+int li_periodo_pago, li_periodo_apartado, li_cancelado = 2
+real li_exito
+int li_num_aspiran, li_num_general, li_num_padres, li_res_aspiran, li_res_general, li_res_padres
+boolean lb_ejecuta_cobranzas= true
+int li_clv_carr, li_res_salon, li_bachi
+real lr_promedio
+string ls_cve_salon_anterior
+integer  li_retrieve
+u_datastore lu_datastore
+double lr_saldo
+
+
+	ls_mensaje_titulo = "Folio: ["+string(al_folio)+"] ~n" +&
+										  	"Version Orig: ["+string(ai_clv_ver)+"] ~n"+&
+									  		"Periodo Orig: ["+string(ai_clv_per)+"] ~n"+&
+											"Anio Orig: ["+string(ai_anio)+"] ~n"+&
+											"Folio Nvo: ["+string(al_folio_apartado)+"] ~n" +&
+											"Version Nva: ["+string(ai_clv_ver_apartado)+"] ~n"
+
+	IF lb_ejecuta_cobranzas THEN
+		IF NOT isvalid(gtr_scob) THEN
+			IF conecta_bd_n_tr(gtr_scob,gs_scob,gs_usuario,gs_password)<>1 THEN
+				DESTROY gtr_scob
+				RETURN -1
+			END IF
+		END IF
+
+	
+		IF NOT isvalid(lu_datastore) then
+			lu_datastore = CREATE u_datastore
+		END IF
+		
+//integer ai_periodo,  ai_periodo_sit ,ai_anio_sit, li_obten_periodo_sit			
+//		li_obten_periodo_sit = f_obten_periodo_sit(ai_periodo, ai_anio, ai_periodo_sit, ai_anio_sit )
+
+//sp_saldo_admision_lic  Para obtener el saldo del trámite antes de efectuar cualquier traspaso
+//
+//Parámetros entrada:
+//@folio integer
+//@periodo smallint
+//@anio smallint
+
+
+		lu_datastore.dataobject = 'd_sp_saldo_admision_lic'
+		lu_datastore.SetTransObject(gtr_scob )		
+		
+		li_retrieve = lu_datastore.Retrieve(al_folio, ai_clv_per, ai_anio)
+		IF li_retrieve = -1 THEN
+			desconecta_bd(gtr_scob)
+			MessageBox("ERROR", "Error al ejecutar sp_saldo_admision_lic: ",  StopSign!)		
+			return -1
+		ELSEIF li_retrieve = 100 THEN
+			desconecta_bd(gtr_scob)
+			MessageBox("ERROR", "El aspirante no cuenta con saldo para el traspaso ",  StopSign!)		
+			return -1
+		ELSE
+			IF li_retrieve>0 THEN
+				lr_saldo = lu_datastore.GetItemNumber(li_retrieve,"saldo")
+				IF isnull(lr_saldo) THEN
+					lr_saldo = -1
+				END IF
+				IF lr_saldo<=0 THEN
+					desconecta_bd(gtr_scob)
+					MessageBox("ERROR", "El aspirante no cuenta con saldo para el traspaso ",  StopSign!)		
+					RETURN lr_saldo
+				ELSE
+					desconecta_bd(gtr_scob)
+					RETURN lr_saldo
+				END IF				
+			ELSE 	
+				MessageBox("ERROR", "El aspirante no cuenta con saldo para el traspaso ",  StopSign!)		
+				return -1
+			END IF	
+		END IF
+	END IF
+
+
+end function
+

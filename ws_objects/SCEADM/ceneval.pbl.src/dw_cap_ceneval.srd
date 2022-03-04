@@ -1,0 +1,568 @@
+﻿$PBExportHeader$dw_cap_ceneval.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=169 color="536870912" )
+summary(height=77 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=97 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=folio dbname="ceneval_2.folio" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=clv_ver dbname="ceneval_2.clv_ver" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=clv_per dbname="ceneval_2.clv_per" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=anio dbname="ceneval_2.anio" )
+ column=(type=char(45) update=yes updatewhereclause=yes name=nombre dbname="ceneval_2.nombre" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=p2 dbname="ceneval_2.p2" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=p3 dbname="ceneval_2.p3" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p4 dbname="ceneval_2.p4" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p5 dbname="ceneval_2.p5" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p6 dbname="ceneval_2.p6" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p7 dbname="ceneval_2.p7" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p8 dbname="ceneval_2.p8" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=p9 dbname="ceneval_2.p9" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p10 dbname="ceneval_2.p10" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p11 dbname="ceneval_2.p11" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p12 dbname="ceneval_2.p12" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p13 dbname="ceneval_2.p13" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p14 dbname="ceneval_2.p14" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p15 dbname="ceneval_2.p15" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p16_1 dbname="ceneval_2.p16_1" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p16_2 dbname="ceneval_2.p16_2" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p16_3 dbname="ceneval_2.p16_3" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p16_4 dbname="ceneval_2.p16_4" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p16_5 dbname="ceneval_2.p16_5" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p16_6 dbname="ceneval_2.p16_6" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p16_7 dbname="ceneval_2.p16_7" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p16_8 dbname="ceneval_2.p16_8" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p16_9 dbname="ceneval_2.p16_9" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p16_10 dbname="ceneval_2.p16_10" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p16_11 dbname="ceneval_2.p16_11" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p16_12 dbname="ceneval_2.p16_12" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p16_13 dbname="ceneval_2.p16_13" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p16_14 dbname="ceneval_2.p16_14" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p16_15 dbname="ceneval_2.p16_15" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p16_16 dbname="ceneval_2.p16_16" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p16_17 dbname="ceneval_2.p16_17" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p17_1 dbname="ceneval_2.p17_1" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p17_2 dbname="ceneval_2.p17_2" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p17_3 dbname="ceneval_2.p17_3" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p17_4 dbname="ceneval_2.p17_4" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p17_5 dbname="ceneval_2.p17_5" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p18 dbname="ceneval_2.p18" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p19 dbname="ceneval_2.p19" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p20 dbname="ceneval_2.p20" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p21 dbname="ceneval_2.p21" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=p22 dbname="ceneval_2.p22" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=p23 dbname="ceneval_2.p23" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=p24 dbname="ceneval_2.p24" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p25_1 dbname="ceneval_2.p25_1" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p25_2 dbname="ceneval_2.p25_2" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p25_3 dbname="ceneval_2.p25_3" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p25_4 dbname="ceneval_2.p25_4" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p25_5 dbname="ceneval_2.p25_5" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p25_6 dbname="ceneval_2.p25_6" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p25_7 dbname="ceneval_2.p25_7" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p25_8 dbname="ceneval_2.p25_8" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p25_9 dbname="ceneval_2.p25_9" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p25_10 dbname="ceneval_2.p25_10" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p25_11 dbname="ceneval_2.p25_11" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p25_12 dbname="ceneval_2.p25_12" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p25_13 dbname="ceneval_2.p25_13" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p26 dbname="ceneval_2.p26" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p27_1 dbname="ceneval_2.p27_1" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p27_2 dbname="ceneval_2.p27_2" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p28 dbname="ceneval_2.p28" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p29 dbname="ceneval_2.p29" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p30 dbname="ceneval_2.p30" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p31 dbname="ceneval_2.p31" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p33 dbname="ceneval_2.p33" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p34 dbname="ceneval_2.p34" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p35 dbname="ceneval_2.p35" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p36 dbname="ceneval_2.p36" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_1 dbname="ceneval_2.p37_1" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_2 dbname="ceneval_2.p37_2" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_3 dbname="ceneval_2.p37_3" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_4 dbname="ceneval_2.p37_4" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_5 dbname="ceneval_2.p37_5" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_6 dbname="ceneval_2.p37_6" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_7 dbname="ceneval_2.p37_7" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_8 dbname="ceneval_2.p37_8" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_9 dbname="ceneval_2.p37_9" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_10 dbname="ceneval_2.p37_10" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_11 dbname="ceneval_2.p37_11" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_12 dbname="ceneval_2.p37_12" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_13 dbname="ceneval_2.p37_13" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_14 dbname="ceneval_2.p37_14" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_15 dbname="ceneval_2.p37_15" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_16 dbname="ceneval_2.p37_16" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_17 dbname="ceneval_2.p37_17" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_18 dbname="ceneval_2.p37_18" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_19 dbname="ceneval_2.p37_19" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_20 dbname="ceneval_2.p37_20" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_21 dbname="ceneval_2.p37_21" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p37_22 dbname="ceneval_2.p37_22" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p38_1 dbname="ceneval_2.p38_1" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p38_2 dbname="ceneval_2.p38_2" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p38_3 dbname="ceneval_2.p38_3" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p38_4 dbname="ceneval_2.p38_4" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p38_5 dbname="ceneval_2.p38_5" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p38_6 dbname="ceneval_2.p38_6" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p38_7 dbname="ceneval_2.p38_7" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p38_8 dbname="ceneval_2.p38_8" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p38_9 dbname="ceneval_2.p38_9" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p38_10 dbname="ceneval_2.p38_10" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p38_11 dbname="ceneval_2.p38_11" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p38_12 dbname="ceneval_2.p38_12" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p38_13 dbname="ceneval_2.p38_13" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p39_1 dbname="ceneval_2.p39_1" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p39_2 dbname="ceneval_2.p39_2" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p39_3 dbname="ceneval_2.p39_3" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p39_4 dbname="ceneval_2.p39_4" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p39_5 dbname="ceneval_2.p39_5" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p39_6 dbname="ceneval_2.p39_6" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p39_7 dbname="ceneval_2.p39_7" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p39_8 dbname="ceneval_2.p39_8" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p39_9 dbname="ceneval_2.p39_9" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p39_10 dbname="ceneval_2.p39_10" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p39_11 dbname="ceneval_2.p39_11" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p39_12 dbname="ceneval_2.p39_12" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p39_13 dbname="ceneval_2.p39_13" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p39_14 dbname="ceneval_2.p39_14" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p40_1 dbname="ceneval_2.p40_1" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p40_2 dbname="ceneval_2.p40_2" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p40_3 dbname="ceneval_2.p40_3" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p40_4 dbname="ceneval_2.p40_4" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=ident_carr dbname="ceneval_2.ident_carr" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p32_1 dbname="ceneval_2.p32_1" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p32_2 dbname="ceneval_2.p32_2" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p32_3 dbname="ceneval_2.p32_3" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p32_4 dbname="ceneval_2.p32_4" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p32_5 dbname="ceneval_2.p32_5" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p32_6 dbname="ceneval_2.p32_6" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p32_7 dbname="ceneval_2.p32_7" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p32_8 dbname="ceneval_2.p32_8" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p32_9 dbname="ceneval_2.p32_9" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p32_10 dbname="ceneval_2.p32_10" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p32_11 dbname="ceneval_2.p32_11" )
+ retrieve="  SELECT ceneval_2.folio,   
+         ceneval_2.clv_ver,   
+         ceneval_2.clv_per,   
+         ceneval_2.anio,   
+         ceneval_2.nombre,   
+         ceneval_2.p2,   
+         ceneval_2.p3,   
+         ceneval_2.p4,   
+         ceneval_2.p5,   
+         ceneval_2.p6,   
+         ceneval_2.p7,   
+         ceneval_2.p8,   
+         ceneval_2.p9,   
+         ceneval_2.p10,   
+         ceneval_2.p11,   
+         ceneval_2.p12,   
+         ceneval_2.p13,   
+         ceneval_2.p14,   
+         ceneval_2.p15,   
+         ceneval_2.p16_1,   
+         ceneval_2.p16_2,   
+         ceneval_2.p16_3,   
+         ceneval_2.p16_4,   
+         ceneval_2.p16_5,   
+         ceneval_2.p16_6,   
+         ceneval_2.p16_7,   
+         ceneval_2.p16_8,   
+         ceneval_2.p16_9,   
+         ceneval_2.p16_10,   
+         ceneval_2.p16_11,   
+         ceneval_2.p16_12,   
+         ceneval_2.p16_13,   
+         ceneval_2.p16_14,   
+         ceneval_2.p16_15,   
+         ceneval_2.p16_16,   
+         ceneval_2.p16_17,   
+         ceneval_2.p17_1,   
+         ceneval_2.p17_2,   
+         ceneval_2.p17_3,   
+         ceneval_2.p17_4,   
+         ceneval_2.p17_5,   
+         ceneval_2.p18,   
+         ceneval_2.p19,   
+         ceneval_2.p20,   
+         ceneval_2.p21,   
+         ceneval_2.p22,   
+         ceneval_2.p23,   
+         ceneval_2.p24,   
+         ceneval_2.p25_1,   
+         ceneval_2.p25_2,   
+         ceneval_2.p25_3,   
+         ceneval_2.p25_4,   
+         ceneval_2.p25_5,   
+         ceneval_2.p25_6,   
+         ceneval_2.p25_7,   
+         ceneval_2.p25_8,   
+         ceneval_2.p25_9,   
+         ceneval_2.p25_10,   
+         ceneval_2.p25_11,   
+         ceneval_2.p25_12,   
+         ceneval_2.p25_13,   
+         ceneval_2.p26,   
+         ceneval_2.p27_1,   
+         ceneval_2.p27_2,   
+         ceneval_2.p28,   
+         ceneval_2.p29,   
+         ceneval_2.p30,   
+         ceneval_2.p31,   
+         ceneval_2.p33,   
+         ceneval_2.p34,   
+         ceneval_2.p35,   
+         ceneval_2.p36,   
+         ceneval_2.p37_1,   
+         ceneval_2.p37_2,   
+         ceneval_2.p37_3,   
+         ceneval_2.p37_4,   
+         ceneval_2.p37_5,   
+         ceneval_2.p37_6,   
+         ceneval_2.p37_7,   
+         ceneval_2.p37_8,   
+         ceneval_2.p37_9,   
+         ceneval_2.p37_10,   
+         ceneval_2.p37_11,   
+         ceneval_2.p37_12,   
+         ceneval_2.p37_13,   
+         ceneval_2.p37_14,   
+         ceneval_2.p37_15,   
+         ceneval_2.p37_16,   
+         ceneval_2.p37_17,   
+         ceneval_2.p37_18,   
+         ceneval_2.p37_19,   
+         ceneval_2.p37_20,   
+         ceneval_2.p37_21,   
+         ceneval_2.p37_22,   
+         ceneval_2.p38_1,   
+         ceneval_2.p38_2,   
+         ceneval_2.p38_3,   
+         ceneval_2.p38_4,   
+         ceneval_2.p38_5,   
+         ceneval_2.p38_6,   
+         ceneval_2.p38_7,   
+         ceneval_2.p38_8,   
+         ceneval_2.p38_9,   
+         ceneval_2.p38_10,   
+         ceneval_2.p38_11,   
+         ceneval_2.p38_12,   
+         ceneval_2.p38_13,   
+         ceneval_2.p39_1,   
+         ceneval_2.p39_2,   
+         ceneval_2.p39_3,   
+         ceneval_2.p39_4,   
+         ceneval_2.p39_5,   
+         ceneval_2.p39_6,   
+         ceneval_2.p39_7,   
+         ceneval_2.p39_8,   
+         ceneval_2.p39_9,   
+         ceneval_2.p39_10,   
+         ceneval_2.p39_11,   
+         ceneval_2.p39_12,   
+         ceneval_2.p39_13,   
+         ceneval_2.p39_14,   
+         ceneval_2.p40_1,   
+         ceneval_2.p40_2,   
+         ceneval_2.p40_3,   
+         ceneval_2.p40_4,   
+         ceneval_2.ident_carr,   
+         ceneval_2.p32_1,   
+         ceneval_2.p32_2,   
+         ceneval_2.p32_3,   
+         ceneval_2.p32_4,   
+         ceneval_2.p32_5,   
+         ceneval_2.p32_6,   
+         ceneval_2.p32_7,   
+         ceneval_2.p32_8,   
+         ceneval_2.p32_9,   
+         ceneval_2.p32_10,   
+         ceneval_2.p32_11  
+    FROM ceneval_2  
+   WHERE ( (ceneval_2.clv_ver = :ver) OR
+            (:ver = 99) ) AND  
+         ( ceneval_2.clv_per = :per ) AND  
+         ( ceneval_2.anio = :ani )    
+" update="ceneval_2" updatewhere=0 updatekeyinplace=no arguments=(("ver", number),("per", number),("ani", number)) )
+column(band=header id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="23233" y="212" height="77" width="266" format="[general]"  name=clv_ver edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=header id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="23498" y="212" height="77" width="266" format="[general]"  name=clv_per edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="Anio"border="0" color="0" x="732" y="80" height="65" width="174"  name=anio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Per"border="0" color="0" x="609" y="80" height="65" width="92"  name=clv_per_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Ver"border="0" color="0" x="471" y="80" height="65" width="92"  name=clv_ver_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Folio"border="0" color="0" x="165" y="80" height="65" width="247"  name=folio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text=""border="0" color="0" x="133" y="4" height="61" width="3498"  name=st_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="P12"border="0" color="0" x="3059" y="80" height="65" width="106"  name=p12_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P13"border="0" color="0" x="3169" y="80" height="65" width="106"  name=p13_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P14"border="0" color="0" x="3278" y="80" height="65" width="110"  name=p14_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P15"border="0" color="0" x="3393" y="80" height="65" width="106"  name=p15_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P16 17"border="0" color="0" x="6323" y="80" height="65" width="156"  name=p17_17_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P16 16"border="0" color="0" x="6131" y="80" height="65" width="156"  name=p17_16_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P16 15"border="0" color="0" x="5939" y="80" height="65" width="156"  name=p17_15_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P16 14"border="0" color="0" x="5742" y="80" height="65" width="156"  name=p17_14_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P16 13"border="0" color="0" x="5550" y="80" height="65" width="156"  name=p17_13_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P16 12"border="0" color="0" x="5358" y="80" height="65" width="156"  name=p17_12_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P16 11"border="0" color="0" x="5166" y="80" height="65" width="156"  name=p17_11_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P16 10"border="0" color="0" x="4970" y="80" height="65" width="156"  name=p17_10_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P16 9"border="0" color="0" x="4810" y="80" height="65" width="156"  name=p17_9_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P16 8"border="0" color="0" x="4650" y="80" height="65" width="156"  name=p17_8_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P16 7"border="0" color="0" x="4490" y="80" height="65" width="156"  name=p17_7_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P16 6"border="0" color="0" x="4325" y="80" height="65" width="156"  name=p17_6_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P16 5"border="0" color="0" x="4165" y="80" height="65" width="156"  name=p17_5_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P16 4"border="0" color="0" x="4005" y="80" height="65" width="156"  name=p17_4_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P16 3"border="0" color="0" x="3845" y="80" height="65" width="156"  name=p17_3_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P16 2"border="0" color="0" x="3685" y="80" height="65" width="156"  name=p17_2_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P16 1"border="0" color="0" x="3521" y="80" height="65" width="156"  name=p17_1_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P171"border="0" color="0" x="6501" y="80" height="65" width="138"  name=p18_1_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P17 4"border="0" color="0" x="6977" y="80" height="65" width="156"  name=p18_4_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P17 3"border="0" color="0" x="6812" y="80" height="65" width="156"  name=p18_3_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P17 2"border="0" color="0" x="6652" y="80" height="65" width="156"  name=p18_2_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P17 5"border="0" color="0" x="7137" y="80" height="65" width="156"  name=p18_5_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P18"border="0" color="0" x="7306" y="80" height="65" width="106"  name=p18_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P19"border="0" color="0" x="7429" y="80" height="65" width="106"  name=p19_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P21"border="0" color="0" x="7658" y="80" height="65" width="106"  name=p21_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P22"border="0" color="0" x="7767" y="80" height="65" width="106"  name=p22_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P23"border="0" color="0" x="7877" y="80" height="65" width="106"  name=p23_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P24"border="0" color="0" x="7991" y="80" height="65" width="106"  name=p24_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P20"border="0" color="0" x="7543" y="80" height="65" width="110"  name=p20_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="P25"border="0" color="0" x="8106" y="80" height="65" width="161"  name=p25_1_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P25 3"border="0" color="0" x="8435" y="80" height="65" width="156"  name=p25_3_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P25 2"border="0" color="0" x="8275" y="80" height="65" width="156"  name=p25_2_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P25 4"border="0" color="0" x="8599" y="80" height="65" width="156"  name=p25_4_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P25 5"border="0" color="0" x="8759" y="80" height="65" width="156"  name=p25_5_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P25 6"border="0" color="0" x="8919" y="80" height="65" width="156"  name=p25_6_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P25 7"border="0" color="0" x="9079" y="80" height="65" width="156"  name=p25_7_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P25 8"border="0" color="0" x="9239" y="80" height="65" width="161"  name=p25_8_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P25 9"border="0" color="0" x="9404" y="80" height="65" width="156"  name=p25_9_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P25 10"border="0" color="0" x="9564" y="80" height="65" width="188"  name=p25_10_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P25 11"border="0" color="0" x="9756" y="80" height="65" width="188"  name=p25_11_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P25 12"border="0" color="0" x="9948" y="80" height="65" width="188"  name=p25_12_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P25 13"border="0" color="0" x="10145" y="80" height="65" width="188"  name=p25_13_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P26"border="0" color="0" x="10337" y="80" height="65" width="106"  name=p26_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P29"border="0" color="0" x="10949" y="80" height="65" width="106"  name=p29_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P27_1"border="0" color="0" x="10451" y="80" height="65" width="170"  name=p27_1_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P27_2"border="0" color="0" x="10643" y="80" height="65" width="170"  name=p27_2_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P31"border="0" color="0" x="11187" y="80" height="65" width="106"  name=p31_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P32 1"border="0" color="0" x="11310" y="80" height="65" width="156"  name=p32_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P30"border="0" color="0" x="11068" y="80" height="65" width="106"  name=p30_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P28"border="0" color="0" x="10830" y="80" height="65" width="106"  name=p28_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P32 1"border="0" color="0" x="11310" y="80" height="65" width="156"  name=p32_1_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P32 2"border="0" color="0" x="11484" y="80" height="65" width="156"  name=p32_2_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P32 3"border="0" color="0" x="11658" y="80" height="65" width="156"  name=p32_3_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P35"border="0" color="0" x="13523" y="80" height="65" width="110"  name=p35_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P36"border="0" color="0" x="13665" y="80" height="65" width="106"  name=p_36_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P33"border="0" color="0" x="13276" y="80" height="65" width="106"  name=p33_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="p34"border="0" color="0" x="13409" y="80" height="65" width="97"  name=p_34_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P33"border="0" color="0" x="13276" y="80" height="65" width="106"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P32 5"border="0" color="0" x="11996" y="80" height="65" width="156"  name=p32_5_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P32 4"border="0" color="0" x="11827" y="80" height="65" width="156"  name=p32_4_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P32 6"border="0" color="0" x="12165" y="80" height="65" width="156"  name=p32_6_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P32 7"border="0" color="0" x="12330" y="80" height="65" width="165"  name=p32_7_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P32 8"border="0" color="0" x="12508" y="80" height="65" width="161"  name=p32_8_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P32 9"border="0" color="0" x="12682" y="80" height="65" width="161"  name=p32_9_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P32 10"border="0" color="0" x="12855" y="80" height="65" width="193"  name=p32_10_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P32 11"border="0" color="0" x="13061" y="80" height="65" width="188"  name=p32_11_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 1"border="0" color="0" x="13793" y="80" height="65" width="156"  name=p37_1_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 2"border="0" color="0" x="13953" y="80" height="65" width="156"  name=p37_2_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37  3"border="0" color="0" x="14103" y="80" height="65" width="174"  name=p37_3_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 4"border="0" color="0" x="14273" y="80" height="65" width="156"  name=p37_4_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 5"border="0" color="0" x="14437" y="80" height="65" width="156"  name=p37_5_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 6"border="0" color="0" x="14597" y="80" height="65" width="156"  name=p37_6_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 7"border="0" color="0" x="14757" y="80" height="65" width="156"  name=p37_7_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 8"border="0" color="0" x="14917" y="80" height="65" width="156"  name=p37_8_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 9"border="0" color="0" x="15077" y="80" height="65" width="156"  name=p37_9_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 10"border="0" color="0" x="15242" y="80" height="65" width="188"  name=p37_10_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 11"border="0" color="0" x="15434" y="80" height="65" width="188"  name=p37_11_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 12"border="0" color="0" x="15626" y="80" height="65" width="188"  name=p36_12_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 13"border="0" color="0" x="15818" y="80" height="65" width="188"  name=p37_13_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 14"border="0" color="0" x="16014" y="80" height="65" width="188"  name=p37_14_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 15"border="0" color="0" x="16206" y="80" height="65" width="188"  name=p37_15_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 16"border="0" color="0" x="16398" y="80" height="65" width="188"  name=p37_16_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 17"border="0" color="0" x="16595" y="80" height="65" width="188"  name=p37_17_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 18"border="0" color="0" x="16782" y="80" height="65" width="188"  name=p37_18_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 19"border="0" color="0" x="16979" y="80" height="65" width="188"  name=p37_19_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 20"border="0" color="0" x="17171" y="80" height="65" width="188"  name=p37_20_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 22"border="0" color="0" x="17555" y="80" height="65" width="188"  name=p37_22_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P38 1"border="0" color="0" x="17761" y="80" height="65" width="156"  name=p_38_1_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P38 2"border="0" color="0" x="17939" y="80" height="65" width="156"  name=p_38_2_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P38 3"border="0" color="0" x="18108" y="80" height="65" width="156"  name=p_38_3_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P38 4"border="0" color="0" x="18282" y="80" height="65" width="156"  name=p_38_4_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P38 5"border="0" color="0" x="18455" y="80" height="65" width="156"  name=p_38_5_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P38 6"border="0" color="0" x="18629" y="80" height="65" width="156"  name=p_38_6_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P38 7"border="0" color="0" x="18803" y="80" height="65" width="156"  name=p_38_7_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P38 8"border="0" color="0" x="18977" y="80" height="65" width="156"  name=p38_8_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P38 9"border="0" color="0" x="19150" y="80" height="65" width="156"  name=p38_9_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P38 10"border="0" color="0" x="19324" y="80" height="65" width="188"  name=p38_10_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P38 11"border="0" color="0" x="19530" y="80" height="65" width="188"  name=p38_11_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P38 12"border="0" color="0" x="19735" y="80" height="65" width="188"  name=p38_12_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P38 13"border="0" color="0" x="19941" y="80" height="65" width="188"  name=p38_13_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P39 1"border="0" color="0" x="20147" y="80" height="65" width="156"  name=p39_1_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P39 2"border="0" color="0" x="20321" y="80" height="65" width="156"  name=p39_2_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P39 3"border="0" color="0" x="20494" y="80" height="65" width="156"  name=p39_3_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P39 4"border="0" color="0" x="20668" y="80" height="65" width="156"  name=p39_4_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P39 5"border="0" color="0" x="20842" y="80" height="65" width="156"  name=p39_5_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P39 6"border="0" color="0" x="21015" y="80" height="65" width="156"  name=p39_6_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P39 7"border="0" color="0" x="21189" y="80" height="65" width="156"  name=p39_7_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P39 8"border="0" color="0" x="21363" y="80" height="65" width="156"  name=p39_8_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P39 9"border="0" color="0" x="21537" y="80" height="65" width="156"  name=p39_9_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P39 10"border="0" color="0" x="21710" y="80" height="65" width="188"  name=p39_10_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P39 11"border="0" color="0" x="21916" y="80" height="65" width="188"  name=p39_11_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P39 12"border="0" color="0" x="22122" y="80" height="65" width="193"  name=p39_12_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P39 13"border="0" color="0" x="22327" y="80" height="65" width="193"  name=p39_13_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P39 14"border="0" color="0" x="22538" y="80" height="65" width="188"  name=p39_14_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P40 3"border="0" color="0" x="23082" y="80" height="65" width="156"  name=p_40_3_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P40 4"border="0" color="0" x="23251" y="80" height="65" width="161"  name=p_40_4_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P40 2"border="0" color="0" x="22913" y="80" height="65" width="156"  name=p_40_2_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P40 1"border="0" color="0" x="22739" y="80" height="65" width="161"  name=p_40_1_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P37 21"border="0" color="0" x="17363" y="80" height="65" width="188"  name=p37_21_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Ident. Carr."border="0" color="33554432" x="23434" y="80" height="65" width="293"  name=ident_carr_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="P11"border="0" color="0" x="2913" y="80" height="65" width="133"  name=p11_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P5"border="0" color="0" x="2254" y="80" height="65" width="92"  name=p5_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P6"border="0" color="0" x="2359" y="80" height="65" width="151"  name=p6_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P7"border="0" color="0" x="2524" y="80" height="65" width="74"  name=p7_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P8"border="0" color="0" x="2611" y="80" height="65" width="74"  name=p8_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P9"border="0" color="0" x="2698" y="80" height="65" width="74"  name=p9_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P10"border="0" color="0" x="2785" y="80" height="65" width="110"  name=p10_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P4"border="0" color="0" x="2149" y="80" height="65" width="92"  name=p4_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Nombre"border="0" color="0" x="915" y="80" height="65" width="951"  name=nombre_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P2"border="0" color="0" x="1879" y="80" height="65" width="78"  name=p2_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P3"border="0" color="0" x="1975" y="80" height="65" width="156"  name=p3_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="732" y="16" height="65" width="174" format="[general]"  name=anio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="609" y="16" height="65" width="92" format="[general]" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="471" y="16" height="65" width="92" format="[general]" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="165" y="16" height="65" width="247" format="[general]"  name=folio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="0" color="33554432" x="3063" y="16" height="65" width="106" format="[general]"  name=p12 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="0" color="33554432" x="3169" y="16" height="65" width="106" format="[general]"  name=p13 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=18 alignment="0" tabsequence=32766 border="0" color="33554432" x="3278" y="16" height="65" width="110" format="[general]"  name=p14 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=19 alignment="0" tabsequence=32766 border="0" color="33554432" x="3393" y="16" height="65" width="106" format="[general]"  name=p15 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=36 alignment="0" tabsequence=32766 border="0" color="33554432" x="6323" y="16" height="65" width="156" format="[general]"  name=p16_17 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=35 alignment="0" tabsequence=32766 border="0" color="33554432" x="6131" y="16" height="65" width="156" format="[general]"  name=p16_16 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=34 alignment="0" tabsequence=32766 border="0" color="33554432" x="5939" y="16" height="65" width="156" format="[general]"  name=p16_15 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=33 alignment="0" tabsequence=32766 border="0" color="33554432" x="5742" y="16" height="65" width="156" format="[general]"  name=p16_14 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=32 alignment="0" tabsequence=32766 border="0" color="33554432" x="5550" y="16" height="65" width="156" format="[general]"  name=p16_13 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=31 alignment="0" tabsequence=32766 border="0" color="33554432" x="5358" y="16" height="65" width="156" format="[general]"  name=p16_12 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=30 alignment="0" tabsequence=32766 border="0" color="33554432" x="5166" y="16" height="65" width="156" format="[general]"  name=p16_11 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=29 alignment="0" tabsequence=32766 border="0" color="33554432" x="4970" y="16" height="65" width="156" format="[general]"  name=p16_10 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=28 alignment="0" tabsequence=32766 border="0" color="33554432" x="4810" y="16" height="65" width="156" format="[general]"  name=p16_9 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=27 alignment="0" tabsequence=32766 border="0" color="33554432" x="4650" y="16" height="65" width="156" format="[general]"  name=p16_8 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=26 alignment="0" tabsequence=32766 border="0" color="33554432" x="4490" y="16" height="65" width="156" format="[general]"  name=p16_7 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=25 alignment="0" tabsequence=32766 border="0" color="33554432" x="4325" y="16" height="65" width="156" format="[general]"  name=p16_6 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=24 alignment="0" tabsequence=32766 border="0" color="33554432" x="4165" y="16" height="65" width="156" format="[general]"  name=p16_5 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=23 alignment="0" tabsequence=32766 border="0" color="33554432" x="4005" y="16" height="65" width="156" format="[general]"  name=p16_4 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=22 alignment="0" tabsequence=32766 border="0" color="33554432" x="3845" y="16" height="65" width="156" format="[general]"  name=p16_3 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=21 alignment="0" tabsequence=32766 border="0" color="33554432" x="3685" y="16" height="65" width="156" format="[general]"  name=p16_2 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=20 alignment="0" tabsequence=32766 border="0" color="33554432" x="3521" y="16" height="65" width="156" format="[general]"  name=p16_1 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=37 alignment="0" tabsequence=32766 border="0" color="33554432" x="6501" y="16" height="65" width="138" format="[general]"  name=p17_1 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=40 alignment="0" tabsequence=32766 border="0" color="33554432" x="6977" y="16" height="65" width="156" format="[general]"  name=p17_4 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=39 alignment="0" tabsequence=32766 border="0" color="33554432" x="6812" y="16" height="65" width="156" format="[general]"  name=p17_3 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=38 alignment="0" tabsequence=32766 border="0" color="33554432" x="6652" y="16" height="65" width="156" format="[general]"  name=p17_2 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=41 alignment="0" tabsequence=32766 border="0" color="33554432" x="7137" y="16" height="65" width="156" format="[general]"  name=p17_5 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=42 alignment="0" tabsequence=32766 border="0" color="33554432" x="7306" y="16" height="65" width="119" format="[general]"  name=p18 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=44 alignment="0" tabsequence=32766 border="0" color="33554432" x="7543" y="16" height="65" width="110" format="[general]"  name=p20 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=45 alignment="0" tabsequence=32766 border="0" color="33554432" x="7658" y="16" height="65" width="106" format="[general]"  name=p21 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=46 alignment="0" tabsequence=32766 border="0" color="33554432" x="7767" y="16" height="65" width="106" format="[general]"  name=p22 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=47 alignment="0" tabsequence=32766 border="0" color="33554432" x="7877" y="16" height="65" width="106" format="[general]"  name=p23 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=43 alignment="0" tabsequence=32766 border="0" color="33554432" x="7429" y="16" height="65" width="106" format="[general]"  name=p19 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=48 alignment="0" tabsequence=32766 border="0" color="33554432" x="7991" y="16" height="65" width="106" format="[general]"  name=p24 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=49 alignment="0" tabsequence=32766 border="0" color="33554432" x="8106" y="16" height="65" width="161" format="[general]"  name=p25_1 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=51 alignment="0" tabsequence=32766 border="0" color="33554432" x="8435" y="16" height="65" width="156" format="[general]"  name=p25_3 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=50 alignment="0" tabsequence=32766 border="0" color="33554432" x="8275" y="16" height="65" width="156" format="[general]"  name=p25_2 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=52 alignment="0" tabsequence=32766 border="0" color="33554432" x="8599" y="16" height="65" width="156" format="[general]"  name=p25_4 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=53 alignment="0" tabsequence=32766 border="0" color="33554432" x="8759" y="16" height="65" width="156" format="[general]"  name=p25_5 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=54 alignment="0" tabsequence=32766 border="0" color="33554432" x="8919" y="16" height="65" width="156" format="[general]"  name=p25_6 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=55 alignment="0" tabsequence=32766 border="0" color="33554432" x="9079" y="16" height="65" width="161" format="[general]"  name=p25_7 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=56 alignment="0" tabsequence=32766 border="0" color="33554432" x="9239" y="16" height="65" width="156" format="[general]"  name=p25_8 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=57 alignment="0" tabsequence=32766 border="0" color="33554432" x="9404" y="16" height="65" width="156" format="[general]"  name=p25_9 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=58 alignment="0" tabsequence=32766 border="0" color="33554432" x="9564" y="16" height="65" width="188" format="[general]"  name=p25_10 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=59 alignment="0" tabsequence=32766 border="0" color="33554432" x="9756" y="16" height="65" width="188" format="[general]"  name=p25_11 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=60 alignment="0" tabsequence=32766 border="0" color="33554432" x="9948" y="16" height="65" width="188" format="[general]"  name=p25_12 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=61 alignment="0" tabsequence=32766 border="0" color="33554432" x="10145" y="16" height="65" width="188" format="[general]"  name=p25_13 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=66 alignment="0" tabsequence=32766 border="0" color="33554432" x="10949" y="16" height="65" width="106" format="[general]"  name=p29 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=62 alignment="0" tabsequence=32766 border="0" color="33554432" x="10337" y="16" height="65" width="106" format="[general]"  name=p26 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=64 alignment="0" tabsequence=32766 border="0" color="33554432" x="10451" y="16" height="65" width="170" format="[general]"  name=p27_2 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=63 alignment="0" tabsequence=32766 border="0" color="33554432" x="10638" y="16" height="65" width="170" format="[general]"  name=p27_1 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=67 alignment="0" tabsequence=32766 border="0" color="33554432" x="11068" y="16" height="65" width="106" format="[general]"  name=p30 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=65 alignment="0" tabsequence=32766 border="0" color="33554432" x="10830" y="16" height="65" width="106" format="[general]"  name=p28 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=68 alignment="0" tabsequence=32766 border="0" color="33554432" x="11187" y="16" height="65" width="106" format="[general]"  name=p31 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=127 alignment="0" tabsequence=32766 border="0" color="33554432" x="11306" y="16" height="65" width="156" format="[general]"  name=p32_1 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=70 alignment="0" tabsequence=32766 border="0" color="33554432" x="13409" y="16" height="65" width="97" format="[general]"  name=p34 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=71 alignment="0" tabsequence=32766 border="0" color="33554432" x="13523" y="16" height="65" width="110" format="[general]"  name=p35 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=72 alignment="0" tabsequence=32766 border="0" color="33554432" x="13665" y="16" height="65" width="106" format="[general]"  name=p36 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=129 alignment="0" tabsequence=32766 border="0" color="33554432" x="11658" y="16" height="65" width="161" format="[general]"  name=p32_3 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=128 alignment="0" tabsequence=32766 border="0" color="33554432" x="11479" y="16" height="65" width="161" format="[general]"  name=p32_2 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=69 alignment="0" tabsequence=32766 border="0" color="33554432" x="13276" y="16" height="65" width="106" format="[general]"  name=p33 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=131 alignment="0" tabsequence=32766 border="0" color="33554432" x="11996" y="16" height="65" width="156" format="[general]"  name=p32_5 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=130 alignment="0" tabsequence=32766 border="0" color="33554432" x="11827" y="16" height="65" width="156" format="[general]"  name=p32_4 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=132 alignment="0" tabsequence=32766 border="0" color="33554432" x="12165" y="16" height="65" width="156" format="[general]"  name=p32_6 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=133 alignment="0" tabsequence=32766 border="0" color="33554432" x="12330" y="16" height="65" width="156" format="[general]"  name=p32_7 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=134 alignment="0" tabsequence=32766 border="0" color="33554432" x="12508" y="16" height="65" width="156" format="[general]"  name=p32_8 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=135 alignment="0" tabsequence=32766 border="0" color="33554432" x="12682" y="16" height="65" width="156" format="[general]"  name=p32_9 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=136 alignment="0" tabsequence=32766 border="0" color="33554432" x="12855" y="16" height="65" width="193" format="[general]"  name=p32_10 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=137 alignment="0" tabsequence=32766 border="0" color="33554432" x="13061" y="16" height="65" width="188" format="[general]"  name=p32_11 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=93 alignment="0" tabsequence=32766 border="0" color="33554432" x="17363" y="16" height="65" width="188" format="[general]"  name=p37_21 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=73 alignment="0" tabsequence=32766 border="0" color="33554432" x="13793" y="16" height="65" width="156" format="[general]"  name=p37_1 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=74 alignment="0" tabsequence=32766 border="0" color="33554432" x="13953" y="16" height="65" width="156" format="[general]"  name=p37_2 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=75 alignment="0" tabsequence=32766 border="0" color="33554432" x="14103" y="16" height="65" width="174" format="[general]"  name=p37_3 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=76 alignment="0" tabsequence=32766 border="0" color="33554432" x="14273" y="16" height="65" width="156" format="[general]"  name=p37_4 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=77 alignment="0" tabsequence=32766 border="0" color="33554432" x="14437" y="16" height="65" width="156" format="[general]"  name=p37_5 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=78 alignment="0" tabsequence=32766 border="0" color="33554432" x="14597" y="16" height="65" width="156" format="[general]"  name=p37_6 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=79 alignment="0" tabsequence=32766 border="0" color="33554432" x="14757" y="16" height="65" width="156" format="[general]"  name=p37_7 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=80 alignment="0" tabsequence=32766 border="0" color="33554432" x="14917" y="16" height="65" width="156" format="[general]"  name=p37_8 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=81 alignment="0" tabsequence=32766 border="0" color="33554432" x="15077" y="16" height="65" width="156" format="[general]"  name=p37_9 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=82 alignment="0" tabsequence=32766 border="0" color="33554432" x="15242" y="16" height="65" width="188" format="[general]"  name=p37_10 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=83 alignment="0" tabsequence=32766 border="0" color="33554432" x="15434" y="16" height="65" width="188" format="[general]"  name=p37_11 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=84 alignment="0" tabsequence=32766 border="0" color="33554432" x="15626" y="16" height="65" width="188" format="[general]"  name=p37_12 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=85 alignment="0" tabsequence=32766 border="0" color="33554432" x="15818" y="16" height="65" width="188" format="[general]"  name=p37_13 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=86 alignment="0" tabsequence=32766 border="0" color="33554432" x="16014" y="16" height="65" width="188" format="[general]"  name=p37_14 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=87 alignment="0" tabsequence=32766 border="0" color="33554432" x="16206" y="16" height="65" width="188" format="[general]"  name=p37_15 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=88 alignment="0" tabsequence=32766 border="0" color="33554432" x="16398" y="16" height="65" width="188" format="[general]"  name=p37_16 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=89 alignment="0" tabsequence=32766 border="0" color="33554432" x="16595" y="16" height="65" width="188" format="[general]"  name=p37_17 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=90 alignment="0" tabsequence=32766 border="0" color="33554432" x="16782" y="16" height="65" width="188" format="[general]"  name=p37_18 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=91 alignment="0" tabsequence=32766 border="0" color="33554432" x="16979" y="16" height="65" width="188" format="[general]"  name=p37_19 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=92 alignment="0" tabsequence=32766 border="0" color="33554432" x="17171" y="16" height="65" width="188" format="[general]"  name=p37_20 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=94 alignment="0" tabsequence=32766 border="0" color="33554432" x="17555" y="16" height="65" width="188" format="[general]"  name=p37_22 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=95 alignment="0" tabsequence=32766 border="0" color="33554432" x="17761" y="16" height="65" width="156" format="[general]"  name=p38_1 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=96 alignment="0" tabsequence=32766 border="0" color="33554432" x="17939" y="16" height="65" width="156" format="[general]"  name=p38_2 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=97 alignment="0" tabsequence=32766 border="0" color="33554432" x="18108" y="16" height="65" width="156" format="[general]"  name=p38_3 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=98 alignment="0" tabsequence=32766 border="0" color="33554432" x="18282" y="16" height="65" width="156" format="[general]"  name=p38_4 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=99 alignment="0" tabsequence=32766 border="0" color="33554432" x="18455" y="16" height="65" width="156" format="[general]"  name=p38_5 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=100 alignment="0" tabsequence=32766 border="0" color="33554432" x="18629" y="16" height="65" width="156" format="[general]"  name=p38_6 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=101 alignment="0" tabsequence=32766 border="0" color="33554432" x="18803" y="16" height="65" width="156" format="[general]"  name=p38_7 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=102 alignment="0" tabsequence=32766 border="0" color="33554432" x="18977" y="16" height="65" width="156" format="[general]"  name=p38_8 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=103 alignment="0" tabsequence=32766 border="0" color="33554432" x="19150" y="16" height="65" width="156" format="[general]"  name=p38_9 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=104 alignment="0" tabsequence=32766 border="0" color="33554432" x="19324" y="16" height="65" width="188" format="[general]"  name=p38_10 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=105 alignment="0" tabsequence=32766 border="0" color="33554432" x="19530" y="16" height="65" width="188" format="[general]"  name=p38_11 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=106 alignment="0" tabsequence=32766 border="0" color="33554432" x="19735" y="16" height="65" width="188" format="[general]"  name=p38_12 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=107 alignment="0" tabsequence=32766 border="0" color="33554432" x="19941" y="16" height="65" width="188" format="[general]"  name=p38_13 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=108 alignment="0" tabsequence=32766 border="0" color="33554432" x="20147" y="16" height="65" width="156" format="[general]"  name=p39_1 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=109 alignment="0" tabsequence=32766 border="0" color="33554432" x="20321" y="16" height="65" width="156" format="[general]"  name=p39_2 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=110 alignment="0" tabsequence=32766 border="0" color="33554432" x="20494" y="16" height="65" width="156" format="[general]"  name=p39_3 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=111 alignment="0" tabsequence=32766 border="0" color="33554432" x="20668" y="16" height="65" width="156" format="[general]"  name=p39_4 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=112 alignment="0" tabsequence=32766 border="0" color="33554432" x="20842" y="16" height="65" width="156" format="[general]"  name=p39_5 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=113 alignment="0" tabsequence=32766 border="0" color="33554432" x="21015" y="16" height="65" width="156" format="[general]"  name=p39_6 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=114 alignment="0" tabsequence=32766 border="0" color="33554432" x="21189" y="16" height="65" width="156" format="[general]"  name=p39_7 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=115 alignment="0" tabsequence=32766 border="0" color="33554432" x="21363" y="16" height="65" width="156" format="[general]"  name=p39_8 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=116 alignment="0" tabsequence=32766 border="0" color="33554432" x="21537" y="16" height="65" width="156" format="[general]"  name=p39_9 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=117 alignment="0" tabsequence=32766 border="0" color="33554432" x="21710" y="16" height="65" width="188" format="[general]"  name=p39_10 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=118 alignment="0" tabsequence=32766 border="0" color="33554432" x="21916" y="16" height="65" width="188" format="[general]"  name=p39_11 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=119 alignment="0" tabsequence=32766 border="0" color="33554432" x="22122" y="16" height="65" width="193" format="[general]"  name=p39_12 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=120 alignment="0" tabsequence=32766 border="0" color="33554432" x="22327" y="16" height="65" width="193" format="[general]"  name=p39_13 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=121 alignment="0" tabsequence=32766 border="0" color="33554432" x="22538" y="16" height="65" width="188" format="[general]"  name=p39_14 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=124 alignment="0" tabsequence=32766 border="0" color="33554432" x="23082" y="16" height="65" width="156" format="[general]"  name=p40_3 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=123 alignment="0" tabsequence=32766 border="0" color="33554432" x="22913" y="16" height="65" width="156" format="[general]"  name=p40_2 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=122 alignment="0" tabsequence=32766 border="0" color="33554432" x="22739" y="16" height="65" width="161" format="[general]"  name=p40_1 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=125 alignment="0" tabsequence=32766 border="0" color="33554432" x="23251" y="16" height="65" width="156" format="[general]"  name=p40_4 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=126 alignment="0" tabsequence=32766 border="0" color="33554432" x="23447" y="20" height="65" width="261" format="[general]"  name=ident_carr edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="33554432" x="2913" y="16" height="65" width="133" format="[general]"  name=p11 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="33554432" x="2149" y="16" height="65" width="92" format="[general]"  name=p4 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="33554432" x="2254" y="16" height="65" width="92" format="[general]"  name=p5 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="33554432" x="2359" y="16" height="65" width="151" format="[general]"  name=p6 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="33554432" x="2524" y="16" height="65" width="74" format="[general]"  name=p7 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="33554432" x="2611" y="16" height="65" width="74" format="[general]"  name=p8 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="33554432" x="2698" y="16" height="65" width="74" format="[general]"  name=p9 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="33554432" x="2785" y="16" height="65" width="110" format="[general]"  name=p10 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="33554432" x="915" y="16" height="65" width="951" format="[general]"  name=nombre edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="33554432" x="1879" y="16" height="65" width="78" format="[general]"  name=p2 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="33554432" x="1975" y="16" height="65" width="156" format="[general]"  name=p3 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=summary alignment="2" text="Total de Registros:"border="0" color="0" x="165" y="4" height="65" width="499"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="count(folio for all)"border="0" color="0" x="695" y="4" height="69" width="307" format="[General]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

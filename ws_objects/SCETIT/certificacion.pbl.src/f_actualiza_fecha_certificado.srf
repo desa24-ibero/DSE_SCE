@@ -1,0 +1,49 @@
+﻿$PBExportHeader$f_actualiza_fecha_certificado.srf
+global type f_actualiza_fecha_certificado from function_object
+end type
+
+forward prototypes
+global function long f_actualiza_fecha_certificado (long al_cuenta, long al_cve_carrera, long al_cve_plan, datetime adttm_fecha_solicitud, integer ai_folio_solicitud)
+end prototypes
+
+global function long f_actualiza_fecha_certificado (long al_cuenta, long al_cve_carrera, long al_cve_plan, datetime adttm_fecha_solicitud, integer ai_folio_solicitud);//f_actualiza_fecha_certificado
+//Recibe
+//			al_cuenta					long
+//			al_cve_carrera				long
+//			al_cve_plan					long
+//			adttm_fecha_solicitud	datetime
+//			ai_folio_solicitud		integer
+
+integer li_parcial, li_codigo_sql
+datetime ldttm_fecha_hoy
+string ls_mensaje_sql
+
+ldttm_fecha_hoy = fecha_servidor(gtr_sce)
+
+UPDATE certificado
+SET fecha_entrada_sep = :ldttm_fecha_hoy,
+	fecha_elaboracion = :ldttm_fecha_hoy
+FROM certificado
+WHERE cuenta = :al_cuenta	
+AND cve_carrera = :al_cve_carrera
+AND cve_plan = :al_cve_plan
+AND fecha_inicio = :adttm_fecha_solicitud
+AND folio_solicitud = :ai_folio_solicitud
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = -1 then
+	ROLLBACK USING gtr_sce;
+	MessageBox("Error al actualizar certificado", ls_mensaje_sql, StopSign!)
+	return  -1
+elseif li_codigo_sql = 0 then
+	COMMIT USING gtr_sce;
+	return  0
+end if
+
+return 0
+
+end function
+

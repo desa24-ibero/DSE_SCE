@@ -1,0 +1,18 @@
+﻿$PBExportHeader$dw_titulacion_carrera.srd
+$PBExportComments$Este datawindow ofrece las carreras para Titulacion, en el menu de selección de parámetros
+release 5;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=5 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=157 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cve_carrera dbname="carreras.cve_carrera" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=carrera dbname="carreras.carrera" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"carreras~" ) COLUMN(NAME=~"carreras.cve_carrera~") COLUMN(NAME=~"carreras.carrera~")) " update="carreras" updatewhere=1 updatekeyinplace=no )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="677" y="36" height="85" width="270" brush.hatch="6" brush.color="10789024" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="14" y="4" height="149" width="2675" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="28" y="36" height="85" width="357" brush.hatch="6" brush.color="10789024" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+text(band=detail alignment="1" text="Carrera"border="0" color="0" x="714" y="44" height="65" width="193"  name=carrera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="Cve Carrera"border="0" color="0" x="55" y="44" height="65" width="307"  name=cve_carrera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="5" color="0" x="421" y="44" height="69" width="174" format="[general]"  name=cve_carrera edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="5" color="0" x="979" y="44" height="69" width="1399" format="[general]"  name=carrera edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )

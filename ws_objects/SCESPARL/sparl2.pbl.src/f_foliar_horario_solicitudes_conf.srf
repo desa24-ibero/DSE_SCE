@@ -1,0 +1,97 @@
+﻿$PBExportHeader$f_foliar_horario_solicitudes_conf.srf
+global type f_foliar_horario_solicitudes_conf from function_object
+end type
+
+forward prototypes
+global function long f_foliar_horario_solicitudes_conf (string as_cve_criterio, integer ai_periodo, integer ai_anio)
+end prototypes
+
+global function long f_foliar_horario_solicitudes_conf (string as_cve_criterio, integer ai_periodo, integer ai_anio);//NOMBRE
+//f_foliar_horario_solicitudes_conf
+//
+//REGRESA
+//long
+//
+//RECIBE
+//as_cve_criterio			string
+//ai_periodo				int
+//ai_anio					int
+
+integer li_codigo_sql
+string ls_criterio, ls_mensaje_sql
+long	ll_cuenta, ll_rows_lic, ll_row_actual_lic, ll_rows_pos, ll_row_actual_pos, ll_rows
+u_datastore lds_licenciatura, lds_posgrado
+
+UPDATE horario_insc
+SET folio_sol_mat=NULL
+WHERE periodo = :ai_periodo
+AND	anio = :ai_anio
+USING gtr_sce;
+
+li_codigo_sql =gtr_sce.SqlCode
+ls_mensaje_sql =gtr_sce.SqlErrText
+ll_rows =gtr_sce.SqlNRows
+
+if li_codigo_sql = -1 then
+	MessageBox("Error al limpiar horario_insc", ls_mensaje_sql)	
+	return li_codigo_sql	
+end if
+
+
+
+
+lds_licenciatura= CREATE u_datastore
+lds_posgrado	 = CREATE u_datastore
+
+IF as_cve_criterio= "P" THEN
+	lds_licenciatura.dataobject="d_folios_lic_preinsc_conf"
+	lds_posgrado.dataobject="d_folios_pos_preinsc_conf"
+	
+ELSEIF as_cve_criterio= "T" THEN
+	lds_licenciatura.dataobject="d_folios_lic"
+	lds_posgrado.dataobject="d_folios_pos"
+ELSE
+	MessageBox("Error de criterio","Error al seleccionar el criterio de foliado", StopSign!)	
+	return -1
+END IF
+
+lds_licenciatura.SetTransObject(gtr_sce)
+lds_posgrado.SetTransObject(gtr_sce)
+	
+ll_rows_lic= lds_licenciatura.Retrieve(gs_tipo_periodo)	
+ll_rows_pos= lds_posgrado.Retrieve(gs_tipo_periodo)	
+
+FOR ll_row_actual_lic= 1 TO ll_rows_lic
+	lds_licenciatura.SetItem(ll_row_actual_lic,"horario_insc_folio_sol_mat", ll_row_actual_lic)	
+NEXT
+
+FOR ll_row_actual_pos= 1 TO ll_rows_pos
+	lds_posgrado.SetItem(ll_row_actual_pos,"horario_insc_folio_sol_mat", ll_row_actual_pos)	
+NEXT
+
+
+IF lds_licenciatura.Update()=1 THEN
+	COMMIT USING gtr_sce;	
+	IF lds_posgrado.Update()=1 THEN
+		COMMIT USING gtr_sce;	
+
+		MessageBox("Horarios Foliados Exitosamente", &
+			"Se han foliado los horarios para la generación de solicitudes de materias",Information!)
+		return 0
+	ELSE
+		ROLLBACK USING gtr_sce;
+		MessageBox("Error al Foliar los Horarios ", &
+			"NO ha sido posible foliar los horarios para la generación de solicitudes de materias",StopSign!)
+		return -1				
+	END IF
+ELSE
+	ROLLBACK USING gtr_sce;
+	MessageBox("Error al Foliar los Horarios ", &
+		"NO ha sido posible foliar los horarios para la generación de solicitudes de materias",StopSign!)
+	return -1		
+END IF
+
+
+
+end function
+

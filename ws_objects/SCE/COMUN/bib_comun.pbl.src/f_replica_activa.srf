@@ -1,0 +1,17 @@
+﻿$PBExportHeader$f_replica_activa.srf
+global type f_replica_activa from function_object
+end type
+
+forward prototypes
+global function integer f_replica_activa ()
+end prototypes
+
+global function integer f_replica_activa ();n_transfiere_sybase_sql ln_transfiere_sybase_sql
+ln_transfiere_sybase_sql =  create n_transfiere_sybase_sql
+integer li_replica_activa, li_obten_parametros_replicacion
+
+li_obten_parametros_replicacion = ln_transfiere_sybase_sql.of_obten_parametros_replica(li_replica_activa)
+
+return li_replica_activa
+end function
+

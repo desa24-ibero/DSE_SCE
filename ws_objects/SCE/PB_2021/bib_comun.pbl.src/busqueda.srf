@@ -1,0 +1,13 @@
+﻿$PBExportHeader$busqueda.srf
+global type busqueda from function_object
+end type
+
+forward prototypes
+global subroutine busqueda (string objeto)
+end prototypes
+
+global subroutine busqueda (string objeto);openwithparm(w_busqueda_2013,objeto)
+
+	
+end subroutine
+

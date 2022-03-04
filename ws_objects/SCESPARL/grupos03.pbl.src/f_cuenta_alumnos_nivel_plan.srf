@@ -1,0 +1,44 @@
+﻿$PBExportHeader$f_cuenta_alumnos_nivel_plan.srf
+global type f_cuenta_alumnos_nivel_plan from function_object
+end type
+
+forward prototypes
+global function long f_cuenta_alumnos_nivel_plan (string as_nivel, long al_cve_plan)
+end prototypes
+
+global function long f_cuenta_alumnos_nivel_plan (string as_nivel, long al_cve_plan);//f_cuenta_alumnos_nivel_plan
+//Cuenta todos los alumnos correspondientes a un nivel 
+//Recibe		as_nivel		L	Licenciatura
+//								P	Posgrado
+//								T	Todos 
+//				al_cve_plan  Plan de estudios
+
+
+Integer  li_codigo_sql
+String ls_mensaje_sql
+long ll_cant_alumnos
+
+SELECT count(*)
+INTO :ll_cant_alumnos
+FROM academicos, plan_estudios
+WHERE (academicos.nivel = :as_nivel OR :as_nivel = "A")
+AND academicos.cve_plan = :al_cve_plan 
+AND academicos.cve_carrera = plan_estudios.cve_carrera
+AND academicos.cve_plan = plan_estudios.cve_plan 
+AND plan_estudios.tipo_periodo = :gs_tipo_periodo
+USING gtr_sce;
+
+/*WHERE (academicos.nivel = :as_nivel OR :as_nivel = "T")*/
+
+ls_mensaje_sql= gtr_sce.SqlErrtext
+li_codigo_sql= gtr_sce.SqlCode
+
+IF li_codigo_sql =-1 THEN
+	Messagebox("Error al contar los alumnos de un nivel-plan en f_cuenta_alumnos_nivel_plan",ls_mensaje_sql,StopSign!)
+END IF
+
+RETURN ll_cant_alumnos
+
+
+end function
+

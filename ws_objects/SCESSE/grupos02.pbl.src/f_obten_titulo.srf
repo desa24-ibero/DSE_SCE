@@ -1,0 +1,45 @@
+﻿$PBExportHeader$f_obten_titulo.srf
+global type f_obten_titulo from function_object
+end type
+
+forward prototypes
+global subroutine f_obten_titulo (ref window aw_ventana)
+end prototypes
+
+global subroutine f_obten_titulo (ref window aw_ventana);//f_obten_titulo
+//Recibe 	aw_ventana	window
+//Asigna el titulo de la aplicacion
+
+
+string ls_nombre, ls_base_conectada, ls_plantel, ls_servidor_base
+ls_nombre=gs_usuario
+
+SELECT description
+INTO :ls_nombre
+FROM security_users
+WHERE security_users.name = :ls_nombre
+USING gtr_sce;
+
+SELECT plantel
+INTO :ls_plantel
+FROM planteles
+WHERE actual = 1
+USING gtr_sce;
+
+
+if isvalid(gtr_scob) then
+	ls_servidor_base =	gtr_scob.ServerName+ ":" + gtr_scob.Database
+	ls_base_conectada = "* Conexion a Cobranzas: "+ls_servidor_base
+else
+	ls_base_conectada= ""
+end if
+
+if isvalid(aw_ventana) then
+	aw_ventana.title=gs_usuario+' '+ls_nombre+"  Plantel: "+ls_plantel+ls_base_conectada+" ("+gtr_sce.servername+")"
+end if
+
+
+
+
+end subroutine
+

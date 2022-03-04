@@ -1,0 +1,102 @@
+﻿$PBExportHeader$f_curso_prerrequisitos.srf
+global type f_curso_prerrequisitos from function_object
+end type
+
+forward prototypes
+global function integer f_curso_prerrequisitos (long al_cuenta, long al_cve_mat, long al_cve_carrera, integer ai_cve_plan, string as_nivel, long al_cve_carrera_anterior, integer ai_cve_plan_anterior)
+end prototypes
+
+global function integer f_curso_prerrequisitos (long al_cuenta, long al_cve_mat, long al_cve_carrera, integer ai_cve_plan, string as_nivel, long al_cve_carrera_anterior, integer ai_cve_plan_anterior);//f_curso_prerrequisitos 
+// Recibe:
+//		al_cuenta			long
+//		al_cve_mat			long
+//		al_cve_carrera		long
+//		ai_cve_plan			integer
+//		al_cve_carrera_anterior long
+//		ai_cve_plan_anterior		long
+
+
+//	Devuelve:				boolean
+
+datastore lds_prerrequisitos
+integer ll_rows_prerrequisitos
+long ll_cve_prerreq, ll_row_prerrequisito_actual, ll_orden
+string ls_enlace, ls_primer_enlace
+
+lds_prerrequisitos= CREATE datastore
+lds_prerrequisitos.dataobject = "dw_prerrequisitos"
+lds_prerrequisitos.SetTransObject(gtr_sce)
+lds_prerrequisitos.SetSort("orden A")
+lds_prerrequisitos.Sort( ) 
+
+ll_rows_prerrequisitos =lds_prerrequisitos.Retrieve(al_cve_mat, al_cve_carrera, ai_cve_plan)
+
+
+IF ll_rows_prerrequisitos = -1 THEN 
+	MessageBox("Error al consultar prerrequisitos","No es posible leer ["+string(al_cve_mat)+"]", StopSign!)
+	RETURN -1
+ELSEIF ll_rows_prerrequisitos>=0 THEN
+	ll_row_prerrequisito_actual=1
+		
+	DO WHILE ll_row_prerrequisito_actual<= ll_rows_prerrequisitos
+		ll_cve_prerreq= lds_prerrequisitos.GetItemNumber(ll_row_prerrequisito_actual,"cve_prerreq")
+		ls_enlace= lds_prerrequisitos.GetItemString(ll_row_prerrequisito_actual,"enlace")
+		ll_orden= lds_prerrequisitos.GetItemNumber(ll_row_prerrequisito_actual,"orden")
+		IF ll_orden=1 THEN
+			ls_primer_enlace= ls_enlace
+			IF ll_row_prerrequisito_actual= ll_rows_prerrequisitos THEN
+				IF isnull(ls_enlace) THEN
+					ls_enlace= ls_primer_enlace
+				END IF
+			END IF
+		END IF
+		IF ll_row_prerrequisito_actual=1 AND (isnull(ls_enlace) or ls_enlace="Y" ) THEN
+			IF f_aprobada_en_historico(al_cuenta, ll_cve_prerreq, al_cve_carrera_anterior, ai_cve_plan_anterior )= 1 &
+				AND f_curso_prerrequisitos(al_cuenta, ll_cve_prerreq, al_cve_carrera, ai_cve_plan, as_nivel, al_cve_carrera_anterior, ai_cve_plan_anterior)= 1  THEN
+				IF ll_row_prerrequisito_actual = ll_rows_prerrequisitos THEN
+					RETURN 1
+				END IF					
+			ELSE
+				RETURN 0
+			END IF	
+		ELSEIF ll_row_prerrequisito_actual> 1 THEN
+			IF ls_enlace = "O" THEN
+				IF f_aprobada_en_historico(al_cuenta, ll_cve_prerreq, al_cve_carrera_anterior, ai_cve_plan_anterior )= 1 &
+					AND f_curso_prerrequisitos(al_cuenta, ll_cve_prerreq, al_cve_carrera, ai_cve_plan, as_nivel, al_cve_carrera_anterior, ai_cve_plan_anterior)= 1  THEN
+					RETURN 1					
+				END IF
+				IF ll_row_prerrequisito_actual = ll_rows_prerrequisitos THEN
+					RETURN 0					
+				END IF
+			ELSEIF (ls_enlace = "Y") THEN
+				IF f_aprobada_en_historico(al_cuenta, ll_cve_prerreq, al_cve_carrera_anterior, ai_cve_plan_anterior )= 1 &
+					AND f_curso_prerrequisitos(al_cuenta, ll_cve_prerreq, al_cve_carrera, ai_cve_plan, as_nivel, al_cve_carrera_anterior, ai_cve_plan_anterior)= 1  THEN
+					IF ll_row_prerrequisito_actual = ll_rows_prerrequisitos THEN
+						RETURN 1
+					END IF					
+				ELSE
+					RETURN 0					
+				END IF
+			ELSEIF (isnull(ls_enlace) OR (ls_enlace = "") ) THEN
+				IF f_aprobada_en_historico(al_cuenta, ll_cve_prerreq, al_cve_carrera_anterior, ai_cve_plan_anterior )= 1 &
+					AND f_curso_prerrequisitos(al_cuenta, ll_cve_prerreq, al_cve_carrera, ai_cve_plan, as_nivel, al_cve_carrera_anterior, ai_cve_plan_anterior)= 1  THEN
+					IF ll_row_prerrequisito_actual = ll_rows_prerrequisitos THEN
+						RETURN 1
+					END IF						
+				ELSE
+					RETURN 0					
+				END IF
+			END IF		
+		END IF		
+		ll_row_prerrequisito_actual = ll_row_prerrequisito_actual + 1
+	LOOP
+END IF
+
+
+IF isvalid(lds_prerrequisitos) THEN
+	DESTROY lds_prerrequisitos
+END IF
+
+RETURN 1
+end function
+

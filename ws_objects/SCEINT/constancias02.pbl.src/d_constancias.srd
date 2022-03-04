@@ -1,0 +1,11 @@
+﻿$PBExportHeader$d_constancias.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=15793151 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cve_constancia dbname="tipo_constancia.cve_constancia" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"dbo.tipo_constancia~" ) COLUMN(NAME=~"dbo.tipo_constancia.cve_constancia~")) " update="dbo.tipo_constancia" updatewhere=1 updatekeyinplace=no )
+text(band=header alignment="2" text="Tipo de Constancia"border="0" color="0" x="430" y="4" height="64" width="567"  name=cve_constancia_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=10 border="5" color="0" x="5" y="4" height="76" width="1454" format="[general]"  name=cve_constancia dddw.name=dddw_tipo_constancia dddw.displaycolumn=constancia dddw.datacolumn=cve_constancia dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=yes dddw.case=any dddw.nilisnull=yes dddw.vscrollbar=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

@@ -1,0 +1,52 @@
+﻿$PBExportHeader$d_doc_holograma_planteles.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=227 color="536870912" )
+summary(height=99 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=83 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cuenta dbname="control_sep_planteles.cuenta" )
+ column=(type=char(150) updatewhereclause=yes name=nombre_completo dbname="control_sep_planteles.nombre_completo" )
+ column=(type=char(100) updatewhereclause=yes name=carrera dbname="control_sep_planteles.carrera" )
+ column=(type=long update=yes updatewhereclause=yes name=num_holograma dbname="control_sep_planteles.num_holograma" )
+ column=(type=char(12) updatewhereclause=yes name=orden_cobro dbname="control_sep_planteles.orden_cobro" )
+ column=(type=long updatewhereclause=yes key=yes name=numero dbname="control_sep_planteles.numero" )
+ column=(type=long update=yes updatewhereclause=yes name=folio_acta dbname="control_sep_planteles.folio_acta" )
+ column=(type=long updatewhereclause=yes name=cve_doc_control_sep dbname="control_sep_planteles.cve_doc_control_sep" )
+ column=(type=char(25) updatewhereclause=yes name=planteles_plantel dbname="planteles.plantel" )
+ column=(type=long updatewhereclause=yes key=yes name=control_sep_planteles_cve_plantel dbname="control_sep_planteles.cve_plantel" )
+ column=(type=long updatewhereclause=yes name=planteles_cve_plantel dbname="planteles_cve_plantel" )
+ retrieve="  SELECT control_sep_planteles.cuenta,   
+         control_sep_planteles.nombre_completo,   
+         control_sep_planteles.carrera,   
+         control_sep_planteles.num_holograma,   
+         control_sep_planteles.orden_cobro,   
+         control_sep_planteles.numero,   
+         control_sep_planteles.folio_acta,   
+         control_sep_planteles.cve_doc_control_sep,   
+         planteles.plantel,   
+         control_sep_planteles.cve_plantel,   
+         planteles_cve_plantel= planteles.cve_plantel  
+    FROM control_sep_planteles,   
+         planteles  
+   WHERE ( control_sep_planteles.cve_plantel = planteles.cve_plantel ) and  
+         ( ( control_sep_planteles.orden_cobro = :as_orden_cobro ) AND  
+         ( control_sep_planteles.cve_doc_control_sep in (3,4,5,6) ) AND  
+         ( control_sep_planteles.cancelado = 0 ) ) AND 
+         datepart(yy,fecha_emision) = datepart(yy,getdate())
+  
+" update="control_sep_planteles" updatewhere=1 updatekeyinplace=yes arguments=(("as_orden_cobro", string))  sort="cuenta A " )
+text(band=header alignment="2" text="NUM." border="0" color="0" x="91" y="90" height="64" width="165"  name=t_1  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="NUMERO DE CUENTA" border="0" color="0" x="260" y="61" height="118" width="377"  name=control_sep_cuenta_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="NOMBRE DEL ALUMNO" border="0" color="0" x="845" y="99" height="64" width="819"  name=control_sep_cve_carrera_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="CARRERA" border="0" color="0" x="2300" y="93" height="64" width="402"  name=t_2  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="NUMERO DE HOLOGRAMA" border="0" color="0" x="2962" y="64" height="122" width="424"  name=t_3  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression="getrow()"border="5" color="0" x="80" y="7" height="64" width="179" format="#,##0"  name=num  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+compute(band=detail alignment="0" expression="string(  cuenta )+ ~"-~"+obten_digito(  cuenta )"border="5" color="0" x="296" y="7" height="64" width="304" format="[general]"  name=cuenta_digito  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="5" color="0" x="622" y="3" height="77" width="1306" format="[general]"  name=nombre_completo edit.limit=150 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="5" color="0" x="1949" y="3" height="77" width="1046" format="[general]"  name=carrera edit.limit=100 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=4 alignment="1" tabsequence=10 border="5" color="0" x="3017" y="3" height="77" width="293" format="[General]"  name=num_holograma edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+text(band=summary alignment="0" text="TOTAL" border="0" color="0" x="55" y="16" height="64" width="194"  name=t_4  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="0" expression="count(  cuenta for all)"border="5" color="0" x="296" y="7" height="77" width="304" format="[general]"  name=compute_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

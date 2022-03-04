@@ -1,0 +1,110 @@
+﻿$PBExportHeader$d_bloques_por_dia_backup.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+header(height=428 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=116 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=grupo_clase_periodo dbname="grupo_clase.periodo" )
+ column=(type=long updatewhereclause=yes name=grupo_clase_anio dbname="grupo_clase.anio" )
+ column=(type=long updatewhereclause=yes name=cve_tipo_grupo_clase dbname="tipo_grupo_clase.cve_tipo_grupo_clase" )
+ column=(type=char(75) updatewhereclause=yes name=tipo_grupo_clase dbname="tipo_grupo_clase.tipo_grupo_clase" )
+ column=(type=long updatewhereclause=yes name=clase_aula dbname="clase_aula.clase_aula" )
+ column=(type=char(12) updatewhereclause=yes name=nombre_aula dbname="clase_aula.nombre_aula" )
+ column=(type=long updatewhereclause=yes name=cve_dia dbname="dias.cve_dia" )
+ column=(type=char(9) updatewhereclause=yes name=dia dbname="dias.dia" )
+ column=(type=long updatewhereclause=yes name=num_horas dbname="num_horas" )
+ column=(type=long updatewhereclause=yes name=num_grupos dbname="num_grupos" )
+ column=(type=long updatewhereclause=yes name=total_horas dbname="total_horas" )
+ column=(type=long updatewhereclause=yes name=total_grupos dbname="total_grupos" )
+ column=(type=decimal(4) updatewhereclause=yes name=porcentaje_horas dbname="porcentaje_horas" )
+ column=(type=decimal(4) updatewhereclause=yes name=porcentaje_grupos dbname="porcentaje_grupos" )
+ retrieve="Select		grupo_clase.periodo,
+			grupo_clase.anio,
+			tipo_grupo_clase.cve_tipo_grupo_clase cve_tipo_grupo_clase,
+			tipo_grupo_clase.tipo_grupo_clase,
+			clase_aula.clase clase_aula,
+			nombre_aula,
+			dias.cve_dia cve_dia,
+			dia,
+			num_horas = sum(num_horas),
+			num_grupos = 0,
+			total_horas = 0,
+			total_grupos = 0,
+			porcentaje_horas = 0.0,
+			porcentaje_grupos = 0.0
+From		grupo_clase,
+			tipo_grupo_clase,
+			clase_aula,
+			dias
+Where	grupo_clase.cve_tipo_grupo_clase <> 9999 AND
+			grupo_clase.anio = :an_anio AND
+			grupo_clase.periodo = :an_periodo AND
+			grupo_clase.cve_tipo_grupo_clase = tipo_grupo_clase.cve_tipo_grupo_clase AND
+			grupo_clase.clase_aula = clase_aula.clase AND
+			grupo_clase.cve_dia = dias.cve_dia AND
+			( dias.cve_dia = :an_cve_dia OR 9999 = :an_cve_dia ) AND						
+			( clase_aula.clase = :an_clase_aula OR 9999 = :an_clase_aula ) AND		
+			( tipo_grupo_clase.cve_tipo_grupo_clase in (:an_cve_tipo_grupo_clase ) )
+
+Group by grupo_clase.periodo,
+			grupo_clase.anio,
+			tipo_grupo_clase.cve_tipo_grupo_clase,
+			tipo_grupo_clase.tipo_grupo_clase,
+			clase_aula.clase,
+			nombre_aula,
+			dias.cve_dia,
+			dia
+Order BY tipo_grupo_clase.cve_tipo_grupo_clase,clase_aula.clase
+" arguments=(("an_anio", number),("an_periodo", number),("an_cve_dia", number),("an_clase_aula", number),("an_cve_tipo_grupo_clase", numberlist),("an_horario_matutino", number),("an_horario_vespertino", number))  sort="cve_tipo_grupo_clase A clase_aula A cve_dia A " )
+group(level=1 header.height=296 trailer.height=92 by=("cve_tipo_grupo_clase" , "nombre_aula" ) header.color="536870912" trailer.color="536870912" )
+bitmap(band=header filename="C:\Oscar\Programacion de Grupos\anEscudo-Oficial.GIF" x="59" y="16" height="400" width="357" border="0"  name=p_1 visible="1" )
+text(band=header alignment="2" text="REPORTE CONDENSADO DE PROGRAMACIÓN DE GRUPOS " border="0" color="33554432" x="73" y="124" height="76" width="3264" html.valueishtml="0"  name=t_reporte visible="1"  font.face="Tahoma" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="Todos los días" border="0" color="33554432" x="823" y="220" height="52" width="1819" html.valueishtml="0"  name=t_dia visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="Clase de Aula: Salón" border="0" color="33554432" x="823" y="280" height="52" width="1819" html.valueishtml="0"  name=t_clase_aula visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="TIPO DE BLOQUE: BASE RECOMENDADO" border="0" color="33554432" x="434" y="344" height="44" width="2592" html.valueishtml="0"  name=t_tipo_grupo_clase visible="1"  font.face="Tahoma" font.height="-7" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header.1 alignment="2" text="Clase Aula" border="6" color="33554432" x="699" y="184" height="52" width="443" html.valueishtml="0"  name=clase_aula_nombre_aula_t visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+text(band=header.1 alignment="2" text="Dia" border="6" color="33554432" x="1157" y="184" height="52" width="352" html.valueishtml="0"  name=dias_dia_t visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+text(band=header.1 alignment="2" text="% por No. Grupos-Clase" border="6" color="33554432" x="3410" y="20" height="52" width="608" html.valueishtml="0"  name=t_2 visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+text(band=header.1 alignment="2" text="No. Horas" border="6" color="33554432" x="1522" y="184" height="52" width="361" html.valueishtml="0"  name=t_4 visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+text(band=header.1 alignment="2" text="% Horas" border="6" color="33554432" x="3081" y="184" height="52" width="361" html.valueishtml="0"  name=t_8 visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+text(band=header.1 alignment="2" text="% Grupos" border="6" color="33554432" x="3474" y="184" height="52" width="361" html.valueishtml="0"  name=t_9 visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+text(band=header.1 alignment="2" text="No. Grupos" border="6" color="33554432" x="1911" y="184" height="52" width="361" html.valueishtml="0"  name=t_3 visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+text(band=header.1 alignment="2" text="Total Horas
+Semana" border="6" color="33554432" x="2299" y="184" height="104" width="361" html.valueishtml="0"  name=t_5 visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+text(band=header.1 alignment="2" text="Total Grupos 
+Semana" border="6" color="33554432" x="2693" y="184" height="104" width="361" html.valueishtml="0"  name=t_6 visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="2" color="33554432" x="695" y="4" height="76" width="457" format="[general]" html.valueishtml="0"  name=nombre_aula visible="1" edit.limit=12 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="2" color="33554432" x="1527" y="4" height="76" width="352" format="#,##0" html.valueishtml="0"  name=num_horas visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="2" color="33554432" x="1157" y="4" height="76" width="352" format="[general]" html.valueishtml="0"  name=dia visible="1" edit.limit=9 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="2" color="33554432" x="1915" y="4" height="76" width="352" format="#,##0" html.valueishtml="0"  name=num_grupos visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="2" color="33554432" x="2304" y="4" height="76" width="352" format="#,##0" html.valueishtml="0"  name=total_horas visible="1~t1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="2" color="33554432" x="2697" y="4" height="76" width="352" format="#,##0" html.valueishtml="0"  name=total_grupos visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="0" expression="sum(num_horas for group 1)"border="2" color="33554432" x="1527" y="4" height="76" width="352" format="#,##0" html.valueishtml="0"  name=compute_4 visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="0" expression="sum(num_grupos for group 1)"border="2" color="33554432" x="1915" y="4" height="76" width="352" format="#,##0" html.valueishtml="0"  name=compute_5 visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="0" expression=" total_horas "border="2" color="33554432" x="2304" y="4" height="76" width="352" format="#,##0" html.valueishtml="0"  name=compute_6 visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="0" expression="sum(total_grupos for group 1)"border="2" color="33554432" x="2697" y="4" height="76" width="352" format="#,##0" html.valueishtml="0"  name=compute_7 visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="" border="0" color="8388608" x="837" y="8" height="64" width="677" html.valueishtml="0"  name=t_porcentaje visible="1"  font.face="Tahoma" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=footer alignment="2" expression="'Página ' + String ( Page ( ) ) + ' de ' + String ( PageCount ( ) )"border="0" color="8388608" x="681" y="72" height="48" width="1440" format="[General]" html.valueishtml="0"  name=compute_3 visible="1"  font.face="Tahoma" font.height="-7" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="Total:" border="0" color="8388608" x="677" y="8" height="52" width="169" html.valueishtml="0"  name=t_7 visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=footer alignment="2" expression="/* sum(  num_bloques  for all ) */"border="0" color="8388608" x="1509" y="8" height="64" width="480" format="###,###,###.00" html.valueishtml="0"  name=c_total_grupos_clase visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=footer alignment="2" expression="/* sum(  c_porcentaje_por_clase_aula2 for all )  */"border="0" color="8388608" x="2066" y="8" height="64" width="622" format="###,###,###.00" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="2" color="33554432" x="3086" y="4" height="76" width="352" format="0.00%" html.valueishtml="0"  name=porcentaje_horas visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="2" color="33554432" x="3479" y="4" height="76" width="352" format="0.00%" html.valueishtml="0"  name=porcentaje_grupos visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="0" expression="sum(porcentaje_horas for group 1)"border="2" color="33554432" x="3086" y="4" height="76" width="352" format="0.00%" html.valueishtml="0"  name=compute_8 visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="0" expression="sum(porcentaje_grupos for group 1)"border="2" color="33554432" x="3479" y="4" height="76" width="352" format="0.00%" html.valueishtml="0"  name=compute_9 visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="2" text="Tipo de Bloque" border="1" color="33554432" x="283" y="12" height="52" width="887" html.valueishtml="0"  name=division_t visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header.1 alignment="2" text="Clase de Aula" border="1" color="33554432" x="1211" y="12" height="52" width="805" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=header.1 id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="293" y="88" height="76" width="891" format="[general]" html.valueishtml="0"  name=tipo_grupo_clase visible="1" edit.limit=75 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header.1 id=6 alignment="0" tabsequence=0 border="0" color="33554432" x="1211" y="88" height="76" width="805" html.valueishtml="0"  name=nombre_aula_1 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0  template=(comment="" encoding="UTF-16LE" name="d_bloques_por_dia" xml="<?xml version=~"1.0~" encoding=~"UTF-16LE~" standalone=~"no~"?><dw_grupos_clase_por_division_condensado><dw_grupos_clase_por_division_condensado_row><dw_grupos_clase_por_division_condensado_group1 __pbband=~"detail~"><cve_tipo_grupo_clase>cve_tipo_grupo_clase</cve_tipo_grupo_clase><tipo_grupo_clase>tipo_grupo_clase</tipo_grupo_clase><clase_aula>clase_aula</clase_aula><nombre_aula>nombre_aula</nombre_aula><cve_dia>cve_dia</cve_dia><dia>dia</dia><num_bloques/><total_base_recomendado>total_base_recomendado</total_base_recomendado><total_base_extendido>total_base_extendido</total_base_extendido><total_transgrede_inicio>total_transgrede_inicio</total_transgrede_inicio><total_transgrede_fin>total_transgrede_fin</total_transgrede_fin><total_transgrede_inicio_y_fin>total_transgrede_inicio_y_fin</total_transgrede_inicio_y_fin><total_ext_pero_transgrede>total_ext_pero_transgrede</total_ext_pero_transgrede><total_inician_13_o_14>total_inician_13_o_14</total_inician_13_o_14><total_grupos_clase>total_grupos_clase</total_grupos_clase></dw_grupos_clase_por_division_condensado_group1></dw_grupos_clase_por_division_condensado_row></dw_grupos_clase_por_division_condensado>"))
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml( template=(comment="" name="d_bloques_por_dia" xhtml="﻿<form name=~"d_bloques_por_dia_dataForm~"><div class=~"d_bloques_por_dia_band_0~"><img src=~"p_1~"/><div class=~"d_bloques_por_dia_t_reporte~">t_reporte</div><div class=~"d_bloques_por_dia_t_dia~">t_dia</div><div class=~"d_bloques_por_dia_t_clase_aula~">t_clase_aula</div><div class=~"d_bloques_por_dia_t_tipo_grupo_clase~">t_tipo_grupo_clase</div></div><div class=~"d_bloques_por_dia_band_1~"><div class=~"d_bloques_por_dia_clase_aula_nombre_aula_t~">clase_aula_nombre_aula_t</div><div class=~"d_bloques_por_dia_dias_dia_t~">dias_dia_t</div><div class=~"d_bloques_por_dia_t_1~">t_1</div><div class=~"d_bloques_por_dia_t_2~">t_2</div><div class=~"d_bloques_por_dia_t_4~">t_4</div><div class=~"d_bloques_por_dia_t_8~">t_8</div><div class=~"d_bloques_por_dia_t_9~">t_9</div><div class=~"d_bloques_por_dia_t_3~">t_3</div><div class=~"d_bloques_por_dia_t_5~">t_5</div><div class=~"d_bloques_por_dia_t_6~">t_6</div><div class=~"d_bloques_por_dia_division_t~">division_t</div><input name=~"d_bloques_por_dia_tipo_grupo_clase~" type=~"text~" value=~"tipo_grupo_clase~"/><input name=~"d_bloques_por_dia_nombre_aula_1~" type=~"text~" value=~"nombre_aula_1~"/></div><div class=~"d_bloques_por_dia_detail_0~" __pbband=~"detail~"><input name=~"d_bloques_por_dia_nombre_aula~" type=~"text~" value=~"nombre_aula~"/><input name=~"d_bloques_por_dia_num_horas~" type=~"text~" value=~"num_horas~"/><input name=~"d_bloques_por_dia_dia~" type=~"text~" value=~"dia~"/><input name=~"d_bloques_por_dia_num_grupos~" type=~"text~" value=~"num_grupos~"/><input name=~"d_bloques_por_dia_total_horas~" type=~"text~" value=~"total_horas~"/><input name=~"d_bloques_por_dia_total_grupos~" type=~"text~" value=~"total_grupos~"/><input name=~"d_bloques_por_dia_porcentaje_horas~" type=~"text~" value=~"porcentaje_horas~"/><input name=~"d_bloques_por_dia_porcentaje_grupos~" type=~"text~" value=~"porcentaje_grupos~"/></div><div class=~"d_bloques_por_dia_band_2~"><div class=~"d_bloques_por_dia_compute_4~">compute_4</div><div class=~"d_bloques_por_dia_compute_5~">compute_5</div><div class=~"d_bloques_por_dia_compute_6~">compute_6</div><div class=~"d_bloques_por_dia_compute_7~">compute_7</div><div class=~"d_bloques_por_dia_compute_8~">compute_8</div><div class=~"d_bloques_por_dia_compute_9~">compute_9</div></div><div class=~"d_bloques_por_dia_band_3~"><div class=~"d_bloques_por_dia_t_porcentaje~">t_porcentaje</div><div class=~"d_bloques_por_dia_compute_3~">compute_3</div><div class=~"d_bloques_por_dia_t_7~">t_7</div><div class=~"d_bloques_por_dia_c_total_grupos_clase~">c_total_grupos_clase</div><div class=~"d_bloques_por_dia_compute_2~">compute_2</div></div></form>"))
+ 

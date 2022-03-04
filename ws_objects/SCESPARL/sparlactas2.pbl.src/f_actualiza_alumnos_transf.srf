@@ -1,0 +1,98 @@
+﻿$PBExportHeader$f_actualiza_alumnos_transf.srf
+global type f_actualiza_alumnos_transf from function_object
+end type
+
+forward prototypes
+global function integer f_actualiza_alumnos_transf (integer ai_periodo, integer ai_anio, integer ai_cve_estatus_acta, integer ai_cve_tipo_examen, transaction atr_transaction)
+end prototypes
+
+global function integer f_actualiza_alumnos_transf (integer ai_periodo, integer ai_anio, integer ai_cve_estatus_acta, integer ai_cve_tipo_examen, transaction atr_transaction);//f_actualiza_alumnos_transf
+//
+//Recibe:
+//ai_periodo				integer
+//ai_anio					integer
+//ai_cve_estatus_acta	integer
+//ai_cve_tipo_examen		integer
+//atr_transaction			transaction
+
+integer li_codigo_sql
+long li_no_acta
+string ls_mensaje_sql
+
+
+if ai_cve_tipo_examen = 3 then
+	UPDATE alumno_acta_evaluacion_preelim
+	SET calificacion_confirmada       = alumno_acta_evaluacion_transf.calificacion_confirmada,   
+    calificacion                  = alumno_acta_evaluacion_transf.calificacion,   
+    ip_calificacion_confirmada    = alumno_acta_evaluacion_transf.ip_calificacion_confirmada,   
+    ip_calificacion               = alumno_acta_evaluacion_transf.ip_calificacion,   
+    fecha_calificacion_confirmada = alumno_acta_evaluacion_transf.fecha_calificacion_confirmada,   
+    fecha_calificacion            = alumno_acta_evaluacion_transf.fecha_calificacion  
+	FROM alumno_acta_evaluacion_preelim,   
+     alumno_acta_evaluacion_transf,
+	  acta_evaluacion_preeliminar  
+	WHERE ( alumno_acta_evaluacion_preelim.cve_mat = alumno_acta_evaluacion_transf.cve_mat ) and  
+      ( alumno_acta_evaluacion_preelim.gpo = alumno_acta_evaluacion_transf.gpo ) and  
+      ( alumno_acta_evaluacion_preelim.periodo = alumno_acta_evaluacion_transf.periodo ) and  
+      ( alumno_acta_evaluacion_preelim.anio = alumno_acta_evaluacion_transf.anio ) and  
+      ( alumno_acta_evaluacion_preelim.no_acta = alumno_acta_evaluacion_transf.no_acta ) and  
+      ( alumno_acta_evaluacion_preelim.cve_tipo_examen = alumno_acta_evaluacion_transf.cve_tipo_examen ) and  
+      ( alumno_acta_evaluacion_preelim.cve_tipo_examen = acta_evaluacion_preeliminar.cve_tipo_examen ) and  
+      ( alumno_acta_evaluacion_preelim.nivel = alumno_acta_evaluacion_transf.nivel ) and  
+      ( alumno_acta_evaluacion_preelim.cuenta = alumno_acta_evaluacion_transf.cuenta ) and
+      ( alumno_acta_evaluacion_preelim.no_acta = acta_evaluacion_preeliminar.no_acta ) and  
+      ( alumno_acta_evaluacion_preelim.nivel = acta_evaluacion_preeliminar.nivel ) and  
+		( alumno_acta_evaluacion_preelim.periodo = :ai_periodo )  AND
+		( alumno_acta_evaluacion_preelim.anio = :ai_anio )  AND		
+		( acta_evaluacion_preeliminar.cve_estatus_acta <= :ai_cve_estatus_acta ) and			 	
+		( acta_evaluacion_preeliminar.cve_tipo_examen in (:ai_cve_tipo_examen) )			 	
+	USING atr_transaction;
+elseif ai_cve_tipo_examen = 26 then
+	UPDATE alumno_acta_evaluacion_preelim
+	SET calificacion_confirmada       = alumno_acta_evaluacion_transf.calificacion_confirmada,   
+    calificacion                  = alumno_acta_evaluacion_transf.calificacion,   
+    ip_calificacion_confirmada    = alumno_acta_evaluacion_transf.ip_calificacion_confirmada,   
+    ip_calificacion               = alumno_acta_evaluacion_transf.ip_calificacion,   
+    fecha_calificacion_confirmada = alumno_acta_evaluacion_transf.fecha_calificacion_confirmada,   
+    fecha_calificacion            = alumno_acta_evaluacion_transf.fecha_calificacion  
+	FROM alumno_acta_evaluacion_preelim,   
+     alumno_acta_evaluacion_transf,
+	  acta_evaluacion_preeliminar  
+	WHERE ( alumno_acta_evaluacion_preelim.cve_mat = alumno_acta_evaluacion_transf.cve_mat ) and  
+      ( alumno_acta_evaluacion_preelim.gpo = alumno_acta_evaluacion_transf.gpo ) and  
+      ( alumno_acta_evaluacion_preelim.periodo = alumno_acta_evaluacion_transf.periodo ) and  
+      ( alumno_acta_evaluacion_preelim.anio = alumno_acta_evaluacion_transf.anio ) and  
+      ( alumno_acta_evaluacion_preelim.no_acta = alumno_acta_evaluacion_transf.no_acta ) and  
+      ( alumno_acta_evaluacion_preelim.cve_tipo_examen = alumno_acta_evaluacion_transf.cve_tipo_examen ) and  
+      ( alumno_acta_evaluacion_preelim.cve_tipo_examen = acta_evaluacion_preeliminar.cve_tipo_examen ) and  
+      ( alumno_acta_evaluacion_preelim.nivel = alumno_acta_evaluacion_transf.nivel ) and  
+      ( alumno_acta_evaluacion_preelim.cuenta = alumno_acta_evaluacion_transf.cuenta ) and
+      ( alumno_acta_evaluacion_preelim.no_acta = acta_evaluacion_preeliminar.no_acta ) and  
+      ( alumno_acta_evaluacion_preelim.nivel = acta_evaluacion_preeliminar.nivel ) and  
+		( alumno_acta_evaluacion_preelim.periodo = :ai_periodo )  AND
+		( alumno_acta_evaluacion_preelim.anio = :ai_anio )  AND		
+		( acta_evaluacion_preeliminar.cve_estatus_acta <= :ai_cve_estatus_acta ) and			 	
+		( acta_evaluacion_preeliminar.cve_tipo_examen in (2,6) )			 	
+	USING atr_transaction;
+
+end if
+
+li_codigo_sql = atr_transaction.SqlCode
+ls_mensaje_sql = atr_transaction.SqlErrText
+
+if li_codigo_sql = 100  then	
+	return li_codigo_sql
+elseif li_codigo_sql = -1 then
+	rollback using atr_transaction;
+	MessageBox("Error al actualizar en alumno_acta_evaluacion_preelim", ls_mensaje_sql)
+	return li_codigo_sql
+elseif li_codigo_sql = 0 then
+	commit using atr_transaction;
+end if
+
+
+
+return li_codigo_sql
+
+end function
+

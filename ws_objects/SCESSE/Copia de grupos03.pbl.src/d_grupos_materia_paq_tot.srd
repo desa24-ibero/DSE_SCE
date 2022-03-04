@@ -1,0 +1,86 @@
+﻿$PBExportHeader$d_grupos_materia_paq_tot.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=67108864 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+header(height=136 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=4 color="536870912" )
+detail(height=72 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cve_mat dbname="cve_mat" )
+ column=(type=char(42) updatewhereclause=yes name=materias_materia dbname="materia" )
+ column=(type=long updatewhereclause=yes name=num_grupos dbname="num_grupos" )
+ column=(type=long updatewhereclause=yes name=cupo_promedio dbname="cupo_promedio" )
+ column=(type=long updatewhereclause=yes name=inscritos_promedio dbname="inscritos_promedio" )
+ column=(type=long updatewhereclause=yes name=semestre_ideal dbname="semestre_ideal" )
+ retrieve="select
+cve_mat = m.cve_mat, 
+materia =m.materia, 
+num_grupos = count(g.gpo), 
+cupo_promedio= avg(g.cupo), 
+inscritos_promedio =avg(g.inscritos),
+semestre_ideal = mp.semestre_ideal
+from mat_prerrequisito mp, materias m, grupos g
+where mp.cve_mat = m.cve_mat
+and (mp.semestre_ideal = :a_semestre_ideal or :a_semestre_ideal = 9999)
+and mp.cve_carrera = :a_cve_carrera
+and mp.cve_plan = :a_cve_plan 
+and mp.cve_mat = g.cve_mat
+and g.periodo = :a_periodo
+and g.anio = :a_anio
+and mp.cve_mat not in (
+select cve_mat  from prerrequisitos
+where cve_carrera = :a_cve_carrera
+and cve_plan = :a_cve_plan)
+and mp.cve_mat not in (8763)
+and m.cve_coordinacion not in (6010,6020,6030,6040,6050,6060,6070,6071,6072,6073) 
+group by m.cve_mat, m.materia, mp.semestre_ideal
+union all
+select 
+cve_mat = m.cve_mat, 
+materia = m.materia, 
+num_grupos = 0, 
+cupo_promedio = 0, 
+inscritos_promedio = 0,
+semestre_ideal = mp.semestre_ideal
+from mat_prerrequisito mp, materias m
+where mp.cve_mat = m.cve_mat
+and (mp.semestre_ideal = :a_semestre_ideal or :a_semestre_ideal = 9999)
+and mp.cve_carrera = :a_cve_carrera
+and mp.cve_plan = :a_cve_plan 
+and not exists (select * from grupos g
+					where mp.cve_mat = g.cve_mat
+					and g.periodo = :a_periodo
+					and g.anio = :a_anio)
+and mp.cve_mat not in (
+select cve_mat  from prerrequisitos
+where cve_carrera = :a_cve_carrera
+and cve_plan = :a_cve_plan)
+and mp.cve_mat not in (8763)
+and m.cve_coordinacion not in (6010,6020,6030,6040,6050,6060,6070,6071,6072,6073) 
+
+" arguments=(("a_cve_carrera", number),("a_cve_plan", number),("a_periodo", number),("a_anio", number),("a_semestre_ideal", number))  sort="semestre_ideal A materias_materia A " )
+text(band=header alignment="2" text="Sem.
+Id." border="0" color="33554432" x="2153" y="0" height="132" width="160" html.valueishtml="0"  name=t_1 visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Insc. 
+Prom." border="0" color="33554432" x="1943" y="4" height="132" width="192" html.valueishtml="0"  name=inscritos_promedio_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cupo
+ Prom." border="0" color="33554432" x="1710" y="4" height="132" width="219" html.valueishtml="0"  name=cupo_promedio_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="# Gpos" border="0" color="33554432" x="1490" y="40" height="64" width="206" html.valueishtml="0"  name=num_grupos_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Materia" border="0" color="33554432" x="297" y="40" height="64" width="1179" html.valueishtml="0"  name=materias_materia_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Clave" border="0" color="33554432" x="64" y="40" height="64" width="206" html.valueishtml="0"  name=cve_mat_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="5" color="33554432" x="297" y="4" height="64" width="1179" format="[general]" html.valueishtml="0"  name=materias_materia visible="1" edit.limit=42 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=1 alignment="1" tabsequence=10 border="5" color="33554432" x="64" y="4" height="64" width="206" format="[general]" html.valueishtml="0"  name=cve_mat visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.displayonly=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="5" color="33554432" x="1513" y="4" height="64" width="165" format="[general]" html.valueishtml="0"  name=num_grupos visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="5" color="33554432" x="1737" y="4" height="64" width="165" format="[general]" html.valueishtml="0"  name=cupo_promedio visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="5" color="33554432" x="1957" y="4" height="64" width="165" format="[general]" html.valueishtml="0"  name=inscritos_promedio visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="5" color="33554432" x="2153" y="4" height="64" width="165" format="[general]" html.valueishtml="0"  name=semestre_ideal visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,68 @@
+﻿$PBExportHeader$pago_inscripcion_n_tr.srf
+global type pago_inscripcion_n_tr from function_object
+end type
+
+forward prototypes
+global function integer pago_inscripcion_n_tr (long al_cuenta, integer ai_anio, integer ai_periodo, n_tr atr_trans)
+end prototypes
+
+global function integer pago_inscripcion_n_tr (long al_cuenta, integer ai_anio, integer ai_periodo, n_tr atr_trans);//
+// 		Nombre	pago_inscripcion
+// 		Recibe	al_cuenta,ai_anio,ai_periodo,atr_trans
+// 		Regresa	1	si el alumno al_cuenta registrado su pago de inscripcion correspondiente a ai_periodo ai_anio
+// 					0	el alumno al_cuenta no tiene registrado el pago 
+// 					-1	error de comunicacion
+// 					FMC06051999
+// 		Modificación para que reciba una transacción de PFC
+//
+boolean lb_liberacion_vigente
+uo_administrador_liberacion luo_administrador_liberacion
+string ls_nombre_datastore, ls_control_correcto
+int li_res, li_ret, li_periodo, li_anio
+char lc_periodo
+DataStore lds_pago_cuenta_anio_periodo
+
+li_periodo = ai_periodo
+li_anio = ai_anio
+lds_pago_cuenta_anio_periodo = Create DataStore
+ls_nombre_datastore = "d_pago_cuenta_anio_periodo_sit"
+lb_liberacion_vigente= true
+
+//luo_administrador_liberacion = CREATE uo_administrador_liberacion
+//IF luo_administrador_liberacion.of_liberacion_vigente("SIT") THEN
+//	lb_liberacion_vigente = true
+//	IF luo_administrador_liberacion.of_obten_control_correcto("SIT", "control_escolar",ls_nombre_datastore,"datawindow", ls_control_correcto) THEN
+//		ls_nombre_datastore = ls_control_correcto
+//	END IF
+//END IF
+
+lds_pago_cuenta_anio_periodo.DataObject = ls_nombre_datastore
+lds_pago_cuenta_anio_periodo.SetTransObject(atr_trans)
+choose case ai_periodo
+	case 0
+		lc_periodo = 'P'
+	case 1
+		lc_periodo = 'V'
+	case 2
+		lc_periodo = 'O'
+end choose
+ai_anio = integer(right(string(ai_anio),2))
+IF lb_liberacion_vigente THEN
+	li_res = lds_pago_cuenta_anio_periodo.Retrieve(al_cuenta,li_anio,li_periodo)
+ELSE
+	li_res = lds_pago_cuenta_anio_periodo.Retrieve(al_cuenta,ai_anio,lc_periodo)
+END IF
+if li_res >= 1 then
+	li_ret = 1
+elseif li_res = 0 then
+	li_ret = 0
+else
+	li_ret = -1
+	messagebox("Error de Comunicación","Error con la consulta de pago inscripción BD. Favor de intentar nuevamente", None!)
+end if
+Destroy lds_pago_cuenta_anio_periodo
+Destroy luo_administrador_liberacion
+return li_ret
+
+end function
+

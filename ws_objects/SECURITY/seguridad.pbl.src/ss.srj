@@ -1,0 +1,17 @@
+﻿$PBExportHeader$ss.srj
+EXE:f:\codigo fuente\ss\ss.exe,,0,1
+CMP:0,0,0,2,0,0
+PBD:f:\codigo fuente\ss\seguridad.pbl,,1
+PBD:F:\Codigo Fuente\SS\funciones_seguridad.pbl,,1
+PBD:F:\Codigo Fuente\SS\comun.pbl,,1
+OBJ:f:\codigo fuente\ss\seguridad.pbl,m_principal,m
+OBJ:f:\codigo fuente\ss\seguridad.pbl,w_principal,w
+OBJ:F:\Codigo Fuente\SS\funciones_seguridad.pbl,ss_usuario_valido_aplicacion,f
+OBJ:F:\Codigo Fuente\SS\comun.pbl,consulta_sie,f
+OBJ:f:\codigo fuente\ss\seguridad.pbl,w_login_ss,w
+OBJ:F:\Codigo Fuente\SS\comun.pbl,salir_sie,f
+OBJ:F:\Codigo Fuente\SS\comun.pbl,revmay,f
+OBJ:f:\codigo fuente\ss\seguridad.pbl,ss,a
+OBJ:F:\Codigo Fuente\SS\comun.pbl,m_menu,m
+OBJ:f:\codigo fuente\ss\seguridad.pbl,w_asegura_aplicaciones,w
+OBJ:F:\Codigo Fuente\SS\comun.pbl,conf_impr,w

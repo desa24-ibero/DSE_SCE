@@ -1,0 +1,84 @@
+﻿$PBExportHeader$d_relacion_titulos_profesiones.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=1021 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=80 color="536870912" )
+detail(height=90 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cuenta dbname="cuenta" )
+ column=(type=char(30) updatewhereclause=yes name=digito_verificador dbname="digito_verificador" )
+ column=(type=datetime updatewhereclause=yes name=fecha_examen dbname="fecha_examen" )
+ column=(type=long updatewhereclause=yes name=cve_carrera dbname="cve_carrera" )
+ column=(type=char(100) updatewhereclause=yes name=carrera dbname="carrera" )
+ column=(type=long updatewhereclause=yes name=cve_carrera_ant dbname="cve_carrera_ant" )
+ column=(type=char(152) updatewhereclause=yes name=nombre_completo dbname="nombre_completo" )
+ column=(type=char(24) updatewhereclause=yes name=fecha_examen2 dbname="fecha_examen2" )
+ column=(type=long updatewhereclause=yes name=num_titulo dbname="num_titulo" )
+ retrieve="  SELECT titulacion.cuenta,   
+         v_sce_alumno_digitoverificador.digito_verificador,   
+         titulacion.fecha_examen,   
+         carreras.cve_carrera,   
+         carreras.carrera,
+			carrera_equiv.cve_carrera_ant,
+  			nombre_completo = alumnos.nombre+~" ~"+alumnos.apaterno+~" ~"+alumnos.amaterno,
+			fecha_examen2 = CASE datepart(mm, titulacion.fecha_examen) 
+                             WHEN 1 THEN convert(varchar(2),datepart(dd, titulacion.fecha_examen)) +~" de Enero de ~"+convert(varchar(4),datepart(yy, titulacion.fecha_examen))
+                             WHEN 2 THEN convert(varchar(2),datepart(dd, titulacion.fecha_examen)) +~" de Febrero de ~"+convert(varchar(4),datepart(yy, titulacion.fecha_examen))
+                             WHEN 3 THEN convert(varchar(2),datepart(dd, titulacion.fecha_examen)) +~" de Marzo de ~"+convert(varchar(4),datepart(yy, titulacion.fecha_examen))
+                             WHEN 4 THEN convert(varchar(2),datepart(dd, titulacion.fecha_examen)) +~" de Abril de ~"+convert(varchar(4),datepart(yy, titulacion.fecha_examen))
+                             WHEN 5 THEN convert(varchar(2),datepart(dd, titulacion.fecha_examen)) +~" de Mayo de ~"+convert(varchar(4),datepart(yy, titulacion.fecha_examen))
+                             WHEN 6 THEN convert(varchar(2),datepart(dd, titulacion.fecha_examen)) +~" de Junio de ~"+convert(varchar(4),datepart(yy, titulacion.fecha_examen))
+                             WHEN 7 THEN convert(varchar(2),datepart(dd, titulacion.fecha_examen)) +~" de Julio de ~"+convert(varchar(4),datepart(yy, titulacion.fecha_examen))
+                             WHEN 8 THEN convert(varchar(2),datepart(dd, titulacion.fecha_examen)) +~" de Agosto de ~"+convert(varchar(4),datepart(yy, titulacion.fecha_examen))
+                             WHEN 9 THEN convert(varchar(2),datepart(dd, titulacion.fecha_examen)) +~" de Septiembre de ~"+convert(varchar(4),datepart(yy, titulacion.fecha_examen))
+                             WHEN 10 THEN convert(varchar(2),datepart(dd, titulacion.fecha_examen)) +~" de Octubre de ~"+convert(varchar(4),datepart(yy, titulacion.fecha_examen))
+                             WHEN 11 THEN convert(varchar(2),datepart(dd, titulacion.fecha_examen)) +~" de Noviembre de ~"+convert(varchar(4),datepart(yy, titulacion.fecha_examen))
+                             WHEN 12 THEN convert(varchar(2),datepart(dd, titulacion.fecha_examen)) +~" de Diciembre de ~"+convert(varchar(4),datepart(yy, titulacion.fecha_examen))
+                             ELSE ~"~" END,
+			titulacion.num_titulo
+    FROM diseño_titulacion,   
+         titulacion,   
+         carreras,   
+         carrera_equiv,   
+         v_sce_alumno_digitoverificador,
+			alumnos  
+   WHERE ( diseño_titulacion.cuenta = titulacion.cuenta ) and  
+         ( diseño_titulacion.cve_plan = titulacion.cve_plan ) and  
+         ( diseño_titulacion.cve_carrera = titulacion.cve_carrera ) and  
+         ( titulacion.cve_carrera = carreras.cve_carrera ) and  
+         ( titulacion.cuenta = v_sce_alumno_digitoverificador.cuenta ) and  
+         ( titulacion.cuenta = alumnos.cuenta ) and  
+         ( carrera_equiv.cve_carrera_act = carreras.cve_carrera ) and  
+         ( ( titulacion.aprobado = 1 ) )   and 
+			( diseño_titulacion.fecha_envio IS NOT NULL) and
+			( diseño_titulacion.fecha_regreso IS NOT NULL) and
+			( alumnos.cuenta in (:al_cuentas)) and
+			( titulacion.fecha_examen >= :adttm_fecha_examen)
+ORDER BY carreras.carrera ASC,
+			alumnos.nombre_completo ASC,
+         titulacion.cuenta ASC   
+" arguments=(("al_cuentas", numberlist),("adttm_fecha_examen", datetime))  sort="cve_carrera A carrera A cve_carrera_ant A " )
+group(level=1 header.height=90 trailer.height=0 by=("cve_carrera" , "carrera" , "cve_carrera_ant" ) header.color="536870912" trailer.color="536870912" )
+bitmap(band=header filename="logo_uia.bmp" x="128" y="29" height="438" width="508" border="0"  name=p_1 )
+text(band=header alignment="1" text="TRAMITACION ESCOLAR" border="0" color="0" x="2370" y="323" height="64" width="1028"  name=t_6  font.face="Times New Roman" font.height="-10" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="1" text="DIRECCION DE SERVICIOS ESCOLARES" border="0" color="0" x="1821" y="256" height="64" width="1576"  name=t_5  font.face="Times New Roman" font.height="-10" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Relación No.  1" border="0" color="0" x="2966" y="870" height="64" width="432"  name=t_4  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+line(band=header x1="95" y1="493" x2="3397" y2="493"  name=l_1 pen.style="0" pen.width="11" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="RELACION DE TITULOS QUE SE ENVIAN A LA DIRECCION GENERAL DE PROFESIONES, PARA SU REGISTRO Y EXPEDICION 
+DE CEDULA PROFESIONAL, ANEXANDO TODOS LOS ANTECEDENTES ACADEMICOS EN ORIGINAL QUE A CONTINUACION" border="0" color="0" x="95" y="518" height="106" width="3302"  name=t_1  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="MENCIONAMOS: (ACTA DE NACIMIENTO, CERTIFICADO DE SECUNDARIA, CERTIFICADO DE BACHILLERATO, REVISION DE
+ESTUDIOS, CARTA DE SERVICIO SOCIAL, ACTA DE EXAMEN PROFESIONAL, CUATRO FOTOGRAFIAS TAMAÑO FILIACION," border="0" color="0" x="95" y="627" height="106" width="3302"  name=t_2  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="ACTA TESTIMONIAL Y CERTIFICADO DE NACIONALIDAD NOTARIADOS, ESTOS DOS ULTIMOS DOCUMENTOS SOLO SI EL
+ CASO LO REQUIERE)." border="0" color="0" x="95" y="736" height="106" width="3302"  name=t_3  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="FECHA" border="0" color="33554432" x="2589" y="954" height="58" width="731"  name=fecha_examen_t  font.face="Arial" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="No. Cta." border="0" color="33554432" x="2154" y="954" height="58" width="351"  name=cuenta_t  font.face="Arial" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header.1 id=6 alignment="1" tabsequence=32766 border="0" color="33554432" x="1946" y="3" height="74" width="161" format="[general]"  name=cve_carrera_ant edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header.1 id=4 alignment="1" tabsequence=32766 border="0" color="33554432" x="77" y="3" height="74" width="157" format="[general]"  name=cve_carrera edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header.1 id=5 alignment="0" tabsequence=32766 border="0" color="33554432" x="245" y="3" height="74" width="1646" format="[general]"  name=carrera edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression="getrow()"border="0" color="33554432" x="77" y="7" height="74" width="146" format="[GENERAL]"  name=compute_7  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="33554432" x="2589" y="7" height="74" width="731" format="[general]"  name=fecha_examen2 edit.limit=24 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="STRING( cuenta )+~"-~"+ digito_verificador "border="0" color="33554432" x="2154" y="10" height="64" width="351" format="[GENERAL]"  name=cuenta_digito  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="33554432" x="252" y="7" height="74" width="1646" format="[general]"  name=nombre_completo edit.limit=152 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=footer alignment="0" expression="'Hoja : ' + page() + ' de ' + pagecount()"border="0" color="33554432" x="2823" y="6" height="64" width="574" format="[general]"  name=hoja  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

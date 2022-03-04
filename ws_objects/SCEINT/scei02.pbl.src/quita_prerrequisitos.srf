@@ -1,0 +1,90 @@
+﻿$PBExportHeader$quita_prerrequisitos.srf
+global type quita_prerrequisitos from function_object
+end type
+
+forward prototypes
+global subroutine quita_prerrequisitos (integer area, ref datastore dw_materiasxcursar, ref datastore dw_historico)
+end prototypes
+
+global subroutine quita_prerrequisitos (integer area, ref datastore dw_materiasxcursar, ref datastore dw_historico);/*Elimina las materias para las cuales no has llevado los prerrequisito*/
+long ll_cont_1,ll_cont_2,ll_cont_3,ll_found
+long li_puede,borrables[]
+
+if isnull(area) then
+	area=0
+end if
+dw_materiasxcursar.SetFilter("area_mat_cve_area="+string(area))
+dw_materiasxcursar.Filter( )
+dw_historico.SetFilter('historico_calificacion in ("6","7","8","9","10","AC","RE","E","MB","B","S")')
+dw_historico.Filter( )
+
+ll_cont_3=0
+FOR ll_cont_1=1 TO dw_materiasxcursar.rowcount()
+	if not(isnull(dw_materiasxcursar.object.prerrequisitos_cve_prerreq[ll_cont_1])) then
+		ll_found = dw_historico.Find("historico_cve_mat="+string(dw_materiasxcursar.object.prerrequisitos_cve_prerreq[ll_cont_1]),&
+			1, dw_historico.RowCount( ))
+		if ll_found>0 then
+			li_puede=1
+		else
+			li_puede=0
+		end if		
+		
+		if dw_materiasxcursar.object.prerrequisitos_orden[ll_cont_1]>1 then
+			if dw_materiasxcursar.object.cve_mat[ll_cont_1]=dw_materiasxcursar.object.cve_mat[ll_cont_1 -1] then
+				if li_puede=1 then
+					if dw_materiasxcursar.object.prerrequisitos_enlace[ll_cont_1 -1]='O' then
+						if ll_cont_3>0 then
+							if borrables[ll_cont_3]=dw_materiasxcursar.object.cve_mat[ll_cont_1] then
+								borrables[ll_cont_3]=0
+								ll_cont_3=ll_cont_3 -1
+							end if
+						end if
+					else
+						if ll_cont_3>0 then
+							if borrables[ll_cont_3]=dw_materiasxcursar.object.cve_mat[ll_cont_1] then
+								li_puede=0
+							end if
+						end if
+					end if
+				else
+					if dw_materiasxcursar.object.prerrequisitos_enlace[ll_cont_1 -1]='O' then
+						if ll_cont_3>0 then
+							if borrables[ll_cont_3]<>dw_materiasxcursar.object.cve_mat[ll_cont_1] then
+								li_puede=1
+							end if
+						else
+							li_puede=1
+						end if
+					end if
+				end if
+			end if
+		end if
+		
+		if li_puede=0 then
+			ll_cont_3=ll_cont_3+1
+			borrables[ll_cont_3]=dw_materiasxcursar.object.cve_mat[ll_cont_1]
+		end if
+	end if
+NEXT
+FOR ll_cont_1=1 TO ll_cont_3
+	ll_found=1
+	DO UNTIL ll_found=0
+		ll_found = dw_materiasxcursar.Find("cve_mat="+string(borrables[ll_cont_1]),&
+			1, dw_materiasxcursar.RowCount( ))
+		if ll_found>0 then
+			dw_materiasxcursar.deleterow(ll_found)
+		end if
+	LOOP
+NEXT
+/**/
+
+/*Elimina los duplicados*/
+FOR ll_cont_1=dw_materiasxcursar.rowcount() TO 2 STEP -1
+	IF dw_materiasxcursar.object.cve_mat[ll_cont_1]=&
+	dw_materiasxcursar.object.cve_mat[ll_cont_1 -1] THEN
+		dw_materiasxcursar.deleterow(ll_cont_1)
+	END IF
+NEXT
+/**/
+end subroutine
+

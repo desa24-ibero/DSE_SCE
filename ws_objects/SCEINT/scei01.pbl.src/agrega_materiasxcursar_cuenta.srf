@@ -1,0 +1,443 @@
+﻿$PBExportHeader$agrega_materiasxcursar_cuenta.srf
+global type agrega_materiasxcursar_cuenta from function_object
+end type
+
+forward prototypes
+global function integer agrega_materiasxcursar_cuenta (string nivel, ref datastore dw_materiasxcursar, ref datastore dw_historico, datastore dw_materias_abiertas, long cuenta, ref integer contlinea, integer numarchivo, integer plan, integer carrera, integer subsistema, datastore dw_plan_estud, integer servsoc)
+end prototypes
+
+global function integer agrega_materiasxcursar_cuenta (string nivel, ref datastore dw_materiasxcursar, ref datastore dw_historico, datastore dw_materias_abiertas, long cuenta, ref integer contlinea, integer numarchivo, integer plan, integer carrera, integer subsistema, datastore dw_plan_estud, integer servsoc);string ls_textin
+long ll_cont_1,ll_cont_2,ll_cont_3,ll_found, ll_ContLinea
+integer areas[12]
+decimal creditos[2,12]
+long titula[2]
+
+//IF nivel='L' THEN
+IF nivel <> 'P' THEN 
+	dw_materiasxcursar.Modify("DataWindow.Table.Select = 'SELECT area_mat.cve_area,materias.cve_mat,materias.sigla,materias.materia,materias.creditos,materias.horas_reales,prerrequisitos.cve_prerreq,prerrequisitos.enlace,semestre_ideal,prerrequisitos.orden, materias.sigla_anterior FROM materias,mat_prerrequisito,prerrequisitos,area_mat WHERE ( mat_prerrequisito.cve_mat *= prerrequisitos.cve_mat) and ( prerrequisitos.cve_carrera =* mat_prerrequisito.cve_carrera) and ( mat_prerrequisito.cve_plan *= prerrequisitos.cve_plan) and ( materias.cve_mat = mat_prerrequisito.cve_mat ) and ( area_mat.cve_mat = materias.cve_mat ) and ( ( materias.creditos > 0 ) AND ( area_mat.cve_area in ( :areas ) ) AND ( mat_prerrequisito.cve_carrera = :carrera ) AND ( mat_prerrequisito.cve_plan = :plan ) ) '")
+ELSE
+	dw_materiasxcursar.Modify("DataWindow.Table.Select = 'SELECT area_mat.cve_area,materias.cve_mat,materias.sigla,materias.materia,materias.creditos,materias.horas_reales,prerrequisitos.cve_prerreq,prerrequisitos.enlace,semestre_ideal,prerrequisitos.orden, materias.sigla_anterior FROM materias,mat_prerreq_pos,prerrequisitos,area_mat WHERE ( mat_prerreq_pos.cve_mat *= prerrequisitos.cve_mat) and ( prerrequisitos.cve_carrera =* mat_prerreq_pos.cve_carrera) and ( mat_prerreq_pos.cve_plan *= prerrequisitos.cve_plan) and ( materias.cve_mat = mat_prerreq_pos.cve_mat ) and ( area_mat.cve_mat = materias.cve_mat ) and ( ( materias.creditos > 0 ) AND ( area_mat.cve_area in ( :areas ) ) AND ( mat_prerreq_pos.cve_carrera = :carrera ) AND ( mat_prerreq_pos.cve_plan = :plan ) ) '")
+END IF
+
+/*Agrega Kardex*/
+//dw_historico.event agrega()
+ll_ContLinea = agrega_historico_cuenta(dw_historico,cuenta,contlinea,numarchivo,plan)
+ContLinea = ll_ContLinea
+
+w_solicitud_materias_cuenta.dw_plan_estud.retrieve(plan,carrera,subsistema)
+
+if w_solicitud_materias_cuenta.dw_plan_estud.rowcount()=0 then
+	return 0
+end if
+
+areas[1]=dw_plan_estud.object.cve_area_basica[1]
+creditos[2,1]=busca_creditos(areas[1])
+
+areas[2]=dw_plan_estud.object.cve_area_mayor_oblig[1]
+creditos[2,2]=busca_creditos(areas[2])
+
+areas[3]=dw_plan_estud.object.cve_area_mayor_opt[1]
+creditos[2,3]=busca_creditos(areas[3])
+
+areas[4]=dw_plan_estud.object.cve_area_servicio_social[1]
+creditos[2,4]=busca_creditos(areas[4])
+
+areas[5]=dw_plan_estud.object.cve_area_integ_fundamental[1]
+creditos[2,5]=busca_creditos(areas[5])
+
+//IF nivel='L' THEN
+IF nivel <> 'P' THEN 
+	areas[6]=dw_plan_estud.object.subsistema_cve_area[1]
+	creditos[2,6]=busca_creditos(areas[6])
+
+	if dw_plan_estud.rowcount()>1 then
+		areas[7]=dw_plan_estud.object.subsistema_cve_area[2]
+		creditos[2,6]=creditos[2,6]+busca_creditos(areas[7])
+	end if
+
+	/*Titulación*/
+	titula[1]=dw_plan_estud.object.cve_proyecto_opc_ter[1]
+	titula[2]=dw_plan_estud.object.cve_seminario_tit[1]
+	
+	SELECT sum(creditos)
+	INTO :creditos[2,8]
+	FROM dbo.materias
+	WHERE dbo.materias.cve_mat = :titula[1] or dbo.materias.cve_mat = :titula[2]
+	USING gtr_sce;
+	commit using gtr_sce;
+	/**/
+	
+	if	plan = 6 then
+		creditos[2,8]=0
+	end if
+
+	areas[9]=dw_plan_estud.object.cve_area_integ_tema1[1]
+	creditos[2,9]=busca_creditos(areas[9])
+	
+	areas[10]=dw_plan_estud.object.cve_area_integ_tema2[1]
+	creditos[2,10]=busca_creditos(areas[10])
+	
+	areas[11]=dw_plan_estud.object.cve_area_integ_tema3[1]
+	creditos[2,11]=busca_creditos(areas[11])
+	
+	areas[12]=dw_plan_estud.object.cve_area_integ_tema4[1]
+	creditos[2,12]=busca_creditos(areas[12])
+end if
+
+dw_materiasxcursar.retrieve(plan,carrera,areas)
+
+quita_prerrequisitos(areas[1],dw_materiasxcursar,dw_historico)
+quita_prerrequisitos(areas[2],dw_materiasxcursar,dw_historico)
+quita_prerrequisitos(areas[3],dw_materiasxcursar,dw_historico)
+quita_prerrequisitos(areas[4],dw_materiasxcursar,dw_historico)
+quita_prerrequisitos(areas[5],dw_materiasxcursar,dw_historico)
+quita_prerrequisitos(areas[6],dw_materiasxcursar,dw_historico)
+if dw_plan_estud.rowcount()>1 then
+	quita_prerrequisitos(areas[7],dw_materiasxcursar,dw_historico)
+end if
+
+/*Elimina las materias que ya cursaste*/
+creditos[1,1]=elimina_cursadas(areas[1],dw_materiasxcursar,dw_historico)
+creditos[1,2]=elimina_cursadas(areas[2],dw_materiasxcursar,dw_historico)
+creditos[1,4]=elimina_cursadas(areas[4],dw_materiasxcursar,dw_historico)
+creditos[1,5]=elimina_cursadas(areas[5],dw_materiasxcursar,dw_historico)
+
+//IF nivel='L' THEN	
+IF nivel <> 'P' THEN		
+	/*Titulación*/
+	dw_historico.SetFilter('historico_calificacion in ("6","7","8","9","10","AC","RE","E","MB","B","S")'+&
+		' and ( historico_cve_mat='+string(titula[1])+' or historico_cve_mat='+string(titula[2])+')')
+	dw_historico.Filter( )
+	
+	creditos[1,8]=0
+	ll_found = dw_historico.Find("historico_cve_mat="+string(titula[1]),&
+		1, dw_historico.RowCount( ))
+	if ll_found>0 then
+		creditos[1,8]=creditos[1,8]+dw_historico.object.materias_creditos[ll_found]
+		dw_historico.deleterow(ll_found)
+	end if
+	ll_found = dw_historico.Find("historico_cve_mat="+string(titula[2]),&
+		1, dw_historico.RowCount( ))
+	if ll_found>0 then
+		creditos[1,8]=creditos[1,8]+dw_historico.object.materias_creditos[ll_found]
+		dw_historico.deleterow(ll_found)
+	end if
+	/**/
+	
+	creditos[1,9]=elimina_cursadas(areas[9],dw_materiasxcursar,dw_historico)
+	creditos[1,10]=elimina_cursadas(areas[10],dw_materiasxcursar,dw_historico)
+	creditos[1,11]=elimina_cursadas(areas[11],dw_materiasxcursar,dw_historico)
+	creditos[1,12]=elimina_cursadas(areas[12],dw_materiasxcursar,dw_historico)
+end if
+
+elimina_cursadas_3(dw_historico,dw_materiasxcursar,areas,creditos)
+quita_no_abiertas(dw_materiasxcursar,dw_materias_abiertas)
+
+If ContLinea >= 58 Then 
+	w_solicitud_materias_cuenta.Escribe_Encabezado()
+	ContLinea = 11
+end if
+FileWrite(NumArchivo,"                               ** DIAGNOSTICO **")
+FileWrite(NumArchivo,"")
+FileWrite(NumArchivo,"                          MINIMO   CURSADO  FALTAN")
+FileWrite(NumArchivo,"")
+FileWrite(NumArchivo,"                          "+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,1]),9)+&
+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[1,1]),9)+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,1] - creditos[1,1]),9)+"AREA BASICA")
+ContLinea = ContLinea + 5
+ll_cont_1=w_solicitud_materias_cuenta.diagnostico.insertrow(0)
+w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,3,"AREA BASICA")
+w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,1,creditos[2,1])
+w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,2,creditos[1,1])
+
+If ContLinea >= 58 Then 
+	w_solicitud_materias_cuenta.Escribe_Encabezado()
+	ContLinea = 11
+end if
+
+FileWrite(NumArchivo,"                          "+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,2]),9)+&
+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[1,2]),9)+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,2] - creditos[1,2]),9)+"AREA MAYOR OBLIGATORIA")
+ContLinea = ContLinea + 1
+ll_cont_1=w_solicitud_materias_cuenta.diagnostico.insertrow(0)
+w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,3,"AREA MAYOR OBLIGATORIA")
+w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,1,creditos[2,2])
+w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,2,creditos[1,2])
+
+If ContLinea >= 58 Then 
+	w_solicitud_materias_cuenta.Escribe_Encabezado()
+	ContLinea = 11
+end if
+
+FileWrite(NumArchivo,"                          "+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,3]),9)+&
+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[1,3]),9)+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,3] - creditos[1,3]),9)+"AREA MAYOR OPTATIVA")
+ContLinea = ContLinea + 1
+ll_cont_1=w_solicitud_materias_cuenta.diagnostico.insertrow(0)
+w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,3,"AREA MAYOR OPTATIVA")
+w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,1,creditos[2,3])
+w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,2,creditos[1,3])
+
+
+//IF nivel='L' THEN	
+IF nivel <> 'P' THEN		
+	If ContLinea >= 58 Then 
+		w_solicitud_materias_cuenta.Escribe_Encabezado()
+		ContLinea = 11
+	end if
+
+	FileWrite(NumArchivo,"                          "+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,4]),9)+&
+	w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[1,4]),9)+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,4] - creditos[1,4]),9)+"SERVICIO SOCIAL")
+	ContLinea = ContLinea + 1
+	ll_cont_1=w_solicitud_materias_cuenta.diagnostico.insertrow(0)
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,3,"SERVICIO SOCIAL")
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,1,creditos[2,4])
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,2,creditos[1,4])
+
+	if	plan <> 6 then	
+		If ContLinea >= 58 Then 
+			w_solicitud_materias_cuenta.Escribe_Encabezado()
+			ContLinea = 11
+		end if
+		FileWrite(NumArchivo,"                          "+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,5]),9)+&
+		w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[1,5]),9)+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,5] - creditos[1,5]),9)+"INTEGRACION FUNDAMENTAL")
+		ContLinea = ContLinea + 1
+	end if
+	
+	
+	if	plan <> 6 then	
+		ll_cont_1=w_solicitud_materias_cuenta.diagnostico.insertrow(0)
+		w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,3,"INTEGRACION FUNDAMENTAL")
+		w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,1,creditos[2,5])
+		w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,2,creditos[1,5])
+	Else
+		ll_cont_1=w_solicitud_materias_cuenta.diagnostico.insertrow(0)
+		w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,3,"REFLEXION UNIVERSITARIA")
+		w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,1,creditos[2,5])
+		w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,2,creditos[1,5])
+	End if	
+	
+	
+	if	plan <> 6 then	
+		If ContLinea >= 58 Then 
+			w_solicitud_materias_cuenta.Escribe_Encabezado()
+			ContLinea = 11
+		end if
+
+		FileWrite(NumArchivo,"                          "+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,9]),9)+&
+		w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[1,9]),9)+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,9] - creditos[1,9]),9)+"INTEGRACION TEMA 1")
+		ContLinea = ContLinea + 1
+	else
+		If ContLinea >= 58 Then 
+			w_solicitud_materias_cuenta.Escribe_Encabezado()
+			ContLinea = 11
+		end if
+
+		FileWrite(NumArchivo,"                          "+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,9]),9)+&
+		w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[1,9]),9)+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,9] - creditos[1,9]),9)+"REFLEXION UNIVERSITARIA 1")
+		ContLinea = ContLinea + 1		
+	end if
+	
+	ll_cont_1=w_solicitud_materias_cuenta.diagnostico.insertrow(0)
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,3,"TEMA 1")
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,1,creditos[2,9])
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,2,creditos[1,9])
+	
+	if	plan <> 6 then	
+		If ContLinea >= 58 Then 			
+			w_solicitud_materias_cuenta.Escribe_Encabezado()
+			ContLinea = 11
+		end if
+		FileWrite(NumArchivo,"                          "+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,10]),9)+&
+		w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[1,10]),9)+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,10] - creditos[1,10]),9)+"INTEGRACION TEMA 2")
+		ContLinea = ContLinea + 1
+	else
+		If ContLinea >= 58 Then 
+			w_solicitud_materias_cuenta.Escribe_Encabezado()
+			ContLinea = 11
+		end if
+		FileWrite(NumArchivo,"                          "+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,10]),9)+&
+		w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[1,10]),9)+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,10] - creditos[1,10]),9)+"REFLEXION UNIVERSITARIA 2")
+		ContLinea = ContLinea + 1		
+	end if
+	
+	ll_cont_1=w_solicitud_materias_cuenta.diagnostico.insertrow(0)
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,3,"TEMA 2")
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,1,creditos[2,10])
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,2,creditos[1,10])
+	
+	if	plan <> 6 then	
+		If ContLinea >= 58 Then 
+			w_solicitud_materias_cuenta.Escribe_Encabezado()
+			ContLinea = 11
+		end if
+		FileWrite(NumArchivo,"                          "+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,11]),9)+&
+		w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[1,11]),9)+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,11] - creditos[1,11]),9)+"INTEGRACION TEMA 3")
+		ContLinea = ContLinea + 1
+	else
+		If ContLinea >= 58 Then 
+			w_solicitud_materias_cuenta.Escribe_Encabezado()
+			ContLinea = 11
+		end if
+		FileWrite(NumArchivo,"                          "+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,11]),9)+&
+		w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[1,11]),9)+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,11] - creditos[1,11]),9)+"REFLEXION UNIVERSITARIA 3")
+		ContLinea = ContLinea + 1
+	end if
+	
+	ll_cont_1=w_solicitud_materias_cuenta.diagnostico.insertrow(0)
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,3,"TEMA 3")
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,1,creditos[2,11])
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,2,creditos[1,11])
+	
+	if	plan <> 6 then	
+		If ContLinea >= 58 Then 
+			w_solicitud_materias_cuenta.Escribe_Encabezado()
+			ContLinea = 11
+		end if
+		FileWrite(NumArchivo,"                          "+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,12]),9)+&
+		w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[1,12]),9)+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,12] - creditos[1,12]),9)+"INTEGRACION TEMA 4")
+		ContLinea = ContLinea + 1
+	else
+		If ContLinea >= 58 Then 
+			w_solicitud_materias_cuenta.Escribe_Encabezado()
+			ContLinea = 11
+		end if
+		FileWrite(NumArchivo,"                          "+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,12]),9)+&
+		w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[1,12]),9)+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,12] - creditos[1,12]),9)+"REFLEXION UNIVERSITARIA 4")
+		ContLinea = ContLinea + 1
+	end if
+	
+	ll_cont_1=w_solicitud_materias_cuenta.diagnostico.insertrow(0)
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,3,"TEMA 4")
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,1,creditos[2,12])
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,2,creditos[1,12])
+	
+	If ContLinea >= 58 Then 
+		w_solicitud_materias_cuenta.Escribe_Encabezado()
+		ContLinea = 11
+	end if
+	FileWrite(NumArchivo,"                          "+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,8]),9)+&
+	w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[1,8]),9)+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,8] - creditos[1,8]),9)+"TITULACION")
+	ContLinea = ContLinea + 1
+	ll_cont_1=w_solicitud_materias_cuenta.diagnostico.insertrow(0)
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,3,"TITULACION")
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,1,creditos[2,8])
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,2,creditos[1,8])
+END IF
+
+if dw_plan_estud.object.subsistema_subsistema[1]<>"" then
+	If ContLinea >= 58 Then 
+		w_solicitud_materias_cuenta.Escribe_Encabezado()
+		ContLinea = 11
+	end if
+
+	ls_textin="                          "+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,6]),9)+&
+	w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[1,6]),9)+w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,6] - creditos[1,6]),9)+left(dw_plan_estud.object.subsistema_subsistema[1],27)
+	FileWrite(NumArchivo,ls_textin)
+	ContLinea = ContLinea + 1
+	ll_cont_1=w_solicitud_materias_cuenta.diagnostico.insertrow(0)
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,3,"SUBSISTEMA")
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,1,creditos[2,6])
+	w_solicitud_materias_cuenta.diagnostico.SetItem(ll_cont_1,2,creditos[1,6])
+end if
+If ContLinea >= 58 Then 
+	w_solicitud_materias_cuenta.Escribe_Encabezado()
+	ContLinea = 11
+end if
+FileWrite(NumArchivo,'')
+FileWrite(NumArchivo,'')
+FileWrite(NumArchivo,"                          "+&
+	w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,1]+creditos[2,2]+creditos[2,3]+creditos[2,4]+creditos[2,5]+creditos[2,9]+creditos[2,10]+creditos[2,11]+creditos[2,12]+creditos[2,8]+creditos[2,6]),9)+&
+	w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[1,1]+creditos[1,2]+creditos[1,3]+creditos[1,4]+creditos[1,5]+creditos[1,9]+creditos[1,10]+creditos[1,11]+creditos[1,12]+creditos[1,8]+creditos[1,6]),9)+&
+	w_solicitud_materias_cuenta.AjustaPalabra(string(creditos[2,1]+creditos[2,2]+creditos[2,3]+creditos[2,4]+creditos[2,5]+creditos[2,9]+creditos[2,10]+creditos[2,11]+creditos[2,12]+creditos[2,8]+creditos[2,6] - &
+	(creditos[1,1]+creditos[1,2]+creditos[1,3]+creditos[1,4]+creditos[1,5]+creditos[1,9]+creditos[1,10]+creditos[1,11]+creditos[1,12]+creditos[1,8]+creditos[1,6]) ),9)+"TOTAL")
+ContLinea = ContLinea + 3
+	
+/*Puedes Inscribir*/
+w_solicitud_materias_cuenta.Escribe_Encabezado()
+ContLinea = 11
+w_solicitud_materias_cuenta.Escribe_Encabezado1()
+
+
+if creditos[1,1]<creditos[2,1] then
+	If ContLinea >= 58 Then 
+		w_solicitud_materias_cuenta.Escribe_Encabezado()
+		ContLinea = 11
+		w_solicitud_materias_cuenta.Escribe_Encabezado1()
+
+	END IF
+	FileWrite(NumArchivo,'  AREA BASICA:')
+	FileWrite(NumArchivo,'')
+	ContLinea = ContLinea + 2
+	w_solicitud_materias_cuenta.despliega_materias(areas[1],1,plan)
+end if
+
+if creditos[1,2]<creditos[2,2] then
+	If ContLinea >= 58 Then 
+		w_solicitud_materias_cuenta.Escribe_Encabezado()
+		ContLinea = 11
+		w_solicitud_materias_cuenta.Escribe_Encabezado1()
+
+	END IF
+	FileWrite(NumArchivo,'')
+	FileWrite(NumArchivo,'  AREA MAYOR OBLIGATORIA:')
+	FileWrite(NumArchivo,'')
+	ContLinea = ContLinea + 3
+	w_solicitud_materias_cuenta.despliega_materias(areas[2],2,plan)
+end if
+
+if creditos[1,3]<creditos[2,3] then
+	If ContLinea >= 58 Then 
+		w_solicitud_materias_cuenta.Escribe_Encabezado()
+		ContLinea = 11
+		w_solicitud_materias_cuenta.Escribe_Encabezado1()
+
+	END IF
+	FileWrite(NumArchivo,'')
+	FileWrite(NumArchivo,'  AREA MAYOR OPTATIVA:')
+	FileWrite(NumArchivo,'')
+	ContLinea = ContLinea + 3
+	w_solicitud_materias_cuenta.despliega_materias(areas[3],3,plan)
+end if
+
+
+//IF nivel='L' THEN	
+IF nivel <> 'P' THEN	
+	
+	if (creditos[1,4]<creditos[2,4] and ServSoc=1) then
+		If ContLinea >= 58 Then 
+			w_solicitud_materias_cuenta.Escribe_Encabezado()
+			ContLinea = 11
+			w_solicitud_materias_cuenta.Escribe_Encabezado1()
+
+		END IF
+		FileWrite(NumArchivo,'')
+		FileWrite(NumArchivo,'  SERVICIO SOCIAL:')
+		FileWrite(NumArchivo,'')
+		ContLinea = ContLinea + 3
+		w_solicitud_materias_cuenta.despliega_materias(areas[4],4,plan)
+	end if
+	
+END IF
+
+//if dw_plan_estud.object.subsistema_subsistema[1]<>"" and nivel = 'L' then
+if dw_plan_estud.object.subsistema_subsistema[1]<>"" and nivel <> 'P' then
+	if (creditos[1,6]<creditos[2,6]) then
+		If ContLinea >= 58 Then 
+			w_solicitud_materias_cuenta.Escribe_Encabezado()
+			ContLinea = 11
+			w_solicitud_materias_cuenta.Escribe_Encabezado1()
+
+		END IF
+		FileWrite(NumArchivo,'')
+		ls_textin="  "+dw_plan_estud.object.subsistema_subsistema[1]
+		FileWrite(NumArchivo,ls_textin)
+		FileWrite(NumArchivo,'')
+		ContLinea = ContLinea + 3
+		IF subsistema<>99 THEN
+			w_solicitud_materias_cuenta.despliega_materias(areas[6],6,plan)
+			w_solicitud_materias_cuenta.despliega_materias(areas[7],6,plan)
+		END IF
+	end if
+end if
+
+RETURN 0
+end function
+

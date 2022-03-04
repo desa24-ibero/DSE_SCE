@@ -1,0 +1,65 @@
+﻿$PBExportHeader$f_obten_subsistema.srf
+global type f_obten_subsistema from function_object
+end type
+
+forward prototypes
+global function long f_obten_subsistema (long al_cuenta, long al_cve_carrera, long al_cve_plan)
+end prototypes
+
+global function long f_obten_subsistema (long al_cuenta, long al_cve_carrera, long al_cve_plan);//f_obten_subsistema
+//Obtiene la clave del grado de la carrrera correspondiente recibida
+//Recibe			al_cuenta 		long
+//					al_cve_carrera	long 
+//					al_cve_plan		long
+//Devuelve		long
+
+integer li_codigo_sql
+string ls_mensaje_sql,  ls_nivel_carrera, ls_null
+long ll_cve_subsistema01, ll_cve_subsistema02
+
+
+SELECT isnull(dbo.academicos.cve_subsistema,0)
+INTO	:ll_cve_subsistema01
+FROM	dbo.academicos
+WHERE dbo.academicos.cuenta = :al_cuenta
+AND	dbo.academicos.cve_carrera = :al_cve_carrera
+AND	dbo.academicos.cve_plan = :al_cve_plan
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = -1 then
+	MessageBox("Error al academicos", ls_mensaje_sql,StopSign!)
+	return  -1
+end if
+
+
+SELECT isnull(dbo.hist_carreras.cve_subsistema_ant,0)
+INTO	:ll_cve_subsistema02
+FROM	dbo.hist_carreras
+WHERE dbo.hist_carreras.cuenta = :al_cuenta
+AND	dbo.hist_carreras.cve_carrera_ant = :al_cve_carrera
+AND	dbo.hist_carreras.cve_plan_ant = :al_cve_plan
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = -1 then
+	MessageBox("Error al hist_carreras", ls_mensaje_sql,StopSign!)
+	return  -1
+end if
+
+IF ll_cve_subsistema01>0 THEN
+	RETURN ll_cve_subsistema01
+ELSEIF ll_cve_subsistema02>0 THEN
+	RETURN ll_cve_subsistema02
+ELSE 
+	RETURN 0
+END IF
+
+return 0
+
+end function
+

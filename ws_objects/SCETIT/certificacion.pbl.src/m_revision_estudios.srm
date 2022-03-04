@@ -1,0 +1,107 @@
+﻿$PBExportHeader$m_revision_estudios.srm
+forward
+global type m_revision_estudios from m_menu
+end type
+end forward
+
+global type m_revision_estudios from m_menu
+end type
+global m_revision_estudios m_revision_estudios
+
+on m_revision_estudios.create
+m_revision_estudios=this
+call super::create
+end on
+
+on m_revision_estudios.destroy
+call super::destroy
+end on
+
+on m_archivo.create
+call super::create
+this.ToolBarItemVisible=false
+end on
+
+on m_leer.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_salvar.create
+call super::create
+this.Visible=false
+this.Enabled=false
+this.ToolBarItemVisible=false
+end on
+
+on m_configurarimpresora.create
+call super::create
+this.Visible=false
+this.Enabled=false
+this.ToolBarItemVisible=false
+end on
+
+on m_imprimir.create
+call super::create
+this.Visible=false
+this.Enabled=false
+this.ToolBarItemVisible=false
+end on
+
+on m_-.create
+call super::create
+this.Visible=false
+end on
+
+on m_registro.create
+call super::create
+this.Visible=false
+this.ToolBarItemVisible=false
+end on
+
+on m_nuevo.create
+call super::create
+this.ToolBarItemVisible=false
+end on
+
+on m_actualiza.create
+call super::create
+this.ToolBarItemVisible=false
+end on
+
+on m_borraregistro.create
+call super::create
+this.ToolBarItemVisible=false
+end on
+
+on m_primero.create
+call super::create
+this.ToolBarItemVisible=false
+end on
+
+on m_anterior.create
+call super::create
+this.ToolBarItemVisible=false
+end on
+
+on m_siguiente.create
+call super::create
+this.ToolBarItemVisible=false
+end on
+
+on m_ltimo.create
+call super::create
+this.ToolBarItemVisible=false
+end on
+
+on m_filtrar.create
+call super::create
+this.ToolBarItemVisible=false
+end on
+
+on m_ordenar.create
+call super::create
+this.ToolBarItemVisible=false
+end on
+

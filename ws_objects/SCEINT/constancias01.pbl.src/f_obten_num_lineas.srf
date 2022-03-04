@@ -1,0 +1,90 @@
+﻿$PBExportHeader$f_obten_num_lineas.srf
+global type f_obten_num_lineas from function_object
+end type
+
+forward prototypes
+global function integer f_obten_num_lineas (string as_texto)
+end prototypes
+
+global function integer f_obten_num_lineas (string as_texto);//Función que regresa el numero de lineas del texto libre
+//al nivel de la carrera
+//
+//f_obten_num_lineas
+//
+//Parámetros:		as_texto		string
+
+
+integer li_lon_texto_libre, li_carac_por_linea, li_num_lineas, li_residuo, li_lineas_truncadas, li_indice, li_indice_anterior
+integer li_indice_previo_nl, li_new_lines, li_indice_array, li_tamanio_array, li_lon_texto_array, li_num_lineas_array
+long	ll_posicion
+decimal ld_num_lineas
+string ls_texto, ls_caracter, ls_caracter_auxiliar
+string arrray_strings[ ]
+
+li_carac_por_linea= 72
+
+ls_texto =  trim(as_texto)
+
+li_lon_texto_libre = len(trim(ls_texto))
+
+li_new_lines = 0
+
+li_indice_array= 1
+li_indice_previo_nl= 1
+li_indice = 1
+
+do while li_indice <= li_lon_texto_libre
+	ls_caracter = Mid (ls_texto, li_indice, 1)
+	if ls_caracter = "~r" or ls_caracter = "~n" then
+		ls_caracter_auxiliar = ls_caracter
+		do while ls_caracter_auxiliar = "~r" or ls_caracter_auxiliar = "~n"  
+			ls_caracter_auxiliar = Mid (ls_texto, li_indice, 1)
+			li_indice = li_indice + 1
+		loop
+			li_new_lines = li_new_lines +1 
+			ll_posicion = Pos( ls_texto, ls_caracter, li_indice)
+			arrray_strings[li_indice_array] = Mid (ls_texto, li_indice_previo_nl, li_indice_anterior)
+			li_indice_array = li_indice_array + 1
+			li_indice_previo_nl= li_indice - 1
+	end if	
+	li_indice_anterior = li_indice
+	li_indice = li_indice +1
+loop
+
+
+
+li_tamanio_array = upperbound(arrray_strings)
+
+if li_tamanio_array>0 or li_lon_texto_libre >0 then
+	arrray_strings[li_indice_array] = Mid (ls_texto, li_indice_previo_nl, li_indice_anterior)
+end if
+
+li_tamanio_array = upperbound(arrray_strings)
+li_num_lineas_array= 0
+li_num_lineas= 0
+
+for li_indice_array=1 to li_tamanio_array
+
+	li_lon_texto_array = len(trim(arrray_strings[li_indice_array]))
+
+	ld_num_lineas = li_lon_texto_array / li_carac_por_linea
+
+	li_residuo = Mod(li_lon_texto_array, li_carac_por_linea)	
+
+	li_lineas_truncadas= truncate(ld_num_lineas,0)
+
+	if li_residuo = 0 then
+		li_num_lineas_array = li_lineas_truncadas 
+	else
+		li_num_lineas_array = li_lineas_truncadas + 1 
+	end if
+	li_num_lineas =li_num_lineas + li_num_lineas_array
+next
+
+
+return li_num_lineas
+
+
+
+end function
+

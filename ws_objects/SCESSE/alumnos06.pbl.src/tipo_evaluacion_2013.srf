@@ -1,0 +1,84 @@
+﻿$PBExportHeader$tipo_evaluacion_2013.srf
+$PBExportComments$Recibe dos  parametero clave de materia y calificación.  Regresa  "true" si la clave de materia es del tipo de evaluacion. de acuerdo a la tabla materias.evaluacion.       Juan Campos. Enero-1997.
+global type tipo_evaluacion_2013 from function_object
+end type
+
+forward prototypes
+global function boolean tipo_evaluacion_2013 (long cve_materia, string nueva_calificacion)
+end prototypes
+
+global function boolean tipo_evaluacion_2013 (long cve_materia, string nueva_calificacion);// Recibe un parametro clave de materia y calificación
+// Regresa True si la clave de materia es del tipo de evaluación.
+// Deacurdo a la tabla materias.evaluacion.
+// Juan Campos. Enero-1997.
+
+String  TipoEvaluacion
+Boolean TipoEvaluacionOk 
+ 
+SELECT evaluacion  
+  INTO :TipoEvaluacion  
+  FROM materias 
+ WHERE cve_mat = :cve_materia
+Using gtr_sce;
+TipoEvaluacionOk = False
+
+If gtr_sce.sqlcode = 0 Then
+	IF TipoEvaluacion = "NUM" Then	 
+    	IF nueva_calificacion = "5" OR nueva_calificacion = "6"  OR nueva_calificacion = "7" OR nueva_calificacion = "8" OR &
+	    	nueva_calificacion = "9" OR nueva_calificacion = "10" THEN
+      	TipoEvaluacionOk = True	 
+    	Else
+			If Messagebox("Aviso","La calificación de esta materia debe ser [5 al 10] ~r¿Aun desea continuar?",Question!,YesNo!,1) = 1 Then
+				TipoEvaluacionOk = True
+			Else
+				TipoEvaluacionOk = False
+    		End if
+		End if		 
+  	End If
+   IF TipoEvaluacion = "NUIN" Then	 
+		IF nueva_calificacion = "5" OR nueva_calificacion = "6"  OR nueva_calificacion = "7" OR nueva_calificacion = "8" OR &
+			nueva_calificacion = "9" OR nueva_calificacion = "10" OR nueva_calificacion = "IN" THEN
+			TipoEvaluacionOk = True	 
+		Else
+			If Messagebox("Aviso","La calificación de esta materia debe ser [5 al 10, IN] ~r¿Aun desea continuar?",Question!,YesNo!,1) = 1 Then
+				TipoEvaluacionOk = True
+			Else
+				TipoEvaluacionOk = False
+			End if
+		End if		 
+	End If
+	IF TipoEvaluacion = "ALIN" Then	 
+		IF nueva_calificacion = "AC" OR nueva_calificacion = "NA"  OR nueva_calificacion = "IN"& 
+		 OR upper(nueva_calificacion) = "BA" THEN
+			TipoEvaluacionOk = True	 
+		Else
+			If Messagebox("Aviso","La calificación de esta materia debe ser [AC,NA,IN] ~r¿Aun desea continuar?",Question!,YesNo!,1) = 1 Then
+				TipoEvaluacionOk = True
+			Else
+				TipoEvaluacionOk = False
+			End if
+		End if		 
+	End If 
+	IF TipoEvaluacion = "ALFA" Then	 
+	   IF upper(nueva_calificacion) =  "AC" OR upper(nueva_calificacion) = "NA" Then
+		  	TipoEvaluacionOk = True	
+		Else
+			If Messagebox("Aviso","La calificación de esta materia debe ser [AC, NA] ~r¿Aun desea continuar?",Question!,YesNo!,1) = 1 Then			
+				TipoEvaluacionOk = True
+			Else
+		  		TipoEvaluacionOk = False
+			End if
+		End if
+	End if	
+Else
+  Messagebox("Error en el tipo de evaluación",gtr_sce.sqlerrtext)
+End if
+
+IF TipoEvaluacionOk then 
+  Return True
+Else
+  Return False	
+End if  
+
+end function
+

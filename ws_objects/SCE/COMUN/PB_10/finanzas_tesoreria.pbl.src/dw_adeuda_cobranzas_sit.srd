@@ -1,0 +1,45 @@
+﻿$PBExportHeader$dw_adeuda_cobranzas_sit.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=461 color="536870912" )
+summary(height=86 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=77 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=saldos_cuenta dbname="cuenta" )
+ column=(type=long updatewhereclause=yes name=saldos_periodo dbname="saldos_periodo" values="PRIMAVERA	0/VERANO	1/OTOÑO	2/" )
+ column=(type=long updatewhereclause=yes name=saldos_anio dbname="saldos_anio" )
+ column=(type=char(40) updatewhereclause=yes name=conceptos_descripcion dbname="conceptos_descripcion" )
+ column=(type=datetime updatewhereclause=yes name=fecha_vencimiento dbname="fecha_vencimiento" )
+ column=(type=number updatewhereclause=yes name=saldos_importe dbname="saldos_importe" )
+ retrieve="SELECT v_saldos_mov_alumnos.cuenta,   
+       saldos_periodo = v_saldos_mov_alumnos.periodo,   
+       saldos_anio = v_saldos_mov_alumnos.anio,   
+       conceptos_descripcion = conceptos.concepto,   
+       v_saldos_mov_alumnos.fecha_vencimiento,
+       saldos_importe = v_saldos_mov_alumnos.saldo  
+    FROM conceptos,   
+         v_saldos_mov_alumnos		
+   WHERE (v_saldos_mov_alumnos.cuenta =:cuenta) And
+         (v_saldos_mov_alumnos.saldo > 0 ) And 
+			(v_saldos_mov_alumnos.fecha_vencimiento < :Fechaven) And
+         (v_saldos_mov_alumnos.cve_concepto = conceptos.cve_concepto) AND
+			( conceptos.pago_servicio = 0 )
+" retrieve.asneeded=yes arguments=(("Cuenta", number),("FechaVen", datetime)) )
+text(band=header alignment="2" text="CONCEPTO" border="0" color="0" x="1240" y="394" height="64" width="329"  name=conceptos_descripcion_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Fecha Ven" border="0" color="16777215" x="2721" y="371" height="67" width="44"  name=saldos_fecha_ven_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=header id=1 alignment="2" tabsequence=32766 border="0" color="16777215" x="2849" y="371" height="67" width="44" format="[general]"  name=saldos_cuenta edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="3" text="CONCEPTOS AQUI DESCRITOS YA LO CUBRISTE, PASA AL DEPARTAMENTO DE COBRANZAS A VERIFICAR TU PAGO.   " border="0" color="0" x="22" y="269" height="61" width="3068"  name=t_1  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="3" text="RECUERDA QUE LOS ADEUDOS VENCIDOS NO PAGADOS, BLOQUEAN TU INSCRIPCIÓN, SI ALGUNO DE LOS" border="0" color="0" x="22" y="195" height="61" width="3068"  name=t_2  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="3" text="TE PEDIMOS QUE PASES A LIQUIDAR LOS  MONTOS CORRESPONDIENTES  A LA  MAYOR BREVEDAD." border="0" color="0" x="22" y="125" height="61" width="3068"  name=t_3  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="ADEUDOS VENCIDOS" border="0" color="0" x="1335" y="10" height="61" width="578"  name=t_4  font.face="Arial" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="PERIODO" border="0" color="0" x="102" y="394" height="64" width="267"  name=saldos_periodo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="ANO" border="0" color="0" x="516" y="394" height="64" width="132"  name=saldos_anio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="IMPORTE" border="0" color="0" x="2187" y="394" height="64" width="263"  name=saldos_importe_pagado_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="4" color="0" x="40" y="3" height="64" width="391" format=""  name=saldos_periodo ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="4" color="0" x="494" y="3" height="64" width="176" format="[general]"  name=saldos_anio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="4" color="0" x="717" y="3" height="64" width="1415" format="[general]"  name=conceptos_descripcion edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="4" color="0" x="2154" y="6" height="64" width="340" format="[general]"  name=saldos_importe edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=summary alignment="1" text=" Total: " border="0" color="0" x="1913" y="9" height="64" width="201"  name=t_5  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="30791125" )
+compute(band=summary alignment="1" expression="sum(  saldos_importe for all)  "border="4" color="0" x="2154" y="3" height="74" width="340" format="[general]"  name=total_saldos  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

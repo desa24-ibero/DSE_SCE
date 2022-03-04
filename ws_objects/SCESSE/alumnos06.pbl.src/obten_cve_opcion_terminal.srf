@@ -1,0 +1,85 @@
+﻿$PBExportHeader$obten_cve_opcion_terminal.srf
+$PBExportComments$Regresa "true" si encuentra las materias de Opcion terminal. se recibe 5 parametros carrera,plan,cveopcterm,cvesemtit,cveproyopcterm. si hay exito, en los 3 ultimos parametros se regresa las claves que le corresponde al plan de estudios. Juan Campos 䅄⩔Ѐ
+global type obten_cve_opcion_terminal from function_object
+end type
+
+forward prototypes
+global function boolean obten_cve_opcion_terminal (integer carrera, integer plan, ref long cveopcterm, ref long cvesemtit, ref long cveproyopcterm)
+end prototypes
+
+global function boolean obten_cve_opcion_terminal (integer carrera, integer plan, ref long cveopcterm, ref long cvesemtit, ref long cveproyopcterm);// Regresa "true" si encuentra la(s) materia(s) de Opcion terminal.
+// se recibe 5 parameteros carrera,plan,cveopcterm,cvesemtit,cveproyopcterm.
+// si hay exito, en los 3 ultimos parametros se regresan las claves que le corresponde
+// al plan de estudios.
+
+// Juan Campos. Febrero 1997.
+
+// Modificado: Roberto Novoa  Jul/2016
+
+Integer CveArea
+Boolean Exito
+String ls_nivel
+
+cveproyopcterm = 0
+cvesemtit = 0
+
+SELECT pe.cve_area_opcion_terminal, c.nivel 
+INTO :CveArea, :ls_nivel         // obtiene clave area materia para opción terminal
+FROM plan_estudios pe, carreras c
+WHERE (pe.cve_carrera = :carrera and pe.cve_plan = :Plan) AND
+		(pe.cve_carrera = c.cve_carrera)
+USING gtr_sce;
+
+if ls_nivel='P' then
+	cveopcterm = CveArea
+	cveproyopcterm = -1
+	cvesemtit = -1
+	Return true
+else
+	select aot.cve_proyecto_opc_term, aot.cve_proyecto_opc_term, aot.cve_seminario_tit into :CveOpcTerm, :cveproyopcterm, :cvesemtit from aux_opcion_terminal aot, materias m, plan_estudios pe
+	where aot.cve_proyecto_opc_term = m.cve_mat
+	and pe.cve_area_opcion_terminal = aot.cve_proyecto_opc_term
+	AND pe.cve_carrera = :carrera and pe.cve_plan = :plan
+	AND m.tipo_periodo=:gs_tipo_periodo
+	USING gtr_sce;
+	if gtr_sce.sqlcode = 0	 then
+		Return true
+	else
+ 		MessageBox("Error al obtener claves: Seminario Titulacion y Proyecto Opción Terminal ",gtr_sce.sqlerrtext)			 
+		Return false
+	end if
+end if
+
+/*
+If gtr_sce.sqlcode = 0 Then 
+	SELECT distinct cve_mat
+	INTO :CveOpcTerm  // obtiene clave opción terminal Para la SEP.
+	FROM area_mat
+	WHERE cve_area = :CveArea
+	USING gtr_sce; 
+	If gtr_sce.sqlcode = 0 AND ls_nivel = "L" Then 
+		SELECT cve_proyecto_opc_term,cve_seminario_tit
+	     	INTO :cveproyopcterm,:cvesemtit // obtiene claves prerrequisito UIA para Opcion Terminal 
+        	FROM aux_opcion_terminal
+	    	WHERE cve_proyecto_opc_term = :CveArea  
+	    	USING gtr_sce;
+	   	If gtr_sce.sqlcode = 0 Then Return True
+	Else
+			IF ls_nivel = "P" then
+				cveproyopcterm = -1
+				cvesemtit = -1
+				Return true
+			else
+		 		MessageBox("Error al obtener claves: Seminario Titulacion y Proyecto Opción Terminal ",gtr_sce.sqlerrtext)			 
+		 		Return False
+			end if
+			MessageBox("Error al obtener clave del área ",gtr_sce.sqlerrtext)
+			Return False
+	End If	
+Else
+ 	MessageBox("Error al obtener la clave de opción terminal ",gtr_sce.sqlerrtext)	 
+  	Return False
+End If 
+*/
+end function
+

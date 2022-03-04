@@ -1,0 +1,142 @@
+﻿$PBExportHeader$m_antecedentesacademicos.srm
+forward
+global type m_antecedentesacademicos from m_titulacion
+end type
+end forward
+
+global type m_antecedentesacademicos from m_titulacion
+end type
+global m_antecedentesacademicos m_antecedentesacademicos
+
+on m_antecedentesacademicos.create
+m_antecedentesacademicos=this
+call super::create
+end on
+
+on m_antecedentesacademicos.destroy
+call super::destroy
+end on
+
+on m_archivo.create
+call super::create
+this.Visible=false
+this.Enabled=false
+this.MergeOption=Exclude!
+end on
+
+on m_configurarimpresora.create
+call super::create
+this.Visible=false
+this.Enabled=false
+this.MergeOption=Exclude!
+end on
+
+on m_imprimir.create
+call super::create
+this.ToolBarItemName=""
+this.ToolBarItemText=""
+this.Visible=false
+this.Enabled=false
+this.MergeOption=Exclude!
+end on
+
+on m_edicion.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_deshacer.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_cortar.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_copiar.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_pegar.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_registro.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_nuevo.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_actualiza.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_borraregistro.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_-2.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_primero.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_siguiente.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_anterior.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_ultimo.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_ventana.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_horizontal.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_vertical.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_primerplano.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_cascada.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_cerrar.create
+call super::create
+this.MergeOption=Exclude!
+end on
+

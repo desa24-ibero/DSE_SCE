@@ -1,0 +1,43 @@
+﻿$PBExportHeader$of_obten_maximo_folio_holog.srf
+global type of_obten_maximo_folio_holog from function_object
+end type
+
+forward prototypes
+global function long of_obten_maximo_folio_holog (integer ai_cve_doc_control_sep)
+end prototypes
+
+global function long of_obten_maximo_folio_holog (integer ai_cve_doc_control_sep);//of_obten_maximo_folio
+//Obtiene el siguiente folio para insercion en la tabla control_sep
+//Recibe	ai_cve_doc_control_sep	integer
+
+
+
+u_DataStore lds_maximo
+long	ll_maximo, ll_numero, ll_numeracion
+int li_anio, li_periodo
+int li_cves[4], li_tipo
+choose case ai_cve_doc_control_sep
+	case 1
+		li_cves = {1,2}
+	case 2
+		li_cves = {1,2}
+	case 3
+		li_cves = {3}
+	case else
+		li_cves = {4,5,6}
+end choose
+	
+	
+lds_maximo = Create u_DataStore
+lds_maximo.dataobject = "d_maximo_numero_con_holog"
+lds_maximo.SetTrans(gtr_sce)
+lds_maximo.Retrieve(li_cves)
+ll_maximo = lds_maximo.getitemnumber(1,"maximo")
+if isnull(ll_maximo) then ll_maximo = 0
+Destroy lds_maximo
+
+return ll_maximo
+
+
+end function
+

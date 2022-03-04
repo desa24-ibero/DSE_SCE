@@ -1,0 +1,54 @@
+﻿$PBExportHeader$dw_materias_inscritas_horario.srd
+$PBExportComments$Este data window nos trae los datos resultado de la consulta de las tablas mat_inscritas,materias y horario. Recibe como parametro el numero de cuenta. Juan campos Nov-1996.
+release 10;
+datawindow(units=0 timer_interval=0 color=10789024 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+header(height=124 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=8 color="536870912" )
+detail(height=0 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=mat_inscritas_cve_mat dbname="mat_inscritas.cve_mat" )
+ column=(type=char(2) updatewhereclause=yes name=mat_inscritas_gpo dbname="mat_inscritas.gpo" )
+ column=(type=long updatewhereclause=yes name=horario_hora_inicio dbname="horario.hora_inicio" values=" -	22/" )
+ column=(type=long updatewhereclause=yes name=horario_hora_final dbname="horario.hora_final" values="-	22/" validation="int( horario_hora_inicio ) = 22" validationmsg="~"~"" )
+ column=(type=long updatewhereclause=yes name=horario_cve_dia dbname="horario.cve_dia" values="-	0/LUNES	1/MARTES	2/MIERCOLES	3/JUEVES	4/VIERNES	5/SABADO	6/" )
+ column=(type=char(16) updatewhereclause=yes name=horario_cve_salon dbname="horario.cve_salon" )
+ retrieve="  SELECT 	mat_inscritas.cve_mat,   
+         			mat_inscritas.gpo,   
+          			horario.hora_inicio,   
+         			horario.hora_final,   
+         			horario.cve_dia,   
+         			horario.cve_salon  
+    FROM 	mat_inscritas,   
+         			horario  
+   WHERE 	(cuenta  = :cuenta )  and 
+         			(mat_inscritas.cve_mat 	= horario.cve_mat) and 
+                     (mat_inscritas.gpo  = horario.gpo) and
+         			(mat_inscritas.periodo 	= horario.periodo) and 
+                     (mat_inscritas.anio  = horario.anio) 
+ORDER BY mat_inscritas.cve_mat,horario.hora_inicio,horario.cve_dia ASC   
+" arguments=(("cuenta", number)) )
+group(level=1 header.height=76 trailer.height=0 by=("mat_inscritas_cve_mat" , "mat_inscritas_gpo" ) header.color="536870912" trailer.color="536870912" )
+group(level=2 header.height=76 trailer.height=0 by=("horario_hora_inicio" , "horario_hora_final" , "horario_cve_dia" , "horario_cve_salon" ) header.color="536870912" trailer.color="536870912" )
+roundrectangle(band=header ellipseheight="60" ellipsewidth="69"x="50" y="4" height="120" width="1152"  name=rr_1 visible="1" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="15793151"  background.mode="2" background.color="0" )
+text(band=header alignment="2" text="Clave" border="0" color="0" x="69" y="20" height="68" width="169" html.valueishtml="0"  name=mat_inscritas_cve_mat_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Horario" border="0" color="0" x="338" y="20" height="68" width="215" html.valueishtml="0"  name=hora visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Día" border="0" color="0" x="663" y="20" height="68" width="101" html.valueishtml="0"  name=dia visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="G" border="0" color="0" x="274" y="20" height="68" width="50" html.valueishtml="0"  name=mat_inscritas_gpo_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Salón" border="0" color="0" x="910" y="20" height="68" width="247" html.valueishtml="0"  name=salon visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=header.1 id=1 alignment="2" tabsequence=32766 border="5" color="0" x="55" y="4" height="68" width="201" format="[general]" html.valueishtml="0"  name=mat_inscritas_cve_mat visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=header.1 id=2 alignment="2" tabsequence=32766 border="5" color="0" x="270" y="4" height="68" width="69" format="[general]" html.valueishtml="0"  name=mat_inscritas_gpo visible="1" edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=header.2 id=3 alignment="2" tabsequence=32766 border="5" color="0" x="338" y="4" height="72" width="82" format="[general]" html.valueishtml="0"  name=horario_hora_inicio visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=header.2 id=4 alignment="2" tabsequence=32766 border="5" color="0" x="439" y="4" height="72" width="82" format="[general]" html.valueishtml="0"  name=horario_hora_final visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=header.2 id=5 alignment="2" tabsequence=32766 border="5" color="0" x="535" y="4" height="72" width="338" format="[general]" html.valueishtml="0"  name=horario_cve_dia visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=header.2 id=6 alignment="2" tabsequence=32766 border="5" color="0" x="896" y="4" height="72" width="265" format="[general]" html.valueishtml="0"  name=horario_cve_salon visible="1" edit.limit=16 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

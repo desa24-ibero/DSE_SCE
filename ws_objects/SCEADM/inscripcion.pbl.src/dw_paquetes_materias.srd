@@ -1,0 +1,17 @@
+﻿$PBExportHeader$dw_paquetes_materias.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=77 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=num_paq dbname="paquetes_materias.num_paq" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=clv_mat dbname="paquetes_materias.clv_mat" )
+ column=(type=char(2) update=yes updatewhereclause=yes key=yes name=grupo dbname="paquetes_materias.grupo" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"paquetes_materias~" ) COLUMN(NAME=~"paquetes_materias.num_paq~") COLUMN(NAME=~"paquetes_materias.clv_mat~") COLUMN(NAME=~"paquetes_materias.grupo~")) " update="paquetes_materias" updatewhere=1 updatekeyinplace=yes )
+text(band=header alignment="2" text="Num Paq"border="0" color="0" x="5" y="4" height="65" width="330"  name=num_paq_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=10 border="0" color="0" x="60" y="4" height="77" width="330" format="[general]"  name=num_paq edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Grupo"border="0" color="0" x="837" y="4" height="65" width="161"  name=grupo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=30 border="0" color="0" x="878" y="4" height="77" width="83" format="[general]"  name=grupo edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=20 border="0" color="0" x="435" y="4" height="77" width="330" format="[general]"  name=clv_mat edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Clv Mat"border="0" color="0" x="435" y="4" height="65" width="330"  name=clv_mat_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

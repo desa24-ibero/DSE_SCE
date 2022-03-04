@@ -1,0 +1,30 @@
+﻿$PBExportHeader$d_cicloscursados.srd
+$PBExportComments$Obtiene el numero de ciclos cursados dada una cuenta, una carrera, un plan y las areas.
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=141 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=historico_periodo dbname="historico.periodo" )
+ column=(type=long updatewhereclause=yes name=historico_anio dbname="historico.anio" )
+ retrieve="SELECT DISTINCT historico.periodo,
+			historico.anio
+    FROM historico,   
+         materias,
+			area_mat 
+   WHERE ( historico.cve_mat = materias.cve_mat ) and 
+	 		( area_mat.cve_mat = materias.cve_mat ) and 
+         ( ( historico.cuenta = :cuenta ) AND  
+         ( materias.creditos > 0 ) AND  
+         ( historico.calificacion in ('6','7','8','9','10','AC','MB','B','S','RE','E') ) AND  
+	 		( historico.cve_carrera = :carrera ) AND  
+         ( historico.cve_plan = :plan ) AND
+	 		( area_mat.cve_area IN (:areas) ) )  " arguments=(("cuenta", number),("carrera", number),("plan", number),("areas", numberlist)) )
+text(band=header alignment="2" text="Historico
+Periodo"border="0" color="0" x="5" y="4" height="129" width="330"  name=historico_periodo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Historico
+Anio"border="0" color="0" x="339" y="4" height="129" width="330"  name=historico_anio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="330" format="[general]"  name=historico_periodo edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="339" y="4" height="77" width="330" format="[general]"  name=historico_anio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="rowcount()"border="0" color="0" x="695" y="4" height="77" width="261" format="[general]"  name=total_ciclos  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

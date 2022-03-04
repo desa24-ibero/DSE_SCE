@@ -1,0 +1,31 @@
+﻿$PBExportHeader$of_obten_nombre_base.srf
+global type of_obten_nombre_base from function_object
+end type
+
+forward prototypes
+global function string of_obten_nombre_base ()
+end prototypes
+
+global function string of_obten_nombre_base ();//of_obten_nombre_base
+string ls_nombre_base, ls_error
+integer li_codigo_sql
+
+SELECT max(db_name())
+INTO :ls_nombre_base
+FROM admision_bd.dbo.sexo
+USING gtr_sadm;
+
+li_codigo_sql = gtr_sadm.SqlCode
+ls_error = gtr_sadm.SqlErrText
+
+IF li_codigo_sql= -1 THEN
+	MessageBox("of_obten_nombre_base", ls_error, StopSign!)
+	RETURN "ERROR"
+END IF
+
+RETURN ls_nombre_base
+
+
+
+end function
+

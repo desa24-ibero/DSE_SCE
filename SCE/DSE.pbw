@@ -1,0 +1,17 @@
+Save Format v3.0(19990112)
+@begin Unchecked
+@end;
+@begin Targets
+ 0 "..\\SCESSE\\control_escolar.pbt";
+ 1 "..\\SCEINT\\scei.pbt";
+ 2 "..\\varios\\varios.pbt";
+ 3 "..\\SCETIT\\titulacion.pbt";
+ 4 "..\\SCESPARL\\sparl.pbt";
+ 5 "..\\SECURITY\\PB_10\\pfcsecurity_admin.pbt";
+ 6 "..\\SECURITY\\PB_10\\pfcsecurity_scanner.pbt";
+ 7 "..\\SCESRL\\srl.pbt";
+ 8 "..\\SCESRLCORD\\insc_coord.pbt";
+ 9 "..\\SCEEST\\estadisticas.pbt";
+@end;
+DefaultTarget "..\\SCESSE\\control_escolar.pbt";
+DefaultRemoteTarget "..\\SCESSE\\control_escolar.pbt";

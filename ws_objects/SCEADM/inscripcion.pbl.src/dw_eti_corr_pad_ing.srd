@@ -1,0 +1,45 @@
+﻿$PBExportHeader$dw_eti_corr_pad_ing.srd
+release 6;
+datawindow(units=2 timer_interval=0 color=16777215 processing=2 print.documentname="" print.orientation = 0 print.margin.left = 156 print.margin.right = 156 print.margin.top = 833 print.margin.bottom = 836 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no label.name="Laser Address 1.33 x 4.00 5162,5262" label.width=4000 label.height=1333 label.rows=7 label.rows.spacing=0 label.columns=2 label.columns.spacing=188 label.topdown=no label.sheet=yes label.shape=roundrectangle label.ellipse_height=130 label.ellipse_width=130 )
+detail(height=1333 color="536870912"  height.autosize=yes)
+table(column=(type=long updatewhereclause=yes name=general_cuenta dbname="general.cuenta" )
+ column=(type=long updatewhereclause=yes name=clv_carr dbname="aspiran.clv_carr" )
+ column=(type=char(50) updatewhereclause=yes name=padres_nombre dbname="padres.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=padres_apaterno dbname="padres.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=padres_amaterno dbname="padres.amaterno" )
+ column=(type=char(50) updatewhereclause=yes name=padres_calle dbname="padres.calle" )
+ column=(type=char(6) updatewhereclause=yes name=padres_codigo_pos dbname="padres.codigo_pos" )
+ column=(type=char(50) updatewhereclause=yes name=padres_colonia dbname="padres.colonia" )
+ column=(type=long updatewhereclause=yes name=padres_estado dbname="padres.estado" )
+ retrieve="  SELECT general.cuenta,   
+         aspiran.clv_carr,   
+         padres.nombre,   
+         padres.apaterno,   
+         padres.amaterno,   
+         padres.calle,   
+         padres.codigo_pos,   
+         padres.colonia,   
+         padres.estado  
+    FROM aspiran,   
+         general,   
+         padres  
+   WHERE ( aspiran.folio = general.folio ) and  
+         ( aspiran.clv_ver = general.clv_ver ) and  
+         ( aspiran.clv_per = general.clv_per ) and  
+         ( aspiran.anio = general.anio ) and  
+         ( aspiran.folio = padres.folio ) and  
+         ( aspiran.clv_ver = padres.clv_ver ) and  
+         ( aspiran.clv_per = padres.clv_per ) and  
+         ( aspiran.anio = padres.anio ) and  
+         (( aspiran.ing_per = :per ) AND  
+         ( aspiran.ing_anio = :ani )) AND  
+         (( :carr = 9999 ) OR  
+         ( aspiran.clv_carr = :carr )) AND  
+         aspiran.pago_insc = 1   
+" arguments=(("ver", number),("per", number),("ani", number),("carr", number))  sort="general_cuenta A " )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="3391" y="225" height="166" width="458" format="[general]"  name=clv_carr edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="general_cuenta+'--'+obten_digito(general_cuenta) "border="0" color="0" x="175" y="225" height="166" width="1650" format="[general]"  name=foli  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="padres_nombre+' '+padres_apaterno+' '+padres_amaterno "border="0" color="0" x="183" y="516" height="166" width="3683" format="[general]"  name=nombr  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="padres_calle+' '+padres_colonia+' C.P. '+padres_codigo_pos"border="0" color="0" x="175" y="800" height="166" width="3675" format="[general]"  name=direccion  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="175" y="1083" height="166" width="3675" format="[general]"  name=padres_estado dddw.name=dw_estado dddw.displaycolumn=estado dddw.datacolumn=cve_estado dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

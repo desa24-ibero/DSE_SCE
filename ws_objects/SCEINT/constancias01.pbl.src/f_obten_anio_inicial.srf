@@ -1,0 +1,67 @@
+﻿$PBExportHeader$f_obten_anio_inicial.srf
+global type f_obten_anio_inicial from function_object
+end type
+
+forward prototypes
+global function integer f_obten_anio_inicial (long al_cuenta)
+end prototypes
+
+global function integer f_obten_anio_inicial (long al_cuenta);integer li_rows, li_periodo_elegido, li_num_rows, li_row, li_periodo_row, li_anio_row, li_codigo_sql, li_anio
+long ll_cuenta_row
+string ls_mensaje_sql
+integer li_cve_carrera, li_cve_plan
+
+SELECT dbo.academicos.cve_carrera,
+		dbo.academicos.cve_plan
+INTO :li_cve_carrera,
+	  :li_cve_plan
+FROM dbo.academicos  
+WHERE ( dbo.academicos.cuenta = :al_cuenta )   
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SQLCode
+ls_mensaje_sql = gtr_sce.SQLErrText
+
+if li_codigo_sql <> 0 then
+	ROLLBACK USING gtr_sce;
+	MessageBox("Error en la lectura de cve_carra y cve_plan de academicos", ls_mensaje_sql)
+	li_anio = 0
+else
+	COMMIT USING gtr_sce;
+end if
+
+
+datastore ds_periodos
+
+li_periodo_elegido = 0
+
+
+SELECT min(dbo.historico.anio)
+INTO :li_anio
+FROM dbo.historico  
+WHERE ( dbo.historico.periodo <> 1 ) AND  
+         ( dbo.historico.cuenta = :al_cuenta ) AND  
+         ( dbo.historico.cve_carrera = :li_cve_carrera )   AND  
+         ( dbo.historico.cve_plan = :li_cve_plan ) AND
+			( dbo.historico.cve_mat not in (SELECT cve_mat 
+													FROM materias_requisito 
+													WHERE id_prerrequisito = 'ING')) 
+USING gtr_sce;
+//Se excluye la materia 4078 del prerrequisito de ingles (Se toma de la tabla de requisitos)
+
+li_codigo_sql = gtr_sce.SQLCode
+ls_mensaje_sql = gtr_sce.SQLErrText
+
+if li_codigo_sql <> 0 then
+	ROLLBACK USING gtr_sce;
+	MessageBox("Error en la lectura de min historico.anio", ls_mensaje_sql)
+	li_anio = 0
+else
+	COMMIT USING gtr_sce;
+end if
+
+return li_anio
+
+
+end function
+

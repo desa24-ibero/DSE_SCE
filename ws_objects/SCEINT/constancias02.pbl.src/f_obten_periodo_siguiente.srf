@@ -1,0 +1,60 @@
+﻿$PBExportHeader$f_obten_periodo_siguiente.srf
+global type f_obten_periodo_siguiente from function_object
+end type
+
+forward prototypes
+global subroutine f_obten_periodo_siguiente (ref integer ai_periodo, ref integer ai_anio)
+end prototypes
+
+global subroutine f_obten_periodo_siguiente (ref integer ai_periodo, ref integer ai_anio);// Funcion utilizada para devolver el periodo siguiente
+//
+// f_obten_periodo_siguiente
+
+integer li_periodo_sig, li_anio_sig, li_permin, li_permax
+
+SELECT max(periodo), min(periodo) into :li_permax, :li_permin FROM periodo where tipo=:gs_tipo_periodo using gtr_sce;
+
+periodo_actual_mat_insc_2013(ai_periodo, ai_anio, gtr_sce)
+
+IF gs_tipo_periodo <> 'S' THEN 
+	if ai_periodo=li_permax then
+		ai_periodo=li_permin
+		ai_anio= ai_anio + 1
+	else
+		ai_periodo++
+	end if
+ELSE	
+	choose case ai_periodo
+		case 0
+			li_periodo_sig = 2
+			li_anio_sig = ai_anio
+		case 1
+			li_periodo_sig = 2 	
+			li_anio_sig = ai_anio 
+		case 2
+			li_periodo_sig = 0
+			li_anio_sig = ai_anio +1		
+	end choose
+	ai_periodo = li_periodo_sig
+	ai_anio = li_anio_sig	
+END IF	
+/*
+choose case ai_periodo
+	case 0
+		li_periodo_sig = 2
+		li_anio_sig = ai_anio
+	case 1
+		li_periodo_sig = 2 	
+		li_anio_sig = ai_anio 
+	case 2
+		li_periodo_sig = 0
+		li_anio_sig = ai_anio +1		
+end choose
+ai_periodo = li_periodo_sig
+ai_anio = li_anio_sig
+*/
+return 
+
+
+end subroutine
+

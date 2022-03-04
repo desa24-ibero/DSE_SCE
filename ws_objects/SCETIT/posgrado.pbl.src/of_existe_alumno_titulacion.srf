@@ -1,0 +1,44 @@
+﻿$PBExportHeader$of_existe_alumno_titulacion.srf
+global type of_existe_alumno_titulacion from function_object
+end type
+
+forward prototypes
+global function long of_existe_alumno_titulacion (long al_cuenta, long al_cve_carrera)
+end prototypes
+
+global function long of_existe_alumno_titulacion (long al_cuenta, long al_cve_carrera);//of_existe_alumno_titulacion
+//Recibe	al_cuenta			long
+//			al_cve_carrera		long
+//Devuelve el numero de registros en titulación para la carrera
+
+long ll_cve_concepto, ll_cve_subconcepto, ll_num_registros, ll_folio_mov_alumnos
+string ls_mensaje
+integer li_codigo_sql
+
+	SELECT
+	COUNT(*)
+	INTO
+	:ll_num_registros
+	FROM dbo.titulacion 
+	WHERE dbo.titulacion.cuenta = :al_cuenta
+	AND dbo.titulacion.cve_carrera = :al_cve_carrera
+	USING gtr_sce;
+
+	li_codigo_sql = gtr_sce.SqlCode
+	ls_mensaje = gtr_sce.SqlErrText
+	
+	IF li_codigo_sql= -1 THEN
+		MessageBox("Error al consultar titulacion",ls_mensaje,StopSign! )
+		return  -1
+	ELSE
+		IF ll_num_registros = 0 THEN
+			return 0
+		END IF		
+	END IF
+
+
+return ll_num_registros
+
+			
+end function
+

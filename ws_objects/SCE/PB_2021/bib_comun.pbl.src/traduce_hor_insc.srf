@@ -1,0 +1,65 @@
+﻿$PBExportHeader$traduce_hor_insc.srf
+global type traduce_hor_insc from function_object
+end type
+
+forward prototypes
+global function string traduce_hor_insc (string fecha)
+end prototypes
+
+global function string traduce_hor_insc (string fecha);// Se recibe un parametro de tipo String con el valor de datetime
+// Se regresa un string con la fecha en formato con letra: Dia mes año hh:mm:ss
+// Juan Campos Sánchez. Feb-1998.
+
+String Dia, Mes, Anio, Hora
+If Mid(Fecha,1,3) = "Mon" Then 
+	Dia = "LUNES " + Mid(Fecha,5,2)
+ElseIf Mid(Fecha,1,3) = "Tue" Then 
+	Dia = "MARTES " + Mid(Fecha,5,2)
+ElseIf Mid(Fecha,1,3) = "Wed" Then 
+	Dia = "MIERCOLES " + Mid(Fecha,5,2)
+ElseIf Mid(Fecha,1,3) = "Thu" Then 
+	Dia = "JUEVES " + Mid(Fecha,5,2)
+ElseIf Mid(Fecha,1,3) = "Fri" Then 
+	Dia = "VIERNES " + Mid(Fecha,5,2)
+ElseIf Mid(Fecha,1,3) = "Sat" Then 
+	Dia = "SABADO " + Mid(Fecha,5,2)
+ElseIf Mid(Fecha,1,3) = "Sun" Then 
+	Dia = "DOMINGO " + Mid(Fecha,5,2)
+Else 
+	Dia = "Error-Dia"
+End If
+CHOOSE CASE Integer(Mid(fecha,8,2))
+CASE 1
+	Mes = "ENERO"
+CASE 2
+	Mes = "FEBRERO"
+CASE 3
+	Mes = "MARZO"
+CASE 4
+	Mes = "ABRIL"
+CASE 5
+	Mes = "MAYO"
+CASE 6
+	Mes = "JUNIO"
+CASE 7
+	Mes = "JULIO"
+CASE 8
+	Mes = "AGOSTO"
+CASE 9
+	Mes = "SEPTIEMBRE"
+CASE 10
+	Mes = "OCTUBRE"
+CASE 11
+	Mes = "NOVIEMBRE"
+CASE 12
+	Mes = "DICIEMBRE"
+CASE ELSE
+	Mes = "Error-Mes"
+END CHOOSE
+Anio = Mid(Fecha,11,5)
+Hora = Mid(Fecha,16,len(fecha))
+Fecha = Dia+' '+Mes+' '+Anio+",  A LAS "+Hora+" HRS." 
+
+Return Fecha 
+end function
+

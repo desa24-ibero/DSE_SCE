@@ -1,0 +1,43 @@
+﻿$PBExportHeader$f_obten_periodo_ant_sv.srf
+global type f_obten_periodo_ant_sv from function_object
+end type
+
+forward prototypes
+global subroutine f_obten_periodo_ant_sv (ref integer ai_periodo, ref integer ai_anio)
+end prototypes
+
+global subroutine f_obten_periodo_ant_sv (ref integer ai_periodo, ref integer ai_anio);// Funcion utilizada para devolver el periodo siguiente
+//
+// f_obten_periodo_ant_sv
+
+integer li_periodo_ant, li_anio_ant
+
+uo_periodo_servicios luo_periodo_servicios
+luo_periodo_servicios = CREATE uo_periodo_servicios
+
+luo_periodo_servicios.f_recupera_periodo_anterior(ai_periodo, ai_anio, gtr_sce)
+
+IF luo_periodo_servicios.ierror = -1 THEN 
+	MessageBox(luo_periodo_servicios.ititulo, luo_periodo_servicios.imensaje, StopSign!)
+	RETURN
+END IF	
+
+//choose case ai_periodo
+//	case 0
+//		li_periodo_ant = 2
+//		li_anio_ant = ai_anio - 1 
+//	case 1
+//		li_periodo_ant = 0 	
+//		li_anio_ant = ai_anio 	
+//	case 2
+//		li_periodo_ant = 0
+//		li_anio_ant = ai_anio 	
+//end choose
+//ai_periodo = li_periodo_ant
+//ai_anio = li_anio_ant
+
+return 
+
+
+end subroutine
+

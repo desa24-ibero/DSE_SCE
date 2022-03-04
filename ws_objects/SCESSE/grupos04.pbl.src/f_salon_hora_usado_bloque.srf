@@ -1,0 +1,165 @@
+﻿$PBExportHeader$f_salon_hora_usado_bloque.srf
+global type f_salon_hora_usado_bloque from function_object
+end type
+
+forward prototypes
+global function boolean f_salon_hora_usado_bloque (long al_cve_mat, string as_gpo, integer ai_periodo, integer ai_anio, integer ai_cve_dia, string as_cve_salon, integer ai_hora_inicio)
+global function boolean f_salon_hora_usado_bloque (long al_cve_mat, string as_gpo, integer ai_periodo, integer ai_anio, integer ai_cve_dia, string as_cve_salon, integer ai_hora_inicio, datetime fecha_inicio, datetime fecha_fin)
+end prototypes
+
+global function boolean f_salon_hora_usado_bloque (long al_cve_mat, string as_gpo, integer ai_periodo, integer ai_anio, integer ai_cve_dia, string as_cve_salon, integer ai_hora_inicio);//f_salon_hora_usado
+//Función que revisa que el salón en cuestión no se esté utilizando para otro grupo
+//
+//RECIBE
+//al_cve_mat		integer
+//as_gpo				string
+//ai_periodo		integer
+//ai_anio			integer
+//ai_cve_dia		integer
+//as_cve_salon		string
+//ai_hora_inicio	integer
+//
+//REGRESA boolean
+
+
+integer ll_num_rows, li_codigo_sql, ll_num_rows2, li_codigo_sql2
+string ls_mensaje_sql
+
+// Se verifica si el salón está ocupado para el mismo periodo y año para el tipo de periodo que se procesa 
+SELECT count(*)
+INTO	:ll_num_rows
+FROM	dbo.horario
+WHERE not(dbo.horario.cve_mat = :al_cve_mat AND	dbo.horario.gpo = :as_gpo) 
+AND	dbo.horario.periodo = :ai_periodo
+AND	dbo.horario.anio = :ai_anio
+AND	dbo.horario.cve_dia = :ai_cve_dia
+AND ( ( dbo.horario.hora_inicio <= :ai_hora_inicio  AND	:ai_hora_inicio < dbo.horario.hora_final ) )
+AND	dbo.horario.cve_salon = :as_cve_salon
+USING gtr_sce;
+IF ISNULL(ll_num_rows) THEN ll_num_rows = 0 
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+
+// Se verifica si el salón está disponible para cualquier otro periodo de cualquier otro tipo, sin importar la lmateria y/o el grupo. 
+SELECT count(*)
+INTO	:ll_num_rows2 
+FROM	dbo.horario
+WHERE dbo.horario.periodo IN(SELECT periodo from periodos_por_procesos where cve_proceso = 0 and tipo_periodo <> (SELECT tipo FROM periodo WHERE periodo = :ai_periodo) ) 
+AND	dbo.horario.anio IN(SELECT      anio from periodos_por_procesos where cve_proceso = 0 and tipo_periodo <> (SELECT tipo FROM periodo WHERE periodo = :ai_periodo) )  
+AND	dbo.horario.cve_dia = :ai_cve_dia
+AND ( ( dbo.horario.hora_inicio <= :ai_hora_inicio  AND	 :ai_hora_inicio < dbo.horario.hora_final ) )
+AND	dbo.horario.cve_salon = :as_cve_salon
+USING gtr_sce;
+IF ISNULL(ll_num_rows2) THEN ll_num_rows2 = 0 
+
+li_codigo_sql2 = gtr_sce.SqlCode
+ls_mensaje_sql = TRIM(ls_mensaje_sql + " " + gtr_sce.SqlErrText) 
+
+if isnull(ll_num_rows) then
+	return false
+elseif li_codigo_sql = -1 OR li_codigo_sql2 = -1  then
+	MessageBox("Error al consultar el horario de los grupos", ls_mensaje_sql)
+	return true
+end if
+
+// Se acumulan las dos totales de salones 
+ll_num_rows = ll_num_rows  + ll_num_rows2
+
+
+if ll_num_rows > 0 then
+	return true
+else
+	return false
+end if
+
+end function
+
+global function boolean f_salon_hora_usado_bloque (long al_cve_mat, string as_gpo, integer ai_periodo, integer ai_anio, integer ai_cve_dia, string as_cve_salon, integer ai_hora_inicio, datetime fecha_inicio, datetime fecha_fin);//f_salon_hora_usado
+//Función que revisa que el salón en cuestión no se esté utilizando para otro grupo
+//
+//RECIBE
+//al_cve_mat		integer
+//as_gpo				string
+//ai_periodo		integer
+//ai_anio			integer
+//ai_cve_dia		integer
+//as_cve_salon		string
+//ai_hora_inicio	integer
+//
+//REGRESA boolean
+
+
+integer ll_num_rows, li_codigo_sql, ll_num_rows2, li_codigo_sql2
+string ls_mensaje_sql
+
+// Se verifica si el salón está ocupado para el mismo periodo y año para el tipo de periodo que se procesa 
+SELECT count(*)
+INTO	:ll_num_rows
+FROM	horario, grupos 
+WHERE not(horario.cve_mat = :al_cve_mat AND	horario.gpo = :as_gpo) 
+AND	horario.periodo = :ai_periodo
+AND	horario.anio = :ai_anio
+AND	horario.cve_dia = :ai_cve_dia
+AND ( ( horario.hora_inicio <= :ai_hora_inicio  AND	:ai_hora_inicio < horario.hora_final ) )
+AND	horario.cve_salon = :as_cve_salon 
+AND grupos.cve_mat = horario.cve_mat 
+AND grupos.gpo = horario.gpo
+AND grupos.periodo = horario.periodo 
+AND grupos.anio = horario.anio  
+AND (  
+	(grupos.fecha_inicio <= :fecha_inicio AND :fecha_inicio <= grupos.fecha_fin)
+	OR 
+	(grupos.fecha_fin <= :fecha_fin AND :fecha_fin <= grupos.fecha_fin) 
+	)
+USING gtr_sce;
+IF ISNULL(ll_num_rows) THEN ll_num_rows = 0 
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+
+// Se verifica si el salón está disponible para cualquier otro periodo de cualquier otro tipo, sin importar la lmateria y/o el grupo. 
+SELECT count(*)
+INTO	:ll_num_rows2 
+FROM	horario, grupos 
+WHERE horario.periodo IN(SELECT periodo from periodos_por_procesos where cve_proceso = 0 and tipo_periodo <> (SELECT tipo FROM periodo WHERE periodo = :ai_periodo) ) 
+AND	horario.anio IN(SELECT      anio from periodos_por_procesos where cve_proceso = 0 and tipo_periodo <> (SELECT tipo FROM periodo WHERE periodo = :ai_periodo) )  
+AND	horario.cve_dia = :ai_cve_dia
+AND ( ( horario.hora_inicio <= :ai_hora_inicio  AND	 :ai_hora_inicio < horario.hora_final ) )
+AND	horario.cve_salon = :as_cve_salon
+AND grupos.cve_mat = horario.cve_mat 
+AND grupos.gpo = horario.gpo
+AND grupos.periodo = horario.periodo 
+AND grupos.anio = horario.anio  
+AND (  
+	(grupos.fecha_inicio <= :fecha_inicio AND :fecha_inicio <= grupos.fecha_fin)
+	OR 
+	(grupos.fecha_fin <= :fecha_fin AND :fecha_fin <= grupos.fecha_fin) 
+	)
+USING gtr_sce;
+IF ISNULL(ll_num_rows2) THEN ll_num_rows2 = 0 
+
+li_codigo_sql2 = gtr_sce.SqlCode
+ls_mensaje_sql = TRIM(ls_mensaje_sql + " " + gtr_sce.SqlErrText) 
+
+if isnull(ll_num_rows) then
+	return false
+elseif li_codigo_sql = -1 OR li_codigo_sql2 = -1  then
+	MessageBox("Error al consultar el horario de los grupos", ls_mensaje_sql)
+	return true
+end if
+
+// Se acumulan las dos totales de salones 
+ll_num_rows = ll_num_rows  + ll_num_rows2
+
+
+if ll_num_rows > 0 then
+	return true
+else
+	return false
+end if
+
+end function
+

@@ -1,0 +1,30 @@
+﻿$PBExportHeader$dw_camb_carr.srd
+$PBExportComments$Con este DW se puede cambiar la carrera después de hacer los exámenes
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=77 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes key=yes name=folio dbname="aspiran.folio" )
+ column=(type=long update=yes updatewhereclause=yes name=clv_carr dbname="aspiran.clv_carr" )
+ column=(type=long updatewhereclause=yes key=yes name=clv_ver dbname="aspiran.clv_ver" )
+ column=(type=long updatewhereclause=yes key=yes name=clv_per dbname="aspiran.clv_per" )
+ column=(type=long updatewhereclause=yes key=yes name=anio dbname="aspiran.anio" )
+ retrieve="  SELECT aspiran.folio,   
+         aspiran.clv_carr,   
+         aspiran.clv_ver,   
+         aspiran.clv_per,   
+         aspiran.anio  
+    FROM aspiran  
+   WHERE ( aspiran.folio = :fol ) AND  
+         ( aspiran.clv_ver = :ver ) AND  
+         ( aspiran.clv_per = :per ) AND  
+         ( aspiran.anio = :anio ) AND  
+         ( aspiran.status = 1 or aspiran.status = 4 ) AND  
+         ( aspiran.pago_exam = 1 )    
+" update="aspiran" updatewhere=0 updatekeyinplace=no arguments=(("fol", number),("ver", number),("per", number),("anio", number)) )
+text(band=header alignment="2" text="Folio"border="0" color="0" x="5" y="4" height="65" width="330"  name=folio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Clv Carr"border="0" color="0" x="947" y="4" height="65" width="330"  name=clv_carr_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="folio"border="0" color="0" x="5" y="8" height="69" width="330" format="[general]"  name=fol  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=10 border="0" color="0" x="334" y="4" height="77" width="1559" format="[general]"  name=clv_carr dddw.name=dw_carrera dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

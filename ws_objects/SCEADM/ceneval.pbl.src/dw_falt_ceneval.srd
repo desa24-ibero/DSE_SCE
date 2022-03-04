@@ -1,0 +1,49 @@
+﻿$PBExportHeader$dw_falt_ceneval.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=141 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=aspiran_folio dbname="aspiran.folio" )
+ column=(type=char(50) updatewhereclause=yes name=general_nombre dbname="general.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=general_apaterno dbname="general.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=general_amaterno dbname="general.amaterno" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_carr dbname="aspiran.clv_carr" )
+ retrieve="  SELECT aspiran.folio,   
+         general.nombre,   
+         general.apaterno,   
+         general.amaterno,   
+         aspiran.clv_carr  
+    FROM aspiran,   
+         general  
+   WHERE ( aspiran.folio = general.folio ) and  
+         ( general.clv_ver = aspiran.clv_ver ) and  
+         ( general.clv_per = aspiran.clv_per ) and  
+         ( general.anio = aspiran.anio ) and  
+         ( ( ( aspiran.clv_ver = :ver ) OR
+             ( :ver = 99) )     AND  
+         ( aspiran.clv_per = :per ) AND  
+         ( aspiran.anio = :ani ) AND  
+         ( aspiran.folio not in (  SELECT ceneval.folio  
+                                     FROM ceneval  
+                                    WHERE(( ceneval.clv_ver = :ver) OR
+                                          ( :ver = 99) ) AND  
+                                          ( ceneval.clv_per = :per ) AND  
+                                          ( ceneval.anio = :ani )  )) )    
+" arguments=(("ver", number),("per", number),("ani", number)) )
+text(band=header alignment="2" text="Aspiran
+Folio"border="0" color="0" x="5" y="4" height="129" width="330"  name=aspiran_folio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Nombre"border="0" color="0" x="339" y="4" height="129" width="1399"  name=general_nombre_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Apaterno"border="0" color="0" x="1742" y="4" height="129" width="1399"  name=general_apaterno_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Amaterno"border="0" color="0" x="3146" y="4" height="129" width="1399"  name=general_amaterno_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Clv Carr"border="0" color="0" x="4549" y="4" height="129" width="330"  name=aspiran_clv_carr_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="330" format="[general]"  name=aspiran_folio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="339" y="4" height="77" width="1399" format="[general]"  name=general_nombre edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1742" y="4" height="77" width="1399" format="[general]"  name=general_apaterno edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="3146" y="4" height="77" width="1399" format="[general]"  name=general_amaterno edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="4549" y="4" height="77" width="330" format="[general]"  name=aspiran_clv_carr edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

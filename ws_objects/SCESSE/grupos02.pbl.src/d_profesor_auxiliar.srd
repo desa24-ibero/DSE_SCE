@@ -1,0 +1,41 @@
+﻿$PBExportHeader$d_profesor_auxiliar.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=10789024 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=74 color="536870912" )
+summary(height=74 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=67 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cve_profesor dbname="profesor_auxiliar.cve_profesor" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=cve_mat dbname="profesor_auxiliar.cve_mat" )
+ column=(type=char(2) update=yes updatewhereclause=yes key=yes name=gpo dbname="profesor_auxiliar.gpo" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=periodo dbname="profesor_auxiliar.periodo" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=anio dbname="profesor_auxiliar.anio" )
+ column=(type=long update=yes updatewhereclause=yes name=cve_categoria_auxiliar dbname="profesor_auxiliar.cve_categoria_auxiliar" )
+ column=(type=long update=yes updatewhereclause=yes name=horas dbname="profesor_auxiliar.horas" )
+ column=(type=char(75) updatewhereclause=yes name=nombre_completo dbname="nombre_completo" )
+ retrieve="  SELECT profesor_auxiliar.cve_profesor,   
+         profesor_auxiliar.cve_mat,   
+         profesor_auxiliar.gpo,   
+         profesor_auxiliar.periodo,   
+         profesor_auxiliar.anio,   
+         profesor_auxiliar.cve_categoria_auxiliar,   
+         profesor_auxiliar.horas,   
+         nombre_completo = convert(varchar(75), ~"~")  
+    FROM profesor_auxiliar  
+   WHERE ( profesor_auxiliar.cve_mat = :ai_cve_mat ) AND  
+         ( profesor_auxiliar.gpo = :as_gpo ) AND  
+         ( profesor_auxiliar.periodo = :ai_periodo ) AND  
+         ( profesor_auxiliar.anio = :ai_anio )    
+" update="profesor_auxiliar" updatewhere=1 updatekeyinplace=yes arguments=(("ai_cve_mat", number),("as_gpo", string),("ai_periodo", number),("ai_anio", number)) )
+text(band=header alignment="2" text="Adjunto"border="0" color="0" x="351" y="3" height="64" width="227"  name=cve_categoria_auxiliar_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Nombre Completo"border="0" color="0" x="1437" y="10" height="64" width="523"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Horas"border="0" color="0" x="2253" y="3" height="64" width="176"  name=horas_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Clave Prof."border="0" color="0" x="867" y="6" height="64" width="318"  name=cve_profesor_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=10 border="5" color="0" x="95" y="0" height="64" width="790" format="[general]"  name=cve_categoria_auxiliar dddw.name=dddw_categoria_auxiliar dddw.displaycolumn=categoria_auxiliar dddw.datacolumn=cve_categoria_auxiliar dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="5" color="0" x="1167" y="0" height="64" width="1064" format="[general]"  name=nombre_completo edit.limit=0 edit.case=upper edit.autoselect=yes edit.displayonly=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=7 alignment="1" tabsequence=30 border="5" color="0" x="2253" y="0" height="64" width="179" format="[general]"  name=horas editmask.mask="##" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+compute(band=detail alignment="1" expression="getrow()"border="5" color="0" x="2461" y="0" height="64" width="132" format="#,##0"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="10789024" )
+column(band=detail id=1 alignment="1" tabsequence=20 border="5" color="0" x="907" y="0" height="64" width="238" format="[general]"  name=cve_profesor editmask.mask="#####" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+text(band=summary alignment="2" text="Totales"border="0" color="0" x="132" y="3" height="64" width="216"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="0" expression="rowcount()"border="5" color="0" x="369" y="3" height="64" width="216" format="#,##0"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

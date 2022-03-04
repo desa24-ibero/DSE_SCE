@@ -1,0 +1,23 @@
+﻿$PBExportHeader$f_obten_usuario.srf
+global type f_obten_usuario from function_object
+end type
+
+forward prototypes
+global function string f_obten_usuario ()
+end prototypes
+
+global function string f_obten_usuario ();//Función que regresa el nombre del usuario firmado
+//
+//f_obten_usuario
+//
+//Parámetros:		ninguno	
+
+string ls_usuario
+
+ls_usuario=gs_usuario
+
+return ls_usuario
+
+
+end function
+

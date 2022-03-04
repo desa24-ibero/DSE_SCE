@@ -1,0 +1,35 @@
+﻿$PBExportHeader$f_obten_status.srf
+global type f_obten_status from function_object
+end type
+
+forward prototypes
+global function integer f_obten_status (long al_folio)
+end prototypes
+
+global function integer f_obten_status (long al_folio);integer li_codigo
+string ls_mensaje_error
+integer li_status
+
+select dbo.aspirantes_revalidacion.status
+into :li_status
+from dbo.aspirantes_revalidacion
+where dbo.aspirantes_revalidacion.folio = :al_folio
+using gtr_sce;
+
+li_codigo= gtr_sce.SqlCode
+ls_mensaje_error= gtr_sce.SqlErrText
+
+if isnull(li_status) then
+	li_status= 0
+end if
+
+if li_codigo = -1  then
+	MessageBox("Error al recuperar status en el folio actual",ls_mensaje_error, StopSign!)
+	return -1
+else
+	return li_status	
+end if
+
+
+end function
+

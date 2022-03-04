@@ -1,0 +1,12 @@
+﻿$PBExportHeader$dw_tipo_doc.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=15780518 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=125 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cve_documento dbname="tipo_documento.cve_documento" )
+ column=(type=char(60) update=yes updatewhereclause=yes name=documento dbname="tipo_documento.documento" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"tipo_documento~" ) COLUMN(NAME=~"tipo_documento.cve_documento~") COLUMN(NAME=~"tipo_documento.documento~")) " update="tipo_documento" updatewhere=1 updatekeyinplace=no )
+column(band=detail id=1 alignment="1" tabsequence=10 border="5" color="0" x="10" y="20" height="77" width="183" format="[general]"  name=cve_documento edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="5" color="0" x="215" y="20" height="77" width="1541" format="[general]"  name=documento edit.limit=30 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )

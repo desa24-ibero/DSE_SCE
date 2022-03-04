@@ -1,0 +1,136 @@
+﻿$PBExportHeader$agrega_historico.srf
+global type agrega_historico from function_object
+end type
+
+forward prototypes
+global function integer agrega_historico (datastore dw_historico, long cuenta, ref integer contlinea, integer numarchivo, integer ai_cve_plan)
+end prototypes
+
+global function integer agrega_historico (datastore dw_historico, long cuenta, ref integer contlinea, integer numarchivo, integer ai_cve_plan);/*
+DESCRIPCIÓN: Manda por correo como quedó el kardex.
+PARÁMETROS: linea leída por correo.
+REGRESA: Nada
+AUTOR: Víctor Manuel Iniestra Álvarez
+FECHA: 22 Septiembre 1998
+MODIFICACIÓN:
+*/
+long ll_renglon
+boolean boleana
+string ls_textin,is_respuesta
+INTEGER le_periodo
+STRING ls_periodo
+
+
+dw_historico.retrieve(cuenta,"5","9","10","AC","NA","RE","IN","BA","BJ","E","MB","B","S")
+dw_historico.SetFilter('')
+dw_historico.Filter( )
+dw_historico.Sort( )
+
+If ContLinea >= 56 Then w_solicitud_materias.Escribe_Encabezado()
+FileWrite(NumArchivo,"                            ** MATERIAS CURSADAS **")
+FileWrite(NumArchivo,"")
+FileWrite(NumArchivo,"  CVE  SIGLA  CRED CAL GPO  OBS  MATERIA")
+FileWrite(NumArchivo,"")
+ContLinea = ContLinea + 4
+
+FOR ll_renglon=1 TO dw_historico.rowcount()
+	if ll_renglon=1 then
+		is_respuesta='				'
+		
+//		CHOOSE CASE dw_historico.object.historico_periodo[ll_renglon]
+//			CASE 0
+//				is_respuesta=is_respuesta+'PRIMAVERA '
+//			CASE 1
+//				is_respuesta=is_respuesta+'VERANO '
+//			CASE 2
+//				is_respuesta=is_respuesta+'OTONO '
+//		END CHOOSE
+		
+		le_periodo = dw_historico.object.historico_periodo[ll_renglon] 
+		
+		SELECT descripcion 
+		INTO :ls_periodo 
+		FROM periodo 
+		WHERE periodo = :le_periodo
+		USING gtr_sce;
+		IF ISNULL(ls_periodo) THEN ls_periodo = "" 
+		
+		is_respuesta=is_respuesta + " " + ls_periodo
+		
+		is_respuesta=is_respuesta+string(dw_historico.object.historico_anio[ll_renglon],"0000;****")
+		FileWrite(NumArchivo,is_respuesta)
+		ContLinea = ContLinea + 1
+	elseif dw_historico.object.historico_periodo[ll_renglon]<>dw_historico.object.historico_periodo[ll_renglon -1] or &
+			dw_historico.object.historico_anio[ll_renglon]<>dw_historico.object.historico_anio[ll_renglon -1] then
+		FileWrite(NumArchivo,"")
+		is_respuesta='				'
+		
+		
+//		CHOOSE CASE dw_historico.object.historico_periodo[ll_renglon]
+//			CASE 0
+//				is_respuesta=is_respuesta+'PRIMAVERA '
+//			CASE 1
+//				is_respuesta=is_respuesta+'VERANO '
+//			CASE 2
+//				is_respuesta=is_respuesta+'OTONO '
+//		END CHOOSE
+		
+		le_periodo = dw_historico.object.historico_periodo[ll_renglon] 
+		
+		SELECT descripcion 
+		INTO :ls_periodo 
+		FROM periodo  
+		WHERE periodo = :le_periodo
+		USING gtr_sce;
+		IF ISNULL(ls_periodo) THEN ls_periodo = "" 
+		
+		is_respuesta=is_respuesta + " " + ls_periodo		
+		
+		is_respuesta=is_respuesta+string(dw_historico.object.historico_anio[ll_renglon],"0000;****")
+		FileWrite(NumArchivo,is_respuesta)
+		ContLinea = ContLinea + 2
+	end if
+	is_respuesta="  "+string(dw_historico.object.historico_cve_mat[ll_renglon],"00000;*****")+'  '
+	if ai_cve_plan=6 then	
+		if isnull(dw_historico.object.materias_sigla[ll_renglon]) then
+			is_respuesta=is_respuesta+' 	'
+		else
+			is_respuesta=is_respuesta+string(dw_historico.object.materias_sigla[ll_renglon],"@@@@@")+'  '
+		end if
+	else
+		if isnull(dw_historico.object.materias_sigla_anterior[ll_renglon]) then
+			is_respuesta=is_respuesta+' 	'
+		else
+			is_respuesta=is_respuesta+string(dw_historico.object.materias_sigla_anterior[ll_renglon],"@@@@@")+'  '
+		end if		
+	end if
+	
+	
+	is_respuesta=is_respuesta+string(dw_historico.object.materias_creditos[ll_renglon],"00;**")+'  '
+	is_respuesta=is_respuesta+string(dw_historico.object.historico_calificacion[ll_renglon],"@@")+'     '
+		
+	if isnull(dw_historico.object.historico_gpo[ll_renglon]) then
+		is_respuesta=is_respuesta+'   '
+	else
+		is_respuesta=is_respuesta+string(dw_historico.object.historico_gpo[ll_renglon],"@@")+'  '
+	end if
+	is_respuesta=is_respuesta+convierteobservacion(dw_historico.object.historico_observacion[ll_renglon],boleana)+'  '
+	if not(isnull(dw_historico.object.materias_materia[ll_renglon])) then
+		is_respuesta=is_respuesta+string(dw_historico.object.materias_materia[ll_renglon])
+	end if
+	If ContLinea >= 57 Then w_solicitud_materias.Escribe_Encabezado()
+	FileWrite(NumArchivo,is_respuesta)
+	ContLinea = ContLinea + 1
+NEXT
+if dw_historico.rowcount()>=1 then
+	If ContLinea >= 54 Then w_solicitud_materias.Escribe_Encabezado()
+	FileWrite(NumArchivo,"")
+	FileWrite(NumArchivo,'           CREDITOS                                    PROMEDIO')
+	ls_textin=dw_historico.object.avance[1]
+	FileWrite(NumArchivo,ls_textin)
+	ContLinea = ContLinea + 3
+end if
+
+RETURN 0
+end function
+

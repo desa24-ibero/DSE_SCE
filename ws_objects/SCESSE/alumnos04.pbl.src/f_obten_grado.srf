@@ -1,0 +1,41 @@
+﻿$PBExportHeader$f_obten_grado.srf
+global type f_obten_grado from function_object
+end type
+
+forward prototypes
+global function string f_obten_grado (string as_cve_grado)
+end prototypes
+
+global function string f_obten_grado (string as_cve_grado);//f_obten_grado
+//Obtiene el valor correspondiente a la clave de grado recibida
+//Recibe			as_cve_grado	string
+//Devuelve		integer
+
+integer li_codigo_sql
+string ls_mensaje_sql,  ls_grado, ls_null
+
+SetNull(ls_null)
+
+SELECT isnull(dbo.grado.grado,"")
+INTO	:ls_grado
+FROM	dbo.grado
+WHERE dbo.grado.cve_grado = :as_cve_grado
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 then
+	MessageBox("Grado inexistente", "El grado["+as_cve_grado+"] no existe", StopSign!)
+	return ls_null
+elseif isnull(ls_grado) then
+	return ""
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar grado", ls_mensaje_sql,StopSign!)
+	return  ls_null
+end if
+
+return ls_grado
+
+end function
+

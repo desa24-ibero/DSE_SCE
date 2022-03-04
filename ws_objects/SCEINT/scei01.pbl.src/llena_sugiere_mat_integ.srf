@@ -1,0 +1,127 @@
+﻿$PBExportHeader$llena_sugiere_mat_integ.srf
+global type llena_sugiere_mat_integ from function_object
+end type
+
+forward prototypes
+global subroutine llena_sugiere_mat_integ (integer puede_integ, integer temaf1, integer temaf2, integer tema1, integer tema2, integer tema3, integer tema4, ref datawindowchild dw_sugiere_mat_integ, integer ai_cve_plan)
+end prototypes
+
+global subroutine llena_sugiere_mat_integ (integer puede_integ, integer temaf1, integer temaf2, integer tema1, integer tema2, integer tema3, integer tema4, ref datawindowchild dw_sugiere_mat_integ, integer ai_cve_plan);
+// Juan Campos Sánchez.		Abril-1998.
+
+Integer i=0,j=0,Indice =0
+
+IF Puede_Integ = 1 Then // 1= True
+	If TemaF1 = 0 Then
+		if ai_cve_plan <> 6 then
+			i++
+			dw_sugiere_mat_integ.InsertRow(i)
+			dw_sugiere_mat_integ.SetItem(i,1,1)
+			dw_sugiere_mat_integ.SetItem(i,2,"8580")
+			dw_sugiere_mat_integ.SetItem(i,3,"(       )")
+			dw_sugiere_mat_integ.SetItem(i,4,"FL111")
+			dw_sugiere_mat_integ.SetItem(i,5,"INTRODUCCION AL PROBLEMA DEL HOMBRE")		
+		else
+			i++
+			dw_sugiere_mat_integ.InsertRow(i)
+			dw_sugiere_mat_integ.SetItem(i,1,11)
+			dw_sugiere_mat_integ.SetItem(i,2,"20483")
+			dw_sugiere_mat_integ.SetItem(i,3,"(       )")
+			dw_sugiere_mat_integ.SetItem(i,4,"RU101")
+			dw_sugiere_mat_integ.SetItem(i,5,"PERSONA Y HUMANISMO")		
+		end if
+	End IF
+	If TemaF2 = 0 Then 
+		if ai_cve_plan <> 6 then
+			i++
+			dw_sugiere_mat_integ.InsertRow(i)
+ 			dw_sugiere_mat_integ.SetItem(i,1,1)
+			dw_sugiere_mat_integ.SetItem(i,2,"8581")
+			dw_sugiere_mat_integ.SetItem(i,3,"(       )")
+			dw_sugiere_mat_integ.SetItem(i,4,"FL112")
+			dw_sugiere_mat_integ.SetItem(i,5,"INTRODUCCION AL PROBLEMA SOCIAL")
+		else
+//			i++
+//			dw_sugiere_mat_integ.InsertRow(i)
+//			dw_sugiere_mat_integ.SetItem(i,1,1)
+//			dw_sugiere_mat_integ.SetItem(i,2,"20483")
+//			dw_sugiere_mat_integ.SetItem(i,3,"(       )")
+//			dw_sugiere_mat_integ.SetItem(i,4,"RU101")
+//			dw_sugiere_mat_integ.SetItem(i,5,"PERSONA Y HUMANISMO")		
+		end if
+	End IF
+	
+	If TemaF1=1 And TemaF2 = 1 Then
+		If Tema1 = 0 Then
+			i++
+			dw_sugiere_mat_integ.InsertRow(i)
+			if ai_cve_plan <> 6 then
+ 				dw_sugiere_mat_integ.SetItem(i,1,2)
+			else
+ 				dw_sugiere_mat_integ.SetItem(i,1,12)
+			end if
+			dw_sugiere_mat_integ.SetItem(i,2,"_______")
+			dw_sugiere_mat_integ.SetItem(i,3,"(       )")
+			dw_sugiere_mat_integ.SetItem(i,4,"_______")
+			dw_sugiere_mat_integ.SetItem(i,5,"______________________________________________")			                                  
+		End if
+		If Tema2 = 0 Then
+			i++
+			dw_sugiere_mat_integ.InsertRow(i)
+			if ai_cve_plan <> 6 then
+	 			dw_sugiere_mat_integ.SetItem(i,1,3)
+			else
+	 			dw_sugiere_mat_integ.SetItem(i,1,13)
+			end if
+			dw_sugiere_mat_integ.SetItem(i,2,"_______")
+			dw_sugiere_mat_integ.SetItem(i,3,"(       )")
+			dw_sugiere_mat_integ.SetItem(i,4,"_______")
+			dw_sugiere_mat_integ.SetItem(i,5,"______________________________________________")
+		End if
+		If Tema3 = 0 Then
+			i++
+			dw_sugiere_mat_integ.InsertRow(i)
+			if ai_cve_plan <> 6 then
+				dw_sugiere_mat_integ.SetItem(i,1,4)
+			else
+				dw_sugiere_mat_integ.SetItem(i,1,14)
+			end if
+			dw_sugiere_mat_integ.SetItem(i,2,"_______")
+			dw_sugiere_mat_integ.SetItem(i,3,"(       )")
+			dw_sugiere_mat_integ.SetItem(i,4,"_______")
+			dw_sugiere_mat_integ.SetItem(i,5,"______________________________________________")
+		End if
+		If Tema4 = 0 Then
+			i++
+			dw_sugiere_mat_integ.InsertRow(i)
+			if ai_cve_plan <> 6 then
+	 			dw_sugiere_mat_integ.SetItem(i,1,5)
+			else
+	 			dw_sugiere_mat_integ.SetItem(i,1,15)
+			end if
+			dw_sugiere_mat_integ.SetItem(i,2,"_______")
+			dw_sugiere_mat_integ.SetItem(i,3,"(       )")
+			dw_sugiere_mat_integ.SetItem(i,4,"_______")
+			dw_sugiere_mat_integ.SetItem(i,5,"______________________________________________")
+		End if    		
+	End If 
+End if
+
+For j = i To i+5 
+	Indice = dw_sugiere_mat_integ.InsertRow(0)
+	if ai_cve_plan <> 6 then
+		dw_sugiere_mat_integ.SetItem(Indice,1,6)
+	else
+		dw_sugiere_mat_integ.SetItem(Indice,1,16)
+	end if
+	dw_sugiere_mat_integ.SetItem(Indice,2,"_______")
+	dw_sugiere_mat_integ.SetItem(Indice,3,"(       )")
+	dw_sugiere_mat_integ.SetItem(Indice,4,"_______")
+	dw_sugiere_mat_integ.SetItem(Indice,5,"______________________________________________")
+Next
+
+dw_sugiere_mat_integ.SetSort("tema A")
+dw_sugiere_mat_integ.Sort()
+dw_sugiere_mat_integ.GroupCalc()
+end subroutine
+

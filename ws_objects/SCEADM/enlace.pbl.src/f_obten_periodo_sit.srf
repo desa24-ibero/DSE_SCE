@@ -1,0 +1,79 @@
+﻿$PBExportHeader$f_obten_periodo_sit.srf
+global type f_obten_periodo_sit from function_object
+end type
+
+forward prototypes
+global function string f_obten_periodo_sit (integer ai_periodo)
+global function integer f_obten_periodo_sit (integer ai_periodo, integer ai_anio, ref integer ai_periodo_sit, ref integer ai_anio_sit)
+end prototypes
+
+global function string f_obten_periodo_sit (integer ai_periodo);// f_obten_periodo_cob
+// Regresa el periodo equivalente de cobranzas
+// 
+// Recibe:
+// ai_periodo	:integer
+
+datetime ldttm_fecha
+string ls_mensaje, ls_periodo_cob
+integer li_codigo
+
+ls_mensaje = ""
+ls_periodo_cob = ""
+
+choose case ai_periodo
+	case 0
+		ls_periodo_cob= "P"
+	case 1
+		ls_periodo_cob= "V"
+	case 2
+		ls_periodo_cob= "O"
+	case else
+		ls_mensaje="El periodo utilizado no es valido"
+end choose
+
+
+if len(ls_mensaje) > 1 then
+	MessageBox("Error en la conversion de periodos", ls_mensaje )
+end if
+
+return ls_periodo_cob
+
+
+end function
+
+global function integer f_obten_periodo_sit (integer ai_periodo, integer ai_anio, ref integer ai_periodo_sit, ref integer ai_anio_sit);// f_obten_periodo_sit
+// Regresa el periodo equivalente de tesoreria_bd
+//con el objeto de realizar un cambio de version de examen
+// 
+// Recibe:
+//ai_periodo			integer
+//ai_anio				integer
+//ai_periodo_sit	integer
+//ai_anio_sit			integer
+
+
+Choose case ai_periodo
+//Si es primavera en admisión, corresponde a otoño del año pasado
+	case 0
+		ai_periodo_sit= 2
+		ai_anio_sit = ai_anio - 1
+	case 1
+		ai_periodo_sit= 0
+		ai_anio_sit = ai_anio 
+	case 2
+		ai_periodo_sit= 0
+//2016-06-01		
+		ai_periodo_sit= 1
+		ai_anio_sit = ai_anio 
+	case else
+		messagebox("Periodo-Año Incorrecto","El periodo y año utilizados no son válidos",StopSign!)
+		return -1
+end choose
+
+
+return 0
+
+
+
+end function
+

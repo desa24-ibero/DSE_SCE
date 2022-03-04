@@ -1,0 +1,38 @@
+﻿$PBExportHeader$f_cuenta_mats_revalid.srf
+global type f_cuenta_mats_revalid from function_object
+end type
+
+forward prototypes
+global function integer f_cuenta_mats_revalid (long al_folio)
+end prototypes
+
+global function integer f_cuenta_mats_revalid (long al_folio);integer li_codigo
+string ls_mensaje_error
+long ll_cuenta
+
+
+select count(distinct(dbo.materias_revalidacion.cve_mat)) 
+into :ll_cuenta
+from dbo.materias_revalidacion, dbo.materias
+where dbo.materias_revalidacion.folio = :al_folio
+and dbo.materias.cve_mat = dbo.materias_revalidacion.cve_mat 
+and isnull(dbo.materias_revalidacion.status,0) = 0
+using gtr_sce;
+
+li_codigo= gtr_sce.SqlCode
+ls_mensaje_error= gtr_sce.SqlErrText
+
+if isnull(ll_cuenta) then
+	ll_cuenta= 0
+end if
+
+if li_codigo = -1  then
+	MessageBox("Error al contar las materias en el folio actual",ls_mensaje_error, StopSign!)
+	return -1
+else
+	return ll_cuenta	
+end if
+
+
+end function
+

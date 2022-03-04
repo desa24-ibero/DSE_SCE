@@ -1,0 +1,41 @@
+﻿$PBExportHeader$f_dia_inicio_semana.srf
+global type f_dia_inicio_semana from function_object
+end type
+
+forward prototypes
+global subroutine f_dia_inicio_semana (date ad_inicio, ref integer aia_dias[7], date aia_descansos[64])
+global subroutine f_dia_inicio_semana (date ad_fec_hoy, ref date ad_fec_ini)
+end prototypes
+
+global subroutine f_dia_inicio_semana (date ad_inicio, ref integer aia_dias[7], date aia_descansos[64]);int li_dia, li_i, li_j
+li_dia = DayNumber(ad_inicio)
+for li_i = 1 to li_dia - 1
+	aia_dias[li_i] = 0
+next
+for li_i = li_dia to 7
+	li_j = 1
+	aia_dias[li_i] = 1
+	do while li_j < 65
+		if ( ad_inicio = aia_descansos[li_j] ) then
+			aia_dias[li_i] = 0
+			li_j = 64
+		end if
+		li_j++
+	loop
+	ad_inicio = RelativeDate(ad_inicio,1)
+next
+
+end subroutine
+
+global subroutine f_dia_inicio_semana (date ad_fec_hoy, ref date ad_fec_ini);int li_dia, li_i, li_dia2
+
+li_dia = DayNumber(ad_fec_hoy)
+ad_fec_ini = ad_fec_hoy
+
+do while li_dia2 <> 2
+	ad_fec_ini = RelativeDate(ad_fec_ini,-1)
+	li_dia2 = DayNumber(ad_fec_ini)
+loop
+
+end subroutine
+

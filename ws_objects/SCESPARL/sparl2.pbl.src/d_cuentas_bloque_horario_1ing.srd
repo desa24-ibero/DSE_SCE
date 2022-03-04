@@ -1,0 +1,99 @@
+﻿$PBExportHeader$d_cuentas_bloque_horario_1ing.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no grid.lines=0 )
+header(height=144 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=92 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cuenta dbname="cuenta" )
+ column=(type=char(1) updatewhereclause=yes name=nivel dbname="nivel" )
+ column=(type=long updatewhereclause=yes name=preincrito dbname="preincrito" )
+ column=(type=long updatewhereclause=yes name=creditos_cursados dbname="creditos_cursados" )
+ column=(type=long updatewhereclause=yes name=sem_cursados dbname="sem_cursados" )
+ column=(type=real updatewhereclause=yes name=promedio dbname="promedio" )
+ column=(type=char(70) updatewhereclause=yes name=nombre_completo dbname="nombre_completo" )
+ retrieve="SELECT cuenta = ac.cuenta, nivel = ac.nivel, preincrito = 1, 
+creditos_cursados = ac.creditos_cursados, sem_cursados = ac.sem_cursados, promedio = ac.promedio, nombre_completo = al.nombre_completo
+FROM academicos ac, cuentas_cortes cc, alumnos al
+WHERE ac.egresado = 0
+AND ac.cuenta = al.cuenta
+AND ac.cuenta in (select cuenta from preinsc)
+AND ac.cuenta = cc.cuenta
+UNION
+SELECT cuenta = ac.cuenta, nivel = ac.nivel, preincrito = 0, 
+creditos_cursados = ac.creditos_cursados, sem_cursados = ac.sem_cursados, promedio = ac.promedio, nombre_completo = al.nombre_completo 
+FROM academicos ac, cuentas_cortes cc, alumnos al
+WHERE ac.egresado = 0
+AND ac.cuenta = al.cuenta
+AND ac.cuenta not in (select cuenta from preinsc)
+AND ac.cuenta = cc.cuenta
+UNION
+SELECT cuenta = hr.cuenta, nivel = ac.nivel, preincrito = 1, 
+creditos_cursados = ac.creditos_cursados, sem_cursados = ac.sem_cursados, promedio = ac.promedio, nombre_completo = al.nombre_completo 
+FROM hist_reingreso hr, academicos ac, alumnos al
+WHERE hr.cuenta = ac.cuenta
+AND ac.cuenta = al.cuenta
+AND ac.egresado = 0
+AND hr.periodo_ing = :an_periodo
+AND hr.anio_ing = :an_anio
+AND ac.cuenta IN (select cuenta from preinsc)
+AND ac.cuenta NOT in (select cuenta from cuentas_cortes)
+UNION
+SELECT cuenta = hr.cuenta, nivel = ac.nivel, preincrito = 0, 
+creditos_cursados = ac.creditos_cursados, sem_cursados = ac.sem_cursados, promedio = ac.promedio, nombre_completo = al.nombre_completo
+FROM hist_reingreso hr, academicos ac, alumnos al
+WHERE hr.cuenta = ac.cuenta
+AND ac.cuenta = al.cuenta
+AND ac.egresado = 0
+AND hr.periodo_ing = :an_periodo
+AND hr.anio_ing = :an_anio
+AND ac.cuenta NOT in (select cuenta from preinsc)
+AND ac.cuenta NOT in (select cuenta from cuentas_cortes)
+UNION
+SELECT cuenta = ar.cuenta, nivel = ac.nivel,  preincrito = 0, 
+creditos_cursados = ac.creditos_cursados, sem_cursados = ac.sem_cursados, promedio = ac.promedio, nombre_completo = al.nombre_completo  
+FROM aspirantes_revalidacion ar, academicos ac, alumnos al
+WHERE ar.cuenta = ac.cuenta
+AND ac.cuenta = al.cuenta
+AND ac.egresado = 0
+AND ar.periodo_ing = :an_periodo
+AND ar.anio_ing = :an_anio
+AND ac.cuenta NOT in (select cuenta from preinsc)
+AND ac.cuenta NOT in (select cuenta from cuentas_cortes)
+UNION
+SELECT cuenta = ar.cuenta, nivel = ac.nivel,  preincrito = 1, 
+creditos_cursados = ac.creditos_cursados, sem_cursados = ac.sem_cursados, promedio = ac.promedio, nombre_completo = al.nombre_completo  
+FROM aspirantes_revalidacion ar, academicos ac, alumnos al
+WHERE ar.cuenta = ac.cuenta
+AND ac.cuenta = al.cuenta
+AND ac.egresado = 0
+AND ar.periodo_ing = :an_periodo
+AND ar.anio_ing = :an_anio
+AND ac.cuenta IN (select cuenta from preinsc)
+AND ac.cuenta NOT in (select cuenta from cuentas_cortes) 
+" filter=" nivel ='L' and  preincrito =1"arguments=(("an_periodo", number),("an_anio", number))  sort="creditos_cursados D promedio D creditos_cursados A nombre_completo A " )
+text(band=header alignment="2" text="Cuenta" border="0" color="33554432" x="9" y="8" height="64" width="215" html.valueishtml="0"  name=cuenta_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Nivel" border="0" color="33554432" x="233" y="8" height="64" width="123" html.valueishtml="0"  name=nivel_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Preincrito" border="0" color="33554432" x="366" y="8" height="64" width="261" html.valueishtml="0"  name=preincrito_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Creditos Cursados" border="0" color="33554432" x="635" y="8" height="64" width="489" html.valueishtml="0"  name=creditos_cursados_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Sem Cursados" border="0" color="33554432" x="1134" y="8" height="64" width="389" html.valueishtml="0"  name=sem_cursados_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Promedio" border="0" color="33554432" x="1531" y="8" height="64" width="329" html.valueishtml="0"  name=promedio_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Nombre Completo" border="0" color="33554432" x="1870" y="8" height="64" width="1303" html.valueishtml="0"  name=nombre_completo_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="33554432" x="9" y="8" height="76" width="215" format="[general]" html.valueishtml="0"  name=cuenta visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="233" y="8" height="76" width="123" format="[general]" html.valueishtml="0"  name=nivel visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="33554432" x="366" y="8" height="76" width="261" format="[general]" html.valueishtml="0"  name=preincrito visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="33554432" x="635" y="8" height="76" width="489" format="[general]" html.valueishtml="0"  name=creditos_cursados visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="33554432" x="1134" y="8" height="76" width="389" format="[general]" html.valueishtml="0"  name=sem_cursados visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="33554432" x="1531" y="8" height="76" width="329" format="[general]" html.valueishtml="0"  name=promedio visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="33554432" x="1870" y="8" height="76" width="1303" format="[general]" html.valueishtml="0"  name=nombre_completo visible="1" edit.limit=70 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

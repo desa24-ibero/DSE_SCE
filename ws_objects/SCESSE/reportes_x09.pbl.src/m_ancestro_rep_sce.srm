@@ -1,0 +1,578 @@
+﻿$PBExportHeader$m_ancestro_rep_sce.srm
+$PBExportComments$Este menu es de los reportes de Listas de Asistencia para imprimir 1 Datawindow Horizontal
+forward
+global type m_ancestro_rep_sce from menu
+end type
+type m_archivo from menu within m_ancestro_rep_sce
+end type
+type m_ordenar from menu within m_archivo
+end type
+type m_filtrar from menu within m_archivo
+end type
+type m_salvar from menu within m_archivo
+end type
+type m_configurarimpresora from menu within m_archivo
+end type
+type m_imprimelaslistasdelaopcingen from menu within m_archivo
+end type
+type m_imprimelaslistasdelaopcinin from menu within m_archivo
+end type
+type m_actual from menu within m_imprimelaslistasdelaopcinin
+end type
+type m_lista from menu within m_imprimelaslistasdelaopcinin
+end type
+type m_imprimelaslistasdelaopcinin from menu within m_archivo
+m_actual m_actual
+m_lista m_lista
+end type
+type m_archivo from menu within m_ancestro_rep_sce
+m_ordenar m_ordenar
+m_filtrar m_filtrar
+m_salvar m_salvar
+m_configurarimpresora m_configurarimpresora
+m_imprimelaslistasdelaopcingen m_imprimelaslistasdelaopcingen
+m_imprimelaslistasdelaopcinin m_imprimelaslistasdelaopcinin
+end type
+type m_edicion from menu within m_ancestro_rep_sce
+end type
+type m_deshacer from menu within m_edicion
+end type
+type m_cortar from menu within m_edicion
+end type
+type m_copiar from menu within m_edicion
+end type
+type m_pegar from menu within m_edicion
+end type
+type m_edicion from menu within m_ancestro_rep_sce
+m_deshacer m_deshacer
+m_cortar m_cortar
+m_copiar m_copiar
+m_pegar m_pegar
+end type
+type m_ventana from menu within m_ancestro_rep_sce
+end type
+type m_horizontal from menu within m_ventana
+end type
+type m_vertical from menu within m_ventana
+end type
+type m_primerplano from menu within m_ventana
+end type
+type m_cascada from menu within m_ventana
+end type
+type m_ventana from menu within m_ancestro_rep_sce
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+type m_cerrar from menu within m_ancestro_rep_sce
+end type
+global type m_ancestro_rep_sce from menu
+m_archivo m_archivo
+m_edicion m_edicion
+m_ventana m_ventana
+m_cerrar m_cerrar
+end type
+end forward
+
+global type m_ancestro_rep_sce from menu
+m_archivo m_archivo
+m_edicion m_edicion
+m_ventana m_ventana
+m_cerrar m_cerrar
+end type
+global m_ancestro_rep_sce m_ancestro_rep_sce
+
+type variables
+datawindow dw
+int Individual_si
+s_dwtit dw_t
+end variables
+
+on m_ancestro_rep_sce.create
+m_ancestro_rep_sce=this
+call super::create
+this.m_archivo=create m_archivo
+this.m_edicion=create m_edicion
+this.m_ventana=create m_ventana
+this.m_cerrar=create m_cerrar
+this.Item[UpperBound(this.Item)+1]=this.m_archivo
+this.Item[UpperBound(this.Item)+1]=this.m_edicion
+this.Item[UpperBound(this.Item)+1]=this.m_ventana
+this.Item[UpperBound(this.Item)+1]=this.m_cerrar
+end on
+
+on m_ancestro_rep_sce.destroy
+call super::destroy
+destroy(this.m_archivo)
+destroy(this.m_edicion)
+destroy(this.m_ventana)
+destroy(this.m_cerrar)
+end on
+
+type m_archivo from menu within m_ancestro_rep_sce
+m_ordenar m_ordenar
+m_filtrar m_filtrar
+m_salvar m_salvar
+m_configurarimpresora m_configurarimpresora
+m_imprimelaslistasdelaopcingen m_imprimelaslistasdelaopcingen
+m_imprimelaslistasdelaopcinin m_imprimelaslistasdelaopcinin
+end type
+
+on m_archivo.create
+call super::create
+this.text = "Impresión"
+this.m_ordenar=create m_ordenar
+this.m_filtrar=create m_filtrar
+this.m_salvar=create m_salvar
+this.m_configurarimpresora=create m_configurarimpresora
+this.m_imprimelaslistasdelaopcingen=create m_imprimelaslistasdelaopcingen
+this.m_imprimelaslistasdelaopcinin=create m_imprimelaslistasdelaopcinin
+this.Item[UpperBound(this.Item)+1]=this.m_ordenar
+this.Item[UpperBound(this.Item)+1]=this.m_filtrar
+this.Item[UpperBound(this.Item)+1]=this.m_salvar
+this.Item[UpperBound(this.Item)+1]=this.m_configurarimpresora
+this.Item[UpperBound(this.Item)+1]=this.m_imprimelaslistasdelaopcingen
+this.Item[UpperBound(this.Item)+1]=this.m_imprimelaslistasdelaopcinin
+end on
+
+on m_archivo.destroy
+call super::destroy
+destroy(this.m_ordenar)
+destroy(this.m_filtrar)
+destroy(this.m_salvar)
+destroy(this.m_configurarimpresora)
+destroy(this.m_imprimelaslistasdelaopcingen)
+destroy(this.m_imprimelaslistasdelaopcinin)
+end on
+
+type m_ordenar from menu within m_archivo
+end type
+
+event clicked;string orden
+
+if isvalid(dw) then
+	SetPointer(HourGlass!)
+	SetNull(orden)
+	dw.setsort(orden)
+	SetPointer(HourGlass!)
+	dw.sort()
+	dw.groupcalc()
+end if
+
+end event
+
+on m_ordenar.create
+call super::create
+this.text = "Ordenar"
+this.toolbaritemname = "RichTextEdit1!"
+end on
+
+on m_ordenar.destroy
+call super::destroy
+end on
+
+type m_filtrar from menu within m_archivo
+end type
+
+event clicked;string filtro
+
+SetNull(filtro)
+
+if isvalid(dw) then
+	dw.SetFilter(filtro)
+	dw.Filter( )
+	dw.sort()
+	dw.groupcalc()
+end if
+
+
+end event
+
+on m_filtrar.create
+call super::create
+this.text = "Filtrar"
+this.toolbaritemname = "Custom096!"
+end on
+
+on m_filtrar.destroy
+call super::destroy
+end on
+
+type m_salvar from menu within m_archivo
+end type
+
+event clicked;if isvalid(dw) then
+	if dw.SaveAs("",Excel!, TRUE)<>1 then
+		dw.SaveAs("",Clipboard!, TRUE)
+		messagebox("No se pudo guardar el archivo","La información se encuentra en el Clipboard")	
+	end if
+end if
+end event
+
+on m_salvar.create
+call super::create
+this.text = "Salvar"
+this.toolbaritemname = "Save!"
+end on
+
+on m_salvar.destroy
+call super::destroy
+end on
+
+type m_configurarimpresora from menu within m_archivo
+end type
+
+event clicked;printsetup()
+
+end event
+
+on m_configurarimpresora.create
+call super::create
+this.text = "C&onfigurar Impresora"
+end on
+
+on m_configurarimpresora.destroy
+call super::destroy
+end on
+
+type m_imprimelaslistasdelaopcingen from menu within m_archivo
+end type
+
+on m_imprimelaslistasdelaopcingen.create
+call super::create
+this.text = "&Imprime las Listas de la opción ~"General~""
+this.microhelp = "Imprime de la Opción GENERAL"
+this.toolbaritemname = "Print!"
+this.toolbaritemtext = "Imprimir"
+this.toolbaritemorder = 1
+end on
+
+event clicked;
+dw_t.dwp[1]=dw
+
+
+if individual_si = 2 then
+	messagebox ("Información",&
+            " NO OLVIDE configurar la ORIENTACION del Papel de manera HORIZONTAL"+&
+			"~r~          Si NO lo SABE, Favor de Consultar al Administrador",Exclamation!)
+		if isvalid(dw) then
+			openwithparm(conf_impr_2ver,dw_t)
+		end if
+	else
+messagebox("Información","Para Procesar la opción GENERAL, es NECESARIO que cambie al TAB de GENERAL",Exclamation!)		
+end if
+end event
+
+on m_imprimelaslistasdelaopcingen.destroy
+call super::destroy
+end on
+
+type m_imprimelaslistasdelaopcinin from menu within m_archivo
+m_actual m_actual
+m_lista m_lista
+end type
+
+on m_imprimelaslistasdelaopcinin.create
+call super::create
+this.text = "Imprime las &Listas  de la opción ~"Individuales~""
+this.m_actual=create m_actual
+this.m_lista=create m_lista
+this.Item[UpperBound(this.Item)+1]=this.m_actual
+this.Item[UpperBound(this.Item)+1]=this.m_lista
+end on
+
+on m_imprimelaslistasdelaopcinin.destroy
+call super::destroy
+destroy(this.m_actual)
+destroy(this.m_lista)
+end on
+
+type m_actual from menu within m_imprimelaslistasdelaopcinin
+end type
+
+event clicked;
+dw_t.dwp[1]=dw
+
+
+if individual_si = 1 then
+	messagebox ("Información",&
+            " NO OLVIDE configurar la ORIENTACION del Papel de manera HORIZONTAL"+&
+			"~r~          Si NO lo SABE, Favor de Consultar al Administrador",Exclamation!)
+		if isvalid(dw) then
+			openwithparm(conf_impr_2ver,dw_t)
+		end if
+	else
+messagebox("Información","Para Procesar la opción INDIVIDUAL, es NECESARIO que cambie al TAB de INDIVIDUAL",Exclamation!)		
+end if
+end event
+
+on m_actual.create
+call super::create
+this.text = "Impresión del Actual"
+this.microhelp = "Imprime la materia actual"
+this.toolbaritemname = "SingletonReturn!"
+this.toolbaritemtext = "Imprime la materia actual"
+this.toolbaritemorder = 3
+this.toolbaritemspace = 3
+end on
+
+on m_actual.destroy
+call super::destroy
+end on
+
+type m_lista from menu within m_imprimelaslistasdelaopcinin
+end type
+
+event clicked;if individual_si = 1 then
+	w_mad_repo_24.tab_1.tabpage_individual.cb_3x. EVENT imprime_todos()
+else
+	messagebox("Información","Para Procesar la LISTA de Materias Individuales, es NECESARIO que cambie al TAB de Individuales",Exclamation!)
+end if
+
+end event
+
+on m_lista.create
+call super::create
+this.text = "Imprimir la Lista"
+this.microhelp = "Imprime la Lista de Materias"
+this.toolbaritemname = "Count!"
+this.toolbaritemtext = "Imprime la Lista de Materias"
+this.toolbaritemorder = 3
+this.toolbaritemspace = 3
+end on
+
+on m_lista.destroy
+call super::destroy
+end on
+
+type m_edicion from menu within m_ancestro_rep_sce
+m_deshacer m_deshacer
+m_cortar m_cortar
+m_copiar m_copiar
+m_pegar m_pegar
+end type
+
+on m_edicion.create
+call super::create
+this.text = "Editar"
+this.m_deshacer=create m_deshacer
+this.m_cortar=create m_cortar
+this.m_copiar=create m_copiar
+this.m_pegar=create m_pegar
+this.Item[UpperBound(this.Item)+1]=this.m_deshacer
+this.Item[UpperBound(this.Item)+1]=this.m_cortar
+this.Item[UpperBound(this.Item)+1]=this.m_copiar
+this.Item[UpperBound(this.Item)+1]=this.m_pegar
+end on
+
+on m_edicion.destroy
+call super::destroy
+destroy(this.m_deshacer)
+destroy(this.m_cortar)
+destroy(this.m_copiar)
+destroy(this.m_pegar)
+end on
+
+type m_deshacer from menu within m_edicion
+end type
+
+on m_deshacer.create
+call super::create
+this.text = "&Deshacer~tCtrl+U"
+this.shortcut = 341
+this.microhelp = "Deshacer la última edición"
+this.toolbaritemname = "Undo!"
+this.toolbaritemtext = "Deshacer"
+this.toolbaritemorder = 4
+this.toolbaritemspace = 3
+end on
+
+event clicked;if isvalid(dw) then
+	dw.undo()
+end if
+end event
+
+on m_deshacer.destroy
+call super::destroy
+end on
+
+type m_cortar from menu within m_edicion
+end type
+
+on m_cortar.create
+call super::create
+this.text = "C&ortar~tCtrl+X"
+this.shortcut = 344
+this.microhelp = "Borra la selección actual y la pone en el portapapeles"
+this.toolbaritemname = "Cut!"
+this.toolbaritemtext = "Cortar"
+this.toolbaritemorder = 5
+end on
+
+event clicked;
+if isvalid(dw) then
+	dw.cut()
+end if
+end event
+
+on m_cortar.destroy
+call super::destroy
+end on
+
+type m_copiar from menu within m_edicion
+end type
+
+on m_copiar.create
+call super::create
+this.text = "&Copiar~tCtrl+C"
+this.shortcut = 323
+this.microhelp = "Copia la selección actual en el portapapeles"
+this.toolbaritemname = "Copy!"
+this.toolbaritemtext = "Copiar"
+this.toolbaritemorder = 4
+end on
+
+event clicked;if isvalid(dw) then
+	dw.copy()
+end if
+end event
+
+on m_copiar.destroy
+call super::destroy
+end on
+
+type m_pegar from menu within m_edicion
+end type
+
+on m_pegar.create
+call super::create
+this.text = "&Pegar~tCtrl+V"
+this.shortcut = 342
+this.microhelp = "Pega el contenido del portapapeles en el campo actual"
+this.toolbaritemname = "Paste!"
+this.toolbaritemtext = "Pegar"
+this.toolbaritemorder = 5
+end on
+
+event clicked;if isvalid(dw) then
+	dw.paste()
+end if
+end event
+
+on m_pegar.destroy
+call super::destroy
+end on
+
+type m_ventana from menu within m_ancestro_rep_sce
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+
+on m_ventana.create
+call super::create
+this.text = "Ventana"
+this.m_horizontal=create m_horizontal
+this.m_vertical=create m_vertical
+this.m_primerplano=create m_primerplano
+this.m_cascada=create m_cascada
+this.Item[UpperBound(this.Item)+1]=this.m_horizontal
+this.Item[UpperBound(this.Item)+1]=this.m_vertical
+this.Item[UpperBound(this.Item)+1]=this.m_primerplano
+this.Item[UpperBound(this.Item)+1]=this.m_cascada
+end on
+
+on m_ventana.destroy
+call super::destroy
+destroy(this.m_horizontal)
+destroy(this.m_vertical)
+destroy(this.m_primerplano)
+destroy(this.m_cascada)
+end on
+
+type m_horizontal from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Tilehorizontal!)
+end event
+
+on m_horizontal.create
+call super::create
+this.text = "Horizontal"
+this.microhelp = "Organiza las ventanas horizontalmente"
+end on
+
+on m_horizontal.destroy
+call super::destroy
+end on
+
+type m_vertical from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Tile!)
+end event
+
+on m_vertical.create
+call super::create
+this.text = "Vertical"
+this.microhelp = "Organiza las ventanas verticalmente"
+end on
+
+on m_vertical.destroy
+call super::destroy
+end on
+
+type m_primerplano from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Layer!)
+end event
+
+on m_primerplano.create
+call super::create
+this.text = "Primer Plano"
+this.microhelp = "Coloca la ventana actual en primer plano"
+end on
+
+on m_primerplano.destroy
+call super::destroy
+end on
+
+type m_cascada from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Cascade!)
+end event
+
+on m_cascada.create
+call super::create
+this.text = "Cascada"
+this.microhelp = "Organiza las ventanas en cascada"
+end on
+
+on m_cascada.destroy
+call super::destroy
+end on
+
+type m_cerrar from menu within m_ancestro_rep_sce
+end type
+
+event clicked;rollback using gtr_sce;
+Close(parentwindow)
+end event
+
+on m_cerrar.create
+call super::create
+this.text = "Cerrar"
+this.toolbaritemname = "Exit!"
+this.toolbaritemtext = "Cerrar la ventana"
+this.toolbaritemorder = 12
+this.toolbaritemspace = 3
+end on
+
+on m_cerrar.destroy
+call super::destroy
+end on
+

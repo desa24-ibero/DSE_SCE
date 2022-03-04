@@ -1,0 +1,39 @@
+﻿$PBExportHeader$f_obten_creditos_materia.srf
+global type f_obten_creditos_materia from function_object
+end type
+
+forward prototypes
+global function decimal f_obten_creditos_materia (long al_cve_mat)
+end prototypes
+
+global function decimal f_obten_creditos_materia (long al_cve_mat);//f_obten_creditos_materia
+//Recibe 	al_cve_mat	long
+//
+//Obtiene los créditos que tiene registrados la materia
+
+decimal ldc_creditos
+string ls_mensaje_sql
+integer li_codigo_sql
+
+SELECT creditos
+INTO :ldc_creditos
+FROM materias
+WHERE materias.cve_mat = :al_cve_mat
+USING SQLCA;
+
+ls_mensaje_sql= SQLCA.SqlErrtext
+li_codigo_sql= SQLCA.SqlCode
+
+IF li_codigo_sql= -1 THEN
+	MessageBox("No es posible consultar los creditos de la materia["+string(al_cve_mat)+"]", ls_mensaje_sql, StopSign!)
+	RETURN  -1
+ELSEIF  li_codigo_sql = 100 THEN	
+	Return 100
+ELSE	
+	RETURN ldc_creditos
+END IF
+
+
+
+end function
+

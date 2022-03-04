@@ -1,0 +1,993 @@
+﻿$PBExportHeader$m_historico_2013.srm
+$PBExportComments$Este menu fija el orden de busqueda para historico, envia los parametros de calificaciones con las que se desea la busqueda. ejecuta los procesos de primero.ultimo,siguiente, anterior.. Ver descripción detallada en cada script_cliked del menu. Juan ca䅄⩔嘀
+forward
+global type m_historico_2013 from menu
+end type
+type m_elijaunorden from menu within m_historico_2013
+end type
+type m_por_clave from menu within m_elijaunorden
+end type
+type m_por_periodo from menu within m_elijaunorden
+end type
+type m_elijaunorden from menu within m_historico_2013
+m_por_clave m_por_clave
+m_por_periodo m_por_periodo
+end type
+type m_tipodeconsulta from menu within m_historico_2013
+end type
+type m_historico1 from menu within m_tipodeconsulta
+end type
+type m_reprobadas from menu within m_tipodeconsulta
+end type
+type m_revalidadas from menu within m_tipodeconsulta
+end type
+type m_incompletas from menu within m_tipodeconsulta
+end type
+type m_acreditadas from menu within m_tipodeconsulta
+end type
+type m_bajas from menu within m_tipodeconsulta
+end type
+type m_tipodeconsulta from menu within m_historico_2013
+m_historico1 m_historico1
+m_reprobadas m_reprobadas
+m_revalidadas m_revalidadas
+m_incompletas m_incompletas
+m_acreditadas m_acreditadas
+m_bajas m_bajas
+end type
+type m_revision from menu within m_historico_2013
+end type
+type m_primero from menu within m_revision
+end type
+type m_anterior from menu within m_revision
+end type
+type m_siguiente from menu within m_revision
+end type
+type m_ultimo from menu within m_revision
+end type
+type m_revision from menu within m_historico_2013
+m_primero m_primero
+m_anterior m_anterior
+m_siguiente m_siguiente
+m_ultimo m_ultimo
+end type
+type m_ventana from menu within m_historico_2013
+end type
+type m_horizontal from menu within m_ventana
+end type
+type m_vertical from menu within m_ventana
+end type
+type m_primerplano from menu within m_ventana
+end type
+type m_cascada from menu within m_ventana
+end type
+type m_ventana from menu within m_historico_2013
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+type m_impresionx from menu within m_historico_2013
+end type
+type m_configurarimpresora1 from menu within m_impresionx
+end type
+type m_imprimir1 from menu within m_impresionx
+end type
+type m_impresionx from menu within m_historico_2013
+m_configurarimpresora1 m_configurarimpresora1
+m_imprimir1 m_imprimir1
+end type
+type m_fin from menu within m_historico_2013
+end type
+global type m_historico_2013 from menu
+m_elijaunorden m_elijaunorden
+m_tipodeconsulta m_tipodeconsulta
+m_revision m_revision
+m_ventana m_ventana
+m_impresionx m_impresionx
+m_fin m_fin
+end type
+end forward
+
+global type m_historico_2013 from menu
+m_elijaunorden m_elijaunorden
+m_tipodeconsulta m_tipodeconsulta
+m_revision m_revision
+m_ventana m_ventana
+m_impresionx m_impresionx
+m_fin m_fin
+end type
+global m_historico_2013 m_historico_2013
+
+type variables
+datawindow dw
+userobject objeto
+end variables
+
+on m_historico_2013.create
+m_historico_2013=this
+call super::create
+this.text = "m_historico_2013"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_elijaunorden=create m_elijaunorden
+this.m_tipodeconsulta=create m_tipodeconsulta
+this.m_revision=create m_revision
+this.m_ventana=create m_ventana
+this.m_impresionx=create m_impresionx
+this.m_fin=create m_fin
+this.Item[UpperBound(this.Item)+1]=this.m_elijaunorden
+this.Item[UpperBound(this.Item)+1]=this.m_tipodeconsulta
+this.Item[UpperBound(this.Item)+1]=this.m_revision
+this.Item[UpperBound(this.Item)+1]=this.m_ventana
+this.Item[UpperBound(this.Item)+1]=this.m_impresionx
+this.Item[UpperBound(this.Item)+1]=this.m_fin
+end on
+
+on m_historico_2013.destroy
+call super::destroy
+destroy(this.m_elijaunorden)
+destroy(this.m_tipodeconsulta)
+destroy(this.m_revision)
+destroy(this.m_ventana)
+destroy(this.m_impresionx)
+destroy(this.m_fin)
+end on
+
+type m_elijaunorden from menu within m_historico_2013
+m_por_clave m_por_clave
+m_por_periodo m_por_periodo
+end type
+
+on m_elijaunorden.create
+call super::create
+this.text = "Elija un orden"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_por_clave=create m_por_clave
+this.m_por_periodo=create m_por_periodo
+this.Item[UpperBound(this.Item)+1]=this.m_por_clave
+this.Item[UpperBound(this.Item)+1]=this.m_por_periodo
+end on
+
+on m_elijaunorden.destroy
+call super::destroy
+destroy(this.m_por_clave)
+destroy(this.m_por_periodo)
+end on
+
+type m_por_clave from menu within m_elijaunorden
+end type
+
+event clicked;SetPointer(HourGlass!)
+parentwindow.triggerevent("ue_sort1")
+
+end event
+
+on m_por_clave.create
+call super::create
+this.text = "Por_Clave"
+this.microhelp = "Fija el orden de despliege en clave de materia"
+this.toolbaritemtext = "ordena por clave de materia"
+this.shifttoright = true
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_por_clave.destroy
+call super::destroy
+end on
+
+type m_por_periodo from menu within m_elijaunorden
+end type
+
+event clicked;SetPointer(HourGlass!)
+parentwindow.triggerevent("ue_sort2")
+end event
+
+on m_por_periodo.create
+call super::create
+this.text = "Por_Periodo"
+this.microhelp = "Fija el orden de despliegue en periodo y año"
+this.toolbaritemtext = "Ordena por año y periodo"
+this.toolbaritemdown = true
+this.shifttoright = true
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_por_periodo.destroy
+call super::destroy
+end on
+
+type m_tipodeconsulta from menu within m_historico_2013
+m_historico1 m_historico1
+m_reprobadas m_reprobadas
+m_revalidadas m_revalidadas
+m_incompletas m_incompletas
+m_acreditadas m_acreditadas
+m_bajas m_bajas
+end type
+
+on m_tipodeconsulta.create
+call super::create
+this.text = "Tipo de Consulta"
+this.enabled = false
+this.toolbaritemtext = "Busqueda  de todas las calificaciones"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_historico1=create m_historico1
+this.m_reprobadas=create m_reprobadas
+this.m_revalidadas=create m_revalidadas
+this.m_incompletas=create m_incompletas
+this.m_acreditadas=create m_acreditadas
+this.m_bajas=create m_bajas
+this.Item[UpperBound(this.Item)+1]=this.m_historico1
+this.Item[UpperBound(this.Item)+1]=this.m_reprobadas
+this.Item[UpperBound(this.Item)+1]=this.m_revalidadas
+this.Item[UpperBound(this.Item)+1]=this.m_incompletas
+this.Item[UpperBound(this.Item)+1]=this.m_acreditadas
+this.Item[UpperBound(this.Item)+1]=this.m_bajas
+end on
+
+on m_tipodeconsulta.destroy
+call super::destroy
+destroy(this.m_historico1)
+destroy(this.m_reprobadas)
+destroy(this.m_revalidadas)
+destroy(this.m_incompletas)
+destroy(this.m_acreditadas)
+destroy(this.m_bajas)
+end on
+
+type m_historico1 from menu within m_tipodeconsulta
+end type
+
+event clicked;SetPointer(HourGlass!)
+parentwindow.triggerevent("ue_consulta1")
+ 
+end event
+
+on m_historico1.create
+call super::create
+this.text = "Histórico"
+this.microhelp = "Busqueda de todas las  materias y calificaciones"
+this.toolbaritemtext = "Busqueda de todas las  materias y calificaciones"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_historico1.destroy
+call super::destroy
+end on
+
+type m_reprobadas from menu within m_tipodeconsulta
+end type
+
+event clicked;SetPointer(HourGlass!)
+parentwindow.triggerevent("ue_consulta2")
+end event
+
+on m_reprobadas.create
+call super::create
+this.text = "Reprobadas"
+this.microhelp = "Busqueda de materias Reprobedas"
+this.toolbaritemtext = "Busqueda de materias Reprobedas"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_reprobadas.destroy
+call super::destroy
+end on
+
+type m_revalidadas from menu within m_tipodeconsulta
+end type
+
+event clicked;SetPointer(HourGlass!)
+parentwindow.triggerevent("ue_consulta3")
+end event
+
+on m_revalidadas.create
+call super::create
+this.text = "Revalidadas"
+this.microhelp = "Busqueda de materias revalidadas"
+this.toolbaritemtext = "Busqueda de materias revalidadas"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_revalidadas.destroy
+call super::destroy
+end on
+
+type m_incompletas from menu within m_tipodeconsulta
+end type
+
+event clicked;SetPointer(HourGlass!)
+parentwindow.triggerevent("ue_consulta4")
+end event
+
+on m_incompletas.create
+call super::create
+this.text = "Incompletas"
+this.microhelp = "Busqueda de materias incompletas"
+this.toolbaritemtext = "Busqueda de materias incompletas"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_incompletas.destroy
+call super::destroy
+end on
+
+type m_acreditadas from menu within m_tipodeconsulta
+end type
+
+event clicked;SetPointer(HourGlass!)
+parentwindow.triggerevent("ue_consulta5")
+end event
+
+on m_acreditadas.create
+call super::create
+this.text = "Acreditadas"
+this.microhelp = "Busqueda de materias Acreditadas"
+this.toolbaritemtext = "Busqueda de materias Acreditadas"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_acreditadas.destroy
+call super::destroy
+end on
+
+type m_bajas from menu within m_tipodeconsulta
+end type
+
+event clicked;SetPointer(HourGlass!)
+parentwindow.triggerevent("ue_consulta6")
+end event
+
+on m_bajas.create
+call super::create
+this.text = "Bajas"
+this.microhelp = "Busqueda de materias con baja"
+this.toolbaritemtext = "Busqueda de materias con baja"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_bajas.destroy
+call super::destroy
+end on
+
+type m_revision from menu within m_historico_2013
+m_primero m_primero
+m_anterior m_anterior
+m_siguiente m_siguiente
+m_ultimo m_ultimo
+end type
+
+on m_revision.create
+call super::create
+this.text = "Registro"
+this.enabled = false
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_primero=create m_primero
+this.m_anterior=create m_anterior
+this.m_siguiente=create m_siguiente
+this.m_ultimo=create m_ultimo
+this.Item[UpperBound(this.Item)+1]=this.m_primero
+this.Item[UpperBound(this.Item)+1]=this.m_anterior
+this.Item[UpperBound(this.Item)+1]=this.m_siguiente
+this.Item[UpperBound(this.Item)+1]=this.m_ultimo
+end on
+
+on m_revision.destroy
+call super::destroy
+destroy(this.m_primero)
+destroy(this.m_anterior)
+destroy(this.m_siguiente)
+destroy(this.m_ultimo)
+end on
+
+type m_primero from menu within m_revision
+end type
+
+event clicked;if isvalid(objeto) then
+	objeto.triggerevent("primero")
+end if
+end event
+
+on m_primero.create
+call super::create
+this.text = "Primero~tAlt+P"
+this.shortcut = 592
+this.microhelp = "Posicion  en el primer renglon de la tabla de historico"
+this.toolbaritemname = "vcrfirst!"
+this.toolbaritemtext = "Primero"
+this.toolbaritemspace = 3
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_primero.destroy
+call super::destroy
+end on
+
+type m_anterior from menu within m_revision
+end type
+
+event clicked;if isvalid(objeto) then
+	objeto.triggerevent("anterior")
+end if
+end event
+
+on m_anterior.create
+call super::create
+this.text = "Anterior~tAlt+A"
+this.shortcut = 577
+this.microhelp = "Posición en el anterior renglon de la tabla de historico, con respecto a el numero de cuenta actual"
+this.toolbaritemname = "vcrprior!"
+this.toolbaritemtext = "Anterior"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_anterior.destroy
+call super::destroy
+end on
+
+type m_siguiente from menu within m_revision
+end type
+
+on m_siguiente.create
+call super::create
+this.text = "Siguiente~tAlt+S"
+this.shortcut = 595
+this.microhelp = "Posición en el siguiente renglon de la tabla de historico, con respecto a el numero de cuenta actual"
+this.toolbaritemname = "vcrnext!"
+this.toolbaritemtext = "Siguiente"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;if isvalid(objeto) then
+	objeto.triggerevent("siguiente")
+end if
+end event
+
+on m_siguiente.destroy
+call super::destroy
+end on
+
+type m_ultimo from menu within m_revision
+end type
+
+event clicked;if isvalid(objeto) then
+	objeto.triggerevent("ultimo")
+end if
+end event
+
+on m_ultimo.create
+call super::create
+this.text = "Último~tAlt+U"
+this.shortcut = 597
+this.microhelp = "Posicion  en el ultimo renglon de la tabla de historico"
+this.toolbaritemname = "vcrlast!"
+this.toolbaritemtext = "Último"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_ultimo.destroy
+call super::destroy
+end on
+
+type m_ventana from menu within m_historico_2013
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+
+on m_ventana.create
+call super::create
+this.text = "Ventana"
+this.microhelp = "cambio de vista y posición de las ventanas"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_horizontal=create m_horizontal
+this.m_vertical=create m_vertical
+this.m_primerplano=create m_primerplano
+this.m_cascada=create m_cascada
+this.Item[UpperBound(this.Item)+1]=this.m_horizontal
+this.Item[UpperBound(this.Item)+1]=this.m_vertical
+this.Item[UpperBound(this.Item)+1]=this.m_primerplano
+this.Item[UpperBound(this.Item)+1]=this.m_cascada
+end on
+
+on m_ventana.destroy
+call super::destroy
+destroy(this.m_horizontal)
+destroy(this.m_vertical)
+destroy(this.m_primerplano)
+destroy(this.m_cascada)
+end on
+
+type m_horizontal from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(tilehorizontal!)
+end event
+
+on m_horizontal.create
+call super::create
+this.text = "Horizontal"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_horizontal.destroy
+call super::destroy
+end on
+
+type m_vertical from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(tile!)
+end event
+
+on m_vertical.create
+call super::create
+this.text = "Vertical"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_vertical.destroy
+call super::destroy
+end on
+
+type m_primerplano from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(layer!)
+end event
+
+on m_primerplano.create
+call super::create
+this.text = "Primer Plano"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_primerplano.destroy
+call super::destroy
+end on
+
+type m_cascada from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(cascade!)
+end event
+
+on m_cascada.create
+call super::create
+this.text = "Cascada"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_cascada.destroy
+call super::destroy
+end on
+
+type m_impresionx from menu within m_historico_2013
+m_configurarimpresora1 m_configurarimpresora1
+m_imprimir1 m_imprimir1
+end type
+
+on m_impresionx.create
+call super::create
+this.visible = false
+this.text = "Impresion"
+this.enabled = false
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_configurarimpresora1=create m_configurarimpresora1
+this.m_imprimir1=create m_imprimir1
+this.Item[UpperBound(this.Item)+1]=this.m_configurarimpresora1
+this.Item[UpperBound(this.Item)+1]=this.m_imprimir1
+end on
+
+on m_impresionx.destroy
+call super::destroy
+destroy(this.m_configurarimpresora1)
+destroy(this.m_imprimir1)
+end on
+
+type m_configurarimpresora1 from menu within m_impresionx
+end type
+
+event clicked;printsetup()
+end event
+
+on m_configurarimpresora1.create
+call super::create
+this.text = "C&onfigurar Impresora"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_configurarimpresora1.destroy
+call super::destroy
+end on
+
+type m_imprimir1 from menu within m_impresionx
+end type
+
+event clicked;SetPointer(HourGlass!)
+parentwindow.triggerevent("ue_imprime")
+end event
+
+on m_imprimir1.create
+call super::create
+this.text = "&Imprimir...."
+this.toolbaritemname = "print!"
+this.toolbaritemspace = 4
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_imprimir1.destroy
+call super::destroy
+end on
+
+type m_fin from menu within m_historico_2013
+end type
+
+event clicked;Close(ParentWindow)
+end event
+
+on m_fin.create
+call super::create
+this.text = "Salir"
+this.microhelp = "Cierra la ventana actual"
+this.toolbaritemname = "exit!"
+this.toolbaritemtext = "Salir  Consultas Histórico"
+this.toolbaritemspace = 4
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_fin.destroy
+call super::destroy
+end on
+

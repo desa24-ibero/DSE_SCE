@@ -1,0 +1,41 @@
+﻿$PBExportHeader$f_convierte_mayusculas_a_nombre.srf
+global type f_convierte_mayusculas_a_nombre from function_object
+end type
+
+forward prototypes
+global function string f_convierte_mayusculas_a_nombre (string as_nombre)
+end prototypes
+
+global function string f_convierte_mayusculas_a_nombre (string as_nombre);//f_convierte_mayusculas_a_nombre
+//Convierte un nombre en puras mayusculas a mayúsculas y minúsculas
+//Recibe	as_nombre 	nombre de una persona
+
+long ll_longitud_nombre, ll_indice
+string ls_nombre, ls_caracter_actual,ls_caracter_actual_minusculas, ls_caracter_previo, ls_caracter_siguiente
+string ls_cadena_previa, ls_cadena_siguiente
+ll_longitud_nombre= len(as_nombre)
+ls_nombre= upper(as_nombre)
+
+FOR ll_indice=1 to ll_longitud_nombre
+	ls_caracter_actual= mid(ls_nombre,ll_indice,1)
+	ls_caracter_previo= mid(ls_nombre,ll_indice - 1,1)
+	ls_caracter_siguiente= mid(ls_nombre,ll_indice + 1,1)
+	ls_cadena_previa= mid(ls_nombre,1, ll_indice - 1)
+	ls_cadena_siguiente= mid(ls_nombre,ll_indice + 1, ll_longitud_nombre)
+	
+	if ll_indice=1 then
+		if not (asc(ls_caracter_previo)<=90 and asc(ls_caracter_previo)>=65 ) then	
+			ls_caracter_actual_minusculas= lower(ls_caracter_actual)
+			ls_nombre = ls_cadena_previa + ls_caracter_actual_minusculas +ls_cadena_siguiente		
+		end if	
+	elseif (asc(ls_caracter_previo)>90  and asc(ls_caracter_previo)<65 ) or &
+		(asc(ls_caracter_previo)<=90 and asc(ls_caracter_previo)>=65 ) or &
+		(asc(ls_caracter_previo)<=122 and asc(ls_caracter_previo)>=97 ) then		
+		ls_caracter_actual_minusculas= lower(ls_caracter_actual)
+		ls_nombre = ls_cadena_previa + ls_caracter_actual_minusculas +ls_cadena_siguiente
+	end if
+NEXT
+
+return ls_nombre
+end function
+

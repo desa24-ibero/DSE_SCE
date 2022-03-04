@@ -1,0 +1,35 @@
+﻿$PBExportHeader$f_convierte_folio.srf
+global type f_convierte_folio from function_object
+end type
+
+forward prototypes
+global function long f_convierte_folio (string as_folio, integer ai_inicio, integer ai_longitud)
+end prototypes
+
+global function long f_convierte_folio (string as_folio, integer ai_inicio, integer ai_longitud);//f_convierte_folio
+//Recibe una cadena de caracteres con un folio del Ceneval 
+//as_folio			string
+//ai_inicio			integer
+//ai_longitud		integer
+//Regresa un folio válido
+
+string ls_folio_valido
+long ll_folio_valido
+
+IF NOT ISNUMBER(as_folio) THEN
+	MessageBox("Folio Inválido", &
+	           "El valor introducido no está permitido, solo pueden ser valores numéricos.", StopSign!)
+   return -1
+END IF
+
+ls_folio_valido = MID(as_folio,2,6)
+ll_folio_valido = long(ls_folio_valido)
+
+
+return ll_folio_valido
+
+
+
+
+end function
+

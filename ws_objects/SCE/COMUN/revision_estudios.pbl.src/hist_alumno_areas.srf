@@ -1,0 +1,282 @@
+﻿$PBExportHeader$hist_alumno_areas.srf
+global type hist_alumno_areas from function_object
+end type
+
+forward prototypes
+global function boolean hist_alumno_areas (long l_cuenta, integer l_carrera, integer l_plan, integer l_subsistema, ref datawindow datawindowext, ref datawindow datawindowrev, string l_nivel)
+end prototypes
+
+global function boolean hist_alumno_areas (long l_cuenta, integer l_carrera, integer l_plan, integer l_subsistema, ref datawindow datawindowext, ref datawindow datawindowrev, string l_nivel);datastore dw_historico_sin_area
+datastore dw_historico_area
+
+boolean revalida = false
+
+int i,j 
+int tot_mat, tot_mat_a, m, renglon, area2, CreditosComunes, area3
+Constant int ABa=1;Constant int AMaOb=2;Constant int AOT=3;Constant int ASS=4;Constant int AMeOb=5
+Constant int AI0=6;Constant int AI1=7;Constant int AI2=8;Constant int AI3=9;Constant int AI4=10;
+Constant int AMaOp = 11;Constant int AMeOp = 12
+Constant int SinEvalObg = 14;Constant int SinEvalOpt = 13 
+
+int FalMe, FalMa
+int Areas[14]
+int CredMin[14]
+int TotCred[14]
+int li_num_subsistemas
+
+dw_historico_sin_area = CREATE DataStore
+dw_historico_area = CREATE DataStore
+dw_historico_sin_area.DataObject = "dw_hist_sin_area"
+dw_historico_area.DataObject = "dw_hist_area"
+dw_historico_sin_area.settransobject(gtr_sce)
+dw_historico_area.settransobject(gtr_sce)
+
+SELECT 	cve_area_basica,					cve_area_mayor_oblig,		cve_area_mayor_opt,
+			cve_area_opcion_terminal,		cve_area_servicio_social,
+			cve_area_integ_fundamental,	cve_area_integ_tema1,		cve_area_integ_tema2,
+			cve_area_integ_tema3,			cve_area_integ_tema4
+		INTO	:Areas[ABa], :Areas[AMaOb],	:Areas[AMaOp], :Areas[AOT], :Areas[ASS],
+				:Areas[AI0], :Areas[AI1], 		:Areas[AI2],  :Areas[AI3], :Areas[AI4], 
+				:Areas[SinEvalObg], :Areas[SinEvalOpt] 
+		FROM plan_estudios
+		WHERE cve_carrera = :l_carrera AND cve_plan = :l_plan using gtr_sce;
+if IsNull(l_subsistema) then l_subsistema = 0
+if (l_subsistema<> 0) then
+	SELECT cve_area  INTO :Areas[AMeOb] FROM subsistema 
+		WHERE cve_subsistema = :l_subsistema 
+		AND	cve_carrera = :l_carrera
+		AND 	cve_plan = :l_plan
+		AND 	clase_area LIKE "OBL" using gtr_sce;
+
+	SELECT cve_area  INTO :Areas[AMeOp] FROM subsistema 
+		WHERE cve_subsistema = :l_subsistema 
+		AND	cve_carrera = :l_carrera
+		AND 	cve_plan = :l_plan
+		AND 	clase_area LIKE "OPT" using gtr_sce;
+else
+	//if l_nivel = "L" then
+	if l_nivel <> "P" then
+		CredMin[AMeOp] = 1
+		CredMin[AMeOb] = 1
+	elseif l_nivel = "P" then
+		
+		SELECT count(cve_carrera)
+		INTO :li_num_subsistemas
+		FROM subsistema 
+		WHERE cve_carrera = :l_carrera
+		AND 	cve_plan = :l_plan	
+		using gtr_sce;
+		if IsNull(li_num_subsistemas) then li_num_subsistemas = 0
+		
+		if li_num_subsistemas >0  and l_subsistema= 0 then
+			CredMin[AMeOp] = 1
+			CredMin[AMeOb] = 1			
+		end if
+		
+	end if
+end if
+
+dw_historico_sin_area.retrieve(l_cuenta,l_carrera,l_plan)
+tot_mat = dw_historico_sin_area.rowcount()
+datawindowext.insertrow(1)
+datawindowext.setitem(1,1,0)
+datawindowext.setitem(1,2,0)
+if IsNull(Areas[AMeOp]) then Areas[AMeOp] = 0
+if IsNull(Areas[AMaOp]) then Areas[AMaOp] = 0
+i = 2
+for j = 1 to 14
+	if IsNull(Areas[j]) then Areas[j] = 0
+	if CredMin[j] <> 1 then
+		SELECT creditos_min INTO :CredMin[j] FROM areas WHERE cve_area = :Areas[j] using gtr_sce; 
+	end if
+	if (Areas[j] <> 0) then
+		area2 = 0
+		area3 = 0
+		//****************************//
+				// Se recuperan las áreas optativas 
+		// Si es la Mayor Optativa, se excluyen la Menor Optativa y la de sintésis_optativa  
+		if j = AMaOp then 
+			area2 = Areas[AMeOp]
+			area3 = Areas[SinEvalOpt]
+		END IF 	
+		
+		// Si es la Menor Optativa, se excluyen la Mayor Optativa y la de   sintésis_optativa
+		if j = AMeOp then 
+			area2 = Areas[AMaOp]
+			area3 = Areas[SinEvalOpt]
+		END IF 	
+		// Si es la Menor Optativa, se excluyen la Mayor Optativa y la de   sintésis_optativa
+		if j = SinEvalOpt then 
+			area2 = Areas[AMaOp]
+			area3 = Areas[AMeOp]
+		END IF 			
+		//****************************// 
+//		if j = AMaOp then area2 = Areas[AMeOp]
+//		if j = AMeOp then area2 = Areas[AMaOp]
+		
+		
+		dw_historico_area.retrieve(l_cuenta,Areas[j],l_carrera,l_plan, area2, area3) 
+		tot_mat_a = dw_historico_area.rowcount()
+		if tot_mat_a > 0 then
+			for m=1 to tot_mat_a
+				renglon = dw_historico_sin_area.find("materias_materia = '"+&
+										dw_historico_area.getitemstring(m,3)+"'", 1, tot_mat)
+				if (renglon<>0) then
+					dw_historico_sin_area.deleterow(renglon)
+					tot_mat --
+					datawindowext.insertrow(i)
+					datawindowext.setitem(i,1,l_cuenta)//cuenta
+//2018-01-23 Comentado y corregido para que salgan bien los de plan SUJ (7)					datawindowext.setitem(i,2,TipoArea_Nivel(j,l_plan,l_nivel))//tipo Area  
+					datawindowext.setitem(i,2,TipoArea_Nivel_Suj(j,l_plan,l_nivel))//tipo Area
+					datawindowext.setitem(i,3,dw_historico_area.getitemstring(m,2))//sigla
+					datawindowext.setitem(i,4,dw_historico_area.getitemstring(m,3))//materia
+					datawindowext.setitem(i,5,SacaPeriodo(&
+								dw_historico_area.getitemnumber(m,4),&
+								dw_historico_area.getitemnumber(m,5),&
+								dw_historico_area.getitemnumber(m,8)))//periodo
+					datawindowext.setitem(i,6,dw_historico_area.getitemnumber(m,6))//creditos
+					TotCred[j] += dw_historico_area.getitemnumber(m,6)
+					datawindowext.setitem(i,7,dw_historico_area.getitemstring(m,7))//CalNum
+					datawindowext.setitem(i,8,ConvierteLetra(dw_historico_area.getitemstring(m,7)))//CalLetra
+					datawindowext.setitem(i,9,ConvierteObservacion(&
+							dw_historico_area.getitemnumber(m,8),revalida))//Observaciones
+					datawindowext.setitem(i,10,string(&
+								dw_historico_area.getitemnumber(m,4)-1900,"000")+string(dw_historico_area.getitemnumber(m,5)))//periodonumerico
+					datawindowext.setitem(i,11,dw_historico_area.getitemnumber(m,9))//sigla
+					datawindowext.setitem(i,12,j)//clave del area
+					datawindowext.setitem(i,13,dw_historico_area.getitemstring(m,10))//sigla_anterior
+					i++
+				end if
+			next
+		end if
+	end  if
+next
+
+//	datawindowext.SetFilter("tipoarea="+string(AMeOp))
+//	datawindowext.Filter()
+//	datawindowext.GroupCalc()
+//	if (datawindowext.rowcount() > 0 ) then
+//		CreditosComunes = datawindowext.getitemnumber(1,"creditos_cursados")
+//	end if
+//	datawindowext.SetFilter("")
+//	datawindowext.Filter()
+CreditosComunes = 0
+
+
+if (dw_historico_sin_area.RowCount() > 0) then
+	//for j = AMaOp to AmeOp
+	for j = AMaOp to SinEvalOpt
+		dw_historico_area.retrieve(l_cuenta,Areas[j],l_carrera,l_plan, 0)
+		if (Areas[j] <> 0) then
+			tot_mat_a = dw_historico_area.rowcount()
+			if tot_mat_a > 0 then
+				for m=1 to tot_mat_a
+					if (TotCred[j] + dw_historico_area.getitemnumber(m,6) <= CredMin[j]) OR (j = AMeOp)then
+						renglon = dw_historico_sin_area.find("materias_materia = '"+&
+												dw_historico_area.getitemstring(m,3)+"'", 1, tot_mat)
+						if (renglon<>0) then
+							dw_historico_sin_area.deleterow(renglon)
+							tot_mat --
+							datawindowext.insertrow(i)
+							datawindowext.setitem(i,1,l_cuenta)//cuenta
+//2018-01-23 Comentado y corregido para que salgan bien los de plan SUJ (7)				datawindowext.setitem(i,2,TipoArea_Nivel(j,l_plan,l_nivel))//tipo Area
+							datawindowext.setitem(i,2,TipoArea_Nivel_Suj(j,l_plan,l_nivel))//tipo Area
+							datawindowext.setitem(i,3,dw_historico_area.getitemstring(m,2))//sigla
+							datawindowext.setitem(i,4,dw_historico_area.getitemstring(m,3))//materia
+							datawindowext.setitem(i,5,SacaPeriodo(&
+										dw_historico_area.getitemnumber(m,4),&
+										dw_historico_area.getitemnumber(m,5),&
+										dw_historico_area.getitemnumber(m,8)))//periodo
+							datawindowext.setitem(i,6,dw_historico_area.getitemnumber(m,6))//creditos
+							TotCred[j] += dw_historico_area.getitemnumber(m,6)
+							CreditosComunes += dw_historico_area.getitemnumber(m,6)
+							datawindowext.setitem(i,7,dw_historico_area.getitemstring(m,7))//CalNum
+							datawindowext.setitem(i,8,ConvierteLetra(dw_historico_area.getitemstring(m,7)))//CalLetra
+							datawindowext.setitem(i,9,ConvierteObservacion(&
+										dw_historico_area.getitemnumber(m,8),revalida))//Observaciones
+							datawindowext.setitem(i,10,string(&
+										dw_historico_area.getitemnumber(m,4)-1900,"000")+string(dw_historico_area.getitemnumber(m,5)))//periodonumerico
+							datawindowext.setitem(i,11,dw_historico_area.getitemnumber(m,9))//sigla
+							datawindowext.setitem(i,12,j)//clave del area
+							datawindowext.setitem(i,13,dw_historico_area.getitemstring(m,10))//sigla_anterior
+							i++
+						end if
+					end if
+				next
+			end if
+		end if
+	next
+end if
+datawindowrev.reset()
+for i = 1 to 14
+	datawindowext.SetFilter("tipoarea="+string(i))
+	datawindowext.Filter()
+	datawindowext.GroupCalc()
+	datawindowrev.InsertRow(i)
+	datawindowrev.SetItem(i,1,CredMin[i])
+	if (datawindowext.RowCount()>0) then
+		datawindowrev.SetItem(i,2,datawindowext.getitemnumber(1,"creditos_cursados"))
+//		if (i = AMeOp) then CreditosComunes = datawindowext.getitemnumber(1,&
+//												"creditos_cursados") - CreditosComunes
+	else
+		datawindowrev.SetItem(i,2,0)
+	end if
+next
+
+
+
+datawindowext.SetFilter("")
+dataWindowext.Filter()
+datawindowext.SetSort("tipoarea A,periodonum A")
+datawindowext.Sort()
+datawindowext.GroupCalc()
+
+FalMa = datawindowrev.getitemnumber(AMaOp,"faltantes")
+FalMe = datawindowrev.getitemnumber(AMeOp,"faltantes")
+if (FalMe < 0) then
+	if (FalMa > 0) and (FalMe+FalMa <= 0) and (CreditosComunes >= FalMa) then
+		datawindowrev.setitem(AMaOp,"cursados", &
+		datawindowrev.getitemnumber(AMaOp,"cursados") + FalMa)
+		datawindowrev.setitem(AMeOp,"cursados", &
+		datawindowrev.getitemnumber(AMeOp,"cursados") - FalMa)
+	end if
+end if
+
+if (FalMa < 0) then
+	if (FalMe > 0) and (FalMe+FalMa <= 0) and (CreditosComunes >= FalMe) then
+		datawindowrev.setitem(AMeOp,"cursados", &
+		datawindowrev.getitemnumber(AMeOp,"cursados") + FalMe)
+		datawindowrev.setitem(AMaOp,"cursados", &
+		datawindowrev.getitemnumber(AMaOp,"cursados") - FalMe)
+	end if
+end if
+
+//if ((l_plan = 1) OR (l_plan = 2)) AND (l_nivel = "L") then
+if ((l_plan = 1) OR (l_plan = 2)) AND (l_nivel <> "P") then 
+	if (datawindowrev.getitemnumber(AI1,"cursados")+datawindowrev.getitemnumber(AI2,"cursados")+&
+		datawindowrev.getitemnumber(AI3,"cursados")+datawindowrev.getitemnumber(AI4,"cursados")+&
+		datawindowrev.getitemnumber(AI0,"cursados")>=40)then
+				datawindowrev.setitem(AI0,"minimos",datawindowrev.getitemnumber(AI0,"cursados"))
+				datawindowrev.setitem(AI1,"minimos",datawindowrev.getitemnumber(AI1,"cursados"))
+				datawindowrev.setitem(AI2,"minimos",datawindowrev.getitemnumber(AI2,"cursados"))
+				datawindowrev.setitem(AI3,"minimos",datawindowrev.getitemnumber(AI3,"cursados"))
+				datawindowrev.setitem(AI4,"minimos",datawindowrev.getitemnumber(AI4,"cursados"))
+	end if
+end if
+
+//if  ((l_plan = 3) OR (l_plan = 4)) AND (l_nivel = "L") then
+if  ((l_plan = 3) OR (l_plan = 4)) AND (l_nivel <> "P") then
+	if (datawindowrev.getitemnumber(AI1,"cursados")+datawindowrev.getitemnumber(AI2,"cursados")+&
+		datawindowrev.getitemnumber(AI3,"cursados")+datawindowrev.getitemnumber(AI4,"cursados")>=32)then
+				datawindowrev.setitem(AI1,"minimos",datawindowrev.getitemnumber(AI1,"cursados"))
+				datawindowrev.setitem(AI2,"minimos",datawindowrev.getitemnumber(AI2,"cursados"))
+				datawindowrev.setitem(AI3,"minimos",datawindowrev.getitemnumber(AI3,"cursados"))
+				datawindowrev.setitem(AI4,"minimos",datawindowrev.getitemnumber(AI4,"cursados"))
+	end if
+end if
+
+DESTROY dw_historico_sin_area
+DESTROY dw_historico_area
+return revalida
+end function
+

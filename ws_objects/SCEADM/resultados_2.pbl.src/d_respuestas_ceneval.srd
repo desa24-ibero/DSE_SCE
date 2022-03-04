@@ -1,0 +1,21 @@
+﻿$PBExportHeader$d_respuestas_ceneval.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=156 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=104 color="536870912" )
+table(column=(type=char(255) updatewhereclause=yes name=descripcion dbname="cnv_catalogospreg.descripcion" )
+ column=(type=long updatewhereclause=yes name=valor dbname="cnv_datrespuestas.valor" )
+ column=(type=long updatewhereclause=yes name=folio dbname="cnv_datrespuestas.folio" )
+ column=(type=char(5) updatewhereclause=yes name=pregunta dbname="cnv_datrespuestas.pregunta" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"cnv_catalogospreg~" )  TABLE(NAME=~"cnv_datrespuestas~" ) COLUMN(NAME=~"cnv_catalogospreg.descripcion~") COLUMN(NAME=~"cnv_datrespuestas.valor~") COLUMN(NAME=~"cnv_datrespuestas.folio~") COLUMN(NAME=~"cnv_datrespuestas.pregunta~")    JOIN (LEFT=~"cnv_catalogospreg.pregunta~"    OP =~"=~"RIGHT=~"cnv_datrespuestas.pregunta~" )WHERE(    EXP1 =~"cnv_datrespuestas.clv_ver~"   OP =~"=~"    EXP2 =~":li_version~"    LOGIC =~"And~" ) WHERE(    EXP1 =~"cnv_datrespuestas.clv_per~"   OP =~"=~"    EXP2 =~":li_periodo~"    LOGIC =~"And~" ) WHERE(    EXP1 =~"cnv_datrespuestas.anio~"   OP =~"=~"    EXP2 =~":li_anio~" ) ) ARG(NAME = ~"li_anio~" TYPE = number)  ARG(NAME = ~"li_periodo~" TYPE = number)  ARG(NAME = ~"li_version~" TYPE = number) " arguments=(("li_anio", number),("li_periodo", number),("li_version", number))  sort="folio A pregunta A " )
+text(band=header alignment="2" text="Valor" border="0" color="0" x="334" y="12" height="64" width="146"  name=cnv_datrespuestas_valor_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cnv Catalogospreg
+Descripcion" border="0" color="0" x="754" y="12" height="128" width="1714"  name=cnv_catalogospreg_descripcion_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="12" height="64" width="306" format="[general]"  name=folio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="334" y="12" height="64" width="146" format="[general]"  name=valor edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="494" y="8" height="64" width="238" format="[general]"  name=pregunta edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="754" y="16" height="64" width="1714" format="[general]"  name=descripcion edit.limit=255 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

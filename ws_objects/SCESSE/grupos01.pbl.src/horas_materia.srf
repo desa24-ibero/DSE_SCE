@@ -1,0 +1,60 @@
+﻿$PBExportHeader$horas_materia.srf
+$PBExportComments$Regresa  en la variable horasclase, el número en de horas de clase asignadas a una  materia por semana, del catalogo de materias. Si el periodo es Verano el número es multiplicado por 2.5. La función regresa False si no es exitosa. Juan Campos. Mayo-1䅄⩔툀
+global type horas_materia from function_object
+end type
+
+forward prototypes
+global function boolean horas_materia (long clavemateria, integer periodohoras, ref integer horasclase)
+end prototypes
+
+global function boolean horas_materia (long clavemateria, integer periodohoras, ref integer horasclase);// Regresa  en la variable horasclase, el número en de horas de clase asignadas a una 
+// materia por semana, del catalogo de materias. Si el periodo es Verano el número es 
+// multiplicado por 2.5. La función regresa False si no es exitosa.
+// Juan Campos. Mayo-1997.
+
+Integer HorasReales, le_retorno 
+decimal ld_factor_ajuste_horas
+uo_periodo_parametros luo_periodo_parametros
+
+luo_periodo_parametros = CREATE uo_periodo_parametros 
+le_retorno = luo_periodo_parametros.f_carga_parametros( periodohoras, gtr_sce)
+IF le_retorno < 0 OR le_retorno = 100 THEN  
+	Messagebox("Error",luo_periodo_parametros.is_msg_err) 
+	DESTROY luo_periodo_parametros  
+	Return False 
+END IF 
+
+// Se toman los valores devueltos
+ld_factor_ajuste_horas = luo_periodo_parametros.id_factor_ajuste_horas 
+
+// Se destruye el objeto de servicios.
+DESTROY luo_periodo_parametros 
+
+// Se recuperan las horas 
+Select horas_reales
+Into	:HorasReales
+From	materias
+Where	cve_mat = :ClaveMateria using gtr_sce;
+ 
+IF gtr_sce.sqlcode = -1 then
+	Messagebox("Error",gtr_sce.sqlerrtext)
+	Return False
+Else	
+	horasclase = HorasReales  * ld_factor_ajuste_horas
+	RETURN TRUE 
+End IF
+
+
+
+
+
+// Código original modificado 
+	//	IF periodohoras = 1 then // 1=VERANO
+	//		horasclase = HorasReales * 2.5
+	//		Return True
+	//	Else
+	//		horasclase = HorasReales
+	//	   Return True
+	//   End IF
+end function
+

@@ -1,0 +1,27 @@
+﻿$PBExportHeader$convierteobservacion.srf
+global type convierteobservacion from function_object
+end type
+
+forward prototypes
+global function string convierteobservacion (integer obs, ref boolean rev)
+end prototypes
+
+global function string convierteobservacion (integer obs, ref boolean rev);CHOOSE CASE obs
+	CASE 2
+		return "EX"
+	CASE 3
+		return "--"
+	CASE 5
+		rev = true
+		return "EQ"
+	CASE 6
+		return "TS"
+	CASE 7
+		return " *"
+	case else
+		return ""
+END CHOOSE
+
+
+end function
+

@@ -1,0 +1,24 @@
+﻿$PBExportHeader$dw_mat_1_sem.srd
+$PBExportComments$Materias del área básica. Leído de SCE. Pide carrera y plan
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=90 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=area_mat_cve_mat dbname="area_mat.cve_mat" )
+ column=(type=long updatewhereclause=yes name=materias_creditos dbname="materias.creditos" )
+ retrieve="  SELECT area_mat.cve_mat,   
+         materias.creditos  
+    FROM area_mat,   
+         plan_estudios,   
+         materias  
+   WHERE ( area_mat.cve_area = plan_estudios.cve_area_basica or area_mat.cve_area = plan_estudios.cve_area_mayor_oblig or area_mat.cve_area = plan_estudios.cve_area_mayor_opt ) and  
+         ( area_mat.cve_mat = materias.cve_mat ) and  
+         ( ( plan_estudios.cve_carrera = :carr ) AND  
+         ( plan_estudios.cve_plan = :plan ) ) AND  
+         materias.activa = 1    
+" arguments=(("carr", number),("plan", number))  sort="area_mat_cve_mat A " )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="11" y="3" height="77" width="183" format="[general]"  name=area_mat_cve_mat edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="205" y="3" height="77" width="1119" format="[general]" dddw.name=dw_materias dddw.displaycolumn=materia dddw.datacolumn=cve_mat dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="1331" y="3" height="77" width="102" format="[general]"  name=materias_creditos edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

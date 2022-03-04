@@ -1,0 +1,216 @@
+﻿$PBExportHeader$m_preinsctoreinsc_sim.srm
+forward
+global type m_preinsctoreinsc_sim from menu
+end type
+type m_archivo from menu within m_preinsctoreinsc_sim
+end type
+type m_empieza_proceso from menu within m_archivo
+end type
+type m_archivo from menu within m_preinsctoreinsc_sim
+m_empieza_proceso m_empieza_proceso
+end type
+type m_ventana from menu within m_preinsctoreinsc_sim
+end type
+type m_horizontal from menu within m_ventana
+end type
+type m_vertical from menu within m_ventana
+end type
+type m_primerplano from menu within m_ventana
+end type
+type m_cascada from menu within m_ventana
+end type
+type m_ventana from menu within m_preinsctoreinsc_sim
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+type m_salir from menu within m_preinsctoreinsc_sim
+end type
+global type m_preinsctoreinsc_sim from menu
+m_archivo m_archivo
+m_ventana m_ventana
+m_salir m_salir
+end type
+end forward
+
+global type m_preinsctoreinsc_sim from menu
+m_archivo m_archivo
+m_ventana m_ventana
+m_salir m_salir
+end type
+global m_preinsctoreinsc_sim m_preinsctoreinsc_sim
+
+on m_preinsctoreinsc_sim.create
+m_preinsctoreinsc_sim=this
+call super::create
+this.text = "m_preinsctoreinsc_sim"
+this.m_archivo=create m_archivo
+this.m_ventana=create m_ventana
+this.m_salir=create m_salir
+this.Item[UpperBound(this.Item)+1]=this.m_archivo
+this.Item[UpperBound(this.Item)+1]=this.m_ventana
+this.Item[UpperBound(this.Item)+1]=this.m_salir
+end on
+
+on m_preinsctoreinsc_sim.destroy
+call super::destroy
+destroy(this.m_archivo)
+destroy(this.m_ventana)
+destroy(this.m_salir)
+end on
+
+type m_archivo from menu within m_preinsctoreinsc_sim
+m_empieza_proceso m_empieza_proceso
+end type
+
+on m_archivo.create
+call super::create
+this.text = "Preinsc a Reinsc"
+this.toolbaritemtext = "Imprimir"
+this.toolbaritemorder = 1
+this.toolbaritemspace = 2
+this.m_empieza_proceso=create m_empieza_proceso
+this.Item[UpperBound(this.Item)+1]=this.m_empieza_proceso
+end on
+
+on m_archivo.destroy
+call super::destroy
+destroy(this.m_empieza_proceso)
+end on
+
+type m_empieza_proceso from menu within m_archivo
+end type
+
+on m_empieza_proceso.create
+call super::create
+this.text = "Empieza Proceso~tCtrl+N"
+this.shortcut = 334
+this.microhelp = "Paso de Preinscripcion a Reinscripción"
+this.toolbaritemname = "Custom075!"
+this.toolbaritemtext = "Paso de Preinscripción a Reinscripción"
+this.toolbaritemorder = 1
+this.toolbaritemspace = 3
+end on
+
+event clicked;w_preinsctoreinsc_sim.cb_preinsctoreinsc.event clicked()
+end event
+
+on m_empieza_proceso.destroy
+call super::destroy
+end on
+
+type m_ventana from menu within m_preinsctoreinsc_sim
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+
+on m_ventana.create
+call super::create
+this.text = "Ventana"
+this.m_horizontal=create m_horizontal
+this.m_vertical=create m_vertical
+this.m_primerplano=create m_primerplano
+this.m_cascada=create m_cascada
+this.Item[UpperBound(this.Item)+1]=this.m_horizontal
+this.Item[UpperBound(this.Item)+1]=this.m_vertical
+this.Item[UpperBound(this.Item)+1]=this.m_primerplano
+this.Item[UpperBound(this.Item)+1]=this.m_cascada
+end on
+
+on m_ventana.destroy
+call super::destroy
+destroy(this.m_horizontal)
+destroy(this.m_vertical)
+destroy(this.m_primerplano)
+destroy(this.m_cascada)
+end on
+
+type m_horizontal from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Tilehorizontal!)
+end event
+
+on m_horizontal.create
+call super::create
+this.text = "Horizontal"
+this.microhelp = "Organiza las ventanas horizontalmente"
+end on
+
+on m_horizontal.destroy
+call super::destroy
+end on
+
+type m_vertical from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Tile!)
+end event
+
+on m_vertical.create
+call super::create
+this.text = "Vertical"
+this.microhelp = "Organiza las ventanas verticalmente"
+end on
+
+on m_vertical.destroy
+call super::destroy
+end on
+
+type m_primerplano from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Layer!)
+end event
+
+on m_primerplano.create
+call super::create
+this.text = "Primer Plano"
+this.microhelp = "Coloca la ventana actual en primer plano"
+end on
+
+on m_primerplano.destroy
+call super::destroy
+end on
+
+type m_cascada from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Cascade!)
+end event
+
+on m_cascada.create
+call super::create
+this.text = "Cascada"
+this.microhelp = "Organiza las ventanas en cascada"
+end on
+
+on m_cascada.destroy
+call super::destroy
+end on
+
+type m_salir from menu within m_preinsctoreinsc_sim
+end type
+
+on m_salir.create
+call super::create
+this.text = "&Salir"
+this.microhelp = "Salir del sistema de reinscripción en linea"
+this.toolbaritemname = "Exit!"
+this.toolbaritemtext = "Salir"
+this.toolbaritemorder = 10
+this.toolbaritemspace = 3
+this.menuitemtype = menuitemtypeexit!
+end on
+
+on m_salir.destroy
+call super::destroy
+end on
+
+event clicked;close(parentwindow)
+
+end event
+

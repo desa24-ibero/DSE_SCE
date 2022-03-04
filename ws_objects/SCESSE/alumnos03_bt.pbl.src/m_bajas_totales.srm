@@ -1,0 +1,518 @@
+﻿$PBExportHeader$m_bajas_totales.srm
+$PBExportComments$Este menu ejecuta el proceso baja total , Reactiva baja total de las materias de un alumno. Ver descripción detallada en cada Script:Clicked del menu. Juan campos Nov-1996.
+forward
+global type m_bajas_totales from m_bajas_materias
+end type
+end forward
+
+global type m_bajas_totales from m_bajas_materias
+end type
+global m_bajas_totales m_bajas_totales
+
+on m_bajas_totales.create
+m_bajas_totales=this
+call super::create
+end on
+
+on m_bajas_totales.destroy
+call super::destroy
+end on
+
+type m_imprime from m_bajas_materias`m_imprime within m_bajas_totales
+end type
+
+on m_imprime.create
+call super::create
+this.microhelp = "Este proceso esta en construcción"
+this.toolbaritemname = ""
+this.toolbaritemtext = "No tine aplicaión."
+end on
+
+event m_imprime::clicked;// Esté script extrae los datos de cuenta, nombre, apaterno, amaterno y digito de uo_nombre. 
+// La cuenta se envia como parametro al dw_imprime_bajas_totales y nombre,apaterno,amaterno 
+// y digito se le asignan a los objetos de nombre_completo y cuenta_digito del 
+// dw_imprime_bajas_totales.
+// Juan Campos Nov-1996.
+
+SetPointer(Hourglass!)  
+
+string Nom,AMat,APat,CuentaStr  
+long   CuentaInt
+char   Digito
+long   job
+int    EstasSeguro
+
+CuentaStr = w_bajas_totales.uo_nombre.em_cuenta.text
+CuentaInt = Long(CuentaStr)
+Digito    = obten_digito(cuentaInt)
+
+w_bajas_totales.dw_imprime_bajas_totales.SetTransObject(gtr_sce)
+
+if w_bajas_totales.dw_imprime_bajas_totales.Retrieve(CuentaInt) = 0 then
+  MessageBox("Aviso","No tiene materias de baja total")
+Else
+  Nom  = w_bajas_totales.uo_nombre.dw_nombre_alumno.GetItemString(1,"nombre")
+  APat = w_bajas_totales.uo_nombre.dw_nombre_alumno.GetItemString(1,"apaterno")
+  AMat = w_bajas_totales.uo_nombre.dw_nombre_alumno.GetItemString(1,"amaterno")
+  w_bajas_totales.dw_imprime_bajas_totales.object.nombre_completo.text = Nom+" "+APat+" "+AMat
+  w_bajas_totales.dw_imprime_bajas_totales.object.cuenta_digito.text = CuentaStr+"-"+Digito	
+  //w_bajas_totales.dw_imprime_bajas_totales.object.fecha.text = fecha_espaniol_servidor(gtr_sce)
+  EstasSeguro = MessageBox("Aviso","Está seguro que desea imprimir el comprobante de bajas totales de esté alumno",Question!,YesNo!,1)	
+  If EstasSeguro = 1 then
+    job = PrintOpen("Comprobante bajas totales")  
+    PrintDataWindow(job,w_bajas_totales.dw_imprime_bajas_totales) 
+    PrintClose(job)
+  end if
+end if  
+
+SetPointer(Arrow!)  	
+
+end event
+
+on m_imprime.destroy
+call super::destroy
+end on
+
+type m_baja from m_bajas_materias`m_baja within m_bajas_totales
+end type
+
+on m_baja.create
+call super::create
+this.enabled = false
+this.microhelp = "baja total de materias inscritas"
+this.toolbaritemtext = "Bajas Totales"
+end on
+
+event m_baja::clicked;// En este script se optiene la cuenta del objeto uo_nombre. se hace una busqueda en el 
+// dw_materias_inscritas para checar que todas las materias no tengan el estatus de baja_total
+// si materiasok y EstasSeguro son verdaderos se optiene ClaveMateria y Grupo de cada renglon
+// de dw_materias_inscritas  y se efectua la actualización de las tablas
+// mat_inscritas.cve_condicion como Baja_Total Y la tabla de grupos.insc_desp_bajas
+// se decrementa en uno.
+// Juan Campos Nov-1996.
+
+Long    Cuenta, Renglon
+Long     ClaveMateria, Condicion, EstasSeguro, Contador
+Int     Periodo, Anio, EstadoNuevo, EstadoAnterior, ContTodasLasMaterias, li_sqlcode, li_sqlcode_mssql
+String  Grupo, CuentaStr, FechaHora, NomUsuario, ls_sqlerrtext, ls_sqlerrtext_mssql
+Boolean MateriasOk, ExitoEnLaModificacion, HayUnNombreDeUsuario
+integer li_transfiere_mov_estac, li_tiene_adeudos
+integer li_obten_estatus_transferencia
+transaction ltr_sit
+
+SetNull(NomUsuario)
+FechaHora     = fecha_ingles_servidor(gtr_sce)
+EstadoNuevo   = 2
+Cuenta        = Long(CuentaStr)
+NomUsuario    = gtr_sce.logid
+
+If IsNull(NomUsuario) Then
+  HayUnNombreDeUsuario = False
+Else
+  HayUnNombreDeUsuario = True
+End If
+
+
+li_obten_estatus_transferencia = w_bajas_totales.of_obten_estatus_transferencia(true)
+
+if li_obten_estatus_transferencia= 1 then
+	Messagebox("Proceso de Tesorería en Ejecución","Favor de intentar la Baja Total mas tarde...", Information!)	
+	return
+end if
+
+
+If HayUnNombreDeUsuario and FechaHora <> "" Then  // HayUnNombreDeUsuario 
+  SetPointer( 	HourGlass!)
+ 
+  MateriasOk = True
+  FOR Contador = 1 To w_bajas_totales.dw_materias_inscritas.RowCount()
+    w_bajas_totales.dw_materias_inscritas.SetRow(Contador)		
+    Renglon   = w_bajas_totales.dw_materias_inscritas.GetRow()
+    Condicion = w_bajas_totales.dw_materias_inscritas.GetItemNumber(Renglon,"mat_inscritas_cve_condicion")
+    if Condicion = 2 or Condicion = 3 then
+      MateriasOk = False 
+    end if	 
+  NEXT 
+
+  if MateriasOk Then 
+    EstasSeguro = MessageBox("Aviso","Está seguro que desea dar de BAJA_TOTAL " + &
+                                     "las materias de este alumno",Question!,YesNo!,1)
+   Else
+	  MessageBox("Movimiento invalido","Ninguna materia debe estar como Baja Total o Baja Finanzas")
+	  EstasSeguro = 0
+  end if											
+
+  IF EstasSeguro = 1 Then 
+    CuentaStr = w_bajas_totales.uo_nombre.em_cuenta.text
+    Cuenta    = Long(CuentaStr)	
+    m_bajas_totales.m_baja.enabled = false
+	 ExitoEnLaModificacion = False
+	 ContTodasLasMaterias  = 0
+	 
+//Comentado el 16 de enero de 2009 temporalmente
+//Descomentado el 5 de febrero de 2009 para que ya se corra
+		li_transfiere_mov_estac = f_transfiere_mov_estac(Cuenta)
+//Asignado a 1 de forma forzoza el 16 de enero de 2009 temporalmente
+//Comentado el 5 de febrero de 2009 para que no se asigne
+//		li_transfiere_mov_estac = 1
+		IF li_transfiere_mov_estac = -1 THEN
+			MessageBox("Aviso","Error en la ejecución de f_transfiere_mov_estac~n Por favor reporte el error mostrado"+ls_sqlerrtext, StopSign!)
+			RETURN
+		END IF
+
+//	 	 MessageBox("","Antes del f_conecta_pas_parametros_bd",StopSign!)
+		  
+//Se elimina la validación de Adeudos de Tesorería
+//2011 Febrero 17
+
+//		if not isvalid(gtr_sit) then
+//
+//			 if f_conecta_pas_parametros_bd(gtr_sce, ltr_sit, 2, gs_usuario, gs_password )=0 then
+//				messagebox("Atención...", "Problemas al conectarse a la bd de tesoreria")
+//				return 
+//			else
+//				gtr_sit = ltr_sit
+//			end if 
+//
+//		end if
+		
+////	 	MessageBox("","Antes del tiene_adeudos",StopSign!)
+//	 
+//	   li_tiene_adeudos = tiene_adeudos(Cuenta, gtr_sit)
+//	 
+//	 	IF li_tiene_adeudos = -1 THEN
+//			MessageBox("Aviso","Error en la revisión de  tiene_adeudos~n Por favor reporte el error mostrado", StopSign!)
+//			RETURN
+//		ELSEIF li_tiene_adeudos = 1 THEN 
+//			MessageBox("Alumno con Adeudos","Se han encontrado adeudos.~n No procede la baja total.", StopSign!)
+//			RETURN
+//		END IF
+	 
+	 
+//	 MessageBox("","Antes del ciclo",StopSign!)
+    FOR Contador = 1 To w_bajas_totales.dw_materias_inscritas.RowCount()
+      w_bajas_totales.dw_materias_inscritas.SetRow(Contador)		
+      Renglon       = w_bajas_totales.dw_materias_inscritas.GetRow()
+      ClaveMateria  = w_bajas_totales.dw_materias_inscritas.GetItemNumber(Renglon,"mat_inscritas_cve_mat")
+      Grupo         = w_bajas_totales.dw_materias_inscritas.GetItemString(Renglon,"mat_inscritas_gpo") 
+      Periodo       = w_bajas_totales.dw_materias_inscritas.GetItemNumber(Renglon,"mat_inscritas_periodo") 
+      Anio          = w_bajas_totales.dw_materias_inscritas.GetItemNumber(Renglon,"mat_inscritas_anio") 
+      EstadoAnterior= w_bajas_totales.dw_materias_inscritas.GetItemNumber(Renglon,"mat_inscritas_cve_condicion")
+
+//	 MessageBox(STRING(Contador),"Antes del update en SYBASE",StopSign!)
+//Actualiza el estatus de las materias en SYBASE 
+      UPDATE mat_inscritas
+        SET cve_condicion = 2
+      WHERE (mat_inscritas.cuenta  = :Cuenta) AND
+            (mat_inscritas.cve_mat = :ClaveMateria) AND
+            (mat_inscritas.gpo     = :Grupo)
+      USING gtr_sce;
+		ls_sqlerrtext= gtr_sce.SqlErrText
+		li_sqlcode =  gtr_sce.sqlcode
+
+//	 MessageBox(STRING(Contador),"Antes del update en MSSQLSERVER",StopSign!)
+
+//Actualiza el estatus de las materias en MSSQLSERVER 
+      UPDATE mat_inscritas
+        SET cve_condicion = 2
+      WHERE (mat_inscritas.cuenta  = :Cuenta) AND
+            (mat_inscritas.cve_mat = :ClaveMateria) AND
+            (mat_inscritas.gpo     = :Grupo)
+      USING w_bajas_totales.itr_mssqlserver;
+		ls_sqlerrtext_mssql= w_bajas_totales.itr_mssqlserver.SqlErrText
+		li_sqlcode_mssql =  w_bajas_totales.itr_mssqlserver.sqlcode		
+		
+      IF li_sqlcode = 0 AND li_sqlcode_mssql = 0 THEN
+        w_bajas_totales.dw_materias_inscritas.SetItem(Renglon,"mat_inscritas_cve_condicion",2) 
+
+//	 	MessageBox(STRING(Contador),"Antes del update de grupos en SYBASE",StopSign!)
+        UPDATE grupos
+          SET insc_desp_bajas = insc_desp_bajas - 1
+        WHERE (grupos.cve_mat = :ClaveMateria) AND
+              (grupos.gpo     = :Grupo)
+        USING gtr_sce;
+			ls_sqlerrtext= gtr_sce.SqlErrText		  
+        IF gtr_sce.sqlcode = 0 THEN
+          Insert Into ui_bibaj values (:Cuenta,null,:ClaveMateria,:Grupo,:Periodo,:Anio,:EstadoNuevo,:EstadoAnterior,:Fechahora,:Nomusuario)
+		    Using gtr_sce;
+			 ls_sqlerrtext= gtr_sce.SqlErrText		  
+		    If gtr_sce.sqlcode = 0 Then 
+			   ExitoEnLaModificacion = True
+				ContTodasLasMaterias = ContTodasLasMaterias + 1
+		    Else 
+			   ExitoEnLaModificacion = False
+				MessageBox("Error","El movimiento no fue registrado~n"+ls_sqlerrtext)
+          End If
+        ELSE
+			 ExitoEnLaModificacion = False
+    	    MessageBox("Error","No se actualizo el campo de insc_desp_bajas de la tabla de grupos~n"+ls_sqlerrtext)
+        END IF	    	 
+      ELSE
+		  ExitoEnLaModificacion = False
+		  	IF li_sqlcode <> 0 THEN
+	     		MessageBox("Error","La Baja_total de esta materia "+ String(ClaveMateria) +  &
+		                     " no fue realizada~n"+ls_sqlerrtext)
+			ELSEIF li_sqlcode_mssql <> 0 THEN
+	     		MessageBox("Error","La Baja_total de esta materia "+ String(ClaveMateria) +  &
+		                     " no fue realizada~n"+ls_sqlerrtext_mssql)
+			END IF
+      END IF
+    NEXT
+	
+	 If ExitoEnLaModificacion and ContTodasLasMaterias = w_bajas_totales.dw_materias_inscritas.RowCount() then
+//	 MessageBox(STRING(Contador),"Antes del COMMIT",StopSign!)
+	   COMMIT USING gtr_sce;
+		COMMIT USING w_bajas_totales.itr_mssqlserver;
+		
+		m_bajas_totales.m_reactivabaja.enabled = true	 
+
+//Comentado el 16 de enero de 2009 temporalmente
+//Descomentado el 5 de febrero de 2009 para que ya se corra
+//Comentado el 16 de febrero de 2011 temporalmente
+//	 MessageBox(STRING(Contador),"Antes del f_transfiere_mov_estac final",StopSign!)
+//		li_transfiere_mov_estac = f_transfiere_mov_estac(Cuenta)
+////Asignado a 1 de forma forzoza
+////Comentado el 5 de febrero de 2009 para que no se asigne
+//		li_transfiere_mov_estac = 1
+//		IF li_transfiere_mov_estac = -1 THEN
+//			MessageBox("Aviso","Error en la ejecución de f_transfiere_mov_estac~n Por favor reporte el error mostrado"+ls_sqlerrtext, StopSign!)
+//			RETURN
+//		END IF
+		
+    Else
+      ROLLBACK USING gtr_sce;
+      ROLLBACK USING w_bajas_totales.itr_mssqlserver;
+		MessageBox("Aviso","Los cambios no se realizaron~n"+ls_sqlerrtext)
+    End If
+	
+  END IF
+
+End If // HayUnNombreDeUsuario
+end event
+
+on m_baja.destroy
+call super::destroy
+end on
+
+type m_reactivabaja from m_bajas_materias`m_reactivabaja within m_bajas_totales
+end type
+
+on m_reactivabaja.create
+call super::create
+this.microhelp = "Reactivación  de baja total de materias inscritas "
+this.toolbaritemtext = "Reacativa bajas Totales"
+end on
+
+event m_reactivabaja::clicked;// En este script se optiene la cuenta del objeto uo_nombre. se hace una busqueda en el 
+// dw_materias_inscritas para checar que todas las materias esten como Normal o baja_academica  
+// si materiasok y EstasSeguro son verdaderos se optiene ClaveMateria y Grupo de cada renglon
+// de dw_materias_inscritas  y se efectua la actualización de las tablas
+// mat_inscritas.cve_condicion como Normal_Inscrita Y la tabla de grupos.insc_desp_bajas
+// se Incrementa en uno.
+// Juan Campos Nov-1996.
+
+Long    Cuenta, Renglon
+Long     ClaveMateria, Condicion, EstasSeguro, Contador
+Int     Periodo, Anio, EstadoNuevo, EstadoAnterior, ContTodasLasMaterias, li_sqlcode, li_sqlcode_mssql
+String  Grupo, CuentaStr, FechaHora, NomUsuario, ls_sql_errtext, ls_sqlerrtext_mssql
+Boolean MateriasOk, HayUnNombreDeUsuario, ExitoModificacion
+string calificacion
+int li_cve_condicion
+
+SetNull(NomUsuario)
+FechaHora     = fecha_ingles_servidor(gtr_sce)
+EstadoNuevo   = 0
+Cuenta        = Long(CuentaStr)
+NomUsuario    = gtr_sce.logid
+
+If IsNull(NomUsuario) Then
+  HayUnNombreDeUsuario = False
+Else
+  HayUnNombreDeUsuario = True
+End If
+
+If HayUnNombreDeUsuario and FechaHora <> "" Then  // HayUnNombreDeUsuario 
+
+  MateriasOk = True
+
+  FOR Contador = 1 To w_bajas_totales.dw_materias_inscritas.RowCount()
+    w_bajas_totales.dw_materias_inscritas.SetRow(Contador)		
+    Renglon = w_bajas_totales.dw_materias_inscritas.GetRow()
+    Condicion = w_bajas_totales.dw_materias_inscritas.GetItemNumber(Renglon,"mat_inscritas_cve_condicion")
+    if Condicion = 0 or Condicion = 1 or condicion = 3 then
+      MateriasOk = False	
+    end if	
+  NEXT 
+
+  if MateriasOk then 
+    EstasSeguro = MessageBox("Aviso","Está seguro que desea Reactivar las materias de este alumno ", &
+                             Question!,YesNo!,1)
+  else
+	  EstasSeguro = 0	
+	  MessageBox("Movimiento Invalido","Todas las materias deben estar como baja_Total")
+  end if									
+								 
+  IF EstasSeguro = 1 Then 
+    CuentaStr = w_bajas_totales.uo_nombre.em_cuenta.text
+    Cuenta    = Long(CuentaStr)	
+    m_bajas_totales.m_reactivabaja.enabled = false 
+	 ExitoModificacion    = False
+	 ContTodasLasMaterias = 0
+    FOR Contador = 1 To w_bajas_totales.dw_materias_inscritas.RowCount()
+      w_bajas_totales.dw_materias_inscritas.SetRow(Contador)		
+      Renglon        = w_bajas_totales.dw_materias_inscritas.GetRow()
+      ClaveMateria   = w_bajas_totales.dw_materias_inscritas.GetItemNumber(Renglon,"mat_inscritas_cve_mat")
+      Grupo          = w_bajas_totales.dw_materias_inscritas.GetItemString(Renglon,"mat_inscritas_gpo")
+		Periodo        = w_bajas_totales.dw_materias_inscritas.GetItemNumber(Renglon,"mat_inscritas_periodo")
+		Anio           = w_bajas_totales.dw_materias_inscritas.GetItemNumber(Renglon,"mat_inscritas_anio")
+		EstadoAnterior = w_bajas_totales.dw_materias_inscritas.GetItemNumber(Renglon,"mat_inscritas_cve_condicion")
+		Calificacion 	= w_bajas_totales.dw_materias_inscritas.GetItemString(Renglon,"mat_inscritas_calificacion")
+		if calificacion = "BA" then
+			li_cve_condicion = 1
+     	else
+			li_cve_condicion = 0
+		end if
+		
+//Actualiza el estatus de las materias en SYBASE 		
+		UPDATE mat_inscritas
+        	SET cve_condicion = :li_cve_condicion
+      	WHERE (mat_inscritas.cuenta  = :Cuenta) AND
+            (mat_inscritas.cve_mat = :ClaveMateria) AND
+      	   (mat_inscritas.gpo     = :Grupo)
+      	USING gtr_sce;
+			ls_sql_errtext= gtr_sce.SqlErrtext
+			li_sqlcode= gtr_sce.SqlCode
+
+//Actualiza el estatus de las materias en MSSQLSERVER 
+      UPDATE mat_inscritas
+        	SET cve_condicion = :li_cve_condicion
+      WHERE (mat_inscritas.cuenta  = :Cuenta) AND
+            (mat_inscritas.cve_mat = :ClaveMateria) AND
+            (mat_inscritas.gpo     = :Grupo)
+      USING w_bajas_totales.itr_mssqlserver;
+		ls_sqlerrtext_mssql= w_bajas_totales.itr_mssqlserver.SqlErrText
+		li_sqlcode_mssql =  w_bajas_totales.itr_mssqlserver.sqlcode		
+		
+		IF li_sqlcode <> 100 AND li_sqlcode_mssql<> 100 and li_sqlcode <> -1 AND li_sqlcode_mssql<> -1 THEN	
+        w_bajas_totales.dw_materias_inscritas.SetItem(Renglon,"mat_inscritas_cve_condicion",li_cve_condicion) 
+        UPDATE grupos
+          SET insc_desp_bajas = insc_desp_bajas + 1
+        WHERE (grupos.cve_mat = :ClaveMateria) AND
+              (grupos.gpo     = :Grupo)
+        USING gtr_sce;
+			ls_sql_errtext= gtr_sce.SqlErrtext
+        IF gtr_sce.sqlcode <> 100 THEN
+			 Insert Into ui_bibaj values (:Cuenta,null,:ClaveMateria,:Grupo,:Periodo,:Anio,:li_cve_condicion,:EstadoAnterior,:Fechahora,:Nomusuario)
+		    Using gtr_sce;
+			 ls_sql_errtext= gtr_sce.SqlErrtext
+		    If gtr_sce.sqlcode = 0 Then 
+			   ExitoModificacion = True
+				ContTodasLasMaterias = ContTodasLasMaterias + 1
+		    Else 
+			   ExitoModificacion = False
+				MessageBox("Error","El movimiento no fue registrado~n"+ls_sql_errtext)
+          End If
+			 
+        ELSE
+			 ExitoModificacion = False
+  	       MessageBox("Error","No se actualizo el campo de insc_desp_bajas de la tabla de grupos~n"+ls_sql_errtext)
+        END IF	    	 
+      ELSE
+		  ExitoModificacion = False	
+	     MessageBox("Error","La Reactivación de estas materias: "+ String(ClaveMateria) +  &
+	                        " no fue realizada~n"+ls_sql_errtext)
+      END IF
+    NEXT
+ 
+    if ExitoModificacion and ContTodasLasMaterias = w_bajas_totales.dw_materias_inscritas.RowCount() then
+	   COMMIT USING gtr_sce;
+		COMMIT USING w_bajas_totales.itr_mssqlserver;		
+		m_bajas_totales.m_baja.enabled = true
+    Else
+	   ROLLBACK USING gtr_sce;
+      ROLLBACK USING w_bajas_totales.itr_mssqlserver;		
+		MessageBox("Aviso","Los cambios no se realizaron~n"+ls_sql_errtext)
+    End If	
+	 
+  END If
+
+End If   // Hay UnNombreDeusuario
+end event
+
+on m_reactivabaja.destroy
+call super::destroy
+end on
+
+type m_ventana from m_bajas_materias`m_ventana within m_bajas_totales
+end type
+
+on m_ventana.create
+call super::create
+this.microhelp = "Cambio de vista y posición de las ventanas"
+end on
+
+on m_ventana.destroy
+call super::destroy
+end on
+
+type m_horizontal from m_bajas_materias`m_horizontal within m_ventana
+end type
+
+on m_horizontal.create
+call super::create
+end on
+
+on m_horizontal.destroy
+call super::destroy
+end on
+
+type m_vertical from m_bajas_materias`m_vertical within m_ventana
+end type
+
+on m_vertical.create
+call super::create
+end on
+
+on m_vertical.destroy
+call super::destroy
+end on
+
+type m_primerplano from m_bajas_materias`m_primerplano within m_ventana
+end type
+
+on m_primerplano.create
+call super::create
+end on
+
+on m_primerplano.destroy
+call super::destroy
+end on
+
+type m_cascada from m_bajas_materias`m_cascada within m_ventana
+end type
+
+on m_cascada.create
+call super::create
+end on
+
+on m_cascada.destroy
+call super::destroy
+end on
+
+type m_fin from m_bajas_materias`m_fin within m_bajas_totales
+end type
+
+on m_fin.create
+call super::create
+this.text = "Salir"
+this.microhelp = "Cierra la ventana Actual"
+this.toolbaritemtext = "Salir de bajas totales"
+end on
+
+event m_fin::clicked;call super::clicked;Close(w_bajas_totales)
+end event
+
+on m_fin.destroy
+call super::destroy
+end on
+

@@ -1,0 +1,124 @@
+﻿$PBExportHeader$ingles_sersoc_opcterm.srf
+$PBExportComments$Esta función regresa "True" si la Clave de la materia es de:  Prerrequisito de ingles, Servicio Socail o de Opción terminal.       Juan Campos. Enero-1997.
+global type ingles_sersoc_opcterm from function_object
+end type
+
+forward prototypes
+global function boolean ingles_sersoc_opcterm (string cvemateria)
+end prototypes
+
+global function boolean ingles_sersoc_opcterm (string cvemateria);// Esta función regresa "True" si la Clave de la materia es de: 
+// Prerrequisito de ingles, Servicio Socail o de Opción terminal.
+// Juan Campos. Enero-1997.
+
+INTEGER 	CveOpcionTerminal
+Long 	CveMatLong
+Boolean Bandera = True
+INTEGER le_existe
+ 
+Bandera            		= False 
+CveMatLong          		= Long(cvemateria)
+
+// Se verifica si la materia es de ingles
+SELECT COUNT(*)
+INTO :le_existe  
+FROM materias_requisito  
+WHERE id_prerrequisito = 'ING' 
+AND cve_mat = :CveMatLong 
+USING gtr_sce; 
+IF gtr_sce.SQLCODE < 0 THEN 
+	MESSAGEBOX("ERROR", "Se produjo un error al verificar materia de inglés: " + gtr_sce.SQLERRTEXT)
+	RETURN FALSE 
+END IF
+IF le_existe > 0 THEN 
+	Bandera = true
+ 	MessageBox("Atención","El prerrequisito de ingles no se puede modificar desde esta pantalla")
+END IF
+
+// Se verifica si la materia es de servicio social 
+SELECT COUNT(*) 
+INTO :le_existe  
+FROM area_mat 
+WHERE cve_mat = :CveMatLong
+AND cve_area in(SELECT cve_area_servicio_social  FROM plan_estudios)
+USING gtr_sce; 
+IF gtr_sce.SQLCODE < 0 THEN 
+	MESSAGEBOX("ERROR", "Se produjo un error al verificar materia de servicio social: " + gtr_sce.SQLERRTEXT) 
+	RETURN FALSE 
+END IF
+If le_existe > 0 Then 
+  	Bandera = true
+  	MessageBox("Atención","El servicio socail no se puede modificar desde esta pantalla.")
+End If
+
+Select Count(plan_estudios.cve_area_opcion_terminal)
+ into :CveOpcionTerminal
+ From area_mat,plan_estudios
+ Where 	(area_mat.cve_mat  = :CveMatLong) And 
+       		(area_mat.cve_area = plan_estudios.cve_area_opcion_terminal)
+Using gtr_sce;	
+If gtr_sce.sqlcode = 0 Then	
+	If CveOpcionTerminal > 0 Then
+		Bandera = True
+    		MessageBox("Atención","La opción terminal no se puede modificar desde esta pantalla.")
+ 	End IF    
+End If
+
+If Bandera Then
+  	Return True
+Else
+  	Return False	
+End if
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+// CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL 
+// CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL 
+
+//// Esta función regresa "True" si la Clave de la materia es de: 
+//// Prerrequisito de ingles, Servicio Socail o de Opción terminal.
+//// Juan Campos. Enero-1997.
+//
+//Integer 	CvePrerreqIngles, CveServicioSocial1,CveServicioSocial2, CveOpcionTerminal
+//Long 	CveMatLong
+//Boolean Bandera = True
+// 
+//Bandera            		= False 
+//CveMatLong          		= Long(cvemateria)
+//CvePrerreqIngles   	= 4078 
+//CveServicioSocial1 	= 3748
+//CveServicioSocial2 	= 8763
+//
+//If CveMatLong = CvePrerreqIngles  Then
+//	Bandera = true
+// 	MessageBox("Atención","El prerrequisito de ingles no se puede modificar desde esta pantalla")
+//End if
+//
+//If CveMatLong = CveServicioSocial1 or CveMatLong = CveServicioSocial2   Then
+//  	Bandera = true
+//  	MessageBox("Atención","El servicio socail no se puede modificar desde esta pantalla.")
+//End If
+//
+//Select Count(plan_estudios.cve_area_opcion_terminal)
+// into :CveOpcionTerminal
+// From area_mat,plan_estudios
+// Where 	(area_mat.cve_mat  = :CveMatLong) And 
+//       		(area_mat.cve_area = plan_estudios.cve_area_opcion_terminal)
+//Using gtr_sce;	
+//
+//If gtr_sce.sqlcode = 0 Then	
+//	If CveOpcionTerminal <> 0 Then
+//		Bandera = True
+//    		MessageBox("Atención","La opción terminal no se puede modificar desde esta pantalla.")
+// 	End IF    
+//End If
+//
+//If Bandera Then
+//  	Return True
+//Else
+//  	Return False	
+//End if
+end function
+

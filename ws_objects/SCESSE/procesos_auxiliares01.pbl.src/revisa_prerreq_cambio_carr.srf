@@ -1,0 +1,89 @@
+﻿$PBExportHeader$revisa_prerreq_cambio_carr.srf
+global type revisa_prerreq_cambio_carr from function_object
+end type
+
+forward prototypes
+global function boolean revisa_prerreq_cambio_carr (long cuenta, long materia, integer carrera, integer plan, string nivel)
+end prototypes
+
+global function boolean revisa_prerreq_cambio_carr (long cuenta, long materia, integer carrera, integer plan, string nivel);// Revisa que el alumno cumpla con todos los prerrequisitos para cursar una materia
+// Regresa True si los prerrequisitos fueron cumplidos.
+// Juan Campos Feb-1998.
+
+DataStore dw_prerreq
+  
+dw_prerreq = CREATE DataStore
+dw_prerreq.DataObject = "dw_prerrequisitos"
+dw_prerreq.Settransobject(gtr_sce)
+
+Integer	Cont,Orden,Ok_Historico
+Long 		CvMat
+Char     Enlace, EnlaceAnterior =''
+Boolean  Acreditada = False
+
+//IF Nivel = 'L'	Then
+IF Nivel <> 'P'	Then 
+	dw_prerreq.Retrieve(Materia,Carrera,Plan)								
+	dw_prerreq.SetSort("orden A")
+	dw_prerreq.Sort( ) 
+	
+	IF dw_prerreq.RowCount() = 0 Then   
+		Commit using gtr_sce;
+		Return True
+	ElseIF dw_prerreq.RowCount() > 0 Then
+		Commit using gtr_sce;
+		For Cont = 1 To dw_prerreq.RowCount()
+			CvMat		= dw_prerreq.getitemnumber(Cont,"cve_prerreq")
+			Enlace	= dw_prerreq.getitemstring(Cont,"enlace")
+			Ok_Historico = 0
+		 	Select Count(*)  
+				Into :Ok_Historico  
+				From historico  
+				Where (cuenta	= :Cuenta) AND  
+						(cve_mat	= :CvMat) AND
+						(calificacion IN ("6","7","8","9","10","AC","MB","B","S","E","RE")) using gtr_sce;
+			If Isnull(Ok_Historico) Then Ok_Historico = 0
+			IF gtr_sce.sqlcode = 0 And Ok_Historico > 0 Then 
+				EnlaceAnterior = Enlace
+				Acreditada = True
+			ElseIf gtr_sce.SqlErrtext ="Select returned more than one row" Then    
+				EnlaceAnterior = Enlace
+				Acreditada = True
+         ElseIF gtr_sce.sqlcode = - 1 Then
+				Acreditada = False 
+				Exit
+			ElseIf gtr_sce.sqlcode = 100 or Ok_Historico = 0 Then
+				Commit using gtr_sce;
+				IF (Enlace = 'Y' Or Isnull(Enlace)) And EnlaceAnterior <> "O" Then	
+					Acreditada = False
+ 					Exit
+				ElseIF (Enlace = 'Y' Or Isnull(Enlace)) And EnlaceAnterior = "O" And Not Acreditada Then
+					Acreditada = False
+ 					Exit						
+				ElseIf EnlaceAnterior = 'Y' Or Isnull(EnlaceAnterior) Then
+					EnlaceAnterior = Enlace
+					Acreditada = False
+ 				Else
+					EnlaceAnterior = Enlace
+				End IF	
+			End IF
+ 		Next
+		If Acreditada Then 
+			Commit using gtr_sce;
+			Return True
+		Else
+			Commit using gtr_sce;
+			Return False			
+		End if
+	ElseIF dw_prerreq.RowCount() < 0 Then
+		Commit using gtr_sce; 
+		Return False //Error en la comunicación con la base de datos .
+	End IF	
+ 	Return False // Quien sabe si el control pase alguna vez  por aqui
+Else
+	Return True // Nivel Postgrado
+end if
+
+Return false
+end function
+

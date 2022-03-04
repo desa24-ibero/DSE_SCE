@@ -1,0 +1,28 @@
+﻿$PBExportHeader$f_correo_valido.srf
+global type f_correo_valido from function_object
+end type
+
+forward prototypes
+global function boolean f_correo_valido (string as_correo)
+end prototypes
+
+global function boolean f_correo_valido (string as_correo);//f_correo_valido
+//Permite determinar si la dirección de correo escrita es válida en estructura
+//Recibe	as_correo	string
+
+IF len(as_correo)<= 3 or isnull(as_correo) THEN
+	return false
+END IF
+
+IF pos(as_correo,".") > 3 AND pos(as_correo,"@")>1 THEN
+	return true	
+ELSE
+	return false
+END IF
+
+
+ 
+
+
+end function
+

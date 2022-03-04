@@ -1,0 +1,14 @@
+﻿$PBExportHeader$dw_varios.srd
+$PBExportComments$DstaWindow para modificar el porcentaje de uso de los salones, el puntaje mínimo para ser aceptado en otro plantel
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes name=valor dbname="varios.valor" )
+ column=(type=long updatewhereclause=yes key=yes name=indice dbname="varios.indice" )
+ column=(type=char(30) updatewhereclause=yes name=descripcion dbname="varios.descripcion" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"varios~" ) COLUMN(NAME=~"varios.valor~") COLUMN(NAME=~"varios.indice~") COLUMN(NAME=~"varios.descripcion~")WHERE(    EXP1 =~"varios.indice~"   OP =~"=~"    EXP2 =~":indice~" ) ) ARG(NAME = ~"indice~" TYPE = number) " update="varios" updatewhere=0 updatekeyinplace=yes arguments=(("indice", number)) )
+column(band=detail id=1 alignment="2" tabsequence=10 border="0" color="0" x="5" y="4" height="77" width="266" format="[general]"  name=valor  resizeable=1 edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=0 border="0" color="0" x="270" y="8" height="69" width="842"  name=descripcion  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

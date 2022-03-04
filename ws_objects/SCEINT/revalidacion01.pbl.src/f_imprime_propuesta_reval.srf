@@ -1,0 +1,66 @@
+﻿$PBExportHeader$f_imprime_propuesta_reval.srf
+global type f_imprime_propuesta_reval from function_object
+end type
+
+forward prototypes
+global function long f_imprime_propuesta_reval (long al_folio, datetime adttm_fecha, long al_cve_coordinacion)
+end prototypes
+
+global function long f_imprime_propuesta_reval (long al_folio, datetime adttm_fecha, long al_cve_coordinacion);//Argumentos:
+//long 		al_folio
+//datetime 	adttm_fecha
+//
+//Regresa:
+//long		num_de_registros leidos
+
+
+long ll_rows, ll_folio_reval_sep
+string ls_folio_reval_sep
+integer li_res_imp, li_cancelado, li_res_comite
+DataStore lds_sol_equivalencias
+lds_sol_equivalencias = Create DataStore
+lds_sol_equivalencias.DataObject = "d_propuesta_reval"
+lds_sol_equivalencias.SetTransObject(gtr_sce)
+
+ll_rows = lds_sol_equivalencias.Retrieve(al_folio, adttm_fecha, al_cve_coordinacion)
+li_cancelado = f_obten_cancelado(al_folio)
+//li_res_comite = f_obten_res_comite(al_folio)
+
+if li_cancelado <> 0 then
+	MessageBox("Aspirante con proceso cancelado","No se puede imprimir el pliego de un aspirante cancelado.",StopSign!)
+	return -1	
+end if
+
+//NO ES NECESARIO REVISAR EL RESULTADO DEL COMITE
+//if li_res_comite <> 1 then
+//	MessageBox("Aspirante no autorizado","No se puede imprimir el pliego de un aspirante ~n"+&
+//	          "si el comite no lo  ha autorizado.",StopSign!)
+//	return -1	
+//end if
+
+
+if ll_rows = -1 then
+	MessageBox("Error de Datawindow","No se puede leer: d_propuesta_reval",StopSign!)
+elseif ll_rows >0 then
+
+// NO SE REQUIERE REGISTRAR EN LA BITACORA DICHA IMPRESION
+//	ll_folio_reval_sep= f_inserta_folio_reval_sep(al_folio)
+//	ls_folio_reval_sep= string(ll_folio_reval_sep)
+//	lds_sol_equivalencias.object.st_folio.text = ls_folio_reval_sep
+	li_res_imp= lds_sol_equivalencias.Print()
+	if li_res_imp = -1 then
+		MessageBox("Error al Imprimir", &
+		       "No se pudo imprimir el Datawindow: d_propuesta_reval",StopSign!)
+		return -1
+	end if
+else
+	MessageBox("No existen registros","Datawindow: d_propuesta_reval~n"+&
+	           "no tiene registros para imprimir",StopSign!)
+end if
+
+return ll_rows		
+
+
+
+end function
+

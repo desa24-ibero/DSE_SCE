@@ -1,0 +1,34 @@
+﻿$PBExportHeader$dw_historico_grupos.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=141 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=93 color="536870912"  height.autosize=yes)
+table(column=(type=long updatewhereclause=yes name=hist_grupos_cve_mat dbname="hist_grupos.cve_mat" )
+ column=(type=char(42) updatewhereclause=yes name=materias_materia dbname="materias.materia" )
+ column=(type=long updatewhereclause=yes name=compute_0003 dbname="compute_0003" )
+ retrieve="  SELECT hist_grupos.cve_mat,   
+         materias.materia,   
+         SUM(hist_grupos.inscritos)  
+    FROM hist_grupos,   
+         materias  
+   WHERE ( hist_grupos.cve_mat = materias.cve_mat ) and  
+         ( ( hist_grupos.periodo = :periodo ) AND  
+         ( hist_grupos.anio = :anio ) AND  
+         ( hist_grupos.tipo <> 2 ) AND  
+         ( hist_grupos.cond_gpo = 1 ) )   
+GROUP BY hist_grupos.cve_mat,   
+         materias.materia   
+" arguments=(("periodo", number),("anio", number)) )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="330" format="[general]"  name=hist_grupos_cve_mat edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Hist Grupos
+Cve Mat"border="0" color="0" x="5" y="4" height="129" width="330"  name=hist_grupos_cve_mat_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="353" y="4" height="77" width="1180" format="[general]"  name=materias_materia edit.limit=42 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Materias
+Materia"border="0" color="0" x="353" y="4" height="129" width="1180"  name=materias_materia_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=0 border="0" color="0" x="1550" y="8" height="69" width="229"  name=compute_0003  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Hist Grupos
+Inscritos"border="0" color="0" x="1550" y="4" height="129" width="330"  name=hist_grupos_inscritos_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+report(band=detail dataobject="d_asimiladahistorico" x="2012" y="8" height="77" width="577" border="0"  height.autosize=yes criteria="" nest_arguments=(("anio"),("periodo"),("hist_grupos_cve_mat")) trail_footer = yes  name=nestedreport  slideup=directlyabove )
+text(band=header alignment="0" text="NestedReport"border="0" color="0" x="2012" y="44" height="65" width="362"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

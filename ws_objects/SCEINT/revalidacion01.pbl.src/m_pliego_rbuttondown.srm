@@ -1,0 +1,50 @@
+﻿$PBExportHeader$m_pliego_rbuttondown.srm
+forward
+global type m_pliego_rbuttondown from menu
+end type
+type m_duplicarmateria from menu within m_pliego_rbuttondown
+end type
+type m_duplicarmateria from menu within m_pliego_rbuttondown
+end type
+end forward
+
+global type m_pliego_rbuttondown from menu
+m_duplicarmateria m_duplicarmateria
+end type
+global m_pliego_rbuttondown m_pliego_rbuttondown
+
+type variables
+datawindow idw_materias
+end variables
+
+on m_pliego_rbuttondown.create
+m_pliego_rbuttondown=this
+this.m_duplicarmateria=create m_duplicarmateria
+this.Item[]={this.m_duplicarmateria}
+end on
+
+on m_pliego_rbuttondown.destroy
+destroy(this.m_duplicarmateria)
+end on
+
+type m_duplicarmateria from menu within m_pliego_rbuttondown
+end type
+
+event clicked;integer li_resp
+li_resp=MessageBox("Duplicacion de materias", "Desea revalidar la materia actual con otra", Question!, YesNo!)
+if li_resp = 1 then
+	if isvalid(idw_materias) then
+		SetPointer(HourGlass!)
+		idw_materias.TriggerEvent("ue_duplicar_materia")
+	end if	
+end if
+
+end event
+
+on m_duplicarmateria.create
+this.Text="Duplicar Materia"
+end on
+
+on m_duplicarmateria.destroy
+end on
+

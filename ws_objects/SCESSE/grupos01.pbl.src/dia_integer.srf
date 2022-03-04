@@ -1,0 +1,31 @@
+﻿$PBExportHeader$dia_integer.srf
+$PBExportComments$Regresa un entero con valor de un dia valido esto es de Lunes A Sabado [1..6]   Juan Campos.         Junio-1997.
+global type dia_integer from function_object
+end type
+
+forward prototypes
+global function integer dia_integer (string dia)
+end prototypes
+
+global function integer dia_integer (string dia);// Regresa un entero con valor de un dia valido esto es de Lunes A Sabado [1..6]
+// Juan Campos.         Junio-1997.
+	
+if Dia  = "LUNES" THEN
+	Return 1
+elseif Dia  = "MARTES" then
+	Return 2
+elseif Dia  = "MIERCOLES" then
+	Return 3
+elseif Dia  = "JUEVES" then
+	Return 4
+elseif Dia  = "VIERNES" then
+	Return 5
+elseif Dia = "SABADO" then
+	Return 6
+elseif Dia = "DOMINGO" then
+	Return 99		
+else
+	Return 99	
+end if
+end function
+

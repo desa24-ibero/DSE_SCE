@@ -1,0 +1,17 @@
+﻿$PBExportHeader$d_convierte_id_name_a_skey.srd
+$PBExportComments$Recibe un user_id y un app_name y contesta user_skey y app_skey
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=141 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=pc_app_def_app_skey dbname="pc_app_def.app_skey" )
+ column=(type=long updatewhereclause=yes name=pc_user_def_user_skey dbname="pc_user_def.user_skey" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"dbo.pc_app_def~" )  TABLE(NAME=~"dbo.pc_user_def~" ) COLUMN(NAME=~"dbo.pc_app_def.app_skey~") COLUMN(NAME=~"dbo.pc_user_def.user_skey~")WHERE(    EXP1 =~"dbo.pc_app_def.app_name~"   OP =~"like~"    EXP2 =~":app_name~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"dbo.pc_user_def.user_id~"   OP =~"like~"    EXP2 =~":user_id~" ) ) ARG(NAME = ~"user_id~" TYPE = string)  ARG(NAME = ~"app_name~" TYPE = string) " arguments=(("user_id", string),("app_name", string)) )
+text(band=header alignment="2" text="Pc App Def
+App Skey"border="0" color="0" x="5" y="4" height="129" width="330"  name=pc_app_def_app_skey_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Pc User Def
+User Skey"border="0" color="0" x="339" y="4" height="129" width="330"  name=pc_user_def_user_skey_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="330" format="[general]"  name=pc_app_def_app_skey edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="339" y="4" height="77" width="330" format="[general]"  name=pc_user_def_user_skey edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

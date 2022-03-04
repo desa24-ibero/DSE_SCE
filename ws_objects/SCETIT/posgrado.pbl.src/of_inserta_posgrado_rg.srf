@@ -1,0 +1,46 @@
+﻿$PBExportHeader$of_inserta_posgrado_rg.srf
+global type of_inserta_posgrado_rg from function_object
+end type
+
+forward prototypes
+global function long of_inserta_posgrado_rg (long al_cuenta, long al_cve_carrera, long al_cve_plan)
+end prototypes
+
+global function long of_inserta_posgrado_rg (long al_cuenta, long al_cve_carrera, long al_cve_plan);//Función que inserta el posgrado según su revalidación general
+
+//
+//of_inserta_posgrado_rg
+//
+//Parámetros:		al_cuenta		
+//						al_cve_carrera
+//						al_cve_plan
+
+string ls_mensaje
+integer li_codigo_error
+
+DECLARE spinsertaposgradorg procedure for sp_inserta_posgrado_rg
+@cuenta   = :al_cuenta,
+@cve_carrera   = :al_cve_carrera,
+@cve_plan      = :al_cve_plan
+using gtr_sce;
+
+EXECUTE spinsertaposgradorg;
+
+li_codigo_error= gtr_sce.SQLCode
+ls_mensaje= gtr_sce.SQLErrText
+CLOSE spinsertaposgradorg;
+
+if li_codigo_error = -1 then
+	MessageBox("Error al ejecutar sp_inserta_posgrado_rg: ", ls_mensaje,StopSign!)
+	return -1
+else
+	COMMIT USING gtr_sce;
+	return 0
+end if
+
+
+return 0
+
+
+end function
+

@@ -1,0 +1,24 @@
+﻿$PBExportHeader$dw_#prom_bach.srd
+$PBExportComments$Número de aspirantes, rechazados o inscritos según prom. de bachillerato.
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=105 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=1 color="536870912" )
+table(column=(type=real updatewhereclause=yes name=promedio dbname="promedio" )
+ retrieve="  SELECT aspiran.promedio  
+    FROM aspiran  
+   WHERE ( :ver=99 or aspiran.clv_ver = :ver ) AND  
+         ( aspiran.clv_per = :per ) AND  
+         ( aspiran.anio = :anio ) AND  
+         ( :carr = 9999 OR  
+         aspiran.clv_carr = :carr ) AND  
+         ( :statu = 255 OR  
+         aspiran.status = :statu ) AND  
+         aspiran.pago_exam = 1    
+" arguments=(("ver", number),("per", number),("anio", number),("carr", number),("statu", number),("min", number),("max", number))  sort="if( promedio >=min and promedio<=max, (max-min)/2+min,0) A " )
+group(level=1 header.height=1 trailer.height=1 by=("if( promedio >=min and promedio<=max, (max-min)/2+min,0)" ) header.color="536870912" trailer.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="14" y="8" height="77" width="133" format="[general]"  name=promedio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression=" cuenta_1 /count(promedio for all)"border="0" color="0" x="275" y="8" height="81" width="311" format="0.00%"  name=cuenta_2 visible="1~tif(  (cuenta_1 =count(promedio for all)) ,if ( min=0 and max=100,1,0),1)"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="count(promedio for 1)"border="0" color="0" x="19" y="8" height="81" width="243" format="[general]"  name=cuenta_1 visible="1~tif(  (cuenta_1 =count(promedio for all)) ,if ( min=0 and max=100,1,0),1)"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )

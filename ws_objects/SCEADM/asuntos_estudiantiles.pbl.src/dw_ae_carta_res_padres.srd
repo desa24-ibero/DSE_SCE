@@ -1,0 +1,52 @@
+﻿$PBExportHeader$dw_ae_carta_res_padres.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=6 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=3680 color="536870912"  height.autosize=yes)
+table(column=(type=long updatewhereclause=yes name=general_cuenta dbname="general.cuenta" )
+ column=(type=long updatewhereclause=yes name=folio dbname="aspiran.folio" )
+ column=(type=long updatewhereclause=yes name=clv_carr dbname="aspiran.clv_carr" )
+ column=(type=char(50) updatewhereclause=yes name=padres_nombre dbname="padres.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=padres_apaterno dbname="padres.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=padres_amaterno dbname="padres.amaterno" )
+ column=(type=char(1) updatewhereclause=yes name=padres_sexo dbname="padres.sexo" )
+ retrieve="  SELECT dbo.general.cuenta,
+			dbo.aspiran.folio,   
+         		dbo.aspiran.clv_carr,   
+         		dbo.padres.nombre,   
+         		dbo.padres.apaterno,   
+         		dbo.padres.amaterno,   
+ 			dbo.padres.sexo
+    FROM dbo.aspiran,   
+         		dbo.general,   
+         		dbo.padres
+   WHERE ( dbo.aspiran.folio = dbo.general.folio ) and  
+         ( dbo.aspiran.clv_ver = dbo.general.clv_ver ) and  
+         ( dbo.aspiran.clv_per = dbo.general.clv_per ) and  
+         ( dbo.aspiran.anio = dbo.general.anio ) and  
+         ( dbo.aspiran.folio = dbo.padres.folio ) and  
+         ( dbo.aspiran.clv_ver = dbo.padres.clv_ver ) and  
+         ( dbo.aspiran.clv_per = dbo.padres.clv_per ) and 
+         ( dbo.aspiran.anio = dbo.padres.anio ) and
+         ( dbo.aspiran.clv_per = :per ) AND  
+         ( dbo.aspiran.anio = :ani ) AND  
+         (( :carr = 9999 ) OR  
+         ( dbo.aspiran.clv_carr = :carr )) AND  
+         dbo.aspiran.pago_insc = 1    
+" arguments=(("per", number),("ani", number),("carr", number),("mensa_1", string),("mensa_2", string),("mensa_3", string),("mensa_4", string))  sort="clv_carr A padres_apaterno A padres_amaterno A padres_nombre A " )
+compute(band=background alignment="3" expression="mensa_1"border="0" color="0" x="669" y="1581" height="1456" width="2556" format="[general]"  name=resultado  font.face="Galliard BT" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215"  height.autosize=yes)
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="16777215" x="1448" y="608" height="77" width="77" format="[general]"  name=padres_apaterno edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="16777215" x="1192" y="608" height="77" width="77" format="[general]"  name=padres_nombre edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression="fecha_cartas_invitacion(string(date(today())))"border="0" color="0" x="2414" y="602" height="80" width="965" format="[general]"  name=fecha  font.face="Bookman Old Style" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression="padres_nombre+' '+padres_apaterno+' '+padres_amaterno"border="0" color="0" x="852" y="957" height="80" width="2516" format="[general]"  name=nom  font.face="Bookman Old Style" font.height="-11" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression=" if( padres_sexo  = ~"F~", ~"Sra. ~", ~"Sr. ~" ) "border="0" color="0" x="669" y="957" height="80" width="161" format="[general]"  font.face="Bookman Old Style" font.height="-11" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="0" text="P r e s e n t e"border="0" color="0" x="669" y="1146" height="80" width="464"  font.face="Bookman Old Style" font.height="-11" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression=" if(  padres_sexo = ~"F~", ~"Estimada Sra. ~"+padres_apaterno, ~"Estimado Sr. ~"+padres_apaterno) "border="0" color="33554432" x="669" y="1331" height="83" width="2161" format="[general]"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="16777215" x="1313" y="608" height="77" width="73" format="[general]"  name=padres_amaterno edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="0" text="A t e n t a m e n t e,"border="0" color="33554432" x="669" y="2992" height="86" width="907"  font.face="Bookman Old Style" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="0" text="~"LA VERDAD NOS HARA LIBRES~""border="0" color="33554432" x="669" y="3091" height="86" width="1225"  font.face="Bookman Old Style" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="3" text="Rector"border="0" color="0" x="669" y="3584" height="86" width="395"  font.face="Bookman Old Style" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=detail alignment="3" text="Mtro. Enrique González Torres,  S.J."border="0" color="0" x="669" y="3485" height="77" width="1836"  font.face="Bookman Old Style" font.height="-12" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="16777215" x="3379" y="0" height="77" width="33" format="[general]"  name=padres_sexo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

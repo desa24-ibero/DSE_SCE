@@ -1,0 +1,44 @@
+﻿$PBExportHeader$dw_ceneval.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=141 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=ccodigo dbname="codigo" )
+ column=(type=char(255) updatewhereclause=yes name=cinst dbname="inst" )
+ column=(type=long updatewhereclause=yes name=ccla dbname="cla" )
+ column=(type=char(255) updatewhereclause=yes name=municipio_localidad_municipio dbname="municipio" )
+ column=(type=char(50) updatewhereclause=yes name=estados_estado dbname="estado" )
+ column=(type=char(255) updatewhereclause=yes name=cmunicipio dbname="municipio" )
+ column=(type=char(31) updatewhereclause=yes name=cestado dbname="estado" )
+ column=(type=long updatewhereclause=yes name=ccve_sep dbname="cve_sep" )
+ column=(type=long updatewhereclause=yes name=ccve_estado dbname="cve_estado" )
+ retrieve="  SELECT  escuelas_ceneval.codigo ,
+           escuelas_ceneval.inst ,
+           escuelas_ceneval.cla ,
+           escuelas_ceneval.municipio ,
+           escuelas_ceneval.estado ,
+           escuelas_ceneval.municipio ,
+           estados.estado ,
+           estados.cve_sep , 
+           estados.cve_estado 
+        FROM escuelas_ceneval ,
+           estados 
+        WHERE ( escuelas_ceneval.cla = estados.cve_sep ) and
+          ( ( escuelas_ceneval.inst like ( :nombre ) ) )   
+" arguments=(("nombre", string))  sort="cinst A estados_estado A cmunicipio A " )
+compute(band=header alignment="0" expression="count(  nombre for all) "border="0" color="255" x="119" y="16" height="81" width="279" format="[general]"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Ceneval
+Escuela"border="0" color="0" x="609" y="8" height="113" width="179"  name=ceneval_escuela_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Municipio"border="0" color="0" x="2629" y="0" height="57" width="202"  name=municipio_localidad_municipio_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Estado"border="0" color="0" x="1847" y="0" height="57" width="151"  name=estados_estado_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="2789" y="144" height="77" width="549" format="[general]"  name=cestado edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1687" y="144" height="77" width="1015" format="[general]"  name=municipio_localidad_municipio edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="1303" y="144" height="77" width="343" format="[general]"  name=ccve_sep edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="919" y="144" height="77" width="353" format="[general]"  name=ccve_estado edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="467" y="144" height="77" width="334" format="[general]"  name=ccla edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="42" y="144" height="77" width="348" format="[general]"  name=ccodigo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="119" y="4" height="77" width="1555" format="[general]"  name=cinst edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="1697" y="4" height="77" width="586" format="[general]"  name=estados_estado edit.limit=31 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="2305" y="4" height="77" width="983" format="[general]"  name=cmunicipio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

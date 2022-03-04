@@ -1,0 +1,118 @@
+﻿$PBExportHeader$dw_comp_insc_masivos_anterior.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=1245 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=1562 color="536870912" )
+detail(height=64 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=alumnos_cuenta dbname="alumnos.cuenta" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_nombre dbname="alumnos.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_apaterno dbname="alumnos.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_amaterno dbname="alumnos.amaterno" )
+ column=(type=char(70) updatewhereclause=yes name=carreras_carrera dbname="carreras.carrera" )
+ column=(type=char(20) updatewhereclause=yes name=nombre_plan_nombre_plan dbname="nombre_plan.nombre_plan" )
+ column=(type=long updatewhereclause=yes name=mat_inscritas_cve_mat dbname="mat_inscritas.cve_mat" )
+ column=(type=char(2) updatewhereclause=yes name=mat_inscritas_gpo dbname="mat_inscritas.gpo" )
+ column=(type=char(42) updatewhereclause=yes name=materias_materia dbname="materias.materia" )
+ column=(type=long updatewhereclause=yes name=horario_cve_dia dbname="horario.cve_dia" values="Lunes	1/Martes	2/Miercoles	3/Jueves	4/Viernes	5/Sabado	6/Domingo	7/" )
+ column=(type=long updatewhereclause=yes name=horario_hora_inicio dbname="horario.hora_inicio" )
+ column=(type=long updatewhereclause=yes name=horario_hora_final dbname="horario.hora_final" )
+ column=(type=char(32771) updatewhereclause=no name=activacion_mensaje dbname="activacion.mensaje" )
+ column=(type=char(16) updatewhereclause=yes name=horario_cve_salon dbname="horario.cve_salon" )
+ column=(type=long updatewhereclause=yes name=mat_inscritas_periodo dbname="mat_inscritas.periodo" values="Primavera	0/Verano	1/Otoño	2/" )
+ column=(type=long updatewhereclause=yes name=mat_inscritas_anio dbname="mat_inscritas.anio" )
+ retrieve="  SELECT dbo.alumnos.cuenta,   
+         dbo.alumnos.nombre,   
+         dbo.alumnos.apaterno,   
+         dbo.alumnos.amaterno,   
+         dbo.carreras.carrera,   
+         dbo.nombre_plan.nombre_plan,   
+         dbo.mat_inscritas.cve_mat,   
+         dbo.mat_inscritas.gpo,   
+         dbo.materias.materia,   
+         dbo.horario.cve_dia,   
+         dbo.horario.hora_inicio,   
+         dbo.horario.hora_final,   
+         dbo.activacion.mensaje,   
+         dbo.horario.cve_salon,   
+         dbo.mat_inscritas.periodo,   
+         dbo.mat_inscritas.anio  
+    FROM dbo.academicos,   
+         dbo.alumnos,   
+         dbo.carreras,   
+         dbo.horario,   
+         dbo.mat_inscritas,   
+         dbo.materias,   
+         dbo.nombre_plan,   
+         dbo.activacion,
+         dbo.grupos,
+         dbo.banderas_inscrito  
+   WHERE
+      ( dbo.alumnos.cuenta>=:cuenta_min and dbo.alumnos.cuenta<=:cuenta_max) and
+		((( dbo.grupos.cve_mat *= dbo.horario.cve_mat ) and
+		( dbo.grupos.gpo *= dbo.horario.gpo )) or	 
+		(( dbo.grupos.cve_asimilada *= dbo.horario.cve_mat ) and
+		( dbo.grupos.gpo_asimilado *= dbo.horario.gpo ))) and
+		( dbo.grupos.cve_mat = dbo.mat_inscritas.cve_mat) and
+		( dbo.grupos.gpo = dbo.mat_inscritas.gpo ) and
+		( dbo.mat_inscritas.cve_mat = dbo.materias.cve_mat) and  
+         ( dbo.mat_inscritas.cuenta = dbo.alumnos.cuenta ) and  
+         ( dbo.academicos.cuenta = dbo.alumnos.cuenta ) and  
+         ( dbo.academicos.cve_plan = dbo.nombre_plan.cve_plan) and  
+         ( dbo.academicos.cve_carrera = dbo.carreras.cve_carrera ) and  
+         ( dbo.horario.periodo = :periodo ) AND  
+         ( dbo.horario.anio = :year ) AND   
+		( dbo.grupos.periodo = :periodo ) AND
+		( dbo.horario.anio = :year ) AND
+      ( dbo.academicos.nivel = 'L' ) AND
+      ( dbo.alumnos.cuenta = dbo.banderas_inscrito.cuenta ) /*AND
+      ( dbo.banderas_inscrito.cuenta = 119459 or
+ dbo.banderas_inscrito.cuenta =119460 or
+ dbo.banderas_inscrito.cuenta =119461 or
+ dbo.banderas_inscrito.cuenta =119462 or
+ dbo.banderas_inscrito.cuenta =119463 or
+ dbo.banderas_inscrito.cuenta =119464 or
+ dbo.banderas_inscrito.cuenta =119465 or
+ dbo.banderas_inscrito.cuenta =119466 or
+ dbo.banderas_inscrito.cuenta =119467 or
+ dbo.banderas_inscrito.cuenta =119468 or
+ dbo.banderas_inscrito.cuenta =119469 or
+ dbo.banderas_inscrito.cuenta =119470 or
+ dbo.banderas_inscrito.cuenta =119471 or
+ dbo.banderas_inscrito.cuenta =119472 or
+ dbo.banderas_inscrito.cuenta =119473 or
+ dbo.banderas_inscrito.cuenta =119474 or
+ dbo.banderas_inscrito.cuenta =119475 or
+ dbo.banderas_inscrito.cuenta =119476 or
+ dbo.banderas_inscrito.cuenta =119477 or
+ dbo.banderas_inscrito.cuenta =119478 or
+ dbo.banderas_inscrito.cuenta =116358 )*/" arguments=(("periodo", number),("year", number),("cuenta_min", number),("cuenta_max", number))  sort="alumnos_cuenta A mat_inscritas_cve_mat A horario_cve_dia A horario_hora_inicio A " )
+group(level=1 header.height=0 trailer.height=0 by=("alumnos_cuenta" ) newpage=yes resetpagecount=yes header.color="536870912" trailer.color="536870912" )
+column(band=header id=6 alignment="0" tabsequence=32766 border="0" color="0" x="2717" y="992" height="77" width="625" format="[general]"  name=nombre_plan_nombre_plan edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=5 alignment="0" tabsequence=32766 border="0" color="0" x="739" y="992" height="77" width="1576" format="[general]"  name=carreras_carrera edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=2 alignment="2" tabsequence=32766 border="0" color="0" x="2337" y="851" height="77" width="1006" format="[general]"  name=alumnos_nombre edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=4 alignment="2" tabsequence=32766 border="0" color="0" x="1262" y="851" height="77" width="1057" format="[general]"  name=alumnos_amaterno edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=3 alignment="2" tabsequence=32766 border="0" color="0" x="187" y="851" height="77" width="1057" format="[general]"  name=alumnos_apaterno edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="obten_digito( alumnos_cuenta )"border="0" color="0" x="1145" y="650" height="77" width="95" format="[general]"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=1 alignment="1" tabsequence=32766 border="0" color="0" x="859" y="650" height="77" width="238" format="[general]"  name=alumnos_cuenta edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=15 alignment="0" tabsequence=32766 border="0" color="0" x="2834" y="243" height="77" width="347" format="[general]"  name=mat_inscritas_periodo ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=16 alignment="0" tabsequence=32766 border="0" color="0" x="3211" y="243" height="77" width="146" format="[general]"  name=mat_inscritas_anio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+rectangle(band=header x="399" y="32" height="118" width="300" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="4" pen.color="15793151"  background.mode="2" background.color="16777215" )
+rectangle(band=header x="475" y="240" height="118" width="117" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="4" pen.color="16777215"  background.mode="2" background.color="16777215" )
+rectangle(band=header x="461" y="240" height="118" width="51" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="4" pen.color="16777215"  background.mode="2" background.color="16777215" )
+compute(band=header alignment="0" expression="page()"border="0" color="16777215" x="55" y="115" height="67" width="11" format="[general]"  name=page  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=header alignment="2" expression="today()"border="0" color="0" x="2922" y="467" height="77" width="333" format="dd/mm/yyyy"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="-"border="0" color="0" x="1101" y="650" height="77" width="37"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+rectangle(band=header x="662" y="83" height="118" width="26" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="4" pen.color="16777215"  background.mode="2" background.color="0" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="278" y="9" height="48" width="216" format="[general]"  name=mat_inscritas_cve_mat edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="706" y="9" height="48" width="95" format="[general]"  name=mat_inscritas_gpo edit.limit=2 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="900" y="9" height="48" width="1518" format="[general]"  name=materias_materia edit.limit=42 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="0" x="2436" y="9" height="48" width="322" format="[general]"  name=horario_cve_dia ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="0" x="2787" y="9" height="48" width="113" format="[general]"  name=horario_hora_inicio edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="2" tabsequence=32766 border="0" color="0" x="2929" y="9" height="48" width="117" format="[general]"  name=horario_hora_final edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="3076" y="9" height="48" width="230" format="[general]"  name=horario_cve_salon edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="F.M.C. - C.A.M.P. (DkWf 1998)"border="0" color="16777215~tif( rowcount() = 0 , rgb(255,255,255), rgb(0,0,0) )" x="113" y="1507" height="42" width="497"  font.face="Arial" font.height="-6" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=footer alignment="2" expression="page() +~"  /  ~"+pageCount()"border="0" color="0" x="3160" y="1395" height="58" width="154" format="[general]"  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=footer id=13 alignment="0" tabsequence=32766 border="0" color="0" x="278" y="889" height="445" width="2973" format="[general]"  name=activacion_mensaje edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+
+sparse(names="mat_inscritas_cve_mat	materias_materia	mat_inscritas_gpo")htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

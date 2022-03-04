@@ -1,0 +1,60 @@
+﻿$PBExportHeader$dw_sexo_padres.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=5 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=3709 color="536870912"  height.autosize=yes)
+table(column=(type=long updatewhereclause=yes name=general_cuenta dbname="general.cuenta" )
+ column=(type=long updatewhereclause=yes name=folio dbname="aspiran.folio" )
+ column=(type=long updatewhereclause=yes name=aspiran_anio dbname="aspiran.anio" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_per dbname="aspiran.clv_per" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_ver dbname="aspiran.clv_ver" )
+ column=(type=long updatewhereclause=yes name=clv_carr dbname="aspiran.clv_carr" )
+ column=(type=char(50) updatewhereclause=yes name=padres_nombre dbname="padres.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=padres_apaterno dbname="padres.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=padres_amaterno dbname="padres.amaterno" )
+ retrieve="  SELECT dbo.general.cuenta, 
+			dbo.aspiran.folio,  
+			dbo.aspiran.anio,
+			dbo.aspiran.clv_per,
+			dbo.aspiran.clv_ver,
+         		dbo.aspiran.clv_carr,   
+         		dbo.padres.nombre,   
+         		dbo.padres.apaterno,   
+         		dbo.padres.amaterno 
+    FROM dbo.aspiran,   
+         		dbo.general,   
+         		dbo.padres              
+    WHERE  
+	    (( dbo.aspiran.folio = dbo.general.folio ) and
+         ( dbo.aspiran.clv_ver = dbo.general.clv_ver ) and  
+         ( dbo.aspiran.clv_per = dbo.general.clv_per ) and  
+         ( dbo.aspiran.anio = dbo.general.anio ) and  
+         ( dbo.aspiran.folio = dbo.padres.folio ) and  
+         ( dbo.aspiran.clv_ver = dbo.padres.clv_ver ) and  
+         ( dbo.aspiran.clv_per = dbo.padres.clv_per ) and 
+         ( dbo.aspiran.anio = dbo.padres.anio ) and
+/*
+         ( dbo.aspiran.clv_per = :per ) AND  
+         ( dbo.aspiran.anio = :ani ) AND  
+         (( :carr = 9999 ) OR  
+         ( dbo.aspiran.clv_carr = :carr )) AND  
+*/
+         (dbo.aspiran.pago_insc = 1)) 
+ 
+" arguments=(("per", number),("ani", number),("carr", number))  sort="aspiran_anio A aspiran_clv_per A aspiran_clv_ver A clv_carr A padres_apaterno A padres_amaterno A padres_nombre A " )
+compute(band=background alignment="3" expression="/* mensa_1 */"border="0" color="0" x="668" y="1504" height="1649" width="2542" format="[general]"  name=resultado  font.face="Galliard BT" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215"  height.autosize=yes)
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="16777215" x="1313" y="536" height="77" width="74" format="[general]"  name=padres_amaterno edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="16777215" x="1450" y="536" height="77" width="74" format="[general]"  name=padres_apaterno edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="16777215" x="1194" y="536" height="77" width="74" format="[general]"  name=padres_nombre edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression="padres_nombre+' '+padres_apaterno+' '+padres_amaterno"border="0" color="0" x="668" y="736" height="81" width="2519" format="[general]"  name=nom  font.face="Bookman Old Style" font.height="-11" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression="'México, D.F., a ' +fecha_español(string(date(today())))"border="0" color="0" x="668" y="640" height="81" width="2135" format="[general]"  name=fecha  font.face="Bookman Old Style" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="0" text="P r e s e n t e"border="0" color="0" x="654" y="832" height="81" width="467"  font.face="Bookman Old Style" font.height="-11" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="0" text="A t e n t a m e n t e,"border="0" color="33554432" x="668" y="3116" height="85" width="910"  font.face="Bookman Old Style" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="0" text="~"LA VERDAD NOS HARÁ LIBRES~""border="0" color="33554432" x="668" y="3220" height="85" width="1335"  font.face="Bookman Old Style" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="3" text="Mtro. Enrique González Torres,  S.J."border="0" color="0" x="668" y="3512" height="77" width="1838"  font.face="Bookman Old Style" font.height="-12" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=detail alignment="3" text="Rector"border="0" color="0" x="668" y="3612" height="85" width="398"  font.face="Bookman Old Style" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="16777215" x="3210" y="0" height="77" width="266" format="[general]"  name=aspiran_clv_per edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="16777215" x="3475" y="0" height="77" width="33" format="[general]"  name=aspiran_anio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="16777215" x="3507" y="0" height="77" width="266" format="[general]"  name=aspiran_clv_ver edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )

@@ -1,0 +1,49 @@
+﻿$PBExportHeader$of_obten_carrera_plan_rg.srf
+global type of_obten_carrera_plan_rg from function_object
+end type
+
+forward prototypes
+global function long of_obten_carrera_plan_rg (long al_cve_carrera, long al_cve_plan, ref long al_cve_carrera_rg, ref long al_cve_plan_rg)
+end prototypes
+
+global function long of_obten_carrera_plan_rg (long al_cve_carrera, long al_cve_plan, ref long al_cve_carrera_rg, ref long al_cve_plan_rg);//of_obten_carrera_plan_rg
+//Recibe		al_cve_carrera		long
+//				al_cve_plan			long
+//Devuelve	al_cve_carrera_rg	long
+//				al_cve_plan_rg		long
+//Devuelve la carrera y el plan de estudios de revalidacion general
+
+long ll_cve_concepto, ll_cve_subconcepto, ll_cve_plan, ll_folio_mov_alumnos, ll_SQLNRows	
+string ls_mensaje
+integer li_codigo_sql
+
+	SELECT
+	dbo.carreras_equivalencia_rg.cve_carrera_rg,
+	dbo.carreras_equivalencia_rg.cve_plan_rg
+	INTO
+	:al_cve_carrera_rg,
+	:al_cve_plan_rg
+	FROM dbo.carreras_equivalencia_rg 
+	WHERE dbo.carreras_equivalencia_rg.cve_carrera_libre = :al_cve_carrera
+	AND 	dbo.carreras_equivalencia_rg.cve_plan_libre = :al_cve_plan
+	USING gtr_sce;
+
+	li_codigo_sql = gtr_sce.SqlCode
+	ls_mensaje = gtr_sce.SqlErrText
+	ll_SQLNRows = gtr_sce.SQLNRows	
+	
+	IF li_codigo_sql= -1 THEN
+		MessageBox("Error al consultar carreras_equivalencia_rg",ls_mensaje,StopSign! )
+		return  -1
+	ELSE
+		IF ll_SQLNRows= 0 THEN
+			return 0
+		ELSE
+			return 1
+		END IF
+	END IF
+return 1
+
+
+end function
+

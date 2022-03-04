@@ -1,0 +1,33 @@
+﻿$PBExportHeader$f_obten_folio_resultante.srf
+global type f_obten_folio_resultante from function_object
+end type
+
+forward prototypes
+global function long f_obten_folio_resultante (string as_apaterno, string as_amaterno, string as_nombre)
+end prototypes
+
+global function long f_obten_folio_resultante (string as_apaterno, string as_amaterno, string as_nombre);integer li_codigo
+string ls_mensaje_error
+long ll_max_folio
+
+select max(dbo.aspirantes_revalidacion.folio)
+into :ll_max_folio
+from dbo.aspirantes_revalidacion
+where dbo.aspirantes_revalidacion.apaterno = :as_apaterno
+and   dbo.aspirantes_revalidacion.amaterno = :as_amaterno
+and	dbo.aspirantes_revalidacion.nombre = :as_nombre
+using gtr_sce;
+
+li_codigo= gtr_sce.SqlCode
+ls_mensaje_error= gtr_sce.SqlErrText
+
+if li_codigo = -1 or li_codigo = 100 then
+	MessageBox("Error al recuperar el folio actual",ls_mensaje_error, StopSign!)
+	return 0
+else
+	return ll_max_folio	
+end if
+
+
+end function
+

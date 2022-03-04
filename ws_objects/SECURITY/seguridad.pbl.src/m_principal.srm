@@ -1,0 +1,78 @@
+﻿$PBExportHeader$m_principal.srm
+forward
+global type m_principal from menu
+end type
+type m_asegurar from menu within m_principal
+end type
+type m_aplicaciones2 from menu within m_asegurar
+end type
+type m_asegurar from menu within m_principal
+m_aplicaciones2 m_aplicaciones2
+end type
+type m_salir from menu within m_principal
+end type
+type m_salir from menu within m_principal
+end type
+end forward
+
+global type m_principal from menu
+m_asegurar m_asegurar
+m_salir m_salir
+end type
+global m_principal m_principal
+
+on m_principal.create
+m_principal=this
+this.m_asegurar=create m_asegurar
+this.m_salir=create m_salir
+this.Item[]={this.m_asegurar, &
+this.m_salir}
+end on
+
+on m_principal.destroy
+destroy(this.m_asegurar)
+destroy(this.m_salir)
+end on
+
+type m_asegurar from menu within m_principal
+m_aplicaciones2 m_aplicaciones2
+end type
+
+on m_asegurar.create
+this.Text="Asegurar"
+this.m_aplicaciones2=create m_aplicaciones2
+this.Item[]={this.m_aplicaciones2}
+end on
+
+on m_asegurar.destroy
+destroy(this.m_aplicaciones2)
+end on
+
+type m_aplicaciones2 from menu within m_asegurar
+end type
+
+event clicked;opensheet(w_asegura_aplicaciones_nvo,w_principal,0,Original!)
+end event
+
+on m_aplicaciones2.create
+this.Text="Aplicaciones 2"
+end on
+
+type m_salir from menu within m_principal
+end type
+
+event clicked;Close(w_principal)
+end event
+
+on m_salir.create
+this.Text="Salir"
+this.Microhelp="Cierra la aplicación de seguridad"
+this.ToolBarItemName="Exit!"
+this.ToolBarItemText="Cierra la aplicación de seguridad"
+this.ToolBarItemOrder=30
+this.ToolBarItemSpace=3
+end on
+
+on m_salir.destroy
+end on
+

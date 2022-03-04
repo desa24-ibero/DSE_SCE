@@ -1,0 +1,23 @@
+﻿$PBExportHeader$dw_cobran_19_sit.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no print.columns=10 print.columns.width=330 )
+header(height=80 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=90 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cuenta dbname="cuenta" )
+ retrieve="
+SELECT DISTINCT v_saldos_mov_alumnos.cuenta
+	FROM v_saldos_mov_alumnos
+	WHERE ( v_saldos_mov_alumnos.saldo < 0 ) and
+  		( v_saldos_mov_alumnos.cve_concepto IN(3,30,1,31) ) and
+ 		( v_saldos_mov_alumnos.periodo = :periodo ) and
+  		( v_saldos_mov_alumnos.anio = :anio )   
+
+" arguments=(("periodo", number),("anio", number))  sort="cuenta A " )
+text(band=header alignment="2" text="Inscripción Pagada" border="0" color="0" x="51" y="3" height="67" width="501"  name=cuenta_t  hidesnaked=1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="" border="0" color="0" x="571" y="3" height="67" width="2088"  name=st_1  hidesnaked=1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="2" expression="count(cuenta for all)"border="0" color="0" x="2670" y="3" height="67" width="380" format="[general]"  name=compute_1  hidesnaked=1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression=" cuenta +'-'+obten_digito( cuenta )"border="0" color="0" x="4" y="3" height="77" width="380" format="[general]"  name=compute_2  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

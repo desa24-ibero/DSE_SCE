@@ -1,0 +1,42 @@
+﻿$PBExportHeader$f_obten_ordinal.srf
+global type f_obten_ordinal from function_object
+end type
+
+forward prototypes
+global function string f_obten_ordinal (integer a_numero)
+end prototypes
+
+global function string f_obten_ordinal (integer a_numero);
+integer li_unidad, li_decena, li_numero
+string ls_ordinal, ls_numero, ls_unidad, ls_decena, ls_ordinal_unidad, ls_ordinal_decena
+
+li_numero =a_numero
+
+ls_numero = string(li_numero)
+
+if li_numero >=100 or li_numero <=0 then
+	return ""
+end if
+
+if li_numero >= 10 then
+	ls_unidad = Mid(ls_numero,2,1)
+	ls_decena = Mid(ls_numero,1,1)
+else
+	ls_unidad = Mid(ls_numero,1,1)	
+	ls_decena = "0"
+end if
+
+li_unidad = integer(ls_unidad)
+li_decena = integer(ls_decena)
+
+ls_ordinal_unidad = f_obten_ordinal_unidad(li_unidad)
+ls_ordinal_decena = f_obten_ordinal_decena(li_decena)
+
+ls_ordinal = ls_ordinal_decena+ls_ordinal_unidad
+
+
+return ls_ordinal
+		
+
+end function
+

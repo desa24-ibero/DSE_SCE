@@ -1,0 +1,42 @@
+﻿$PBExportHeader$f_obten_concepto_tramite.srf
+global type f_obten_concepto_tramite from function_object
+end type
+
+forward prototypes
+global function long f_obten_concepto_tramite (integer ai_cve_tramite)
+end prototypes
+
+global function long f_obten_concepto_tramite (integer ai_cve_tramite);//f_obten_concepto_tramite
+//Obtiene la clave de concepto del tramite solicitado
+//Recibe			ai_cve_tramite	int
+//Devuelve		long
+
+integer li_codigo_sql
+string ls_mensaje_sql
+long ll_cve_concepto, ll_null
+
+SetNull(ll_null)
+
+SELECT cve_concepto 
+INTO :ll_cve_concepto
+FROM tramite_control_escolar
+WHERE cve_tramite = :ai_cve_tramite
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 then
+	MessageBox("Tramite no encontrado", "El tramite["+string(ai_cve_tramite)+"] no existe", StopSign!)
+	return -1
+elseif isnull(ll_cve_concepto) then
+	return -1
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar trámite", ls_mensaje_sql,StopSign!)
+	return  -1
+end if
+
+return ll_cve_concepto
+
+end function
+

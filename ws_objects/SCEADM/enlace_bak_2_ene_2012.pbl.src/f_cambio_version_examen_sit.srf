@@ -1,0 +1,285 @@
+﻿$PBExportHeader$f_cambio_version_examen_sit.srf
+global type f_cambio_version_examen_sit from function_object
+end type
+
+forward prototypes
+global function integer f_cambio_version_examen_sit (long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio, long al_folio_apartado, integer ai_clv_ver_apartado)
+end prototypes
+
+global function integer f_cambio_version_examen_sit (long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio, long al_folio_apartado, integer ai_clv_ver_apartado);//f_cambio_version_examen_sit
+///Recibe :	al_folio	long
+//		ai_clv_ver	integer
+//		ai_clv_per	integer
+//		ai_anio		integer
+//		al_folio_apartado		long
+//		ai_clv_ver_apartado	integer
+
+int li_existe_aspirante, li_codigo_error, li_codigo_error_exec, li_exito, li_res_admision, li_res_control
+string ls_mensaje, ls_mensaje_exec, ls_mensaje_titulo, ls_periodo_pago, ls_periodo_apartado
+int li_anio_pago_cob, li_anio_apartado_cob, li_trncnt_out, li_anio_aportacion_out, li_anio_inscripcion_out
+string ls_mensaje_control, ls_mensaje_admision, ls_mensaje_out, ls_periodo_aportacion_out, ls_periodo_inscripcion_out
+string ls_mensaje_aportacion, ls_mensaje_inscripcion, ls_cve_salon, ls_inva_salon = "INVA"
+int li_periodo_pago, li_periodo_apartado, li_cancelado = 2
+
+int li_num_aspiran, li_num_general, li_num_padres, li_res_aspiran, li_res_general, li_res_padres
+boolean lb_ejecuta_cobranzas= true
+int li_clv_carr, li_res_salon, li_bachi
+real lr_promedio
+string ls_cve_salon_anterior
+
+SELECT clv_carr,
+		isnull(promedio,0),
+		salon
+INTO :li_clv_carr,
+	  :lr_promedio,
+	  :ls_cve_salon_anterior
+FROM aspiran 
+WHERE folio = :al_folio
+AND clv_ver = :ai_clv_ver
+AND clv_per = :ai_clv_per 
+AND anio = :ai_anio
+USING gtr_sadm;
+li_res_admision= gtr_sadm.SqlCode
+ls_mensaje_admision= gtr_sadm.SqlErrtext
+IF li_res_admision = -1 THEN
+	MessageBox ("Error al consultar carrera en  aspiran,",ls_mensaje_admision,StopSign!)
+	RETURN -1
+END IF
+
+li_res_salon= f_obten_salon_carrera(ai_clv_ver_apartado, ai_clv_per, ai_anio, li_clv_carr, ls_cve_salon)
+IF li_res_salon = -1 THEN
+	MessageBox ("Carrera sin salón","No es posible terminar el proceso",StopSign!)
+	RETURN -1
+END IF
+
+
+SELECT COUNT(*)
+INTO :li_num_aspiran
+FROM aspiran 
+WHERE folio = :al_folio_apartado
+AND clv_ver = :ai_clv_ver_apartado
+AND clv_per = :ai_clv_per 
+AND anio = :ai_anio
+USING gtr_sadm;
+li_res_admision= gtr_sadm.SqlCode
+ls_mensaje_admision= gtr_sadm.SqlErrtext
+IF li_res_admision = -1 THEN
+	MessageBox ("Error al contar aspiran,",ls_mensaje_admision,StopSign!)
+	RETURN -1
+END IF
+SELECT COUNT(*) 
+INTO :li_num_general
+FROM general 
+WHERE folio = :al_folio_apartado
+AND clv_ver = :ai_clv_ver_apartado
+AND clv_per = :ai_clv_per 
+AND anio = :ai_anio
+USING gtr_sadm;
+li_res_admision= gtr_sadm.SqlCode
+ls_mensaje_admision= gtr_sadm.SqlErrtext
+IF li_res_admision = -1 THEN
+	MessageBox ("Error al contar general,",ls_mensaje_admision,StopSign!)
+	RETURN -1
+END IF
+
+SELECT COUNT(*) 
+INTO :li_num_padres
+FROM padres 
+WHERE folio = :al_folio_apartado
+AND clv_ver = :ai_clv_ver_apartado
+AND clv_per = :ai_clv_per 
+AND anio = :ai_anio
+USING gtr_sadm;
+li_res_admision= gtr_sadm.SqlCode
+ls_mensaje_admision= gtr_sadm.SqlErrtext
+IF li_res_admision = -1 THEN
+	MessageBox ("Error al contar padres,",ls_mensaje_admision,StopSign!)
+	RETURN -1
+END IF
+
+li_exito= 0
+
+li_existe_aspirante= f_existe_aspirante(al_folio, ai_clv_ver, ai_clv_per, ai_anio) 
+
+IF li_existe_aspirante=0 THEN
+
+				ls_mensaje_titulo = "Folio: ["+string(al_folio)+"] ~n" +&
+										  	"Version Orig: ["+string(ai_clv_ver)+"] ~n"+&
+									  		"Periodo Orig: ["+string(ai_clv_per)+"] ~n"+&
+											"Anio Orig: ["+string(ai_anio)+"] ~n"+&
+											"Folio Nvo: ["+string(al_folio_apartado)+"] ~n" +&
+											"Version Nva: ["+string(ai_clv_ver_apartado)+"] ~n"
+
+IF lb_ejecuta_cobranzas THEN
+	IF NOT isvalid(gtr_scob) THEN
+		IF conecta_bd(gtr_scob,"SCOB",gs_usuario,gs_password)<>1 THEN
+			DESTROY gtr_scob
+			RETURN -1
+		END IF
+	END IF
+
+		DECLARE sptransfpagoadmisionlic procedure for sp_transf_pago_admision_lic
+		@folio   			= :al_folio,
+		@periodo   			= :ai_clv_per,
+		@anio 				= :ai_anio,
+		@f_cambio		 	= :al_folio_apartado,
+		@p_cambio			= :ai_clv_per,
+		@a_cambio			= :ai_anio,
+		@status 				= :li_exito out
+		using gtr_scob;	
+		
+		EXECUTE sptransfpagoadmisionlic;
+		li_codigo_error_exec= gtr_scob.SQLCode
+		ls_mensaje_exec= gtr_scob.SQLErrText
+
+		IF li_codigo_error_exec= -1 THEN
+			CLOSE sptransfpagoadmisionlic;
+			MessageBox("Error al ejecutar sp_transf_pago_admision_lic: ", ls_mensaje_titulo+"~n"+ls_mensaje_exec, StopSign!)		
+			desconecta_bd(gtr_scob)
+//			Goto ActualizaControl
+			RETURN -1			
+		END IF
+
+		FETCH sptransfpagoadmisionlic INTO :li_exito;
+	
+		li_codigo_error= gtr_scob.SQLCode
+		ls_mensaje= gtr_scob.SQLErrText
+		IF li_codigo_error= -1 THEN
+			CLOSE sptransfpagoadmisionlic;
+			MessageBox("Error al ejecutar fetch de sp_transf_pago_admision_lic: ", ls_mensaje_titulo+"~n"+ls_mensaje, StopSign!)		
+			desconecta_bd(gtr_scob)
+//			Goto ActualizaControl
+			RETURN -1
+		END IF
+	
+		
+		CLOSE sptransfpagoadmisionlic;
+
+END IF
+//Si se pudo realizar la actualizacion en cobranzas
+
+	IF li_exito = 1 THEN
+//ActualizaAdmision:
+		IF li_num_aspiran > 0 THEN 
+			li_res_aspiran= f_inserta_aspiran(al_folio, ai_clv_ver, ai_clv_per, ai_anio, al_folio_apartado, ai_clv_ver_apartado, ls_cve_salon, true)
+		ELSE
+			li_res_aspiran= f_inserta_aspiran(al_folio, ai_clv_ver, ai_clv_per, ai_anio, al_folio_apartado, ai_clv_ver_apartado, ls_cve_salon, false)
+		END IF
+		
+		li_bachi= f_inserta_bita_bachi(al_folio, ai_clv_ver, ai_clv_per, ai_anio, al_folio_apartado, ai_clv_ver_apartado, lr_promedio)
+		
+		IF li_num_general > 0 THEN 
+			li_res_general= f_inserta_general(al_folio, ai_clv_ver, ai_clv_per, ai_anio, al_folio_apartado, ai_clv_ver_apartado, true)
+		ELSE
+			li_res_general= f_inserta_general(al_folio, ai_clv_ver, ai_clv_per, ai_anio, al_folio_apartado, ai_clv_ver_apartado, false)
+		END IF
+		
+		IF li_num_padres > 0 THEN 
+			li_res_padres= f_inserta_padres(al_folio, ai_clv_ver, ai_clv_per, ai_anio, al_folio_apartado, ai_clv_ver_apartado, true)
+		ELSE
+			li_res_padres= f_inserta_padres(al_folio, ai_clv_ver, ai_clv_per, ai_anio, al_folio_apartado, ai_clv_ver_apartado, true)
+		END IF
+		
+		IF  li_res_aspiran=0 AND li_bachi=0 AND li_res_general=0 AND li_res_padres=0 THEN
+			UPDATE aspiran			
+			SET pago_exam= :li_cancelado
+			FROM aspiran 
+			WHERE folio = :al_folio
+			AND clv_ver = :ai_clv_ver
+			AND clv_per = :ai_clv_per 
+			AND anio = :ai_anio
+			USING gtr_sadm;
+			li_res_admision= gtr_sadm.SqlCode
+			ls_mensaje_admision= gtr_sadm.SqlErrtext
+			IF li_res_admision = -1 THEN
+				ROLLBACK USING gtr_sadm;
+				MessageBox ("Error al actualizar aspiran original,",ls_mensaje_admision,StopSign!)
+				desconecta_bd(gtr_scob)
+				RETURN -1
+			END IF
+			
+			UPDATE carr_sal
+			SET folios = folios - 1
+			WHERE clv_ver = :ai_clv_ver
+			AND clv_per = :ai_clv_per 
+			AND anio = :ai_anio
+			AND clv_carr = :li_clv_carr
+			AND salon = :ls_cve_salon_anterior
+			USING gtr_sadm;
+			li_res_admision= gtr_sadm.SqlCode
+			ls_mensaje_admision= gtr_sadm.SqlErrtext
+			IF li_res_admision = -1 THEN
+				ROLLBACK USING gtr_sadm;
+				MessageBox ("Error al actualizar carr_sal original,",ls_mensaje_admision,StopSign!)
+				desconecta_bd(gtr_scob)
+				RETURN -1
+			END IF
+			
+			UPDATE aspiran			
+			SET salon= :ls_cve_salon
+			FROM aspiran 
+			WHERE folio = :al_folio_apartado
+			AND clv_ver = :ai_clv_ver_apartado
+			AND clv_per = :ai_clv_per 
+			AND anio = :ai_anio
+			USING gtr_sadm;
+			li_res_admision= gtr_sadm.SqlCode
+			ls_mensaje_admision= gtr_sadm.SqlErrtext
+			IF li_res_admision = -1 THEN
+				ROLLBACK USING gtr_sadm;
+				MessageBox ("Error al actualizar aspiran nuevo,",ls_mensaje_admision,StopSign!)
+				desconecta_bd(gtr_scob)
+				RETURN -1
+			END IF
+
+			UPDATE carr_sal
+			SET folios = folios + 1
+			WHERE clv_ver = :ai_clv_ver_apartado
+			AND clv_per = :ai_clv_per 
+			AND anio = :ai_anio
+			AND clv_carr = :li_clv_carr
+			AND salon = :ls_cve_salon
+			USING gtr_sadm;
+			li_res_admision= gtr_sadm.SqlCode
+			ls_mensaje_admision= gtr_sadm.SqlErrtext
+			IF li_res_admision = -1 THEN
+				ROLLBACK USING gtr_sadm;
+				MessageBox ("Error al actualizar carr_sal nuevo,",ls_mensaje_admision,StopSign!)
+				desconecta_bd(gtr_scob)
+				RETURN -1
+			END IF
+
+
+			COMMIT USING gtr_sadm;
+			IF li_codigo_error_exec<> -1 AND li_codigo_error<>-1 THEN
+				IF lb_ejecuta_cobranzas THEN
+				COMMIT USING gtr_scob;
+				IF IsValid( gtr_scob) then
+					desconecta_bd(gtr_scob)
+				END IF
+				END IF
+			END IF
+			RETURN 0
+		ELSE
+			ROLLBACK USING gtr_sadm;
+			MessageBox("Error al actualizar el periodo en aspiran", ls_mensaje_titulo+"~n"+ls_mensaje_admision, StopSign!)		
+			desconecta_bd(gtr_scob)
+			RETURN -1
+		END IF
+	ELSE
+		
+
+//SIN FUNCION MIENTRAS SE ESTABILIZA EL NUEVO SISTEMA DE COBRANZAS
+		MessageBox("Error al ejecutar sp_transf_pago_admision_lic: ", ls_mensaje_titulo+"~n"+ls_mensaje_out+"~n" +&
+						ls_mensaje_aportacion+"~n"+ls_mensaje_inscripcion, StopSign!)		
+		desconecta_bd(gtr_scob)
+		RETURN -1
+	END IF
+ELSEIF  li_existe_aspirante= -1 THEN
+	RETURN -1
+ELSEIF  li_existe_aspirante= 100 THEN
+	MessageBox("Alumno Inexistente","No existe el alumno con el folio["+string(al_folio)+"]",StopSign!)		
+END IF
+
+end function
+

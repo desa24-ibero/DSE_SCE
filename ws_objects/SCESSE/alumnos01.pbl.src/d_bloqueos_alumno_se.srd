@@ -1,0 +1,37 @@
+﻿$PBExportHeader$d_bloqueos_alumno_se.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=134 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=banderas_cuenta dbname="banderas.cuenta" )
+ column=(type=long updatewhereclause=yes name=banderas_cve_flag_promedio dbname="banderas.cve_flag_promedio" )
+ column=(type=char(20) updatewhereclause=yes name=flag_promedio_flag_promedio dbname="flag_promedio.flag_promedio" )
+ column=(type=long updatewhereclause=yes name=banderas_cve_flag_biblioteca dbname="banderas.cve_flag_biblioteca" )
+ column=(type=char(20) updatewhereclause=yes name=flag_biblioteca_flag_biblioteca dbname="flag_biblioteca.flag_biblioteca" )
+ column=(type=long updatewhereclause=yes name=banderas_baja_documentos dbname="banderas.baja_documentos" )
+ column=(type=long updatewhereclause=yes name=banderas_baja_disciplina dbname="banderas.baja_disciplina" )
+ column=(type=long updatewhereclause=yes name=banderas_baja_3_reprob dbname="banderas.baja_3_reprob" )
+ column=(type=long updatewhereclause=yes name=banderas_baja_4_insc dbname="banderas.baja_4_insc" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"banderas~" )  TABLE(NAME=~"flag_biblioteca~" )  TABLE(NAME=~"flag_promedio~" ) COLUMN(NAME=~"banderas.cuenta~") COLUMN(NAME=~"banderas.cve_flag_promedio~") COLUMN(NAME=~"flag_promedio.flag_promedio~") COLUMN(NAME=~"banderas.cve_flag_biblioteca~") COLUMN(NAME=~"flag_biblioteca.flag_biblioteca~") COLUMN(NAME=~"banderas.baja_documentos~") COLUMN(NAME=~"banderas.baja_disciplina~") COLUMN(NAME=~"banderas.baja_3_reprob~") COLUMN(NAME=~"banderas.baja_4_insc~")    JOIN (LEFT=~"flag_biblioteca.cve_flag_biblioteca~"    OP =~"=~"RIGHT=~"banderas.cve_flag_biblioteca~" )    JOIN (LEFT=~"banderas.cve_flag_promedio~"    OP =~"=~"RIGHT=~"flag_promedio.cve_flag_promedio~" )WHERE(    EXP1 =~"banderas.cuenta~"   OP =~"=~"    EXP2 =~":al_cuenta~" ) ) ARG(NAME = ~"al_cuenta~" TYPE = number) " arguments=(("al_cuenta", number)) )
+text(band=header alignment="2" text="Banderas
+Cuenta"border="0" color="0" x="4" y="3" height="128" width="351"  name=banderas_cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Banderas
+Cve Flag Promedio"border="0" color="0" x="358" y="3" height="128" width="508"  name=banderas_cve_flag_promedio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Flag Promedio
+Flag Promedio"border="0" color="0" x="870" y="3" height="128" width="614"  name=flag_promedio_flag_promedio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Banderas
+Cve Flag Biblioteca"border="0" color="0" x="1488" y="3" height="128" width="512"  name=banderas_cve_flag_biblioteca_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Flag Biblioteca
+Flag Biblioteca"border="0" color="0" x="2004" y="3" height="128" width="614"  name=flag_biblioteca_flag_biblioteca_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="4" y="4" height="74" width="351" format="[general]"  name=banderas_cuenta edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="358" y="4" height="74" width="351" format="[general]"  name=banderas_cve_flag_promedio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="870" y="4" height="74" width="614" format="[general]"  name=flag_promedio_flag_promedio edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="0" x="1488" y="4" height="74" width="351" format="[general]"  name=banderas_cve_flag_biblioteca edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="2004" y="4" height="74" width="614" format="[general]"  name=flag_biblioteca_flag_biblioteca edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=0 border="0" color="0" x="2619" y="0" height="64" width="1247"  name=banderas_baja_documentos  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=0 border="0" color="0" x="3866" y="0" height="64" width="1247"  name=banderas_baja_disciplina  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=0 border="0" color="0" x="5113" y="0" height="64" width="1247"  name=banderas_baja_3_reprob  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=0 border="0" color="0" x="6360" y="0" height="64" width="1247"  name=banderas_baja_4_insc  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

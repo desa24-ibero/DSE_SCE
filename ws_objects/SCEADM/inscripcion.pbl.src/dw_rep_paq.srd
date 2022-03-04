@@ -1,0 +1,58 @@
+﻿$PBExportHeader$dw_rep_paq.srd
+$PBExportComments$Inscritos ordenados por carreras y por paquetes de materias
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=204 color="536870912" )
+summary(height=92 color="536870912" )
+footer(height=44 color="536870912" )
+detail(height=92 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=aspiran_num_paq dbname="aspiran.num_paq" )
+ column=(type=long updatewhereclause=yes name=aspiran_folio dbname="aspiran.folio" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_carr dbname="aspiran.clv_carr" )
+ column=(type=char(50) updatewhereclause=yes name=general_nombre dbname="general.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=general_apaterno dbname="general.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=general_amaterno dbname="general.amaterno" )
+ column=(type=long updatewhereclause=yes name=general_cuenta dbname="general.cuenta" )
+ column=(type=char(1) updatewhereclause=yes name=digito dbname="digito" )
+ retrieve="  SELECT aspiran.num_paq,   
+         aspiran.folio,   
+         aspiran.clv_carr,   
+         general.nombre,   
+         general.apaterno,   
+         general.amaterno,  
+         general.cuenta,  
+         digito = ~" ~"  
+    FROM aspiran,   
+         general  
+   WHERE ( general.folio = aspiran.folio ) and  
+         ( general.clv_ver = aspiran.clv_ver ) and  
+         ( general.clv_per = aspiran.clv_per ) and  
+         ( general.anio = aspiran.anio ) and  
+         ( :ver=99 or aspiran.clv_ver = :ver ) AND  
+         ( aspiran.clv_per = :per ) AND  
+         ( aspiran.anio = :anio )  
+" arguments=(("ver", number),("per", number),("anio", number))  sort="aspiran_clv_carr A aspiran_num_paq A aspiran_folio A " )
+group(level=1 header.height=0 trailer.height=88 by=("aspiran_clv_carr" ) header.color="536870912" trailer.color="536870912" )
+group(level=2 header.height=0 trailer.height=92 by=("aspiran_num_paq" ) header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="2" text="" border="0" color="0" x="5" y="32" height="64" width="3410"  name=st_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Clv Carr" border="0" color="0" x="1230" y="124" height="64" width="206"  name=aspiran_clv_carr_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Nombre" border="0" color="0" x="2597" y="124" height="64" width="206"  name=general_nombre_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Num Paq" border="0" color="0" x="9" y="124" height="64" width="247"  name=aspiran_num_paq_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Folio" border="0" color="0" x="274" y="124" height="64" width="128"  name=aspiran_folio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="general_apaterno+' '+general_amaterno+' '+general_nombre"border="0" color="0" x="2016" y="4" height="76" width="1358" format="[general]"  name=nom  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="745" y="4" height="76" width="1266" format="[general]"  name=aspiran_clv_carr dddw.name=dw_carrera dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="37" y="4" height="76" width="197" format="[general]"  name=aspiran_num_paq edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="aspiran_folio"border="0" color="0" x="242" y="4" height="76" width="192" format="[general]"  name=fol  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.2 alignment="2" expression="count(aspiran_num_paq for group 2)"border="0" color="0" x="402" y="4" height="84" width="329" format="[general]"  name=compute_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=trailer.2 alignment="0" text="Total Paq:" border="0" color="0" x="27" y="12" height="64" width="270"  name=t_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="2" expression="count(aspiran_num_paq for 1)"border="0" color="0" x="402" y="4" height="84" width="329" format="[general]"  name=compute_2  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=trailer.1 alignment="0" text="Total Carr:" border="0" color="0" x="27" y="12" height="64" width="274"  name=t_2  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="count(aspiran_num_paq for all)"border="0" color="0" x="398" y="4" height="84" width="329" format="[general]"  name=compute_3  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=summary alignment="0" text="Gran Total:" border="0" color="0" x="18" y="4" height="84" width="293"  name=t_3  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=footer alignment="0" text="<dw_rep_paq>" border="0" color="33554432" x="23" y="0" height="44" width="425"  name=t_4  font.face="Arial" font.height="-6" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="Cuenta" border="0" color="0" x="466" y="124" height="64" width="187"  name=t_6  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="453" y="4" height="76" width="210" format="[general]"  name=general_cuenta edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="-" border="0" color="0" x="667" y="4" height="76" width="23"  name=t_5  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="695" y="4" height="76" width="37" format="[general]"  name=digito edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

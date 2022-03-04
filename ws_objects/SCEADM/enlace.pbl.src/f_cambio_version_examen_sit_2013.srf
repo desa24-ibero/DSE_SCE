@@ -1,0 +1,118 @@
+﻿$PBExportHeader$f_cambio_version_examen_sit_2013.srf
+global type f_cambio_version_examen_sit_2013 from function_object
+end type
+
+forward prototypes
+global function integer f_cambio_version_examen_sit_2013 (long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio, long al_folio_apartado, integer ai_clv_ver_apartado)
+end prototypes
+
+global function integer f_cambio_version_examen_sit_2013 (long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio, long al_folio_apartado, integer ai_clv_ver_apartado);//f_cambio_version_examen_sit_2013
+///Recibe :	al_folio	long
+//		ai_clv_ver	integer
+//		ai_clv_per	integer
+//		ai_anio		integer
+//		al_folio_apartado		long
+//		ai_clv_ver_apartado	integer
+
+int li_existe_aspirante, li_codigo_error, li_codigo_error_exec, li_exito, li_res_admision, li_res_control
+string ls_mensaje, ls_mensaje_exec, ls_mensaje_titulo, ls_periodo_pago, ls_periodo_apartado
+int li_anio_pago_cob, li_anio_apartado_cob, li_trncnt_out, li_anio_aportacion_out, li_anio_inscripcion_out
+string ls_mensaje_control, ls_mensaje_admision, ls_mensaje_out, ls_periodo_aportacion_out, ls_periodo_inscripcion_out
+string ls_mensaje_aportacion, ls_mensaje_inscripcion, ls_cve_salon, ls_inva_salon = "INVA"
+string ls_mensaje_sp
+int li_periodo_pago, li_periodo_apartado, li_cancelado = 2
+
+int li_num_aspiran, li_num_general, li_num_padres, li_res_aspiran, li_res_general, li_res_padres
+boolean lb_ejecuta_cobranzas= true
+int li_clv_carr, li_res_salon, li_bachi
+real lr_promedio
+string ls_cve_salon_anterior
+
+
+				ls_mensaje_titulo = "Folio: ["+string(al_folio)+"] ~n" +&
+										  	"Version Orig: ["+string(ai_clv_ver)+"] ~n"+&
+									  		"Periodo Orig: ["+string(ai_clv_per)+"] ~n"+&
+											"Anio Orig: ["+string(ai_anio)+"] ~n"+&
+											"Folio Nvo: ["+string(al_folio_apartado)+"] ~n" +&
+											"Version Nva: ["+string(ai_clv_ver_apartado)+"] ~n"
+
+	IF lb_ejecuta_cobranzas THEN
+		IF NOT isvalid(gtr_scob) THEN
+			IF conecta_bd_n_tr(gtr_scob,gs_scob,gs_usuario,gs_password)<>1 THEN
+				DESTROY gtr_scob
+				RETURN -1
+			ELSE
+				gtr_scob.AUTOCOMMIT = TRUE 
+			END IF
+		END IF
+
+//Descripción del stored procedure
+//sp_transf_pago_admision_lic Para transferir el pago de una cuenta a otra
+//
+//Parámetros entrada:
+//@folio integer,
+//@periodo smallint,
+//@anio smallint,
+//@f_cambio integer,
+//@p_cambio smallint,
+//@a_cambio smallint, 
+//@status integer output,
+//@mensaje varchar(80) output)
+//
+//Parámetros salida:
+//@status   el valor puede ser 1 cuando la transferencia fue exitosa y -1 cuando no.
+//@mensaje  mensaje en caso de error, va vació cuando fue exitoso
+
+
+		DECLARE sptransfpagoadmisionlic procedure for sp_transf_pago_admision_lic
+		@folio   			= :al_folio,
+		@periodo   			= :ai_clv_per,
+		@anio 				= :ai_anio,
+		@f_cambio		 	= :al_folio_apartado,
+		@p_cambio			= :ai_clv_per,
+		@a_cambio			= :ai_anio,
+		@status 				= :li_exito out,
+		@mensaje 				= :ls_mensaje_sp out
+		using gtr_scob;	
+		
+		EXECUTE sptransfpagoadmisionlic;
+		li_codigo_error_exec= gtr_scob.SQLCode
+		ls_mensaje_exec= gtr_scob.SQLErrText
+
+		IF li_codigo_error_exec= -1 THEN
+			CLOSE sptransfpagoadmisionlic;
+			MessageBox("Error al ejecutar sp_transf_pago_admision_lic: ", ls_mensaje_titulo+"~n"+ls_mensaje_sp, StopSign!)		
+			desconecta_bd(gtr_scob)
+//			Goto ActualizaControl
+			RETURN -1			
+		END IF
+
+		FETCH sptransfpagoadmisionlic INTO :li_exito, :ls_mensaje_sp ;
+	
+		li_codigo_error= gtr_scob.SQLCode
+		ls_mensaje= gtr_scob.SQLErrText
+		IF li_codigo_error= -1 THEN
+			CLOSE sptransfpagoadmisionlic;
+			MessageBox("Error al ejecutar fetch de sp_transf_pago_admision_lic: ", ls_mensaje_titulo+"~n"+ls_mensaje_sp, StopSign!)		
+			desconecta_bd(gtr_scob)
+//			Goto ActualizaControl
+			RETURN -1
+		END IF
+			
+		CLOSE sptransfpagoadmisionlic;
+
+//	IF lb_ejecuta_cobranzas THEN	
+	END IF
+
+	if li_exito = 1 then
+		desconecta_bd(gtr_scob)
+		return li_exito
+	else
+	//Si se pudo realizar la actualizacion en cobranzas
+		MessageBox("Error al ejecutar sp_transf_pago_admision_lic: ", ls_mensaje_titulo+"~n"+ls_mensaje_sp, StopSign!)		
+		desconecta_bd(gtr_scob)
+		RETURN li_exito
+	END IF
+
+end function
+

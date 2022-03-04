@@ -1,0 +1,66 @@
+﻿$PBExportHeader$f_actualiza_condicion_materias.srf
+global type f_actualiza_condicion_materias from function_object
+end type
+
+forward prototypes
+global function integer f_actualiza_condicion_materias (long al_cuenta, long al_cve_condicion, ref n_tr atr_transaction)
+end prototypes
+
+global function integer f_actualiza_condicion_materias (long al_cuenta, long al_cve_condicion, ref n_tr atr_transaction);//f_actualiza_condicion_materias
+//
+//Recibe al_cuenta			long
+//			al_cve_condicion	long
+//
+
+//Esta funcion actualiza el cupo, los inscritos y el profesor 
+//de un grupo que está asmilando a otros
+
+integer  li_codigo_sql, li_cupo, li_inscritos, li_cve_profesor, li_periodo, li_anio
+string ls_mensaje_sql, ls_gpo
+long ll_cuenta, ll_num_rows, ll_row_actual
+uds_datastore luds_datastore
+long ll_cve_mat
+
+
+luds_datastore = create uds_datastore
+luds_datastore.dataobject = 'd_materias_inscritas_sin_bt'
+luds_datastore.SetTransObject(atr_transaction)
+ll_num_rows = luds_datastore.Retrieve(al_cuenta)
+
+for ll_row_actual=1 to ll_num_rows	
+	//Lee los valores de las materias del alumno
+	li_periodo	= luds_datastore.GetItemNumber(ll_row_actual, 'mat_inscritas_periodo')
+	li_anio		= luds_datastore.GetItemNumber(ll_row_actual, 'mat_inscritas_anio')
+	ll_cve_mat	= luds_datastore.GetItemNumber(ll_row_actual, 'mat_inscritas_cve_mat')
+	ls_gpo		= luds_datastore.GetItemString(ll_row_actual, 'mat_inscritas_gpo')
+	
+	//Actualiza la condicion de las materias inscritas
+
+	UPDATE dbo.mat_inscritas
+	SET   dbo.mat_inscritas.cve_condicion =:al_cve_condicion,
+			dbo.mat_inscritas.calificacion = null
+	FROM	dbo.mat_inscritas
+	WHERE dbo.mat_inscritas.cuenta = :al_cuenta
+	AND   dbo.mat_inscritas.cve_mat =  :ll_cve_mat
+	AND   dbo.mat_inscritas.gpo =  :ls_gpo
+	AND   dbo.mat_inscritas.periodo =  :li_periodo
+	AND   dbo.mat_inscritas.anio =  :li_anio
+	USING atr_transaction;
+
+	li_codigo_sql = atr_transaction.SqlCode
+	ls_mensaje_sql = atr_transaction.SqlErrText
+
+	if li_codigo_sql = -1 then
+		ROLLBACK USING atr_transaction;
+		MessageBox("Error al actualizar la condicion en mat_inscritas", ls_mensaje_sql)
+		return li_codigo_sql
+	end if	
+next
+
+if ll_row_actual>= 1 then
+	COMMIT USING atr_transaction;
+end if
+return li_codigo_sql
+
+end function
+

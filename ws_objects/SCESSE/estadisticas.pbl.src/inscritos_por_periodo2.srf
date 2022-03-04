@@ -1,0 +1,25 @@
+﻿$PBExportHeader$inscritos_por_periodo2.srf
+global type inscritos_por_periodo2 from function_object
+end type
+
+forward prototypes
+global function string inscritos_por_periodo2 (integer año, integer periodo, long materia, integer tipo)
+end prototypes
+
+global function string inscritos_por_periodo2 (integer año, integer periodo, long materia, integer tipo);Long Tot
+
+SELECT COUNT(historico.cuenta) INTO :Tot FROM historico, hist_grupos
+WHERE hist_grupos.cve_mat = historico.cve_mat AND
+hist_grupos.gpo = historico.gpo AND
+hist_grupos.anio = historico.anio AND
+hist_grupos.periodo = historico.periodo AND
+hist_grupos.tipo = :tipo AND
+historico.cve_mat = :materia AND
+historico.periodo = :periodo AND
+historico.anio = :año using gtr_sce;
+
+Return String(Tot)
+ 
+
+end function
+

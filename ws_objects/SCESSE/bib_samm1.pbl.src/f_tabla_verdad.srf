@@ -1,0 +1,80 @@
+﻿$PBExportHeader$f_tabla_verdad.srf
+$PBExportComments$Tabla de verdad. Crea una matriz de valores booleanos 2^nxn  donde n es el número de condiciones que se van a evaluar.
+global type f_tabla_verdad from function_object
+end type
+
+forward prototypes
+global function any f_tabla_verdad (integer ai_condiciones)
+end prototypes
+
+global function any f_tabla_verdad (integer ai_condiciones);//////////////////////////////////////////////////////////////////////////////
+//
+//	Function:  f_tabla_verdad
+//
+//	Access:  public
+//
+//	Arguments:
+//	ai_condiciones		El número de condiciones o variables.
+//
+//	Returns:
+//	Any					Matriz 2^nxn
+//
+//	Description:
+//	Crea una matriz de valores booleanos 2^nxn, donde n es el número de
+//	condiciones que se van a evaluar.
+//	Ejemplo. Si el número de condiciones es 3, entonces devuelve una matriz
+//	de 2^3 = 8 renglones por 3 columnas.
+//			|	1	2	3
+//	------|------------
+//		1	|	V	V	V
+//		2	|	V	V	F
+//		3	|	V	F	V
+//		4	|	V	F	F
+//		5	|	F	V	V
+//		6	|	F	V	F
+//		7	|	F	F	V
+//		8	|	F	F	F
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+//	Revision History
+//
+//	Version
+//	1.0   Initial version
+//
+//////////////////////////////////////////////////////////////////////////////
+long ll_columnas
+long ll_renglones
+long ll_x, ll_y
+long ll_x_min, ll_x_max
+long ll_y_min, ll_y_max
+boolean lb_bandera
+any la_matriz[]
+any la_resultado
+
+ll_renglones = 2^ai_condiciones
+ll_columnas = ai_condiciones
+
+la_matriz = f_matrix_dim(ll_renglones,ll_columnas,"boolean")
+
+ll_x_min = f_matrix_lbound(la_matriz,1)
+ll_x_max = f_matrix_ubound(la_matriz,1)
+
+ll_y_min = f_matrix_lbound(la_matriz,2)
+ll_y_max = f_matrix_ubound(la_matriz,2)
+
+for ll_y = ll_y_min to ll_y_max
+	lb_bandera = True
+	for ll_x = ll_x_min to ll_x_max
+		f_matrix_setitem(la_matriz,lb_bandera,ll_x,ll_y)
+		If mod(ll_x,2 ^ (ll_y_max - ll_y)) = 0 Then
+			lb_bandera = Not lb_bandera
+		End If
+	next
+next
+
+la_resultado = la_matriz
+
+return la_resultado
+end function
+

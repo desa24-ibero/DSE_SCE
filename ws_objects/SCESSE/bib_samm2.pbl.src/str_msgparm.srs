@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_msgparm.srs
+$PBExportComments$Objeto generico usado para el paso de parametros complejos entre diferentes ventanas. Usado con Message.PowerObjectParm.
+global type str_msgparm from structure
+	any		data[]
+end type
+

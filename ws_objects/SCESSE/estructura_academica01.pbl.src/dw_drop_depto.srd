@@ -1,0 +1,16 @@
+﻿$PBExportHeader$dw_drop_depto.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=15780518 processing=1 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no grid.lines=0 )
+header(height=69 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=61 color="536870912" )
+table(column=(type=long updatewhereclause=yes key=yes name=cve_depto dbname="departamentos.cve_depto" )
+ column=(type=char(45) updatewhereclause=yes name=departamento dbname="departamentos.departamento" )
+ retrieve="  SELECT  departamentos.cve_depto ,
+           departamentos.departamento 
+         FROM departamentos   
+        ORDER BY departamentos.cve_depto          ASC  " update="departamentos" updatewhere=0 updatekeyinplace=no )
+text(band=header alignment="2" text="Departamento"border="0" color="0" x="23" y="8" height="53" width="1052"  name=departamento_t  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="23" y="4" height="61" width="1052" format="[general]"  name=departamento edit.limit=45 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-7" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="15780518" x="10" y="8" height="77" width="5" format="[general]"  name=cve_depto edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

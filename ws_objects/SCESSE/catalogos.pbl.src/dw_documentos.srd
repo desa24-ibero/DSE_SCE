@@ -1,0 +1,12 @@
+﻿$PBExportHeader$dw_documentos.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=31436382 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=5 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=121 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cve_doc dbname="clave_doc.cve_doc" )
+ column=(type=char(30) updatewhereclause=yes name=documento dbname="clave_doc.documento" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"clave_doc~" ) COLUMN(NAME=~"clave_doc.cve_doc~") COLUMN(NAME=~"clave_doc.documento~")) " )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="5" color="0" x="60" y="16" height="77" width="220" format="[general]"  name=cve_doc edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="5" color="0" x="334" y="16" height="77" width="965" format="[general]"  name=documento edit.limit=30 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )

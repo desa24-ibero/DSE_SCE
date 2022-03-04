@@ -1,0 +1,15 @@
+﻿$PBExportHeader$dw_mad_carrera_pos.srd
+$PBExportComments$Datawindow que trae todas las carreras de posgrado
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=77 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cve_carrera dbname="carreras.cve_carrera" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=carrera dbname="carreras.carrera" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"carreras~" ) COLUMN(NAME=~"carreras.cve_carrera~") COLUMN(NAME=~"carreras.carrera~")WHERE(    EXP1 =~"carreras.nivel~"   OP =~"=~"    EXP2 =~"'P'~" ) ) " update="carreras" updatewhere=1 updatekeyinplace=no )
+text(band=header alignment="2" text="Cve Carrera"border="0" color="0" x="5" y="4" height="65" width="330"  name=cve_carrera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Carrera"border="0" color="0" x="339" y="4" height="65" width="1399"  name=carrera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=10 border="0" color="0" x="5" y="4" height="77" width="330" format="[general]"  name=cve_carrera edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="353" y="8" height="65" width="1399" format="[general]"  name=carrera edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

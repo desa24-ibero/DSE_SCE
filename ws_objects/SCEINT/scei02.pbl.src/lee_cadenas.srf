@@ -1,0 +1,26 @@
+﻿$PBExportHeader$lee_cadenas.srf
+global type lee_cadenas from function_object
+end type
+
+forward prototypes
+global function string lee_cadenas (ref string linea, string variable)
+end prototypes
+
+global function string lee_cadenas (ref string linea, string variable);int li_a
+string valor
+
+//if Pos (linea, variable)<>0 then
+//	li_a=Pos (linea, "	")
+//	valor=Left (linea, li_a -1)
+//	valor=Right(valor,len(valor) - len(variable))
+//	linea=mid(linea,li_a+1)
+//end if
+
+if Pos (linea, variable)<>0 then
+	li_a=Pos (linea, "=")
+	valor=Trim(Right(linea,len(linea) - li_a))
+end if
+
+return valor
+end function
+

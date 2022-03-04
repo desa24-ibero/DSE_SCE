@@ -1,0 +1,108 @@
+﻿$PBExportHeader$f_revisa_adeudos_const.srf
+global type f_revisa_adeudos_const from function_object
+end type
+
+forward prototypes
+global function string f_revisa_adeudos_const (long a_cuenta)
+end prototypes
+
+global function string f_revisa_adeudos_const (long a_cuenta);//Función que revisa los documentos de licenciatura de un alumno 
+//
+//f_revisa_adeudos_const
+//
+//Parámetros:		a_cuenta			long
+//
+//Regresa:			li_resultado	integer
+
+
+long ll_cuenta
+integer li_carrera, li_plan, li_precision
+decimal ld_promedio
+string ls_mensaje_documentos, ls_nivel, ls_mensaje_constancia
+integer li_bandera_biblioteca, li_bandera_disciplina, li_bandera_documentos, li_bandera_finanzas
+integer li_bandera_4inscritas, li_bandera_3reprobadas, li_bandera_flag_promedio
+string ls_bandera_biblioteca, ls_bandera_disciplina, ls_bandera_documentos, ls_bandera_finanzas
+string ls_bandera_4inscritas, ls_bandera_3reprobadas, ls_bandera_flag_promedio
+
+
+ll_cuenta = a_cuenta
+
+li_carrera = f_obten_cve_carrera(ll_cuenta)
+
+li_plan = f_obten_cve_plan(ll_cuenta)
+
+ls_nivel = f_obten_nivel(ll_cuenta)
+
+li_bandera_biblioteca = f_bandera_biblioteca(ll_cuenta)
+
+li_bandera_disciplina = f_bandera_disciplina(ll_cuenta)
+
+li_bandera_documentos = f_bandera_documentos(ll_cuenta)
+
+//li_bandera_finanzas = f_bandera_finanzas(ll_cuenta)
+li_bandera_finanzas = tiene_adeudos_n_tr(ll_cuenta,  gtr_scob)
+
+li_bandera_4inscritas = f_bandera_4inscritas(ll_cuenta)
+
+li_bandera_3reprobadas = f_bandera_3reprobadas(ll_cuenta)
+
+li_bandera_flag_promedio = f_bandera_flag_promedio(ll_cuenta)
+
+
+ ls_bandera_biblioteca=""
+ ls_bandera_disciplina=""
+ ls_bandera_documentos=""
+ ls_bandera_finanzas=""
+ ls_bandera_4inscritas=""
+ ls_bandera_3reprobadas=""
+ ls_bandera_flag_promedio=""
+ ls_mensaje_documentos=""
+ ls_mensaje_constancia=""
+
+if li_bandera_biblioteca = 1 then
+	ls_bandera_biblioteca = "+El alumno tiene adeudo de biblioteca.~n"
+end if
+
+if li_bandera_disciplina = 1 then
+	ls_bandera_disciplina = "+El alumno tiene antecedentes de disciplina.~n"
+end if
+	
+if li_bandera_documentos = 1 then
+	ls_bandera_documentos = "+El alumno tiene adeudo de documentos. ~n"
+end if
+
+if li_bandera_finanzas = 1 then
+	ls_bandera_finanzas = "+El alumno tiene adeudo de finanzas.~n"
+end if
+	
+if li_bandera_4inscritas = 1 then
+	ls_bandera_4inscritas = "+El alumno tiene baja por 4 inscritas.~n"
+end if
+
+if li_bandera_3reprobadas = 1 then
+	ls_bandera_3reprobadas = "+El alumno tiene 3 reprobadas.~n"
+end if
+	
+if li_bandera_flag_promedio = 2 then
+	ls_bandera_flag_promedio = "+El alumno tiene problemas de promedio.~n"
+end if
+
+//A peticion de Roberto Serna 19-Octubre-2000 se suprime la revision detallada de documentos
+//if ls_nivel = "P" then
+//	ls_mensaje_documentos= f_revisa_docum_pos(ll_cuenta)
+//else
+//	ls_mensaje_documentos= f_revisa_docum_lic(ll_cuenta)
+//end if
+//
+//if ls_mensaje_documentos <> "" then ls_mensaje_documentos = "+"+ls_mensaje_documentos
+
+ls_mensaje_constancia= ls_bandera_biblioteca + ls_bandera_disciplina + ls_bandera_documentos + ls_bandera_finanzas + &
+                       ls_bandera_4inscritas + ls_bandera_3reprobadas + ls_bandera_flag_promedio + ls_mensaje_documentos
+
+//ls_mensaje_constancia="" // cph luego quitar
+
+return ls_mensaje_constancia
+
+
+end function
+

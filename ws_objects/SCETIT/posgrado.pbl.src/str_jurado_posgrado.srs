@@ -1,0 +1,14 @@
+﻿$PBExportHeader$str_jurado_posgrado.srs
+global type str_jurado_posgrado from structure
+	long		cve_presidente
+	long		cve_vocal
+	long		cve_secretario
+	long		cve_suplente_1
+	long		cve_suplente_2
+	string		nombre_presidente
+	string		nombre_vocal
+	string		nombre_secretario
+	string		nombre_suplente_1
+	string		nombre_suplente_2
+end type
+

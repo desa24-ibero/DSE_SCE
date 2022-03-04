@@ -1,0 +1,48 @@
+﻿$PBExportHeader$f_borra_criterio.srf
+global type f_borra_criterio from function_object
+end type
+
+forward prototypes
+global subroutine f_borra_criterio (integer a_periodo, integer a_anio)
+end prototypes
+
+global subroutine f_borra_criterio (integer a_periodo, integer a_anio);//NOMBRE
+//f_borra_criterio
+//
+//REGRESA
+//integer
+//
+//RECIBE
+//a_periodo		integer
+//a_anio			integer
+
+
+integer li_codigo_sql
+string ls_criterio, ls_mensaje_sql
+long	ll_cuenta
+
+//ls_criterio = a_criterio + "%"
+
+
+//DELETE FROM orden_inscripcion
+//WHERE periodo = :a_periodo
+//AND	anio= :a_anio
+//USING gtr_sce;
+
+DELETE FROM orden_inscripcion
+USING gtr_sce;
+
+li_codigo_sql =gtr_sce.SqlCode
+ls_mensaje_sql =gtr_sce.SqlErrText
+
+
+if li_codigo_sql = -1 then
+	MessageBox("Error al borrar orden_inscripcion", ls_mensaje_sql)	
+end if
+
+return 
+
+	
+
+end subroutine
+

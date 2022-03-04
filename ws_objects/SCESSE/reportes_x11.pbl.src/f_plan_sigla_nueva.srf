@@ -1,0 +1,45 @@
+﻿$PBExportHeader$f_plan_sigla_nueva.srf
+global type f_plan_sigla_nueva from function_object
+end type
+
+forward prototypes
+global function boolean f_plan_sigla_nueva (long al_cve_plan)
+end prototypes
+
+global function boolean f_plan_sigla_nueva (long al_cve_plan);//f_plan_sigla_nueva
+//Recibe:
+//	al_cve_plan		long
+//Devuelve:
+//	Boolean que indica si la clave del plan de estudios recibida como parámetro coresponde a las nuevas siglas
+
+
+integer li_cve_plan, li_codigo_sql
+string ls_mensaje_sql
+
+SELECT dbo.plan_sigla_nueva.cve_plan
+INTO	:li_cve_plan
+FROM	dbo.plan_sigla_nueva
+WHERE dbo.plan_sigla_nueva.cve_plan = :al_cve_plan
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 or isnull(li_cve_plan) then
+	return false
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar plan_sigla_nueva", ls_mensaje_sql)
+	return false
+end if
+
+if li_cve_plan> 0 then 
+	return true
+else
+	return false
+end if
+
+
+
+
+end function
+

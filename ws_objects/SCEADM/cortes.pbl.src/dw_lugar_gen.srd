@@ -1,0 +1,49 @@
+﻿$PBExportHeader$dw_lugar_gen.srd
+$PBExportComments$Da el lugar general
+release 10;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=88 color="536870912" )
+table(column=(type=long updatewhereclause=yes key=yes name=folio dbname="aspiran.folio" )
+ column=(type=real updatewhereclause=yes name=puntaje dbname="puntaje" )
+ column=(type=long update=yes updatewhereclause=yes name=lugar_gen dbname="aspiran.lugar_gen" )
+ column=(type=long updatewhereclause=yes key=yes name=clv_ver dbname="aspiran.clv_ver" )
+ column=(type=long updatewhereclause=yes key=yes name=clv_per dbname="aspiran.clv_per" )
+ column=(type=long updatewhereclause=yes key=yes name=anio dbname="aspiran.anio" )
+ column=(type=long updatewhereclause=yes name=clv_carr dbname="aspiran.clv_carr" )
+ column=(type=long updatewhereclause=yes name=status dbname="aspiran.status" )
+ retrieve="  SELECT aspiran.folio,   
+         puntaje = isnull(aspiran.puntaje,0),   
+         aspiran.lugar_gen,   
+         aspiran.clv_ver,   
+         aspiran.clv_per,   
+         aspiran.anio,   
+         aspiran.clv_carr,
+         aspiran.status  
+    FROM aspiran  
+   WHERE aspiran.clv_per = :per AND  
+         aspiran.anio = :ani AND  
+         aspiran.pago_exam = 1 AND  
+         ( ( :opcion = 0 AND aspiran.status = 0 AND aspiran.clv_ver = :ver ) OR
+         ( :opcion = 1 AND (( aspiran.status = 0 AND aspiran.clv_ver = :ver ) OR
+                            aspiran.status = 3 ) ) )" update="aspiran" updatewhere=1 updatekeyinplace=yes arguments=(("ver", number),("per", number),("ani", number),("opcion", number))  sort="puntaje D clv_carr A folio A " )
+text(band=header alignment="2" text="Lugar Gen" border="0" color="0" x="686" y="4" height="64" width="329" html.valueishtml="0"  name=lugar_gen_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Folio" border="0" color="0" x="18" y="4" height="64" width="329" html.valueishtml="0"  name=folio_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Puntaje" border="0" color="0" x="352" y="4" height="64" width="329" html.valueishtml="0"  name=puntaje_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="count(folio for all)"border="0" color="0" x="1083" y="0" height="80" width="329" format="[general]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="686" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=lugar_gen visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="352" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=puntaje visible="1" editmask.mask="####.##" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="folio"border="0" color="0~tif(  status =3, rgb(255,0,0), rgb(0,0,0) )" x="18" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=fol visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="0" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

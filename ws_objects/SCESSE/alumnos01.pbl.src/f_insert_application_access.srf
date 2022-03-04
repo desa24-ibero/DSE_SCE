@@ -1,0 +1,50 @@
+﻿$PBExportHeader$f_insert_application_access.srf
+global type f_insert_application_access from function_object
+end type
+
+forward prototypes
+global function integer f_insert_application_access (string as_user_name, string as_application, string as_password)
+end prototypes
+
+global function integer f_insert_application_access (string as_user_name, string as_application, string as_password);//f_insert_application_access
+//Recibe:
+//       as_user_name		string
+//			as_application		string
+//			as_password			string
+//Devuelve:
+//	-1	  Error
+//100   Registro no encontrado
+//	 0   Sin problemas
+//
+
+integer li_inscritos, li_codigo_sql
+string ls_mensaje_sql
+
+
+INSERT INTO 
+application_access (
+   user_name ,
+	application ,
+	password )
+VALUES (:as_user_name,
+	:as_application,
+	:as_password)
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 then
+	MessageBox("Error de acceso a aplicación", "Error 100")
+	COMMIT USING gtr_sce;
+elseif li_codigo_sql = -1 then
+	MessageBox("Error de acceso a aplicación", "Error -1")
+	ROLLBACK USING gtr_sce;
+elseif li_codigo_sql = 0 then
+	COMMIT USING gtr_sce;
+end if
+
+return li_codigo_sql
+
+end function
+

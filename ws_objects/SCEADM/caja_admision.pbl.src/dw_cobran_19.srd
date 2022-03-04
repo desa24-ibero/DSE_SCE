@@ -1,0 +1,14 @@
+﻿$PBExportHeader$dw_cobran_19.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.columns=10 print.columns.width=330 )
+header(height=81 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cuenta dbname="saldos.cuenta" )
+ column=(type=long updatewhereclause=yes name=cve_ban dbname="saldos.cve_ban" )
+ retrieve="PBSELECT( VERSION(400) DISTINCT ()TABLE(NAME=~"saldos~" ) COLUMN(NAME=~"saldos.cuenta~") COLUMN(NAME=~"saldos.cve_ban~")WHERE(    EXP1 =~"saldos.status~"   OP =~"=~"    EXP2 =~"1~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"saldos.cve_con~"   OP =~"=~"    EXP2 =~"19~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"saldos.periodo~"   OP =~"=~"    EXP2 =~":per~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"saldos.anio~"   OP =~"=~"    EXP2 =~":ani~" ) ) ARG(NAME = ~"per~" TYPE = string)  ARG(NAME = ~"ani~" TYPE = number) " arguments=(("per", string),("ani", number))  sort="cuenta A " )
+text(band=header alignment="2" text="Inscripción Pagada"border="0" color="0" x="51" y="4" height="65" width="503"  name=cuenta_t  hidesnaked=1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text=""border="0" color="0" x="572" y="4" height="65" width="2085"  name=st_1  hidesnaked=1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="2" expression="count(cuenta for all)"border="0" color="0" x="2670" y="4" height="65" width="380" format="[general]"  hidesnaked=1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression=" cuenta +'-'+obten_digito( cuenta )"border="0" color="0" x="5" y="4" height="77" width="380" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

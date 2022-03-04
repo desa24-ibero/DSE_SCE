@@ -1,0 +1,70 @@
+﻿$PBExportHeader$dw_mat_insc.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=10789024 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+header(height=124 color="536870912" )
+summary(height=80 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=mat_inscritas_cve_mat dbname="mat_inscritas.cve_mat" )
+ column=(type=char(2) updatewhereclause=yes name=mat_inscritas_gpo dbname="mat_inscritas.gpo" )
+ column=(type=char(42) updatewhereclause=yes name=materias_materia dbname="materias.materia" )
+ column=(type=long updatewhereclause=yes name=materias_creditos dbname="materias.creditos" )
+ column=(type=long updatewhereclause=yes name=mat_inscritas_cve_condicion dbname="mat_inscritas.cve_condicion" values="Normal	0/Baja Acad.	1/Baja Total	2/" )
+ column=(type=long updatewhereclause=yes name=grupos_tipo dbname="grupos.tipo" values="Normal	0/Asesoria	1/Asimilado	2/Taller	3/Lab	4/Otro	5/" )
+ column=(type=long updatewhereclause=yes name=grupos_cve_asimilada dbname="grupos.cve_asimilada" )
+ column=(type=char(2) updatewhereclause=yes name=grupos_gpo_asimilado dbname="grupos.gpo_asimilado" )
+ column=(type=long updatewhereclause=yes name=materias_horas_teoria dbname="materias.horas_teoria" )
+ column=(type=long updatewhereclause=yes name=materias_horas_practica dbname="materias.horas_practica" )
+ retrieve="  SELECT 	mat_inscritas.cve_mat,   
+         			mat_inscritas.gpo,   
+        		 	materias.materia,   
+         			materias.creditos,   
+         			mat_inscritas.cve_condicion,   
+         			grupos.tipo,
+         			grupos.cve_asimilada,   
+         			grupos.gpo_asimilado,
+						materias.horas_teoria,
+						materias.horas_practica  
+    FROM mat_inscritas,   
+         		grupos,   
+         		materias  
+   WHERE	(cuenta = :cuenta ) AND
+                     (mat_inscritas.cve_mat = grupos.cve_mat ) and  
+                     (mat_inscritas.gpo = grupos.gpo ) and  
+							(mat_inscritas.anio = grupos.anio ) and  
+							(mat_inscritas.periodo = grupos.periodo ) and  
+       					(mat_inscritas.cve_mat = materias.cve_mat )		
+Order by mat_inscritas.cve_mat
+" arguments=(("cuenta", number)) )
+roundrectangle(band=header ellipseheight="60" ellipsewidth="69"x="9" y="4" height="116" width="2482"  name=rr_1 visible="1" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="1090519039"  background.mode="2" background.color="0" )
+text(band=header alignment="2" text="Clave" border="0" color="0" x="27" y="28" height="76" width="206" html.valueishtml="0"  name=mat_inscritas_cve_mat_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="G" border="0" color="0" x="238" y="28" height="76" width="50" html.valueishtml="0"  name=mat_inscritas_gpo_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Tipo_Gpo" border="0" color="0" x="306" y="28" height="76" width="288" html.valueishtml="0"  name=grupos_tipo_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Materia" border="0" color="0" x="1175" y="28" height="76" width="215" html.valueishtml="0"  name=materias_materia_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="10789024" x="2464" y="8" height="64" width="55" format="[general]" html.valueishtml="0"  name=grupos_cve_asimilada visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="10789024" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="10789024" x="2523" y="8" height="64" width="55" format="[general]" html.valueishtml="0"  name=grupos_gpo_asimilado visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="10789024" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="10789024" x="2597" y="8" height="64" width="55" format="[general]" html.valueishtml="0"  name=materias_horas_teoria visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="10789024" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="10789024" x="2706" y="8" height="64" width="55" format="[general]" html.valueishtml="0"  name=materias_horas_practica visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="10789024" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="1" color="0" x="9" y="4" height="76" width="210" format="[general]" html.valueishtml="0"  name=mat_inscritas_cve_mat visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="1" color="0" x="229" y="4" height="76" width="87" format="[general]" html.valueishtml="0"  name=mat_inscritas_gpo visible="1" edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="1" color="0" x="325" y="4" height="76" width="183" format="[general]" html.valueishtml="0"  name=grupos_tipo visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="1" color="0" x="517" y="4" height="76" width="1349" format="[general]" html.valueishtml="0"  name=materias_materia visible="1" edit.limit=42 edit.case=any edit.autoselect=yes edit.autohscroll=yes criteria.required=yes criteria.override_edit=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+text(band=summary alignment="2" text="Total de Créditos:" border="2" color="0" x="1307" y="12" height="64" width="517" html.valueishtml="0"  name=t_2 visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+compute(band=summary alignment="1" expression="sum(materias_creditos for all)"border="1" color="0" x="1874" y="12" height="64" width="101" format="[general]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="1" color="0" x="1874" y="4" height="76" width="101" format="[general]" html.valueishtml="0"  name=materias_creditos visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+text(band=header alignment="2" text="Cred" border="0" color="0" x="1842" y="28" height="76" width="165" html.valueishtml="0"  name=materias_creditos_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+compute(band=detail alignment="0" expression=" materias_horas_teoria + materias_horas_practica "border="1" color="0" x="2030" y="4" height="76" width="114" format="[general]" html.valueishtml="0"  name=materias_horas_totales visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+text(band=header alignment="2" text="Hrs" border="0" color="0" x="2021" y="28" height="76" width="137" html.valueishtml="0"  name=t_1 visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="1" color="0" x="2167" y="4" height="76" width="297" format="[general]" html.valueishtml="0"  name=mat_inscritas_cve_condicion visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+text(band=header alignment="2" text="Cond." border="0" color="0" x="2222" y="28" height="76" width="183" html.valueishtml="0"  name=mat_inscritas_cve_condicion_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

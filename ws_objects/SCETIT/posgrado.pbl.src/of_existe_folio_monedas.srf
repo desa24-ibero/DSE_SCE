@@ -1,0 +1,46 @@
+﻿$PBExportHeader$of_existe_folio_monedas.srf
+global type of_existe_folio_monedas from function_object
+end type
+
+forward prototypes
+global function long of_existe_folio_monedas (long al_cuenta, long al_cve_carrera, long al_cve_plan)
+end prototypes
+
+global function long of_existe_folio_monedas (long al_cuenta, long al_cve_carrera, long al_cve_plan);//of_existe_folio_monedas
+//Recibe	al_cuenta			long
+//			al_cve_carrera		long
+//			al_cve_plan			long
+//Devuelve el numero de fechas encontradas
+
+long ll_cve_concepto, ll_cve_subconcepto, ll_num_folios, ll_folio_mov_alumnos
+string ls_mensaje
+integer li_codigo_sql
+
+	SELECT
+	COUNT(*)
+	INTO
+	:ll_num_folios
+	FROM dbo.bit_folio_monedas 
+	WHERE dbo.bit_folio_monedas.cuenta = :al_cuenta
+	AND dbo.bit_folio_monedas.cve_carrera = :al_cve_carrera
+	AND dbo.bit_folio_monedas.cve_plan = :al_cve_plan
+	USING gtr_sce;
+
+	li_codigo_sql = gtr_sce.SqlCode
+	ls_mensaje = gtr_sce.SqlErrText
+	
+	IF li_codigo_sql= -1 THEN
+		MessageBox("Error al consultar folio_monedas",ls_mensaje,StopSign! )
+		return  -1
+	ELSE
+		IF ll_num_folios = 0 THEN
+			return 0
+		END IF		
+	END IF
+
+
+return ll_num_folios
+
+			
+end function
+

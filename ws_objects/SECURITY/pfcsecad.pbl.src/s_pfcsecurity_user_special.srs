@@ -1,0 +1,10 @@
+﻿$PBExportHeader$s_pfcsecurity_user_special.srs
+global type s_pfcsecurity_user_special from structure
+	string		name
+	string		desc
+	integer		priority
+	integer		user_type
+	integer		status
+	integer		user_special
+end type
+

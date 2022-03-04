@@ -1,0 +1,141 @@
+﻿$PBExportHeader$llena_avisos_control_esc.srf
+global type llena_avisos_control_esc from function_object
+end type
+
+forward prototypes
+global function boolean llena_avisos_control_esc (long cuenta, ref integer puede_integ, ref integer temaf1, ref integer temaf2, ref integer tema1, ref integer tema2, ref integer tema3, ref integer tema4, string nivel, ref datawindowchild avisobanderas, ref integer serv_soc, ref integer ingles)
+end prototypes
+
+global function boolean llena_avisos_control_esc (long cuenta, ref integer puede_integ, ref integer temaf1, ref integer temaf2, ref integer tema1, ref integer tema2, ref integer tema3, ref integer tema4, string nivel, ref datawindowchild avisobanderas, ref integer serv_soc, ref integer ingles);// Opción para optimizar el espacio en la hoja de impresión
+// si no convence utilice retrieve al datawindow AvisoBanderas.
+// Juan campos Sánchez.   Mar-1998.
+
+Integer	insc_sem_ant,cve_flag_promedio,baja_3_reprob,baja_4_insc, &
+			baja_documentos,cve_flag_biblioteca,cve_flag_diapositeca,Ind, li_preinscrito, li_baja_laboratorio
+	 
+Select	insc_sem_ant,				cve_flag_promedio,		baja_3_reprob,
+			baja_4_insc,				baja_documentos,			cve_flag_prerreq_ingles,
+			cve_flag_serv_social,	puede_integracion,		tema_fundamental_1,		
+			tema_fundamental_2,		tema_1,						tema_2,
+			tema_3,						tema_4,						cve_flag_biblioteca,
+			cve_flag_diapositeca,	baja_laboratorio
+			
+Into		:insc_sem_ant,				:cve_flag_promedio,		:baja_3_reprob,
+			:baja_4_insc,         	:baja_documentos,			:ingles,
+			:serv_soc,	            :Puede_integ,				:TemaF1,
+			:TemaF2,						:Tema1,						:Tema2,
+			:Tema3,						:Tema4,						:cve_flag_biblioteca,
+			:cve_flag_diapositeca, 	:li_baja_laboratorio
+From banderas
+Where cuenta = :Cuenta
+using gtr_sce;
+			
+AvisoBanderas.Reset()
+If gtr_sce.sqlcode = 0 Then
+	
+	SELECT status INTO :li_preinscrito FROM preinsc
+	WHERE anio = :gi_anio AND periodo = :gi_periodo AND cuenta = :cuenta USING gtr_sce;
+	if gtr_sce.sqlcode = 0 then
+		li_preinscrito = 1 
+	else
+		li_preinscrito = 0
+	end if
+//*-	Eliminar	mensaje
+//	If li_preinscrito = 0 Then 
+//		Ind= AvisoBanderas.InsertRow(0)
+//		AvisoBanderas.Setitem(Ind,1,"ALUMNO NO PREINSCRITO.TU HORARIO FUE ASIGNADO DESPUES DE TODOS LOS ALUMNOS PREINSCRITOS")
+// End IF
+	If insc_sem_ant = 0 Then 
+		Ind= AvisoBanderas.InsertRow(0)
+		AvisoBanderas.Setitem(Ind,1,"NO ESTUVISTE INSCRITO EL SEMESTRE ANTERIOR.")
+ 	End IF
+	//If Nivel = 'L' Then
+	If Nivel <> 'P' Then
+		If cve_flag_promedio = 1 Then
+			Ind= AvisoBanderas.InsertRow(0)
+//*-			AvisoBanderas.Setitem(Ind,1,"ESTAS AMONESTADO , SEGUN EL REGLAMENTO DE PUNTAJE DE CALIDAD ARTICULO 7.3.2  UNA SEGUNDA AMONESTACION CONSECUTIVA CAUSA BAJA.")	    
+			AvisoBanderas.Setitem(Ind,1,"ESTAS AMONESTADO , SEGÚN EL REGLAMENTO DE TRÁMITES ESCOLARES ARTÍCULO 3.33 UNA SEGUNDA AMONESTACIÓN CONSECUTIVA CAUSA BAJA.")	    
+		End If			 
+		If cve_flag_promedio = 2 Then
+			Ind= AvisoBanderas.InsertRow(0)
+//*-			AvisoBanderas.Setitem(Ind,1,"ESTAS DADO DE BAJA, POR ACUMULAR 2 AMONESTACIONES CONSECUTIVAS, CONSULTA EL REGLAMENTO DE PUNTAJE DE CALIDAD .       ")		
+			AvisoBanderas.Setitem(Ind,1,"ESTAS DADO DE BAJA, POR ACUMULAR 2 AMONESTACIONES CONSECUTIVAS, CONSULTA EL REGLAMENTO DE TRÁMITES ESCOLARES.")		
+ 		End If			 
+//*-Eliminar mensaje
+//	If cve_flag_promedio = 3 Then		 
+//			Ind= AvisoBanderas.InsertRow(0)
+//			AvisoBanderas.Setitem(Ind,1,"ESTAS EXENTO POR CONCEPTO DE PROMEDIO.")		 
+//		End If
+
+	End If	
+	
+   IF baja_3_reprob = 1 Then
+		Ind= AvisoBanderas.InsertRow(0)
+//*-		AvisoBanderas.Setitem(Ind,1,"ESTAS DADO DE BAJA POR REPROBAR 3 VECES LA MISMA MATERIA. REGLAMENTO DE EVALUACIONES, ARTICULO 3.5.	")
+		AvisoBanderas.Setitem(Ind,1,"ESTAS DADO DE BAJA POR REPROBAR 3 VECES LA MISMA MATERIA. REGLAMENTO DE TRÁMITES ESCOLARES, ARTICULO 4.2a.")
+ 	End IF
+	IF baja_4_insc = 1 Then
+		Ind= AvisoBanderas.InsertRow(0)
+//*-		AvisoBanderas.Setitem(Ind,1,"ESTAS DADO DE BAJA, POR TENER 4 INSCRIPCIONES A UNA MISMA MATERIA, SEGUN EL ARTICULO 3.5 (B) DEL REGLAMENTO.")     		
+		AvisoBanderas.Setitem(Ind,1,"ESTAS DADO DE BAJA, POR TENER 4 INSCRIPCIONES A UNA MISMA MATERIA. REGLAMENTO DE TRÁMITES ESCOLARES, ARTICULO 4.2b.")     		
+	End IF
+	IF baja_documentos = 1 Then
+		Ind= AvisoBanderas.InsertRow(0)
+		AvisoBanderas.Setitem(Ind,1,"BLOQUEADO POR ADEUDO DE DOCUMENTOS")
+ 	End If
+	//If Nivel = 'L' Then
+	If Nivel <> 'P' Then 
+		IF ingles = 1 Then
+			Ind= AvisoBanderas.InsertRow(0)
+			AvisoBanderas.Setitem(Ind,1,"ADEUDAS EL PRERREQUISITO DE INGLÉS")
+ 		End If
+		IF ingles = 2 Then	  
+			Ind= AvisoBanderas.InsertRow(0)
+//*-			AvisoBanderas.Setitem(Ind,1,"SI TERMINAS DOS SEMESTRES EN LA UNIVERSIDAD SIN HABER ACREDITADO EL PRERREQUISITO DE INGLES, EN TU TERCER SEMESTRE NO PODRAS CURSAR MAS DE 30 CREDITOS.	  ")
+			AvisoBanderas.Setitem(Ind,1,"SI NO ACREDITAS EL PRERREQUISITO DE INGLÉS, EN TU INSCRIPCIÓN AL CUARTO SEMESTRE TU CARGA ACADÉMICA SE LIMITARÁ A 48 CRÉDITOS.")
+ 		End if
+		IF serv_soc = 1 Then
+			Ind= AvisoBanderas.InsertRow(0)
+			AvisoBanderas.Setitem(Ind,1,"YA PUEDES CURSAR TU SERVICIO SOCIAL. TE RECUERDO QUE LOS 16 CRÉDITOS DE SERVICIO SOCIAL TAMBIEN SE TOMAN EN CUENTA PARA EL MÁXIMO  DE CRÉDITOS QUE PUEDES INSCRIBIR EN UN SEMESTRE.")
+ 		End if
+	End IF	 
+	IF cve_flag_biblioteca = 1 Then
+		Ind= AvisoBanderas.InsertRow(0)
+//*-		AvisoBanderas.Setitem(Ind,1,"AMONESTADO POR ADEUDO EN BIBLIOTECA")
+		AvisoBanderas.Setitem(Ind,1,"DADO DE BAJA POR ADEUDO EN BIBLIOTECA")		
+ 	End IF
+	IF cve_flag_biblioteca = 2 Then
+		Ind= AvisoBanderas.InsertRow(0)
+//*-		AvisoBanderas.Setitem(Ind,1,"SUSPENDIDO POR ADEUDO EN BIBLIOTECA")
+		AvisoBanderas.Setitem(Ind,1,"DADO DE BAJA POR ADEUDO EN BIBLIOTECA")		
+	END IF
+ 	IF cve_flag_biblioteca = 3 Then
+		Ind= AvisoBanderas.InsertRow(0)
+		AvisoBanderas.Setitem(Ind,1,"DADO DE BAJA POR ADEUDO EN BIBLIOTECA")		
+ 	End if	
+	If cve_flag_diapositeca = 1 Then
+		Ind= AvisoBanderas.InsertRow(0)
+//*-		AvisoBanderas.Setitem(Ind,1,"AMONESTADO POR ADEUDO EN DIAPOSITECA")		
+		AvisoBanderas.Setitem(Ind,1,"DADO DE BAJA POR ADEUDO EN DIAPOSITECA")
+ 	End if
+	If cve_flag_diapositeca = 2 Then
+		Ind= AvisoBanderas.InsertRow(0)
+//*-		AvisoBanderas.Setitem(Ind,1,"SUSPENDIDO POR ADEUDO EN DIAPOSITECA")
+		AvisoBanderas.Setitem(Ind,1,"DADO DE BAJA POR ADEUDO EN DIAPOSITECA")
+ 	End if
+	If cve_flag_diapositeca = 3 Then	
+		Ind= AvisoBanderas.InsertRow(0)
+		AvisoBanderas.Setitem(Ind,1,"DADO DE BAJA POR ADEUDO EN DIAPOSITECA")
+ 	End IF
+	If li_baja_laboratorio = 1 Then	
+		Ind= AvisoBanderas.InsertRow(0)
+		AvisoBanderas.Setitem(Ind,1,"BLOQUEADO POR ADEUDO DE MATERIAL DE LABORATORIO")
+ 	End IF
+	 
+//End If
+ENd IF	
+	
+AvisoBanderas.AcceptText()
+Return true
+end function
+

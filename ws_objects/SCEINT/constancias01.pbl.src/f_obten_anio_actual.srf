@@ -1,0 +1,21 @@
+﻿$PBExportHeader$f_obten_anio_actual.srf
+global type f_obten_anio_actual from function_object
+end type
+
+forward prototypes
+global function integer f_obten_anio_actual ()
+end prototypes
+
+global function integer f_obten_anio_actual ();// Funcion utilizada para devolver el periodo actual
+//
+// f_obten_anio_actual
+
+integer li_periodo, li_anio
+
+periodo_actual(li_periodo, li_anio, gtr_sce)
+
+return li_anio
+
+
+end function
+

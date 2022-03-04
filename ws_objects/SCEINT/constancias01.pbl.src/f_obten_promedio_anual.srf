@@ -1,0 +1,111 @@
+﻿$PBExportHeader$f_obten_promedio_anual.srf
+global type f_obten_promedio_anual from function_object
+end type
+
+forward prototypes
+global function decimal f_obten_promedio_anual (long al_cuenta, integer ai_periodo, integer ai_anio, integer ai_periodo-1, integer ai_anio-1, integer ai_periodo_v, integer ai_anio_v)
+end prototypes
+
+global function decimal f_obten_promedio_anual (long al_cuenta, integer ai_periodo, integer ai_anio, integer ai_periodo-1, integer ai_anio-1, integer ai_periodo_v, integer ai_anio_v);dec ldc_promedio_anual
+long ll_calif1, ll_calif_num1, ll_calif2, ll_calif_num2,ll_califv, ll_calif_numv
+
+  SELECT sum((case historico.calificacion 
+				when 'MB' then 10 
+				when 'B' then 8
+				when 'S' then 5
+				when '5' then 5
+				when '6' then 6   
+				when '7' then 7 
+				when '8' then 8
+				when '9' then 9 
+				when '10' then 10 
+				else 0
+				end ))  , count(historico.calificacion)
+		INTO :ll_calif1, :ll_calif_num1
+    FROM materias,   
+         historico  
+   WHERE ( materias.cve_mat = historico.cve_mat ) and  
+		( historico.calificacion not in ( 'AC', 'IN', 'NA','B ', 'S ','BJ', 'BA','RE', 'E' ) ) and
+         ( historico.cuenta = :al_cuenta ) AND  
+        ( historico.periodo = :ai_periodo  AND  
+          historico.anio = :ai_anio  )  using gtr_sce;
+			
+if isnull(ll_calif1) then ll_calif1 = 0
+if isnull(ll_calif_num1) then ll_calif_num1 = 0
+			
+  SELECT sum((case historico.calificacion  
+				when 'MB' then 10 
+				when 'B' then 8
+				when 'S' then 5
+				when '5' then 5
+				when '6' then 6   
+				when '7' then 7 
+				when '8' then 8
+				when '9' then 9 
+				when '10' then 10 
+				else 0
+				end ))  , count(historico.calificacion)
+		INTO :ll_calif2, :ll_calif_num2
+    FROM materias,   
+         historico  
+   WHERE ( materias.cve_mat = historico.cve_mat ) and  
+		( historico.calificacion not in ( 'AC', 'IN', 'NA','B ', 'S ','BJ', 'BA','RE', 'E' ) ) and
+         ( historico.cuenta = :al_cuenta ) AND  
+        ( historico.periodo = :ai_periodo-1  AND  
+          historico.anio = :ai_anio-1  )  using gtr_sce;	
+			
+			
+if isnull(ll_calif2) then ll_calif2 = 0
+if isnull(ll_calif_num2) then ll_calif_num2 = 0	
+
+if  ll_calif1 = 0 and  ll_calif2 = 0 then
+	ldc_promedio_anual = 0
+elseif  ll_calif1 > 0 and  ll_calif2 = 0 then
+	ldc_promedio_anual = round((ll_calif1) / (ll_calif_num1 ),2)
+elseif  ll_calif1 = 0 and  ll_calif2 > 0 then
+	ldc_promedio_anual = round((ll_calif2) / (ll_calif_num2 ),2)
+else
+	ldc_promedio_anual = round((ll_calif1 + ll_calif2) / (ll_calif_num1 + ll_calif_num2),2)
+end if
+
+if ai_anio_v <> 0 then
+	  SELECT sum((case historico.calificacion 
+				when 'MB' then 10 
+				when 'B' then 8
+				when 'S' then 5
+				when '5' then 5
+				when '6' then 6   
+				when '7' then 7 
+				when '8' then 8
+				when '9' then 9 
+				when '10' then 10 
+				else 0
+				end ))  , count(historico.calificacion)
+		INTO :ll_califv, :ll_calif_numv
+    FROM materias,   
+         historico  
+   WHERE ( materias.cve_mat = historico.cve_mat ) and  
+		( historico.calificacion not in ( 'AC', 'IN', 'NA','B ', 'S ','BJ', 'BA','RE', 'E' ) ) and
+         ( historico.cuenta = :al_cuenta ) AND  
+        ( historico.periodo = :ai_periodo_v  AND  
+          historico.anio = :ai_anio_v  )  using gtr_sce;	
+	
+	if ll_califv > 0 then
+		if  ll_calif1 = 0 and  ll_calif2 = 0 then
+			ldc_promedio_anual = round((ll_califv) / (ll_calif_numv ),2)
+		elseif  ll_calif1 > 0 and  ll_calif2 = 0 then
+			ldc_promedio_anual = round((ll_calif1 + ll_califv) / (ll_calif_num1 + ll_calif_numv),2)
+		elseif  ll_calif1 = 0 and  ll_calif2 > 0 then
+			ldc_promedio_anual = round((ll_califv + ll_calif2) / (ll_calif_numv + ll_calif_num2),2)
+		else
+			ldc_promedio_anual = round((ll_calif1 + ll_calif2 + ll_califv ) / (ll_calif_num1 + ll_calif_num2 + ll_calif_numv),2)
+		end if
+	end if
+	
+end if
+
+return ldc_promedio_anual
+
+
+end function
+

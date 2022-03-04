@@ -1,0 +1,31 @@
+﻿$PBExportHeader$fecha_servidor.srf
+global type fecha_servidor from function_object
+end type
+
+forward prototypes
+global function datetime fecha_servidor (transaction servidor)
+end prototypes
+
+global function datetime fecha_servidor (transaction servidor);String ls_Dia , ls_Mes, ls_Anio, ls_Hora, ls_Fecha
+Datetime ld_fecha
+ 
+DECLARE Fecha_Servidor procedure for fechaservidor
+  @fecha = :ls_Fecha output
+ USING servidor;
+   	
+EXECUTE Fecha_Servidor;
+
+FETCH Fecha_Servidor INTO :ls_Fecha;
+
+CLOSE Fecha_Servidor;
+
+ls_Dia  = Mid(ls_fecha,5,2)
+ls_Mes  = Mid(ls_Fecha,1,3)
+ls_Anio = Mid(ls_fecha,8,4)
+ls_Hora = Mid(ls_fecha,13,14)
+
+ld_Fecha = datetime(date(ls_Dia+"-"+ls_Mes+"-"+ls_Anio),time(ls_Hora))
+
+return ld_fecha
+end function
+

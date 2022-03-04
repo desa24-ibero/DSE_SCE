@@ -1,0 +1,57 @@
+﻿$PBExportHeader$f_obten_texto_imss.srf
+global type f_obten_texto_imss from function_object
+end type
+
+forward prototypes
+global function string f_obten_texto_imss ()
+end prototypes
+
+global function string f_obten_texto_imss ();//El objetivo de esta función es obtener el periodo de vacaciones 
+//para las constancias de IMSS
+//
+//f_obten_fecha_en_texto
+//
+
+integer li_periodo, li_anio, li_evento, li_periodo_sig, li_anio_sig
+string ls_periodo_base, ls_nombre_periodo, ls_fecha
+string ls_fecha_inic_vac, ls_fecha_fin_vac, ls_texto_vacaciones
+
+date ldt_fecha_fin_per_act, ldt_fecha_inic_per_sig
+date ldt_fecha_inic_vac, ldt_fecha_fin_vac
+
+
+f_obten_periodo_valido(li_periodo, li_anio)
+f_obten_periodo_siguiente(li_periodo_sig, li_anio_sig)
+
+ldt_fecha_fin_per_act= f_obten_fecha_evento(li_periodo, li_anio, 2)
+ldt_fecha_inic_per_sig= f_obten_fecha_evento(li_periodo_sig, li_anio_sig, 1)
+
+ldt_fecha_inic_vac= RelativeDate(ldt_fecha_fin_per_act, 1)
+ldt_fecha_fin_vac= RelativeDate(ldt_fecha_inic_per_sig,-1)
+
+ls_fecha_inic_vac= f_obten_fecha_simple_en_texto(ldt_fecha_inic_vac)
+ls_fecha_fin_vac= f_obten_fecha_simple_en_texto(ldt_fecha_fin_vac)
+
+ls_fecha_inic_vac = Lower(ls_fecha_inic_vac)
+ls_fecha_fin_vac= Lower(ls_fecha_fin_vac)
+
+Select descripcion into :ls_nombre_periodo from periodo where periodo=:li_periodo using gtr_sce;
+//choose case li_periodo
+//	case 0
+//		ls_nombre_periodo= "primavera"
+//	case 1
+//		ls_nombre_periodo= "verano"
+//	case 2
+//		ls_nombre_periodo= "otoño"
+//end choose
+
+//ls_texto_vacaciones= "Asimismo se hace constar que el período vacacional de "+ls_nombre_periodo+&
+//    +" "+string(li_anio)+" abarca del "+ls_fecha_inic_vac+" al "+ls_fecha_fin_vac+"."
+ls_texto_vacaciones= "El período vacacional de "+ls_nombre_periodo+&
+    +" "+string(li_anio)+" abarca del "+ls_fecha_inic_vac+" al "+ls_fecha_fin_vac+"."+"~r~n"
+	 
+
+return ls_texto_vacaciones
+
+end function
+

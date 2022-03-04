@@ -1,0 +1,19 @@
+﻿$PBExportHeader$f_obten_nombre_plantel.srf
+global type f_obten_nombre_plantel from function_object
+end type
+
+forward prototypes
+global function string f_obten_nombre_plantel ()
+end prototypes
+
+global function string f_obten_nombre_plantel ();string fs_plantel
+
+Select plantel into :fs_plantel from planteles where actual=1 using gtr_sce;
+
+IF gtr_sce.sqlcode < 0 THEN 
+	RETURN "***Error en plantel"
+END IF
+
+Return fs_plantel
+end function
+

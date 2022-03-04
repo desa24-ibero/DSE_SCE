@@ -1,0 +1,89 @@
+﻿$PBExportHeader$f_asigna_puntaje_aspiran_2017.srf
+global type f_asigna_puntaje_aspiran_2017 from function_object
+end type
+
+forward prototypes
+global function integer f_asigna_puntaje_aspiran_2017 (long al_folio, ref integer ai_clv_ver, ref integer ai_clv_per, integer ai_anio)
+end prototypes
+
+global function integer f_asigna_puntaje_aspiran_2017 (long al_folio, ref integer ai_clv_ver, ref integer ai_clv_per, integer ai_anio);//f_asigna_puntaje_aspiran
+//
+//Recibe: 
+//	al_folio
+// ai_clv_ver
+// ai_clv_per
+//	ai_anio
+//Devuelve:
+//	integer (SqlCode - en función a la operación de actualización)
+
+string ls_cve_opcion_aplicacion 
+integer li_cve_tipo_examen, li_cve_modulo_examen    
+int li_codigo_sql, li_SQLNRows
+string ls_mensaje
+integer li_clv_ver, li_clv_per, li_anio, li_criterios_absolutos
+decimal ld_peso_promedio,  ld_peso_examen_seleccion, ld_peso_examen_diagnostico, ld_calificacion_global_examen
+string ls_archivo_presentaron, ls_archivo_no_presentaron, ls_ruta_archivo_dsn
+datetime ldttm_fecha_ultima_aplicacion  
+integer li_obten_calificacion_global_examen
+
+f_obten_parametros_evaluacion(ai_clv_ver, ai_clv_per, ai_anio,  li_criterios_absolutos,&
+ld_peso_promedio,  ld_peso_examen_seleccion, ld_peso_examen_diagnostico, ls_archivo_presentaron, &
+ls_archivo_no_presentaron, ls_ruta_archivo_dsn, ldttm_fecha_ultima_aplicacion)
+
+li_cve_tipo_examen = 1
+li_cve_modulo_examen = 1
+li_obten_calificacion_global_examen = f_obten_calificacion_global_examen(al_folio, ai_clv_ver, ai_clv_per, ai_anio, &
+ 					li_cve_tipo_examen, li_cve_modulo_examen, ld_calificacion_global_examen)
+
+IF li_obten_calificacion_global_examen = -1  THEN
+	MessageBox("Error al obtener la calificacion global", ls_mensaje, StopSign!)
+	return -1
+ELSEIF li_obten_calificacion_global_examen = 100  THEN
+	ld_calificacion_global_examen = 0
+END IF
+
+//Si son criterios absolutos, se utilizará el mismo promedio y la misma ponderación
+//para todos los alumnos
+
+IF li_criterios_absolutos = 1 THEN
+		UPDATE aspiran
+		SET puntaje = (aspiran.promedio *:ld_peso_promedio) + (:ld_peso_examen_seleccion * :ld_calificacion_global_examen) + (:ld_peso_examen_diagnostico * 0.0)
+		FROM aspiran
+		WHERE ( aspiran.folio = :al_folio ) AND  
+			( aspiran.clv_ver = :ai_clv_ver ) AND  
+			( aspiran.clv_per = :ai_clv_per ) AND  
+			( aspiran.anio = :ai_anio )   
+		USING gtr_sadm;
+ELSE
+		UPDATE aspiran
+		SET puntaje = (aspiran.promedio * promedio_peso.peso) + (:ld_peso_examen_seleccion * 1) + (:ld_peso_examen_diagnostico * 0.0)
+		FROM aspiran, promedio_peso
+		WHERE ( aspiran.folio = :al_folio ) AND  
+			( aspiran.clv_ver = :ai_clv_ver ) AND  
+			( aspiran.clv_per = :ai_clv_per ) AND  
+			( aspiran.anio = :ai_anio )   AND
+			( aspiran.clv_carr = promedio_peso.clv_carr)
+		USING gtr_sadm;
+		
+END IF
+
+li_codigo_sql = gtr_sadm.SqlCode
+ls_mensaje = gtr_sadm.SqlErrText
+li_SQLNRows = gtr_sadm.SQLNRows	
+
+IF li_codigo_sql = -1 THEN
+	ROLLBACK USING gtr_sadm;
+	MessageBox("Error al actualizar aspiran", ls_mensaje, StopSign!)
+ELSEIF li_codigo_sql = 100 THEN
+	ROLLBACK USING gtr_sadm;
+	MessageBox("Error al actualizar aspiran", ls_mensaje, StopSign!)
+ELSEIF li_codigo_sql = 0 THEN
+	COMMIT USING gtr_sadm;
+END IF
+	
+	
+return li_codigo_sql
+
+
+end function
+

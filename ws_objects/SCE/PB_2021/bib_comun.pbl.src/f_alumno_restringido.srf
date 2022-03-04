@@ -1,0 +1,52 @@
+﻿$PBExportHeader$f_alumno_restringido.srf
+global type f_alumno_restringido from function_object
+end type
+
+forward prototypes
+global function boolean f_alumno_restringido (long al_cuenta)
+end prototypes
+
+global function boolean f_alumno_restringido (long al_cuenta);//f_alumnos_restringidos
+//
+//Objetivo:
+//		Revisa si el alumno esta registrado con acceso restringido
+//
+//Recibe:
+//		al_cuenta	long
+
+integer  li_codigo_sql, li_restringido
+string ls_mensaje_sql
+long ll_cuenta
+
+if al_cuenta = 0 or isnull(al_cuenta)  then
+	return false	
+end if
+
+SELECT dbo.alumnos_restringidos.cuenta,   
+       dbo.alumnos_restringidos.restringido
+INTO :ll_cuenta,	
+     :li_restringido    
+FROM dbo.alumnos_restringidos  
+WHERE dbo.alumnos_restringidos.cuenta = :al_cuenta    
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 or isnull(ll_cuenta) then
+	return false
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar alumnos_restringidos", ls_mensaje_sql)
+	return false
+end if
+
+if li_restringido = 0 or isnull(li_restringido) then
+	return false
+else	
+	return true
+end if
+
+
+
+end function
+

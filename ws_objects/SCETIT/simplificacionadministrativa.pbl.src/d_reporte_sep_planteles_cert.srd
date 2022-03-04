@@ -1,0 +1,66 @@
+﻿$PBExportHeader$d_reporte_sep_planteles_cert.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=637 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=173 color="536870912" )
+detail(height=77 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=control_sep_cuenta dbname="control_sep_cuenta" )
+ column=(type=char(150) updatewhereclause=yes name=alumnos_nombre_completo dbname="alumnos_nombre_completo" )
+ column=(type=long updatewhereclause=yes name=control_sep_numero dbname="control_sep_numero" )
+ column=(type=char(30) updatewhereclause=yes name=doc_control_sep_doc_control_sep dbname="doc_control_sep" )
+ column=(type=char(12) updatewhereclause=yes name=control_sep_orden_cobro dbname="control_sep_orden_cobro" )
+ column=(type=long updatewhereclause=yes name=planteles_cve_plantel dbname="planteles.cve_plantel" )
+ column=(type=char(70) updatewhereclause=yes name=datos_certificado_nombre dbname="datos_certificado.nombre" )
+ column=(type=char(1) updatewhereclause=yes name=alumnos_sexo dbname="alumnos_sexo" )
+ column=(type=datetime updatewhereclause=yes name=fecha_server dbname="fecha_server" )
+ column=(type=char(25) updatewhereclause=yes name=planteles_plantel dbname="planteles.plantel" )
+ column=(type=long updatewhereclause=yes name=cve_doc_control_sep dbname="cve_doc_control_sep" )
+ retrieve="  SELECT control_sep_cuenta= dbo.control_sep_planteles.cuenta,   
+         alumnos_nombre_completo= dbo.control_sep_planteles.nombre_completo,   
+         control_sep_numero = dbo.control_sep_planteles.numero,
+			doc_control_sep= dbo.doc_control_sep.doc_control_sep,
+			control_sep_orden_cobro = dbo.control_sep_planteles.orden_cobro,
+			dbo.planteles.cve_plantel,
+			dbo.datos_certificado.nombre,
+			alumnos_sexo= dbo.control_sep_planteles.sexo,
+			fecha_server = getdate(),
+			dbo.planteles.plantel,
+			cve_doc_control_sep= dbo.doc_control_sep.cve_doc_control_sep
+    FROM dbo.control_sep_planteles,
+         dbo.planteles,
+			dbo.datos_certificado,
+			dbo.doc_control_sep 
+   WHERE ( dbo.control_sep_planteles.cve_doc_control_sep = dbo.doc_control_sep.cve_doc_control_sep ) and 
+         ( dbo.control_sep_planteles.cancelado = 0 ) AND 
+ 			( dbo.control_sep_planteles.cve_plantel = dbo.planteles.cve_plantel ) AND
+			( dbo.datos_certificado.id = 2 ) AND
+         ((( dbo.control_sep_planteles.orden_cobro like :orden_cobro ) AND  
+         ( :orden_cobro not like '0' )) OR  
+         (( dbo.control_sep_planteles.orden_cobro is NULL ) AND  
+         ( :orden_cobro = '0' ))) AND
+ 			( dbo.control_sep_planteles.cve_plantel = :ai_cve_plantel)  AND 
+			( dbo.control_sep_planteles.cve_doc_control_sep in (1,2,3)) " arguments=(("orden_cobro", string),("ai_cve_plantel", number))  sort="control_sep_numero A " )
+text(band=header alignment="0" text="REPORTE ESCRITO DE LAS LISTAS CAPTURADAS"border="0" color="0" x="592" y="99" height="80" width="1792"  font.face="Arial" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="count(  control_sep_numero  for all )+~" ~"+ if( cve_doc_control_sep = 4 or cve_doc_control_sep = 5 or cve_doc_control_sep = 6, ~"TI TITULO(S)~", doc_control_sep_doc_control_sep )"border="0" color="0" x="1320" y="333" height="48" width="1715" format="[general]"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="~"UN~"+ planteles_cve_plantel "border="0" color="0" x="2842" y="397" height="51" width="176" format="[general]"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="ESTA RELACIÓN AMPARA LA AUTENTICACIÓN DE"border="0" color="0" x="51" y="333" height="48" width="1181"  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=header x1="48" y1="493" x2="3295" y2="493" pen.style="0" pen.width="4" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="48" y1="499" x2="3295" y2="499" pen.style="0" pen.width="4" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="48" y1="621" x2="3295" y2="621" pen.style="0" pen.width="4" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="48" y1="634" x2="3295" y2="634" pen.style="0" pen.width="4" pen.color="0"  background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="No. de Certificado Global o Revisión de Estudios"border="0" color="0" x="2626" y="509" height="102" width="677"  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="No."border="0" color="0" x="91" y="509" height="51" width="95"  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="No. de Cuenta"border="0" color="0" x="362" y="509" height="51" width="410"  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Nombre del Alumno"border="0" color="0" x="816" y="509" height="51" width="567"  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="No. ORDEN DE COBRO:"border="0" color="0" x="51" y="269" height="48" width="549"  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=5 alignment="0" tabsequence=32766 border="0" color="0" x="633" y="269" height="48" width="391" format="[general]"  name=control_sep_orden_cobro edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="QUE SE IMPARTEN EN:"border="0" color="0" x="51" y="397" height="51" width="549"  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="~"UNIVERSIDAD IBEROAMERICANA ~"+UPPER( planteles_plantel )"border="0" color="0" x="633" y="397" height="51" width="2063" format="[general]"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="getrow()"border="0" color="0" x="80" y="3" height="64" width="230" format="[general]"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression=" control_sep_cuenta +obten_digito( control_sep_cuenta )"border="0" color="0" x="366" y="3" height="64" width="351" format="[general]"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="816" y="3" height="64" width="1924" format="[general]"  name=alumnos_nombre_completo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="0" expression="mod(  control_sep_numero , 100000000 )"border="0" color="0" x="2951" y="3" height="64" width="296" format="00-000000"  name=control_sep_numero  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=footer id=7 alignment="2" tabsequence=32766 border="0" color="0" x="1050" y="28" height="54" width="1488" format="[general]"  name=datos_certificado_nombre edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=footer alignment="2" text="NOMBRE DEL RESPONSABLE DE SERVICIOS ESCOLARES"border="0" color="0" x="1050" y="112" height="51" width="1488"  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

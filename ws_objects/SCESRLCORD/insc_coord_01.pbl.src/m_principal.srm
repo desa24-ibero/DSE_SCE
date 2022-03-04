@@ -1,0 +1,381 @@
+﻿$PBExportHeader$m_principal.srm
+$PBExportComments$Menu desde el cual se puede abrir cualquiera de las aplicaciones del sistema de control escolar Consultas alumnos, horarios materias,etc.
+forward
+global type m_principal from menu
+end type
+type m_solicitudesdeautorizaciónespecial from menu within m_principal
+end type
+type m_reportedesolicitudesdeautorizaciónespecial from menu within m_principal
+end type
+type m_reinscripcion from menu within m_principal
+end type
+type m_reinscrip from menu within m_reinscripcion
+end type
+type m_cambiarperiodo from menu within m_reinscripcion
+end type
+type m_reinscripcion from menu within m_principal
+m_reinscrip m_reinscrip
+m_cambiarperiodo m_cambiarperiodo
+end type
+type m_help from menu within m_principal
+end type
+type m_acercadesrl10 from menu within m_help
+end type
+type m_help from menu within m_principal
+m_acercadesrl10 m_acercadesrl10
+end type
+type m_salir from menu within m_principal
+end type
+global type m_principal from menu
+m_solicitudesdeautorizaciónespecial m_solicitudesdeautorizaciónespecial
+m_reportedesolicitudesdeautorizaciónespecial m_reportedesolicitudesdeautorizaciónespecial
+m_reinscripcion m_reinscripcion
+m_help m_help
+m_salir m_salir
+end type
+end forward
+
+global type m_principal from menu
+m_solicitudesdeautorizaciónespecial m_solicitudesdeautorizaciónespecial
+m_reportedesolicitudesdeautorizaciónespecial m_reportedesolicitudesdeautorizaciónespecial
+m_reinscripcion m_reinscripcion
+m_help m_help
+m_salir m_salir
+end type
+global m_principal m_principal
+
+on m_principal.create
+m_principal=this
+call super::create
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_solicitudesdeautorizaciónespecial=create m_solicitudesdeautorizaciónespecial
+this.m_reportedesolicitudesdeautorizaciónespecial=create m_reportedesolicitudesdeautorizaciónespecial
+this.m_reinscripcion=create m_reinscripcion
+this.m_help=create m_help
+this.m_salir=create m_salir
+this.Item[UpperBound(this.Item)+1]=this.m_solicitudesdeautorizaciónespecial
+this.Item[UpperBound(this.Item)+1]=this.m_reportedesolicitudesdeautorizaciónespecial
+this.Item[UpperBound(this.Item)+1]=this.m_reinscripcion
+this.Item[UpperBound(this.Item)+1]=this.m_help
+this.Item[UpperBound(this.Item)+1]=this.m_salir
+end on
+
+on m_principal.destroy
+call super::destroy
+destroy(this.m_solicitudesdeautorizaciónespecial)
+destroy(this.m_reportedesolicitudesdeautorizaciónespecial)
+destroy(this.m_reinscripcion)
+destroy(this.m_help)
+destroy(this.m_salir)
+end on
+
+type m_solicitudesdeautorizaciónespecial from menu within m_principal
+end type
+
+event clicked;
+setpointer(Hourglass!)
+opensheet(w_solicitud_autorizacion_especial,w_insc_coord,6,Original!)
+
+end event
+
+on m_solicitudesdeautorizaciónespecial.create
+call super::create
+this.visible = false
+this.text = "Solicitudes de Autorización Especial"
+this.enabled = false
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_solicitudesdeautorizaciónespecial.destroy
+call super::destroy
+end on
+
+type m_reportedesolicitudesdeautorizaciónespecial from menu within m_principal
+end type
+
+event clicked;
+setpointer(Hourglass!)
+opensheet(w_reporte_solicitud_aut_esp,w_insc_coord,7,Original!)
+end event
+
+on m_reportedesolicitudesdeautorizaciónespecial.create
+call super::create
+this.visible = false
+this.text = "Reporte de Solicitudes de Autorización Especial"
+this.enabled = false
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_reportedesolicitudesdeautorizaciónespecial.destroy
+call super::destroy
+end on
+
+type m_reinscripcion from menu within m_principal
+m_reinscrip m_reinscrip
+m_cambiarperiodo m_cambiarperiodo
+end type
+
+on m_reinscripcion.create
+call super::create
+this.text = "Reinscripción"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_reinscrip=create m_reinscrip
+this.m_cambiarperiodo=create m_cambiarperiodo
+this.Item[UpperBound(this.Item)+1]=this.m_reinscrip
+this.Item[UpperBound(this.Item)+1]=this.m_cambiarperiodo
+end on
+
+on m_reinscripcion.destroy
+call super::destroy
+destroy(this.m_reinscrip)
+destroy(this.m_cambiarperiodo)
+end on
+
+type m_reinscrip from menu within m_reinscripcion
+end type
+
+event clicked;//	Oscar Sánchez, 10 Dic 2019.	La unica ventana a usar es w_reinscripcion_2014, no usar w_preinscripción_2014 para Coordinadores.
+											
+/*
+int preinsc
+preinsc = 0
+if ( gi_nivel_usuario < 10 ) then
+	SELECT activacion.preinsc  
+    INTO :preinsc  
+    FROM activacion 
+	 WHERE tipo_periodo = :gs_tipo_periodo;
+else
+	SELECT activacion_su.preinsc  
+    INTO :preinsc  
+    FROM activacion_su 
+	 WHERE tipo_periodo = :gs_tipo_periodo;
+end if
+if preinsc = 0 then
+	setpointer(Hourglass!)*/
+	opensheet(w_reinscripcion_2014,w_insc_coord,6,Original!)
+/*	
+else
+	setpointer(Hourglass!)
+	opensheet(w_preinscripción_2014,w_insc_coord,6,Original!)
+end if
+*/
+end event
+
+on m_reinscrip.create
+call super::create
+this.text = "Reinscripción"
+this.microhelp = "Sistema de Reinscripción en Linea"
+this.toolbaritemname = "run!"
+this.toolbaritemtext = "Reinscripción"
+this.toolbaritemorder = 1
+this.toolbaritemspace = 3
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_reinscrip.destroy
+call super::destroy
+end on
+
+type m_cambiarperiodo from menu within m_reinscripcion
+end type
+
+on m_cambiarperiodo.create
+call super::create
+this.visible = false
+this.text = "Cambiar Tipo de Periodo"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_cambiarperiodo.destroy
+call super::destroy
+end on
+
+event clicked;setpointer(Hourglass!)
+open(w_cambio_tipo_periodo)
+
+end event
+
+type m_help from menu within m_principal
+m_acercadesrl10 m_acercadesrl10
+end type
+
+on m_help.create
+call super::create
+this.text = "Ayuda"
+this.menuitemtype = menuitemtypeexit!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_acercadesrl10=create m_acercadesrl10
+this.Item[UpperBound(this.Item)+1]=this.m_acercadesrl10
+end on
+
+on m_help.destroy
+call super::destroy
+destroy(this.m_acercadesrl10)
+end on
+
+type m_acercadesrl10 from menu within m_help
+end type
+
+on m_acercadesrl10.create
+call super::create
+this.text = "Acerca de SRL 1.804.98"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;setpointer(Hourglass!)
+opensheet(w_about,w_insc_coord,4,Original!)
+end event
+
+on m_acercadesrl10.destroy
+call super::destroy
+end on
+
+type m_salir from menu within m_principal
+end type
+
+on m_salir.create
+call super::create
+this.text = "Salir"
+this.microhelp = "Salir del Sistema de Reinscripción en Linea"
+this.toolbaritemname = "exit!"
+this.toolbaritemtext = "Salir"
+this.toolbaritemorder = 3
+this.toolbaritemspace = 3
+this.menuitemtype = menuitemtypeexit!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_salir.destroy
+call super::destroy
+end on
+
+event clicked;close(w_insc_coord)
+
+end event
+

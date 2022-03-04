@@ -1,0 +1,34 @@
+﻿$PBExportHeader$f_obten_cuenta_disponible.srf
+global type f_obten_cuenta_disponible from function_object
+end type
+
+forward prototypes
+global function long f_obten_cuenta_disponible ()
+end prototypes
+
+global function long f_obten_cuenta_disponible ();integer li_codigo
+string ls_mensaje_error
+long ll_cuenta
+
+select min(dbo.cuentas_disponibles.cuenta)
+into :ll_cuenta
+from dbo.cuentas_disponibles
+using gtr_sce;
+
+li_codigo= gtr_sce.SqlCode
+ls_mensaje_error= gtr_sce.SqlErrText
+
+if isnull(ll_cuenta) then
+	ll_cuenta= 0
+end if
+
+if li_codigo = -1  then
+	MessageBox("Error al recuperar cuentas_disponibles",ls_mensaje_error, StopSign!)
+	return -1
+else
+	return ll_cuenta	
+end if
+
+
+end function
+

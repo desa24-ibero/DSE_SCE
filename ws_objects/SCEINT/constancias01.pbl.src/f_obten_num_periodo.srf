@@ -1,0 +1,34 @@
+﻿$PBExportHeader$f_obten_num_periodo.srf
+global type f_obten_num_periodo from function_object
+end type
+
+forward prototypes
+global function integer f_obten_num_periodo (long al_cuenta, integer ai_periodo, integer ai_anio, long al_carrera)
+end prototypes
+
+global function integer f_obten_num_periodo (long al_cuenta, integer ai_periodo, integer ai_anio, long al_carrera);integer li_rows, li_periodo_elegido, li_num_rows, li_row, li_periodo_row, li_anio_row
+long ll_cuenta_row
+datastore ds_periodos
+
+li_periodo_elegido = 0
+
+ds_periodos = CREATE datastore
+ds_periodos.DataObject = 'd_periodos_historico_cuenta'  
+ds_periodos.SetTransObject(gtr_sce)  
+li_num_rows = ds_periodos.Retrieve(al_cuenta,ai_periodo,ai_anio, al_carrera)
+
+for li_row = 1 to  li_num_rows
+	ll_cuenta_row = ds_periodos.GetItemNumber(li_row, "cuenta")
+	li_periodo_row = ds_periodos.GetItemNumber(li_row, "periodo")
+	li_anio_row = ds_periodos.GetItemNumber(li_row, "anio")
+	if li_periodo_row = ai_periodo and li_anio_row = ai_anio then
+		li_periodo_elegido= li_row
+		exit
+	end if	
+next
+ 
+return li_periodo_elegido
+
+
+end function
+

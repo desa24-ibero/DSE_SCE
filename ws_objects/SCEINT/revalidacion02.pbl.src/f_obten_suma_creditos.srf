@@ -1,0 +1,47 @@
+﻿$PBExportHeader$f_obten_suma_creditos.srf
+global type f_obten_suma_creditos from function_object
+end type
+
+forward prototypes
+global function decimal f_obten_suma_creditos (long al_folio)
+end prototypes
+
+global function decimal f_obten_suma_creditos (long al_folio);//Obtiene la suma de los creditos de la tabla materias_revalidacion
+//
+//f_obten_suma_creditos
+//
+//long 		al_folio
+//integer	ai_cve_carrera
+//integer	ai_cve_plan
+
+
+integer li_codigo
+string ls_mensaje_error
+decimal ldc_creditos
+
+select sum(dbo.materias.creditos) 
+into :ldc_creditos
+from dbo.materias
+where dbo.materias.cve_mat in (select dbo.materias_revalidacion.cve_mat 
+from dbo.materias_revalidacion
+where dbo.materias_revalidacion.folio = :al_folio
+and dbo.materias_revalidacion.status = 1)
+using gtr_sce;
+
+li_codigo= gtr_sce.SqlCode
+ls_mensaje_error= gtr_sce.SqlErrText
+
+if isnull(ldc_creditos) then
+	ldc_creditos = 0
+end if
+
+if li_codigo = -1  then
+	MessageBox("Error al obtener los créditos de las materias",ls_mensaje_error, StopSign!)
+	return -1
+else
+	return ldc_creditos	
+end if
+
+
+end function
+

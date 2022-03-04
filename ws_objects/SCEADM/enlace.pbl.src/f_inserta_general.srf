@@ -1,0 +1,170 @@
+﻿$PBExportHeader$f_inserta_general.srf
+global type f_inserta_general from function_object
+end type
+
+forward prototypes
+global function integer f_inserta_general (long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio, long al_folio_apartado, integer ai_clv_ver_apartado, boolean ab_existe_nuevo_registro)
+end prototypes
+
+global function integer f_inserta_general (long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio, long al_folio_apartado, integer ai_clv_ver_apartado, boolean ab_existe_nuevo_registro);//f_inserta_general
+//Recibe 	:	al_folio	long
+//		ai_clv_ver	integer
+//		ai_clv_per	integer
+//		ai_anio		integer
+//		al_folio_apartado		long
+//		ai_clv_ver_apartado	integer
+//		ab_existe_nuevo_registro	boolean
+//Devuelve : 0 Inserción/Actualización exitosa
+//			100 No existe el registro
+//			 -1 Error al insertar/actualizar
+long ll_cuenta
+int li_codigo_sql
+string ls_mensaje, ls_operacion
+
+IF ab_existe_nuevo_registro THEN
+	UPDATE general
+	SET 
+	nombre = g_origen.nombre,
+	apaterno = g_origen.apaterno,
+	amaterno = g_origen.amaterno,
+	calle = g_origen.calle,
+	codigo_pos = g_origen.codigo_pos,
+	colonia = g_origen.colonia,
+	estado = g_origen.estado,
+	telefono = g_origen.telefono,
+	fecha_nac = g_origen.fecha_nac,
+	lugar_nac = g_origen.lugar_nac,
+	nacional = g_origen.nacional,
+	sexo = g_origen.sexo,
+	edo_civil = g_origen.edo_civil,
+	religion = g_origen.religion,
+	bachillera = g_origen.bachillera,
+	trabajo = g_origen.trabajo,
+	trab_hor = g_origen.trab_hor,
+	ya_inscri = g_origen.ya_inscri,
+	cuenta = g_origen.cuenta,
+	transporte = g_origen.transporte,
+	padreexuia = g_origen.padreexuia,
+	madreexuia = g_origen.madreexuia,
+	delmunpio = g_origen.delmunpio,
+	bachilleraturno = g_origen.bachilleraturno,
+	tiporegistro = g_origen.tiporegistro,
+	email = g_origen.email,
+	lada = g_origen.lada,
+	trab_lugar = g_origen.trab_lugar,
+	callenom = g_origen.callenom,
+	callenum = g_origen.callenum,
+	calleedf = g_origen.calleedf,
+	calledepto = g_origen.calledepto,
+	colnom = g_origen.colnom,
+	bachilleradir = g_origen.bachilleradir
+	FROM general g_destino , general g_origen
+	WHERE g_destino.folio = :al_folio_apartado
+	AND g_destino.clv_ver = :ai_clv_ver_apartado
+	AND g_destino.clv_per = :ai_clv_per 
+	AND g_destino.anio = :ai_anio
+	AND g_destino.clv_per = g_origen.clv_per
+	AND g_destino.anio = g_origen.anio
+	AND g_origen.clv_ver = :ai_clv_ver
+	AND g_origen.folio = :al_folio
+	USING gtr_sadm;
+	ls_operacion = "Actualizar"
+ELSE
+
+	INSERT INTO general(
+	folio,
+	clv_ver,
+	clv_per,
+	anio,
+	nombre,
+	apaterno,
+	amaterno,
+	calle,
+	codigo_pos,
+	colonia,
+	estado,
+	telefono,
+	fecha_nac,
+	lugar_nac,
+	nacional,
+	sexo,
+	edo_civil,
+	religion,
+	bachillera,
+	trabajo,
+	trab_hor,
+	ya_inscri,
+	cuenta,
+	transporte,
+	padreexuia,
+	madreexuia,
+	delmunpio,
+	bachilleraturno,
+	tiporegistro,
+	email,
+	lada,
+	trab_lugar,
+	callenom,
+	callenum,
+	calleedf,
+	calledepto,
+	colnom,
+	bachilleradir)
+	SELECT
+	:al_folio_apartado,
+	:ai_clv_ver_apartado,
+	clv_per,
+	anio,
+	nombre,
+	apaterno,
+	amaterno,
+	calle,
+	codigo_pos,
+	colonia,
+	estado,
+	telefono,
+	fecha_nac,
+	lugar_nac,
+	nacional,
+	sexo,
+	edo_civil,
+	religion,
+	bachillera,
+	trabajo,
+	trab_hor,
+	ya_inscri,
+	cuenta,
+	transporte,
+	padreexuia,
+	madreexuia,
+	delmunpio,
+	bachilleraturno,
+	tiporegistro,
+	email,
+	lada,
+	trab_lugar,
+	callenom,
+	callenum,
+	calleedf,
+	calledepto,
+	colnom,
+	bachilleradir
+	FROM general
+	WHERE folio = :al_folio
+	AND clv_ver = :ai_clv_ver
+	AND clv_per = :ai_clv_per 
+	AND anio = :ai_anio
+	USING gtr_sadm;
+	ls_operacion = "Insertar"
+END IF
+
+li_codigo_sql = gtr_sadm.SqlCode
+ls_mensaje = gtr_sadm.SqlErrText
+
+IF li_codigo_sql = -1 THEN
+	MessageBox("Error al "+ls_operacion+" en general", ls_mensaje, StopSign!)
+END IF
+
+RETURN li_codigo_sql
+end function
+

@@ -1,0 +1,55 @@
+﻿$PBExportHeader$convierte_avisos.srf
+global type convierte_avisos from function_object
+end type
+
+forward prototypes
+global function string convierte_avisos (string aviso)
+end prototypes
+
+global function string convierte_avisos (string aviso);// El texto se justifica a la izquierda partiendo la linea  si contiene mas de 80
+// caracteres, se hace un salto de linea si se encuentra un caracter "punto"  
+// seguido por uno de los caracteres siguientes:
+//	(Avance de linea, Avance de Pagina ó Retorno de carro).
+// ******************************************************************************* 
+// Esta función se llama solo una vez antes de generar todas las solicitudes.
+// Juan Campos Sánchez. 	Mayo-1998.
+
+Long		i
+String	Linea,Palabra
+Char  	Texto[]
+string corregido
+
+Palabra = ""
+corregido=char(13)+char(10)            
+Texto=aviso
+For i = 1 To Len(aviso)-1
+	If Texto[i] = ' ' or Texto[i] = char(10) or Texto[i] = char(12) or Texto[i] = char(13) Then
+		If Palabra <> '' And (Texto[i] = ' ' or Texto[i] = char(13)) Then Palabra = Palabra + ' '
+		If ((Len(Linea) + Len(Palabra)) <=76) Then 
+			Linea = Linea + Palabra
+		Else
+			corregido=corregido+JustificaLinea(Linea,3,78)+char(13)+char(10)
+			Linea = ''
+			Linea = Palabra
+		End IF
+		Palabra = ''
+	Else
+		Palabra = Palabra + Texto[i]
+		If (Mid(Palabra,Len(Palabra),1) = '.') And (Texto[i+1] = char(10) or &
+			Texto[i+1] = char(12) or Texto[i+1] = char(13) Or Texto[i+1] = '') Then
+			If ((Len(Linea) + Len(Palabra)) <=76) Then 
+				Linea = Linea + Palabra
+				corregido=corregido+"  "+Linea+char(13)+char(10)
+			Else
+				corregido=corregido+JustificaLinea(Linea,3,78)+char(13)+char(10)
+				corregido=corregido+"  "+Palabra+char(13)+char(10)
+			End IF
+			Linea = ''
+			Palabra = ''				
+ 		End if	
+ 	End IF
+Next
+corregido=corregido+"  "+Linea+Palabra+char(13)+char(10)
+return corregido
+end function
+

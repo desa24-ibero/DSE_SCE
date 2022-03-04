@@ -1,0 +1,41 @@
+﻿$PBExportHeader$f_carrera_en_academicos.srf
+global type f_carrera_en_academicos from function_object
+end type
+
+forward prototypes
+global function integer f_carrera_en_academicos (long al_cuenta, long al_cve_carrera)
+end prototypes
+
+global function integer f_carrera_en_academicos (long al_cuenta, long al_cve_carrera);//f_carrera_en_academicos
+//Obtiene si la carrera del alumno esta en academicos
+//Recibe			al_cuenta		long
+//      			al_cve_carrera	long
+//Devuelve		integer
+
+integer li_codigo_sql, li_num_academicos
+string ls_mensaje_sql, ls_dia
+
+SELECT count(*)
+INTO	:li_num_academicos
+FROM	dbo.academicos
+WHERE dbo.academicos.cuenta = :al_cuenta
+AND   dbo.academicos.cve_carrera = :al_cve_carrera
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 then
+	MessageBox("Academicos inexistentes", "El alumno con cuenta ["+string(al_cuenta)+"] no tiene academicos", StopSign!)
+	return -1
+elseif isnull(li_num_academicos) then
+	return 0
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar academicos", ls_mensaje_sql,StopSign!)
+	return  -1
+end if
+
+return li_num_academicos
+
+end function
+

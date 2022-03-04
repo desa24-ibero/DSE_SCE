@@ -1,0 +1,557 @@
+﻿$PBExportHeader$m_ancestro_general.srm
+$PBExportComments$Menu modificable Para todas las ventanas. En este menu se pueden agregar items requeridos solo encabezados  (deben colocarse como visible = true). NO Borrar(13011999) CAMP.(DkWf)
+forward
+global type m_ancestro_general from m_ancestro_menu
+end type
+type m_tipodecuota from menu within m_ancestro_general
+end type
+type m_tipodecuota from menu within m_ancestro_general
+end type
+type m_registro from menu within m_ancestro_general
+end type
+type m_nuevo from menu within m_registro
+end type
+type m_actualizar from menu within m_registro
+end type
+type m_borraregistro from menu within m_registro
+end type
+type m_cargaregistro from menu within m_registro
+end type
+type m_-1 from menu within m_registro
+end type
+type m_primero from menu within m_registro
+end type
+type m_anterior from menu within m_registro
+end type
+type m_siguiente from menu within m_registro
+end type
+type m_ltimo from menu within m_registro
+end type
+type m_-2 from menu within m_registro
+end type
+type m_filtrar from menu within m_registro
+end type
+type m_ordenar from menu within m_registro
+end type
+type m_registro from menu within m_ancestro_general
+m_nuevo m_nuevo
+m_actualizar m_actualizar
+m_borraregistro m_borraregistro
+m_cargaregistro m_cargaregistro
+m_-1 m_-1
+m_primero m_primero
+m_anterior m_anterior
+m_siguiente m_siguiente
+m_ltimo m_ltimo
+m_-2 m_-2
+m_filtrar m_filtrar
+m_ordenar m_ordenar
+end type
+type m_procesos from menu within m_ancestro_general
+end type
+type m_procesos from menu within m_ancestro_general
+end type
+type m_pasos from menucascade within m_ancestro_general
+end type
+type m_pasos from menucascade within m_ancestro_general
+end type
+type m_ver from menu within m_ancestro_general
+end type
+type m_ver from menu within m_ancestro_general
+end type
+type m_animacion from menu within m_ancestro_general
+end type
+type m_animacion from menu within m_ancestro_general
+end type
+type m_ventana from menu within m_ancestro_general
+end type
+type m_horizontal from menu within m_ventana
+end type
+type m_vertical from menu within m_ventana
+end type
+type m_primerplano from menu within m_ventana
+end type
+type m_cascada from menu within m_ventana
+end type
+type m_ventana from menu within m_ancestro_general
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+type m_ayuda from menu within m_ancestro_general
+end type
+type m_ayuda from menu within m_ancestro_general
+end type
+end forward
+
+global type m_ancestro_general from m_ancestro_menu
+m_tipodecuota m_tipodecuota
+m_registro m_registro
+m_procesos m_procesos
+m_pasos m_pasos
+m_ver m_ver
+m_animacion m_animacion
+m_ventana m_ventana
+m_ayuda m_ayuda
+end type
+global m_ancestro_general m_ancestro_general
+
+type variables
+
+end variables
+
+on m_ancestro_general.create
+m_ancestro_general=this
+call super::create
+this.m_tipodecuota=create m_tipodecuota
+this.m_registro=create m_registro
+this.m_procesos=create m_procesos
+this.m_pasos=create m_pasos
+this.m_ver=create m_ver
+this.m_animacion=create m_animacion
+this.m_ventana=create m_ventana
+this.m_ayuda=create m_ayuda
+this.Item[UpperBound(this.item)+1]=this.m_tipodecuota
+this.Item[UpperBound(this.item)+1]=this.m_registro
+this.Item[UpperBound(this.item)+1]=this.m_procesos
+this.Item[UpperBound(this.item)+1]=this.m_pasos
+this.Item[UpperBound(this.item)+1]=this.m_ver
+this.Item[UpperBound(this.item)+1]=this.m_animacion
+this.Item[UpperBound(this.item)+1]=this.m_ventana
+this.Item[UpperBound(this.item)+1]=this.m_ayuda
+end on
+
+on m_ancestro_general.destroy
+call super::destroy
+destroy(this.m_tipodecuota)
+destroy(this.m_registro)
+destroy(this.m_procesos)
+destroy(this.m_pasos)
+destroy(this.m_ver)
+destroy(this.m_animacion)
+destroy(this.m_ventana)
+destroy(this.m_ayuda)
+end on
+
+type m_tipodecuota from menu within m_ancestro_general
+end type
+
+on m_tipodecuota.create
+this.Text="Tipo de Cuota"
+this.Visible=false
+end on
+
+on m_tipodecuota.destroy
+end on
+
+type m_registro from menu within m_ancestro_general
+m_nuevo m_nuevo
+m_actualizar m_actualizar
+m_borraregistro m_borraregistro
+m_cargaregistro m_cargaregistro
+m_-1 m_-1
+m_primero m_primero
+m_anterior m_anterior
+m_siguiente m_siguiente
+m_ltimo m_ltimo
+m_-2 m_-2
+m_filtrar m_filtrar
+m_ordenar m_ordenar
+end type
+
+on m_registro.create
+this.Text="Registro"
+this.Visible=false
+this.m_nuevo=create m_nuevo
+this.m_actualizar=create m_actualizar
+this.m_borraregistro=create m_borraregistro
+this.m_cargaregistro=create m_cargaregistro
+this.m_-1=create m_-1
+this.m_primero=create m_primero
+this.m_anterior=create m_anterior
+this.m_siguiente=create m_siguiente
+this.m_ltimo=create m_ltimo
+this.m_-2=create m_-2
+this.m_filtrar=create m_filtrar
+this.m_ordenar=create m_ordenar
+this.Item[]={this.m_nuevo, &
+this.m_actualizar, &
+this.m_borraregistro, &
+this.m_cargaregistro, &
+this.m_-1, &
+this.m_primero, &
+this.m_anterior, &
+this.m_siguiente, &
+this.m_ltimo, &
+this.m_-2, &
+this.m_filtrar, &
+this.m_ordenar}
+end on
+
+on m_registro.destroy
+destroy(this.m_nuevo)
+destroy(this.m_actualizar)
+destroy(this.m_borraregistro)
+destroy(this.m_cargaregistro)
+destroy(this.m_-1)
+destroy(this.m_primero)
+destroy(this.m_anterior)
+destroy(this.m_siguiente)
+destroy(this.m_ltimo)
+destroy(this.m_-2)
+destroy(this.m_filtrar)
+destroy(this.m_ordenar)
+end on
+
+type m_nuevo from menu within m_registro
+end type
+
+event clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	dw.triggerevent("ue_nuevo")
+end if
+
+end event
+
+on m_nuevo.create
+this.Text="&Nuevo~tCtrl+N"
+this.Microhelp="Inserta un renglon al final para agregar un dato"
+this.ToolBarItemName="SelectScript!"
+this.ToolBarItemText="Nuevo"
+this.Visible=false
+this.ToolBarItemOrder=8
+this.ToolBarItemSpace=3
+this.Shortcut=334
+end on
+
+type m_actualizar from menu within m_registro
+end type
+
+event clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	dw.triggerevent("ue_actualizacion")
+end if
+end event
+
+on m_actualizar.create
+this.Text="&Actualizar~tCtrl+A"
+this.Microhelp="Guarda los cambios en la base de datos"
+this.ToolBarItemName="Custom044!"
+this.ToolBarItemText="Actualizar"
+this.Visible=false
+this.ToolBarItemOrder=9
+this.Shortcut=321
+end on
+
+type m_borraregistro from menu within m_registro
+end type
+
+event clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	dw.triggerevent("ue_borra")
+end if
+end event
+
+on m_borraregistro.create
+this.Text="&Borra registro~tCtrl+B"
+this.Microhelp="Borra el renglón actual"
+this.ToolBarItemName="Clear!"
+this.ToolBarItemText="Borrar"
+this.Visible=false
+this.ToolBarItemOrder=10
+this.Shortcut=322
+end on
+
+type m_cargaregistro from menu within m_registro
+end type
+
+event clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	dw.triggerevent("ue_carga")
+end if
+end event
+
+on m_cargaregistro.create
+this.Text="&Carga registro~tCtrl+C"
+this.ToolBarItemName="Update!"
+this.ToolBarItemText="Cargar"
+this.Visible=false
+this.ToolBarItemOrder=11
+this.Shortcut=323
+end on
+
+type m_-1 from menu within m_registro
+end type
+
+on m_-1.create
+this.Text="-"
+end on
+
+type m_primero from menu within m_registro
+end type
+
+event clicked;if isvalid(dw) then
+	dw.triggerevent("ue_primero")
+end if
+
+//if isvalid(objeto) then
+//	objeto.triggerevent("primero")
+//end if
+
+end event
+
+on m_primero.create
+this.Text="Primero~tAlt+P"
+this.ToolBarItemName="VCRFirst!"
+this.ToolBarItemText="Primero"
+this.Visible=false
+this.ToolBarItemOrder=12
+this.ToolBarItemSpace=3
+this.Shortcut=592
+end on
+
+type m_anterior from menu within m_registro
+end type
+
+event clicked;if isvalid(dw) then
+	dw.triggerevent("ue_anterior")
+end if
+
+//if isvalid(objeto) then
+//	objeto.triggerevent("anterior")
+//end if
+
+//dw.scrollpriorpage ( )
+end event
+
+on m_anterior.create
+this.Text="Anterior~tAlt+A"
+this.ToolBarItemName="VCRPrior!"
+this.ToolBarItemText="Anterior"
+this.Visible=false
+this.ToolBarItemOrder=13
+this.Shortcut=577
+end on
+
+type m_siguiente from menu within m_registro
+end type
+
+event clicked;if isvalid(dw) then
+	dw.triggerevent("ue_siguiente")
+end if
+
+//if isvalid(objeto) then
+//	objeto.triggerevent("siguiente")
+//end if
+
+//dw.scrollnextpage ( )
+end event
+
+on m_siguiente.create
+this.Text="Siguiente~tAlt+S"
+this.ToolBarItemName="VCRNext!"
+this.ToolBarItemText="Siguiente"
+this.Visible=false
+this.ToolBarItemOrder=14
+this.Shortcut=595
+end on
+
+type m_ltimo from menu within m_registro
+end type
+
+event clicked;if isvalid(dw) then
+	dw.triggerevent("ue_ultimo")
+end if
+
+//if isvalid(objeto) then
+//	objeto.triggerevent("ultimo")
+//end if
+
+//dw.scrolltorow(dw.rowcount())
+end event
+
+on m_ltimo.create
+this.Text="Último~tAlt+U"
+this.ToolBarItemName="VCRLast!"
+this.ToolBarItemText="Último"
+this.Visible=false
+this.ToolBarItemOrder=15
+this.Shortcut=597
+end on
+
+type m_-2 from menu within m_registro
+end type
+
+on m_-2.create
+this.Text="-"
+end on
+
+type m_filtrar from menu within m_registro
+end type
+
+event clicked;string filtro
+
+if isvalid(dw) then
+	SetPointer(HourGlass!)
+	SetNull(filtro)
+	dw.SetFilter(filtro)
+	dw.Filter( )
+	dw.sort()
+	dw.groupcalc()
+end if
+end event
+
+on m_filtrar.create
+this.Text="Filtrar"
+this.Visible=false
+end on
+
+type m_ordenar from menu within m_registro
+end type
+
+event clicked;string orden
+
+if isvalid(dw) then
+	SetPointer(HourGlass!)
+	SetNull(orden)
+	dw.setsort(orden)
+	SetPointer(HourGlass!)
+	dw.sort()
+	dw.groupcalc()
+end if
+end event
+
+on m_ordenar.create
+this.Text="Ordenar"
+this.Visible=false
+end on
+
+type m_procesos from menu within m_ancestro_general
+end type
+
+on m_procesos.create
+this.Text="Procesos"
+this.Visible=false
+end on
+
+on m_procesos.destroy
+end on
+
+type m_pasos from menucascade within m_ancestro_general
+end type
+
+on m_pasos.create
+this.Text="Pasos "
+this.Visible=false
+end on
+
+on m_pasos.destroy
+end on
+
+type m_ver from menu within m_ancestro_general
+end type
+
+on m_ver.create
+this.Text="Ver"
+this.Visible=false
+end on
+
+on m_ver.destroy
+end on
+
+type m_animacion from menu within m_ancestro_general
+end type
+
+on m_animacion.create
+this.Text="Animación"
+this.Visible=false
+end on
+
+on m_animacion.destroy
+end on
+
+type m_ventana from menu within m_ancestro_general
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+
+on m_ventana.create
+this.Text="Ventana"
+this.m_horizontal=create m_horizontal
+this.m_vertical=create m_vertical
+this.m_primerplano=create m_primerplano
+this.m_cascada=create m_cascada
+this.Item[]={this.m_horizontal, &
+this.m_vertical, &
+this.m_primerplano, &
+this.m_cascada}
+end on
+
+on m_ventana.destroy
+destroy(this.m_horizontal)
+destroy(this.m_vertical)
+destroy(this.m_primerplano)
+destroy(this.m_cascada)
+end on
+
+type m_horizontal from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Tilehorizontal!)
+//w_principal.ii_bandera_hojas = 1
+end event
+
+on m_horizontal.create
+this.Text="Horizontal"
+this.Microhelp="Organiza las ventanas horizontalmente."
+end on
+
+type m_vertical from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Tile!)
+//w_principal.ii_bandera_hojas = 1
+end event
+
+on m_vertical.create
+this.Text="Vertical"
+this.Microhelp="Organiza las ventanas verticalmente."
+end on
+
+type m_primerplano from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Layer!)
+//w_principal.ii_bandera_hojas = 0
+end event
+
+on m_primerplano.create
+this.Text="Primer Plano"
+this.Microhelp="Coloca en primer plano la ventana activa."
+end on
+
+type m_cascada from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Cascade!)
+//w_principal.ii_bandera_hojas = 1
+end event
+
+on m_cascada.create
+this.Text="Cascada"
+this.Microhelp="Organiza las ventanas en cascada."
+end on
+
+type m_ayuda from menu within m_ancestro_general
+end type
+
+on m_ayuda.create
+this.Text="Ayuda"
+end on
+
+on m_ayuda.destroy
+end on
+

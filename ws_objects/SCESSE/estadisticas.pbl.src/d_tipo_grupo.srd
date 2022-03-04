@@ -1,0 +1,12 @@
+﻿$PBExportHeader$d_tipo_grupo.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=tipo dbname="tipo_grupo.tipo" )
+ column=(type=char(12) updatewhereclause=yes name=nombre_tipo dbname="tipo_grupo.nombre_tipo" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"tipo_grupo~" ) COLUMN(NAME=~"tipo_grupo.tipo~") COLUMN(NAME=~"tipo_grupo.nombre_tipo~")) " )
+column(band=detail id=1 alignment="1" tabsequence=10 border="0" color="0" x="5" y="4" height="77" width="87" format="[general]"  name=tipo edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="0" color="0" x="106" y="4" height="77" width="357" format="[general]"  name=nombre_tipo edit.limit=12 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

@@ -1,0 +1,49 @@
+﻿$PBExportHeader$f_salon_ocupado.srf
+global type f_salon_ocupado from function_object
+end type
+
+forward prototypes
+global function boolean f_salon_ocupado (long al_cve_mat, string as_gpo, integer ai_periodo, integer ai_anio, integer ai_cve_dia, string as_cve_salon, integer ai_hora_inicio, integer ai_hora_final)
+end prototypes
+
+global function boolean f_salon_ocupado (long al_cve_mat, string as_gpo, integer ai_periodo, integer ai_anio, integer ai_cve_dia, string as_cve_salon, integer ai_hora_inicio, integer ai_hora_final);//f_salon_ocupado
+//Función que revisa que el salón en cuestión no se esté utilizando para otro grupo
+//
+//RECIBE
+//al_cve_mat		integer
+//as_gpo				string
+//ai_periodo		integer
+//ai_anio			integer
+//ai_cve_dia		integer
+//as_cve_salon		string
+//ai_hora_inicio	integer
+//ai_hora_final	integer
+//
+//REGRESA boolean
+
+
+long ll_num_horas, ll_hora_actual, ll_ultima_hora
+boolean lb_horario_ocupado
+
+ll_hora_actual = ai_hora_inicio
+ll_ultima_hora = ai_hora_final - 1 
+lb_horario_ocupado = false
+
+DO WHILE  ll_hora_actual <= ll_ultima_hora 
+
+	lb_horario_ocupado = f_salon_hora_usado(al_cve_mat, as_gpo, ai_periodo, ai_anio, ai_cve_dia, &
+	                                        as_cve_salon, ll_hora_actual)
+	if lb_horario_ocupado then
+		EXIT
+	end if 
+	ll_hora_actual = ll_hora_actual + 1													 
+LOOP
+
+if lb_horario_ocupado then
+	return true
+else
+	return false
+end if
+
+end function
+

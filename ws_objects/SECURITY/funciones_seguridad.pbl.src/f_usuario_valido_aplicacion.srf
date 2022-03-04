@@ -1,0 +1,40 @@
+﻿$PBExportHeader$f_usuario_valido_aplicacion.srf
+global type f_usuario_valido_aplicacion from function_object
+end type
+
+forward prototypes
+global function integer f_usuario_valido_aplicacion (string as_app_name, string as_user_id, transaction at_trans)
+end prototypes
+
+global function integer f_usuario_valido_aplicacion (string as_app_name, string as_user_id, transaction at_trans);/*
+ *		Nombre	ss_usuario_valido_aplicacion
+ *		Recibe	as_app_name, as_user_id, at_trans
+ *		Regresa	1	si el usuario as_user_id tiene permisos de entrar a la aplicacion as_app_name  
+ *						de acuerdo a la base de datos que apunta at_trans
+ *					0	si el usuario as_user_id no tiene permisos de entrar a la aplicacion as_app_name 
+ *						de acuerdo a la base de datos que apunta at_trans
+ *					-1	error de comunicacion
+ *					FMC12041999
+ */
+ 
+DataStore lds_user_app
+int li_res, li_ret
+
+lds_user_app = Create DataStore
+lds_user_app.DataObject = "ds_user_app"
+lds_user_app.SetTransObject(at_trans)
+li_res = lds_user_app.Retrieve(as_user_id,as_app_name, 2)
+choose case li_res
+	case 1
+		li_ret = 1
+	case 0
+		li_ret = 0
+	case else
+		li_ret = -1
+end choose
+Destroy lds_user_app
+return li_ret
+
+
+end function
+

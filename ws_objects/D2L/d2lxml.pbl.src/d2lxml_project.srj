@@ -1,0 +1,24 @@
+﻿$PBExportHeader$d2lxml_project.srj
+EXE:D2LXML.exe,,0,1,1
+CMP:0,0,0,2,0,0,1
+COM:Sybase, Inc.
+DES:Sybase, Inc. Product File
+CPY:
+PRD:PowerBuilder Enterprise Series
+PVS:1.0.0.1
+PVN:1,0,0,1
+FVS:1.0.0.1
+FVN:1,0,0,1
+MAN:0,asInvoker,0
+PBD:d2lxml.pbl,,1
+OBJ:C:\XML\D2L\d2lxml.pbl,w_login,w
+OBJ:C:\XML\D2L\d2lxml.pbl,uo_conexion,u
+OBJ:C:\XML\D2L\d2lxml.pbl,uo_genera_xml_cuenta,u
+OBJ:C:\XML\D2L\d2lxml.pbl,w_edita_archivo,w
+OBJ:C:\XML\D2L\d2lxml.pbl,w_procesar,w
+OBJ:C:\XML\D2L\d2lxml.pbl,uo_genera_xml,u
+OBJ:C:\XML\D2L\d2lxml.pbl,dw_archivo_edit,d
+OBJ:C:\XML\D2L\d2lxml.pbl,w_confirma_fecha,w
+OBJ:C:\XML\D2L\d2lxml.pbl,uds_datastore,u
+OBJ:C:\XML\D2L\d2lxml.pbl,uo_genera_xml_incremental,u
+OBJ:C:\XML\D2L\d2lxml.pbl,d2lxml,a

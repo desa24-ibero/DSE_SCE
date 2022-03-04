@@ -1,0 +1,54 @@
+﻿$PBExportHeader$d_opcion_terminal.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912"  height.autosize=yes)
+table(column=(type=long updatewhereclause=yes name=academicos_cuenta dbname="academicos.cuenta" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_carrera dbname="academicos.cve_carrera" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_plan dbname="academicos.cve_plan" )
+ column=(type=long updatewhereclause=yes name=area_mat_cve_mat dbname="area_mat.cve_mat" )
+ column=(type=long updatewhereclause=yes name=aux_opcion_terminal_cve_area dbname="aux_opcion_terminal.cve_area" )
+ column=(type=long updatewhereclause=yes name=aux_opcion_terminal_cve_proyecto_opc_ter dbname="aux_opcion_terminal.cve_proyecto_opc_term" )
+ column=(type=long updatewhereclause=yes name=aux_opcion_terminal_cve_seminario_tit dbname="aux_opcion_terminal.cve_seminario_tit" )
+ column=(type=long updatewhereclause=yes name=historico_cve_mat dbname="historico.cve_mat" )
+ column=(type=char(2) updatewhereclause=yes name=historico_calificacion dbname="historico.calificacion" )
+ retrieve="  SELECT dbo.academicos.cuenta,   
+         dbo.academicos.cve_carrera,   
+         dbo.academicos.cve_plan, 
+			dbo.area_mat.cve_mat,  
+         dbo.aux_opcion_terminal.cve_area,   
+         dbo.aux_opcion_terminal.cve_proyecto_opc_term,   
+         dbo.aux_opcion_terminal.cve_seminario_tit,   
+         dbo.historico.cve_mat,   
+         dbo.historico.calificacion  
+    FROM dbo.academicos,   
+         dbo.aux_opcion_terminal,   
+         dbo.historico,   
+         dbo.plan_estudios,
+			dbo.area_mat 
+   WHERE ( dbo.academicos.cuenta = dbo.historico.cuenta ) and  
+         ( dbo.plan_estudios.cve_area_opcion_terminal = dbo.aux_opcion_terminal.cve_area ) and  
+         ( dbo.academicos.cve_carrera = dbo.plan_estudios.cve_carrera ) and  
+         ( dbo.academicos.cve_plan = dbo.plan_estudios.cve_plan ) and  
+         ( dbo.academicos.cve_carrera = dbo.historico.cve_carrera ) and  
+         ( dbo.academicos.cve_plan = dbo.historico.cve_plan ) and  
+         ( dbo.aux_opcion_terminal.cve_seminario_tit = dbo.historico.cve_mat ) and
+			( dbo.area_mat.cve_area = dbo.plan_estudios.cve_area_opcion_terminal ) and
+         ( ( dbo.historico.anio = :anio ) AND  
+         ( dbo.historico.periodo = :periodo ) AND  
+         ( dbo.historico.calificacion like ~"AC~" ) )    
+" arguments=(("anio", number),("periodo", number))  sort="academicos_cuenta A " )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="14" y="4" height="77" width="206" format="[general]"  name=academicos_cuenta edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="238" y="4" height="77" width="206" format="[general]"  name=academicos_cve_carrera edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="462" y="4" height="77" width="206" format="[general]"  name=academicos_cve_plan edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="686" y="4" height="77" width="206" format="[general]"  name=aux_opcion_terminal_cve_area edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="915" y="4" height="77" width="206" format="[general]"  name=aux_opcion_terminal_cve_proyecto_opc_ter edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="1477" y="4" height="77" width="206" format="[general]"  name=aux_opcion_terminal_cve_seminario_tit edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="2044" y="8" height="77" width="206" format="[general]"  name=area_mat_cve_mat edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+report(band=detail dataobject="d_curso_mat" x="1130" y="4" height="81" width="334" border="0"  height.autosize=yes criteria="" nest_arguments=(("academicos_cuenta"),("academicos_cve_carrera"),("academicos_cve_plan"),("aux_opcion_terminal_cve_proyecto_opc_ter")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="d_curso_mat" x="1697" y="4" height="81" width="334" border="0"  height.autosize=yes criteria="" nest_arguments=(("academicos_cuenta"),("academicos_cve_carrera"),("academicos_cve_plan"),("aux_opcion_terminal_cve_seminario_tit")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="d_curso_mat" x="2263" y="4" height="81" width="334" border="0"  height.autosize=yes criteria="" nest_arguments=(("academicos_cuenta"),("academicos_cve_carrera"),("academicos_cve_plan"),("area_mat_cve_mat")) trail_footer = yes  slideup=directlyabove )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="0" x="2611" y="8" height="77" width="206" format="[general]"  name=historico_cve_mat edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="2830" y="8" height="77" width="206" format="[general]"  name=historico_calificacion edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

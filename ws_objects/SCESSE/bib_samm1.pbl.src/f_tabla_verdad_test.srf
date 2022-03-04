@@ -1,0 +1,66 @@
+﻿$PBExportHeader$f_tabla_verdad_test.srf
+$PBExportComments$Tabla de verdad. Compara un arreglo de valores booleanos contra la matriz creada con una tabla de verdad y determina que renglón es idéntico a éste devolviendo el número de fila.
+global type f_tabla_verdad_test from function_object
+end type
+
+forward prototypes
+global function integer f_tabla_verdad_test (ref any aa_matrix[], ref any aa_vector[])
+end prototypes
+
+global function integer f_tabla_verdad_test (ref any aa_matrix[], ref any aa_vector[]);//////////////////////////////////////////////////////////////////////////////
+//
+//	Function:  f_tabla_verdad_test
+//
+//	Access:  public
+//
+//	Arguments:
+//	aa_matrix			Una tabla de verdad.
+//	aa_vector			un arreglo con valores booleanos.
+//
+//	Returns:
+//	Integer				La fila en la que coinciden los valores de la tabla de
+//							verdad y los valores del arreglo.
+//
+//	Description:
+//	Compara una tabla de verdad contra un arreglo de valores booleanos. Busca
+// La fila para la cual coinciden columna por columna los valores de ambos.
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+//	Revision History
+//
+//	Version
+//	1.0   Initial version
+//
+//////////////////////////////////////////////////////////////////////////////
+long ll_x, ll_y
+long ll_x_min, ll_x_max
+long ll_y_min, ll_y_max
+integer li_bandera
+integer li_resultado
+
+
+ll_x_min = f_matrix_lbound(aa_matrix,1)
+ll_x_max = f_matrix_ubound(aa_matrix,1)
+
+ll_y_min = f_matrix_lbound(aa_matrix,2)
+ll_y_max = f_matrix_ubound(aa_matrix,2)
+
+li_resultado = 0
+
+for ll_x = ll_x_min to ll_x_max
+	li_bandera = 0
+	for ll_y = ll_y_min to ll_y_max
+		if f_matrix_getitem(aa_matrix,ll_x,ll_y) = aa_vector[ll_y] then
+			li_bandera++
+		end if
+	next
+	if li_bandera = ll_y_max then
+		li_resultado = ll_x
+		exit
+	end if
+next
+
+return li_resultado
+end function
+

@@ -1,0 +1,116 @@
+﻿$PBExportHeader$f_obten_calificacion_idioma.srf
+global type f_obten_calificacion_idioma from function_object
+end type
+
+forward prototypes
+global function string f_obten_materia_idioma (long al_cve_carrera)
+global function string f_obten_calificacion_idioma (long al_cve_mat, integer ai_cve_idioma)
+global function string f_obten_calificacion_idioma (string as_cve_calificacion, integer ai_cve_idioma)
+end prototypes
+
+global function string f_obten_materia_idioma (long al_cve_carrera);//f_obten_nivel_carrera
+//Obtiene la clave del grado de la carrrera correspondiente recibida
+//Recibe			al_cve_carrera	long 
+//Devuelve		string
+
+integer li_codigo_sql
+string ls_mensaje_sql,  ls_nivel_carrera, ls_null
+
+SetNull(ls_null)
+
+SELECT isnull(dbo.carreras.nivel,"")
+INTO	:ls_nivel_carrera
+FROM	dbo.carreras
+WHERE dbo.carreras.cve_carrera = :al_cve_carrera
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 then
+	MessageBox("Carrera inexistente", "El nivel/carrera ["+string(al_cve_carrera)+"] no existe", StopSign!)
+	return ls_null
+elseif isnull(ls_nivel_carrera) then
+	return ""
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar nivel/carreras", ls_mensaje_sql,StopSign!)
+	return  ls_null
+end if
+
+return ls_nivel_carrera
+
+end function
+
+global function string f_obten_calificacion_idioma (long al_cve_mat, integer ai_cve_idioma);//f_obten_materia_idioma
+//Obtiene la clave del grado de la carrrera correspondiente recibida
+//Recibe			al_cve_carrera	long 
+//					ai_cve_idioma	integer
+//Devuelve		string
+
+integer li_codigo_sql
+string ls_mensaje_sql,  ls_nivel_carrera, ls_null, ls_materia_idioma
+
+SetNull(ls_null)
+
+
+SELECT isnull(materia,"")
+INTO :ls_materia_idioma
+FROM v_materias_idioma
+WHERE cve_mat = :al_cve_mat
+AND cve_idioma = :ai_cve_idioma
+AND 0 < :al_cve_mat AND :al_cve_mat <= 987654
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 then
+	MessageBox("Traducción inexistente", "La materia ["+string(al_cve_mat)+"] no cuenta con traducción", StopSign!)
+	return ls_null
+elseif isnull(ls_materia_idioma) then
+	return ""
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar v_materias_idioma", ls_mensaje_sql,StopSign!)
+	return  ls_null
+end if
+
+return ls_materia_idioma
+
+end function
+
+global function string f_obten_calificacion_idioma (string as_cve_calificacion, integer ai_cve_idioma);//f_obten_calificacion_idioma
+//Obtiene la calificación en base al valor y el idioma recibido
+//Recibe			as_cve_calificacion	long 
+//					ai_cve_idioma	integer
+//Devuelve		string
+
+integer li_codigo_sql
+string ls_mensaje_sql,  ls_nivel_carrera, ls_null, ls_calificacion_idioma
+
+SetNull(ls_null)
+
+
+SELECT isnull(calificacion,"")
+INTO :ls_calificacion_idioma
+FROM calificacion_idioma
+WHERE cve_calificacion = :as_cve_calificacion
+AND cve_idioma = :ai_cve_idioma
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 then
+	MessageBox("Traducción inexistente", "La calificación ["+as_cve_calificacion+"] no cuenta con traducción", StopSign!)
+	return ls_null
+elseif isnull(ls_calificacion_idioma) then
+	return ""
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar calificacion_idioma", ls_mensaje_sql,StopSign!)
+	return  ls_null
+end if
+
+return ls_calificacion_idioma
+
+end function
+

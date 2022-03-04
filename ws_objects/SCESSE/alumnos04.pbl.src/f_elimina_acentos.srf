@@ -1,0 +1,27 @@
+﻿$PBExportHeader$f_elimina_acentos.srf
+global type f_elimina_acentos from function_object
+end type
+
+forward prototypes
+global function string f_elimina_acentos (string as_cadena_con_acentos)
+end prototypes
+
+global function string f_elimina_acentos (string as_cadena_con_acentos);string ls_cadena_sin_acentos
+string ls_letras_con_acentos[] = {"Á","É","Í","Ó","Ú"}
+string ls_letras_sin_acentos[] = {"A","E","I","O","U"}
+int li_i, li_ubicacion
+ls_cadena_sin_acentos = as_cadena_con_acentos
+
+for li_i = 1 to 5
+	li_ubicacion = 1
+	li_ubicacion = Pos(ls_cadena_sin_acentos, ls_letras_con_acentos[li_i], li_ubicacion)
+	do while li_ubicacion > 0
+		ls_cadena_sin_acentos = Replace(ls_cadena_sin_acentos,li_ubicacion,1,ls_letras_sin_acentos[li_i])
+		li_ubicacion ++
+		li_ubicacion = Pos(ls_cadena_sin_acentos, ls_letras_con_acentos[li_i], li_ubicacion)
+	loop	
+next
+
+return ls_cadena_sin_acentos
+end function
+

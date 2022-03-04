@@ -1,0 +1,36 @@
+﻿$PBExportHeader$d_actualiza_bit_aspiran.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=70 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=folio dbname="bit_aspiran.folio" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=bandera dbname="bit_aspiran.bandera" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=anterior dbname="bit_aspiran.anterior" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=actual dbname="bit_aspiran.actual" )
+ column=(type=char(30) update=yes updatewhereclause=yes key=yes name=usuario dbname="bit_aspiran.usuario" )
+ column=(type=datetime update=yes updatewhereclause=yes name=fecha dbname="bit_aspiran.fecha" )
+ retrieve="  SELECT bit_aspiran.folio,   
+         bit_aspiran.bandera,   
+         bit_aspiran.anterior,   
+         bit_aspiran.actual,   
+         bit_aspiran.usuario,   
+         bit_aspiran.fecha  
+    FROM bit_aspiran  
+   WHERE 1 = 2    
+" update="bit_aspiran" updatewhere=0 updatekeyinplace=no )
+text(band=header alignment="2" text="Folio" border="0" color="0" x="4" y="3" height="64" width="351"  name=folio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Bandera" border="0" color="0" x="358" y="3" height="64" width="351"  name=bandera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Anterior" border="0" color="0" x="713" y="3" height="64" width="351"  name=anterior_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Actual" border="0" color="0" x="1068" y="3" height="64" width="351"  name=actual_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Usuario" border="0" color="0" x="1423" y="3" height="64" width="907"  name=usuario_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Fecha" border="0" color="0" x="2333" y="3" height="64" width="647"  name=fecha_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=10 border="0" color="0" x="4" y="4" height="74" width="351" format="[general]"  name=folio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=20 border="0" color="0" x="358" y="4" height="74" width="351" format="[general]"  name=bandera edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=30 border="0" color="0" x="713" y="4" height="74" width="351" format="[general]"  name=anterior edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=40 border="0" color="0" x="1068" y="4" height="74" width="351" format="[general]"  name=actual edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=50 border="0" color="0" x="1423" y="4" height="74" width="907" format="[general]"  name=usuario edit.limit=30 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=60 border="0" color="0" x="2333" y="4" height="74" width="647" format="[shortdate] [time]"  name=fecha edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

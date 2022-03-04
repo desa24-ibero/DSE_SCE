@@ -1,0 +1,35 @@
+﻿$PBExportHeader$obten_ciclos.srf
+global type obten_ciclos from function_object
+end type
+
+forward prototypes
+global function integer obten_ciclos (long al_cuenta, integer ai_carrera, integer ai_plan, integer ai_subsistema)
+end prototypes
+
+global function integer obten_ciclos (long al_cuenta, integer ai_carrera, integer ai_plan, integer ai_subsistema);int li_resultado, li_i,li_Areas[12]
+DataStore lds_areasplanestudios, lds_cicloscursados
+lds_areasplanestudios = Create DataStore
+lds_cicloscursados = Create DataStore
+lds_areasplanestudios.DataObject = "d_areasplanestudios"
+lds_cicloscursados.DataObject = "d_cicloscursados"
+lds_areasplanestudios.SetTrans(gtr_sce)
+lds_cicloscursados.SetTrans(gtr_sce)
+if isnull(ai_subsistema) then ai_subsistema = 0
+li_resultado = lds_areasplanestudios.retrieve(ai_carrera,ai_plan,ai_subsistema)
+if li_resultado > 0 then
+	for li_i = 1 to 11
+		li_Areas[li_i] = lds_areasplanestudios.getitemnumber(1,li_i)
+		if IsNull(li_Areas[li_i]) then li_Areas[li_i] = 0
+	next
+	if li_resultado = 2 then
+		li_Areas[11] = lds_areasplanestudios.getitemnumber(2,11)
+		if IsNull(li_Areas[11]) then li_Areas[11] = 0
+	end if
+	li_resultado = lds_cicloscursados.retrieve(al_cuenta,ai_carrera,ai_plan,li_Areas)
+	if li_resultado > 0 then li_resultado = lds_cicloscursados.getitemnumber(1,"total_ciclos")
+end if
+Destroy lds_areasplanestudios
+Destroy lds_cicloscursados
+return li_resultado
+end function
+

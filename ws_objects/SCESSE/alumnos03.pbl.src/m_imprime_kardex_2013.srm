@@ -1,0 +1,353 @@
+﻿$PBExportHeader$m_imprime_kardex_2013.srm
+$PBExportComments$Este menu tiene solo una opción de Salir de la ventana de w_imp_kardex. el proceso de impresin de kardex se hace en el evento de doublecliked de la ventana w_imp_kardex. Juan Campos Nov-1996.
+forward
+global type m_imprime_kardex_2013 from menu
+end type
+type m_impresion from menu within m_imprime_kardex_2013
+end type
+type m_configuraimpresosa from menu within m_impresion
+end type
+type m_imprime from menu within m_impresion
+end type
+type m_imprimirk from menu within m_impresion
+end type
+type m_impresion from menu within m_imprime_kardex_2013
+m_configuraimpresosa m_configuraimpresosa
+m_imprime m_imprime
+m_imprimirk m_imprimirk
+end type
+type m_registro from menu within m_imprime_kardex_2013
+end type
+type m_eliminarcuenta from menu within m_registro
+end type
+type m_limpiarseleccion from menu within m_registro
+end type
+type m_registro from menu within m_imprime_kardex_2013
+m_eliminarcuenta m_eliminarcuenta
+m_limpiarseleccion m_limpiarseleccion
+end type
+type m_salir from menu within m_imprime_kardex_2013
+end type
+global type m_imprime_kardex_2013 from menu
+m_impresion m_impresion
+m_registro m_registro
+m_salir m_salir
+end type
+end forward
+
+global type m_imprime_kardex_2013 from menu
+m_impresion m_impresion
+m_registro m_registro
+m_salir m_salir
+end type
+global m_imprime_kardex_2013 m_imprime_kardex_2013
+
+on m_imprime_kardex_2013.create
+m_imprime_kardex_2013=this
+call super::create
+this.text = "m_imprime_kardex_2013"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_impresion=create m_impresion
+this.m_registro=create m_registro
+this.m_salir=create m_salir
+this.Item[UpperBound(this.Item)+1]=this.m_impresion
+this.Item[UpperBound(this.Item)+1]=this.m_registro
+this.Item[UpperBound(this.Item)+1]=this.m_salir
+end on
+
+on m_imprime_kardex_2013.destroy
+call super::destroy
+destroy(this.m_impresion)
+destroy(this.m_registro)
+destroy(this.m_salir)
+end on
+
+type m_impresion from menu within m_imprime_kardex_2013
+m_configuraimpresosa m_configuraimpresosa
+m_imprime m_imprime
+m_imprimirk m_imprimirk
+end type
+
+on m_impresion.create
+call super::create
+this.text = "Impresión"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_configuraimpresosa=create m_configuraimpresosa
+this.m_imprime=create m_imprime
+this.m_imprimirk=create m_imprimirk
+this.Item[UpperBound(this.Item)+1]=this.m_configuraimpresosa
+this.Item[UpperBound(this.Item)+1]=this.m_imprime
+this.Item[UpperBound(this.Item)+1]=this.m_imprimirk
+end on
+
+on m_impresion.destroy
+call super::destroy
+destroy(this.m_configuraimpresosa)
+destroy(this.m_imprime)
+destroy(this.m_imprimirk)
+end on
+
+type m_configuraimpresosa from menu within m_impresion
+end type
+
+event clicked;PrintSetup()
+end event
+
+on m_configuraimpresosa.create
+call super::create
+this.text = "Configura Impresosa"
+this.toolbaritemname = "print!"
+this.toolbaritemtext = "Configura Impresora"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_configuraimpresosa.destroy
+call super::destroy
+end on
+
+type m_imprime from menu within m_impresion
+end type
+
+event clicked;SetPointer(HourGlass!)
+parentwindow.triggerevent("ue_imprime_todos")
+end event
+
+on m_imprime.create
+call super::create
+this.text = "Imprimir Todos"
+this.microhelp = "Imprime todas las cuentas de la lista"
+this.toolbaritemname = "custom003!"
+this.toolbaritemtext = "Imprime Todos"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_imprime.destroy
+call super::destroy
+end on
+
+type m_imprimirk from menu within m_impresion
+end type
+
+on m_imprimirk.create
+call super::create
+this.text = "Imprimir Kárdex"
+this.microhelp = "Imprime el Kárdex en pantalla"
+this.toolbaritemname = "custom004!"
+this.toolbaritemtext = "Imprime Kárdex"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_imprimirk.destroy
+call super::destroy
+end on
+
+event clicked;SetPointer(HourGlass!)
+parentwindow.triggerevent("ue_imprime_kardex")
+end event
+
+type m_registro from menu within m_imprime_kardex_2013
+m_eliminarcuenta m_eliminarcuenta
+m_limpiarseleccion m_limpiarseleccion
+end type
+
+on m_registro.create
+call super::create
+this.text = "Registro"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_eliminarcuenta=create m_eliminarcuenta
+this.m_limpiarseleccion=create m_limpiarseleccion
+this.Item[UpperBound(this.Item)+1]=this.m_eliminarcuenta
+this.Item[UpperBound(this.Item)+1]=this.m_limpiarseleccion
+end on
+
+on m_registro.destroy
+call super::destroy
+destroy(this.m_eliminarcuenta)
+destroy(this.m_limpiarseleccion)
+end on
+
+type m_eliminarcuenta from menu within m_registro
+end type
+
+on m_eliminarcuenta.create
+call super::create
+this.text = "Eliminar Cuenta"
+this.microhelp = "Elimina cuenta de la lista de selección"
+this.toolbaritemname = "custom080!"
+this.toolbaritemtext = "Elimina Cuenta"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_eliminarcuenta.destroy
+call super::destroy
+end on
+
+event clicked;SetPointer(HourGlass!)
+parentwindow.triggerevent("ue_elimina_cuenta")
+end event
+
+type m_limpiarseleccion from menu within m_registro
+end type
+
+on m_limpiarseleccion.create
+call super::create
+this.text = "Limpiar Selección"
+this.microhelp = "Limpia lista de selección"
+this.toolbaritemname = "custom094!"
+this.toolbaritemtext = "Limpia selección"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_limpiarseleccion.destroy
+call super::destroy
+end on
+
+event clicked;SetPointer(HourGlass!)
+parentwindow.triggerevent("ue_limpiar_sel")
+end event
+
+type m_salir from menu within m_imprime_kardex_2013
+end type
+
+event clicked;Close(parentwindow)
+end event
+
+on m_salir.create
+call super::create
+this.text = "Salir"
+this.microhelp = "Cierra la ventana actual"
+this.toolbaritemname = "exit!"
+this.toolbaritemtext = "Salir Impresión de kárdex"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_salir.destroy
+call super::destroy
+end on
+

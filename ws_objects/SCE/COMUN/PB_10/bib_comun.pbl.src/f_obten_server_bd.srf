@@ -1,0 +1,63 @@
+﻿$PBExportHeader$f_obten_server_bd.srf
+$PBExportComments$Función encargada de conectar el "transaction object" a su base de datos indicada mediante el nombre del archivo_ini y la sección.~t~r~nParametros Entrada~tTransaction base_datos, str Salida Regresa 1 si la conexión se realizó de forma correcta. DkWf 1998
+global type f_obten_server_bd from function_object
+end type
+
+forward prototypes
+global function integer f_obten_server_bd (ref transaction atr_transaccion_parametros, string as_database, integer ai_activo)
+end prototypes
+
+global function integer f_obten_server_bd (ref transaction atr_transaccion_parametros, string as_database, integer ai_activo);//f_obten_server_bd
+//Recibe:
+//transaction 		atr_transaccion_parametros
+//string				as_database
+//integer			ai_activo
+
+integer li_codigo_sql
+string ls_mensaje_sql, ls_DBMS_parametros
+
+integer li_cve_conexion, li_AutoCommit, li_activo
+string ls_conexion, ls_Database, ls_DBMS, ls_DBParm, ls_DBPass, ls_Lock, ls_LogID, ls_LogPass, ls_ServerName, ls_SQLReturnData, ls_UserID
+boolean lb_autocommit
+string ls_sintaxis_sql, ls_tipo_server
+
+SELECT 
+conexion,
+Database_,
+ServerName,	
+tipo_server,
+activo	 
+INTO
+:ls_conexion,
+:ls_Database, 
+:ls_ServerName,
+:ls_tipo_server, 
+:li_activo
+FROM parametros_conexion
+WHERE  Database_ = :as_database
+AND activo = :ai_activo
+AND conexion = 'controlescolar_inscripcion'
+USING atr_transaccion_parametros;
+
+li_codigo_sql = atr_transaccion_parametros.SqlCode
+ls_mensaje_sql = atr_transaccion_parametros.SqlErrText
+
+if li_codigo_sql = -1 then
+	MessageBox ("Error en consulta de parámetros de la Base de Datos ","No fue posible consultar la tabla parametros_conexion~n"+ls_mensaje_sql, StopSign!)
+	return li_codigo_sql	
+elseif li_codigo_sql = 100 then
+	MessageBox ("Parámetro no encontrado de la Base de Datos ","No fue posible encontrar el parámetro en la tabla parametros_conexion~n"+ls_mensaje_sql, StopSign!)
+	return li_codigo_sql	
+end if
+
+if ls_tipo_server <> 'SYBASE' then
+	MessageBox ("Error en consulta de parámetros de la Base de Datos ","Los Ajustes de Inscripción están en otro servidor ["+ls_tipo_server+"]", StopSign!)
+	return -1	
+end if
+
+
+
+return 0
+
+end function
+

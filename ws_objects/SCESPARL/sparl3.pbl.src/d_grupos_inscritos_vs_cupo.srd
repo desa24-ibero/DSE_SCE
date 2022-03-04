@@ -1,0 +1,85 @@
+﻿$PBExportHeader$d_grupos_inscritos_vs_cupo.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+header(height=92 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=grupos_cve_mat dbname="grupos.cve_mat" )
+ column=(type=char(2) updatewhereclause=yes name=grupos_gpo dbname="grupos.gpo" )
+ column=(type=long updatewhereclause=yes name=grupos_cupo dbname="grupos.cupo" )
+ column=(type=long updatewhereclause=yes name=grupos_inscritos dbname="grupos.inscritos" )
+ column=(type=long updatewhereclause=yes key=yes name=horario_cve_dia dbname="horario.cve_dia" )
+ column=(type=long updatewhereclause=yes key=yes name=horario_hora_inicio dbname="horario.hora_inicio" )
+ column=(type=long updatewhereclause=yes name=horario_hora_final dbname="horario.hora_final" )
+ column=(type=char(16) update=yes updatewhereclause=yes name=horario_cve_salon dbname="horario.cve_salon" )
+ column=(type=long updatewhereclause=yes key=yes name=horario_cve_mat dbname="horario.cve_mat" )
+ column=(type=char(2) updatewhereclause=yes key=yes name=horario_gpo dbname="horario.gpo" )
+ column=(type=long updatewhereclause=yes key=yes name=horario_periodo dbname="horario.periodo" )
+ column=(type=long updatewhereclause=yes key=yes name=horario_anio dbname="horario.anio" )
+ column=(type=char(9) updatewhereclause=yes name=dias_dia dbname="dias.dia" )
+ column=(type=char(42) updatewhereclause=yes name=materias_materia dbname="materias.materia" )
+ column=(type=long updatewhereclause=yes name=salon_cupo_max dbname="salon.cupo_max" )
+ column=(type=char(1) updatewhereclause=yes name=materias_nivel dbname="materias.nivel" )
+ retrieve="  SELECT grupos.cve_mat,   
+         grupos.gpo,   
+         grupos.cupo,   
+         grupos.inscritos,   
+         horario.cve_dia,   
+         horario.hora_inicio,   
+         horario.hora_final,   
+         horario.cve_salon,   
+         horario.cve_mat,   
+         horario.gpo,   
+         horario.periodo,   
+         horario.anio,   
+         dias.dia,   
+         materias.materia,   
+         salon.cupo_max,
+			materias.nivel  
+    FROM grupos,   
+         horario,   
+         dias,   
+         materias,   
+         salon  
+   WHERE ( horario.cve_mat = grupos.cve_mat ) and  
+         ( horario.gpo = grupos.gpo ) and  
+         ( horario.periodo = grupos.periodo ) and  
+         ( horario.anio = grupos.anio ) and  
+         ( horario.cve_dia = dias.cve_dia ) and  
+         ( materias.cve_mat = grupos.cve_mat ) and  
+         ( horario.cve_salon = salon.cve_salon ) and  
+         ( ( grupos.anio = :a_anio ) AND  
+         ( grupos.periodo = :a_periodo ) AND  
+         ( horario.clase_aula = 0 ) AND  
+         ( salon.clase_aula = ~"SALON~" ) AND
+			( grupos.cve_mat <> 7783 ) AND  
+         ( grupos.inscritos < 60 ) AND  
+         ((( grupos.inscritos >= salon.cupo_max + :a_diferencia_excedidos ) AND (:a_diferencia = 0)) OR  
+         (( grupos.inscritos  < salon.cupo_max - :a_diferencia) AND  
+         ( :a_diferencia > 0 )))   
+         )    
+" update="horario" updatewhere=0 updatekeyinplace=yes arguments=(("a_anio", number),("a_periodo", number),("a_diferencia", number),("a_diferencia_excedidos", number))  sort="diferencia D grupos_cve_mat A grupos_gpo A horario_cve_dia A horario_hora_inicio A " )
+group(level=1 header.height=116 trailer.height=16 by=("grupos_cve_mat" , "grupos_gpo" ) header.color="536870912" trailer.color="536870912" )
+compute(band=header alignment="1" expression="~"Total:~"+COUNT( grupos_cve_mat )"border="0" color="0" x="2720" y="8" height="68" width="544" format="[GENERAL]" html.valueishtml="0"  name=compute_4 visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=header.1 alignment="0" expression=" grupos_cve_mat +~"-~"+ grupos_gpo "border="0" color="0" x="14" y="4" height="60" width="229" format="[GENERAL]" html.valueishtml="0"  name=compute_3 visible="1"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header.1 alignment="0" expression="~"Diferencia: ~" +  string(grupos_inscritos - salon_cupo_max ,~"000~")"border="0" color="0" x="2871" y="4" height="56" width="393" format="[General]" html.valueishtml="0"  name=diferencia visible="1"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header.1 id=14 alignment="0" tabsequence=32766 border="0" color="0" x="261" y="4" height="60" width="1248" format="[general]" html.valueishtml="0"  name=materias_materia visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header.1 alignment="0" expression="~"Nivel:~" + materias_nivel "border="0" color="0" x="1947" y="8" height="48" width="375" format="[GENERAL]" html.valueishtml="0"  name=compute_7 visible="1"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header.1 alignment="0" expression="~"inscritos grupo: ~"+  grupos_inscritos "border="0" color="0" x="1947" y="60" height="48" width="375" format="[GENERAL]" html.valueishtml="0"  name=compute_6 visible="1"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header.1 alignment="0" expression="~"cupo salon: ~"+  salon_cupo_max "border="0" color="0" x="2441" y="4" height="48" width="375" format="[GENERAL]" html.valueishtml="0"  name=compute_5 visible="1"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header.1 alignment="0" expression="~"cupo grupo: ~"+ grupos_cupo "border="0" color="0" x="2441" y="56" height="48" width="375" format="[GENERAL]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression=" dias_dia +~" ~"+ horario_hora_inicio + ~" a las ~" + horario_hora_final +~" hrs.~""border="0" color="0" x="2098" y="8" height="60" width="928" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="3086" y="8" height="60" width="178" format="[general]" html.valueishtml="0"  name=horario_cve_salon visible="1" edit.limit=16 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+
+sparse(names="compute_3	materias_materia")htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

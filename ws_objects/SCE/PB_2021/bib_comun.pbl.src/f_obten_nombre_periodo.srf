@@ -1,0 +1,15 @@
+﻿$PBExportHeader$f_obten_nombre_periodo.srf
+global type f_obten_nombre_periodo from function_object
+end type
+
+forward prototypes
+global function string f_obten_nombre_periodo (integer ai_periodo)
+end prototypes
+
+global function string f_obten_nombre_periodo (integer ai_periodo);string fs_periodo
+
+SELECT descripcion into :fs_periodo FROM periodo where periodo=:ai_periodo using gtr_sce;
+
+Return fs_periodo
+end function
+

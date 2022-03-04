@@ -1,0 +1,53 @@
+﻿$PBExportHeader$f_mapea_parametros_conexion.srf
+global type f_mapea_parametros_conexion from function_object
+end type
+
+forward prototypes
+global function boolean f_mapea_parametros_conexion (string as_sistema, string as_seccion, ref string as_nombre_servidor, ref string as_nombre_base_datos)
+end prototypes
+
+global function boolean f_mapea_parametros_conexion (string as_sistema, string as_seccion, ref string as_nombre_servidor, ref string as_nombre_base_datos);//f_mapea_parametros_conexion
+//Recibe 	as_sistema
+//				as_seccion
+//Devuelve	as_nombre_servidor
+//				as_nombre_base_datos
+
+string ls_nombre_servidor, ls_nombre_base_datos, ls_mensaje_sql
+integer li_codigo_sql
+
+as_sistema= upper(as_sistema)
+as_seccion = upper(as_seccion)
+
+SELECT nombre_servidor,
+		 nombre_base_datos
+INTO  :ls_nombre_servidor, 
+		:ls_nombre_base_datos
+FROM parametros_liberacion
+WHERE sistema = :as_sistema
+AND liberacion_vigente	= 1
+AND seccion_ini_bd = :as_seccion
+USING SQLCA;
+
+ls_mensaje_sql= SQLCA.SqlErrtext
+li_codigo_sql= SQLCA.SqlCode
+
+IF li_codigo_sql= -1 THEN
+	MessageBox("No es posible consultar los parametros de liberacion", ls_mensaje_sql, StopSign!)
+	gb_liberacion_vigente = false
+	RETURN  False
+ELSEIF  li_codigo_sql = 100 THEN
+	ls_nombre_servidor = ""
+	ls_nombre_base_datos = ""
+	as_nombre_servidor = ls_nombre_servidor
+	as_nombre_base_datos = ls_nombre_base_datos
+	gb_liberacion_vigente = false
+	Return False
+ELSE
+	as_nombre_servidor = ls_nombre_servidor
+	as_nombre_base_datos = ls_nombre_base_datos
+	gb_liberacion_vigente = true
+	RETURN True
+END IF
+
+end function
+

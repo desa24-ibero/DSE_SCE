@@ -1,0 +1,90 @@
+﻿$PBExportHeader$f_inserta_folio_constancia.srf
+global type f_inserta_folio_constancia from function_object
+end type
+
+forward prototypes
+global function long f_inserta_folio_constancia (long al_cuenta, integer ai_cve_constancia)
+end prototypes
+
+global function long f_inserta_folio_constancia (long al_cuenta, integer ai_cve_constancia);//Función que regresa el número de semestres que ha cursado un alumno 
+//
+//f_inserta_folio_constancia
+//
+//Parámetros:		al_cuenta		
+//						ai_cve_constancia
+
+int li_codigo_sql, li_cve_constancia
+long ll_cuenta, ll_max_folio, ll_folio_siguiente
+string ls_carrera, ls_nivel, ls_mensaje_sql, ls_sexo, ls_mensaje_aux
+boolean 	lb_nueva_insercion 
+
+
+gtr_sce.AutoCommit = true
+lb_nueva_insercion = false
+	
+ll_cuenta = al_cuenta
+li_cve_constancia = ai_cve_constancia
+
+SELECT max(dbo.folio_constancia.folio)
+INTO	:ll_max_folio
+FROM	dbo.folio_constancia
+USING gtr_sce;
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	rollback using gtr_sce;
+	MessageBox("Error al recuperar el folio máximo en la constancia:"+string(ai_cve_constancia),  ls_mensaje_sql)
+elseif li_codigo_sql=100 then
+	commit using gtr_sce;
+	ll_max_folio = 0
+else
+	commit using gtr_sce;
+end if
+
+if isnull(ll_max_folio) then
+	lb_nueva_insercion = true
+	ll_max_folio = 0
+end if
+
+ll_folio_siguiente= ll_max_folio +1
+
+if lb_nueva_insercion then
+
+	ls_mensaje_aux="Error al insertar en folio_constancia en la constancia: "
+
+	INSERT INTO	dbo.folio_constancia
+	(dbo.folio_constancia.folio, dbo.folio_constancia.cuenta, dbo.folio_constancia.cve_constancia)
+	VALUES
+	(:ll_folio_siguiente, :ll_cuenta, :li_cve_constancia)
+	USING gtr_sce;
+else
+
+	ls_mensaje_aux="Error al actualizar en folio_constancia en la constancia: "
+
+	UPDATE dbo.folio_constancia
+	SET dbo.folio_constancia.folio = :ll_folio_siguiente,
+	    dbo.folio_constancia.cuenta = :ll_cuenta,
+		 dbo.folio_constancia.cve_constancia = :li_cve_constancia
+	FROM dbo.folio_constancia
+	USING gtr_sce;
+end if
+
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	rollback using gtr_sce;
+	MessageBox(ls_mensaje_aux+string(ai_cve_constancia),  ls_mensaje_sql)
+else
+	commit using gtr_sce;
+end if
+
+
+return ll_folio_siguiente
+
+
+end function
+

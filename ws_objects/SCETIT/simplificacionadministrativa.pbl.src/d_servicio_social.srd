@@ -1,0 +1,17 @@
+﻿$PBExportHeader$d_servicio_social.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=246 color="536870912" )
+table(column=(type=char(255) update=yes updatewhereclause=yes name=nombre_institucion dbname="servicio_social.nombre_institucion" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=entidad_federativa dbname="servicio_social.entidad_federativa" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=cuenta dbname="servicio_social.cuenta" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=cve_carrera dbname="servicio_social.cve_carrera" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=cve_plan dbname="servicio_social.cve_plan" )
+ column=(type=char(30) update=yes updatewhereclause=yes name=periodo dbname="servicio_social.periodo" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"servicio_social~" ) COLUMN(NAME=~"servicio_social.nombre_institucion~") COLUMN(NAME=~"servicio_social.entidad_federativa~") COLUMN(NAME=~"servicio_social.cuenta~") COLUMN(NAME=~"servicio_social.cve_carrera~") COLUMN(NAME=~"servicio_social.cve_plan~") COLUMN(NAME=~"servicio_social.periodo~")WHERE(    EXP1 =~"servicio_social.cuenta~"   OP =~"=~"    EXP2 =~":cuenta~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"servicio_social.cve_carrera~"   OP =~"=~"    EXP2 =~":cve_carrera~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"servicio_social.cve_plan~"   OP =~"=~"    EXP2 =~":cve_plan~" ) ) ARG(NAME = ~"cuenta~" TYPE = number)  ARG(NAME = ~"cve_carrera~" TYPE = number)  ARG(NAME = ~"cve_plan~" TYPE = number) " update="servicio_social" updatewhere=2 updatekeyinplace=yes arguments=(("cuenta", number),("cve_carrera", number),("cve_plan", number)) )
+column(band=detail id=1 alignment="0" tabsequence=10 border="0" color="0" x="11" y="3" height="115" width="2355" format="[general]"  name=nombre_institucion edit.limit=255 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Times" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="3" tabsequence=20 border="0" color="0" x="11" y="131" height="106" width="1061" format="[general]"  name=entidad_federativa edit.limit=100 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Times" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=30 border="0" color="0" x="1682" y="131" height="106" width="684" format="[general]"  name=periodo edit.limit=10 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Times" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

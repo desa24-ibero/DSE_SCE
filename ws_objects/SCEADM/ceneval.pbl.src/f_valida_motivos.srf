@@ -1,0 +1,52 @@
+﻿$PBExportHeader$f_valida_motivos.srf
+global type f_valida_motivos from function_object
+end type
+
+forward prototypes
+global function string f_valida_motivos (string as_nombre)
+end prototypes
+
+global function string f_valida_motivos (string as_nombre);/*
+Esta función se utiliza en el proceso de carga automática del disco
+de CENEVAL para validar que la clave recibida para los motivos de prolongación
+sea correcta
+
+
+PARAMETROS:
+	as_nombre		string 	value
+	
+REGRESA:
+	La Cadena de la clave recuperada de la base de datos
+
+AUTOR:
+	Antonio Pica Ruiz
+
+FECHA:
+	9 de Abril de 1999
+	
+*/
+
+string ls_clave 
+
+ls_clave = as_nombre
+
+if len(as_nombre) <> 0 then
+	SELECT clave
+	INTO :ls_clave
+	FROM motivos
+	WHERE nombre = :as_nombre
+	USING gtr_sadm;
+	if gtr_sadm.SQLCode = 100 then
+		MessageBox("Error de Catálogo (Motivos)",as_nombre)
+		return as_nombre
+	elseif gtr_sadm.SQLCode = -1 then
+		MessageBox("Error de Base de Datos",gtr_sadm.SQLErrText, Exclamation!)
+		return as_nombre
+	End If
+end if
+
+return ls_clave
+
+
+end function
+

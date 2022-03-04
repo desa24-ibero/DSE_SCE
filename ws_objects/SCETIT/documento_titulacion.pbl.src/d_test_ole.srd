@@ -1,0 +1,17 @@
+﻿$PBExportHeader$d_test_ole.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no ole.client.class="DataWindow" ole.client.name="Untitled" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=803 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cve_documento dbname="documento_titulacion.cve_documento" )
+ column=(type=char(255) updatewhereclause=yes name=descripcion dbname="documento_titulacion.descripcion" )
+ column=(type=blob name=blob_1 dbname="archivo_documento_titulac" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"documento_titulacion~" ) COLUMN(NAME=~"documento_titulacion.cve_documento~") COLUMN(NAME=~"documento_titulacion.descripcion~")) " update="documento_titulacion" updatewhere=1 updatekeyinplace=no )
+text(band=detail alignment="1" text="Cve Documento:" border="0" color="0" x="0" y="16" height="64" width="479"  name=t_2  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Descripción:" border="0" color="0" x="37" y="90" height="64" width="443"  name=t_1  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=10 border="2" color="0" x="512" y="13" height="64" width="347" format="[general]"  name=cve_documento edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+tableblob (band=detail table="documento_titulacion" keyclause="cve_documento = :cve_documento" template="" id=3 x="512" y="182" height="602" width="2037" border="3"  oleclass="Word.Document.8" clientname="~"Documento ~"+string(cve_documento)" name=blob_1  resizeable=1 )
+column(band=detail id=2 alignment="0" tabsequence=20 border="2" color="0" x="512" y="90" height="64" width="2037" format="[general]"  name=descripcion edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

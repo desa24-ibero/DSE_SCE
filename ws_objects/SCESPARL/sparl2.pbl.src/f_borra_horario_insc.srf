@@ -1,0 +1,49 @@
+﻿$PBExportHeader$f_borra_horario_insc.srf
+global type f_borra_horario_insc from function_object
+end type
+
+forward prototypes
+global subroutine f_borra_horario_insc (integer a_periodo, integer a_anio)
+end prototypes
+
+global subroutine f_borra_horario_insc (integer a_periodo, integer a_anio);//NOMBRE
+//f_borra_horario_insc
+//
+//REGRESA
+//integer
+//
+//RECIBE
+
+
+integer li_codigo_sql
+string ls_criterio, ls_mensaje_sql
+long	ll_cuenta
+
+//ls_criterio = a_criterio + "%"
+
+
+//DELETE FROM horario_insc
+//USING gtr_sce;
+
+// Se modifica la función para que borre todos los registros solamente del tipo de periodo activo en la aplicación.
+DELETE FROM horario_insc
+WHERE periodo IN(SELECT periodo from periodo where tipo = :gs_tipo_periodo)  
+USING gtr_sce;
+
+li_codigo_sql =gtr_sce.SqlCode
+ls_mensaje_sql =gtr_sce.SqlErrText
+
+
+if li_codigo_sql = -1 then
+	ROLLBACK USING gtr_sce;
+	MessageBox("Error al borrar horario_insc", ls_mensaje_sql)	
+else
+	COMMIT USING gtr_sce;
+end if
+
+return 
+
+	
+
+end subroutine
+

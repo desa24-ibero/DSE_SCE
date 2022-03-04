@@ -1,0 +1,233 @@
+﻿$PBExportHeader$menu_principal.srm
+forward
+global type menu_principal from menu
+end type
+type generardocumento from menu within menu_principal
+end type
+type m_0 from menu within generardocumento
+end type
+type m_tituloindividual from menu within generardocumento
+end type
+type m_certificados from menu within generardocumento
+end type
+type m_certificadoindividual from menu within generardocumento
+end type
+type generardocumento from menu within menu_principal
+m_0 m_0
+m_tituloindividual m_tituloindividual
+m_certificados m_certificados
+m_certificadoindividual m_certificadoindividual
+end type
+global type menu_principal from menu
+generardocumento generardocumento
+end type
+end forward
+
+global type menu_principal from menu
+generardocumento generardocumento
+end type
+global menu_principal menu_principal
+
+on menu_principal.create
+menu_principal=this
+call super::create
+this.text = "menu_principal"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.generardocumento=create generardocumento
+this.Item[UpperBound(this.Item)+1]=this.generardocumento
+end on
+
+on menu_principal.destroy
+call super::destroy
+destroy(this.generardocumento)
+end on
+
+type generardocumento from menu within menu_principal
+m_0 m_0
+m_tituloindividual m_tituloindividual
+m_certificados m_certificados
+m_certificadoindividual m_certificadoindividual
+end type
+
+on generardocumento.create
+call super::create
+this.text = "Generar Documento"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_0=create m_0
+this.m_tituloindividual=create m_tituloindividual
+this.m_certificados=create m_certificados
+this.m_certificadoindividual=create m_certificadoindividual
+this.Item[UpperBound(this.Item)+1]=this.m_0
+this.Item[UpperBound(this.Item)+1]=this.m_tituloindividual
+this.Item[UpperBound(this.Item)+1]=this.m_certificados
+this.Item[UpperBound(this.Item)+1]=this.m_certificadoindividual
+end on
+
+on generardocumento.destroy
+call super::destroy
+destroy(this.m_0)
+destroy(this.m_tituloindividual)
+destroy(this.m_certificados)
+destroy(this.m_certificadoindividual)
+end on
+
+type m_0 from menu within generardocumento
+end type
+
+on m_0.create
+call super::create
+this.text = "Titulos "
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_0.destroy
+call super::destroy
+end on
+
+event clicked;String ls_window
+
+ls_window = Message.StringParm
+OpenSheetWithParm(w_titulos_relacion, 'TIT', w_principal, 4, Layered!)
+
+end event
+
+type m_tituloindividual from menu within generardocumento
+end type
+
+on m_tituloindividual.create
+call super::create
+this.text = "Titulo Individual"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_tituloindividual.destroy
+call super::destroy
+end on
+
+event clicked;String ls_window
+
+ls_window = Message.StringParm
+OpenSheet(w_titulo_electronico, w_principal, 4, Layered!)
+
+end event
+
+type m_certificados from menu within generardocumento
+end type
+
+on m_certificados.create
+call super::create
+this.text = "Certificados"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_certificados.destroy
+call super::destroy
+end on
+
+event clicked;String ls_window
+
+ls_window = Message.StringParm
+OpenSheetWithParm(w_titulos_relacion, 'CER', w_principal, 4, Layered!)  
+
+
+
+
+end event
+
+type m_certificadoindividual from menu within generardocumento
+end type
+
+on m_certificadoindividual.create
+call super::create
+this.text = "Certificado Individual"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_certificadoindividual.destroy
+call super::destroy
+end on
+

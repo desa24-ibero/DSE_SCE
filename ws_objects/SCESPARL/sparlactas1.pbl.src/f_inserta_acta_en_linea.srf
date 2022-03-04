@@ -1,0 +1,72 @@
+﻿$PBExportHeader$f_inserta_acta_en_linea.srf
+global type f_inserta_acta_en_linea from function_object
+end type
+
+forward prototypes
+global function integer f_inserta_acta_en_linea (long ll_cve_mat, string ls_gpo, integer li_periodo, integer li_anio, long ll_no_acta, integer li_cve_tipo_examen, string ls_nivel, long ll_cve_profesor, integer li_inscritos_acta, integer li_status, string ls_cve_tipo_calificacion, integer li_cve_estatus_acta)
+end prototypes
+
+global function integer f_inserta_acta_en_linea (long ll_cve_mat, string ls_gpo, integer li_periodo, integer li_anio, long ll_no_acta, integer li_cve_tipo_examen, string ls_nivel, long ll_cve_profesor, integer li_inscritos_acta, integer li_status, string ls_cve_tipo_calificacion, integer li_cve_estatus_acta);//f_inserta_acta_en_linea
+//	Inserta una nueva acta para ser capturada en línea
+//Recibe:
+//			long ll_cve_mat
+//			string ls_gpo
+//			integer li_periodo
+//			integer li_anio
+//			long ll_no_acta
+//			integer li_cve_tipo_examen
+//			string ls_nivel
+//			long ll_cve_profesor
+//			integer li_inscritos_acta
+//			integer li_status
+//			string ls_cve_tipo_calificacion
+//			integerli_cve_estatus_acta		
+//Devuelve:
+//El código de la base de datos de la transacción
+//	-1 Error
+//	0  Exito
+
+string ls_mensaje_sql
+integer li_codigo_sql
+
+	INSERT INTO acta_evaluacion_preeliminar (
+			cve_mat,
+			gpo,
+			periodo,
+			anio,
+			no_acta,
+			cve_tipo_examen,
+			nivel,
+			cve_profesor,
+			inscritos,
+			status,
+			cve_tipo_calificacion,
+			cve_estatus_acta)       		
+	VALUES (
+			:ll_cve_mat,
+			:ls_gpo,
+			:li_periodo,
+			:li_anio,
+			:ll_no_acta,
+			:li_cve_tipo_examen,
+			:ls_nivel,
+			:ll_cve_profesor,
+			:li_inscritos_acta,
+			:li_status,			
+			:ls_cve_tipo_calificacion,	
+			:li_cve_estatus_acta		
+			) 
+	USING gtr_sce;
+	ls_mensaje_sql= gtr_sce.SqlErrtext
+	li_codigo_sql= gtr_sce.SqlCode
+
+	IF li_codigo_sql <> 0 THEN
+			ROLLBACK USING gtr_sce;
+			Messagebox("Error al insertar acta_evaluacion_preeliminar en wf_genera_actas_en_linea",ls_mensaje_sql,StopSign!)
+	ELSE
+			COMMIT USING gtr_sce;
+	END IF
+return li_codigo_sql
+
+end function
+

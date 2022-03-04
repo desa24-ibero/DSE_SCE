@@ -1,0 +1,37 @@
+﻿$PBExportHeader$dw_salones_x_grupo_cd_mex.srd
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=72 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cve_mat dbname="horario.cve_mat" dbalias=".cve_mat" )
+ column=(type=char(2) updatewhereclause=yes name=gpo dbname="horario.gpo" dbalias=".gpo" )
+ column=(type=char(16) updatewhereclause=yes name=cve_salon dbname="horario.cve_salon" dbalias=".cve_salon" )
+ retrieve="select 
+cve_mat,
+gpo,
+cve_salon
+from horario
+where 
+cve_mat=:cve_mat_param and gpo=:gpo_param and
+cve_salon<>'0'
+group by cve_mat,gpo,cve_salon
+order by cve_mat,gpo,cve_salon" arguments=(("cve_mat_param", number),("gpo_param", string)) )
+text(band=header alignment="2" text="Cve Mat Gpo" border="0" color="33554432" x="5" y="4" height="64" width="384" html.valueishtml="0"  name=cve_mat_gpo_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Salon" border="0" color="33554432" x="393" y="4" height="64" width="265" html.valueishtml="0"  name=cve_salon_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="393" y="4" height="76" width="137" format="[general]" html.valueishtml="0"  name=cve_salon visible="1" edit.limit=4 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=0 border="0" color="33554432" x="658" y="0" height="64" width="2135" html.valueishtml="0"  name=cve_mat visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=0 border="0" color="33554432" x="2793" y="0" height="64" width="55" html.valueishtml="0"  name=gpo visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="string( cve_mat )+ gpo "border="0" color="33554432" x="2930" y="24" height="76" width="256" format="[GENERAL]" html.valueishtml="0"  name=cve_mat_gpo visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1073741824" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,121 @@
+﻿$PBExportHeader$f_obten_numero_en_texto.srf
+global type f_obten_numero_en_texto from function_object
+end type
+
+forward prototypes
+global function string f_obten_numero_en_texto (long a_numero)
+end prototypes
+
+global function string f_obten_numero_en_texto (long a_numero);//El objetivo de esta función es convertir un número a su representación escrita
+//
+//f_obten_numero_en_texto
+//
+
+integer li_unidad, li_decena, li_centenaanio, li_residuo, li_mes, li_indice, li_digito, li_long_digito, li_long_digito_base
+long ll_cociente, ll_numero
+string ls_dia, ls_mes, ls_anio, ls_fecha, ls_texto, ls_unidad, ls_decena, ls_centena, ls_millar 
+string ls_numero, ls_numero_restante,ls_unidad1, ls_decena1, ls_centena1, ls_millar1 
+decimal ld_cociente, ld_digito
+
+if a_numero > 10000 then
+   MessageBox("Límite Rebasado","El número escrito no es permitido por su tamaño")
+elseif a_numero = 0 then
+	return "CERO"
+end if
+
+ll_numero= a_numero
+
+li_residuo = ll_numero / 10
+ld_cociente = ll_numero / 10
+ld_digito = (ld_cociente -li_residuo) * 10
+li_digito = truncate(ld_digito,0)
+ll_cociente = truncate(ld_cociente,0)
+ls_texto= ""
+li_indice = 1
+
+ls_numero =string(ll_numero)
+li_long_digito = len(ls_numero)
+li_long_digito_base = len(ls_numero)
+ls_unidad1 = mid(ls_numero,li_long_digito,1)
+
+ls_numero = mid(ls_numero, 1, li_long_digito -1)
+li_long_digito = len(ls_numero)
+ls_decena1 = mid(ls_numero,li_long_digito)
+
+ls_numero = mid(ls_numero, 1, li_long_digito -1)
+li_long_digito = len(ls_numero)
+ls_centena1 = mid(ls_numero,li_long_digito)
+
+ls_numero = mid(ls_numero, 1, li_long_digito -1)
+li_long_digito = len(ls_numero)
+ls_centena1 = mid(ls_numero,li_long_digito)
+
+ls_numero = mid(ls_numero, 1, li_long_digito -1)
+li_long_digito = len(ls_numero)
+ls_millar1 = mid(ls_numero,li_long_digito)
+
+
+do while li_indice <= li_long_digito_base
+
+	choose case li_indice
+		case 1
+			if ls_decena1<>"1" then
+				ls_unidad = f_obten_unidad(ld_digito)
+				if ls_unidad <> "" and li_long_digito_base >1 and ls_decena1 <> "2" and ls_decena1 <> "0" then
+					ls_unidad= " Y " +ls_unidad			
+				end if
+				if ls_unidad <> "" and li_long_digito_base >1 and ls_decena1 <> "2" then
+					ls_unidad= " " +ls_unidad			
+				end if
+				ls_texto = ls_unidad +ls_texto
+			end if
+		case 2
+			if ls_decena1<>"1" then
+				if ls_unidad1="0" then
+					ls_decena = f_obten_decena(ld_digito, true)
+				else
+					ls_decena = f_obten_decena(ld_digito, false)
+				end if
+		
+				if ls_decena <> "" and li_long_digito_base >2 then
+					ls_decena= " " +ls_decena
+				end if
+				ls_texto = ls_decena + ls_texto			
+			else
+				ls_decena = f_obten_primer_decena(integer(ls_unidad1))
+				if ls_decena <> "" and li_long_digito_base >2 then
+					ls_decena= " " +ls_decena
+				end if
+				ls_texto = ls_decena + ls_texto	
+			end if
+		case 3
+			if ls_decena1 = "0" and ls_unidad1 = "0" then 
+				ls_centena = f_obten_centena(ld_digito, true)
+			else
+				ls_centena = f_obten_centena(ld_digito, false)				
+			end if
+			if ls_centena <> "" and li_long_digito_base >3 then
+				ls_centena= " " +ls_centena
+			end if			
+			ls_texto = ls_centena+ ls_texto 
+		case 4
+			ls_texto = f_obten_millar(ld_digito, false)+ ls_texto 
+
+	end choose
+
+	li_indice = li_indice + 1
+	
+	li_residuo = ll_cociente / 10
+	ld_cociente = ll_cociente / 10
+	ld_digito = (ld_cociente -li_residuo) * 10
+	li_digito = truncate(ld_digito,0)
+	ll_cociente = truncate(ld_cociente,0)
+
+loop
+
+
+
+return ls_texto
+
+end function
+

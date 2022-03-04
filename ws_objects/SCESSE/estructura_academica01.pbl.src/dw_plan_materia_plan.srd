@@ -1,0 +1,18 @@
+﻿$PBExportHeader$dw_plan_materia_plan.srd
+$PBExportComments$Este datawindow ofrece los planes de estudios
+release 5;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=5 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=157 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cve_plan dbname="nombre_plan.cve_plan" )
+ column=(type=char(20) updatewhereclause=yes name=nombre_plan dbname="nombre_plan.nombre_plan" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"nombre_plan~" ) COLUMN(NAME=~"nombre_plan.cve_plan~") COLUMN(NAME=~"nombre_plan.nombre_plan~")) " )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="705" y="36" height="85" width="211" brush.hatch="6" brush.color="10789024" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="5" y="4" height="149" width="2300" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="28" y="36" height="85" width="357" brush.hatch="6" brush.color="10789024" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+text(band=detail alignment="1" text="Clave Plan"border="0" color="0" x="65" y="44" height="65" width="279"  name=cve_carrera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="5" color="0" x="412" y="44" height="65" width="174" format="[general]"  name=cve_plan edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="5" color="0" x="974" y="44" height="65" width="1029" format="[general]"  name=nombre_plan edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+text(band=detail alignment="1" text="Plan"border="0" color="0" x="755" y="44" height="65" width="119"  name=carrera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )

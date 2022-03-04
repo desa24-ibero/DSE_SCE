@@ -1,0 +1,30 @@
+﻿$PBExportHeader$revisa_total_cred.srf
+$PBExportComments$Función que busca los creditos totales de una carrera~r~nEntrada Carrera, Plan~r~nSalida~tCreditos totales~r~nMarzo 1998 CAMP DkWf
+global type revisa_total_cred from function_object
+end type
+
+forward prototypes
+global function decimal revisa_total_cred (integer carrera, integer plan)
+end prototypes
+
+global function decimal revisa_total_cred (integer carrera, integer plan);//Función que busca los creditos totales de una carrera
+//Entrada Carrera, Plan
+//Salida	Creditos totales
+//Marzo 1998 CAMP DkWf
+decimal cred_tot
+
+SELECT plan_estudios.cred_total  
+	 INTO :cred_tot  
+ FROM plan_estudios  
+WHERE ( plan_estudios.cve_carrera = :carrera ) AND  
+		( plan_estudios.cve_plan = :plan )   using gtr_sce;
+		
+if gtr_sce.sqlcode = 0 then
+	return cred_tot
+else
+	messagebox("ERROR en la busqueda de CREDITOS del TOTALES","No se puede obtener los creditos  de la carrera "+string(carrera)+" y del plan "+string(plan)+".",stopsign!)
+	return -1
+end if
+
+end function
+

@@ -1,0 +1,17 @@
+﻿$PBExportHeader$d_inscrita_ordinario.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=141 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=mat_inscritas_cuenta dbname="mat_inscritas.cuenta" )
+ retrieve="  SELECT dbo.mat_inscritas.cuenta  
+    FROM dbo.mat_inscritas  
+   WHERE ( dbo.mat_inscritas.cuenta = :cuenta) and  
+         ( dbo.mat_inscritas.anio = :anio) and  
+         ( dbo.mat_inscritas.periodo = :periodo) and  
+         ( dbo.mat_inscritas.cve_mat = :cve_mat ) and
+			( dbo.mat_inscritas.cve_condicion = 0 )   
+" arguments=(("cuenta", number),("anio", number),("periodo", number),("cve_mat", number)) )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="23" y="4" height="77" width="467" format="[general]"  name=mat_inscritas_cuenta edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

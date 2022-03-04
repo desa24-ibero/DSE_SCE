@@ -1,0 +1,19 @@
+﻿$PBExportHeader$duo_coordinador.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=83 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=clave dbname="clave" )
+ column=(type=char(152) updatewhereclause=yes name=texto dbname="texto" )
+ retrieve="  SELECT clave = profesor.cve_profesor,  
+			texto = profesor.nombre+~" ~"+profesor.apaterno+~" ~"+profesor.amaterno
+    FROM coordinaciones,   
+         profesor  
+   WHERE ( coordinaciones.cve_coordinador = profesor.cve_profesor )
+	GROUP BY cve_profesor
+	ORDER BY profesor.nombre+~" ~"+profesor.apaterno+~" ~"+profesor.amaterno
+" )
+column(band=detail id=1 alignment="0" tabsequence=10 border="0" color="0" x="11" y="3" height="74" width="1083"  name=clave dddw.name=dddw_coordinador dddw.displaycolumn=texto dddw.datacolumn=clave dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

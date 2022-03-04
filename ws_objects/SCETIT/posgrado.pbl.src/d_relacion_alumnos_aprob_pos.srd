@@ -1,0 +1,59 @@
+﻿$PBExportHeader$d_relacion_alumnos_aprob_pos.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 1 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=312 color="536870912" )
+summary(height=88 color="536870912" )
+footer(height=48 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cuenta dbname="cuenta" )
+ column=(type=char(30) updatewhereclause=yes name=digito dbname="digito" )
+ column=(type=char(70) updatewhereclause=yes name=nombre_completo dbname="nombre_completo" )
+ column=(type=long updatewhereclause=yes name=cve_carrera dbname="cve_carrera" )
+ column=(type=long updatewhereclause=yes name=cve_plan dbname="cve_plan" )
+ column=(type=char(100) updatewhereclause=yes name=carrera dbname="carrera" )
+ column=(type=datetime updatewhereclause=yes name=fecha_examen dbname="fecha_examen" )
+ column=(type=long updatewhereclause=yes name=aprobado dbname="aprobado" values="Si	1/Suspendido	2/Cancelado	3/" )
+ retrieve="  SELECT DISTINCT cuenta =titulacion.cuenta,   
+			digito =   v_sce_alumno_digito.digito,
+			nombre_completo = alumnos.nombre_completo,
+         cve_carrera =titulacion.cve_carrera,   
+         cve_plan =titulacion.cve_plan,
+			carrera =carreras.carrera,
+			fecha_examen = titulacion.fecha_examen,
+			aprobado = titulacion.aprobado
+    FROM titulacion,            
+			alumnos,
+			v_sce_alumno_digito,  
+			carreras  
+   WHERE ( titulacion.fecha_examen > :adttm_fecha_inicial AND  
+           titulacion.fecha_examen < :adttm_fecha_final) 
+	and   ( titulacion.cve_carrera not in (null) )
+	and   ( titulacion.cve_plan not in (null) )
+	and   ( titulacion.cuenta = alumnos.cuenta)
+	and   ( titulacion.cuenta = v_sce_alumno_digito.cuenta)
+	and   ( titulacion.cve_carrera = carreras.cve_carrera)
+	and   ( titulacion.aprobado = 1)
+	and   ( carreras.nivel = ~"P~")
+	ORDER BY alumnos.nombre_completo
+" arguments=(("adttm_fecha_inicial", datetime),("adttm_fecha_final", datetime)) )
+text(band=header alignment="2" text="Cuenta" border="0" color="0" x="64" y="236" height="64" width="283"  name=cuenta_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="~"Alumnos Aprobados de Posgrado del ~"+string( adttm_fecha_inicial,~"dd/mm/yyyy~" )+~" al ~"+string(  adttm_fecha_final ,~"dd/mm/yyyy~" )"border="0" color="0" x="389" y="44" height="64" width="2418" format="[GENERAL]"  name=compute_3  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Nombre Completo" border="0" color="0" x="425" y="236" height="64" width="521"  name=t_2  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression="string( cuenta )+~"-~"+obten_digito( cuenta )"border="0" color="0" x="64" y="4" height="76" width="283" format="[GENERAL]"  name=compute_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="352" y="4" height="76" width="1207" format="[general]"  name=nombre_completo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="count(cve_carrera for all)"border="0" color="0" x="375" y="4" height="76" width="352" format="[general]"  name=compute_2  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=summary alignment="1" text="Aprobados" border="0" color="0" x="46" y="4" height="64" width="311"  name=t_3  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="<d_relacion_alumnos_aprob_pos>" border="0" color="0" x="50" y="4" height="40" width="635"  name=t_1  font.face="Arial" font.height="-6" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Carrera" border="0" color="0" x="1563" y="236" height="64" width="352"  name=cve_carrera_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Plan" border="0" color="0" x="1920" y="236" height="64" width="270"  name=cve_plan_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Fecha Examen" border="0" color="0" x="2194" y="236" height="64" width="434"  name=t_4  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Carrera" border="0" color="0" x="2633" y="236" height="64" width="914"  name=descripcion_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="0" x="1563" y="4" height="76" width="352" format="[general]"  name=cve_carrera edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="1920" y="4" height="76" width="274" format="[general]"  name=cve_plan edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="2199" y="4" height="76" width="434" format="dd-mm-yyyy"  name=fecha_examen edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="2638" y="4" height="76" width="1550" format="[general]"  name=carrera edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="4192" y="4" height="76" width="283" format="[general]"  name=aprobado ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aprobado" border="0" color="0" x="4192" y="240" height="64" width="283"  name=t_5  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="1" expression="string(page())+~"/~"+string(pageCount())"border="0" color="0" x="4091" y="44" height="64" width="384" format="[GENERAL]"  name=compute_4  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

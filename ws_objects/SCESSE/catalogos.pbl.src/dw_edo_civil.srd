@@ -1,0 +1,15 @@
+﻿$PBExportHeader$dw_edo_civil.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=31436382 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=157 color="536870912" )
+summary(height=5 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=85 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cve_edocivil dbname="edo_civil.cve_edocivil" )
+ column=(type=char(11) update=yes updatewhereclause=yes name=edo_civil dbname="edo_civil.edo_civil" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"edo_civil~" ) COLUMN(NAME=~"edo_civil.cve_edocivil~") COLUMN(NAME=~"edo_civil.edo_civil~")) " update="edo_civil" updatewhere=0 updatekeyinplace=yes )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="42" y="12" height="125" width="1125" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Clave"border="0" color="0" x="65" y="36" height="77" width="211"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Estado Civil"border="0" color="0" x="590" y="36" height="65" width="311"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=1 alignment="0" tabsequence=10 border="0" color="0" x="92" y="4" height="77" width="151" format="[general]"  name=cve_edocivil edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="0" color="0" x="485" y="4" height="77" width="494" format="[general]"  name=edo_civil edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

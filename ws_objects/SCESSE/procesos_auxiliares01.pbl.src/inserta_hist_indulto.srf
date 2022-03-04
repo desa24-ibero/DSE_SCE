@@ -1,0 +1,57 @@
+﻿$PBExportHeader$inserta_hist_indulto.srf
+$PBExportComments$hace un insert a la tabla de hist_indulto, consulta que no este repetido el indulto para el mismo periodo y año. Regresa "True" si el insert es exitoso.   Juan Campos. Abril-1997.
+global type inserta_hist_indulto from function_object
+end type
+
+forward prototypes
+global function boolean inserta_hist_indulto (long cuenta, string indulto, integer periodo, long año)
+end prototypes
+
+global function boolean inserta_hist_indulto (long cuenta, string indulto, integer periodo, long año);// hace un insert a la tabla de hist_indulto, consulta que no este repetido el indulto 
+// para el mismo periodo y año. Regresa "True" si el insert es exitoso.
+// Juan Campos. Abril-1997.
+
+integer Existe
+boolean MovimientoOk
+
+select count(*)
+  into :Existe
+  from hist_indulto
+ where (cuenta      = :cuenta) and
+       (cve_indulto = :indulto) and
+		 (periodo     = :periodo) and
+		 (anio        = :año) using gtr_sce;
+		  
+if gtr_sce.sqlcode = -1 Then
+	MovimientoOk = False
+	MessageBox("Error al consultar los indultos",gtr_sce.sqlerrtext)
+Elseif gtr_sce.sqlcode = 0 then
+	MovimientoOk = True
+else
+	MovimientoOk = false
+	MessageBox("Error",gtr_sce.sqlerrtext)
+End if 
+
+if MovimientoOk Then
+	if Existe = 0 then
+ 		Insert Into hist_indulto values (:Cuenta,:Indulto,:Periodo,:Año)
+		Using gtr_sce;	
+		if gtr_sce.sqlcode = 0 Then			
+		   MovimientoOk = True
+	   Else
+         MovimientoOk = False
+			MessageBox("Error al actualizar la tabla de hist_indulto",gtr_sce.sqlerrtext)
+		end if
+	else
+		MovimientoOk = False
+		Messagebox("El alumno ya tiene el indulto para el período próximo","Por favor, revise las banderas de éste alumno, y su histórico de indultos")
+	end if
+end if
+												
+if MovimientoOk Then
+	Return True
+else
+	Return False
+end if
+end function
+

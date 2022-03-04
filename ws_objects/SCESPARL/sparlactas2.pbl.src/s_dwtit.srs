@@ -1,0 +1,6 @@
+﻿$PBExportHeader$s_dwtit.srs
+$PBExportComments$Estructura de datawindow para Conf_impr_2ver
+global type s_dwtit from structure
+	datawindow		dwp[]
+end type
+

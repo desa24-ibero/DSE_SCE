@@ -1,0 +1,44 @@
+﻿$PBExportHeader$d_califica.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=141 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=90 color="536870912" )
+table(column=(type=char(70) updatewhereclause=yes name=alumnos_nombre_completo dbname="alumnos.nombre_completo" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=mat_inscritas_calificacion dbname="mat_inscritas.calificacion" )
+ column=(type=long updatewhereclause=yes key=yes name=mat_inscritas_cuenta dbname="mat_inscritas.cuenta" )
+ column=(type=long updatewhereclause=yes key=yes name=mat_inscritas_cve_mat dbname="mat_inscritas.cve_mat" )
+ column=(type=char(2) updatewhereclause=yes key=yes name=mat_inscritas_gpo dbname="mat_inscritas.gpo" )
+ column=(type=long updatewhereclause=yes key=yes name=mat_inscritas_periodo dbname="mat_inscritas.periodo" )
+ column=(type=long updatewhereclause=yes key=yes name=mat_inscritas_anio dbname="mat_inscritas.anio" )
+ column=(type=char(4) updatewhereclause=yes name=materias_evaluacion dbname="materias.evaluacion" )
+ retrieve="  SELECT dbo.alumnos.nombre_completo,   
+         dbo.mat_inscritas.calificacion,   
+         dbo.mat_inscritas.cuenta,   
+         dbo.mat_inscritas.cve_mat,   
+         dbo.mat_inscritas.gpo,   
+         dbo.mat_inscritas.periodo,   
+         dbo.mat_inscritas.anio,   
+         dbo.materias.evaluacion  
+    FROM dbo.mat_inscritas,   
+         dbo.alumnos,   
+         dbo.materias  
+   WHERE ( dbo.mat_inscritas.cuenta = dbo.alumnos.cuenta ) and  
+         ( dbo.mat_inscritas.cve_mat = dbo.materias.cve_mat ) and  
+         ( ( dbo.mat_inscritas.anio = :anio ) AND  
+         ( dbo.mat_inscritas.periodo = :periodo ) AND  
+         ( dbo.mat_inscritas.cve_mat = :materia ) AND  
+         ( dbo.mat_inscritas.gpo = :grupo )  AND  
+         ( isnull(dbo.mat_inscritas.calificacion,~"~") <> ~"BA~") AND 
+         ( dbo.mat_inscritas.cve_condicion IN (0,3) ) )
+" update="dbo.mat_inscritas" updatewhere=1 updatekeyinplace=yes arguments=(("anio", number),("periodo", number),("materia", number),("grupo", string))  sort="alumnos_nombre_completo A " )
+text(band=header alignment="2" text="Materias Inscritas
+Calificacion"border="0" color="33554432" x="1953" y="3" height="128" width="571"  name=mat_inscritas_calificacion_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=header alignment="0" expression="count(alumnos_nombre_completo for all)"border="0" color="33554432" x="2527" y="3" height="128" width="571" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="Alumnos
+Nombre Completo"border="0" color="33554432" x="0" y="3" height="128" width="1946"  name=alumnos_nombre_completo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="4" y="3" height="77" width="1949" format="[general]"  name=alumnos_nombre_completo edit.limit=70 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="1957" y="3" height="77" width="571" format="[general]"  name=mat_inscritas_calificacion edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="33554432" x="2564" y="9" height="67" width="201" format="[general]"  name=materias_evaluacion edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

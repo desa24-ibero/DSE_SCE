@@ -1,0 +1,94 @@
+﻿$PBExportHeader$m_movimientos_historico.srm
+forward
+global type m_movimientos_historico from m_catalogo
+end type
+end forward
+
+global type m_movimientos_historico from m_catalogo
+end type
+global m_movimientos_historico m_movimientos_historico
+
+on m_movimientos_historico.create
+m_movimientos_historico=this
+call super::create
+end on
+
+on m_movimientos_historico.destroy
+call super::destroy
+end on
+
+event m_imprimir::clicked;// 
+end event
+
+on m_edicion.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_deshacer.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_cortar.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_copiar.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_pegar.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_borrar.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_registro.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_nuevo.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_actualiza.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_borraregistro.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_ordenarporclave.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_ordenarpordescripcin.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+

@@ -1,0 +1,12 @@
+﻿$PBExportHeader$d_seminario_servicio.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=seminario_proyecto_terminal dbname="aux_opcion_terminal.cve_proyecto_opc_term" )
+ column=(type=long updatewhereclause=yes name=servicio_social dbname="area_mat.cve_mat" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"dbo.plan_estudios~" )  TABLE(NAME=~"dbo.aux_opcion_terminal~" )  TABLE(NAME=~"dbo.area_mat~" ) COLUMN(NAME=~"dbo.aux_opcion_terminal.cve_proyecto_opc_term~") COLUMN(NAME=~"dbo.area_mat.cve_mat~")    JOIN (LEFT=~"dbo.plan_estudios.cve_area_opcion_terminal~"    OP =~"=~"RIGHT=~"dbo.aux_opcion_terminal.cve_area~"    OUTER1 =~"dbo.plan_estudios.cve_area_opcion_terminal~" )   JOIN (LEFT=~"dbo.plan_estudios.cve_area_servicio_social~"    OP =~"=~"RIGHT=~"dbo.area_mat.cve_area~" ) WHERE(    EXP1 =~"dbo.plan_estudios.cve_carrera~"   OP =~"=~"    EXP2 =~":cve_carrera~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"dbo.plan_estudios.cve_plan~"   OP =~"=~"    EXP2 =~":cve_plan~" ) ) ARG(NAME = ~"cve_carrera~" TYPE = number)  ARG(NAME = ~"cve_plan~" TYPE = number) " arguments=(("cve_carrera", number),("cve_plan", number)) )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="330" format="[general]"  name=seminario_proyecto_terminal edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="641" y="4" height="77" width="330" format="[general]"  name=servicio_social edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

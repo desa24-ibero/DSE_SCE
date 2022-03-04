@@ -1,0 +1,66 @@
+﻿$PBExportHeader$f_boolean.srf
+global type f_boolean from function_object
+end type
+
+forward prototypes
+global function boolean f_boolean (string as_val)
+end prototypes
+
+global function boolean f_boolean (string as_val);//////////////////////////////////////////////////////////////////////////////
+//
+//	Function:  		f_Boolean
+//
+//	Access:  		public
+//
+//	Arguments:
+//	as_val			La cadena para ser convertida a un valor booleano.
+//
+//	Returns: 		boolean
+// 					El valor booleano de la cadena.
+//						Si el valor de cualquier argumento es NULO, la función
+//						devuelve NULO.
+//						Si el valor de cualquier argumento es Inválido, la función
+//						devuelve NULO.
+//
+//	Description:  	Convierte un valor de cadena a un valor booleano. Tomado de
+//						pfc_n_cst_conversion.
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+//	Revision History
+//
+//	Version
+//	5.0   Initial version
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+//	Copyright © 1996-1997 Sybase, Inc. and its subsidiaries.  All rights reserved.
+//	Any distribution of the PowerBuilder Foundation Classes (PFC)
+//	source code by other than Sybase, Inc. and its subsidiaries is prohibited.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+Boolean lb_null
+SetNull(lb_null)
+
+
+//Check parameters
+If IsNull(as_val) Then
+	Return lb_null
+End If
+
+//Convert to uppercase
+as_val = Upper(as_val)
+
+Choose Case as_val
+	Case 'TRUE', 'T', 'YES', 'Y', '1'
+		Return True
+	Case 'FALSE', 'F', 'NO', 'N', '0'
+		Return False
+End Choose
+
+//Invalid input parameter
+Return lb_null
+
+end function
+

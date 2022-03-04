@@ -1,0 +1,64 @@
+﻿$PBExportHeader$cred_prom.srf
+global type cred_prom from function_object
+end type
+
+forward prototypes
+global function integer cred_prom (long cuenta, ref decimal cred, ref real prom)
+end prototypes
+
+global function integer cred_prom (long cuenta, ref decimal cred, ref real prom);// Calcula el promedio y los creditos de un alumno
+//Recibe 3 parametros de los cuales solo el primero es de Entrada
+//En los siguientes se regresa los creditos y el promedio
+//del alumno. 
+//Parametros (cuenta,creditos,promedio)
+//Regresa 1 si se llevo a cabo con exito y 0 en caso contrario
+//CAMP DkWf Abril 1998
+//Modificada de la función hechar por: Juan Campos Sánchez. 21-Enero-1998.
+
+Integer	Carrera, Plan
+Decimal Creditos
+Real Promedio
+
+ 
+Select cve_carrera, cve_plan Into :Carrera, :Plan From academicos 
+Where cuenta = :cuenta Using gtr_sce;
+
+If gtr_sce.sqlcode = 0 Then 
+  DECLARE Emp_proc procedure for calcula_promedio
+    @cuenta   = :cuenta,
+    @cve_carr = :carrera, 
+    @plan     = :plan,
+    @promedio = :promedio out, 
+    @creditos = :creditos out USING gtr_sce;
+	EXECUTE Emp_proc ;
+	IF gtr_sce.sqlcode <> 0 Then
+		Goto Error
+   End if
+	FETCH Emp_proc INTO :prom,:cred;
+	IF gtr_sce.sqlcode <> 0 Then
+		Goto Error
+   End if	
+	CLOSE Emp_proc;
+	IF gtr_sce.sqlcode <> 0 Then
+		Goto Error
+   End if	
+	prom	=	round(prom,2)
+	Creditos	=	Cred
+//	CreditosYPromedio = "              " + &
+//                    String(Creditos) + & 
+//	                    "                                        " + &
+//							  String(Round(Promedio, 2))
+// 	Return  CreditosYPromedio
+	Return 1
+Else 
+	//MessageBox("Error","Al obtener la carrera y el plan de este alumno"+gtr_sce.sqlerrtext)
+   Return 0
+End IF
+
+Error:
+	Rollback Using gtr_sce;
+	//Messagebox("Error al obtener promedio y creditos",gtr_sce.sqlerrtext)
+	Return 0
+
+end function
+

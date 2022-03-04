@@ -1,0 +1,35 @@
+﻿$PBExportHeader$f_obten_cancelado.srf
+global type f_obten_cancelado from function_object
+end type
+
+forward prototypes
+global function integer f_obten_cancelado (long al_folio)
+end prototypes
+
+global function integer f_obten_cancelado (long al_folio);integer li_codigo
+string ls_mensaje_error
+integer li_cancelado
+
+select dbo.aspirantes_revalidacion.cancelado
+into :li_cancelado
+from dbo.aspirantes_revalidacion
+where dbo.aspirantes_revalidacion.folio = :al_folio
+using gtr_sce;
+
+li_codigo= gtr_sce.SqlCode
+ls_mensaje_error= gtr_sce.SqlErrText
+
+if isnull(li_cancelado) then
+	li_cancelado= 0
+end if
+
+if li_codigo = -1  then
+	MessageBox("Error al recuperar cancelado en el folio actual",ls_mensaje_error, StopSign!)
+	return -1
+else
+	return li_cancelado	
+end if
+
+
+end function
+

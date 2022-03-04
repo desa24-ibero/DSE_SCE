@@ -1,0 +1,42 @@
+﻿$PBExportHeader$pertenece_plan_estudios.srf
+$PBExportComments$Regresa "True" si la clave de una materia pertenece al plan de estudios. Se recibe tres parametros "cve_materia, cve_carrera y cve_plan    Juan Campos. Enero-1997.
+global type pertenece_plan_estudios from function_object
+end type
+
+forward prototypes
+global function boolean pertenece_plan_estudios (long cve_materia, integer cve_carrera, integer cve_plan)
+end prototypes
+
+global function boolean pertenece_plan_estudios (long cve_materia, integer cve_carrera, integer cve_plan);// Esta Función regresa "True" si la clave de una materia pertenece al plan de estudios.
+// Se recibe tres parametros "cve_materia, cve_carrera y cve_plan
+// Juan Campos. Febrero-1997.
+
+Int pertenece
+
+DECLARE perteneceplanestudios procedure for pertenece_al_plan
+	@materia   	= :cve_materia,
+	@carrera   	= :cve_carrera, 
+  	@plan      	= :cve_plan,
+  	@pertenece = :Pertenece out using gtr_sce;
+  
+EXECUTE perteneceplanestudios ;
+
+FETCH perteneceplanestudios INTO :pertenece;
+
+CLOSE perteneceplanestudios;
+
+If gtr_sce.sqlcode = 0 Then
+	If pertenece >= 1 Then
+	  	Return True	
+   Else
+  	  	Return False  	
+   End if	
+Else
+  	if gtr_sce.sqlcode = -1 Then  
+    		MessageBox("Error ",gtr_sce.sqlerrtext)	
+  	End If	 
+  	Return False 
+End IF
+
+end function
+

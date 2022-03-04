@@ -1,0 +1,43 @@
+﻿$PBExportHeader$justificalinea.srf
+global type justificalinea from function_object
+end type
+
+forward prototypes
+global function string justificalinea (string as_linea, integer ai_tamanioinicial, integer ai_tamaniofinal)
+end prototypes
+
+global function string justificalinea (string as_linea, integer ai_tamanioinicial, integer ai_tamaniofinal);int li_tamanio, li_espacios_a_poner, li_espacios_totales, li_inicio, li_interespacios
+string ls_linea
+as_linea = Trim(as_linea)
+ls_linea = as_linea
+li_tamanio = len(ls_linea)
+if li_tamanio >= (ai_tamaniofinal - ai_tamanioinicial) + 1 then
+	return space(ai_tamanioinicial - 1)+ls_linea
+else
+	li_espacios_a_poner = ai_tamaniofinal - ai_tamanioinicial - li_tamanio + 1
+	li_inicio = 1
+	li_espacios_totales = 0
+	do while li_inicio > 0
+		li_inicio = Pos (ls_linea," ",li_inicio+1)
+		li_espacios_totales ++
+	loop
+	li_espacios_totales --
+	li_interespacios = (li_espacios_a_poner/li_espacios_totales)+1
+	li_inicio = 1
+	ls_linea = ""
+	do while li_inicio > 0
+		li_inicio = Pos (as_linea," ",1)
+		if li_espacios_a_poner >= li_interespacios then
+			ls_linea += Mid(as_linea,1,li_inicio)+space(li_interespacios)
+			li_espacios_a_poner -= li_interespacios
+			as_linea = Mid(as_linea,li_inicio+1)
+		else
+			ls_linea += Mid(as_linea,1,li_inicio)+space(li_espacios_a_poner)
+			ls_linea += Mid(as_linea,li_inicio+1)
+			li_inicio = 0
+		end if
+	loop
+	return space(ai_tamanioinicial - 1)+ls_linea
+end if
+end function
+

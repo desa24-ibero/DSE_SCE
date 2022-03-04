@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_aspirante.srs
+global type str_aspirante from structure
+	long		folio
+	integer		clv_ver
+	integer		clv_per
+	integer		anio
+end type
+

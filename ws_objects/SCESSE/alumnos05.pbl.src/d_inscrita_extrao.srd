@@ -1,0 +1,18 @@
+﻿$PBExportHeader$d_inscrita_extrao.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=141 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=examen_extrao_titulo_cuenta dbname="examen_extrao_titulo.cuenta" )
+ retrieve="  SELECT dbo.examen_extrao_titulo.cuenta  
+    FROM dbo.examen_extrao_titulo
+   WHERE ( dbo.examen_extrao_titulo.cuenta = :cuenta ) AND  
+         ( dbo.examen_extrao_titulo.anio = :anio ) AND  
+         ( dbo.examen_extrao_titulo.periodo = :periodo ) AND
+			( dbo.examen_extrao_titulo.cve_mat = :cve_mat )
+" arguments=(("cuenta", number),("anio", number),("periodo", number),("cve_mat", number)) )
+text(band=header alignment="2" text="Examen Extrao Titulo
+Cuenta"border="0" color="0" x="5" y="8" height="129" width="572"  name=examen_extrao_titulo_cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="10" y="4" height="77" width="330" format="[general]"  name=examen_extrao_titulo_cuenta edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

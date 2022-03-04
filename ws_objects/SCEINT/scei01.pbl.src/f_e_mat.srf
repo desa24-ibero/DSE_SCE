@@ -1,0 +1,39 @@
+﻿$PBExportHeader$f_e_mat.srf
+global type f_e_mat from function_object
+end type
+
+forward prototypes
+global function integer f_e_mat (long al_materia)
+end prototypes
+
+global function integer f_e_mat (long al_materia);/*
+DESCRIPCIÓN: Verifica la existencia de una materia dada
+PARÁMETROS: al_materia
+REGRESA: 0 si la materia no existe, 1 si existe
+AUTOR: Víctor Manuel Iniestra Álvarez
+FECHA: 18 Junio 1998
+MODIFICACIÓN:
+*/
+long ll_mate
+
+	SELECT grupos.cve_mat
+	INTO :ll_mate
+	FROM grupos
+	WHERE ( grupos.cve_mat = :al_materia ) AND
+		( grupos.periodo = :gi_periodo ) AND
+		( grupos.anio = :gi_anio ) AND
+		( grupos.cond_gpo = 1 )
+	USING gtr_sce;
+
+if isnull(ll_mate) then
+	ll_mate=0
+end if
+
+if al_materia<>ll_mate then
+	return 0
+else
+	return 1
+end if
+
+end function
+

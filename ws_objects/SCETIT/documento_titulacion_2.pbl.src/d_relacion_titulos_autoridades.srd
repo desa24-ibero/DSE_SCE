@@ -1,0 +1,45 @@
+﻿$PBExportHeader$d_relacion_titulos_autoridades.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=1136 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=176 color="536870912" )
+table(column=(type=long updatewhereclause=yes key=yes name=id dbname="datos_certificado.id" )
+ column=(type=char(70) updatewhereclause=yes name=nombre dbname="datos_certificado.nombre" )
+ column=(type=char(70) updatewhereclause=yes name=puesto dbname="datos_certificado.puesto" )
+ column=(type=char(24) updatewhereclause=yes name=fecha_expedicion dbname="fecha_expedicion" )
+ retrieve="  SELECT datos_certificado.id,   
+         datos_certificado.nombre,   
+         datos_certificado.puesto,
+			fecha_expedicion = CASE datepart(mm, :adttm_fecha_expedicion) 
+                             WHEN 1 THEN convert(varchar(2),datepart(dd, :adttm_fecha_expedicion)) +~" de Enero de ~"+convert(varchar(4),datepart(yy, :adttm_fecha_expedicion))
+                             WHEN 2 THEN convert(varchar(2),datepart(dd, :adttm_fecha_expedicion)) +~" de Febrero de ~"+convert(varchar(4),datepart(yy, :adttm_fecha_expedicion))
+                             WHEN 3 THEN convert(varchar(2),datepart(dd, :adttm_fecha_expedicion)) +~" de Marzo de ~"+convert(varchar(4),datepart(yy, :adttm_fecha_expedicion))
+                             WHEN 4 THEN convert(varchar(2),datepart(dd, :adttm_fecha_expedicion)) +~" de Abril de ~"+convert(varchar(4),datepart(yy, :adttm_fecha_expedicion))
+                             WHEN 5 THEN convert(varchar(2),datepart(dd, :adttm_fecha_expedicion)) +~" de Mayo de ~"+convert(varchar(4),datepart(yy, :adttm_fecha_expedicion))
+                             WHEN 6 THEN convert(varchar(2),datepart(dd, :adttm_fecha_expedicion)) +~" de Junio de ~"+convert(varchar(4),datepart(yy, :adttm_fecha_expedicion))
+                             WHEN 7 THEN convert(varchar(2),datepart(dd, :adttm_fecha_expedicion)) +~" de Julio de ~"+convert(varchar(4),datepart(yy, :adttm_fecha_expedicion))
+                             WHEN 8 THEN convert(varchar(2),datepart(dd, :adttm_fecha_expedicion)) +~" de Agosto de ~"+convert(varchar(4),datepart(yy, :adttm_fecha_expedicion))
+                             WHEN 9 THEN convert(varchar(2),datepart(dd, :adttm_fecha_expedicion)) +~" de Septiembre de ~"+convert(varchar(4),datepart(yy, :adttm_fecha_expedicion))
+                             WHEN 10 THEN convert(varchar(2),datepart(dd, :adttm_fecha_expedicion)) +~" de Octubre de ~"+convert(varchar(4),datepart(yy, :adttm_fecha_expedicion))
+                             WHEN 11 THEN convert(varchar(2),datepart(dd, :adttm_fecha_expedicion)) +~" de Noviembre de ~"+convert(varchar(4),datepart(yy, :adttm_fecha_expedicion))
+                             WHEN 12 THEN convert(varchar(2),datepart(dd, :adttm_fecha_expedicion)) +~" de Diciembre de ~"+convert(varchar(4),datepart(yy, :adttm_fecha_expedicion))
+                             ELSE ~"~" END
+    FROM datos_certificado  
+   WHERE datos_certificado.id in (6,1)   
+ORDER BY datos_certificado.id DESC   
+" update="datos_certificado" updatewhere=0 updatekeyinplace=no arguments=(("adttm_fecha_expedicion", datetime)) )
+text(band=header alignment="0" text="Los nombres de los directivos de la Institución son :" border="0" color="0" x="84" y="938" height="70" width="1671"  name=t_1  font.face="Arial" font.height="-11" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="La fecha de Expedición de estos Títulos será el :" border="0" color="0" x="84" y="822" height="70" width="1591"  name=t_2  font.face="Arial" font.height="-11" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=header id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1723" y="826" height="64" width="984" format="[general]"  name=fecha_expedicion edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-11" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="146" y="86" height="74" width="2077" format="[general]"  name=nombre edit.limit=70 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="84" y="10" height="74" width="2077" format="[general]"  name=puesto edit.limit=70 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+bitmap(band=header filename="logo_uia.bmp" x="128" y="29" height="438" width="508" border="0"  name=p_1 )
+text(band=header alignment="1" text="TRAMITACION ESCOLAR" border="0" color="0" x="2107" y="323" height="64" width="1028"  name=t_6  font.face="Times New Roman" font.height="-10" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="1" text="DIRECCION DE SERVICIOS ESCOLARES" border="0" color="0" x="1558" y="256" height="64" width="1576"  name=t_5  font.face="Times New Roman" font.height="-10" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Relación No.  1" border="0" color="0" x="2703" y="682" height="64" width="432"  name=t_4  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+line(band=header x1="66" y1="493" x2="3134" y2="493"  name=l_1 pen.style="0" pen.width="11" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="1" text="Relación de títulos que se envían a diseñar" border="0" color="0" x="1909" y="579" height="64" width="1225"  name=t_3  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

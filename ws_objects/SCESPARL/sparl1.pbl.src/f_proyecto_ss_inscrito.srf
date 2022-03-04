@@ -1,0 +1,56 @@
+﻿$PBExportHeader$f_proyecto_ss_inscrito.srf
+global type f_proyecto_ss_inscrito from function_object
+end type
+
+forward prototypes
+global function boolean f_proyecto_ss_inscrito (long al_cuenta, long al_anio, long al_periodo)
+end prototypes
+
+global function boolean f_proyecto_ss_inscrito (long al_cuenta, long al_anio, long al_periodo);//f_proyecto_ss_inscrito
+//Recibe		al_cuenta	long
+//				al_anio		long
+//				al_periodo	long
+//Devuelve	boolean
+//				true  : Si el alumno tiene inscrito el proyecto de servicio social
+//				false : en caso contrario
+
+u_datastore lu_datastore
+string ls_dataobject = "dw_proyecto_ss"
+long ll_num_rows
+long ll_periodo[]
+
+if not isvalid(lu_datastore) then
+	lu_datastore = CREATE u_datastore
+end if
+
+lu_datastore.dataobject = ls_dataobject
+
+lu_datastore.SetTransObject(gtr_sce)
+
+//Si el periodo es otoño, incluye verano y otoño
+if al_periodo = 2 then
+	ll_periodo[1]= 1
+	ll_periodo[2]= 2
+else
+//Solo incluye el periodo actual	
+	ll_periodo[1]= al_periodo	
+end if
+
+ll_num_rows = lu_datastore.Retrieve(al_cuenta, al_anio, ll_periodo)
+
+if isvalid(lu_datastore) then
+	DESTROY lu_datastore 
+end if
+
+if ll_num_rows = 0 then
+	return false
+elseif ll_num_rows >= 1 then
+	return true
+elseif ll_num_rows = -1 then
+	MessageBox("Error en Servicio Social","No es posible revisar servicio social inscrito",StopSign!)
+	return false
+end if
+
+return false
+end function
+

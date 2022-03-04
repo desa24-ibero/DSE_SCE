@@ -1,0 +1,106 @@
+﻿$PBExportHeader$d_pase_ingreso.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+header(height=780 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=160 color="536870912"  height.autosize=yes)
+table(column=(type=long updatewhereclause=yes name=academicos_cuenta dbname="academicos.cuenta" )
+ column=(type=char(30) updatewhereclause=yes name=v_sce_alumno_digito_digito dbname="v_sce_alumno_digito.digito" )
+ column=(type=char(70) updatewhereclause=yes name=alumnos_nombre_completo dbname="alumnos.nombre_completo" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_carrera dbname="academicos.cve_carrera" )
+ column=(type=char(100) updatewhereclause=yes name=carreras_carrera dbname="carreras.carrera" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_plan dbname="academicos.cve_plan" )
+ column=(type=char(20) updatewhereclause=yes name=nombre_plan_nombre_plan dbname="nombre_plan.nombre_plan" )
+ column=(type=datetime updatewhereclause=yes name=horario_insc_hora_entrada dbname="horario_insc.hora_entrada" )
+ column=(type=char(9) updatewhereclause=yes name=dia dbname="dia" )
+ column=(type=char(10) updatewhereclause=yes name=mes dbname="mes" )
+ column=(type=datetime updatewhereclause=yes name=fecha_hoy dbname="fecha_hoy" )
+ column=(type=long updatewhereclause=yes name=academicos_creditos_cursados dbname="academicos.creditos_cursados" )
+ column=(type=real updatewhereclause=yes name=academicos_promedio dbname="academicos.promedio" )
+ column=(type=char(1) updatewhereclause=yes name=academicos_nivel dbname="academicos.nivel" )
+ column=(type=long updatewhereclause=yes name=cve_subsistema dbname="cve_subsistema" )
+ column=(type=char(40) updatewhereclause=yes name=subsistema dbname="subsistema" )
+ retrieve="
+SELECT    academicos.cuenta,
+v_sce_alumno_digito.digito,
+alumnos.nombre_completo,
+academicos.cve_carrera,
+carreras.carrera,
+academicos.cve_plan,
+nombre_plan.nombre_plan,
+horario_insc.hora_entrada,
+dia = CASE datepart(dw,horario_insc.hora_entrada)  WHEN 1 THEN 'DOMINGO'
+							 WHEN 2 THEN 'LUNES'
+							 WHEN 3 THEN 'MARTES'
+							 WHEN 4 THEN 'MIERCOLES'
+							 WHEN 5 THEN 'JUEVES'
+							 WHEN 6 THEN 'VIERNES'
+							 WHEN 7 THEN 'SABADO' END,
+mes = CASE datepart(mm,horario_insc.hora_entrada)  WHEN 1 THEN 'ENERO'
+						 	 WHEN 2 THEN 'FEBRERO'
+							 WHEN 3 THEN 'MARZO'
+							 WHEN 4 THEN 'ABRIL'
+							 WHEN 5 THEN 'MAYO'
+							 WHEN 6 THEN 'JUNIO'
+							 WHEN 7 THEN 'JULIO'
+							 WHEN 8 THEN 'AGOSTO'
+							 WHEN 9 THEN 'SEPTIEMBRE'
+							 WHEN 10 THEN 'OCTUBRE'
+							 WHEN 11 THEN 'NOVIEMBRE'
+							 WHEN 12 THEN 'DICIEMBRE' END,
+fecha_hoy = getdate(),
+academicos.creditos_cursados,
+academicos.promedio,
+academicos.nivel,
+cve_subsistema = academicos.cve_subsistema,
+subsistema = isnull((select distinct isnull(subsistema, 'NO REGISTRADO') from subsistema sub
+			where academicos.cve_carrera = sub.cve_carrera
+			and academicos.cve_plan = sub.cve_plan
+			and academicos.cve_subsistema = isnull(sub.cve_subsistema,0)),'NO REGISTRADO')
+FROM      academicos, v_sce_alumno_digito, alumnos, horario_insc, carreras, nombre_plan
+WHERE     academicos.cuenta = v_sce_alumno_digito.cuenta
+  AND     academicos.cuenta = alumnos.cuenta
+  AND     academicos.cuenta = horario_insc.cuenta
+  AND     academicos.cve_plan = nombre_plan.cve_plan
+  AND     academicos.cve_carrera = carreras.cve_carrera
+  AND     (academicos.cuenta = :an_cuenta)" arguments=(("an_cuenta", number)) )
+compute(band=header alignment="1" expression="~"Página ~"+pageCount()"border="0" color="33554432" x="3163" y="32" height="76" width="320" format="[GENERAL]" html.valueishtml="0"  name=compute_4 visible="1"  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=11 alignment="1" tabsequence=32766 border="0" color="33554432" x="2880" y="144" height="76" width="603" format="[shortdate] [time]" html.valueishtml="0"  name=fecha_hoy visible="1" editmask.mask="dd/mm/yyyy hh:mm" editmask.focusrectangle=no  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Pase de Ingreso a Ajustes" border="0" color="33554432" x="37" y="152" height="64" width="690" html.valueishtml="0"  name=t_3 visible="1"  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=11 alignment="1" tabsequence=32766 border="0" color="33554432" x="2880" y="144" height="76" width="603" format="[shortdate] [time]" html.valueishtml="0"  name=fecha_hoy_1 visible="1" editmask.mask="dd/mm/yyyy hh:mm" editmask.focusrectangle=no  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+bitmap(band=header filename="C:\SourceSafe\ServiciosEscolares\srl\Codigo Fuente10\hor_color.bmp" x="1120" y="20" height="332" width="1047" border="0"  name=p_1 visible="1" )
+text(band=header alignment="2" text="DIRECCIÓN DE SERVICIOS ESCOLARES" border="0" color="33554432" x="1083" y="340" height="56" width="1115" html.valueishtml="0"  name=t_4 visible="1"  font.face="Bell MT" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="Cuenta" border="0" color="33554432" x="37" y="408" height="68" width="498" html.valueishtml="0"  name=academicos_cuenta_t visible="1"  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="string( academicos_cuenta ) + ~"-~"+ v_sce_alumno_digito_digito "border="0" color="33554432" x="553" y="408" height="68" width="256" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1073741824" )
+text(band=header alignment="1" text="Nombre " border="0" color="33554432" x="37" y="480" height="68" width="498" html.valueishtml="0"  name=alumnos_nombre_completo_t visible="1"  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="553" y="480" height="68" width="1947" format="[general]" html.valueishtml="0"  name=alumnos_nombre_completo visible="1" edit.limit=70 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="Carrera" border="0" color="33554432" x="37" y="552" height="68" width="498" html.valueishtml="0"  name=academicos_cve_carrera_t visible="1"  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="string( academicos_cve_carrera )+ ~" ~"+ carreras_carrera "border="0" color="33554432" x="553" y="552" height="68" width="2263" format="[GENERAL]" html.valueishtml="0"  name=compute_3 visible="1"  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text=" Plan" border="0" color="33554432" x="2839" y="552" height="68" width="133" html.valueishtml="0"  name=nombre_plan_nombre_plan_t visible="1"  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=7 alignment="0" tabsequence=32766 border="0" color="33554432" x="3008" y="552" height="68" width="475" format="[general]" html.valueishtml="0"  name=nombre_plan_nombre_plan visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=16 alignment="0" tabsequence=32766 border="0" color="33554432" x="3008" y="620" height="68" width="475" format="[general]" html.valueishtml="0"  name=subsistema visible="1" edit.limit=40 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="Subsistema" border="0" color="33554432" x="2642" y="620" height="68" width="329" html.valueishtml="0"  name=subsistema_t visible="1"  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression=" dia +~" ~"+string( horario_insc_hora_entrada,~"dd~") +~" DE ~"+ mes +~" DE ~"+string( horario_insc_hora_entrada ,~"yyyy~")+~" A LAS ~"+string( horario_insc_hora_entrada , ~"hh:mm~")"border="0" color="33554432" x="553" y="620" height="68" width="1888" format="[GENERAL]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="Hora Entrada" border="0" color="33554432" x="37" y="624" height="68" width="498" html.valueishtml="0"  name=horario_insc_hora_entrada_t visible="1"  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=header x1="32" y1="772" x2="3479" y2="772"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="1" text="Créditos Cursados" border="0" color="33554432" x="37" y="696" height="68" width="498" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=12 alignment="0" tabsequence=32766 border="0" color="33554432" x="553" y="692" height="68" width="110" format="[general]" html.valueishtml="0"  name=academicos_creditos_cursados_1 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="Promedio" border="0" color="33554432" x="910" y="692" height="68" width="347" html.valueishtml="0"  name=t_2 visible="1"  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=13 alignment="0" tabsequence=32766 border="0" color="33554432" x="1275" y="692" height="68" width="206" format="[general]" html.valueishtml="0"  name=academicos_promedio_1 visible="1" editmask.mask="##.000" editmask.focusrectangle=no  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+report(band=detail dataobject="d_reporte_mat_pase_ingreso" x="18" y="12" height="136" width="3447" border="0"  height.autosize=yes criteria="" nest_arguments=((" academicos_cuenta ")) trail_footer = yes  name=dw_1 visible="1"  slideup=directlyabove )
+column(band=summary id=13 alignment="1" tabsequence=32766 border="0" color="33554432" x="1623" y="36" height="76" width="329" format="[general]" html.valueishtml="0"  name=academicos_promedio visible="1" editmask.mask="##.000" editmask.focusrectangle=no  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=summary alignment="1" text="Promedio" border="0" color="33554432" x="1106" y="36" height="76" width="498" html.valueishtml="0"  name=academicos_promedio_t visible="1"  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=summary id=12 alignment="1" tabsequence=32766 border="0" color="33554432" x="553" y="36" height="76" width="329" format="[general]" html.valueishtml="0"  name=academicos_creditos_cursados visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=summary alignment="1" text="Creditos Cursados" border="0" color="33554432" x="37" y="36" height="76" width="498" html.valueishtml="0"  name=academicos_creditos_cursados_t visible="1"  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0  template=(comment="" encoding="UTF-16LE" name="d_pase_ingreso" xml="<?xml version=~"1.0~" encoding=~"UTF-16LE~" standalone=~"no~"?><untitled><untitled_row __pbband=~"detail~"><academicos_cuenta/><v_sce_alumno_digito_digito/><alumnos_nombre_completo>alumnos_nombre_completo</alumnos_nombre_completo><academicos_cve_carrera/><carreras_carrera/><academicos_cve_plan/><nombre_plan_nombre_plan>nombre_plan_nombre_plan</nombre_plan_nombre_plan><horario_insc_hora_entrada/><dia/><mes/><fecha_hoy>fecha_hoy</fecha_hoy><academicos_creditos_cursados>academicos_creditos_cursados</academicos_creditos_cursados><academicos_promedio>academicos_promedio</academicos_promedio><academicos_nivel/><mensaje_lic/><mensaje_pos/><cve_subsistema/><subsistema>subsistema</subsistema></untitled_row></untitled>"))
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

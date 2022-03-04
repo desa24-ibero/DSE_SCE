@@ -1,0 +1,37 @@
+﻿$PBExportHeader$f_confirma_periodo.srf
+global type f_confirma_periodo from function_object
+end type
+
+forward prototypes
+global function integer f_confirma_periodo ()
+end prototypes
+
+global function integer f_confirma_periodo ();//f_confirma_periodo
+//Regresa
+//1 si desea ejecutar el proceso
+
+integer li_confirmacion
+string ls_version, ls_periodo
+choose case gi_periodo
+	case 0
+		ls_periodo = "Primavera"
+	case 1
+		ls_periodo = "Verano"
+	case 2
+		ls_periodo = "Otoño"
+	case else
+		MessageBox("Error de Periodo", "El periodo ["+string(gi_periodo)+"] no está permitido",StopSign!)
+		return -1
+end choose
+
+ls_version = String(gi_version)+"a Versión de Examen "
+
+
+
+li_confirmacion = MessageBox("Confirme el Periodo Elegido",&
+"El periodo elegido es "+ls_periodo+" "+string(gi_anio)+" "+ls_version,Question!,YesNo!)
+
+return li_confirmacion
+
+end function
+

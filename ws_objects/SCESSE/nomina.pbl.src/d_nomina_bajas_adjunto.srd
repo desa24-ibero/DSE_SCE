@@ -1,0 +1,72 @@
+﻿$PBExportHeader$d_nomina_bajas_adjunto.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=141 color="536870912" )
+summary(height=3 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=86 color="536870912" )
+table(column=(type=char(255) updatewhereclause=yes name=compute_0001 dbname="compute_0001" )
+ column=(type=char(255) updatewhereclause=yes name=compute_0002 dbname="compute_0002" )
+ column=(type=char(255) updatewhereclause=yes name=compute_0003 dbname="compute_0003" )
+ column=(type=char(1) updatewhereclause=yes name=compute_0004 dbname="compute_0004" )
+ column=(type=char(255) updatewhereclause=yes name=compute_0005 dbname="compute_0005" )
+ column=(type=char(1) updatewhereclause=yes name=compute_0006 dbname="compute_0006" )
+ column=(type=char(8) updatewhereclause=yes name=compute_0007 dbname="compute_0007" )
+ column=(type=char(255) updatewhereclause=yes name=compute_0008 dbname="compute_0008" )
+ column=(type=char(36) updatewhereclause=yes name=compute_0009 dbname="compute_0009" )
+ column=(type=char(255) updatewhereclause=yes name=compute_0010 dbname="compute_0010" )
+ column=(type=char(1) updatewhereclause=yes name=categoria dbname="categoria" )
+ column=(type=char(6) updatewhereclause=yes name=compute_0012 dbname="compute_0012" )
+ retrieve="  SELECT space(6-char_length(convert(varchar,movimiento_prof_aux.cve_prof_ant)))+ convert(varchar,movimiento_prof_aux.cve_prof_ant), 
+         space(4-char_length(convert(varchar,/*deptos_equiv.cve_depto_ant*/materias.cve_coordinacion)))+ convert(varchar,/*deptos_equiv.cve_depto_ant*/materias.cve_coordinacion),
+         space(4-char_length(convert(varchar,materias.cve_mat)))+ convert(varchar,materias.cve_mat),
+         char(ascii(materias.nivel)-((ascii(materias.nivel)/80)*9)),
+         space(2-char_length(convert(varchar,convert(int,bit_profesor_auxiliar.horas))))+ convert(varchar,convert(int,bit_profesor_auxiliar.horas)),
+         ~"B~",   
+         convert(varchar(8),movimiento_prof_aux.fecha_movimiento,112),
+         space(6-char_length(materias.sigla))+ materias.sigla,   
+         convert(char(35),materias.materia)+~".~",   
+         space(2-char_length(grupos.gpo))+grupos.gpo,   
+         categoria = CASE bit_profesor_auxiliar.cve_categoria_auxiliar
+                                            WHEN  1 THEN ~"T~"
+														  WHEN  2 THEN ~"C~"
+														  WHEN  3 THEN ~"L~"
+														  WHEN  4 THEN ~"A~"
+														  ELSE ~" ~" END,
+			~"******~" 
+    FROM grupos,   
+         materias,   
+         movimiento_prof_aux, 
+			bit_profesor_auxiliar
+			/*deptos_equiv     */
+   WHERE /*( materias.cve_coordinacion = deptos_equiv.cve_depto_act ) AND*/
+			( materias.cve_mat = grupos.cve_mat ) and  
+			( grupos.cve_mat = bit_profesor_auxiliar.cve_mat) and
+			( grupos.gpo = bit_profesor_auxiliar.gpo) and
+			( grupos.periodo = bit_profesor_auxiliar.periodo) and
+			( grupos.anio = bit_profesor_auxiliar.anio) and
+         ( ( grupos.tipo in ( 0, 1, 2, 3) ) AND  
+         ( grupos.cond_gpo = 1 ) AND  
+         ( grupos.inscritos > 0 ) AND 
+			( grupos.anio = :anio ) AND
+			(grupos.periodo = :periodo) AND
+	 ( grupos.cve_mat_gpo = movimiento_prof_aux.cve_mat_gpo) AND
+	 ( movimiento_prof_aux.cve_movimiento = 0) AND
+		movimiento_prof_aux.fechacaptura > :fecha) AND
+	(bit_profesor_auxiliar.cve_profesor = movimiento_prof_aux.cve_profesor) AND
+	(bit_profesor_auxiliar.movimiento = ~"DE~")" arguments=(("anio", number),("periodo", number),("fecha", datetime)) )
+text(band=header alignment="2" text="Grupos
+Cve Mat"border="0" color="33554432" x="4" y="3" height="128" width="333"  name=grupos_cve_mat_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="333" y="0" height="77" width="2743" format="[general]"  name=compute_0001 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="3076" y="0" height="77" width="2743" format="[general]"  name=compute_0002 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="5819" y="0" height="77" width="66" format="[general]"  name=compute_0003 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="5881" y="0" height="77" width="2747" format="[general]"  name=compute_0004 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="33554432" x="8627" y="0" height="77" width="33" format="[general]"  name=compute_0005 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="33554432" x="8656" y="0" height="77" width="2743" format="[general]"  name=compute_0006 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="33554432" x="11399" y="0" height="77" width="37" format="[general]"  name=compute_0007 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="33554432" x="11432" y="0" height="77" width="267" format="[general]"  name=compute_0008 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="33554432" x="11699" y="0" height="77" width="2739" format="[general]"  name=compute_0009 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="33554432" x="14438" y="0" height="77" width="1192" format="[general]"  name=compute_0010 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="33554432" x="18373" y="0" height="77" width="197" format="[general]"  name=compute_0012 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="33554432" x="18571" y="0" height="77" width="33" format="[general]"  name=categoria edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

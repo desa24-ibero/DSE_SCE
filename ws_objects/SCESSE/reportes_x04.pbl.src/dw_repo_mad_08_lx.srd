@@ -1,0 +1,20 @@
+﻿$PBExportHeader$dw_repo_mad_08_lx.srd
+$PBExportComments$Datawindow para las Etiquetas del Archivo, pero de una lista de Alumnos y de IMPRESION
+release 6;
+datawindow(units=3 timer_interval=0 color=16777215 processing=2 print.documentname="" print.orientation = 0 print.margin.left = 467 print.margin.right = 467 print.margin.top = 1300 print.margin.bottom = 1300 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no label.name="Laser Address 1.00 x 4.00 5161,5261" label.width=10200 label.height=2550 label.rows=10 label.rows.spacing=0 label.columns=2 label.columns.spacing=400 label.topdown=no label.sheet=yes label.shape=roundrectangle label.ellipse_height=150 label.ellipse_width=150 )
+detail(height=2540 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=academicos_cuenta dbname="academicos.cuenta" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_apaterno dbname="alumnos.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_amaterno dbname="alumnos.amaterno" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_nombre dbname="alumnos.nombre" )
+ column=(type=char(100) updatewhereclause=yes name=carreras_carrera dbname="carreras.carrera" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_carrera dbname="academicos.cve_carrera" )
+ column=(type=char(13) updatewhereclause=yes name=domicilio_telefono dbname="domicilio.telefono" )
+ column=(type=char(70) updatewhereclause=yes name=alumnos_nombre_completo dbname="alumnos.nombre_completo" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"academicos~" )  TABLE(NAME=~"alumnos~" )  TABLE(NAME=~"domicilio~" )  TABLE(NAME=~"carreras~" ) COLUMN(NAME=~"academicos.cuenta~") COLUMN(NAME=~"alumnos.apaterno~") COLUMN(NAME=~"alumnos.amaterno~") COLUMN(NAME=~"alumnos.nombre~") COLUMN(NAME=~"carreras.carrera~") COLUMN(NAME=~"academicos.cve_carrera~") COLUMN(NAME=~"domicilio.telefono~") COLUMN(NAME=~"alumnos.nombre_completo~")    JOIN (LEFT=~"academicos.cuenta~"    OP =~"=~"RIGHT=~"alumnos.cuenta~" )    JOIN (LEFT=~"academicos.cuenta~"    OP =~"=~"RIGHT=~"domicilio.cuenta~" )    JOIN (LEFT=~"academicos.cve_carrera~"    OP =~"=~"RIGHT=~"carreras.cve_carrera~" )WHERE(    EXP1 =~"( academicos.cuenta~"   OP =~"in~"    EXP2 =~"( :cuenta ) )~" ) ) ARG(NAME = ~"cuenta~" TYPE = numberlist) " arguments=(("cuenta", numberlist))  sort="alumnos_nombre_completo A " )
+compute(band=detail alignment="0" expression="~"Teléfono : ~"+ domicilio_telefono "border="0" color="0" x="1534" y="4074" height="370" width="4471" format="[general]"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" font.italic="1" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="M.a.d."border="0" color="0" x="317" y="4021" height="502" width="1137"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="0" expression=" academicos_cuenta + ~" - ~"+obten_digito( academicos_cuenta )"border="0" color="0" x="132" y="291" height="396" width="1534" format="[general]"  font.face="Arial" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression=" alumnos_apaterno + ~"  ~"+ alumnos_amaterno +~"  ~"+ alumnos_nombre "border="0" color="0" x="1746" y="291" height="396" width="8122" format="[general]"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression=" academicos_cve_carrera + ~" - ~"+ carreras_carrera "border="0" color="0" x="132" y="740" height="370" width="9736" format="[general]"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

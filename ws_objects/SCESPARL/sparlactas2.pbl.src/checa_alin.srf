@@ -1,0 +1,39 @@
+﻿$PBExportHeader$checa_alin.srf
+global type checa_alin from function_object
+end type
+
+forward prototypes
+global function string checa_alin (string calif_num, string calif_alfa, integer inscritos)
+end prototypes
+
+global function string checa_alin (string calif_num, string calif_alfa, integer inscritos);long indice
+string corregida
+
+FOR indice=inscritos -len(calif_num) TO inscritos
+	calif_num=calif_num+'*'
+NEXT
+
+FOR indice=inscritos -len(calif_alfa) TO inscritos
+	calif_alfa=calif_alfa+'*'
+NEXT
+
+FOR indice=1 TO inscritos
+	IF mid(calif_alfa,indice,1)<>'*' and &
+		mid(calif_alfa,indice,1)<>'' and &
+		mid(calif_alfa,indice,1)<>' ' THEN
+			corregida=corregida+mid(calif_alfa,indice,1)
+	ELSE
+		CHOOSE CASE mid(calif_num,indice,1)
+			CASE '5'
+				corregida=corregida+'N'
+			CASE '6','7','8','9','D'
+				corregida=corregida+'A'
+			CASE ELSE
+				corregida=corregida+'*'
+		END CHOOSE
+	END IF
+NEXT
+
+return corregida
+end function
+

@@ -1,0 +1,61 @@
+﻿$PBExportHeader$dw_rep_paq_mat.srd
+release 7;
+datawindow(units=3 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 635 print.margin.right = 635 print.margin.top = 635 print.margin.bottom = 635 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=2010 color="536870912" )
+summary(height=476 color="536870912" )
+footer(height=264 color="536870912" )
+detail(height=476 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=num_paq dbname="paquetes.num_paq" )
+ column=(type=long updatewhereclause=yes name=cve_carrera dbname="v_carreras.cve_carrera" )
+ column=(type=char(100) updatewhereclause=yes name=carrera dbname="v_carreras.carrera" )
+ column=(type=long updatewhereclause=yes name=paquetes_materias_clv_mat dbname="paquetes_materias.clv_mat" )
+ column=(type=char(2) updatewhereclause=yes name=paquetes_materias_grupo dbname="paquetes_materias.grupo" )
+ column=(type=long updatewhereclause=yes name=paquetes_cupo dbname="paquetes.cupo" )
+ column=(type=long updatewhereclause=yes name=v_grupos_cupo dbname="v_grupos.cupo" )
+ column=(type=long updatewhereclause=yes name=v_grupos_inscritos dbname="v_grupos.inscritos" )
+ retrieve="SELECT  dbo.paquetes.num_paq ,
+           dbo.v_carreras.cve_carrera ,
+           dbo.v_carreras.carrera ,
+           dbo.paquetes_materias.clv_mat ,
+           dbo.paquetes_materias.grupo ,
+           dbo.paquetes.cupo ,
+           dbo.v_grupos.cupo ,     
+           dbo.v_grupos.inscritos   
+        FROM dbo.paquetes ,
+           dbo.v_carreras ,
+           dbo.paquetes_materias ,
+           dbo.v_materias ,
+           dbo.v_grupos     
+        WHERE ( dbo.paquetes_materias.clv_mat = dbo.v_materias.cve_mat ) and          ( dbo.paquetes_materias.num_paq = dbo.paquetes.num_paq ) and          ( dbo.paquetes.clv_carr = dbo.v_carreras.cve_carrera ) and          ( dbo.v_grupos.cve_mat = dbo.paquetes_materias.clv_mat ) and          ( dbo.v_grupos.gpo = dbo.paquetes_materias.grupo ) and          ( dbo.v_grupos.periodo = dbo.paquetes_materias.clv_per ) and          ( dbo.v_grupos.anio = dbo.paquetes_materias.anio ) and          ( dbo.paquetes_materias.clv_per = :ai_periodo ) and          ( dbo.paquetes_materias.anio = :ai_anio )  
+        ORDER BY dbo.paquetes.num_paq          ASC,
+           dbo.v_carreras.cve_carrera          ASC,
+           dbo.paquetes_materias.clv_mat          ASC,
+           dbo.paquetes_materias.grupo          ASC  " arguments=(("ai_periodo", number),("ai_anio", number))  sort="num_paq A cve_carrera A paquetes_materias_clv_mat A " )
+group(level=1 header.height=0 trailer.height=26 by=("num_paq" , "cve_carrera" , "carrera" ) header.color="536870912" trailer.color="536870912" )
+compute(band=header alignment="0" expression="today()"border="0" color="33554432" x="687" y="79" height="423" width="1746" format="dd/mm/yyyy h:mm:ss"  name=cf_fecha  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Num de Paq." border="0" color="33554432" x="132" y="1587" height="423" width="2143"  name=num_paq_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Carrera" border="0" color="33554432" x="2381" y="1587" height="423" width="2010"  name=cve_carrera_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="1" expression="'Pag ' + page() + ' de ' + pagecount()"border="0" color="33554432" x="16192" y="52" height="423" width="3227" format="[general]"  name=cf_pagina  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="Reporte de Paquetes con Materias " border="0" color="33554432" x="2063" y="661" height="661" width="9683"  name=t_3  font.face="Arial" font.height="-16" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression=" case( ai_periodo   when 0 then ~"Primavera ~" when 1 then ~"Verano ~" when 2 then ~"Otoño ~") +~" ~"+ string(  ai_anio ) "border="0" color="33554432" x="11800" y="661" height="661" width="5820" format="[general]"  name=cf_periodo  font.face="Arial" font.height="-16" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="Carrera" border="0" color="33554432" x="5635" y="1587" height="423" width="1270"  name=carrera_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cupo Paq." border="0" color="33554432" x="12170" y="1587" height="423" width="1719"  name=t_1  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Gpo" border="0" color="33554432" x="15583" y="1587" height="423" width="714"  name=gpo_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Mat" border="0" color="33554432" x="13996" y="1587" height="423" width="1481"  name=cve_mat_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cupo Gpo." border="0" color="33554432" x="16351" y="1587" height="423" width="1772"  name=t_2  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Inscritos" border="0" color="33554432" x="18123" y="1587" height="423" width="1428"  name=t_7  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="2751" y="27" height="449" width="899" format="[general]"  name=cve_carrera edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="33554432" x="264" y="27" height="449" width="1905" format="00"  name=num_paq edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="3836" y="27" height="449" width="8387" format="[general]"  name=carrera edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="33554432" x="12488" y="27" height="449" width="1058" format="[general]"  name=paquetes_cupo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="-" border="0" color="33554432" x="15478" y="27" height="449" width="105"  name=t_4  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="33554432" x="15795" y="53" height="423" width="317" format="[general]"  name=paquetes_materias_grupo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="33554432" x="14181" y="27" height="449" width="1111" format="[general]"  name=paquetes_materias_clv_mat edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="33554432" x="16748" y="27" height="449" width="952" format="[general]"  name=v_grupos_cupo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0~tif( v_grupos_cupo <  v_grupos_inscritos , rgb( 255, 0, 0),  rgb( 0, 0, 0))" x="18362" y="27" height="449" width="952" format="[general]"  name=v_grupos_inscritos edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=summary alignment="0" text="Registros Totales:" border="0" color="33554432" x="264" y="26" height="423" width="2857"  name=t_5  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=summary alignment="1" expression="count(cve_carrera for all)"border="0" color="33554432" x="3307" y="26" height="423" width="1190" format="#,##0"  name=compute_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="<dw_rep_paq_mat>" border="0" color="33554432" x="608" y="0" height="264" width="2222"  name=t_6  font.face="Arial" font.height="-6" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+
+sparse(names="num_paq	cve_carrera	carrera")htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

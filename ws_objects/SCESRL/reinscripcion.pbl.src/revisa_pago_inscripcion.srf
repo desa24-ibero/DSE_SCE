@@ -1,0 +1,73 @@
+﻿$PBExportHeader$revisa_pago_inscripcion.srf
+global type revisa_pago_inscripcion from function_object
+end type
+
+forward prototypes
+global function integer revisa_pago_inscripcion (long cta, integer periodo, long year)
+end prototypes
+
+global function integer revisa_pago_inscripcion (long cta, integer periodo, long year);//Funcion que revisa que el alumno haya pagado inscripcion
+//Regresa 0 si no pago
+//Regresa 1 si pago
+//Mayo 1998
+//CAMP (DkWf)
+Datetime fecha_gen
+string ls_fecha_gen
+integer li_periodo
+decimal ld_saldo
+uo_administrador_liberacion luo_administrador_liberacion
+
+if not isvalid(luo_administrador_liberacion) then
+	luo_administrador_liberacion = CREATE uo_administrador_liberacion	
+end if
+
+year= year +2000
+//IF luo_administrador_liberacion.of_liberacion_vigente("SIT") THEN
+
+//	CHOOSE CASE periodo
+//		CASE "P"
+//			li_periodo = 0
+//		CASE "V"
+//			li_periodo = 1
+//		CASE "O"
+//			li_periodo = 2
+//	END CHOOSE
+
+li_periodo  = periodo
+		
+	SELECT isnull(sum(isnull(saldo,0)),0) 
+	INTO	:ld_saldo
+	FROM v_pagos_inscripcion 
+	WHERE cuenta = :cta
+	AND	periodo= :li_periodo
+	AND	anio = :year 
+	GROUP BY cuenta
+	HAVING sum(isnull(saldo,0))<0		
+ 	USING cobra;
+
+//ELSE
+//   SELECT saldos.fecha_generacion  
+//   INTO :fecha_gen
+//   FROM saldos  
+//   WHERE (saldos.cve_con IN (3,19,20,23,64) ) AND
+//				( saldos.periodo like :periodo ) AND  
+//				( saldos.anio = :year ) AND  
+//				( saldos.cuenta = :cta ) AND
+//				( saldos.status = 1 )
+//	USING cobra;	
+//	
+//END IF
+
+
+	revisa_rows_cob()		
+//ls_fecha_gen= string(fecha_gen)
+if cobra.sqlcode = 0 then//El alumno pagó la inscripcion
+	commit using cobra;
+	return 1
+elseif cobra.sqlcode = 100 then//El alumno NO pagó la inscripción
+	commit using cobra;
+	return 0
+end if
+return 0
+end function
+

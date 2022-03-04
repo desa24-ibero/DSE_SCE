@@ -1,0 +1,55 @@
+﻿$PBExportHeader$f_sit_conv_fecha_español_02.srf
+$PBExportComments$Convierte una fecha tipo datetime a string con la fecha en español. Juan Campos.Enero-2002.
+global type f_sit_conv_fecha_español_02 from function_object
+end type
+
+forward prototypes
+global function string f_sit_conv_fecha_español_02 (datetime adtm_fecha)
+end prototypes
+
+global function string f_sit_conv_fecha_español_02 (datetime adtm_fecha);/* 
+DESCRIPCIÓN: Convierte fecha datatime a string en español 
+PARÁMETROS: adtm_fecha, 
+REGRESA: Un string con la fecha en español.
+AUTOR: Juan Campos Sánchez.
+FECHA: Enero-2002
+MODIFICACIÓN: 
+*/ 
+
+string ls_fecha, ls_mes
+
+if isnull(adtm_fecha) Then Return ""
+
+ls_fecha = string(adtm_fecha,"dd-mm-yyyy")
+CHOOSE CASE month(date(adtm_fecha))
+	CASE 1
+		ls_mes = "Enero"
+	CASE 2		
+		ls_mes = "Febrero"
+	CASE 3
+		ls_mes = "Marzo"
+	CASE 4		
+		ls_mes = "Abril"
+	CASE 5
+		ls_mes = "Mayo"
+	CASE 6		
+		ls_mes = "Junio"
+	CASE 7
+		ls_mes = "Julio"
+	CASE 8		
+		ls_mes = "Agosto"
+	CASE 9
+		ls_mes = "Septiembre"
+	CASE 10		
+		ls_mes = "Octubre"
+	CASE 11
+		ls_mes = "Noviembre"
+	CASE 12	
+		ls_mes = "Diciembre"
+END CHOOSE
+
+ls_fecha = mid(ls_fecha,1,2) + ' de ' + ls_mes + ' de ' + mid(ls_fecha,7,4)
+
+Return ls_fecha
+end function
+

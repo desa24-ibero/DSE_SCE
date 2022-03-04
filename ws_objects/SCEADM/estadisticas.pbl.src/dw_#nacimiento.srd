@@ -1,0 +1,32 @@
+﻿$PBExportHeader$dw_#nacimiento.srd
+$PBExportComments$Perfil de lugar de nacimiento
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=77 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=1 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=general_lugar_nac dbname="lugar_nac" )
+ retrieve="  SELECT general.lugar_nac  
+    FROM aspiran,   
+         general  
+   WHERE ( general.folio = aspiran.folio ) and  
+         ( general.clv_ver = aspiran.clv_ver ) and  
+         ( general.clv_per = aspiran.clv_per ) and  
+         ( general.anio = aspiran.anio ) and  
+         ( :ver=99 or aspiran.clv_ver = :ver ) AND  
+         ( aspiran.clv_per = :per ) AND  
+         ( aspiran.anio = :ani ) AND  
+         ( :carr = 9999 OR  
+         aspiran.clv_carr = :carr ) AND  
+         :status like ~"%~"+convert(varchar(1),aspiran.status)+~"%~" AND  
+         aspiran.pago_exam = 1    
+" arguments=(("ver", number),("per", number),("ani", number),("carr", number),("status", string))  sort="int(( general_lugar_nac -1)*51.5/ general_lugar_nac /25) A " )
+group(level=1 header.height=1 trailer.height=73 by=("int(( general_lugar_nac -1)*51.5/ general_lugar_nac /25)" ) header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="0" text="Lugar de Nacimiento"border="0" color="0" x="1" y="0" height="65" width="545"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="686" y="24" height="77" width="650" format="[general]"  name=general_lugar_nac edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="0" expression="int(( general_lugar_nac -1)*51.5/ general_lugar_nac /25)"border="0" color="0" x="193" y="12" height="77" width="261" format="[general]"  name=d  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="0" expression="case( int(( general_lugar_nac -1)*51.5/ general_lugar_nac /25) when 0 then 'D.F.' when 1 then 'Provincia' else 'Extranjero')"border="0" color="0" x="5" y="4" height="69" width="654" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="2" expression="count(  general_lugar_nac   for group 1) "border="0" color="0" x="700" y="4" height="69" width="421" format="[general]"  name=cuenta  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="2" expression="round((cuenta/total)*100,2)+'%'"border="0" color="0" x="1130" y="4" height="69" width="421" format="[general]"  name=porcentaje  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="0" expression="count(   general_lugar_nac   for all )"border="0" color="0" x="1" y="4" height="81" width="247" format="[general]"  name=total  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

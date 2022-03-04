@@ -1,0 +1,33 @@
+﻿$PBExportHeader$dw_op_sigla_anterior.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=28942423 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=64 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=56 color="536870912" )
+detail(height=100 color="536870912" )
+table(column=(type=long updatewhereclause=yes key=yes name=cve_mat dbname="materias.cve_mat" )
+ column=(type=char(42) updatewhereclause=yes name=materia dbname="materias.materia" )
+ column=(type=char(6) updatewhereclause=yes name=sigla dbname="materias.sigla" )
+ column=(type=long updatewhereclause=yes name=cve_coordinacion dbname="materias.cve_coordinacion" )
+ column=(type=char(6) updatewhereclause=yes name=sigla_anterior dbname="materias.sigla_anterior" )
+ retrieve="  SELECT  materias.cve_mat ,
+           materias.materia ,
+           materias.sigla ,
+           materias.cve_coordinacion ,    
+           materias.sigla_anterior
+        FROM materias      
+        WHERE ( materias.sigla_anterior like :keyname  )  
+        ORDER BY materias.sigla_anterior          ASC  " update="materias" updatewhere=0 updatekeyinplace=no retrieve.asneeded=yes arguments=(("keyname", string)) )
+text(band=header alignment="1" text="Clave" border="0" color="0" x="78" y="8" height="56" width="137"  name=cve_mat_t  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="1" text="Materia" border="0" color="0" x="823" y="8" height="56" width="187"  name=materia_t  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="1" text="Sigla" border="0" color="0" x="1637" y="8" height="56" width="119"  name=sigla_t  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" font.underline="1" background.mode="1" background.color="553648127" )
+text(band=header alignment="1" text="Coordinacion" border="0" color="0" x="1856" y="8" height="56" width="334"  name=depto  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="1" text="Sigla Ant" border="0" color="0" x="2240" y="8" height="56" width="219"  name=t_2  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" font.underline="1" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=10 border="5" color="16711680" x="41" y="20" height="72" width="210" format="[general]"  name=cve_mat edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.displayonly=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="5" color="16711680" x="274" y="20" height="72" width="1285" format="[general]"  name=materia edit.limit=42 edit.case=upper edit.focusrectangle=no edit.autoselect=no edit.displayonly=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="5" color="16711680" x="1582" y="20" height="72" width="229" format="[general]"  name=sigla edit.limit=6 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.displayonly=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="5" color="16711680" x="1833" y="20" height="72" width="379" format="[general]"  name=cve_coordinacion edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="5" color="16711680" x="2235" y="20" height="72" width="229" format="[general]"  name=sigla_anterior edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=footer alignment="0" text="~"enter~" = cargar registro           ~"c~" = copiar campo           ~"esc~"=salir" border="0" color="0" x="274" y="4" height="60" width="1746"  name=t_1  font.face="Arial" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" font.italic="1" background.mode="2" background.color="28942423" )
+htmltable(border="0" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

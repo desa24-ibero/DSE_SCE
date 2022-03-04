@@ -1,0 +1,48 @@
+﻿$PBExportHeader$f_matrix_setitem.srf
+$PBExportComments$Matrices nxm. Permite poner un valor en una celda(arreglo de PB). Ejemplo: (x,y) = valor
+global type f_matrix_setitem from function_object
+end type
+
+forward prototypes
+global subroutine f_matrix_setitem (ref any aa_matrix[], any aa_value, long al_rowid, long al_colid)
+end prototypes
+
+global subroutine f_matrix_setitem (ref any aa_matrix[], any aa_value, long al_rowid, long al_colid);//////////////////////////////////////////////////////////////////////////////
+//
+//	Function:  f_matrix_setitem
+//
+//	Access:  public
+//
+//	Arguments:
+//	aa_matrix		La matriz con la que vamos a trabajar.
+// aa_value			El valor que vamos a asignar
+//	al_rowid			La fila.
+//	al_colid			La columna.
+//
+//	Returns:
+//	None
+//
+//	Description:
+//	Permite poner un valor en una celda de una matriz bidimensional.
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+//	Revision History
+//
+//	Version
+//	1.0   Initial version
+//
+//////////////////////////////////////////////////////////////////////////////
+any la_tempo[]
+any la_resultado
+
+if upperbound(aa_matrix) >= al_rowid then
+	la_tempo = aa_matrix[al_rowid]
+	if upperbound(la_tempo) >= al_colid then
+		la_tempo[al_colid] = aa_value
+		aa_matrix[al_rowid] = la_tempo
+	end if
+end if
+
+end subroutine
+

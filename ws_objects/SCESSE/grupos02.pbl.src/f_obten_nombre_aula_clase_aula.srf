@@ -1,0 +1,45 @@
+﻿$PBExportHeader$f_obten_nombre_aula_clase_aula.srf
+global type f_obten_nombre_aula_clase_aula from function_object
+end type
+
+forward prototypes
+global function integer f_obten_nombre_aula_clase_aula (integer ai_clase, ref string as_nombre_aula)
+end prototypes
+
+global function integer f_obten_nombre_aula_clase_aula (integer ai_clase, ref string as_nombre_aula);//f_obten_nombre_aula_clase_aula
+// Recibe la clave de la clase de aula salon
+//    ai_clase
+// Regresa la clase de aula del salon en base a la clave de la clase de aula
+//    as_nombre_aula
+//
+// Antonio Pica
+
+string ls_nombre_completo, ls_apaterno, ls_amaterno, ls_nombre, ls_mensaje
+integer li_codigo
+string ls_clase, ls_nombre_aula
+
+Select clase,
+		 nombre_aula
+Into	:ls_clase,
+		:ls_nombre_aula
+From	clase_aula
+Where	clase = :ai_clase
+using gtr_sce;
+
+li_codigo= gtr_sce.sqlcode 
+ls_mensaje= gtr_sce.sqlerrtext
+
+IF li_codigo = -1 then
+	Messagebox("Error",ls_mensaje)
+	as_nombre_aula= ""
+Elseif li_codigo = 100 then
+	as_nombre_aula= ""
+End IF
+as_nombre_aula = ls_nombre_aula
+
+return li_codigo
+
+
+
+end function
+

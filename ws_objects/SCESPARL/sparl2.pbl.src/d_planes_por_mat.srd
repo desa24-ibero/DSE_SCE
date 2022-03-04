@@ -1,0 +1,12 @@
+﻿$PBExportHeader$d_planes_por_mat.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=192 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cve_carrera dbname="mat_prerrequisito.cve_carrera" )
+ column=(type=long updatewhereclause=yes name=cve_plan dbname="mat_prerrequisito.cve_plan" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"dbo.mat_prerrequisito~" ) COLUMN(NAME=~"dbo.mat_prerrequisito.cve_carrera~") COLUMN(NAME=~"dbo.mat_prerrequisito.cve_plan~")WHERE(    EXP1 =~"dbo.mat_prerrequisito.cve_mat~"   OP =~"=~"    EXP2 =~":cve_mat~" ) ) ARG(NAME = ~"cve_mat~" TYPE = number) " arguments=(("cve_mat", number)) )
+column(band=detail id=1 alignment="3" tabsequence=32766 border="0" color="0" x="5" y="4" height="176" width="1211" format="[general]"  name=cve_carrera dddw.name=d_carreras dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="3" tabsequence=32766 border="0" color="0" x="1234" y="4" height="76" width="329" format="[general]"  name=cve_plan dddw.name=d_nombre_plan dddw.displaycolumn=nombre_plan dddw.datacolumn=cve_plan dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

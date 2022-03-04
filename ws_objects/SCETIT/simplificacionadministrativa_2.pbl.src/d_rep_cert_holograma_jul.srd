@@ -1,0 +1,115 @@
+﻿$PBExportHeader$d_rep_cert_holograma_jul.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 HTMLDW=no print.documentname="" print.orientation = 2 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=1068 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=904 color="536870912" )
+detail(height=68 color="553648127" )
+table(column=(type=char(12) updatewhereclause=yes name=control_sep_orden_cobro dbname="control_sep.orden_cobro" )
+ column=(type=long updatewhereclause=yes name=control_sep_cuenta dbname="control_sep.cuenta" )
+ column=(type=long updatewhereclause=yes name=control_sep_cve_carrera dbname="control_sep.cve_carrera" )
+ column=(type=long updatewhereclause=yes name=control_sep_cve_plan dbname="control_sep.cve_plan" )
+ column=(type=long updatewhereclause=yes name=control_sep_numero dbname="control_sep.numero" )
+ column=(type=datetime updatewhereclause=yes name=control_sep_fecha_emision dbname="control_sep.fecha_emision" )
+ column=(type=long updatewhereclause=yes name=control_sep_ciclos_cursados dbname="control_sep.ciclos_cursados" )
+ column=(type=long updatewhereclause=yes name=control_sep_cancelado dbname="control_sep.cancelado" )
+ column=(type=long updatewhereclause=yes name=control_sep_cve_doc_control_sep dbname="control_sep.cve_doc_control_sep" )
+ column=(type=long updatewhereclause=yes name=control_sep_num_holograma dbname="control_sep.num_holograma" )
+ column=(type=long updatewhereclause=yes name=folio_acta dbname="control_sep.folio_acta" )
+ column=(type=char(30) updatewhereclause=yes name=doc_control_sep_doc_control_sep dbname="doc_control_sep.doc_control_sep" )
+ column=(type=char(70) updatewhereclause=yes name=alumnos_nombre_completo dbname="alumnos.nombre_completo" )
+ column=(type=char(1) updatewhereclause=yes name=alumnos_sexo dbname="alumnos.sexo" )
+ column=(type=long updatewhereclause=yes name=alumnos_cve_nacion dbname="alumnos.cve_nacion" )
+ column=(type=char(16) updatewhereclause=yes name=nacionalidad_nacionalidad dbname="nacionalidad.nacionalidad" )
+ column=(type=char(30) updatewhereclause=yes name=digito dbname="digito" )
+ column=(type=long updatewhereclause=yes name=carreras_num_simpl_admva_sep dbname="carreras.num_simpl_admva_sep" )
+ column=(type=char(43) updatewhereclause=yes name=plantel dbname="plantel" )
+ retrieve="  SELECT control_sep.orden_cobro,   
+         control_sep.cuenta,   
+         control_sep.cve_carrera,   
+         control_sep.cve_plan,   
+         control_sep.numero,   
+         control_sep.fecha_emision,   
+         control_sep.ciclos_cursados,   
+         control_sep.cancelado,   
+         control_sep.cve_doc_control_sep,   
+         control_sep.num_holograma,   
+         control_sep.folio_acta,   
+         doc_control_sep.doc_control_sep,   
+         alumnos.nombre_completo,   
+         alumnos.sexo,   
+         alumnos.cve_nacion,   
+         nacionalidad.nacionalidad,   
+         digito= v_sce_alumno_digito.digito,   
+         carreras.num_simpl_admva_sep,   
+         plantel = ~"UNIVERSIDAD IBEROAMERICANA CIUDAD DE MÉXICO~"  
+    FROM control_sep,   
+         doc_control_sep,   
+         alumnos,   
+         nacionalidad,   
+         carreras,
+			v_sce_alumno_digito  
+   WHERE ( control_sep.cve_doc_control_sep = doc_control_sep.cve_doc_control_sep ) and  
+         ( control_sep.cuenta = alumnos.cuenta ) and  
+         ( alumnos.cve_nacion = nacionalidad.cve_nacion ) and  
+         ( control_sep.cve_carrera = carreras.cve_carrera ) and  
+         ( ( control_sep.orden_cobro = :as_orden_cobro ) AND  
+         ( control_sep.cve_doc_control_sep in (1,2,3) ) AND  
+         ( control_sep.cancelado = 0 ) AND  
+         ( datepart(yy,fecha_emision)  =  datepart(yy,getdate()) OR folio_acta = 1) )   AND
+			( alumnos.cuenta = v_sce_alumno_digito.cuenta)
+ 
+" arguments=(("as_orden_cobro", string),("as_fecha_texto", string))  sort="control_sep_num_holograma A control_sep_cuenta A " )
+rectangle(band=header x="128" y="916" height="152" width="3301"  name=r_1 brush.hatch="6" brush.color="79741120" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="79741120" )
+column(band=header id=19 alignment="0" tabsequence=32766 border="0" color="0" x="133" y="620" height="56" width="2085" format="[general]"  name=plantel edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="SUBSECRETARIA DE EDUCACION SUPERIOR" border="0" color="0" x="251" y="180" height="88" width="2990"  name=t_1  font.face="Times New Roman" font.height="-14" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="0" text="ACTA DE AUTENTICACIÓN NÚM." border="0" color="0" x="133" y="740" height="56" width="823"  name=t_4  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="1" expression=" as_orden_cobro "border="0" color="0" x="987" y="684" height="56" width="219" format="[general]"  name=cf_orden_cobro  font.face="Times New Roman" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=header id=11 alignment="1" tabsequence=32766 border="0" color="0" x="987" y="748" height="48" width="219" format="0000"  name=folio_acta edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Times New Roman" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=header alignment="0" expression="~"QUE AMPARA LA AUTENTICACIÓN DE ~"+string(rowcount())+ ~" ~"+mid(doc_control_sep_doc_control_sep, 3)"border="0" color="0" x="133" y="800" height="52" width="2761" format="[general]"  name=cf_ampara  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="0" text="EXPEDIDOS EN FAVOR DE:" border="0" color="0" x="133" y="860" height="52" width="672"  name=t_5  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="NÚM. DE LA ORDEN DE COBRO" border="0" color="0" x="133" y="684" height="52" width="782"  name=t_6  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=header x1="265" y1="916" x2="265" y2="1068"  name=l_1 pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="626" y1="916" x2="626" y2="1068"  name=l_2 pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2021" y1="916" x2="2021" y2="1068"  name=l_3 pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2208" y1="916" x2="2208" y2="1068"  name=l_4 pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3063" y1="916" x2="3063" y2="1068"  name=l_5 pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="NOMBRE DEL ALUMNO" border="0" color="0" x="928" y="960" height="52" width="690"  name=control_sep_cve_carrera_t  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Núm." border="0" color="0" x="146" y="960" height="52" width="105"  name=t_7  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="NÚMERO DE CUENTA" border="0" color="0" x="288" y="928" height="112" width="288"  name=control_sep_cuenta_t  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="SEXO" border="0" color="0" x="2039" y="960" height="52" width="160"  name=t_8  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="No. DE CICLOS" border="0" color="0" x="2843" y="928" height="112" width="197"  name=t_9  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="NÚMERO DE HOLOGRAMA" border="0" color="0" x="3086" y="936" height="112" width="325"  name=t_10  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="NACIO-
+NALIDAD" border="0" color="0" x="2231" y="928" height="112" width="251"  name=t_11  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=header x1="2519" y1="916" x2="2519" y2="1068"  name=l_6 pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2830" y1="916" x2="2830" y2="1068"  name=l_7 pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="PLAN DE ESTUDIOS" border="0" color="0" x="2542" y="928" height="112" width="251"  name=t_12  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="DIRECCION DE INSTITUCIONES PARTICULARES DE EDUCACION SUPERIOR" border="0" color="0" x="187" y="492" height="72" width="3122"  name=t_3  font.face="Times New Roman" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="DIRECCION GENERAL DE EDUCACION SUPERIOR UNIVERSITARIA" border="0" color="0" x="544" y="404" height="80" width="2409"  name=t_2  font.face="Times New Roman" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+line(band=detail x1="128" y1="64" x2="3429" y2="64"  name=l_8 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="128" y1="64" x2="128" y2="0"  name=l_9 pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3429" y1="64" x2="3429" y2="0"  name=l_10 pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="265" y1="64" x2="265" y2="0"  name=l_11 pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="626" y1="64" x2="626" y2="0"  name=l_12 pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2021" y1="64" x2="2021" y2="0"  name=l_13 pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2208" y1="64" x2="2208" y2="0"  name=l_14 pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3063" y1="64" x2="3063" y2="0"  name=l_15 pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=detail alignment="1" expression="getrow()"border="0" color="0" x="137" y="0" height="60" width="123" format="#,##0"  name=num  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=detail alignment="0" expression="string( control_sep_cuenta )+ ~"-~"+obten_digito( control_sep_cuenta )"border="0" color="0" x="302" y="0" height="60" width="293" format="[general]"  name=cuenta_digito  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="0" x="640" y="0" height="60" width="1376" format="[general]"  name=alumnos_nombre_completo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="2075" y="0" height="60" width="59" format="[general]"  name=alumnos_sexo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="0" x="3095" y="0" height="60" width="306" format="[general]"  name=control_sep_num_holograma edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+line(band=detail x1="2830" y1="64" x2="2830" y2="0"  name=l_16 pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2519" y1="64" x2="2519" y2="0"  name=l_17 pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="0" color="0" x="2222" y="0" height="60" width="293" format="[general]"  name=nacionalidad_nacionalidad edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=18 alignment="1" tabsequence=32766 border="0" color="0" x="2578" y="0" height="60" width="183" format="[general]"  name=carreras_num_simpl_admva_sep edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+line(band=detail x1="3429" y1="64" x2="3429" y2="0"  name=l_18 pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="2843" y="0" height="60" width="197" format="[general]"  name=control_sep_ciclos_cursados edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=footer alignment="0" expression="~"LA PRESENTE ACTA SE LEVANTA CON FUNDAMENTO EN LO ESTABLECIDO EN EL ARTICULO 18 DE LA LEY PARA LA COORDINACION DE LA EDUCACION SUPERIOR EN MEXICO, D.F. A ~" +  as_fecha_texto "border="0" color="0" x="137" y="732" height="160" width="1888" format="[general]"  name=cf_leyenda_fecha  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=footer alignment="2" expression="if (  control_sep_cve_doc_control_sep =1, f_obten_nombre_certificado(5), f_obten_nombre_certificado(4))"border="0" color="0" x="2062" y="756" height="64" width="1371" format="[general]"  name=cf_nombre_certificado  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=footer alignment="2" expression="if (  control_sep_cve_doc_control_sep =1,f_obten_puesto_certificado(5), f_obten_puesto_certificado(4))"border="0" color="0" x="2062" y="828" height="64" width="1371" format="[general]"  name=puesto_certificado  font.face="Times New Roman" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="1" text="TOTAL DE CICLOS" border="0" color="0" x="2327" y="12" height="48" width="430"  name=t_13  font.face="Times New Roman" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=footer alignment="2" expression="sum(control_sep_ciclos_cursados for page)"border="0" color="0" x="2843" y="8" height="48" width="197" format="#,##0"  name=compute_1  font.face="Times New Roman" font.height="-8" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

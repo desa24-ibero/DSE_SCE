@@ -1,0 +1,36 @@
+﻿$PBExportHeader$dw_nombre_aspirante.srd
+$PBExportComments$Catálogo de aspirantes. Parámetro: folio
+release 6;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=224 color="536870912" )
+table(column=(type=char(50) updatewhereclause=yes name=apaterno dbname="general.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=amaterno dbname="general.amaterno" )
+ column=(type=char(50) updatewhereclause=yes name=nombre dbname="general.nombre" )
+ column=(type=long updatewhereclause=yes name=folio dbname="general.folio" )
+ column=(type=long updatewhereclause=yes name=clv_ver dbname="general.clv_ver" )
+ column=(type=long updatewhereclause=yes name=clv_per dbname="general.clv_per" )
+ column=(type=long updatewhereclause=yes name=anio dbname="general.anio" )
+ retrieve="  SELECT general.apaterno,   
+         general.amaterno,   
+         general.nombre,   
+         general.folio,   
+         general.clv_ver,   
+         general.clv_per,   
+         general.anio  
+    FROM general  
+   WHERE ( general.folio = :folio )  AND  
+         ((general.clv_ver = :ver )  OR
+          (:ver =99)               ) AND  
+         ( general.clv_per = :per )  AND  
+         ( general.anio = :ani )    
+" arguments=(("folio", number),("ver", number),("per", number),("ani", number)) )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="29" y="3" height="122" width="3076" brush.hatch="6" brush.color="79741120" pen.style="0" pen.width="4" pen.color="1090519039"  background.mode="2" background.color="33554432" )
+text(band=detail alignment="2" text="Apellido Materno"border="0" color="33554432" x="1339" y="32" height="64" width="446"  name=amaterno_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=detail alignment="2" text="Nombre"border="0" color="33554432" x="2480" y="32" height="64" width="205"  name=nombre_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=detail alignment="2" text="Apellido Paterno"border="0" color="33554432" x="325" y="32" height="64" width="435"  name=apaterno_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=1 alignment="2" tabsequence=10 border="0" color="33554432" x="48" y="144" height="77" width="995" format="[general]"  name=apaterno editmask.mask="!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=2 alignment="2" tabsequence=20 border="0" color="33554432" x="1064" y="144" height="77" width="998" format="[general]"  name=amaterno editmask.mask="!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=3 alignment="2" tabsequence=30 border="0" color="33554432" x="2085" y="144" height="77" width="998" format="[general]"  name=nombre editmask.mask="!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

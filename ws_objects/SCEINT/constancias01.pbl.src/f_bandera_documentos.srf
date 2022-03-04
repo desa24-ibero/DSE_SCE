@@ -1,0 +1,43 @@
+﻿$PBExportHeader$f_bandera_documentos.srf
+global type f_bandera_documentos from function_object
+end type
+
+forward prototypes
+global function integer f_bandera_documentos (long a_cuenta)
+end prototypes
+
+global function integer f_bandera_documentos (long a_cuenta);//Función que regresa la bandera de documentos de un alumno 
+//
+//f_bandera_documentos
+//
+//Parámetros:		a_cuenta		
+
+long ll_cuenta
+int li_res
+int li_nip, li_hora, li_documentos, li_biblioteca, li_finanzas
+datetime ldt_fecha
+DataStore lds_banderas_por_cuenta
+lds_banderas_por_cuenta = Create DataStore
+lds_banderas_por_cuenta.DataObject = "d_banderas_por_cuenta"
+lds_banderas_por_cuenta.SetTransObject(gtr_sce)
+ll_cuenta= a_cuenta
+
+li_res = lds_banderas_por_cuenta.Retrieve(ll_cuenta)
+if li_res = 1 then
+	li_documentos = lds_banderas_por_cuenta.GetItemNumber(1,"baja_documentos")
+	if li_documentos = 1 then
+		li_documentos = 1
+	else
+		li_documentos = 0
+	end if
+else
+	li_documentos = 0
+	Messagebox("Error de Comunicación","Error con la consulta de banderas BD: baja_documentos. Favor de intentar nuevamente", None!)
+end if
+
+
+return li_documentos
+
+
+end function
+

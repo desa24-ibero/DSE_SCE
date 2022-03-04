@@ -1,0 +1,60 @@
+﻿$PBExportHeader$f_existe_holograma.srf
+global type f_existe_holograma from function_object
+end type
+
+forward prototypes
+global function boolean f_existe_holograma (long al_numero, long al_num_holograma)
+end prototypes
+
+global function boolean f_existe_holograma (long al_numero, long al_num_holograma);//f_existe_holograma
+//
+//al_numero						long 
+//al_num_holograma			long
+
+
+string ls_orden_cobro
+integer li_codigo_sql
+string ls_mensaje_sql
+long ll_num_holograma, ll_cant_hologramas
+
+SELECT count(dbo.control_sep.num_holograma)
+INTO	:ll_cant_hologramas
+FROM	dbo.control_sep
+WHERE dbo.control_sep.num_holograma = :al_num_holograma
+AND NOT (dbo.control_sep.numero = :al_numero)
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+if ll_cant_hologramas> 0 then
+	return true	
+end if
+
+if li_codigo_sql = -1 then
+	MessageBox("Error al consultar control_sep", ls_mensaje_sql)
+	return false
+end if
+
+SELECT count(dbo.control_sep_planteles.num_holograma)
+INTO	:ll_cant_hologramas
+FROM	dbo.control_sep_planteles
+WHERE dbo.control_sep_planteles.num_holograma = :al_num_holograma
+AND NOT (dbo.control_sep_planteles.numero = :al_numero)
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+if ll_cant_hologramas> 0 then
+	return true	
+end if
+
+if li_codigo_sql = -1 then
+	MessageBox("Error al consultar control_sep_planteles", ls_mensaje_sql)
+	return false
+end if
+
+
+return false
+
+end function
+

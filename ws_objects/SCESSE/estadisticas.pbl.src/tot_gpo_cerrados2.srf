@@ -1,0 +1,24 @@
+﻿$PBExportHeader$tot_gpo_cerrados2.srf
+global type tot_gpo_cerrados2 from function_object
+end type
+
+forward prototypes
+global function string tot_gpo_cerrados2 (integer año, integer periodo, long materia, integer tipo)
+end prototypes
+
+global function string tot_gpo_cerrados2 (integer año, integer periodo, long materia, integer tipo);
+Integer Cont = 0
+
+Select count(cve_mat) Into :Cont From hist_grupos     
+Where anio = :año And       
+  		periodo = :periodo and        
+  		cve_mat = :materia and      
+  		cond_gpo = 0 and
+		tipo = :tipo using gtr_sce;            // 0=Cerrado
+If gtr_sce.sqlcode = 0 Then
+	Return String(Cont) 
+Else
+	Return "Error"
+End if
+end function
+

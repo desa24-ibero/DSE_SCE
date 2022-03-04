@@ -1,0 +1,6 @@
+﻿$PBExportHeader$st_cve_mat_gpo.srs
+global type st_cve_mat_gpo from structure
+	integer		cve_mat
+	string		gpo
+end type
+

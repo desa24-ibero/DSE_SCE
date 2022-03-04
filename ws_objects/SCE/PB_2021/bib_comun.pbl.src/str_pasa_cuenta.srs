@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_pasa_cuenta.srs
+$PBExportComments$Ver Descripción del objeto uo_nombre_alumno
+global type str_pasa_cuenta from structure
+	long		cuenta
+	string		tipo_alumno
+end type
+

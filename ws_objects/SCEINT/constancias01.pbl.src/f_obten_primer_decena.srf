@@ -1,0 +1,45 @@
+﻿$PBExportHeader$f_obten_primer_decena.srf
+global type f_obten_primer_decena from function_object
+end type
+
+forward prototypes
+global function string f_obten_primer_decena (integer a_numero)
+end prototypes
+
+global function string f_obten_primer_decena (integer a_numero);
+integer li_decena
+string ls_decena
+
+li_decena =a_numero
+
+choose case li_decena
+	case 0
+		ls_decena = "DIEZ"
+	case 1
+		ls_decena = "ONCE"
+	case 2
+		ls_decena = "DOCE"
+	case 3
+		ls_decena = "TRECE"
+	case 4
+		ls_decena = "CATORCE"
+	case 5
+		ls_decena = "QUINCE"
+	case 6
+		ls_decena = "DIECISÉIS"
+	case 7
+		ls_decena = "DIECISIETE"
+	case 8
+		ls_decena = "DIECIOCHO"
+	case 9
+		ls_decena = "DIECINUEVE"
+	case else		
+		ls_decena = ""
+end choose
+
+return ls_decena
+		
+		
+
+end function
+

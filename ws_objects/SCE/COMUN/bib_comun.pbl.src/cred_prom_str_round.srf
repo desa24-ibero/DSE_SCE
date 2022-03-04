@@ -1,0 +1,111 @@
+﻿$PBExportHeader$cred_prom_str_round.srf
+$PBExportComments$Regresa los creditos y el promedio de un alumno en  un string. Juan Campos Feb-1998.
+global type cred_prom_str_round from function_object
+end type
+
+forward prototypes
+global function string cred_prom_str_round (long cuenta)
+global function string cred_prom_str_round (long cuenta, integer decimales)
+end prototypes
+
+global function string cred_prom_str_round (long cuenta);// Calcula el promedio y los creditos de un alumno
+// Esta Función No actualiza ninguna Tabla. 
+// Regresa en un string los creditos y el promedio.
+// Juan Campos Sánchez. 21-Enero-1998.
+
+Integer	Carrera, Plan,Creditos
+Real Promedio
+String CreditosYPromedio = ""
+ 
+Select cve_carrera, cve_plan Into :Carrera, :Plan From academicos 
+Where cuenta = :cuenta Using gtr_sce;
+
+If gtr_sce.sqlcode = 0 Then 
+  DECLARE Emp_proc procedure for calcula_promedio
+    @cuenta   = :cuenta,
+    @cve_carr = :carrera, 
+    @plan     = :plan,
+    @promedio = :promedio out, 
+    @creditos = :creditos out
+  USING gtr_sce;
+	EXECUTE Emp_proc ;
+	IF gtr_sce.sqlcode <> 0 Then
+		Goto Error
+   End if
+	FETCH Emp_proc INTO :promedio,:creditos;
+	IF gtr_sce.sqlcode <> 0 Then
+		Goto Error
+   End if	
+	CLOSE Emp_proc;
+	IF gtr_sce.sqlcode <> 0 Then
+		Goto Error
+   End if	
+	
+	CreditosYPromedio = "              " + &
+	                    String(Creditos) + & 
+	                    "                                        " + &
+							  String(Round(Promedio, 2))
+ 	Return  CreditosYPromedio
+Else 
+	//MessageBox("Error","Al obtener la carrera y el plan de este alumno"+gtr_sce.sqlerrtext)
+   Return "Error"	
+End IF
+
+Error:
+	Rollback Using gtr_sce;
+	//Messagebox("Error al obtener promedio y creditos",gtr_sce.sqlerrtext)
+	Return "Error"
+
+end function
+
+global function string cred_prom_str_round (long cuenta, integer decimales);// Calcula el promedio y los creditos de un alumno
+// Esta Función No actualiza ninguna Tabla. 
+// Regresa en un string los creditos y el promedio.
+// Juan Campos Sánchez. 21-Enero-1998.
+
+Integer	Carrera, Plan
+Decimal	Creditos
+Real Promedio
+String CreditosYPromedio = ""
+ 
+Select cve_carrera, cve_plan Into :Carrera, :Plan From academicos 
+Where cuenta = :cuenta Using gtr_sce;
+
+If gtr_sce.sqlcode = 0 Then 
+  DECLARE Emp_proc procedure for calcula_promedio
+    @cuenta   = :cuenta,
+    @cve_carr = :carrera, 
+    @plan     = :plan,
+    @promedio = :promedio out, 
+    @creditos = :creditos out
+  USING gtr_sce;
+	EXECUTE Emp_proc ;
+	IF gtr_sce.sqlcode <> 0 Then
+		Goto Error
+   End if
+	FETCH Emp_proc INTO :promedio,:creditos;
+	IF gtr_sce.sqlcode <> 0 Then
+		Goto Error
+   End if	
+	CLOSE Emp_proc;
+	IF gtr_sce.sqlcode <> 0 Then
+		Goto Error
+   End if	
+	
+	CreditosYPromedio = "              " + &
+	                    String(Creditos) + & 
+	                    "                                        " + &
+							  String(Round(Promedio, decimales))
+ 	Return  CreditosYPromedio
+Else 
+	//MessageBox("Error","Al obtener la carrera y el plan de este alumno"+gtr_sce.sqlerrtext)
+   Return "Error"	
+End IF
+
+Error:
+	Rollback Using gtr_sce;
+	//Messagebox("Error al obtener promedio y creditos",gtr_sce.sqlerrtext)
+	Return "Error"
+
+end function
+

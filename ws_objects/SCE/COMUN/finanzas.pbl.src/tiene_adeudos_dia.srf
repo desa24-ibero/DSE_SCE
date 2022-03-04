@@ -1,0 +1,37 @@
+﻿$PBExportHeader$tiene_adeudos_dia.srf
+global type tiene_adeudos_dia from function_object
+end type
+
+forward prototypes
+global function integer tiene_adeudos_dia (long al_cuenta, transaction atr_trans, integer ai_dias)
+end prototypes
+
+global function integer tiene_adeudos_dia (long al_cuenta, transaction atr_trans, integer ai_dias);/*
+ *		Nombre	tiene_adeudos_dia
+ *		Recibe	al_cuenta,atr_trans, ai_dias
+ *		Regresa	1	si el alumno al_cuenta tiene adeudos 
+ *					0	el alumno al_cuenta no tiene adeudos 
+ *					-1	error de comunicacion
+ *					FMC06051999
+ *		Se le suman n días para realizar la comparación de fechas de vencimiento
+ */
+
+int li_res, li_ret
+DataStore lds_adeudos_por_cuenta
+lds_adeudos_por_cuenta = Create DataStore
+lds_adeudos_por_cuenta.DataObject = "d_adeudos_por_cuenta_dia"
+lds_adeudos_por_cuenta.SetTransObject(atr_trans)
+li_res = lds_adeudos_por_cuenta.Retrieve(al_cuenta, ai_dias)
+if li_res > 0 then
+	li_ret = 1
+elseif li_res = 0 then
+	li_ret = 0
+else
+	li_ret = -1
+	messagebox("Error de Comunicación","Error con la consulta de adeudos BD. Favor de intentar nuevamente", None!)
+end if
+Destroy lds_adeudos_por_cuenta
+return li_ret
+
+end function
+

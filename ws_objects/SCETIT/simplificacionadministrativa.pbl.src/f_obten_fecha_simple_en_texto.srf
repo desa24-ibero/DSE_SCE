@@ -1,0 +1,35 @@
+﻿$PBExportHeader$f_obten_fecha_simple_en_texto.srf
+global type f_obten_fecha_simple_en_texto from function_object
+end type
+
+forward prototypes
+global function string f_obten_fecha_simple_en_texto (date a_fecha)
+end prototypes
+
+global function string f_obten_fecha_simple_en_texto (date a_fecha);//El objetivo de esta función es convertir una fecha a su representación escrita
+//
+//f_obten_fecha_en_texto
+//
+
+integer li_dia, li_mes, li_anio
+string ls_dia, ls_mes, ls_anio, ls_fecha
+
+
+li_dia= Day ( a_fecha )
+
+li_mes= Month ( a_fecha )
+
+li_anio= Year ( a_fecha )
+
+ls_mes = f_obten_mes(li_mes)
+
+if li_anio <= 1999 then
+	ls_fecha = string(li_dia) +" DE "+ ls_mes +" DE "+string(li_anio)
+else
+	ls_fecha = string(li_dia) +" DE "+ ls_mes +" DE "+string(li_anio)
+end if
+
+return ls_fecha
+
+end function
+

@@ -1,0 +1,176 @@
+﻿$PBExportHeader$m_salon_derecho_uso.srm
+forward
+global type m_salon_derecho_uso from m_catalogo
+end type
+type m_-1 from menu within m_registro
+end type
+type m_primero from menu within m_registro
+end type
+type m_anterior from menu within m_registro
+end type
+type m_siguiente from menu within m_registro
+end type
+type m_ultimo from menu within m_registro
+end type
+end forward
+
+global type m_salon_derecho_uso from m_catalogo
+end type
+global m_salon_derecho_uso m_salon_derecho_uso
+
+type variables
+window ventana
+end variables
+
+on m_salon_derecho_uso.create
+m_salon_derecho_uso=this
+call super::create
+end on
+
+on m_salon_derecho_uso.destroy
+call super::destroy
+end on
+
+on m_archivo.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_configurarimpresora.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+event m_imprimir::clicked;
+if isvalid(dw) then
+	dw.print(TRUE)	
+end if
+end event
+
+on m_imprimir.create
+call super::create
+this.ToolBarItemName=" "
+this.Visible=false
+this.Enabled=false
+end on
+
+type m_registro from m_catalogo`m_registro within m_salon_derecho_uso
+m_-1 m_-1
+m_primero m_primero
+m_anterior m_anterior
+m_siguiente m_siguiente
+m_ultimo m_ultimo
+end type
+
+on m_registro.create
+call super::create
+this.m_-1=create m_-1
+this.m_primero=create m_primero
+this.m_anterior=create m_anterior
+this.m_siguiente=create m_siguiente
+this.m_ultimo=create m_ultimo
+this.Item[UpperBound(this.item)+1]=this.m_-1
+this.Item[UpperBound(this.item)+1]=this.m_primero
+this.Item[UpperBound(this.item)+1]=this.m_anterior
+this.Item[UpperBound(this.item)+1]=this.m_siguiente
+this.Item[UpperBound(this.item)+1]=this.m_ultimo
+end on
+
+on m_registro.destroy
+call super::destroy
+destroy(this.m_-1)
+destroy(this.m_primero)
+destroy(this.m_anterior)
+destroy(this.m_siguiente)
+destroy(this.m_ultimo)
+end on
+
+event m_nuevo::clicked;Ventana.TriggerEvent("nuevo") 
+ 
+end event
+
+event m_actualiza::clicked;Ventana.TriggerEvent("Actualiza")
+end event
+
+event m_borraregistro::clicked;Ventana.TriggerEvent("Borra")
+ 
+end event
+
+on m_ordenarporclave.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_ordenarpordescripcin.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+type m_-1 from menu within m_registro
+end type
+
+on m_-1.create
+this.Text="-"
+end on
+
+type m_primero from menu within m_registro
+end type
+
+on m_primero.create
+this.Text="Primero~tAlt+P"
+this.ToolBarItemName="VCRFirst!"
+this.ToolBarItemText="Primer Depto"
+this.ToolBarItemOrder=8
+this.ToolBarItemSpace=1
+this.Shortcut=592
+end on
+
+event clicked;Ventana.TriggerEvent("primero") 
+end event
+
+type m_anterior from menu within m_registro
+end type
+
+on m_anterior.create
+this.Text="Anterior~tAlt+A"
+this.ToolBarItemName="VCRPrior!"
+this.ToolBarItemText="Depto Anterior"
+this.ToolBarItemOrder=9
+this.Shortcut=577
+end on
+
+event clicked;Ventana.TriggerEvent("anterior") 
+end event
+
+type m_siguiente from menu within m_registro
+end type
+
+on m_siguiente.create
+this.Text="Siguiente~tAlt+S"
+this.ToolBarItemName="VCRNext!"
+this.ToolBarItemText="Depto Siguiente"
+this.ToolBarItemOrder=10
+this.Shortcut=595
+end on
+
+event clicked;Ventana.TriggerEvent("siguiente") 
+end event
+
+type m_ultimo from menu within m_registro
+end type
+
+on m_ultimo.create
+this.Text="Ultimo~tAlt+U"
+this.ToolBarItemName="VCRLast!"
+this.ToolBarItemText="Ultimo Depto"
+this.ToolBarItemOrder=11
+this.Shortcut=597
+end on
+
+event clicked;Ventana.TriggerEvent("ultimo") 
+end event
+

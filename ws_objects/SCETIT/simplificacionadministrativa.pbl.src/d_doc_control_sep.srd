@@ -1,0 +1,12 @@
+﻿$PBExportHeader$d_doc_control_sep.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=67 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cve_doc_control_sep dbname="doc_control_sep.cve_doc_control_sep" )
+ column=(type=char(30) update=yes updatewhereclause=yes name=doc_control_sep dbname="doc_control_sep.doc_control_sep" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"doc_control_sep~" ) COLUMN(NAME=~"doc_control_sep.cve_doc_control_sep~") COLUMN(NAME=~"doc_control_sep.doc_control_sep~")) " update="doc_control_sep" updatewhere=1 updatekeyinplace=no )
+column(band=detail id=1 alignment="1" tabsequence=10 border="0" color="0" x="7" y="3" height="58" width="77" format="[general]"  name=cve_doc_control_sep edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="0" color="0" x="99" y="3" height="58" width="614" format="[general]"  name=doc_control_sep edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

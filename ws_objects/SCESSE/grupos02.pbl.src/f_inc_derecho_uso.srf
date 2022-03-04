@@ -1,0 +1,106 @@
+﻿$PBExportHeader$f_inc_derecho_uso.srf
+global type f_inc_derecho_uso from function_object
+end type
+
+forward prototypes
+global function boolean f_inc_derecho_uso (long al_cve_mat, integer ai_dia, integer ai_hor_ini, integer ai_hor_fin, integer ai_cupo, boolean ab_desc_sdu_se)
+end prototypes
+
+global function boolean f_inc_derecho_uso (long al_cve_mat, integer ai_dia, integer ai_hor_ini, integer ai_hor_fin, integer ai_cupo, boolean ab_desc_sdu_se);//f_inc_derecho_uso
+//Incrementa el derecho uso en base a los valores recibidos
+//al_cve_mat
+//ai_dia
+//ai_hor_ini
+//ai_hor_fin
+//ai_cupo
+//ab_desc_sdu_se
+//
+
+Integer Depto=0,li_diferencia, hora_inicio_sdu,li_ciclo, Derecho=0,Ocupados=0
+Boolean TieneDerechoTodosOk = True, ConsultaDepto = False
+String ls_mensaje
+//IF Isvalid(w_grupos_impartidos_dse) Then
+//	If w_grupos_impartidos_dse.cbx_ServiciosEscolares.Checked Then
+//		Depto = 7300 // Servicios Escolares
+//	Else
+//		ConsultaDepto = True
+// 	End IF
+//Else
+	ConsultaDepto = True
+//End If	
+
+If ab_desc_sdu_se Then
+// Servicios Escolares
+	Depto = 7300 
+	ConsultaDepto = False
+Else
+	ConsultaDepto = True
+End If	
+
+
+If ConsultaDepto Then
+	Select cve_coordinacion
+	Into 	:depto
+	From 	materias
+	Where	cve_mat = :al_cve_mat using gtr_sce;	
+	If gtr_sce.sqlcode <> 0 Then 
+		Messagebox("Error al consultar la coordinacion",gtr_sce.sqlerrtext)
+		Return False
+	End if
+End If
+
+IF gtr_sce.sqlcode = 0 or Depto = 7300 Then	
+	IF ai_hor_fin > ai_hor_ini Then
+		li_diferencia = ai_hor_fin - ai_hor_ini
+		hora_inicio_sdu = ai_hor_ini
+		FOR li_ciclo=1 TO li_diferencia
+			Select derecho,ocupados
+			Into :Derecho,:Ocupados
+			From salones_derecho_uso
+			Where	(cve_coordinacion	= :depto) and (cve_dia = :ai_dia) and
+					(hora_inicio = :Hora_inicio_sdu) 
+					using gtr_sce;
+//					and (cupo = :ai_cupo) 
+			IF gtr_sce.sqlcode = 0 Then			
+				IF Ocupados >= Derecho Then
+					TieneDerechoTodosOk = False
+					Messagebox("No tiene derecho","Hora Inicio = "+string(Hora_inicio_sdu)+" Ocupados = "+string(Ocupados)+" Derecho = "+string(Derecho))  								 
+				Else	
+					Update salones_derecho_uso
+					Set ocupados = ocupados + 1 // Incrementa uno en el campo de ocupados 
+					Where (cve_coordinacion	= :depto) and (cve_dia	= :ai_dia) and
+							(hora_inicio = :Hora_inicio_sdu) 							
+							using gtr_sce;
+//							and(cupo	= :ai_cupo) 
+					IF gtr_sce.sqlcode <> 0 Then
+						TieneDerechoTodosOk= False
+						ls_mensaje = gtr_sce.sqlerrtext
+						ROLLBACK USING gtr_sce;
+						Messagebox("Error al actualizar la tabla derecho_y_uso",ls_mensaje)
+					Else
+						COMMIT USING gtr_sce;
+ 					End IF	
+				End IF
+			Else
+				TieneDerechoTodosOk = False
+				Messagebox("No tiene asignado un derecho y uso para:","Dia "+Dia_String(ai_dia)+"~nHora Inicio "+string(Hora_inicio_sdu)+"~nCupo "+string(ai_cupo)+" "+gtr_sce.sqlerrtext)
+			End IF // Sqlcode del select 
+			hora_inicio_sdu ++
+		Next
+	Else
+		TieneDerechoTodosOk = False
+		Messagebox("Aviso","El horario no es valido, favor de Verificar")
+	End IF
+Else	
+	TieneDerechoTodosOk = False
+	Messagebox("Error","Al obtener el numero de coordinacion")
+End IF 
+
+IF TieneDerechoTodosOk Then
+	Return True
+Else
+	Return False
+End IF	
+
+end function
+

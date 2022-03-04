@@ -1,0 +1,15 @@
+﻿$PBExportHeader$dw_flag_situacion.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=31436382 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=173 color="536870912" )
+summary(height=5 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=129 color="536870912" )
+table(column=(type=long updatewhereclause=yes key=yes name=cve_flag_disciplina dbname="flag_disciplina.cve_flag_disciplina" )
+ column=(type=char(20) updatewhereclause=yes name=flag_disciplina dbname="flag_disciplina.flag_disciplina" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"flag_disciplina~" ) COLUMN(NAME=~"flag_disciplina.cve_flag_disciplina~") COLUMN(NAME=~"flag_disciplina.flag_disciplina~")) " update="flag_disciplina" updatewhere=0 updatekeyinplace=no )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="23" y="32" height="125" width="1258" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Flag Situación"border="0" color="0" x="78" y="56" height="65" width="481"  name=flag_biblioteca_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Situación"border="0" color="0" x="673" y="56" height="77" width="348"  name=biblioteca_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=2 alignment="0" tabsequence=0 border="5" color="0" x="513" y="28" height="77" width="737"  name=flag_disciplina  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="0" tabsequence=0 border="5" color="0" x="183" y="28" height="77" width="266" format="[General]"  name=cve_flag_disciplina  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

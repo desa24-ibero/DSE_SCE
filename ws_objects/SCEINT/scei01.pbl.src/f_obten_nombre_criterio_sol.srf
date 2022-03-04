@@ -1,0 +1,36 @@
+﻿$PBExportHeader$f_obten_nombre_criterio_sol.srf
+global type f_obten_nombre_criterio_sol from function_object
+end type
+
+forward prototypes
+global function string f_obten_nombre_criterio_sol (string as_cve_criterio)
+end prototypes
+
+global function string f_obten_nombre_criterio_sol (string as_cve_criterio);//f_obten_nombre_criterio_sol
+//as_cve_criterio		string
+//Devuelve
+//					string
+
+
+integer li_codigo
+string ls_mensaje_error, ls_nombre_criterio
+
+select dbo.criterio.nombre_criterio
+into :ls_nombre_criterio
+from dbo.criterio
+where dbo.criterio.cve_criterio = :as_cve_criterio
+using gtr_sce;
+
+li_codigo= gtr_sce.SqlCode
+ls_mensaje_error= gtr_sce.SqlErrText
+
+if li_codigo = -1 or li_codigo = 100 then
+	MessageBox("Error al recuperar el nombre del criterio",ls_mensaje_error, StopSign!)
+	return ""
+else
+	return ls_nombre_criterio	
+end if
+
+
+end function
+

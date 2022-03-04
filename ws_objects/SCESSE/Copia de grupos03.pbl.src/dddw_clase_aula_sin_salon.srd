@@ -1,0 +1,22 @@
+﻿$PBExportHeader$dddw_clase_aula_sin_salon.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=31172699 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=88 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=clase dbname="clase_aula.clase" )
+ column=(type=char(12) update=yes updatewhereclause=yes name=nombre_aula dbname="clase_aula.nombre_aula" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"clase_aula~" ) COLUMN(NAME=~"clase_aula.clase~") COLUMN(NAME=~"clase_aula.nombre_aula~")WHERE(    EXP1 =~"clase_aula.clase~"   OP =~"not in~"    EXP2 =~"(0)~" ) ) " update="clase_aula" updatewhere=1 updatekeyinplace=no )
+column(band=detail id=1 alignment="2" tabsequence=10 border="5" color="0" x="5" y="4" height="76" width="101" format="[general]" html.valueishtml="0"  name=clase visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="5" color="0" x="128" y="4" height="76" width="439" format="[general]" html.valueishtml="0"  name=nombre_aula visible="1" edit.limit=12 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+htmltable(border="0" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

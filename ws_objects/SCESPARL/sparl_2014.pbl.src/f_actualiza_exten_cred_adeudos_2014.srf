@@ -1,0 +1,80 @@
+﻿$PBExportHeader$f_actualiza_exten_cred_adeudos_2014.srf
+global type f_actualiza_exten_cred_adeudos_2014 from function_object
+end type
+
+forward prototypes
+global function integer f_actualiza_exten_cred_adeudos_2014 (integer ai_valor_extension)
+end prototypes
+
+global function integer f_actualiza_exten_cred_adeudos_2014 (integer ai_valor_extension);//f_actualiza_exten_cred_adeudos
+//Actualiza la extensión de créditos de todos los alumnos que adeudan el prerrequisito de ingles
+//
+//Recibe		ai_valor_extension	
+//
+
+Integer  li_codigo_sql, li_codigo_sql2
+String ls_mensaje_sql, ls_mensaje_sql2
+long ll_cant_alumnos
+
+IF ai_valor_extension <= 0 THEN
+	Messagebox("Valor no permitido","No es posible poner asignar cero o menos a la columna exten_cred",StopSign!)
+	RETURN -1
+END IF
+
+IF ai_valor_extension > 68 THEN
+	Messagebox("Valor no permitido","No es posible poner asignar ["+string(ai_valor_extension)+"] a la columna exten_cred",StopSign!)
+	RETURN -1
+END IF
+
+IF ai_valor_extension <> 48 and ai_valor_extension <> 20 THEN
+	Messagebox("Valor no permitido","No es posible poner asignar ["+string(ai_valor_extension)+"] a la columna exten_cred",StopSign!)
+	RETURN -1
+END IF
+
+SetPointer (HourGlass!)
+
+UPDATE banderas
+SET cve_flag_prerreq_ingles = 0
+FROM banderas b, v_sce_carreras_cursadas a
+WHERE b.cuenta = a.cuenta
+and	a.vigente = 1
+AND   (a.nivel = "L")
+AND   (b.cuenta IN (SELECT cuenta FROM historico 
+                WHERE cve_mat = 4078
+                AND   calificacion = "AC" ))
+USING gtr_sce;
+
+
+ls_mensaje_sql= gtr_sce.SqlErrtext
+li_codigo_sql= gtr_sce.SqlCode
+
+UPDATE banderas
+SET exten_cred = :ai_valor_extension
+FROM banderas b, v_sce_carreras_cursadas a
+WHERE b.cuenta = a.cuenta
+and	a.vigente = 1
+AND   (a.nivel = "L")
+AND   (b.cve_flag_prerreq_ingles= 1)
+AND   (b.cuenta NOT IN (SELECT cuenta FROM historico 
+                WHERE cve_mat = 4078
+                AND   calificacion = "AC" ))
+USING gtr_sce;
+
+ls_mensaje_sql2= gtr_sce.SqlErrtext
+li_codigo_sql2= gtr_sce.SqlCode
+
+
+IF li_codigo_sql <>0 or li_codigo_sql2<>0 THEN
+	ROLLBACK USING gtr_sce;
+	Messagebox("Error al actualizar la bandera de extension de creditos en f_actualiza_exten_cred_adeudos",ls_mensaje_sql,StopSign!)
+ELSE 
+	COMMIT USING gtr_sce;
+END IF
+
+SetPointer (Arrow!)
+
+RETURN li_codigo_sql
+
+
+end function
+

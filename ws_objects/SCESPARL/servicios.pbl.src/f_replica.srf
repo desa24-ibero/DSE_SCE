@@ -1,0 +1,75 @@
+﻿$PBExportHeader$f_replica.srf
+global type f_replica from function_object
+end type
+
+forward prototypes
+global function long f_replica (integer an_param1, integer an_param2, string as_param3, string as_param4, datawindow adw_param5, transaction atr_origen, transaction atr_destino)
+global function integer f_replica (string as_datastore, transaction atr_origen, transaction atr_destino, ref long al_numreg)
+end prototypes
+
+global function long f_replica (integer an_param1, integer an_param2, string as_param3, string as_param4, datawindow adw_param5, transaction atr_origen, transaction atr_destino);long ll_res
+
+
+
+return ll_res
+end function
+
+global function integer f_replica (string as_datastore, transaction atr_origen, transaction atr_destino, ref long al_numreg);long ll_rows_origen, ll_rows_destino,ll_ren
+u_datastore lds_origen, lds_destino
+integer li_sfs, li_gfs, li_update_destino, li_transobject, li_cve_tipo_examenes[]
+blob lb_datastore
+long ll_row_actual, ll_num_rows
+
+lds_origen = create u_datastore
+lds_destino = create u_datastore
+	
+lds_origen.dataobject = as_datastore
+lds_destino.dataobject = as_datastore
+
+lds_origen.SetTransObject(atr_origen)
+lds_destino.SetTransObject(atr_destino)
+
+ll_ren = lds_origen.Retrieve()
+al_numreg = ll_ren
+if ll_ren = 0 then 
+	return 0
+end if
+
+li_gfs = lds_origen.GetFullState(lb_datastore)
+
+if li_gfs = -1 or isnull(li_gfs) then
+	MessageBox("Error","Error en GetFullState se datastore Origen",StopSign!)	
+	Return -1
+else
+	li_sfs = lds_destino.SetFullState(lb_datastore)
+	if li_sfs = -1 then
+		MessageBox("Error","Error en SetFullState se datastore Destino",StopSign!)	
+		Return -1
+	else
+		li_transobject = lds_destino.SetTransObject(atr_destino)
+//Indico que es un registro Nuevo para generar una instrucción INSERT
+		ll_num_rows = lds_destino.SetTransObject(atr_destino)
+		ll_num_rows = lds_destino.RowCount()
+		FOR ll_row_actual = 1 TO ll_num_rows
+			lds_destino.SetItemStatus(ll_row_actual, 0,Primary!, NewModified!)
+		NEXT
+
+		if li_transobject = 1 then
+			li_update_destino = lds_destino.Update(TRUE, TRUE)
+			if li_update_destino = 1 then
+				COMMIT USING atr_destino;
+		ELSE
+				ROLLBACK USING atr_destino;
+				MessageBox("Error en Inserción","Error en actualización del datastore Destino",StopSign!)	
+				Return -1
+			end if
+		else
+			MessageBox("Error","Error en SetTransObject del datastore Destino",StopSign!)	
+			Return -1
+		end if
+	end if		
+end if
+return 0
+
+end function
+

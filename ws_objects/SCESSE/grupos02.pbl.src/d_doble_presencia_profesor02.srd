@@ -1,0 +1,56 @@
+﻿$PBExportHeader$d_doble_presencia_profesor02.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=70 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes name=cve_mat dbname="horario.cve_mat" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=gpo dbname="horario.gpo" )
+ column=(type=long update=yes updatewhereclause=yes name=periodo dbname="horario.periodo" )
+ column=(type=long update=yes updatewhereclause=yes name=anio dbname="horario.anio" )
+ column=(type=long update=yes updatewhereclause=yes name=cve_dia dbname="horario.cve_dia" )
+ column=(type=long update=yes updatewhereclause=yes name=hora_inicio dbname="horario.hora_inicio" )
+ column=(type=long update=yes updatewhereclause=yes name=hora_final dbname="horario.hora_final" )
+ retrieve="  SELECT horario.cve_mat,   
+         horario.gpo,   
+         horario.periodo,   
+         horario.anio,   
+         horario.cve_dia,   
+         horario.hora_inicio,   
+         horario.hora_final  
+    FROM horario,   
+         grupos  
+   WHERE ( grupos.cve_mat = horario.cve_mat ) and  
+         ( grupos.gpo = horario.gpo ) and  
+         ( grupos.periodo = horario.periodo ) and  
+         ( grupos.anio = horario.anio ) and  
+         ( grupos.periodo = :ai_periodo ) and  
+         ( grupos.anio = :ai_anio ) and  
+         not( ( horario.cve_mat = :al_cve_mat ) AND  
+              ( horario.gpo = :as_gpo ) AND  
+              ( horario.periodo = :ai_periodo ) AND  
+              ( horario.anio = :ai_anio )) AND  
+            ((( :ai_hora_inicio <= horario.hora_inicio ) AND  
+              ( horario.hora_inicio <= :ai_hora_final  )) OR  
+             (( :ai_hora_final <= horario.hora_final - 1  ) AND  
+              ( horario.hora_final - 1 <= :ai_hora_final   ))) AND  
+             ( horario.cve_dia = :ai_cve_dia ) AND  
+             ( grupos.cve_profesor = :al_cve_profesor )    
+ " arguments=(("al_cve_mat", number),("as_gpo", string),("ai_periodo", number),("ai_anio", number),("al_cve_profesor", number),("ai_cve_dia", number),("ai_hora_inicio", number),("ai_hora_final", number)) )
+text(band=header alignment="2" text="Cve Mat" border="0" color="0" x="4" y="3" height="64" width="351"  name=cve_mat_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Gpo" border="0" color="0" x="358" y="3" height="64" width="110"  name=gpo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Periodo" border="0" color="0" x="472" y="3" height="64" width="351"  name=periodo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Anio" border="0" color="0" x="827" y="3" height="64" width="351"  name=anio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Dia" border="0" color="0" x="1181" y="3" height="64" width="351"  name=cve_dia_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Hora Inicio" border="0" color="0" x="1540" y="3" height="64" width="351"  name=hora_inicio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Hora Final" border="0" color="0" x="1894" y="3" height="64" width="351"  name=hora_final_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=10 border="0" color="0" x="4" y="4" height="74" width="351" format="[general]"  name=cve_mat edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="0" color="0" x="358" y="4" height="74" width="88" format="[general]"  name=gpo edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=30 border="0" color="0" x="472" y="4" height="74" width="351" format="[general]"  name=periodo edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=40 border="0" color="0" x="827" y="4" height="74" width="351" format="[general]"  name=anio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=50 border="0" color="0" x="1181" y="4" height="74" width="351" format="[general]"  name=cve_dia edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=60 border="0" color="0" x="1540" y="4" height="74" width="351" format="[general]"  name=hora_inicio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=70 border="0" color="0" x="1894" y="4" height="74" width="351" format="[general]"  name=hora_final edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

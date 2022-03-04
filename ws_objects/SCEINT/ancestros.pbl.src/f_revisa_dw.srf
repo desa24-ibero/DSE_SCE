@@ -1,0 +1,37 @@
+﻿$PBExportHeader$f_revisa_dw.srf
+$PBExportComments$Función que revisa si un datawindow tiene modificaciones que no se hayan guardado y pregunta al usuario si quiere guardar los cambios. En caso de que se quieran guardar se activa el evento ue_actualizar.
+global type f_revisa_dw from function_object
+end type
+
+forward prototypes
+global function integer f_revisa_dw (uo_dw_captura_base a_dw)
+end prototypes
+
+global function integer f_revisa_dw (uo_dw_captura_base a_dw);// Se modifico la llamada de: ue_actualiza
+// a:	ue_actualiza_con_mensaje
+
+
+int resp
+if a_dw.modifiedcount() > 0 or a_dw.deletedcount() > 0   then
+	resp = messagebox("Aviso","Los cambios no han sido guardados.~n¿Desea guardarlos ahora?",question!,yesnocancel!)
+	choose case resp
+		case 1 
+//			m_datos_generales.m_registro.m_actualiza.triggerevent(clicked!)	
+			if a_dw.event ue_actualiza_con_mensaje()	= 1 then
+				return 0
+			else
+				return 1
+			end if
+			
+		case 2
+			a_dw.resetupdate()			
+			return 0
+		case 3
+			return 1 
+	end choose
+	return 1
+else
+	return 0
+end if
+end function
+

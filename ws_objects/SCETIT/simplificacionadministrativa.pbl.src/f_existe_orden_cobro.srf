@@ -1,0 +1,42 @@
+﻿$PBExportHeader$f_existe_orden_cobro.srf
+global type f_existe_orden_cobro from function_object
+end type
+
+forward prototypes
+global function boolean f_existe_orden_cobro (string as_orden_cobro)
+end prototypes
+
+global function boolean f_existe_orden_cobro (string as_orden_cobro);//f_existe_orden_cobro
+//
+//as_orden_cobro				string
+//Revisa si existe una orden de cobro asignada a Santa Fe
+
+
+string ls_orden_cobro
+integer li_codigo_sql
+string ls_mensaje_sql
+long ll_cant_orden_cobro
+
+SELECT count(dbo.control_sep.orden_cobro)
+INTO	:ll_cant_orden_cobro
+FROM	dbo.control_sep
+WHERE dbo.control_sep.orden_cobro = :as_orden_cobro
+USING gtr_sce;
+//AND datepart(yy,fecha_emision) = datepart(yy,getdate())
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if ll_cant_orden_cobro> 0 then
+	return true	
+end if
+
+if li_codigo_sql = -1 then
+	MessageBox("Error al consultar control_sep", ls_mensaje_sql)
+	return true
+end if
+
+return false
+
+end function
+

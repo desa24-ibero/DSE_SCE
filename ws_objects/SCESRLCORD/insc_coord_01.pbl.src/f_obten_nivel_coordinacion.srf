@@ -1,0 +1,42 @@
+﻿$PBExportHeader$f_obten_nivel_coordinacion.srf
+global type f_obten_nivel_coordinacion from function_object
+end type
+
+forward prototypes
+global function string f_obten_nivel_coordinacion (integer ai_cve_coordinacion)
+end prototypes
+
+global function string f_obten_nivel_coordinacion (integer ai_cve_coordinacion);//f_obten_nivel_coordinacion
+//Recibe:		ai_cve_coordinacion	integer
+//Devuelve:		string indicando el nivel de la coordinacion
+
+integer li_cve_coordinacion, li_codigo_sql
+string ls_mensaje_sql, ls_nivel
+
+if ai_cve_coordinacion = 0 then
+	return ''	
+end if
+
+
+SELECT DISTINCT dbo.v_sce_coordinacion_nivel.cve_coordinacion, dbo.v_sce_coordinacion_nivel.nivel
+INTO	:li_cve_coordinacion, :ls_nivel
+FROM	dbo.v_sce_coordinacion_nivel
+WHERE dbo.v_sce_coordinacion_nivel.cve_coordinacion = :ai_cve_coordinacion
+USING sqlca;
+
+li_codigo_sql = sqlca.SqlCode
+ls_mensaje_sql = sqlca.SqlErrText
+
+//Si no existe es porque no tiene materias registradas
+if li_codigo_sql = 100 or isnull(li_cve_coordinacion) then
+	ls_nivel = ''
+elseif li_codigo_sql = -1 then
+	MessageBox('Error al consultar v_sce_coordinacion_nivel en f_obten_nivel_coordinacion', ls_mensaje_sql)
+	ls_nivel = ''
+end if
+
+return ls_nivel
+
+
+end function
+

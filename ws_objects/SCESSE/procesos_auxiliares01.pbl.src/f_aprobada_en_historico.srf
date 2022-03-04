@@ -1,0 +1,47 @@
+﻿$PBExportHeader$f_aprobada_en_historico.srf
+global type f_aprobada_en_historico from function_object
+end type
+
+forward prototypes
+global function integer f_aprobada_en_historico (long al_cuenta, long al_cve_mat, long al_cve_carrera, integer ai_cve_plan)
+end prototypes
+
+global function integer f_aprobada_en_historico (long al_cuenta, long al_cve_mat, long al_cve_carrera, integer ai_cve_plan);//f_aprobada_en_historico 
+// Recibe:
+//		al_cuenta			long
+//		al_cve_mat			long
+//		al_cve_carrera		long
+//		ai_cve_plan			integer
+
+//	Devuelve:				boolean
+
+integer li_num_materias, li_codigo_sql
+string  ls_mensaje_sql
+
+SELECT COUNT(*)
+INTO	:li_num_materias
+FROM historico
+WHERE cuenta = :al_cuenta
+AND	cve_mat = :al_cve_mat
+AND	cve_carrera = :al_cve_carrera
+AND	cve_plan = :ai_cve_plan
+AND	calificacion in ("6","7","8","9","10","AC","MB","S","E","RE")
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SQLCode
+ls_mensaje_sql = gtr_sce.SQLErrText
+
+IF li_codigo_sql=-1 THEN
+	MessageBox("No es posible consultar la materia["+string(al_cve_mat)+"]",ls_mensaje_sql,StopSign!)
+	RETURN -1
+END IF
+
+IF li_num_materias =0 THEN
+	RETURN 0
+ELSEIF li_num_materias >0 THEN
+	RETURN 1
+END IF
+
+
+end function
+

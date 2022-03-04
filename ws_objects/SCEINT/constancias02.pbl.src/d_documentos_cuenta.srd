@@ -1,0 +1,33 @@
+﻿$PBExportHeader$d_documentos_cuenta.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=136 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=ccuenta dbname="cuenta" )
+ column=(type=long updatewhereclause=yes name=ccve_documento dbname="cve_documento" )
+ column=(type=long updatewhereclause=yes name=ccve_flag_documento dbname="cve_flag_documento" )
+ column=(type=char(15) updatewhereclause=yes name=cdesc_flag_documento dbname="desc_flag_documento" )
+ column=(type=char(60) updatewhereclause=yes name=cdocumento dbname="documento" )
+ retrieve="SELECT documentos.cuenta,
+       documentos.cve_documento,
+       documentos.cve_flag_documento,
+		 flag_documentos.desc_flag_documento,
+		 tipo_documento.documento
+	FROM documentos, flag_documentos, tipo_documento
+	WHERE documentos.cuenta = :al_cuenta
+	AND 	documentos.cve_documento in (:ai_documentos )
+	AND	documentos.cve_documento = tipo_documento.cve_documento
+	AND	documentos.cve_flag_documento = flag_documentos.cve_flag_documento" arguments=(("al_cuenta", number),("ai_documentos", numberlist)) )
+text(band=header alignment="2" text="Cuenta"border="0" color="0" x="5" y="4" height="64" width="329"  name=ccuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Documento"border="0" color="0" x="338" y="4" height="64" width="416"  name=ccve_documento_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Flag Documento"border="0" color="0" x="759" y="4" height="64" width="549"  name=ccve_flag_documento_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Desc Flag Documento"border="0" color="0" x="1312" y="4" height="64" width="594"  name=cdesc_flag_documento_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Documento"border="0" color="0" x="1911" y="4" height="64" width="1673"  name=cdocumento_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="76" width="329" format="[general]"  name=ccuenta edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="338" y="4" height="76" width="329" format="[general]"  name=ccve_documento edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="759" y="4" height="76" width="329" format="[general]"  name=ccve_flag_documento edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1312" y="4" height="76" width="439" format="[general]"  name=cdesc_flag_documento edit.limit=15 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="1911" y="4" height="76" width="1673" format="[general]"  name=cdocumento edit.limit=60 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

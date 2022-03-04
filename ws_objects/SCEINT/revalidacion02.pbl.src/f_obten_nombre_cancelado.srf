@@ -1,0 +1,35 @@
+﻿$PBExportHeader$f_obten_nombre_cancelado.srf
+global type f_obten_nombre_cancelado from function_object
+end type
+
+forward prototypes
+global function string f_obten_nombre_cancelado (long al_clave)
+end prototypes
+
+global function string f_obten_nombre_cancelado (long al_clave);integer li_codigo
+string ls_mensaje_error
+string ls_nombre
+
+select dbo.cancelado_asp_reval.nombre
+into :ls_nombre
+from dbo.cancelado_asp_reval
+where dbo.cancelado_asp_reval.cancelado = :al_clave
+using gtr_sce;
+
+li_codigo= gtr_sce.SqlCode
+ls_mensaje_error= gtr_sce.SqlErrText
+
+if isnull(ls_nombre) then
+	ls_nombre= ""
+end if
+
+if li_codigo = -1  then
+	MessageBox("Error al recuperar cancelado en la clave actual",ls_mensaje_error, StopSign!)
+	return ""
+else
+	return ls_nombre	
+end if
+
+
+end function
+

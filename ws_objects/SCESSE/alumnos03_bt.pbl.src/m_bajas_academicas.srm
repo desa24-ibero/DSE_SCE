@@ -1,0 +1,578 @@
+﻿$PBExportHeader$m_bajas_academicas.srm
+$PBExportComments$Este menu ejecuta el proceso baja academica , Reactiva baja academica e impresión de un comprobante. Ver descripción detallada en cada Script:Clicked del menu. Juan campos Nov-1996.
+forward
+global type m_bajas_academicas from m_bajas_materias
+end type
+end forward
+
+global type m_bajas_academicas from m_bajas_materias
+end type
+global m_bajas_academicas m_bajas_academicas
+
+on m_bajas_academicas.create
+m_bajas_academicas=this
+call super::create
+end on
+
+on m_bajas_academicas.destroy
+call super::destroy
+end on
+
+type m_imprime from m_bajas_materias`m_imprime within m_bajas_academicas
+end type
+
+on m_imprime.create
+call super::create
+this.text = "Imprime "
+this.enabled = false
+this.microhelp = "Imprime comprobante bajas academicas"
+this.toolbaritemtext = "Imprime comprobante bajas académicas"
+end on
+
+event m_imprime::clicked;// Esté script extrae los datos de cuenta, nombre, apaterno, amaterno y digito de uo_nombre. 
+// La cuenta se envia como parametro al dw_imprime_bajas_academicas y nombre,apaterno,amaterno 
+// y digito se le asignan a los objetos de nombre_completo y cuenta_digito del 
+// dw_imprime_bajas_academicas.
+// Juan Campos Nov-1996.
+
+SetPointer(Hourglass!)  
+
+string Nom,AMat,APat,CuentaStr  
+long   CuentaInt
+char   Digito
+long   job
+int    EstasSeguro
+
+CuentaStr = w_bajas_academicas.uo_nombre.em_cuenta.text
+CuentaInt = Long(CuentaStr)
+Digito    = obten_digito(cuentaInt)
+
+w_bajas_academicas.dw_imprime_bajas_academicas.SetTransObject(gtr_sce)
+
+if w_bajas_academicas.dw_imprime_bajas_academicas.Retrieve(CuentaInt) = 0 then
+  MessageBox("Aviso","No tiene materias de baja académica")
+Else
+  Nom  = w_bajas_academicas.uo_nombre.dw_nombre_alumno.GetItemString(1,"nombre")
+  APat = w_bajas_academicas.uo_nombre.dw_nombre_alumno.GetItemString(1,"apaterno")
+  AMat = w_bajas_academicas.uo_nombre.dw_nombre_alumno.GetItemString(1,"amaterno")
+  w_bajas_academicas.dw_imprime_bajas_academicas.object.nombre_completo.text = Nom+" "+APat+" "+AMat
+  w_bajas_academicas.dw_imprime_bajas_academicas.object.cuenta_digito.text = CuentaStr+"-"+Digito	
+  //w_bajas_academicas.dw_imprime_bajas_academicas.object.fecha.text = fecha_espaniol_servidor(gtr_sce)
+  EstasSeguro = MessageBox("Aviso","Está seguro que desea imprimir el comprobante de bajas académicas de esté alumno",Question!,YesNo!,1)	
+  If EstasSeguro = 1 then
+    job = PrintOpen("Comprobante bajas académicas")  
+    PrintDataWindow(job,w_bajas_academicas.dw_imprime_bajas_academicas) 
+    PrintClose(job)
+  end if
+end if  
+
+SetPointer(Arrow!)  	
+
+end event
+
+on m_imprime.destroy
+call super::destroy
+end on
+
+type m_baja from m_bajas_materias`m_baja within m_bajas_academicas
+end type
+
+on m_baja.create
+call super::create
+this.enabled = false
+this.microhelp = "Proceso de Bajas academicas"
+this.toolbaritemtext = "Baja Académica"
+end on
+
+event m_baja::clicked;// Este script obtiene los datos cuenta del objeto uo_nombre, la claveMateria, grupo y 
+// condicion_insc del dw_materias_inscritas. Se actualizan las tablas 
+// mat_inscritas.cve_condición como baja_academica y la tabla de grupos.insc_desp_bajas 
+// con un decremento en uno, por cada materia grupo que se de de baja.
+// Juan Campos. Nov - 1996.
+
+long    Cuenta,Renglon
+long     ClaveMateria,CondicionInsc,ClaveTeoria,ClaveLab,ClaveAsociada
+int     EstasSeguro,Contador,RenglonAux,Periodo,Anio,EstadoNuevo,EstadoAnterior
+string  Grupo,CuentaStr,OpcionOrden,GrupoAsociado,FechaHora,NomUsuario, juan, ls_sql_errtext
+boolean TieneMateriaAsociada, HayUnNombreDeUsuario, ExitoEnLaActualizacion
+
+FechaHora = fecha_ingles_servidor(gtr_sce)  // obtiene la fecha del servidor de sybase Ver descripción de la función
+
+
+Renglon = w_bajas_academicas.dw_materias_inscritas.GetRow()
+w_bajas_academicas.dw_materias_inscritas.ScrollToRow(Renglon)  
+SetNull(NomUsuario)
+CuentaStr     = w_bajas_academicas.uo_nombre.em_cuenta.text
+ClaveMateria  = w_bajas_academicas.dw_materias_inscritas.GetItemNumber(Renglon,"mat_inscritas_cve_mat")
+Grupo         = w_bajas_academicas.dw_materias_inscritas.GetItemString(Renglon,"mat_inscritas_gpo")
+CondicionInsc = w_bajas_academicas.dw_materias_inscritas.GetItemNumber(Renglon,"mat_inscritas_cve_condicion") 
+Periodo       = w_bajas_academicas.dw_materias_inscritas.GetItemNumber(Renglon,"mat_inscritas_periodo") 
+Anio          = w_bajas_academicas.dw_materias_inscritas.GetItemNumber(Renglon,"mat_inscritas_anio") 
+EstadoAnterior= CondicionInsc
+EstadoNuevo   = 1
+Cuenta        = Long(CuentaStr)
+NomUsuario    = gtr_sce.logid
+
+If IsNull(NomUsuario) Then
+  HayUnNombreDeUsuario = False
+Else
+  HayUnNombreDeUsuario = True
+End If
+
+If HayUnNombreDeUsuario and FechaHora <> "" Then  // HayUnNombreDeUsuario 
+ 
+  CHOOSE CASE CondicionInsc
+  CASE 0 
+
+    w_bajas_academicas.dw_teoria_lab.SetTransObject(gtr_sce)
+    If w_bajas_academicas.dw_teoria_lab.Retrieve(ClaveMateria) = 0 Then
+      TieneMateriaAsociada = False
+	   EstasSeguro = MessageBox("Aviso","Está Seguro que desea dar de Baja Académica esta materia: " +String(ClaveMateria)+ " ",Question!,YesNo!,1)
+    Else
+	   TieneMateriaAsociada = true
+      ClaveTeoria = w_bajas_academicas.dw_teoria_lab.GetItemNumber(1,"cve_teoria")	 
+  	   Clavelab    = w_bajas_academicas.dw_teoria_lab.GetItemNumber(1,"cve_lab")	 
+	   If ClaveMateria = ClaveTeoria Then
+		  ClaveAsociada = ClaveLab
+	   Else
+		  ClaveAsociada = ClaveTeoria
+	   End If
+
+	   Contador = 0
+	   DO
+		   Contador = Contador + 1
+         w_bajas_academicas.dw_materias_inscritas.SetRow(Contador)		
+	      RenglonAux = w_bajas_academicas.dw_materias_inscritas.GetRow()
+         If w_bajas_academicas.dw_materias_inscritas.GetItemNumber(RenglonAux,"mat_inscritas_cve_mat") = ClaveAsociada Then
+           GrupoAsociado = w_bajas_academicas.dw_materias_inscritas.GetItemString(RenglonAux,"mat_inscritas_gpo")		
+ 	      End If   	   
+	   LOOP UNTIL (w_bajas_academicas.dw_materias_inscritas.GetItemNumber(RenglonAux,"mat_inscritas_cve_mat") = ClaveAsociada&
+						OR Contador = w_bajas_academicas.dw_materias_inscritas.Rowcount())
+      EstasSeguro = MessageBox("Aviso","Para realizar la baja académica de la materia: " + String(ClaveMateria) + " es necesario " + &
+	                                    "dar de baja la materia asociada: " + string(ClaveAsociada) +" . Está seguro que Desea dar de baja las dos " + &
+			  									   "materias asociadas",Question!,YesNo!,1)	                   										 
+    End If
+
+    If NOT TieneMateriaAsociada AND EstasSeguro = 1 Then
+		ExitoEnLaActualizacion = False
+      Update mat_inscritas
+        Set cve_condicion = 1,
+		  		calificacion = "BA"
+      Where (mat_inscritas.cuenta  = :Cuenta) AND
+            (mat_inscritas.cve_mat = :ClaveMateria) AND
+      	   (mat_inscritas.gpo     = :Grupo)
+      Using gtr_sce;
+		ls_sql_errtext= gtr_sce.SqlErrText
+      If gtr_sce.sqlcode = 0 Then
+        w_bajas_academicas.dw_materias_inscritas.SetItem(Renglon,"mat_inscritas_cve_condicion",1) 
+	     m_bajas_academicas.m_baja.enabled = false
+	     m_bajas_academicas.m_reactivabaja.enabled = true	 
+		  Update grupos
+          Set insc_desp_bajas = insc_desp_bajas - 1
+        Where (grupos.cve_mat = :ClaveMateria) AND
+              (grupos.gpo = :Grupo)
+        Using gtr_sce;
+			ls_sql_errtext= gtr_sce.SqlErrText
+        If gtr_sce.sqlcode = 0 Then
+			 Insert Into ui_bibaj values (:Cuenta,null,:ClaveMateria,:Grupo,:Periodo,:Anio,:EstadoNuevo,:EstadoAnterior,:Fechahora,:Nomusuario)
+		    Using gtr_sce;
+				ls_sql_errtext= gtr_sce.SqlErrText
+		    If gtr_sce.sqlcode = 0 Then 
+			   ExitoEnLaActualizacion = True
+		    Else 
+			   ExitoEnLaActualizacion = False
+				MessageBox("Error","El movimiento no fue registrado~n"+ls_sql_errtext)
+          End If
+        Else
+  	       MessageBox("Error","No se actualizo el campo de insc_desp_bajas de la tabla de grupos~n"+ls_sql_errtext)
+          ExitoEnLaActualizacion = False
+        End If	    	 
+      Else
+	     MessageBox("Error","La baja académica no fue realizada~n"+ls_sql_errtext)
+ 	     ExitoEnLaActualizacion = False
+      End If	   
+		
+	   If ExitoEnLaActualizacion Then
+        Commit Using gtr_sce;
+	   Else		
+	     Rollback Using gtr_sce;
+		  MessageBox("Aviso","Los Cambios no fueron realizados~n"+ls_sql_errtext)
+	   End if	
+		
+    End If
+
+  
+    If TieneMateriaAsociada AND EstasSeguro = 1 Then
+		ExitoEnLaActualizacion = False
+      Update mat_inscritas
+        Set cve_condicion = 1,
+		  		calificacion = "BA"
+      Where (mat_inscritas.cuenta   = :Cuenta AND
+            (mat_inscritas.cve_mat  = :ClaveMateria AND mat_inscritas.gpo = :Grupo)) OR
+			   (mat_inscritas.cuenta   = :Cuenta AND 
+            (mat_inscritas.cve_mat  = :ClaveAsociada AND mat_inscritas.gpo = :GrupoAsociado))			 
+      Using gtr_sce;
+		ls_sql_errtext= gtr_sce.SqlErrText
+      If gtr_sce.sqlcode = 0 Then
+        w_bajas_academicas.dw_materias_inscritas.SetItem(Renglon,"mat_inscritas_cve_condicion",1) 
+        w_bajas_academicas.dw_materias_inscritas.SetItem(RenglonAux,"mat_inscritas_cve_condicion",1) 
+	     m_bajas_academicas.m_baja.enabled = false
+	     m_bajas_academicas.m_reactivabaja.enabled = true	  	
+        Update grupos
+          Set insc_desp_bajas = insc_desp_bajas - 1
+        Where ((grupos.cve_mat = :ClaveMateria) AND (grupos.gpo = :Grupo)) OR
+				  ((grupos.cve_mat = :ClaveAsociada) AND (grupos.gpo = :GrupoAsociado))
+        Using gtr_sce;
+ 		  ls_sql_errtext= gtr_sce.SqlErrText
+        If gtr_sce.sqlcode = 0 Then
+		    Insert Into ui_bibaj values (:Cuenta,null,:ClaveMateria,:Grupo,:Periodo,:Anio,:EstadoNuevo,:EstadoAnterior,:FechaHora,:Nomusuario)
+		    Using gtr_sce;
+ 			 ls_sql_errtext= gtr_sce.SqlErrText
+		    If gtr_sce.sqlcode = 0 Then 
+	   	   Insert Into ui_bibaj values (:Cuenta,null,:ClaveAsociada,:GrupoAsociado,:Periodo,:Anio,:EstadoNuevo,:EstadoAnterior,:FechaHora,:Nomusuario)
+		      Using gtr_sce;
+				ls_sql_errtext= gtr_sce.SqlErrText
+		      If gtr_sce.sqlcode = 0 Then 
+			     ExitoEnLaActualizacion = True
+		      Else  
+              ExitoEnLaActualizacion = False
+			     MessageBox("Error","El movimiento no fue registrado~n"+ls_sql_errtext)
+            End If			 	
+		    Else  
+				ExitoEnLaActualizacion = False
+			   MessageBox("Error","El movimiento no fue registrado~n"+ls_sql_errtext)
+          End If 
+        Else
+          ExitoEnLaActualizacion = False
+  	       MessageBox("Error","No se actualizo el campo de insc_desp_bajas de la tabla de grupos~n"+ls_sql_errtext)
+        End If	    	 
+      Else
+		  ExitoEnLaActualizacion = False
+        MessageBox("Error","La baja académica no fue realizada~n"+ls_sql_errtext)
+      End If	   	
+		
+	   If ExitoEnLaActualizacion Then
+        Commit Using gtr_sce;
+	   Else		
+	     Rollback Using gtr_sce;
+		  MessageBox("Aviso","Los Cambios no fueron realizados~n"+ls_sql_errtext)
+	   End if	
+		
+    End If
+  
+  CASE 1 
+	  MessageBox("Error","Está materia no se puede dar de baja, "+ &
+	                     "ya que su condición actual es de:  BAJA ACADEMICA")
+  CASE 2  
+	  MessageBox("Error","Está materia no se puede dar de baja, "+ &
+ 	                     "ya que su condición actual es de:  BAJA TOTAL")
+	CASE 3 
+	  MessageBox("Error","Está materia no se puede dar de baja, "+ &
+ 	                     "ya que su condición actual es de:  BAJA POR FINANZAS")
+
+  End CHOOSE
+
+End If  // HayUnNombreDeUsuario
+end event
+
+on m_baja.destroy
+call super::destroy
+end on
+
+type m_reactivabaja from m_bajas_materias`m_reactivabaja within m_bajas_academicas
+end type
+
+on m_reactivabaja.create
+call super::create
+this.microhelp = "Reactiva Bajas Academicas"
+this.toolbaritemtext = "Reactiva Baja  Académica"
+end on
+
+event m_reactivabaja::clicked;// Este script obtiene los datos cuenta del objeto uo_nombre, la claveMateria, grupo y 
+// condicion_insc del dw_materias_inscritas. Se actualizan las tablas 
+// mat_inscritas.cve_condicion como Normal_Inscrita  y la tabla de grupos.insc_desp_bajas 
+// con un incremento  en uno, por cada materia grupo que se reactive.
+// Juan Campos. Nov - 1996.
+ 
+long    Cuenta, Renglon
+long     ClaveMateria, CondicionInsc, ClaveTeoria, ClaveLab, ClaveAsociada
+int     EstasSeguro, Contador, RenglonAux, Periodo, Anio, EstadoNuevo, EstadoAnterior, li_sql_code_update, li_sql_code_delete
+string  Grupo, CuentaStr, OpcionOrden, GrupoAsociado, FechaHora, NomUsuario, ls_sql_errtext, ls_sql_errtext_update, ls_sql_errtext_delete
+boolean TieneMateriaAsociada, HayUnNombreDeUsuario, ExitoEnLaActualizacion
+
+SetNull(NomUsuario)
+Renglon = w_bajas_academicas.dw_materias_inscritas.GetRow()
+w_bajas_academicas.dw_materias_inscritas.ScrollToRow(Renglon)  
+CuentaStr      = w_bajas_academicas.uo_nombre.em_cuenta.text
+ClaveMateria   = w_bajas_academicas.dw_materias_inscritas.GetItemNumber(Renglon,"mat_inscritas_cve_mat")
+Grupo          = w_bajas_academicas.dw_materias_inscritas.GetItemString(Renglon,"mat_inscritas_gpo")
+CondicionInsc  = w_bajas_academicas.dw_materias_inscritas.GetItemNumber(Renglon,"mat_inscritas_cve_condicion") 
+Periodo        = w_bajas_academicas.dw_materias_inscritas.GetItemNumber(Renglon,"mat_inscritas_periodo")
+Anio           = w_bajas_academicas.dw_materias_inscritas.GetItemNumber(Renglon,"mat_inscritas_anio") 
+EstadoAnterior = CondicionInsc
+EstadoNuevo    = 0
+FechaHora      = fecha_ingles_servidor(gtr_sce)
+Cuenta         = Long(CuentaStr)
+
+NomUsuario     = gtr_sce.logid
+
+If IsNull(NomUsuario) Then
+  HayUnNombreDeUsuario = False
+Else
+  HayUnNombreDeUsuario = True
+End If
+
+If HayUnNombreDeUsuario and FechaHora <> "" Then  // HayUnNombreDeUsuario 
+ 
+  CHOOSE CASE CondicionInsc
+
+  CASE 0 
+	  MessageBox("Error","Está materia no puede ser Reactivada, "+ &
+  	                   "ya que su condición actual es de:  NORMAL_INSCRITA")
+
+  CASE 1
+
+    w_bajas_academicas.dw_teoria_lab.SetTransObject(gtr_sce)
+    IF w_bajas_academicas.dw_teoria_lab.Retrieve(ClaveMateria) = 0 THEN
+      TieneMateriaAsociada = False
+	   EstasSeguro = MessageBox("Aviso","Está seguro que desea reactivar esta Materia: " +String(ClaveMateria)+ " ",Question!,YesNo!,1)
+    ELSE
+	   TieneMateriaAsociada = true
+      ClaveTeoria   = w_bajas_academicas.dw_teoria_lab.GetItemNumber(1,"cve_teoria")	 
+  	   Clavelab      = w_bajas_academicas.dw_teoria_lab.GetItemNumber(1,"cve_lab")	 
+	   IF ClaveMateria = ClaveTeoria THEN
+		  ClaveAsociada = ClaveLab
+	   ELSE
+		  ClaveAsociada = ClaveTeoria
+	   END IF
+
+	   Contador = 0
+	   DO
+		   Contador = Contador + 1
+         w_bajas_academicas.dw_materias_inscritas.SetRow(Contador)		
+	      RenglonAux = w_bajas_academicas.dw_materias_inscritas.GetRow()
+         if w_bajas_academicas.dw_materias_inscritas.GetItemNumber(RenglonAux,"mat_inscritas_cve_mat") = ClaveAsociada THEN
+           GrupoAsociado = w_bajas_academicas.dw_materias_inscritas.GetItemString(RenglonAux,"mat_inscritas_gpo")		
+ 	      END IF   	   
+	   LOOP UNTIL w_bajas_academicas.dw_materias_inscritas.GetItemNumber(RenglonAux,"mat_inscritas_cve_mat") = ClaveAsociada
+      EstasSeguro = MessageBox("Aviso","Para reactivar la materia: " + String(ClaveMateria) + " es necesario " + &
+	                                    "reactivar la materia asociada: " + string(ClaveAsociada) +" . Está seguro que desea reactivar las dos " + &
+												   "materias asociadas",Question!,YesNo!,1)	                   										 
+    END IF
+
+    IF NOT TieneMateriaAsociada AND EstasSeguro = 1 THEN
+		ExitoEnLaActualizacion = False
+      UPDATE mat_inscritas
+        SET cve_condicion = 0,
+		  		calificacion = NULL
+      WHERE (mat_inscritas.cuenta  = :Cuenta) AND
+            (mat_inscritas.cve_mat = :ClaveMateria) AND
+      	   (mat_inscritas.gpo     = :Grupo)
+      USING gtr_sce;
+		ls_sql_errtext= gtr_sce.SqlErrText		
+		li_sql_code_update= gtr_sce.sqlcode
+
+	  DELETE FROM ba_motivo
+      WHERE (ba_motivo.cuenta  = :Cuenta) AND
+            (ba_motivo.cve_mat = :ClaveMateria) AND
+      	   (ba_motivo.gpo     = :Grupo)
+      USING gtr_sce;
+		ls_sql_errtext_delete= gtr_sce.SqlErrText		
+		li_sql_code_delete= gtr_sce.sqlcode
+
+      IF li_sql_code_update = 0 AND li_sql_code_delete <> -1 THEN
+        w_bajas_academicas.dw_materias_inscritas.SetItem(Renglon,"mat_inscritas_cve_condicion",0) 
+	     m_bajas_academicas.m_baja.enabled = false
+	     m_bajas_academicas.m_reactivabaja.enabled = true	 		  		  
+        UPDATE grupos
+          SET insc_desp_bajas = insc_desp_bajas + 1 
+        WHERE (grupos.cve_mat = :ClaveMateria) AND
+              (grupos.gpo = :Grupo)
+        USING gtr_sce;
+			ls_sql_errtext= gtr_sce.SqlErrText
+        IF gtr_sce.sqlcode = 0 THEN
+          Insert Into ui_bibaj values (:Cuenta,null,:ClaveMateria,:Grupo,:Periodo,:Anio,:EstadoNuevo,:EstadoAnterior,:Fechahora,:Nomusuario)
+		    Using gtr_sce;
+				ls_sql_errtext= gtr_sce.SqlErrText
+		    If gtr_sce.sqlcode = 0 Then 
+			   ExitoEnLaActualizacion = True
+		    Else  
+            ExitoEnLaActualizacion = False
+			   MessageBox("Error","El movimiento no fue registrado~n"+ls_sql_errtext)
+          End If	 
+        ELSE
+          ExitoEnLaActualizacion = False
+  	       MessageBox("Error","No se actualizo el campo de insc_desp_bajas de la tabla de grupos~n"+ls_sql_errtext)
+        END IF	    	 
+      ELSE
+		  ExitoEnLaActualizacion = False
+	     MessageBox("Error","La Reactivación no fue realizada~n"+ls_sql_errtext)
+      END IF
+	   
+		If ExitoEnLaActualizacion THEN
+	     Commit USING gtr_sce;
+	   Else
+		  Rollback Using gtr_sce;
+		  MessageBox("Aviso","Los cambios no fueron realizados~n"+ls_sql_errtext)
+      End if 
+		
+    END IF
+  
+  
+    IF TieneMateriaAsociada AND EstasSeguro = 1 THEN
+		ExitoEnLaActualizacion = False
+      UPDATE mat_inscritas
+        SET cve_condicion = 0,
+		  		calificacion = NULL
+      WHERE (mat_inscritas.cuenta   = :Cuenta AND
+            (mat_inscritas.cve_mat  = :ClaveMateria AND mat_inscritas.gpo = :Grupo)) OR
+			   (mat_inscritas.cuenta   = :Cuenta AND 
+            (mat_inscritas.cve_mat  = :ClaveAsociada AND mat_inscritas.gpo = :GrupoAsociado))			 
+      USING gtr_sce;
+		ls_sql_errtext= gtr_sce.SqlErrText
+		li_sql_code_update= gtr_sce.sqlcode
+		
+	   DELETE FROM ba_motivo
+      WHERE (ba_motivo.cuenta   = :Cuenta AND
+            (ba_motivo.cve_mat  = :ClaveMateria AND ba_motivo.gpo = :Grupo)) OR
+			   (ba_motivo.cuenta   = :Cuenta AND 
+            (ba_motivo.cve_mat  = :ClaveAsociada AND ba_motivo.gpo = :GrupoAsociado))		
+      USING gtr_sce;
+		ls_sql_errtext_delete= gtr_sce.SqlErrText		
+		li_sql_code_delete= gtr_sce.sqlcode
+
+      IF li_sql_code_update = 0 AND li_sql_code_delete <> -1 THEN
+        w_bajas_academicas.dw_materias_inscritas.SetItem(Renglon,"mat_inscritas_cve_condicion",0) 
+        w_bajas_academicas.dw_materias_inscritas.SetItem(RenglonAux,"mat_inscritas_cve_condicion",0) 
+	     m_bajas_academicas.m_baja.enabled = false
+	     m_bajas_academicas.m_reactivabaja.enabled = true	 	 
+        UPDATE grupos
+          SET insc_desp_bajas = insc_desp_bajas + 1
+        WHERE ((grupos.cve_mat = :ClaveMateria) AND (grupos.gpo = :Grupo)) OR
+				  ((grupos.cve_mat = :ClaveAsociada) AND (grupos.gpo = :GrupoAsociado))
+        USING gtr_sce;
+			ls_sql_errtext= gtr_sce.SqlErrText
+        IF gtr_sce.sqlcode = 0 THEN
+	 	    Insert Into ui_bibaj values (:Cuenta,null,:ClaveMateria,:Grupo,:Periodo,:Anio,:EstadoNuevo,:EstadoAnterior,:FechaHora,:Nomusuario)
+		    Using gtr_sce;
+				ls_sql_errtext= gtr_sce.SqlErrText
+		    If gtr_sce.sqlcode = 0 Then 
+	  	      Insert Into ui_bibaj values (:Cuenta,null,:ClaveAsociada,:GrupoAsociado,:Periodo,:Anio,:EstadoNuevo,:EstadoAnterior,:FechaHora,:Nomusuario)
+		      Using gtr_sce;
+				 ls_sql_errtext= gtr_sce.SqlErrText
+		      If gtr_sce.sqlcode = 0 Then 
+			     ExitoEnLaActualizacion = True
+		      Else  
+              ExitoEnLaActualizacion = False
+			     MessageBox("Error","El movimiento no fue registrado~n"+ls_sql_errtext)
+            End If	 
+		    Else  
+            ExitoEnLaActualizacion = False
+			   MessageBox("Error","El movimiento no fue registrado~n"+ls_sql_errtext)
+          End If			 
+        ELSE
+          ExitoEnLaActualizacion = False
+  	       MessageBox("Error","No se actualizo el campo de insc_desp_bajas de la tabla de grupos~n"+ls_sql_errtext)
+        END IF	    	 
+      ELSE
+		  ExitoEnLaActualizacion = False
+        MessageBox("Error","La Reactivación no fue realizada~n"+ls_sql_errtext)
+      END IF	   	
+		
+		If ExitoEnLaActualizacion THEN
+	     Commit USING gtr_sce;
+	   Else
+		  Rollback Using gtr_sce;
+		  MessageBox("Aviso","Los cambios no fueron realizados~n"+ls_sql_errtext)
+      End if 
+			
+    END IF
+
+  CASE 2  
+	  MessageBox("Error","Está materia no puede ser Reactivada, "+ &
+	                   "ya que su condición actual es de:  BAJA TOTAL")	
+  CASE 3  
+	  MessageBox("Error","Está materia no puede ser Reactivada, "+ &
+	                   "ya que su condición actual es de:  BAJA POR FINANZAS")	
+							 
+  END CHOOSE
+
+END IF // HayUnNombreDeUsuario 
+end event
+
+on m_reactivabaja.destroy
+call super::destroy
+end on
+
+type m_ventana from m_bajas_materias`m_ventana within m_bajas_academicas
+end type
+
+on m_ventana.create
+call super::create
+this.microhelp = "Cambio de vista y posición de  una ventana"
+end on
+
+on m_ventana.destroy
+call super::destroy
+end on
+
+type m_horizontal from m_bajas_materias`m_horizontal within m_ventana
+end type
+
+on m_horizontal.create
+call super::create
+end on
+
+on m_horizontal.destroy
+call super::destroy
+end on
+
+type m_vertical from m_bajas_materias`m_vertical within m_ventana
+end type
+
+on m_vertical.create
+call super::create
+end on
+
+on m_vertical.destroy
+call super::destroy
+end on
+
+type m_primerplano from m_bajas_materias`m_primerplano within m_ventana
+end type
+
+on m_primerplano.create
+call super::create
+end on
+
+on m_primerplano.destroy
+call super::destroy
+end on
+
+type m_cascada from m_bajas_materias`m_cascada within m_ventana
+end type
+
+on m_cascada.create
+call super::create
+end on
+
+on m_cascada.destroy
+call super::destroy
+end on
+
+type m_fin from m_bajas_materias`m_fin within m_bajas_academicas
+end type
+
+on m_fin.create
+call super::create
+this.text = "Salir"
+this.toolbaritemtext = "Salir de Bajas Académicas"
+end on
+
+event m_fin::clicked;call super::clicked;Close(w_bajas_academicas)
+end event
+
+on m_fin.destroy
+call super::destroy
+end on
+

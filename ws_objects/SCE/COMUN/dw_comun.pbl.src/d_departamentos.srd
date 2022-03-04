@@ -1,0 +1,14 @@
+﻿$PBExportHeader$d_departamentos.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=77 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cve_depto dbname="departamentos.cve_depto" )
+ column=(type=char(45) update=yes updatewhereclause=yes name=departamento dbname="departamentos.departamento" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"departamentos~" ) COLUMN(NAME=~"departamentos.cve_depto~") COLUMN(NAME=~"departamentos.departamento~")) " update="departamentos" updatewhere=1 updatekeyinplace=no )
+text(band=header alignment="2" text="Departamento"border="0" color="33554432" x="339" y="4" height="65" width="1262"  name=departamento_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="Cve Depto"border="0" color="33554432" x="5" y="4" height="65" width="330"  name=cve_depto_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="0" color="33554432" x="339" y="4" height="77" width="1262" format="[general]"  name=departamento edit.limit=45 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=1 alignment="1" tabsequence=10 border="0" color="33554432" x="5" y="4" height="77" width="330" format="[general]"  name=cve_depto edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )

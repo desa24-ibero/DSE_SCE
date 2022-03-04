@@ -1,0 +1,48 @@
+﻿$PBExportHeader$fecha_espaniol_servidor.srf
+$PBExportComments$Se regresa un string con la fecha en español del servidor, ejemplo: "10-Ene-1997 4:02:01PM"  Se declara un nombre de procediminto para power builder  y se la asigna el procedimiento almacenado del servidor de sybase.  Juan Campos. Enero-19
+global type fecha_espaniol_servidor from function_object
+end type
+
+forward prototypes
+global function string fecha_espaniol_servidor (transaction atr_trans)
+end prototypes
+
+global function string fecha_espaniol_servidor (transaction atr_trans);// Se regresa un string con la fecha en español del servidor, ejemplo: "10-Ene-1997 4:02:01PM" 
+// Se declara un nombre de procediminto para power builder  y se la asigna el procedimiento 
+// almacenado del servidor de sybase.
+// Juan Campos. Enero-1997.
+
+
+String fecha, Dia , Mes, Anio, Hora
+ 
+DECLARE Fecha_Servidor procedure for fechaservidor
+  @fecha = : Fecha out using atr_trans;
+   	
+EXECUTE Fecha_Servidor;
+
+FETCH Fecha_Servidor INTO :Fecha;
+
+CLOSE Fecha_Servidor;
+
+Dia  = Mid(fecha,5,2)
+Mes  = Mid(Fecha,1,3)
+Anio = Mid(fecha,8,4)
+Hora = Mid(fecha,13,14)
+
+if mes = "Jan" then 
+	mes = "Ene"
+end if
+
+if mes = "Apr" then
+  mes = "Abr"
+end if
+
+if mes = "Dec" then
+  mes = "Dic"
+end if
+
+Fecha = Dia + "-" + Mes + "-" + Anio + "  " + Hora
+
+return fecha
+end function
+

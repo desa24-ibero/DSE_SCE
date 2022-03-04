@@ -1,0 +1,31 @@
+﻿$PBExportHeader$periodo_actual_activacion.srf
+global type periodo_actual_activacion from function_object
+end type
+
+forward prototypes
+global subroutine periodo_actual_activacion (ref integer periodo, ref integer anio, transaction trans)
+end prototypes
+
+global subroutine periodo_actual_activacion (ref integer periodo, ref integer anio, transaction trans);//Función que recibe dos parametros variables en los que se regresa el periodo y año actual
+//Mayo 2000 APR
+
+string ls_mensaje
+integer li_codigo_error
+
+SELECT DISTINCT dbo.activacion.periodo, 
+     dbo.activacion.anio
+INTO :periodo, 
+     :anio
+FROM dbo.activacion
+USING trans;
+
+li_codigo_error= trans.SqlCode
+ls_mensaje= trans.SqlErrText
+
+if li_codigo_error = -1 then
+	MessageBox("Error al seleccionar el periodo de activacion", ls_mensaje)
+end if
+
+
+end subroutine
+

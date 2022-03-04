@@ -1,0 +1,40 @@
+﻿$PBExportHeader$dddw_grupos2.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=68 color="536870912" )
+table(column=(type=char(7) updatewhereclause=yes name=cve_mat_gpo dbname="grupos.cve_mat_gpo" )
+ column=(type=long updatewhereclause=yes key=yes name=cve_mat dbname="grupos.cve_mat" )
+ column=(type=char(2) updatewhereclause=yes key=yes name=gpo dbname="grupos.gpo" )
+ column=(type=long updatewhereclause=yes key=yes name=periodo dbname="grupos.periodo" )
+ column=(type=long updatewhereclause=yes key=yes name=anio dbname="grupos.anio" )
+ column=(type=long updatewhereclause=yes name=cond_gpo dbname="grupos.cond_gpo" )
+ column=(type=long updatewhereclause=yes name=primer_sem dbname="grupos.primer_sem" )
+ retrieve="  SELECT distinct grupos.cve_mat_gpo,   
+         grupos.cve_mat,   
+         grupos.gpo,   
+         grupos.periodo,   
+         grupos.anio,   
+         grupos.cond_gpo,   
+         grupos.primer_sem  
+    FROM grupos   
+   WHERE grupos.cond_gpo = 1    
+	AND grupos.periodo = :a_periodo
+	AND grupos.anio = :a_anio
+	AND grupos.cve_mat = :a_cve_mat
+	ORDER BY grupos.gpo
+" update="grupos" updatewhere=0 updatekeyinplace=no arguments=(("a_periodo", number),("a_anio", number),("a_cve_mat", number)) )
+data("0A", 0,"A", 0, 0, 0, 0,) 
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="27" y="0" height="64" width="91" format="[general]" html.valueishtml="0"  name=gpo visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0  template=(comment="" encoding="UTF-16LE" name="dddw_grupos1" xml="<?xml version=~"1.0~" encoding=~"UTF-16LE~" standalone=~"no~"?><dddw_grupos1><dddw_grupos1_row __pbband=~"detail~"><cve_mat_gpo/><cve_mat/><gpo>gpo</gpo><periodo/><anio/><cond_gpo/><primer_sem/></dddw_grupos1_row></dddw_grupos1>"))
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

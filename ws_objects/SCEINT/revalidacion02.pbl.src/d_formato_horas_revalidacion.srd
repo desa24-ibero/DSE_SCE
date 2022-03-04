@@ -1,0 +1,37 @@
+﻿$PBExportHeader$d_formato_horas_revalidacion.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=134 color="536870912" )
+summary(height=90 color="536870912" )
+footer(height=3 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=materias_revalidacion_folio dbname="folio" )
+ column=(type=long updatewhereclause=yes name=cve_mat dbname="cve_mat" )
+ column=(type=char(42) updatewhereclause=yes name=materia dbname="materia" )
+ column=(type=char(6) updatewhereclause=yes name=sigla dbname="sigla" )
+ column=(type=long updatewhereclause=yes name=horas_reales dbname="horas_reales" )
+ retrieve="  SELECT folio=materias_revalidacion.folio,
+			cve_mat=materias_revalidacion.cve_mat,
+			materia=materias.materia,
+			sigla=materias.sigla,
+			horas_reales=materias.horas_reales
+    FROM materias,   
+         materias_revalidacion  
+   WHERE ( materias.cve_mat = materias_revalidacion.cve_mat ) and  
+         (materias_revalidacion.folio = :al_folio)    
+" arguments=(("al_folio", number)) )
+text(band=header alignment="2" text="Materias
+Materia" border="0" color="0" x="837" y="3" height="128" width="1258"  name=materias_materia_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Materias
+Sigla" border="0" color="0" x="600" y="10" height="128" width="227"  name=materias_sigla_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Materias
+Horas Reales" border="0" color="0" x="2099" y="3" height="128" width="355"  name=materias_horas_reales_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Materias Revalidacion
+Cve Mat" border="0" color="0" x="4" y="3" height="128" width="581"  name=materias_revalidacion_cve_mat_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="2187" y="4" height="77" width="99" format="[general]"  name=horas_reales edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="607" y="7" height="77" width="197" format="[general]"  name=sigla edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="26" y="7" height="77" width="333" format="[general]"  name=cve_mat edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="827" y="0" height="77" width="1328" format="[general]"  name=materia edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="0" expression="count(cve_mat for all)"border="0" color="0" x="26" y="4" height="77" width="333" format="[general]"  name=compute_1  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

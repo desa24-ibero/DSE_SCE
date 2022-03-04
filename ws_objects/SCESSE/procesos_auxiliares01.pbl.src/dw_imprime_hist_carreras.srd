@@ -1,0 +1,62 @@
+﻿$PBExportHeader$dw_imprime_hist_carreras.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=641 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=5 color="536870912" )
+detail(height=93 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=hist_carreras_cuenta dbname="hist_carreras.cuenta" )
+ column=(type=long updatewhereclause=yes name=alumnos_cuenta dbname="alumnos.cuenta" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_nombre dbname="alumnos.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_apaterno dbname="alumnos.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_amaterno dbname="alumnos.amaterno" )
+ column=(type=long updatewhereclause=yes name=hist_carreras_cve_formaingreso dbname="hist_carreras.cve_formaingreso" values="CAMBIO CARRERA	1/NUEVA CARRERA	2/" )
+ column=(type=long updatewhereclause=yes name=hist_carreras_cve_carrera_ant dbname="hist_carreras.cve_carrera_ant" )
+ column=(type=long updatewhereclause=yes name=hist_carreras_cve_carrera_act dbname="hist_carreras.cve_carrera_act" )
+ column=(type=long updatewhereclause=yes name=hist_carreras_periodo_ing dbname="hist_carreras.periodo_ing" values="PRIMAVERA	0/VERANO	1/OTOÑO	2/" )
+ column=(type=long updatewhereclause=yes name=hist_carreras_anio_ing dbname="hist_carreras.anio_ing" )
+ retrieve="  	SELECT hist_carreras.cuenta,   
+         alumnos.cuenta,   
+         alumnos.nombre,   
+         alumnos.apaterno,   
+         alumnos.amaterno,   
+         hist_carreras.cve_formaingreso,   
+         hist_carreras.cve_carrera_ant,   
+         hist_carreras.cve_carrera_act,   
+         hist_carreras.periodo_ing,   
+         hist_carreras.anio_ing  
+    	FROM alumnos,   hist_carreras  
+   	WHERE (hist_carreras.anio_ing    	= :ano)  AND
+         			(hist_carreras.periodo_ing = :Periodo) AND         
+         			(hist_carreras.cuenta      	= alumnos.cuenta)
+ 	ORDER BY  hist_carreras.cve_carrera_act,hist_carreras.cuenta
+" arguments=(("periodo", number),("ano", number)) )
+group(level=1 header.height=1 trailer.height=93 by=("hist_carreras_cve_carrera_act" ) newpage=yes header.color="536870912" trailer.color="536870912" )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="19" y="512" height="121" width="3393" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="12632256"  background.mode="2" background.color="0" )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="778" y="20" height="365" width="1797" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="12632256"  background.mode="2" background.color="0" )
+text(band=header alignment="2" text="Universidad Iberoamericana"border="0" color="0" x="997" y="52" height="113" width="1363"  font.face="Arial" font.height="-18" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Dirección de Servicios Escolares"border="0" color="0" x="1025" y="172" height="93" width="1281"  font.face="Arial" font.height="-14" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Reporte cambios de carrera"border="0" color="0" x="1217" y="272" height="77" width="897"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="0" text=""border="0" color="0" x="19" y="184" height="69" width="467"  name=fecha_hoy  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+text(band=header alignment="2" text="Cuenta"border="0" color="0" x="69" y="536" height="69" width="215"  name=hist_carreras_cuenta_t  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="DIg"border="0" color="0" x="330" y="536" height="69" width="101"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="0" text="A. Paterno"border="0" color="0" x="1358" y="536" height="69" width="311"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Nombre(s)"border="0" color="0" x="677" y="536" height="69" width="321"  name=alumnos_nombre_t  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Mov Carrera"border="0" color="0" x="2446" y="536" height="69" width="371"  name=hist_carreras_cve_formaingreso_t  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="0" text="A. Materno"border="0" color="0" x="1889" y="536" height="69" width="316"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="C_Ant"border="0" color="0" x="2963" y="536" height="69" width="183"  name=hist_carreras_cve_carrera_ant_t  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="C_ Act"border="0" color="0" x="3169" y="536" height="69" width="206"  name=hist_carreras_cve_carrera_act_t  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+compute(band=header alignment="0" expression="'Página ' + page() "border="0" color="0" x="3095" y="180" height="77" width="316" format="[general]"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=header id=10 alignment="2" tabsequence=32766 border="5" color="0" x="3214" y="420" height="77" width="197" format="[general]"  name=hist_carreras_anio_ing edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=header id=9 alignment="2" tabsequence=32766 border="5" color="0" x="2785" y="420" height="77" width="407" format="[general]"  name=hist_carreras_periodo_ing ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+text(band=header alignment="0" text="Periodo :"border="0" color="0" x="2419" y="416" height="85" width="321"  font.face="Arial" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="5" color="0" x="33" y="8" height="77" width="289" format="[general]"  name=hist_carreras_cuenta edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="5" color="0" x="343" y="8" height="77" width="78" format="[general]"  name=alumnos_cuenta edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="5" color="0" x="1258" y="8" height="77" width="513" format="[general]"  name=alumnos_apaterno edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="5" color="0" x="439" y="8" height="77" width="796" format="[general]"  name=alumnos_nombre edit.limit=15 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="5" color="0" x="2327" y="8" height="77" width="613" format="[general]"  name=hist_carreras_cve_formaingreso ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="5" color="0" x="1793" y="8" height="77" width="513" format="[general]"  name=alumnos_amaterno edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="5" color="0" x="2958" y="8" height="77" width="193" format="[general]"  name=hist_carreras_cve_carrera_ant edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="5" color="0" x="3173" y="8" height="77" width="197" format="[general]"  name=hist_carreras_cve_carrera_act edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+compute(band=trailer.1 alignment="2" expression="count(hist_carreras_cve_carrera_act for group 1)"border="5" color="0" x="3173" y="4" height="81" width="197" format="[general]"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+text(band=trailer.1 alignment="0" text="Total por carrera: "border="0" color="0" x="2510" y="4" height="81" width="622"  font.face="Arial" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

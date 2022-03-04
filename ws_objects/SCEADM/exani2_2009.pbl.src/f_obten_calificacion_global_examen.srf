@@ -1,0 +1,56 @@
+﻿$PBExportHeader$f_obten_calificacion_global_examen.srf
+global type f_obten_calificacion_global_examen from function_object
+end type
+
+forward prototypes
+global function integer f_obten_calificacion_global_examen (long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio, integer ai_cve_tipo_examen, integer ai_cve_modulo_examen, ref decimal ad_calificacion_global_examen)
+end prototypes
+
+global function integer f_obten_calificacion_global_examen (long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio, integer ai_cve_tipo_examen, integer ai_cve_modulo_examen, ref decimal ad_calificacion_global_examen);//f_obten_calificacion_global_examen
+//
+//Recibe: 
+//al_folio
+//ai_clv_ver
+//ai_clv_per
+//ai_anio
+//ai_cve_tipo_examen
+//ai_cve_modulo_examen
+//
+//Devuelve:
+//  integer
+// decimal ad_calificacion_global_examen
+string ls_cve_opcion_aplicacion 
+integer li_cve_tipo_examen, li_cve_modulo_examen    
+int li_codigo_sql, li_SQLNRows
+string ls_mensaje
+decimal ld_calificacion_global_examen
+
+	  SELECT 
+         resultado_examen_modulo.cve_tipo_examen,   
+         resultado_examen_modulo.cve_modulo_examen,   
+         resultado_examen_modulo.calificacion_global_examen
+	 INTO :li_cve_tipo_examen, 
+	 		:li_cve_modulo_examen, 
+			:ld_calificacion_global_examen
+   FROM resultado_examen_modulo  
+   WHERE ( resultado_examen_modulo.folio = :al_folio ) AND  
+   	   ( resultado_examen_modulo.clv_ver = :ai_clv_ver ) AND  
+         ( resultado_examen_modulo.clv_per = :ai_clv_per ) AND  
+         ( resultado_examen_modulo.anio = :ai_anio )    AND
+         ( resultado_examen_modulo.cve_tipo_examen = :ai_cve_tipo_examen )    AND
+         ( resultado_examen_modulo.cve_modulo_examen = :ai_cve_modulo_examen )
+	USING gtr_sadm;
+	
+	li_codigo_sql = gtr_sadm.SqlCode
+	ls_mensaje = gtr_sadm.SqlErrText
+	li_SQLNRows = gtr_sadm.SQLNRows	
+
+	IF li_codigo_sql = -1 THEN
+		MessageBox("Error al consultar resultado_examen_modulo", ls_mensaje, StopSign!)
+	ELSE
+		ad_calificacion_global_examen=ld_calificacion_global_examen
+	END IF
+
+return li_codigo_sql
+end function
+

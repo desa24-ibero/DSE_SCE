@@ -1,0 +1,43 @@
+﻿$PBExportHeader$f_obten_periodo_tipo.srf
+global type f_obten_periodo_tipo from function_object
+end type
+
+forward prototypes
+global function integer f_obten_periodo_tipo (ref integer ai_periodo, ref integer ai_anio, integer ai_evento)
+global function integer f_obten_periodo_tipo (ref integer ai_periodo, ref integer ai_anio, integer ai_evento, string as_tipo_periodo)
+end prototypes
+
+global function integer f_obten_periodo_tipo (ref integer ai_periodo, ref integer ai_anio, integer ai_evento);//	1	Genera Lista de Profesores
+DataStore lds_periodos_por_procesos
+int li_ret
+lds_periodos_por_procesos = Create DataStore
+lds_periodos_por_procesos.DataObject = "d_periodos_por_procesos"
+lds_periodos_por_procesos.SetTransObject(gtr_sce)
+li_ret =  lds_periodos_por_procesos.Retrieve(ai_evento, gs_tipo_periodo)
+if li_ret = 1 then
+	ai_periodo = lds_periodos_por_procesos.GetItemNumber(1,"periodo")
+	ai_anio = lds_periodos_por_procesos.GetItemNumber(1,"anio")
+else
+	li_ret = -1
+end if
+Destroy  lds_periodos_por_procesos
+return 1
+end function
+
+global function integer f_obten_periodo_tipo (ref integer ai_periodo, ref integer ai_anio, integer ai_evento, string as_tipo_periodo);//	1	Genera Lista de Profesores
+DataStore lds_periodos_por_procesos
+int li_ret
+lds_periodos_por_procesos = Create DataStore
+lds_periodos_por_procesos.DataObject = "d_periodos_por_procesos"
+lds_periodos_por_procesos.SetTransObject(gtr_sce)
+li_ret =  lds_periodos_por_procesos.Retrieve(ai_evento, as_tipo_periodo)
+if li_ret = 1 then
+	ai_periodo = lds_periodos_por_procesos.GetItemNumber(1,"periodo")
+	ai_anio = lds_periodos_por_procesos.GetItemNumber(1,"anio")
+else
+	li_ret = -1
+end if
+Destroy  lds_periodos_por_procesos
+return 1
+end function
+

@@ -1,0 +1,45 @@
+﻿$PBExportHeader$f_obten_incorporado_sep.srf
+global type f_obten_incorporado_sep from function_object
+end type
+
+forward prototypes
+global function integer f_obten_incorporado_sep (integer a_cve_carrera, integer a_cve_plan)
+end prototypes
+
+global function integer f_obten_incorporado_sep (integer a_cve_carrera, integer a_cve_plan);//Función que regresa el si una carrera plan está incorporada a la sep
+//
+//f_obten_incorporado_sep
+//
+//Parámetros:		a_cve_carrera		
+//						a_cve_plan
+
+
+
+int li_codigo_sql, li_incorporado_sep
+long ll_cuenta
+string ls_carrera, ls_nivel, ls_mensaje_sql
+
+
+SELECT dbo.plan_estudios.incorporado_sep
+INTO	:li_incorporado_sep
+FROM	dbo.plan_estudios
+WHERE	dbo.plan_estudios.cve_carrera = :a_cve_carrera
+AND	dbo.plan_estudios.cve_plan = :a_cve_plan
+USING gtr_sce;
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	rollback using gtr_sce;
+	MessageBox("Error al recuperar la incorporación a sep, carrera:"+string(a_cve_carrera)+" plan:"+string(a_cve_plan),  ls_mensaje_sql)
+	SetNull(li_incorporado_sep)
+else
+	commit using gtr_sce;
+end if
+
+return li_incorporado_sep
+
+
+end function
+

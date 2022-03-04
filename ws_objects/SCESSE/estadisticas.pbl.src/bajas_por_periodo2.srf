@@ -1,0 +1,33 @@
+﻿$PBExportHeader$bajas_por_periodo2.srf
+global type bajas_por_periodo2 from function_object
+end type
+
+forward prototypes
+global function string bajas_por_periodo2 (integer año, integer periodo, long materia, integer tipo)
+end prototypes
+
+global function string bajas_por_periodo2 (integer año, integer periodo, long materia, integer tipo);Integer	Tot = 0
+	SELECT count(historico.cve_mat) INTO :Tot FROM historico, hist_grupos
+	WHERE historico.cve_mat = :Materia AND
+			historico.anio = hist_grupos.anio AND
+			historico.periodo = hist_grupos.periodo AND
+			historico.anio = :año AND
+			historico.periodo = :periodo AND
+			hist_grupos.cve_mat = historico.cve_mat AND
+			hist_grupos.gpo = historico.gpo AND
+			hist_grupos.tipo = :tipo AND
+      	historico.calificacion LIKE "BA" using gtr_sce;
+	IF IsNull(Tot) Then Tot = 0		
+	Return String(Tot)
+
+
+
+
+
+
+
+
+
+
+end function
+

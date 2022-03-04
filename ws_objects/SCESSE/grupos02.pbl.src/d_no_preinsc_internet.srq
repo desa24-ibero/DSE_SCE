@@ -1,0 +1,2 @@
+﻿$PBExportHeader$d_no_preinsc_internet.srq
+PBSELECT( VERSION(400) TABLE(NAME="no_preinsc_internet" ) COLUMN(NAME="no_preinsc_internet.cuenta") COLUMN(NAME="no_preinsc_internet.cve_mat") COLUMN(NAME="no_preinsc_internet.gpo") COLUMN(NAME="no_preinsc_internet.status") COLUMN(NAME="no_preinsc_internet.periodo") COLUMN(NAME="no_preinsc_internet.anio") COLUMN(NAME="no_preinsc_internet.orden"))

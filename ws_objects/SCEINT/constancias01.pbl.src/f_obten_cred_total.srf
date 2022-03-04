@@ -1,0 +1,43 @@
+﻿$PBExportHeader$f_obten_cred_total.srf
+global type f_obten_cred_total from function_object
+end type
+
+forward prototypes
+global function decimal f_obten_cred_total (integer ai_cve_carrera, integer ai_plan)
+end prototypes
+
+global function decimal f_obten_cred_total (integer ai_cve_carrera, integer ai_plan);//Función que regresa los créditos totales requeridos para una carrera
+//
+//f_obten_cve_plan
+//
+//Parámetros:		ai_cve_carreraa
+//						ai_plan
+
+int li_codigo_sql
+decimal ldc_cred_total
+long ll_cuenta
+string ls_carrera, ls_nivel, ls_mensaje_sql
+
+SELECT dbo.plan_estudios.cred_total
+INTO	:ldc_cred_total
+FROM	dbo.plan_estudios
+WHERE	dbo.plan_estudios.cve_carrera= :ai_cve_carrera
+AND	dbo.plan_estudios.cve_plan= :ai_plan
+USING gtr_sce;
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	rollback using gtr_sce;
+	MessageBox("Error al recuperar cred_total del plan:"+string(ai_plan) +" carrera: "+string(ai_cve_carrera),  ls_mensaje_sql)
+	ldc_cred_total = 0
+else
+	commit using gtr_sce;
+end if
+
+return ldc_cred_total
+
+
+end function
+

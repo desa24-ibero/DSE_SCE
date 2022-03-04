@@ -1,0 +1,38 @@
+﻿$PBExportHeader$dw_eti_exped.srd
+$PBExportComments$Etiquetas para expedientes. Solo de inscritos con número de cuenta diferente a cero.
+release 6;
+datawindow(units=3 timer_interval=0 color=16777215 processing=2 print.documentname="" print.orientation = 2 print.margin.left = 795 print.margin.right = 0 print.margin.top = 1300 print.margin.bottom = 0 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no label.name="Laser Address 1.00 x 2.63 5160,5260" label.width=6567 label.height=2540 label.rows=10 label.rows.spacing=0 label.columns=3 label.columns.spacing=400 label.topdown=no label.sheet=yes label.shape=roundrectangle label.ellipse_height=176 label.ellipse_width=176 )
+detail(height=2540 color="536870912"  height.autosize=yes)
+table(column=(type=long updatewhereclause=yes name=general_cuenta dbname="general.cuenta" )
+ column=(type=long updatewhereclause=yes name=clv_carr dbname="aspiran.clv_carr" )
+ column=(type=char(50) updatewhereclause=yes name=general_nombre dbname="general.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=general_apaterno dbname="general.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=general_amaterno dbname="general.amaterno" )
+ column=(type=char(50) updatewhereclause=yes name=general_calle dbname="general.calle" )
+ column=(type=char(6) updatewhereclause=yes name=general_codigo_pos dbname="general.codigo_pos" )
+ column=(type=char(50) updatewhereclause=yes name=general_colonia dbname="general.colonia" )
+ column=(type=long updatewhereclause=yes name=general_estado dbname="general.estado" )
+ retrieve="  SELECT  general.cuenta ,
+           aspiran.clv_carr ,
+           general.nombre ,
+           general.apaterno ,
+           general.amaterno ,
+           general.calle ,
+           general.codigo_pos ,
+           general.colonia ,
+           general.estado     
+        FROM aspiran ,
+           general     
+        WHERE ( aspiran.folio = general.folio ) and
+          ( aspiran.clv_ver = general.clv_ver ) and
+          ( aspiran.clv_per = general.clv_per ) and
+          ( aspiran.anio = general.anio ) and
+          ( aspiran.clv_per = :per ) and
+          ( aspiran.anio = :ani ) and
+          (( :carr = 9999 ) or
+          ( aspiran.clv_carr = :carr )) and
+          ( aspiran.pago_insc = 1 )   " arguments=(("per", number),("ani", number),("carr", number))  sort="clv_carr A general_apaterno A general_amaterno A general_nombre A " )
+compute(band=detail alignment="3" expression="if(isnull(general_apaterno),'',general_apaterno)+' '+if(isnull(general_amaterno),'',general_amaterno)+' '+if(isnull(general_nombre),'',general_nombre)"border="0" color="0" x="254" y="402" height="1397" width="6074" format="[general]"  name=nombr  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="string(general_cuenta,~"000000~")+'-'+obten_digito(general_cuenta)"border="0" color="0" x="254" y="1989" height="444" width="2921" format="[general]"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="3407" y="2010" height="402" width="2921" format="[general]"  name=clv_carr editmask.mask="0000" editmask.spinrange="cve_carrera" editmask.focusrectangle=no  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

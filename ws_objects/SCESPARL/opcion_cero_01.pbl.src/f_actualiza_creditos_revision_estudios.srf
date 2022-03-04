@@ -1,0 +1,116 @@
+﻿$PBExportHeader$f_actualiza_creditos_revision_estudios.srf
+global type f_actualiza_creditos_revision_estudios from function_object
+end type
+
+forward prototypes
+global function integer f_actualiza_creditos_revision_estudios (long al_cuenta, integer ai_cve_carrera, integer ai_cve_plan, integer ai_creditos_minimos[], integer ai_creditos_cursados[])
+end prototypes
+
+global function integer f_actualiza_creditos_revision_estudios (long al_cuenta, integer ai_cve_carrera, integer ai_cve_plan, integer ai_creditos_minimos[], integer ai_creditos_cursados[]);//f_actualiza_creditos_revision_estudios
+//al_cuenta			long
+//ai_cve_carrera	integer
+//ai_cve_plan		integer
+//ai_creditos_minimos[] integer array
+//ai_creditos_cursados[] integer array
+
+
+Constant int ABa=1;Constant int AMaOb=2;Constant int AOT=3;Constant int ASS=4;Constant int AMeOb=5
+Constant int AI0=6;Constant int AI1=7;Constant int AI2=8;Constant int AI3=9;Constant int AI4=10;
+Constant int AMaOp = 11;Constant int AMeOp = 12
+
+integer li_basica_min, li_basica_cur, li_mayor_obli_min, li_mayor_obli_cur, li_menor_obli_min, li_menor_obli_cur
+integer li_mayor_opt_min, li_mayor_opt_cur, li_menor_opt_min, li_menor_opt_cur
+integer li_integ_min, li_integ_cur, li_ss_min, li_ss_cur, li_opc_term_min, li_opc_term_cur
+integer li_codigo_sql
+string ls_mensaje
+
+li_basica_min   = ai_creditos_minimos[ABa]
+li_basica_cur   = ai_creditos_cursados[ABa]
+
+li_mayor_obli_min    = ai_creditos_minimos[AMaOb]
+li_mayor_obli_cur    = ai_creditos_cursados[AMaOb]
+
+li_mayor_opt_min    = ai_creditos_minimos[AMaOp]
+li_mayor_opt_cur    = ai_creditos_cursados[AMaOp]
+
+li_menor_obli_min 	 = ai_creditos_minimos[AMeOb]
+li_menor_obli_cur	 = ai_creditos_cursados[AMeOb]
+
+li_menor_opt_min 	 = ai_creditos_minimos[AMeOp]
+li_menor_opt_cur	 = ai_creditos_cursados[AMeOp]
+
+li_integ_min 	 = ai_creditos_minimos[AI0]+ai_creditos_minimos[AI1]+ai_creditos_minimos[AI2]+ai_creditos_minimos[AI3]+ai_creditos_minimos[AI4]
+li_integ_cur    = ai_creditos_cursados[AI0]+ai_creditos_cursados[AI1]+ai_creditos_cursados[AI2]+ai_creditos_cursados[AI3]+ai_creditos_cursados[AI4]
+
+li_ss_min		 = ai_creditos_minimos[ASS]
+li_ss_cur       = ai_creditos_cursados[ASS]
+
+li_opc_term_min = ai_creditos_minimos[AOT]
+li_opc_term_cur = ai_creditos_cursados[AOT]
+
+if isnull(li_basica_min) then li_basica_min=0
+if isnull(li_basica_cur) then li_basica_cur=0
+
+if isnull(li_mayor_obli_min) then li_mayor_obli_min=0
+if isnull(li_mayor_obli_cur) then li_mayor_obli_cur=0
+
+if isnull(li_mayor_opt_min) then li_mayor_opt_min=0
+if isnull(li_mayor_opt_cur) then li_mayor_opt_cur=0
+
+if isnull(li_menor_obli_min) then li_menor_obli_min=0
+if isnull(li_menor_obli_cur) then li_menor_obli_cur=0
+
+if isnull(li_menor_opt_min) then li_menor_opt_min=0
+if isnull(li_menor_opt_cur) then li_menor_opt_cur=0
+
+if isnull(li_integ_min) then li_integ_min=0
+if isnull(li_integ_cur) then li_integ_cur=0
+
+if isnull(li_ss_min) then li_ss_min=0
+if isnull(li_ss_cur) then li_ss_cur=0
+
+if isnull(li_opc_term_min) then li_opc_term_min=0
+if isnull(li_opc_term_cur) then li_opc_term_cur=0
+
+UPDATE revision_de_estudios
+SET basica_min = :li_basica_min,
+	 basica_cur = :li_basica_cur,
+	 mayor_obli_min = :li_mayor_obli_min,
+	 mayor_obli_cur = :li_mayor_obli_cur,
+	 mayor_opt_min = :li_mayor_opt_min,
+	 mayor_opt_cur = :li_mayor_opt_cur,
+	 menor_obli_min = :li_menor_obli_min,
+	 menor_obli_cur = :li_menor_obli_cur,
+	 menor_opt_min = :li_menor_opt_min,
+	 menor_opt_cur = :li_menor_opt_cur,
+	 integ_min = :li_integ_min,
+	 integ_cur = :li_integ_cur,
+	 ss_min =  :li_ss_min,
+	 ss_cur =  :li_ss_cur,
+	 opc_ter_min = :li_opc_term_min,
+	 opc_ter_cur = :li_opc_term_cur
+FROM revision_de_estudios
+WHERE cuenta = :al_cuenta
+AND	cve_carrera = :ai_cve_carrera
+AND	cve_plan = :ai_cve_plan
+USING gtr_sce;
+ls_mensaje = gtr_sce.SqlErrText
+li_codigo_sql = gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	ROLLBACK USING gtr_sce;
+	MessageBox("Error al Actualizar los créditos",ls_mensaje, StopSign!)
+	return -1
+elseif li_codigo_sql = 0 then
+	COMMIT USING gtr_sce;	
+	return 0
+elseif li_codigo_sql = 100 then
+	ROLLBACK USING gtr_sce;
+	MessageBox("Registro inexistente en revision_de_estudios",ls_mensaje, StopSign!)
+	return -1
+end if
+	 
+return 0
+
+end function
+

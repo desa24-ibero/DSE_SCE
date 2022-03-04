@@ -1,0 +1,52 @@
+﻿$PBExportHeader$d_sit_pre_insc_fol.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=136 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=horario_insc_cuenta dbname="horario_insc.cuenta" )
+ column=(type=long updatewhereclause=yes name=horario_insc_anio dbname="horario_insc.anio" )
+ column=(type=long updatewhereclause=yes name=horario_insc_periodo dbname="horario_insc.periodo" )
+ column=(type=long updatewhereclause=yes name=horario_insc_folio_sol_mat dbname="horario_insc.folio_sol_mat" )
+ column=(type=char(1) updatewhereclause=yes name=academicos_nivel dbname="academicos.nivel" )
+ column=(type=char(70) updatewhereclause=yes name=alumnos_nombre_completo dbname="alumnos.nombre_completo" )
+ retrieve="  SELECT dbo.horario_insc.cuenta,   
+         dbo.horario_insc.anio,   
+         dbo.horario_insc.periodo,   
+         dbo.horario_insc.folio_sol_mat,   
+         dbo.academicos.nivel,   
+         dbo.alumnos.nombre_completo  
+    FROM dbo.horario_insc,   
+         dbo.academicos,   
+         dbo.alumnos,   
+         dbo.banderas_inscrito  
+   WHERE ( dbo.horario_insc.cuenta = dbo.academicos.cuenta ) and  
+         ( dbo.alumnos.cuenta = dbo.academicos.cuenta ) and  
+         ( dbo.alumnos.cuenta = dbo.banderas_inscrito.cuenta ) and  
+         ( ( dbo.academicos.nivel = :q_nivel ) AND  
+         ( dbo.horario_insc.anio = :q_anio ) AND  
+         ( dbo.horario_insc.periodo = :q_periodo ) AND  
+         ( dbo.horario_insc.folio_sol_mat is not null ) AND  
+         ( dbo.horario_insc.folio_sol_mat > 0 ) )    
+" arguments=(("q_nivel", string),("q_anio", number),("q_periodo", number))  sort="horario_insc_cuenta A " )
+text(band=header alignment="2" text="Horario Insc
+Cuenta" border="0" color="0" x="5" y="4" height="128" width="329"  name=horario_insc_cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Horario Insc
+Anio" border="0" color="0" x="338" y="4" height="128" width="329"  name=horario_insc_anio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Horario Insc
+Periodo" border="0" color="0" x="672" y="4" height="128" width="329"  name=horario_insc_periodo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Horario Insc
+Folio Sol Mat" border="0" color="0" x="1006" y="4" height="128" width="352"  name=horario_insc_folio_sol_mat_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Academicos
+Nivel" border="0" color="0" x="1362" y="4" height="128" width="329"  name=academicos_nivel_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Alumnos
+Nombre Completo" border="0" color="0" x="1696" y="4" height="128" width="1947"  name=alumnos_nombre_completo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="76" width="329" format="[general]"  name=horario_insc_cuenta edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="338" y="4" height="76" width="329" format="[general]"  name=horario_insc_anio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="672" y="4" height="76" width="329" format="[general]"  name=horario_insc_periodo edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="0" x="1006" y="4" height="76" width="329" format="[general]"  name=horario_insc_folio_sol_mat edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="1362" y="4" height="76" width="224" format="[general]"  name=academicos_nivel edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="1696" y="4" height="76" width="1947" format="[general]"  name=alumnos_nombre_completo edit.limit=70 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

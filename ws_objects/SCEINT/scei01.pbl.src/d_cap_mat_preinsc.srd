@@ -1,0 +1,30 @@
+﻿$PBExportHeader$d_cap_mat_preinsc.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=77 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=90 color="553648127" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cuenta dbname="mat_preinsc.cuenta" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=cve_mat dbname="mat_preinsc.cve_mat" )
+ column=(type=char(2) update=yes updatewhereclause=yes key=yes name=gpo dbname="mat_preinsc.gpo" )
+ column=(type=long update=yes updatewhereclause=yes name=status dbname="mat_preinsc.status" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=periodo dbname="mat_preinsc.periodo" values="Primavera	0/Verano	1/Otoño	2/" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=anio dbname="mat_preinsc.anio" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"mat_preinsc~" ) COLUMN(NAME=~"mat_preinsc.cuenta~") COLUMN(NAME=~"mat_preinsc.cve_mat~") COLUMN(NAME=~"mat_preinsc.gpo~") COLUMN(NAME=~"mat_preinsc.status~") COLUMN(NAME=~"mat_preinsc.periodo~") COLUMN(NAME=~"mat_preinsc.anio~")WHERE(    EXP1 =~"mat_preinsc.cuenta~"   OP =~"=~"    EXP2 =~":cuenta ~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"mat_preinsc.periodo~"   OP =~"=~"    EXP2 =~":per~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"mat_preinsc.anio~"   OP =~"=~"    EXP2 =~":ani~" ) ) ARG(NAME = ~"cuenta~" TYPE = number)  ARG(NAME = ~"per~" TYPE = number)  ARG(NAME = ~"ani~" TYPE = number) " update="mat_preinsc" updatewhere=1 updatekeyinplace=no arguments=(("cuenta", number),("per", number),("ani", number))  sort="anio A periodo A cve_mat A " )
+text(band=header alignment="2" text="Gpo" border="0" color="33554432" x="944" y="3" height="67" width="110"  name=gpo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="Status" border="0" color="33554432" x="1134" y="3" height="67" width="176"  name=status_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="Cve Mat" border="0" color="33554432" x="662" y="3" height="67" width="216"  name=cve_mat_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="33554432" x="157" y="3" height="77" width="139" format="[General]"  name=anio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="33554432" x="307" y="3" height="77" width="307" format="[General]"  name=periodo ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=2 alignment="2" tabsequence=10 border="0" color="33554432" x="622" y="3" height="77" width="315" format="[general]"  name=cve_mat edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=3 alignment="2" tabsequence=20 border="0" color="33554432" x="947" y="3" height="77" width="106" format="[general]"  name=gpo edit.limit=2 edit.case=upper edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="33554432" x="1061" y="3" height="77" width="333" format="[general]"  name=status edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=detail alignment="0" expression="if ( truncate(status/32,0) = 1 ,'', 'Falta Prerreq. ')+
+if ( mod(truncate(status/16,0),2) = 1 ,'', 'No Puede Integración ')+
+if ( mod(truncate(status/8,0),2) = 1 ,'', 'Ya la cursó ')+
+if ( mod(truncate(status/4,0),2) = 1 ,'', 'No Pert. Plan ')+
+if ( mod(truncate(status/2,0),2) = 1 ,'', 'No Existe Grupo ')+
+if ( mod(status,2) = 1 ,'', 'No Existe Materia')"border="0" color="33554432" x="1401" y="3" height="77" width="2052" format="[general]"  name=compute_1  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+htmltable(border="0" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

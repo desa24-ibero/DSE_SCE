@@ -1,0 +1,26 @@
+﻿$PBExportHeader$tot_gpo_cerrados.srf
+global type tot_gpo_cerrados from function_object
+end type
+
+forward prototypes
+global function string tot_gpo_cerrados (integer año, integer periodo, long materia)
+end prototypes
+
+global function string tot_gpo_cerrados (integer año, integer periodo, long materia);// Regresa en un string el total de grupos cerrados en un periodo año.
+// Juan Campos Sánchez.   Mar-1998.
+
+long Cont = 0
+
+Select count(cve_mat) Into :Cont From hist_grupos     
+Where anio = :año And       
+  		periodo = :periodo and        
+  		cve_mat = :materia and      
+  		cond_gpo = 0 and             // 0=Cerrado
+      tipo <> 2 using gtr_sce;                   // 2=Asimilado    
+If gtr_sce.sqlcode = 0 Then
+	Return String(Cont) 
+Else
+	Return "Error"
+End if
+end function
+

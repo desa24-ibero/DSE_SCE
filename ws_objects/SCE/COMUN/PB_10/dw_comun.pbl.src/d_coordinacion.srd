@@ -1,0 +1,15 @@
+﻿$PBExportHeader$d_coordinacion.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=77 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=90 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cve_coordinacion dbname="coordinaciones.cve_coordinacion" )
+ column=(type=char(70) update=yes updatewhereclause=yes name=coordinacion dbname="coordinaciones.coordinacion" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"coordinaciones~" ) COLUMN(NAME=~"coordinaciones.cve_coordinacion~") COLUMN(NAME=~"coordinaciones.coordinacion~")) " update="coordinaciones" updatewhere=1 updatekeyinplace=no )
+text(band=header alignment="2" text="Coordinacion"border="0" color="33554432" x="783" y="3" height="67" width="362"  name=coordinacion_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="Cve Coordinacion"border="0" color="33554432" x="0" y="3" height="67" width="494"  name=cve_coordinacion_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="15" y="3" height="77" width="329" format="[general]"  name=cve_coordinacion edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="358" y="3" height="77" width="2308" format="[general]"  name=coordinacion edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

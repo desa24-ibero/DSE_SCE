@@ -1,0 +1,88 @@
+﻿$PBExportHeader$f_inserta_folio_reval_sep.srf
+global type f_inserta_folio_reval_sep from function_object
+end type
+
+forward prototypes
+global function long f_inserta_folio_reval_sep (long al_folio)
+end prototypes
+
+global function long f_inserta_folio_reval_sep (long al_folio);//Función que regresa el número de semestres que ha cursado un alumno 
+//
+//f_inserta_folio_reval_pliego_sep
+//
+//Parámetros:		al_folio		
+
+int li_codigo_sql, li_cve_constancia
+long ll_folio, ll_max_folio, ll_folio_siguiente
+string ls_carrera, ls_nivel, ls_mensaje_sql, ls_sexo, ls_mensaje_aux
+boolean 	lb_nueva_insercion 
+
+
+gtr_sce.AutoCommit = true
+lb_nueva_insercion = false
+	
+ll_folio = al_folio
+
+
+SELECT max(dbo.folio_reval_pliego_sep.folio_consecutivo)
+INTO	:ll_max_folio
+FROM	dbo.folio_reval_pliego_sep
+USING gtr_sce;
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	rollback using gtr_sce;
+	MessageBox("Error al recuperar el folio_consecutivo máximo en la revalidacion:"+string(al_folio),  ls_mensaje_sql)
+elseif li_codigo_sql=100 then
+	commit using gtr_sce;
+	ll_max_folio = 0
+else
+	commit using gtr_sce;
+end if
+
+if isnull(ll_max_folio) then
+	lb_nueva_insercion = true
+	ll_max_folio = 0
+end if
+
+ll_folio_siguiente= ll_max_folio +1
+
+if lb_nueva_insercion then
+
+	ls_mensaje_aux="Error al insertar en folio_reval_pliego_sep en la constancia: "
+
+	INSERT INTO	dbo.folio_reval_pliego_sep
+	(dbo.folio_reval_pliego_sep.folio_consecutivo, dbo.folio_reval_pliego_sep.folio)
+	VALUES
+	(:ll_folio_siguiente, :ll_folio)
+	USING gtr_sce;
+else
+
+	ls_mensaje_aux="Error al actualizar en folio_reval_pliego_sep en la constancia: "
+
+	UPDATE dbo.folio_reval_pliego_sep
+	SET dbo.folio_reval_pliego_sep.folio_consecutivo = :ll_folio_siguiente,
+	    dbo.folio_reval_pliego_sep.folio = :ll_folio
+	FROM dbo.folio_reval_pliego_sep
+	USING gtr_sce;
+end if
+
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	rollback using gtr_sce;
+	MessageBox(ls_mensaje_aux+string(al_folio),  ls_mensaje_sql)
+else
+	commit using gtr_sce;
+end if
+
+
+return ll_folio_siguiente
+
+
+end function
+

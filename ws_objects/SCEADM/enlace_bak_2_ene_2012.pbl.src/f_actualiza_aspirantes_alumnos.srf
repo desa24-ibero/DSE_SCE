@@ -1,0 +1,180 @@
+﻿$PBExportHeader$f_actualiza_aspirantes_alumnos.srf
+global type f_actualiza_aspirantes_alumnos from function_object
+end type
+
+forward prototypes
+global function integer f_actualiza_aspirantes_alumnos (long al_folio, long al_clv_ver, long al_clv_per, long al_anio)
+end prototypes
+
+global function integer f_actualiza_aspirantes_alumnos (long al_folio, long al_clv_ver, long al_clv_per, long al_anio);//f_actualiza_aspirantes_alumnos
+//Recibe:	al_folio		long
+//				al_clv_ver	long
+//				al_clv_per	long
+//				al_anio		long
+//Actualiza en controlescolar_bd, los registros con información faltante
+integer li_codigo_sql
+string ls_mensaje_sql
+
+li_codigo_sql=0
+
+//Información de academicos
+UPDATE academicos	 SET 	academicos.anio_ing	=	admision_bd.dbo.aspiran.ing_anio	 	FROM academicos, admision_bd.dbo.aspiran, admision_bd.dbo.general	 	WHERE academicos.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio	AND 	academicos.anio_ing	IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE academicos	 SET 	academicos.cve_carrera	=	admision_bd.dbo.aspiran.clv_carr	 	FROM academicos, admision_bd.dbo.aspiran, admision_bd.dbo.general	 	WHERE academicos.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio	AND 	academicos.cve_carrera	IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE academicos	 SET 	academicos.periodo_ing	=	admision_bd.dbo.aspiran.ing_per	 	FROM academicos, admision_bd.dbo.aspiran, admision_bd.dbo.general	 	WHERE academicos.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio	AND 	academicos.periodo_ing	IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+//Información de alumno
+UPDATE alumnos	 SET 	alumnos.amaterno	=	admision_bd.dbo.general.amaterno	 	FROM alumnos, admision_bd.dbo.aspiran, admision_bd.dbo.general	 	WHERE alumnos.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio	 AND 	alumnos.amaterno	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE alumnos	 SET 	alumnos.apaterno	=	admision_bd.dbo.general.apaterno	 	FROM alumnos, admision_bd.dbo.aspiran, admision_bd.dbo.general	 	WHERE alumnos.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio	AND 	alumnos.apaterno	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE alumnos	 SET 	alumnos.cve_edocivil	=	admision_bd.dbo.general.edo_civil	 	FROM alumnos, admision_bd.dbo.aspiran, admision_bd.dbo.general	 	WHERE alumnos.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio	AND 	alumnos.cve_edocivil	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE alumnos	 SET 	alumnos.cve_nacion	=	admision_bd.dbo.general.nacional	 	FROM alumnos, admision_bd.dbo.aspiran, admision_bd.dbo.general	 	WHERE alumnos.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio	AND 	alumnos.cve_nacion	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE alumnos	 SET 	alumnos.cve_religion	=	admision_bd.dbo.general.religion	 	FROM alumnos, admision_bd.dbo.aspiran, admision_bd.dbo.general	 	WHERE alumnos.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio	AND 	alumnos.cve_religion	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE alumnos	 SET 	alumnos.cve_trabajo	=	admision_bd.dbo.general.trabajo	 	FROM alumnos, admision_bd.dbo.aspiran, admision_bd.dbo.general	 	WHERE alumnos.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio	AND 	alumnos.cve_trabajo	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE alumnos	 SET 	alumnos.fecha_nac	=	admision_bd.dbo.general.fecha_nac	 	FROM alumnos, admision_bd.dbo.aspiran, admision_bd.dbo.general	 	WHERE alumnos.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio	AND 	alumnos.fecha_nac	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE alumnos	 SET 	alumnos.lugar_nac	=	admision_bd.dbo.general.lugar_nac	 	FROM alumnos, admision_bd.dbo.aspiran, admision_bd.dbo.general	 	WHERE alumnos.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio	AND 	alumnos.lugar_nac	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE alumnos	 SET 	alumnos.nombre	=	admision_bd.dbo.general.nombre	 	FROM alumnos, admision_bd.dbo.aspiran, admision_bd.dbo.general	 	WHERE alumnos.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio	AND 	alumnos.nombre	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE alumnos	 SET 	alumnos.promedio_bach	=	admision_bd.dbo.aspiran.promedio	 	FROM alumnos, admision_bd.dbo.aspiran, admision_bd.dbo.general	 	WHERE alumnos.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio	AND 	alumnos.promedio_bach	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE alumnos	 SET 	alumnos.sexo	=	admision_bd.dbo.general.sexo	 	FROM alumnos, admision_bd.dbo.aspiran, admision_bd.dbo.general	 	WHERE alumnos.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio	AND 	alumnos.sexo	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+//Información del domicilio
+UPDATE domicilio	 SET 	domicilio.calle	=	admision_bd.dbo.general.calle	 	FROM domicilio, admision_bd.dbo.aspiran, admision_bd.dbo.general	 	WHERE domicilio.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio	AND 	domicilio.calle	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE domicilio	 SET 	domicilio.cod_postal	=	admision_bd.dbo.general.codigo_pos	 	FROM domicilio, admision_bd.dbo.aspiran, admision_bd.dbo.general	 	WHERE domicilio.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio	AND 	domicilio.cod_postal	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE domicilio	 SET 	domicilio.colonia	=	admision_bd.dbo.general.colonia	 	FROM domicilio, admision_bd.dbo.aspiran, admision_bd.dbo.general	 	WHERE domicilio.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio	AND 	domicilio.colonia	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE domicilio	 SET 	domicilio.cve_estado	=	admision_bd.dbo.general.estado	 	FROM domicilio, admision_bd.dbo.aspiran, admision_bd.dbo.general	 	WHERE domicilio.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio	AND 	domicilio.cve_estado	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE domicilio	 SET 	domicilio.telefono	=	admision_bd.dbo.general.telefono	 	FROM domicilio, admision_bd.dbo.aspiran, admision_bd.dbo.general	 	WHERE domicilio.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio	AND 	domicilio.telefono	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+//Información del bachillerato
+UPDATE estudio_ant	 SET 	estudio_ant.cve_escuela	=	admision_bd.dbo.general.bachillera	 	FROM estudio_ant, admision_bd.dbo.aspiran, admision_bd.dbo.general	 	WHERE estudio_ant.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio	AND 	estudio_ant.cve_escuela	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+					 		 				
+//Información del padre
+UPDATE padre	 SET 	padre.amaterno	=	admision_bd.dbo.padres.amaterno	 	FROM padre, admision_bd.dbo.aspiran, admision_bd.dbo.general, admision_bd.dbo.padres	 	WHERE padre.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.padres.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.padres.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.padres.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.padres.anio	AND 	padre.amaterno	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE padre	 SET 	padre.apaterno	=	admision_bd.dbo.padres.apaterno	 	FROM padre, admision_bd.dbo.aspiran, admision_bd.dbo.general, admision_bd.dbo.padres	 	WHERE padre.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.padres.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.padres.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.padres.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.padres.anio	AND 	padre.apaterno	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE padre	 SET 	padre.calle	=	admision_bd.dbo.padres.calle	 	FROM padre, admision_bd.dbo.aspiran, admision_bd.dbo.general, admision_bd.dbo.padres	 	WHERE padre.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.padres.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.padres.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.padres.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.padres.anio	AND 	padre.calle	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE padre	 SET 	padre.cod_postal	=	admision_bd.dbo.padres.codigo_pos	 	FROM padre, admision_bd.dbo.aspiran, admision_bd.dbo.general, admision_bd.dbo.padres	 	WHERE padre.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.padres.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.padres.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.padres.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.padres.anio	AND 	padre.cod_postal	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE padre	 SET 	padre.colonia	=	admision_bd.dbo.padres.colonia	 	FROM padre, admision_bd.dbo.aspiran, admision_bd.dbo.general, admision_bd.dbo.padres	 	WHERE padre.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.padres.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.padres.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.padres.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.padres.anio	AND 	padre.colonia	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE padre	 SET 	padre.cve_estado	=	admision_bd.dbo.padres.estado	 	FROM padre, admision_bd.dbo.aspiran, admision_bd.dbo.general, admision_bd.dbo.padres	 	WHERE padre.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.padres.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.padres.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.padres.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.padres.anio	AND 	padre.cve_estado	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE padre	 SET 	padre.nombre	=	admision_bd.dbo.padres.nombre	 	FROM padre, admision_bd.dbo.aspiran, admision_bd.dbo.general, admision_bd.dbo.padres	 	WHERE padre.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.padres.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.padres.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.padres.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.padres.anio	AND 	padre.nombre	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN Goto ErrorActualizacion
+
+UPDATE padre	 SET 	padre.telefono	=	admision_bd.dbo.padres.telefono	 	FROM padre, admision_bd.dbo.aspiran, admision_bd.dbo.general, admision_bd.dbo.padres	 	WHERE padre.cuenta =admision_bd.dbo.general.cuenta AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.general.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.general.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.general.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.general.anio AND admision_bd.dbo.aspiran.folio = admision_bd.dbo.padres.folio AND admision_bd.dbo.aspiran.clv_ver= admision_bd.dbo.padres.clv_ver AND admision_bd.dbo.aspiran.clv_per= admision_bd.dbo.padres.clv_per AND admision_bd.dbo.aspiran.anio= admision_bd.dbo.padres.anio	AND 	padre.telefono	 IN (NULL)
+AND admision_bd.dbo.aspiran.folio = :al_folio AND admision_bd.dbo.aspiran.clv_ver = :al_clv_ver AND admision_bd.dbo.aspiran.clv_per = :al_clv_per AND admision_bd.dbo.aspiran.anio = :al_anio
+USING gtr_sce;
+IF gtr_sce.SQLCode = -1 THEN 
+	Goto ErrorActualizacion
+ELSEIF gtr_sce.SQLCode = 0 THEN 
+	COMMIT USING gtr_sce;
+	return 0
+END IF
+
+
+ErrorActualizacion:
+li_codigo_sql = gtr_sce.SQLCode
+ls_mensaje_sql = gtr_sce.SQLErrText
+ROLLBACK USING gtr_sce;
+MessageBox("Error al actualizar el folio["+string(al_folio)+"]",ls_mensaje_sql,StopSign!)
+return -1
+
+
+end function
+

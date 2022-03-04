@@ -1,0 +1,65 @@
+﻿$PBExportHeader$d_aspirantes_sin_padre.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=246 color="536870912" )
+summary(height=77 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=74 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=general_cuenta dbname="general.cuenta" )
+ column=(type=long updatewhereclause=yes name=aspiran_folio dbname="aspiran.folio" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_ver dbname="aspiran.clv_ver" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_per dbname="aspiran.clv_per" )
+ column=(type=long updatewhereclause=yes name=aspiran_anio dbname="aspiran.anio" )
+ column=(type=long updatewhereclause=yes name=aspiran_ing_per dbname="aspiran.ing_per" )
+ column=(type=long updatewhereclause=yes name=aspiran_ing_anio dbname="aspiran.ing_anio" )
+ column=(type=char(9) updatewhereclause=yes name=periodo_examen dbname="periodo_examen" )
+ column=(type=char(9) updatewhereclause=yes name=periodo_ingreso dbname="periodo_ingreso" )
+ retrieve="  SELECT g.cuenta,   
+         a.folio,   
+         a.clv_ver,   
+         a.clv_per,   
+         a.anio,   
+         a.ing_per,   
+         a.ing_anio,
+			periodo_examen = CASE a.clv_per WHEN 0 THEN ~"Primavera~"
+																WHEN 1 THEN ~"Verano~"
+																WHEN 2 THEN ~"Otoño~" END,
+			periodo_ingreso = CASE a.ing_per WHEN 0 THEN ~"Primavera~"
+																WHEN 1 THEN ~"Verano~"
+																WHEN 2 THEN ~"Otoño~" END 
+    FROM aspiran a,   
+         general g
+   WHERE ( a.folio = g.folio ) and  
+         ( a.clv_ver = g.clv_ver ) and  
+         ( a.clv_per = g.clv_per ) and  
+         ( a.anio = g.anio ) and  
+         ( a.status in (1,4) ) AND  
+			(( a.clv_ver = :ai_version) OR
+          (:ai_version = 99        ) ) AND
+			( a.clv_per = :ai_periodo) AND
+			( a.anio = :ai_anio) AND
+		   NOT EXISTS (SELECT * FROM padres p 
+												WHERE a.folio = p.folio
+												AND a.clv_ver = p.clv_ver
+												AND a.clv_per = p.clv_per
+												AND a.anio = p.anio)
+" arguments=(("ai_version", number),("ai_periodo", number),("ai_anio", number)) )
+text(band=header alignment="2" text="Aspirantes aceptados SIN información de su padre cargada"border="0" color="33554432" x="611" y="22" height="77" width="1993"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=header alignment="1" expression="~"Pág ~"+ string(page()) + ~"/~"+ string(pageCount())"border="0" color="33554432" x="3050" y="26" height="77" width="336" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="Versión"border="0" color="0" x="1046" y="170" height="64" width="223"  name=aspiran_clv_ver_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Año Ingreso"border="0" color="0" x="2619" y="170" height="64" width="355"  name=aspiran_ing_anio_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Folio"border="0" color="0" x="600" y="170" height="64" width="139"  name=aspiran_folio_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cuenta"border="0" color="0" x="219" y="170" height="64" width="212"  name=general_cuenta_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Año"border="0" color="0" x="1931" y="170" height="64" width="117"  name=aspiran_anio_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Periodo Ingreso"border="0" color="0" x="2114" y="170" height="64" width="461"  name=aspiran_ing_per_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Periodo"border="0" color="0" x="1540" y="170" height="64" width="227"  name=aspiran_clv_per_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="881" y="4" height="64" width="552" format="[general]"  name=aspiran_clv_ver dddw.name=dddw_version dddw.displaycolumn=version dddw.datacolumn=clv_ver dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="2622" y="4" height="64" width="347" format="[general]"  name=aspiran_ing_anio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="1887" y="4" height="64" width="205" format="[general]"  name=aspiran_anio edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="0" x="2139" y="4" height="64" width="410" format="[general]"  name=periodo_ingreso edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="1448" y="4" height="64" width="410" format="[general]"  name=periodo_examen edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="494" y="4" height="64" width="351" format="[general]"  name=aspiran_folio dddw.name=dddw_version dddw.displaycolumn=version dddw.datacolumn=clv_ver dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="string( general_cuenta)+~"-~"+obten_digito( general_cuenta )"border="0" color="0" x="187" y="4" height="64" width="278" format="[general]"  name=cf_cuenta_digito  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=summary alignment="2" text="TOTAL"border="0" color="0" x="179" y="6" height="64" width="278"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="count(aspiran_folio for all)"border="0" color="0" x="497" y="3" height="64" width="351" format="#,##0"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

@@ -1,0 +1,48 @@
+﻿$PBExportHeader$dw_aspi-aceptados.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=89 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=269 color="536870912" )
+table(column=(type=char(50) updatewhereclause=yes name=general_nombre dbname="general.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=general_apaterno dbname="general.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=general_amaterno dbname="general.amaterno" )
+ column=(type=char(50) updatewhereclause=yes name=general_calle dbname="general.calle" )
+ column=(type=char(6) updatewhereclause=yes name=general_codigo_pos dbname="general.codigo_pos" )
+ column=(type=char(50) updatewhereclause=yes name=general_colonia dbname="general.colonia" )
+ column=(type=char(9) updatewhereclause=yes name=general_telefono dbname="general.telefono" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_carr dbname="aspiran.clv_carr" )
+ column=(type=long updatewhereclause=yes name=general_cuenta dbname="general.cuenta" )
+ retrieve="  SELECT general.nombre,   
+         general.apaterno,   
+         general.amaterno,   
+         general.calle,   
+         general.codigo_pos,   
+         general.colonia,   
+         general.telefono,   
+         aspiran.clv_carr,   
+         general.cuenta  
+    FROM aspiran,   
+         general  
+   WHERE ( aspiran.folio = general.folio ) and  
+         ( general.clv_ver = aspiran.clv_ver ) and  
+         ( aspiran.clv_per = general.clv_per ) and  
+         ( general.anio = aspiran.anio ) and  
+         ( (general.clv_ver = :ver) OR
+           (:ver = 99)             ) AND  
+         ( general.clv_per = :per  ) AND  
+         ( general.anio = :ani  ) AND   
+         ( general.folio between :min and :max ) AND  
+         ( aspiran.status <> 0 and aspiran.status <> 3 ) AND
+			( aspiran.pago_insc = :pagado )" arguments=(("ver", number),("per", number),("ani", number),("min", number),("max", number),("pagado", number))  sort="general_cuenta A " )
+compute(band=header alignment="0" expression="count(general_cuenta for all)"border="0" color="0" x="5" y="0" height="81" width="334" format="[general]"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="2807" y="84" height="77" width="193" format="[general]"  name=general_codigo_pos edit.limit=6 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1" y="84" height="77" width="1399" format="[general]"  name=general_amaterno edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1404" y="84" height="77" width="1399" format="[general]"  name=general_calle edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="1" y="164" height="77" width="1399" format="[general]"  name=general_colonia edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="1747" y="4" height="77" width="1399" format="[general]"  name=general_apaterno edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="1742" y="164" height="77" width="275" format="[general]"  name=general_telefono edit.limit=9 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="2021" y="164" height="77" width="577" format="[general]"  name=aspiran_clv_carr edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="339" y="4" height="77" width="1399" format="[general]"  name=general_nombre edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="1" y="4" height="77" width="334" format="[general]"  name=general_cuenta edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

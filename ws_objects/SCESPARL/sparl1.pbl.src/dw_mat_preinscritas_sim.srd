@@ -1,0 +1,48 @@
+﻿$PBExportHeader$dw_mat_preinscritas_sim.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=0 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=72 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cuenta dbname="mat_preinsc.cuenta" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=cve_mat dbname="mat_preinsc.cve_mat" )
+ column=(type=char(2) update=yes updatewhereclause=yes key=yes name=gpo dbname="mat_preinsc.gpo" )
+ column=(type=long update=yes updatewhereclause=yes name=status dbname="mat_preinsc.status" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=anio dbname="mat_preinsc.anio" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=periodo dbname="mat_preinsc.periodo" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=proceso_preinsc dbname="mat_preinsc.proceso_preinsc" )
+ column=(type=long updatewhereclause=yes name=grupo_paralelo dbname="grupo_paralelo" )
+ retrieve="  SELECT  mat_preinsc.cuenta ,
+           mat_preinsc.cve_mat ,
+           mat_preinsc.gpo,
+			  mat_preinsc.status,
+     		mat_preinsc.anio,
+ 			mat_preinsc.periodo, 
+			mat_preinsc.proceso_preinsc, 
+			0 as grupo_paralelo 
+        FROM mat_preinsc      
+        WHERE ( mat_preinsc.cuenta = :cta ) and
+          ( mat_preinsc.periodo = :per ) and
+          ( mat_preinsc.anio = :year ) and 
+		(proceso_preinsc = :proceso) 
+ORDER BY orden 
+
+" update="mat_preinsc" updatewhere=0 updatekeyinplace=yes arguments=(("cta", number),("per", number),("year", number),("proceso", number)) )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="5" color="0" x="18" y="8" height="56" width="329" format="[general]" html.valueishtml="0"  name=cuenta visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="5" color="0" x="370" y="8" height="56" width="329" format="[general]" html.valueishtml="0"  name=cve_mat visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="5" color="0" x="722" y="8" height="56" width="82" format="[general]" html.valueishtml="0"  name=gpo visible="1" edit.limit=2 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=4 alignment="0" tabsequence=10 border="5" color="0" x="827" y="8" height="56" width="183" format="[general]" html.valueishtml="0"  name=status visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="5" color="0" x="1033" y="8" height="56" width="105" format="[general]" html.valueishtml="0"  name=anio visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="5" color="0" x="1161" y="8" height="56" width="183" format="[general]" html.valueishtml="0"  name=periodo visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=7 alignment="0" tabsequence=20 border="5" color="0" x="1367" y="8" height="56" width="256" html.valueishtml="0"  name=proceso_preinsc visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

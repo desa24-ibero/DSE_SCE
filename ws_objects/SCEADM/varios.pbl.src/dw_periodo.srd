@@ -1,0 +1,12 @@
+﻿$PBExportHeader$dw_periodo.srd
+$PBExportComments$Catálogo de Periodos del Año.
+release 5;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=clv_per dbname="periodo.clv_per" )
+ column=(type=char(9) updatewhereclause=yes name=periodo dbname="periodo.periodo" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"periodo~" ) COLUMN(NAME=~"periodo.clv_per~") COLUMN(NAME=~"periodo.periodo~")) " )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="5" y="8" height="77" width="522" format="[general]"  name=periodo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )

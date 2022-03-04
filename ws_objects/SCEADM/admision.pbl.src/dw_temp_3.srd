@@ -1,0 +1,44 @@
+﻿$PBExportHeader$dw_temp_3.srd
+$PBExportComments$Aspirantes que NO tienen bita_bachi completo
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=141 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=aspiran_folio dbname="folio" )
+ column=(type=char(50) updatewhereclause=yes name=general_nombre dbname="nombre" )
+ column=(type=char(50) updatewhereclause=yes name=general_apaterno dbname="apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=general_amaterno dbname="amaterno" )
+ retrieve="  SELECT aspiran.folio,   
+         general.nombre,   
+         general.apaterno,   
+         general.amaterno  
+    FROM aspiran,   
+         general  
+   WHERE ( aspiran.folio = general.folio ) and  
+         ( aspiran.clv_ver = general.clv_ver ) and  
+         ( aspiran.clv_per = general.clv_per ) and  
+         ( aspiran.anio = general.anio ) and  
+         ( ( aspiran.folio not in (  SELECT bita_bachi.folio  
+                                       FROM bita_bachi  
+                                      WHERE ( bita_bachi.clv_ver = 2 ) AND  
+                                            ( bita_bachi.clv_per = 0 ) AND  
+                                            ( bita_bachi.anio = 1999 ) AND  
+                                            ( bita_bachi.anterior = NULL )  )) AND  
+         ( aspiran.clv_ver = 2 ) AND  
+         ( aspiran.clv_per = 0 ) AND  
+         ( aspiran.anio = 1999 ) )    
+" )
+text(band=header alignment="2" text="Aspiran
+Folio"border="0" color="0" x="5" y="4" height="129" width="330"  name=aspiran_folio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Nombre"border="0" color="0" x="339" y="4" height="129" width="1399"  name=general_nombre_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Apaterno"border="0" color="0" x="1742" y="4" height="129" width="1399"  name=general_apaterno_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Amaterno"border="0" color="0" x="3146" y="4" height="129" width="1399"  name=general_amaterno_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="330" format="[general]"  name=aspiran_folio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="343" y="4" height="77" width="1399" format="[general]"  name=general_nombre edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1742" y="4" height="77" width="1399" format="[general]"  name=general_apaterno edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="3146" y="4" height="77" width="1399" format="[general]"  name=general_amaterno edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

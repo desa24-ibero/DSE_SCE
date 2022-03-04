@@ -1,0 +1,29 @@
+﻿$PBExportHeader$d_cuenta_tramite_titulac.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=77 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=90 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cuenta dbname="tramite_titulacion.cuenta" )
+ column=(type=long updatewhereclause=yes name=cve_carrera dbname="tramite_titulacion.cve_carrera" )
+ column=(type=long updatewhereclause=yes name=cve_plan dbname="tramite_titulacion.cve_plan" )
+ column=(type=long updatewhereclause=yes name=cve_subsistema dbname="tramite_titulacion.cve_subsistema" )
+ retrieve="  SELECT tramite_titulacion.cuenta,
+		   tramite_titulacion.cve_carrera,
+			tramite_titulacion.cve_plan,
+			tramite_titulacion.cve_subsistema
+    FROM tramite_titulacion   
+   WHERE tramite_titulacion.cuenta = :al_cuenta AND  
+			tramite_titulacion.cve_carrera = :al_cve_carrera AND  
+         tramite_titulacion.cve_plan = :al_cve_plan
+
+			   
+" arguments=(("al_cuenta", number),("al_cve_carrera", number),("al_cve_plan", number)) )
+text(band=header alignment="2" text="Cuenta" border="0" color="33554432" x="4" y="3" height="67" width="333"  name=cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="336" y="0" height="77" width="333" format="[general]"  name=cuenta edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="669" y="0" height="77" width="329" format="[general]"  name=cve_carrera edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="998" y="0" height="77" width="329" format="[general]"  name=cve_plan edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1328" y="0" height="77" width="329" format="[general]"  name=cve_subsistema edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="0" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

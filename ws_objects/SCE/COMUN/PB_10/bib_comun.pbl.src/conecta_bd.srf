@@ -1,0 +1,68 @@
+﻿$PBExportHeader$conecta_bd.srf
+$PBExportComments$Función encargada de conectar el "transaction object" a su base de datos indicada mediante el nombre del archivo_ini y la sección.~t~r~nParametros Entrada~tTransaction base_datos, str Salida Regresa 1 si la conexión se realizó de forma correcta. DkWf 1998
+global type conecta_bd from function_object
+end type
+
+forward prototypes
+global function integer conecta_bd (ref transaction tr_base_datos, string st_seccion, string st_usuario, string st_contrasenia)
+end prototypes
+
+global function integer conecta_bd (ref transaction tr_base_datos, string st_seccion, string st_usuario, string st_contrasenia);/*
+DESCRIPCIÓN: Función encargada de conectar el "transaction object" a su base de datos indicada mediante el nombre
+					del archivo_ini y la sección.
+				 
+PARÁMETROS: Transaction tr_base_datos, string st_seccion,string st_usuario, string st_contrasenia																
+REGRESA: 1 si la conexión se realizó de forma correcta
+AUTOR: CAMP(DkWf)
+FECHA: 17 Junio 1998
+MODIFICACIÓN:
+*/
+
+string ls_nombre_servidor, ls_nombre_base_datos
+string ls_sintaxis_sql
+
+if isvalid(tr_base_datos) = false  then
+	tr_base_datos = CREATE transaction//Creación de la transacción
+end if
+
+/* Populate sqlca from current PB.INI settings */
+tr_base_datos.DBMS       = ProfileString (gs_startupfile, st_seccion, "dbms",       "")
+tr_base_datos.database   = ProfileString (gs_startupfile, st_seccion, "database",   "")
+tr_base_datos.userid     = ProfileString (gs_startupfile, st_seccion, "userid",     "")
+tr_base_datos.dbpass     = ProfileString (gs_startupfile, st_seccion, "dbpass",     "")
+
+tr_base_datos.logid      = st_usuario
+tr_base_datos.logpass    = st_contrasenia
+
+tr_base_datos.servername = ProfileString (gs_startupfile, st_seccion, "servername", "")
+tr_base_datos.dbparm     = ProfileString (gs_startupfile, st_seccion, "dbparm",     "OJSyntax='PB'")
+
+if isvalid(gtr_sce) then
+	if gtr_sce.SqlErrText <>"Transaction not connected" then
+		if f_mapea_parametros_conexion("SIT", st_seccion, ls_nombre_servidor, ls_nombre_base_datos ) then
+			tr_base_datos.servername = ls_nombre_servidor
+			tr_base_datos.database = ls_nombre_base_datos
+		end if
+	end if
+end if
+
+//Conexión a la base de datos
+connect using tr_base_datos;
+
+if tr_base_datos.sqlcode <> 0 then
+	MessageBox ("No hay conexión con la Base de Datos "+st_seccion+".", tr_base_datos.sqlerrtext, None!)
+	return 0
+ELSE
+	if tr_base_datos.DBMS = 'OLE DB' then
+		ls_sintaxis_sql = 'SET IMPLICIT_TRANSACTIONS OFF'
+		EXECUTE IMMEDIATE :ls_sintaxis_sql USING tr_base_datos;
+	end if
+end if
+
+if isvalid(gtr_sce) then
+	f_obten_titulo(w_principal)
+end if
+return 1
+
+end function
+

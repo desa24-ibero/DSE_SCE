@@ -1,0 +1,29 @@
+﻿$PBExportHeader$f_nivel_descripcion.srf
+global type f_nivel_descripcion from function_object
+end type
+
+forward prototypes
+global function string f_nivel_descripcion (string as_nivel)
+end prototypes
+
+global function string f_nivel_descripcion (string as_nivel);
+STRING as_descripcion
+
+SELECT desc_corta 
+INTO :as_descripcion 
+FROM nivel 
+WHERE cve_nivel = :as_nivel 
+USING gtr_sce; 
+IF gtr_sce.SQLCODE < 0 THEN 
+	MESSAGEBOX("Error", "Se produjo un error al recuperar la descripción del nivel de la carrera: " + gtr_sce.SQLERRTEXT) 
+	RETURN "" 
+END IF
+
+RETURN as_descripcion 
+
+
+
+
+
+end function
+

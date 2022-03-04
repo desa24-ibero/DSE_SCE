@@ -1,0 +1,93 @@
+﻿$PBExportHeader$dw_historico.srd
+$PBExportComments$Este data_window nos trae los datos resultado de la consulta de las tablas historico,academicos y materias. Recibe como parametro la cuenta y 8 parametros mas para comparar la calificacion en historico. Juan Campos Nov-1996.
+release 10;
+datawindow(units=0 timer_interval=0 color=30791125 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no pointer="Arrow!" )
+header(height=104 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=164 color="536870912" )
+detail(height=80 color="536870912"  height.autosize=yes)
+table(column=(type=long updatewhereclause=yes name=historico_cve_mat dbname="historico.cve_mat" )
+ column=(type=char(6) updatewhereclause=yes name=materias_sigla dbname="materias.sigla" )
+ column=(type=char(42) updatewhereclause=yes name=materias_materia dbname="materias.materia" )
+ column=(type=char(2) updatewhereclause=yes name=historico_calificacion dbname="historico.calificacion" )
+ column=(type=long updatewhereclause=yes name=historico_periodo dbname="historico.periodo" values="P 	0/V 	1/O 	2/" )
+ column=(type=long updatewhereclause=yes name=historico_anio dbname="historico.anio" )
+ column=(type=long updatewhereclause=yes name=historico_observacion dbname="historico.observacion" values="NO ACREDITADA	0/ACREDITADA	1/EXTRAORDINARIO	2/ORDINARIO	3/PRERREQ. HIST.	4/REVALIDADA	5/TIT. SUFICIENCIA	6/" )
+ column=(type=char(2) updatewhereclause=yes name=historico_gpo dbname="historico.gpo" )
+ column=(type=long updatewhereclause=yes name=historico_cve_plan dbname="historico.cve_plan" )
+ column=(type=long updatewhereclause=yes name=historico_cuenta dbname="historico.cuenta" )
+ column=(type=long updatewhereclause=yes name=academicos_cuenta dbname="academicos.cuenta" )
+ column=(type=long updatewhereclause=yes name=materias_creditos dbname="materias.creditos" )
+ column=(type=char(6) updatewhereclause=yes name=materias_sigla_anterior dbname="materias.sigla_anterior" )
+ column=(type=long updatewhereclause=yes name=hti dbname="hti" )
+ retrieve="  SELECT historico.cve_mat,   
+         materias.sigla,   
+         materias.materia,   
+         historico.calificacion,   
+         historico.periodo,   
+         historico.anio,   
+         historico.observacion,   
+         historico.gpo,   
+         historico.cve_plan,
+         historico.cuenta,
+         academicos.cuenta,
+			materias.creditos,
+         materias.sigla_anterior,
+			hti = 0
+    FROM academicos,   
+         historico,   
+         materias  
+   WHERE ( academicos.cuenta = :cuenta ) AND  
+         ( academicos.cuenta = historico.cuenta ) AND 
+         ( academicos.cve_carrera = historico.cve_carrera ) AND           
+         ( academicos.cve_plan = historico.cve_plan ) AND           
+         ( historico.cve_mat *= materias.cve_mat ) and  
+         (( historico.calificacion between :cal1 AND :cal2 ) OR  
+          ( historico.calificacion = :cal3 ) OR  
+          ( historico.calificacion = :cal4 ) OR  
+          ( historico.calificacion = :cal5 ) OR  
+          ( historico.calificacion = :cal6 ) OR 
+          ( historico.calificacion = :cal7 ) OR 
+          ( historico.calificacion = :cal8 ) OR 
+          ( historico.calificacion = :cal9 ) OR 
+          ( historico.calificacion = :cal10 ) OR 
+          ( historico.calificacion = :cal11 ) OR 
+          ( historico.calificacion = :cal12 ) OR 
+          ( historico.calificacion = :cal13 ) )    
+  ORDER BY historico.anio,historico.periodo" arguments=(("cuenta", number),("cal1", string),("cal2", string),("cal3", string),("cal4", string),("cal5", string),("cal6", string),("cal7", string),("cal8", string),("cal9", string),("cal10", string),("cal11", string),("cal12", string),("cal13", string)) )
+roundrectangle(band=header ellipseheight="60" ellipsewidth="69"x="32" y="12" height="84" width="3383"  name=rr_1 visible="1" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="16777215"  background.mode="2" background.color="0" )
+text(band=header alignment="1" text="Cve." border="0" color="0" x="64" y="16" height="76" width="142" html.valueishtml="0"  name=historico_cve_mat_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="1" text="Sigla" border="0" color="0" x="283" y="16" height="76" width="146" html.valueishtml="0"  name=materias_sigla_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="1" text="Nombre de la Materia" border="0" color="0" x="1019" y="16" height="76" width="631" html.valueishtml="0"  name=materias_materia_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="1" text="Cal." border="0" color="0" x="2185" y="16" height="76" width="119" html.valueishtml="0"  name=historico_calificacion_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="0" text="Per_Año" border="0" color="0" x="2331" y="16" height="76" width="256" html.valueishtml="0"  name=historico_periodo_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="1" text="Gpo." border="0" color="0" x="2633" y="16" height="76" width="142" html.valueishtml="0"  name=historico_gpo_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="1" text="Obs." border="0" color="0" x="3017" y="16" height="76" width="146" html.valueishtml="0"  name=historico_observacion_t visible="1"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=header id=11 alignment="0" tabsequence=32766 border="0" color="12632256" x="3214" y="16" height="64" width="87" format="[general]" html.valueishtml="0"  name=academicos_cuenta visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="5" color="0" x="251" y="4" height="64" width="215" format="[general]" html.valueishtml="0"  name=materias_sigla_anterior visible="1~tif(   historico_cve_plan =6 , 0, 1 )" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="5" color="0" x="251" y="4" height="64" width="215" format="[general]" html.valueishtml="0"  name=materias_sigla visible="1~tif(  historico_cve_plan  =6 , 1, 0 )" edit.limit=6 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="5" color="0" x="50" y="4" height="64" width="178" format="[general]" html.valueishtml="0"  name=historico_cve_mat visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="5" color="0" x="2203" y="4" height="64" width="101" format="[general]" html.valueishtml="0"  name=historico_calificacion visible="1" edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="5" color="0" x="2331" y="4" height="64" width="101" format="[general]" html.valueishtml="0"  name=historico_periodo visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="5" color="0" x="2459" y="4" height="64" width="169" format="[general]" html.valueishtml="0"  name=historico_anio visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="5" color="0" x="2661" y="4" height="64" width="96" format="[general]" html.valueishtml="0"  name=historico_gpo visible="1" edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="5" color="0" x="2789" y="4" height="64" width="608" format="[general]" html.valueishtml="0"  name=historico_observacion visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="5" color="0" x="494" y="4" height="64" width="1605" format="[general]" html.valueishtml="0"  name=materias_materia pointer="Arrow!" visible="1" edit.limit=42 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="5" color="0" x="2117" y="4" height="64" width="69" format="[general]" html.valueishtml="0"  name=materias_creditos visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="12632256" x="3415" y="0" height="64" width="2135" format="[general]" html.valueishtml="0"  name=hti visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=footer alignment="0" expression="cred_prom_str(academicos_cuenta)"border="0" color="0" x="1600" y="12" height="64" width="1467" format="[general]" html.valueishtml="0"  name=creditos_promedio visible="0"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="30791125" )
+text(band=footer alignment="2" text="   Créditos   " border="6" color="0" x="1157" y="16" height="64" width="334" html.valueishtml="0"  name=t_1 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="30791125" )
+text(band=footer alignment="2" text="   Promedio   " border="6" color="0" x="1989" y="16" height="64" width="329" html.valueishtml="0"  name=t_2 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="30791125" )
+compute(band=footer alignment="0" expression="f_obten_creditos_cuenta_nit( historico_cuenta )"border="0" color="0" x="1157" y="96" height="64" width="334" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="30791125" )
+compute(band=footer alignment="0" expression="f_obten_promedio_cuenta_nit( historico_cuenta )"border="0" color="0" x="1989" y="96" height="64" width="329" format="[GENERAL]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="30791125" )
+htmltable(border="0" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

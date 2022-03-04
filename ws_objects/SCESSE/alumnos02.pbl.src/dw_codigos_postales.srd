@@ -1,0 +1,15 @@
+﻿$PBExportHeader$dw_codigos_postales.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=char(20) updatewhereclause=yes name=cod_postal dbname="codigo_postal.cod_postal" )
+ column=(type=char(50) updatewhereclause=yes name=colonia dbname="codigo_postal.colonia" )
+ column=(type=char(50) updatewhereclause=yes name=ciudad dbname="codigo_postal.ciudad" )
+ column=(type=long updatewhereclause=yes name=cve_estado dbname="codigo_postal.cve_estado" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"codigo_postal~" ) COLUMN(NAME=~"codigo_postal.cod_postal~") COLUMN(NAME=~"codigo_postal.colonia~") COLUMN(NAME=~"codigo_postal.ciudad~") COLUMN(NAME=~"codigo_postal.cve_estado~")WHERE(    EXP1 =~"codigo_postal.cod_postal~"   OP =~"=~"    EXP2 =~":cp~" ) ) ARG(NAME = ~"cp~" TYPE = string) " arguments=(("cp", string)) )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="343" format="[general]"  name=cod_postal edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1564" y="4" height="77" width="1025" format="[general]"  name=ciudad edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="353" y="4" height="77" width="1203" format="[general]"  name=colonia edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

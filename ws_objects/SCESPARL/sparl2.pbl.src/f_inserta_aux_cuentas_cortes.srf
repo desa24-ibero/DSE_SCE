@@ -1,0 +1,62 @@
+﻿$PBExportHeader$f_inserta_aux_cuentas_cortes.srf
+global type f_inserta_aux_cuentas_cortes from function_object
+end type
+
+forward prototypes
+global function long f_inserta_aux_cuentas_cortes (integer ai_periodo, integer ai_anio)
+end prototypes
+
+global function long f_inserta_aux_cuentas_cortes (integer ai_periodo, integer ai_anio);//NOMBRE
+//f_inserta_aux_cuentas_cortes
+//
+//REGRESA
+//long
+//
+//RECIBE	
+//ai_periodo				int
+//ai_anio					int
+
+
+integer li_codigo_sql, li_codigo_sql2, li_periodo_primavera
+string ls_criterio, ls_mensaje_sql, ls_mensaje_sql2, ls_calificacion_anterior 
+long	ll_cuenta, ll_rows
+
+//Si el periodo es Otoño, las cuentas cortes deben ser de Verano más de Primavera para asignación de horarios
+IF ai_periodo = 2 THEN
+	li_periodo_primavera = 0
+	
+	INSERT INTO	cuentas_cortes
+	SELECT cuenta, anio, periodo
+	FROM hist_cuentas_cortes
+	WHERE hist_cuentas_cortes.periodo = :li_periodo_primavera
+	AND hist_cuentas_cortes.anio = :ai_anio
+	AND hist_cuentas_cortes.cuenta not in (select cuenta from cuentas_cortes)
+	USING gtr_sce;
+
+	li_codigo_sql =gtr_sce.SqlCode
+	ls_mensaje_sql =gtr_sce.SqlErrText
+
+//Hubo algún problema al realizar la inserción
+	if li_codigo_sql = -1 then
+		ROLLBACK USING gtr_sce;
+		MessageBox("Error al insertar en cuentas_cortes", ls_mensaje_sql)	
+		return li_codigo_sql
+	elseif li_codigo_sql = 100 then
+		ROLLBACK USING gtr_sce;
+		MessageBox("No existen registros a insertar en cuentas_cortes", ls_mensaje_sql)	
+		return li_codigo_sql		
+	end if
+
+	if li_codigo_sql = 0 then
+		COMMIT USING gtr_sce;
+		return li_codigo_sql		
+	end if
+
+END IF
+
+
+return li_codigo_sql
+	
+
+end function
+

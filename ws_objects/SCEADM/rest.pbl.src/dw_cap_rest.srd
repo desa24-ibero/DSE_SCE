@@ -1,0 +1,73 @@
+﻿$PBExportHeader$dw_cap_rest.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=169 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=folio dbname="rest.folio" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=clv_ver dbname="rest.clv_ver" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=clv_per dbname="rest.clv_per" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=anio dbname="rest.anio" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=leido dbname="rest.leido" )
+ column=(type=decimal(1) update=yes updatewhereclause=yes name=etapa_2 dbname="rest.etapa_2" )
+ column=(type=decimal(1) update=yes updatewhereclause=yes name=etapa_3 dbname="rest.etapa_3" )
+ column=(type=decimal(1) update=yes updatewhereclause=yes name=etapa_4 dbname="rest.etapa_4" )
+ column=(type=decimal(1) update=yes updatewhereclause=yes name=etapa_5a dbname="rest.etapa_5a" )
+ column=(type=decimal(1) update=yes updatewhereclause=yes name=etapa_5b dbname="rest.etapa_5b" )
+ column=(type=decimal(1) update=yes updatewhereclause=yes name=etapa_6 dbname="rest.etapa_6" )
+ column=(type=decimal(1) update=yes updatewhereclause=yes name=etapa_a dbname="rest.etapa_a" )
+ column=(type=decimal(1) update=yes updatewhereclause=yes name=etapa_m dbname="rest.etapa_m" )
+ column=(type=decimal(1) update=yes updatewhereclause=yes name=etapa_p dbname="rest.etapa_p" )
+ column=(type=decimal(3) update=yes updatewhereclause=yes name=indice_d dbname="rest.indice_d" )
+ column=(type=decimal(4) update=yes updatewhereclause=yes name=indice_u dbname="rest.indice_u" )
+ retrieve="  SELECT rest.folio,   
+         rest.clv_ver,   
+         rest.clv_per,   
+         rest.anio,   
+         rest.leido,   
+         rest.etapa_2,   
+         rest.etapa_3,   
+         rest.etapa_4,   
+         rest.etapa_5a,   
+         rest.etapa_5b,   
+         rest.etapa_6,   
+         rest.etapa_a,   
+         rest.etapa_m,   
+         rest.etapa_p,   
+         rest.indice_d,   
+         rest.indice_u  
+    FROM rest  
+   WHERE ( (rest.clv_ver = :ver) OR
+           (:ver =99)           ) AND  
+         ( rest.clv_per = :per ) AND  
+         ( rest.anio = :ani )    
+" update="rest" updatewhere=1 updatekeyinplace=no arguments=(("ver", number),("per", number),("ani", number))  sort="folio A " )
+text(band=header alignment="2" text="Folio"border="0" color="0" x="138" y="92" height="65" width="266"  name=folio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Leido"border="0" color="0" x="417" y="92" height="65" width="266"  name=leido_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Etapa 6"border="0" color="0" x="1815" y="92" height="65" width="206"  name=etapa_6_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Etapa A"border="0" color="0" x="2026" y="92" height="65" width="215"  name=etapa_a_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Etapa M"border="0" color="0" x="2245" y="92" height="65" width="229"  name=etapa_m_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Etapa P"border="0" color="0" x="2478" y="92" height="65" width="215"  name=etapa_p_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Indice D"border="0" color="0" x="2698" y="92" height="65" width="220"  name=indice_d_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Etapa 2"border="0" color="0" x="695" y="92" height="65" width="206"  name=etapa_2_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Etapa 3"border="0" color="0" x="910" y="92" height="65" width="206"  name=etapa_3_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Etapa 4"border="0" color="0" x="1121" y="92" height="65" width="206"  name=etapa_4_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Etapa 5a"border="0" color="0" x="1331" y="92" height="65" width="238"  name=etapa_5a_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Etapa 5b"border="0" color="0" x="1573" y="92" height="65" width="238"  name=etapa_5b_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Indice U"border="0" color="0" x="2922" y="92" height="65" width="215"  name=indice_u_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="2" expression="count(folio for all)"border="0" color="0" x="3150" y="88" height="73" width="266" format="[General]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text=""border="0" color="0" x="142" y="4" height="77" width="3004"  name=st_1  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="1" tabsequence=10 border="0" color="0" x="138" y="4" height="65" width="266" format="[General]"  name=folio  tag=" " edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="417" y="4" height="65" width="266" format="[general]"  name=leido  tag=" " edit.limit=6 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="910" y="4" height="65" width="147" format="[General]"  name=etapa_3  tag=" " editmask.mask="#,#0.0" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="0" x="1121" y="4" height="65" width="147" format="[General]"  name=etapa_4  tag=" " editmask.mask="#,#0.0" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="0" x="1331" y="4" height="65" width="147" format="[General]"  name=etapa_5a  tag=" " editmask.mask="#,#0.0" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="0" x="1573" y="4" height="65" width="147" format="[General]"  name=etapa_5b  tag=" " editmask.mask="#,#0.0" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="1" tabsequence=32766 border="0" color="0" x="1815" y="4" height="65" width="147" format="[General]"  name=etapa_6  tag=" " editmask.mask="#,#0.0" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="1" tabsequence=32766 border="0" color="0" x="2026" y="4" height="65" width="151" format="[General]"  name=etapa_a  tag=" " editmask.mask="#,#0.0" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="1" tabsequence=32766 border="0" color="0" x="2245" y="4" height="65" width="151" format="[General]"  name=etapa_m  tag=" " editmask.mask="#,#0.0" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="1" tabsequence=32766 border="0" color="0" x="2478" y="4" height="65" width="147" format="[General]"  name=etapa_p  tag=" " editmask.mask="#,#0.0" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="1" tabsequence=32766 border="0" color="0" x="2698" y="4" height="65" width="220" format="[General]"  name=indice_d  tag=" " editmask.mask="#,###0.000" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="1" tabsequence=32766 border="0" color="0" x="2922" y="4" height="65" width="202" format="[General]"  name=indice_u  tag=" " editmask.mask="#,####0.0000" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="695" y="4" height="65" width="151" format="[General]"  name=etapa_2  tag=" " editmask.mask="#,#0.0" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

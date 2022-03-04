@@ -1,0 +1,45 @@
+﻿$PBExportHeader$f_obten_coord_de_materia.srf
+global type f_obten_coord_de_materia from function_object
+end type
+
+forward prototypes
+global function long f_obten_coord_de_materia (long al_cve_mat)
+end prototypes
+
+global function long f_obten_coord_de_materia (long al_cve_mat);//f_obten_coord_de_materia
+//Recibe:
+//Materia de la coordinacion
+// 	al_cve_mat	long
+//Devuelve:
+//		ll_cve_coordinador, que corresponde a la clave de profesor del coordinador de la materia
+
+
+
+integer li_cve_coordinacion, li_codigo_sql
+string ls_mensaje_sql
+long ll_cve_mat, ll_cve_coordinador
+
+SELECT materias.cve_mat,   
+       coordinaciones.cve_coordinador  
+INTO	:ll_cve_mat,
+		:ll_cve_coordinador
+FROM coordinaciones,   
+         materias  
+WHERE ( coordinaciones.cve_coordinacion = materias.cve_coordinacion )   
+AND   ( materias.cve_mat = :al_cve_mat )     
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 or isnull(ll_cve_coordinador) then
+	return 0
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar las tablas de coordinaciones y materias", ls_mensaje_sql)
+	return -1
+end if
+
+return ll_cve_coordinador
+
+end function
+

@@ -1,0 +1,46 @@
+﻿$PBExportHeader$f_obten_tipo_modulo_examen.srf
+global type f_obten_tipo_modulo_examen from function_object
+end type
+
+forward prototypes
+global function integer f_obten_tipo_modulo_examen (string as_opc_apli, ref integer ai_cve_tipo_examen, ref integer ai_cve_modulo_examen)
+end prototypes
+
+global function integer f_obten_tipo_modulo_examen (string as_opc_apli, ref integer ai_cve_tipo_examen, ref integer ai_cve_modulo_examen);//f_obten_tipo_modulo_examen
+//
+//Recibe: 
+//	as_opc_apli string (OPCIÓN DE APLICACIÓN del exani_2
+//Devuelve:
+//	ai_cve_tipo_examen       integer       
+//	ai_cve_modulo_examen     integer
+string ls_cve_opcion_aplicacion 
+integer li_cve_tipo_examen, li_cve_modulo_examen    
+int li_codigo_sql, li_SQLNRows
+string ls_mensaje
+
+	SELECT
+		cve_opcion_aplicacion, 
+		cve_tipo_examen,
+		cve_modulo_examen    
+	INTO
+		:ls_cve_opcion_aplicacion,
+		:li_cve_tipo_examen, 
+		:li_cve_modulo_examen    
+	FROM exani_2_opcion_aplicacion
+	WHERE cve_opcion_aplicacion = :as_opc_apli
+	USING gtr_sadm;
+	
+	li_codigo_sql = gtr_sadm.SqlCode
+	ls_mensaje = gtr_sadm.SqlErrText
+	li_SQLNRows = gtr_sadm.SQLNRows	
+
+	IF li_codigo_sql = -1 THEN
+		MessageBox("Error al consultar exani_2_opcion_aplicacion", ls_mensaje, StopSign!)
+	ELSE
+		ai_cve_tipo_examen=li_cve_tipo_examen
+		ai_cve_modulo_examen= li_cve_modulo_examen 
+	END IF
+
+return li_codigo_sql
+end function
+

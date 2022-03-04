@@ -1,0 +1,7 @@
+﻿$PBExportHeader$st_grupo_ligado_sae.srs
+global type st_grupo_ligado_sae from structure
+	long		cve_mat
+	long		periodo
+	long		anio
+end type
+

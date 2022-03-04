@@ -1,0 +1,89 @@
+﻿$PBExportHeader$f_valida_historia_academica.srf
+global type f_valida_historia_academica from function_object
+end type
+
+forward prototypes
+global function integer f_valida_historia_academica (long al_cuenta, integer ai_cve_carrera, integer ai_cve_plan)
+end prototypes
+
+global function integer f_valida_historia_academica (long al_cuenta, integer ai_cve_carrera, integer ai_cve_plan);//f_valida_historia_academica
+//Recibe: al_cuenta				long
+//			ai_cve_carrera		int
+//			ai_cve_plan			int
+
+
+int li_existe_alumno, li_codigo_error, li_codigo_error_exec, li_exito,  li_res_control
+string ls_mensaje, ls_mensaje_exec, ls_mensaje_titulo
+int li_cve_carrera, li_cve_plan, li_mats_repetidas
+long ll_cuenta
+string ls_mensaje_sp, ls_mensaje_control
+
+li_existe_alumno = f_existe_alumno_adm(al_cuenta)
+li_exito= 0
+
+IF  li_existe_alumno= 0 THEN
+			
+			ls_mensaje_titulo =  "Cuenta  : ["+string(al_cuenta)+"] ~n" +&
+									  	"Carrera : ["+string(ai_cve_carrera)+"] ~n"+&
+										"Plan    : ["+string(ai_cve_plan)+"] ~n"
+											
+			ll_cuenta = al_cuenta
+			li_cve_carrera = ai_cve_carrera
+			li_cve_plan = ai_cve_plan
+
+		
+		DECLARE spvalidahistorico procedure for sp_valida_historico 
+												@cuenta         = :ll_cuenta, 
+												@cve_carrera    = :li_cve_carrera,
+												@cve_plan       = :li_cve_plan,
+                              		@mensaje_salida = :ls_mensaje_sp out
+		using gtr_sce;	
+		
+		EXECUTE spvalidahistorico;
+		li_codigo_error_exec= gtr_sce.SQLCode
+		ls_mensaje_exec= gtr_sce.SQLErrText
+
+		IF li_codigo_error_exec= -1 THEN
+			CLOSE spvalidahistorico;
+			MessageBox("Error al ejecutar sp_valida_historico: ", ls_mensaje_titulo+"~n"+ls_mensaje_exec, StopSign!)		
+			RETURN -1			
+		END IF
+
+		FETCH spvalidahistorico INTO :ls_mensaje_sp;
+	
+		li_codigo_error= gtr_sce.SQLCode
+		ls_mensaje= gtr_sce.SQLErrText
+		IF li_codigo_error= -1 THEN
+			CLOSE spvalidahistorico;
+			MessageBox("Error al ejecutar fetch de sp_valida_historico: ", ls_mensaje_titulo+"~n"+ls_mensaje, StopSign!)		
+			RETURN -1
+		END IF
+		
+		CLOSE spvalidahistorico;
+
+		SELECT COUNT(*) 
+		INTO :li_mats_repetidas
+		FROM historico_repetido
+		WHERE cuenta = :ll_cuenta
+		AND	cve_carrera = :li_cve_carrera
+		AND	cve_plan = :li_cve_plan
+		USING gtr_sce;
+		li_res_control = gtr_sce.SqlCode
+		ls_mensaje_control= gtr_sce.SqlErrtext
+		
+		IF li_res_control= -1 THEN
+			MessageBox("Error al contar en historico_repetido", ls_mensaje_titulo+"~n"+ls_mensaje_control, StopSign!)		
+			RETURN -1
+		ELSE 
+			RETURN li_mats_repetidas
+		END IF
+		
+		
+ELSEIF  li_existe_alumno= -1 THEN
+	RETURN -1
+ELSEIF  li_existe_alumno= 100 THEN
+	MessageBox("Alumno Inexistente","No existe el alumno con la cuenta["+string(al_cuenta)+"]",StopSign!)		
+END IF
+
+end function
+

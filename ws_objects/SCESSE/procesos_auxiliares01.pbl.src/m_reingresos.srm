@@ -1,0 +1,70 @@
+﻿$PBExportHeader$m_reingresos.srm
+forward
+global type m_reingresos from menu
+end type
+type m_imprimereportereingresos from menu within m_reingresos
+end type
+type m_imprimereportereingresos from menu within m_reingresos
+end type
+type m_salir from menu within m_reingresos
+end type
+type m_salir from menu within m_reingresos
+end type
+end forward
+
+global type m_reingresos from menu
+m_imprimereportereingresos m_imprimereportereingresos
+m_salir m_salir
+end type
+global m_reingresos m_reingresos
+
+on m_reingresos.create
+m_reingresos=this
+this.m_imprimereportereingresos=create m_imprimereportereingresos
+this.m_salir=create m_salir
+this.Item[]={this.m_imprimereportereingresos, &
+this.m_salir}
+end on
+
+on m_reingresos.destroy
+destroy(this.m_imprimereportereingresos)
+destroy(this.m_salir)
+end on
+
+type m_imprimereportereingresos from menu within m_reingresos
+end type
+
+on m_imprimereportereingresos.create
+this.Text="Imprime Reporte Reingresos"
+this.ToolBarItemName="Print!"
+this.ToolBarItemText="Imprime Reporte Reingresos"
+end on
+
+on m_imprimereportereingresos.destroy
+end on
+
+event clicked;// Imprime reporte de reingresos
+// por:  Juan Campos.  Abril-1997.
+
+setpointer(Hourglass!) 
+
+OpenSheet(w_imprime_hist_reingresos,w_reingresos,4,Original!)  
+
+
+end event
+
+type m_salir from menu within m_reingresos
+end type
+
+on m_salir.create
+this.Text="Salir"
+this.ToolBarItemName="Exit!"
+this.ToolBarItemText="Salir de Reingresos"
+end on
+
+on m_salir.destroy
+end on
+
+event clicked;close(w_reingresos)
+end event
+

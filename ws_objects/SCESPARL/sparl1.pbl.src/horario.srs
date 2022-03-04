@@ -1,0 +1,6 @@
+﻿$PBExportHeader$horario.srs
+global type horario from structure
+	integer		dia[7]
+	string		salon[7]
+end type
+

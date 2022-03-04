@@ -1,0 +1,43 @@
+﻿$PBExportHeader$duo_carreras_plan.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=80269524 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=clave dbname="clave" )
+ column=(type=char(100) updatewhereclause=yes name=texto dbname="texto" )
+ column=(type=long updatewhereclause=yes name=clave_02 dbname="clave_02" )
+ column=(type=char(20) updatewhereclause=yes name=texto_02 dbname="texto_02" )
+ retrieve="select clave = hc.cve_carrera_ant, texto = c.carrera, 
+clave_02 = hc.cve_plan_ant, texto_02= p.nombre_plan
+from hist_carreras hc, carreras c, nombre_plan p
+where hc.cve_carrera_ant not in (9532)
+and	hc.cve_plan_ant in (select cve_plan from plan_tramite where cve_tramite in (3,4))
+and	hc.cve_carrera_ant = c.cve_carrera
+and	c.nivel in (~"L~")
+and	hc.cuenta = :al_cuenta
+and	hc.cve_plan_ant = p.cve_plan
+union 
+select clave = a.cve_carrera,  texto = c.carrera, 
+clave_02= a.cve_plan, texto_02= p.nombre_plan
+from academicos a, carreras c, nombre_plan p
+where a.cve_carrera not in (9532)
+and	a.cve_plan in (select cve_plan from plan_tramite where cve_tramite in (3,4))
+and	a.cve_carrera = c.cve_carrera
+and	c.nivel in (~"L~")
+and	a.cuenta = :al_cuenta
+and	a.cve_plan = p.cve_plan
+" arguments=(("al_cuenta", number)) )
+data( 0,"SIN CARRERA",null null ) 
+column(band=detail id=1 alignment="0" tabsequence=10 border="2" color="0" x="5" y="4" height="72" width="2263" format="[general]" html.valueishtml="0"  name=clave visible="1" dddw.name=dddw_carreras_plan dddw.displaycolumn=texto dddw.datacolumn=clave dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

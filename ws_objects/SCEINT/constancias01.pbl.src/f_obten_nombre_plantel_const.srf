@@ -1,0 +1,22 @@
+﻿$PBExportHeader$f_obten_nombre_plantel_const.srf
+global type f_obten_nombre_plantel_const from function_object
+end type
+
+forward prototypes
+global function string f_obten_nombre_plantel_const ()
+end prototypes
+
+global function string f_obten_nombre_plantel_const ();string fs_plantel 
+INTEGER id_plantel 
+
+Select plantel, cve_plantel into :fs_plantel, :id_plantel from planteles where actual=1 using gtr_sce; 
+
+IF id_plantel <> 17 THEN fs_plantel = "ciudad de " + fs_plantel 
+
+IF gtr_sce.sqlcode < 0 THEN 
+	RETURN "***Error en plantel"
+END IF
+
+Return fs_plantel
+end function
+

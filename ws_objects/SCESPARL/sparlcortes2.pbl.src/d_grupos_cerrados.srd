@@ -1,0 +1,39 @@
+﻿$PBExportHeader$d_grupos_cerrados.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=141 color="536870912" )
+summary(height=9 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=grupos_cve_mat dbname="grupos.cve_mat" )
+ column=(type=char(255) updatewhereclause=yes name=compute_0002 dbname="compute_0002" )
+ column=(type=char(255) updatewhereclause=yes name=compute_0003 dbname="compute_0003" )
+ column=(type=char(255) updatewhereclause=yes name=compute_0004 dbname="compute_0004" )
+ column=(type=char(255) updatewhereclause=yes name=compute_0005 dbname="compute_0005" )
+ retrieve="  SELECT grupos.cve_mat,   
+         grupos.gpo+space(5-char_length(grupos.gpo))+~".~",   
+         materias.materia+space(47-char_length(materias.materia) )+~".~",   
+         space(2-char_length(convert(varchar(2),grupos.inscritos)))+convert(varchar(2),grupos.inscritos)+space(8 )+~".~",   
+         space(2-char_length(convert(varchar(2),grupos.cupo)))+convert(varchar(2),grupos.cupo)  
+    FROM grupos,   
+         materias  
+   WHERE ( grupos.periodo = 0) and
+			( grupos.cve_mat = materias.cve_mat ) and  
+         ( ( grupos.inscritos >= grupos.cupo ) AND  
+         ( materias.cve_coordinacion = :depto ) )    
+" arguments=(("depto", number)) )
+text(band=header alignment="2" text="Grupos
+Gpo"border="0" color="33554432" x="339" y="4" height="129" width="193"  name=grupos_gpo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="Materias
+Materia"border="0" color="33554432" x="540" y="4" height="129" width="1180"  name=materias_materia_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="Grupos
+Inscritos"border="0" color="33554432" x="1724" y="4" height="129" width="334"  name=grupos_inscritos_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="Grupos
+Cupo"border="0" color="33554432" x="2058" y="8" height="129" width="330"  name=grupos_cupo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="Grupos
+Cve Mat"border="0" color="33554432" x="5" y="4" height="129" width="330"  name=grupos_cve_mat_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="33554432" x="5" y="4" height="77" width="330" format="[general]"  name=grupos_cve_mat edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="2387" y="4" height="65" width="2743" format="[general]"  name=compute_0003 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="7873" y="0" height="65" width="2743" format="[general]"  name=compute_0004 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="33554432" x="10615" y="0" height="65" width="2743" format="[general]"  name=compute_0005 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=2 alignment="0" tabsequence=0 border="0" color="33554432" x="13358" y="0" height="65" width="2743"  name=compute_0002  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )

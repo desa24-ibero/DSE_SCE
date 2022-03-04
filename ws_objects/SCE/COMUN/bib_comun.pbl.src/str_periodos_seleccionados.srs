@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_periodos_seleccionados.srs
+global type str_periodos_seleccionados from structure
+	integer		periodo
+	string		descripcion
+	string		tipo
+end type
+

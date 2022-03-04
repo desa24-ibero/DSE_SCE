@@ -1,0 +1,189 @@
+﻿$PBExportHeader$f_obten_sem_cursados_2013_carrera.srf
+global type f_obten_sem_cursados_2013_carrera from function_object
+end type
+
+forward prototypes
+global function integer f_obten_sem_cursados_2013 (long a_cuenta)
+global function integer f_obten_sem_cursados_2013_carrera (long a_cuenta, long a_carrera)
+global function integer f_obten_sem_cursados_2013_carrera (long a_cuenta, long a_carrera, long a_plan)
+end prototypes
+
+global function integer f_obten_sem_cursados_2013 (long a_cuenta);//Función que regresa el número de semestres que ha cursado un alumno 
+//
+//f_obten_sem_cursados
+//
+//Parámetros:		a_cuenta		
+
+int li_sem_cursados, li_codigo_sql
+long ll_cuenta, ll_mat_inscritas
+string ls_carrera, ls_nivel, ls_mensaje_sql
+
+ll_cuenta = a_cuenta
+
+SELECT dbo.academicos.sem_cursados
+INTO	:li_sem_cursados
+FROM	dbo.academicos
+WHERE	dbo.academicos.cuenta = :ll_cuenta
+USING gtr_sce;
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	rollback using gtr_sce;
+	MessageBox("Error al recuperar los semestres cursados del alumno:"+string(ll_cuenta),  ls_mensaje_sql)
+	li_sem_cursados = 0
+else
+	commit using gtr_sce;
+	
+	SELECT count(*) 
+	INTO :ll_mat_inscritas
+	FROM dbo.mat_inscritas 
+	WHERE dbo.mat_inscritas.cuenta = :ll_cuenta
+	AND dbo.mat_inscritas.periodo in (0,2)
+	USING gtr_sce;
+
+	ls_mensaje_sql=gtr_sce.SqlErrText
+	li_codigo_sql=gtr_sce.SqlCode
+
+	if li_codigo_sql = -1 then
+		rollback using gtr_sce;
+		MessageBox("Error al contar las mat_inscritas del alumno:"+string(ll_cuenta),  ls_mensaje_sql)
+		li_sem_cursados = 0
+	else
+		commit using gtr_sce;
+		if ll_mat_inscritas > 0 then
+			li_sem_cursados = li_sem_cursados + 1
+		end if
+	end if
+end if
+
+
+return li_sem_cursados
+
+
+end function
+
+global function integer f_obten_sem_cursados_2013_carrera (long a_cuenta, long a_carrera);//Función que regresa el número de semestres que ha cursado un alumno 
+//
+//f_obten_sem_cursados
+//
+//Parámetros:		a_cuenta		
+
+int li_sem_cursados, li_codigo_sql
+long ll_cuenta, ll_mat_inscritas
+string ls_carrera, ls_nivel, ls_mensaje_sql
+
+ll_cuenta = a_cuenta
+
+SELECT dbo.v_sce_carreras_cursadas.sem_cursados
+INTO	:li_sem_cursados
+FROM	dbo.v_sce_carreras_cursadas
+WHERE	dbo.v_sce_carreras_cursadas.cuenta = :ll_cuenta
+and dbo.v_sce_carreras_cursadas.cve_carrera = :a_carrera
+USING gtr_sce;
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	rollback using gtr_sce;
+	MessageBox("Error al recuperar los semestres cursados del alumno:"+string(ll_cuenta),  ls_mensaje_sql)
+	li_sem_cursados = 0
+else
+	commit using gtr_sce;
+	
+	SELECT count(*) 
+	INTO :ll_mat_inscritas
+	FROM dbo.mat_inscritas 
+	WHERE dbo.mat_inscritas.cuenta = :ll_cuenta
+	AND dbo.mat_inscritas.periodo in (0,2)
+	USING gtr_sce;
+
+	ls_mensaje_sql=gtr_sce.SqlErrText
+	li_codigo_sql=gtr_sce.SqlCode
+
+	if li_codigo_sql = -1 then
+		rollback using gtr_sce;
+		MessageBox("Error al contar las mat_inscritas del alumno:"+string(ll_cuenta),  ls_mensaje_sql)
+		li_sem_cursados = 0
+	else
+		commit using gtr_sce;
+		if ll_mat_inscritas > 0 then
+			li_sem_cursados = li_sem_cursados + 1
+		end if
+	end if
+end if
+
+
+return li_sem_cursados
+
+
+end function
+
+global function integer f_obten_sem_cursados_2013_carrera (long a_cuenta, long a_carrera, long a_plan);//Función que regresa el número de semestres que ha cursado un alumno 
+//
+//f_obten_sem_cursados
+//
+//Parámetros:		a_cuenta		
+
+int li_sem_cursados, li_codigo_sql
+long ll_cuenta, ll_mat_inscritas
+string ls_carrera, ls_nivel, ls_mensaje_sql
+
+ll_cuenta = a_cuenta
+
+SELECT dbo.v_sce_carreras_cursadas.sem_cursados
+INTO	:li_sem_cursados
+FROM	dbo.v_sce_carreras_cursadas
+WHERE	dbo.v_sce_carreras_cursadas.cuenta = :ll_cuenta
+and dbo.v_sce_carreras_cursadas.cve_carrera = :a_carrera
+USING gtr_sce;
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	rollback using gtr_sce;
+	MessageBox("Error al recuperar los semestres cursados del alumno:"+string(ll_cuenta),  ls_mensaje_sql)
+	li_sem_cursados = 0
+else
+	commit using gtr_sce;
+	
+	SELECT count(*) 
+	INTO :ll_mat_inscritas
+	FROM mat_inscritas 
+	WHERE mat_inscritas.cuenta = :ll_cuenta
+	AND mat_inscritas.periodo in (0,2)
+	AND ( EXISTS (SELECT * FROM mat_prerrequisito m 
+				WHERE m.cve_mat = mat_inscritas.cve_mat
+				AND m.cve_carrera = :a_carrera
+				AND m.cve_plan = :a_plan )
+				OR 
+				EXISTS (SELECT * FROM mat_prerreq_pos m 
+				WHERE m.cve_mat = mat_inscritas.cve_mat
+				AND m.cve_carrera = :a_carrera
+				AND m.cve_plan = :a_plan ))	
+	USING gtr_sce;
+
+	ls_mensaje_sql=gtr_sce.SqlErrText
+	li_codigo_sql=gtr_sce.SqlCode
+
+	if li_codigo_sql = -1 then
+		rollback using gtr_sce;
+		MessageBox("Error al contar las mat_inscritas del alumno:"+string(ll_cuenta),  ls_mensaje_sql)
+		li_sem_cursados = 0
+	else
+		commit using gtr_sce;
+		if ll_mat_inscritas > 0 then
+			li_sem_cursados = li_sem_cursados + 1
+		end if
+	end if
+end if
+
+
+return li_sem_cursados
+
+
+end function
+

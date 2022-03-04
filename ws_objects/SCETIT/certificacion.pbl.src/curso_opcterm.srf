@@ -1,0 +1,49 @@
+﻿$PBExportHeader$curso_opcterm.srf
+$PBExportComments$regresa "true" si las claves de perrequisito para acreditar la opción terminal estan acreditadas en la tabla de histórico.Se recibe 3 parametros cuenta alumno, cvesemtit, cveproyopcterm.~r~nJuan Campos. Febrero-1997.
+global type curso_opcterm from function_object
+end type
+
+forward prototypes
+global function boolean curso_opcterm (long cuenta, long cveproyopcterm)
+end prototypes
+
+global function boolean curso_opcterm (long cuenta, long cveproyopcterm);// curso_opcterm
+// Regresa "true" si acredito la opción terminal
+// en la tabla de histórico.
+// Recibe	cuenta			long
+//				cveproyopcterm	long
+
+Integer Contsemtit = 0, Contproyopcterm = 0, Pregunta = 2
+Boolean ConsultaOk = False
+
+if cveproyopcterm < 0 then
+	return true
+end if
+ 
+   SELECT count(calificacion)
+    INTO :Contproyopcterm 
+    FROM historico
+   WHERE (cuenta = :cuenta) And
+         (cve_mat = :cveproyopcterm) And
+		   (calificacion = "AC")
+   USING gtr_sce;		
+	If gtr_sce.sqlcode = -1 Then
+	  MessageBox("Error en consulta de opcion terminal",gtr_sce.sqlerrtext)
+   Else  
+ 	  ConsultaOk = True 	
+	End IF	
+
+If ConsultaOk And Contproyopcterm = 1 Then 
+	Return True
+Else
+	Return False 
+End If
+
+
+
+
+
+
+
+end function
+

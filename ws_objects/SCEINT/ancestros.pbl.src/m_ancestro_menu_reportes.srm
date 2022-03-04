@@ -1,0 +1,91 @@
+﻿$PBExportHeader$m_ancestro_menu_reportes.srm
+forward
+global type m_ancestro_menu_reportes from m_ancestro_general
+end type
+end forward
+
+global type m_ancestro_menu_reportes from m_ancestro_general
+end type
+global m_ancestro_menu_reportes m_ancestro_menu_reportes
+
+on m_ancestro_menu_reportes.create
+m_ancestro_menu_reportes=this
+call super::create
+end on
+
+on m_ancestro_menu_reportes.destroy
+call super::destroy
+end on
+
+on m_leer.create
+call super::create
+this.ToolBarItemName=""
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_configurarimpresora.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+event m_imprimir::clicked;if isvalid(dw) then
+	dw.modify("Datawindow.print.preview = Yes")
+	SetPointer(HourGlass!)
+	openwithparm(conf_impr,dw)
+end if
+end event
+
+on m_deshacer.create
+call super::create
+this.ToolBarItemName=""
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_cortar.create
+call super::create
+this.ToolBarItemName=""
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_copiar.create
+call super::create
+this.ToolBarItemName=""
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_pegar.create
+call super::create
+this.ToolBarItemName=""
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_nuevo.create
+call super::create
+this.ToolBarItemName=""
+this.Enabled=false
+end on
+
+on m_actualizar.create
+call super::create
+this.ToolBarItemName=""
+this.Enabled=false
+end on
+
+on m_borraregistro.create
+call super::create
+this.ToolBarItemName=""
+this.Enabled=false
+end on
+
+on m_cargaregistro.create
+call super::create
+this.ToolBarItemName=""
+this.Enabled=false
+end on
+

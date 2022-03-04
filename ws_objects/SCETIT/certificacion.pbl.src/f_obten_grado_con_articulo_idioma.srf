@@ -1,0 +1,116 @@
+﻿$PBExportHeader$f_obten_grado_con_articulo_idioma.srf
+global type f_obten_grado_con_articulo_idioma from function_object
+end type
+
+forward prototypes
+global function string f_obten_grado_con_articulo_idioma (string as_cve_grado)
+global function string f_obten_grado_con_articulo_idioma (string as_cve_grado, integer ai_cve_idioma)
+end prototypes
+
+global function string f_obten_grado_con_articulo_idioma (string as_cve_grado);//f_obten_grado_con_articulo
+//Obtiene el valor correspondiente a la clave de grado recibida y le concatena
+//el articulo
+//Recibe			as_cve_grado	string
+//Devuelve		integer
+
+integer li_codigo_sql
+string ls_mensaje_sql,  ls_grado, ls_null, ls_articulo, ls_grado_con_articulo
+
+SetNull(ls_null)
+
+ls_grado = f_obten_grado(as_cve_grado)
+
+
+if isnull(ls_grado) then
+	MessageBox("Grado inexistente", "El grado["+as_cve_grado+"] no existe", StopSign!)
+	return ls_null
+elseif isnull(ls_grado) then
+	return ""
+else
+	CHOOSE CASE as_cve_grado
+		CASE "L"
+			ls_articulo= "la"
+		CASE "E"
+			ls_articulo= "la"
+		CASE "M"
+			ls_articulo= "la"
+		CASE "E"
+			ls_articulo= "la"
+		CASE "D"
+			ls_articulo= "el"
+		CASE "B"
+			ls_articulo= "el"
+		CASE ELSE
+			ls_articulo= ""
+	END CHOOSE	
+end if
+ls_grado_con_articulo= ls_articulo+" "+ls_grado
+return ls_grado_con_articulo
+
+end function
+
+global function string f_obten_grado_con_articulo_idioma (string as_cve_grado, integer ai_cve_idioma);//f_obten_grado_con_articulo_idioma
+//Obtiene el valor correspondiente a la clave de grado recibida y le concatena
+//el articulo
+//Recibe			as_cve_grado	string
+//					ai_cve_idioma	int
+//Devuelve		integer
+
+integer li_codigo_sql
+string ls_mensaje_sql,  ls_grado, ls_null, ls_articulo, ls_grado_con_articulo
+
+SetNull(ls_null)
+
+ls_grado = f_obten_grado_idioma(as_cve_grado, ai_cve_idioma)
+
+
+if isnull(ls_grado) then
+	MessageBox("Grado inexistente", "El grado/artículo["+as_cve_grado+"] no existe", StopSign!)
+	return ls_null
+elseif isnull(ls_grado) then
+	return ""
+else
+	choose case ai_cve_idioma
+		case 1
+			CHOOSE CASE as_cve_grado
+				CASE "L"
+					ls_articulo= "la"
+				CASE "E"
+					ls_articulo= "la"
+				CASE "M"
+					ls_articulo= "la"
+				CASE "D"
+					ls_articulo= "el"
+				CASE "B"
+					ls_articulo= "el"
+				CASE "P"
+					ls_articulo= "el"
+				CASE ELSE
+					ls_articulo= ""
+				END CHOOSE	
+		case 2
+			CHOOSE CASE as_cve_grado
+				CASE "L"
+					ls_articulo= "the"
+				CASE "E"
+					ls_articulo= "the"
+				CASE "M"
+					ls_articulo= "the"
+				CASE "D"
+					ls_articulo= "the"
+				CASE "B"
+					ls_articulo= "the"
+				CASE "P"
+					ls_articulo= "the"
+				CASE ELSE
+					ls_articulo= ""
+				END CHOOSE	
+				
+		end choose
+
+end if
+ls_grado_con_articulo= ls_articulo+" "+ls_grado
+return ls_grado_con_articulo
+
+end function
+

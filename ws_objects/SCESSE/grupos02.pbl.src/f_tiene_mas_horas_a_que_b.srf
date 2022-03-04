@@ -1,0 +1,67 @@
+﻿$PBExportHeader$f_tiene_mas_horas_a_que_b.srf
+global type f_tiene_mas_horas_a_que_b from function_object
+end type
+
+forward prototypes
+global function boolean f_tiene_mas_horas_a_que_b (long al_cve_mat_a, long al_cve_mat_b)
+end prototypes
+
+global function boolean f_tiene_mas_horas_a_que_b (long al_cve_mat_a, long al_cve_mat_b);//INSTRUCCIONES
+//Utilicese para comparar las horas de una materia asimilada por otra
+//ponga en al_cve_mat_a la materia asimilada  
+//y en al_cve_mat_b la materia que asimila
+//si devuelve true existe un error
+
+integer li_horas_reales_a, li_horas_reales_B, li_codigo_sql
+string ls_mensaje_sql
+
+//Si las materias no existen regresa true para que no permita el registro
+if al_cve_mat_a = 0 or al_cve_mat_b = 0 or &
+   isnull(al_cve_mat_a) or isnull(al_cve_mat_b) then
+	return false	
+end if
+
+//Obtiene las horas reales de la materia a
+SELECT dbo.materias.horas_reales
+INTO	:li_horas_reales_a
+FROM	dbo.materias
+WHERE dbo.materias.cve_mat = :al_cve_mat_a
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 or isnull(li_horas_reales_a) then
+	li_horas_reales_a = 0
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al comparar horas de materias (a)", ls_mensaje_sql)
+	return false
+end if
+
+//Obtiene las horas reales de la materia b
+SELECT dbo.materias.horas_reales
+INTO	:li_horas_reales_b
+FROM	dbo.materias
+WHERE dbo.materias.cve_mat = :al_cve_mat_b
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 or isnull(li_horas_reales_b) then
+	li_horas_reales_b = 0
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al comparar horas de materias (b)", ls_mensaje_sql)
+	return false
+end if
+
+IF li_horas_reales_a > li_horas_reales_b Then
+	Return True
+Else
+	Return False	
+End If	
+
+
+
+end function
+

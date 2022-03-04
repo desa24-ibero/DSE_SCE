@@ -1,0 +1,118 @@
+﻿$PBExportHeader$f_actualiza_creditos_integracion.srf
+global type f_actualiza_creditos_integracion from function_object
+end type
+
+forward prototypes
+global function long f_actualiza_creditos_integracion (string as_nivel, integer ai_creditos, integer al_cve_plan)
+end prototypes
+
+global function long f_actualiza_creditos_integracion (string as_nivel, integer ai_creditos, integer al_cve_plan);//f_actualiza_creditos_integracion
+//Actualiza los créditos de los alumnos correspondientes a un nivel
+//
+//Recibe		as_nivel		L	Licenciatura
+//								P	Posgrado
+//								T	Todos 
+//				ai_creditos		Creditos
+//				al_cve_plan		Plan de Estudios
+
+Integer  li_codigo_sql
+String ls_mensaje_sql
+long ll_cant_alumnos
+u_datastore Lu_datastore
+long ll_rows, ll_multiplo_elegido = 1000 , ll_residuo,  ll_num_bloques, ll_bloque_actual
+long ll_cuenta_inicial, ll_cuenta_final, ll_cuenta_inicial_bloque, ll_cuenta_final_bloque
+long ll_renglon_inicial_bloque, ll_renglon_final_bloque
+Lu_datastore = CREATE u_datastore
+
+IF ai_creditos < 0 THEN 
+	Messagebox("Valor no permitido","No es posible poner asignar ["+string(ai_creditos)+"] a los creditos de integración",StopSign!)
+	RETURN -1
+END IF
+
+Lu_datastore.dataobject = 'd_cuenta_creditos_integracion'
+Lu_datastore.SetTransObject(gtr_sce)
+ll_rows = Lu_datastore.Retrieve(as_nivel, ai_creditos, al_cve_plan, gs_tipo_periodo) 
+
+IF ll_rows = -1 THEN
+	Messagebox("Error de consulta de cuentas","No es posible encontrar alumnos para asignarles créditos de Integración",StopSign!)
+	RETURN -1	
+ELSE
+	ll_cuenta_inicial = Lu_datastore.GetItemNumber(1, 1)
+	ll_cuenta_final   = Lu_datastore.GetItemNumber(ll_rows, 1)
+//	SI HAY MENOS REGISTROS QUE EL TAMAÑO DE BLOQUE ELEGIDO, SOLO HABRA UN BLOQUE
+	IF ll_rows < ll_multiplo_elegido THEN
+		ll_num_bloques = 0
+		ll_bloque_actual = 0
+		ll_residuo = 0
+		ll_cuenta_inicial_bloque = ll_cuenta_inicial
+		ll_cuenta_final_bloque = ll_cuenta_final
+		
+	ELSE
+		ll_num_bloques = ll_rows / ll_multiplo_elegido	
+		ll_residuo = Mod(ll_rows, ll_multiplo_elegido )
+		ll_bloque_actual = 0
+		
+		ll_renglon_inicial_bloque = (ll_bloque_actual * ll_multiplo_elegido) + 1
+		ll_renglon_final_bloque = (ll_bloque_actual * ll_multiplo_elegido) + ll_multiplo_elegido
+		
+		IF ll_renglon_final_bloque > ll_rows THEN
+			ll_renglon_final_bloque = ll_rows
+		END IF
+		
+		ll_cuenta_inicial_bloque = Lu_datastore.GetItemNumber(ll_renglon_inicial_bloque, 1)		
+		ll_cuenta_final_bloque = Lu_datastore.GetItemNumber(ll_renglon_final_bloque, 1)		
+	END IF	
+END IF
+
+//ll_bloque_actual= 13
+
+DO WHILE ll_bloque_actual <= ll_num_bloques 
+
+	UPDATE banderas
+	SET creditos_integ = :ai_creditos
+	FROM banderas b, academicos a, plan_estudios p 
+	WHERE b.cuenta = a.cuenta
+	AND   (a.nivel = :as_nivel OR :as_nivel = 'A') 
+	AND a.cve_plan = :al_cve_plan
+	AND b.creditos_integ <> :ai_creditos
+	AND a.cuenta >= :ll_cuenta_inicial_bloque
+	AND a.cuenta <= :ll_cuenta_final_bloque
+	AND a.cve_carrera = p.cve_carrera
+	AND a.cve_plan = p.cve_plan 
+	AND p.tipo_periodo = :gs_tipo_periodo
+	USING gtr_sce;
+
+	/*AND   (a.nivel = :as_nivel OR :as_nivel = 'T') */
+
+	ls_mensaje_sql= gtr_sce.SqlErrtext
+	li_codigo_sql= gtr_sce.SqlCode
+
+	IF li_codigo_sql <>0 THEN
+		ROLLBACK USING gtr_sce;
+		Messagebox("Error al actualizar la bandera de creditos de integracion en f_actualiza_creditos_integracion",ls_mensaje_sql,StopSign!)
+		EXIT
+	ELSE 
+		COMMIT USING gtr_sce;
+	END IF
+
+	ll_bloque_actual= ll_bloque_actual + 1
+	IF ll_bloque_actual <= ll_num_bloques THEN
+		ll_renglon_inicial_bloque = (ll_bloque_actual * ll_multiplo_elegido) + 1
+		ll_renglon_final_bloque = (ll_bloque_actual * ll_multiplo_elegido) + ll_multiplo_elegido
+		IF ll_renglon_final_bloque > ll_rows THEN
+			ll_renglon_final_bloque = ll_rows
+		END IF	
+		ll_cuenta_inicial_bloque = Lu_datastore.GetItemNumber(ll_renglon_inicial_bloque, 1)		
+		ll_cuenta_final_bloque = Lu_datastore.GetItemNumber(ll_renglon_final_bloque, 1)		
+	END IF
+LOOP
+
+IF NOT ISNULL(Lu_datastore) THEN
+	DESTROY Lu_datastore
+END IF
+
+RETURN li_codigo_sql
+
+
+end function
+

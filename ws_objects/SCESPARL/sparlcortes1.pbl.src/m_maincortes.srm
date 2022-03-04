@@ -1,0 +1,488 @@
+﻿$PBExportHeader$m_maincortes.srm
+forward
+global type m_maincortes from menu
+end type
+type m_generaactas from menu within m_maincortes
+end type
+type m_actasdeevaluacin from menu within m_generaactas
+end type
+type m_reportesdetablero from menu within m_generaactas
+end type
+type m_generaactas from menu within m_maincortes
+m_actasdeevaluacin m_actasdeevaluacin
+m_reportesdetablero m_reportesdetablero
+end type
+type m_lecturadeactas from menu within m_maincortes
+end type
+type m_evaluacion from menu within m_lecturadeactas
+end type
+type m_evaluacinextraordinaria from menu within m_lecturadeactas
+end type
+type m_evaluacinsuficiencia from menu within m_lecturadeactas
+end type
+type m_cambiodecalificacin from menu within m_lecturadeactas
+end type
+type m_lecturadeactas from menu within m_maincortes
+m_evaluacion m_evaluacion
+m_evaluacinextraordinaria m_evaluacinextraordinaria
+m_evaluacinsuficiencia m_evaluacinsuficiencia
+m_cambiodecalificacin m_cambiodecalificacin
+end type
+type m_cortes from menu within m_maincortes
+end type
+type m_respaldaacadmicos from menu within m_cortes
+end type
+type m_actualizainscrito from menu within m_cortes
+end type
+type m_cortepromedio from menu within m_cortes
+end type
+type m_corte3ry4i from menu within m_cortes
+end type
+type m_cortedeintegracin from menu within m_cortes
+end type
+type m_cortedeprerrequisito from menu within m_cortes
+end type
+type m_cortedeserviciosocial from menu within m_cortes
+end type
+type m_cortedesemestres from menu within m_cortes
+end type
+type m_cortedeegresados from menu within m_cortes
+end type
+type m_cortes from menu within m_maincortes
+m_respaldaacadmicos m_respaldaacadmicos
+m_actualizainscrito m_actualizainscrito
+m_cortepromedio m_cortepromedio
+m_corte3ry4i m_corte3ry4i
+m_cortedeintegracin m_cortedeintegracin
+m_cortedeprerrequisito m_cortedeprerrequisito
+m_cortedeserviciosocial m_cortedeserviciosocial
+m_cortedesemestres m_cortedesemestres
+m_cortedeegresados m_cortedeegresados
+end type
+type m_reportes from menu within m_maincortes
+end type
+type m_cortedepromedio from menu within m_reportes
+end type
+type m_cortede3ry4i from menu within m_reportes
+end type
+type m_cortedeingls from menu within m_reportes
+end type
+type m_reportes from menu within m_maincortes
+m_cortedepromedio m_cortedepromedio
+m_cortede3ry4i m_cortede3ry4i
+m_cortedeingls m_cortedeingls
+end type
+type m_especial from menu within m_maincortes
+end type
+type m_actualizahorario from menu within m_especial
+end type
+type m_actualizaadeudos from menu within m_especial
+end type
+type m_generagruposcancelados from menu within m_especial
+end type
+type m_especial from menu within m_maincortes
+m_actualizahorario m_actualizahorario
+m_actualizaadeudos m_actualizaadeudos
+m_generagruposcancelados m_generagruposcancelados
+end type
+type m_salir from menu within m_maincortes
+end type
+type m_salir from menu within m_maincortes
+end type
+end forward
+
+global type m_maincortes from menu
+m_generaactas m_generaactas
+m_lecturadeactas m_lecturadeactas
+m_cortes m_cortes
+m_reportes m_reportes
+m_especial m_especial
+m_salir m_salir
+end type
+global m_maincortes m_maincortes
+
+on m_maincortes.create
+m_maincortes=this
+this.m_generaactas=create m_generaactas
+this.m_lecturadeactas=create m_lecturadeactas
+this.m_cortes=create m_cortes
+this.m_reportes=create m_reportes
+this.m_especial=create m_especial
+this.m_salir=create m_salir
+this.Item[]={this.m_generaactas, &
+this.m_lecturadeactas, &
+this.m_cortes, &
+this.m_reportes, &
+this.m_especial, &
+this.m_salir}
+end on
+
+on m_maincortes.destroy
+destroy(this.m_generaactas)
+destroy(this.m_lecturadeactas)
+destroy(this.m_cortes)
+destroy(this.m_reportes)
+destroy(this.m_especial)
+destroy(this.m_salir)
+end on
+
+type m_generaactas from menu within m_maincortes
+m_actasdeevaluacin m_actasdeevaluacin
+m_reportesdetablero m_reportesdetablero
+end type
+
+on m_generaactas.create
+this.Text="Genera Actas"
+this.m_actasdeevaluacin=create m_actasdeevaluacin
+this.m_reportesdetablero=create m_reportesdetablero
+this.Item[]={this.m_actasdeevaluacin, &
+this.m_reportesdetablero}
+end on
+
+on m_generaactas.destroy
+destroy(this.m_actasdeevaluacin)
+destroy(this.m_reportesdetablero)
+end on
+
+type m_actasdeevaluacin from menu within m_generaactas
+end type
+
+event clicked;opensheet(w_generador_actas_evaluacion,w_principal,4,Original!)
+end event
+
+on m_actasdeevaluacin.create
+this.Text="Actas de Evaluación"
+end on
+
+type m_reportesdetablero from menu within m_generaactas
+end type
+
+event clicked;opensheet(w_generador_reportes_tablero,w_principal,4,Original!)
+end event
+
+on m_reportesdetablero.create
+this.Text="Reportes de Tablero"
+end on
+
+type m_lecturadeactas from menu within m_maincortes
+m_evaluacion m_evaluacion
+m_evaluacinextraordinaria m_evaluacinextraordinaria
+m_evaluacinsuficiencia m_evaluacinsuficiencia
+m_cambiodecalificacin m_cambiodecalificacin
+end type
+
+on m_lecturadeactas.create
+this.Text="Lectura de Actas"
+this.m_evaluacion=create m_evaluacion
+this.m_evaluacinextraordinaria=create m_evaluacinextraordinaria
+this.m_evaluacinsuficiencia=create m_evaluacinsuficiencia
+this.m_cambiodecalificacin=create m_cambiodecalificacin
+this.Item[]={this.m_evaluacion, &
+this.m_evaluacinextraordinaria, &
+this.m_evaluacinsuficiencia, &
+this.m_cambiodecalificacin}
+end on
+
+on m_lecturadeactas.destroy
+destroy(this.m_evaluacion)
+destroy(this.m_evaluacinextraordinaria)
+destroy(this.m_evaluacinsuficiencia)
+destroy(this.m_cambiodecalificacin)
+end on
+
+type m_evaluacion from menu within m_lecturadeactas
+end type
+
+event clicked;opensheet(w_eva_norm,w_principal,4,Original!)
+end event
+
+on m_evaluacion.create
+this.Text="Evaluacion"
+end on
+
+type m_evaluacinextraordinaria from menu within m_lecturadeactas
+end type
+
+event clicked;opensheet(w_eva_extra,w_principal,4,Original!)
+end event
+
+on m_evaluacinextraordinaria.create
+this.Text="Evaluación Extraordinaria"
+end on
+
+type m_evaluacinsuficiencia from menu within m_lecturadeactas
+end type
+
+event clicked;opensheet(w_eva_sufi,w_principal,4,Original!)
+end event
+
+on m_evaluacinsuficiencia.create
+this.Text="Evaluación Suficiencia"
+end on
+
+type m_cambiodecalificacin from menu within m_lecturadeactas
+end type
+
+event clicked;opensheet(w_camb_calif,w_principal,4,Original!)
+end event
+
+on m_cambiodecalificacin.create
+this.Text="Cambio de Calificación"
+end on
+
+type m_cortes from menu within m_maincortes
+m_respaldaacadmicos m_respaldaacadmicos
+m_actualizainscrito m_actualizainscrito
+m_cortepromedio m_cortepromedio
+m_corte3ry4i m_corte3ry4i
+m_cortedeintegracin m_cortedeintegracin
+m_cortedeprerrequisito m_cortedeprerrequisito
+m_cortedeserviciosocial m_cortedeserviciosocial
+m_cortedesemestres m_cortedesemestres
+m_cortedeegresados m_cortedeegresados
+end type
+
+on m_cortes.create
+this.Text="Cortes"
+this.m_respaldaacadmicos=create m_respaldaacadmicos
+this.m_actualizainscrito=create m_actualizainscrito
+this.m_cortepromedio=create m_cortepromedio
+this.m_corte3ry4i=create m_corte3ry4i
+this.m_cortedeintegracin=create m_cortedeintegracin
+this.m_cortedeprerrequisito=create m_cortedeprerrequisito
+this.m_cortedeserviciosocial=create m_cortedeserviciosocial
+this.m_cortedesemestres=create m_cortedesemestres
+this.m_cortedeegresados=create m_cortedeegresados
+this.Item[]={this.m_respaldaacadmicos, &
+this.m_actualizainscrito, &
+this.m_cortepromedio, &
+this.m_corte3ry4i, &
+this.m_cortedeintegracin, &
+this.m_cortedeprerrequisito, &
+this.m_cortedeserviciosocial, &
+this.m_cortedesemestres, &
+this.m_cortedeegresados}
+end on
+
+on m_cortes.destroy
+destroy(this.m_respaldaacadmicos)
+destroy(this.m_actualizainscrito)
+destroy(this.m_cortepromedio)
+destroy(this.m_corte3ry4i)
+destroy(this.m_cortedeintegracin)
+destroy(this.m_cortedeprerrequisito)
+destroy(this.m_cortedeserviciosocial)
+destroy(this.m_cortedesemestres)
+destroy(this.m_cortedeegresados)
+end on
+
+type m_respaldaacadmicos from menu within m_cortes
+end type
+
+event clicked;opensheet(w_academicos,w_principal,4,Layered!)
+end event
+
+on m_respaldaacadmicos.create
+this.Text="Respalda Académicos"
+end on
+
+type m_actualizainscrito from menu within m_cortes
+end type
+
+on m_actualizainscrito.create
+this.Text="Actualiza Inscrito"
+end on
+
+event clicked;opensheet(w_actua_insc_ant,w_principal,4,Layered!)
+end event
+
+type m_cortepromedio from menu within m_cortes
+end type
+
+event clicked;opensheet(w_promedio,w_principal,4,Layered!)
+end event
+
+on m_cortepromedio.create
+this.Text="Corte Promedio"
+end on
+
+type m_corte3ry4i from menu within m_cortes
+end type
+
+event clicked;opensheet(w_3ry4i,w_principal,4,Layered!)
+end event
+
+on m_corte3ry4i.create
+this.Text="Corte 3R y 4I"
+end on
+
+type m_cortedeintegracin from menu within m_cortes
+end type
+
+event clicked;opensheet(w_integracion,w_principal,4,Layered!)
+end event
+
+on m_cortedeintegracin.create
+this.Text="Corte de Integración"
+end on
+
+type m_cortedeprerrequisito from menu within m_cortes
+end type
+
+event clicked;opensheet(w_ingles,w_principal,4,Layered!)
+end event
+
+on m_cortedeprerrequisito.create
+this.Text="Corte de Prerrequisito de Ingles"
+end on
+
+type m_cortedeserviciosocial from menu within m_cortes
+end type
+
+event clicked;opensheet(w_serv_soc,w_principal,4,Layered!)
+end event
+
+on m_cortedeserviciosocial.create
+this.Text="Corte de Servicio Social"
+end on
+
+type m_cortedesemestres from menu within m_cortes
+end type
+
+event clicked;opensheet(w_sem_cursados,w_principal,4,Layered!)
+end event
+
+on m_cortedesemestres.create
+this.Text="Corte de Semestres"
+end on
+
+type m_cortedeegresados from menu within m_cortes
+end type
+
+on m_cortedeegresados.create
+this.Text="Corte de Egresados"
+end on
+
+event clicked;// Juan Campos Sánchez.	Abril-1998.
+Opensheet(w_egresados,w_principal,4,Original!)
+end event
+
+type m_reportes from menu within m_maincortes
+m_cortedepromedio m_cortedepromedio
+m_cortede3ry4i m_cortede3ry4i
+m_cortedeingls m_cortedeingls
+end type
+
+on m_reportes.create
+this.Text="Reportes"
+this.m_cortedepromedio=create m_cortedepromedio
+this.m_cortede3ry4i=create m_cortede3ry4i
+this.m_cortedeingls=create m_cortedeingls
+this.Item[]={this.m_cortedepromedio, &
+this.m_cortede3ry4i, &
+this.m_cortedeingls}
+end on
+
+on m_reportes.destroy
+destroy(this.m_cortedepromedio)
+destroy(this.m_cortede3ry4i)
+destroy(this.m_cortedeingls)
+end on
+
+type m_cortedepromedio from menu within m_reportes
+end type
+
+event clicked;opensheet(w_rep_prom,w_principal,4,Layered!)
+end event
+
+on m_cortedepromedio.create
+this.Text="Corte de Promedio"
+end on
+
+type m_cortede3ry4i from menu within m_reportes
+end type
+
+event clicked;opensheet(w_rep_3r4i,w_principal,4,Layered!)
+end event
+
+on m_cortede3ry4i.create
+this.Text="Corte de 3R y 4I"
+end on
+
+type m_cortedeingls from menu within m_reportes
+end type
+
+event clicked;opensheet(w_rep_ingles,w_principal,4,Layered!)
+end event
+
+on m_cortedeingls.create
+this.Text="Corte de Inglés"
+end on
+
+type m_especial from menu within m_maincortes
+m_actualizahorario m_actualizahorario
+m_actualizaadeudos m_actualizaadeudos
+m_generagruposcancelados m_generagruposcancelados
+end type
+
+on m_especial.create
+this.Text="Especial"
+this.m_actualizahorario=create m_actualizahorario
+this.m_actualizaadeudos=create m_actualizaadeudos
+this.m_generagruposcancelados=create m_generagruposcancelados
+this.Item[]={this.m_actualizahorario, &
+this.m_actualizaadeudos, &
+this.m_generagruposcancelados}
+end on
+
+on m_especial.destroy
+destroy(this.m_actualizahorario)
+destroy(this.m_actualizaadeudos)
+destroy(this.m_generagruposcancelados)
+end on
+
+type m_actualizahorario from menu within m_especial
+end type
+
+on m_actualizahorario.create
+this.Text="Actualiza Horario"
+end on
+
+event clicked;opensheet(w_actualiza_horario,w_principal,4,Original!)
+end event
+
+type m_actualizaadeudos from menu within m_especial
+end type
+
+event clicked;opensheet(w_verifica_adeudos2,w_principal,4,Original!)
+end event
+
+on m_actualizaadeudos.create
+this.Text="Actualiza Adeudos"
+end on
+
+type m_generagruposcancelados from menu within m_especial
+end type
+
+event clicked;opensheet(w_actualiza_grupos_cerrados,w_principal,4,Original!)
+end event
+
+on m_generagruposcancelados.create
+this.Text="Genera GruposCancelados"
+end on
+
+type m_salir from menu within m_maincortes
+end type
+
+on m_salir.create
+this.Text="Salir"
+this.ToolBarItemText="Salir CortesExit!"
+this.MenuItemType=MenuItemTypeExit!
+end on
+
+on m_salir.destroy
+end on
+
+event clicked;close(w_principal)
+end event
+

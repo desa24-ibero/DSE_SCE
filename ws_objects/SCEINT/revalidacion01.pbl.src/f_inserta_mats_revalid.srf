@@ -1,0 +1,210 @@
+﻿$PBExportHeader$f_inserta_mats_revalid.srf
+global type f_inserta_mats_revalid from function_object
+end type
+
+forward prototypes
+global function long f_inserta_mats_revalid (long al_cuenta)
+end prototypes
+
+global function long f_inserta_mats_revalid (long al_cuenta);//Función que inserta las materias revalidadas de un aspirante/alumno
+//
+//f_inserta_mats_revalid
+//
+//Parámetros:		al_cuenta		
+
+int li_codigo_sql, li_cve_constancia, li_codigo_sql_mi, li_codigo_sql_hist
+long ll_cuenta, ll_max_folio, ll_cuenta_siguiente, ll_rows_mats, ll_row_actual, ll_folio
+string ls_carrera, ls_nivel, ls_mensaje_sql, ls_sexo, ls_mensaje_aux
+boolean 	lb_nueva_insercion 
+integer li_res_comite, li_cancelado, li_cve_carrera, li_cve_plan
+integer li_periodo, li_anio, li_observacion
+long ll_cve_mat,  ll_cve_mat_busc_hist, ll_cve_mat_busc_mi
+string ls_calificacion, ls_gpo
+integer li_rtn_update, li_pase_realizado
+long ll_mats_insertadas
+
+ll_mats_insertadas= 0
+gtr_sce.AutoCommit = true
+lb_nueva_insercion = false
+	
+ll_cuenta = al_cuenta
+
+
+SELECT dbo.aspirantes_revalidacion.res_comite,
+		 dbo.aspirantes_revalidacion.cancelado,
+		 dbo.aspirantes_revalidacion.cve_carrera,
+		 dbo.aspirantes_revalidacion.cve_plan,
+		 dbo.aspirantes_revalidacion.folio
+INTO	:li_res_comite,
+		:li_cancelado,
+		:li_cve_carrera,
+		:li_cve_plan,
+		:ll_folio
+FROM	dbo.aspirantes_revalidacion
+WHERE dbo.aspirantes_revalidacion.cuenta = :ll_cuenta
+USING gtr_sce;
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	rollback using gtr_sce;
+	MessageBox("Error al recuperar el aspirante a revalidacion:"+string(al_cuenta),  ls_mensaje_sql, StopSign!)
+	return -1
+elseif li_codigo_sql=100 then
+	commit using gtr_sce;
+	ll_max_folio = 0
+	MessageBox("Aspirante no registrado", "El aspirante de revalidación con folio: "+string(al_cuenta)+" no existe.",  StopSign!)
+	return -1
+else
+	commit using gtr_sce;
+	if li_cancelado <> 0 then
+		MessageBox("Aspirante cancelado", "El aspirante de revalidación con folio: "+string(al_cuenta)+" se ha cancelado.",  StopSign!)
+		return -1
+	end if	
+end if
+
+
+DataStore lds_mats_revalid_proced
+lds_mats_revalid_proced = Create DataStore
+lds_mats_revalid_proced.DataObject = "d_mats_revalid_proced"
+lds_mats_revalid_proced.SetTransObject(gtr_sce)
+
+ll_rows_mats = lds_mats_revalid_proced.Retrieve(ll_folio)
+
+if ll_rows_mats = -1 then
+	MessageBox("Error de Datawindow","No se puede leer: d_mats_revalid_proced",StopSign!)
+	return -1
+elseif ll_rows_mats = 0 then
+	MessageBox("No existen registros","Datawindow: d_mats_revalid_proced~n"+&
+	           "no tiene materias a inscribir",StopSign!)
+	return 0
+else
+	
+	for ll_row_actual=1 to ll_rows_mats
+		
+		li_periodo = lds_mats_revalid_proced.GetItemNumber(ll_row_actual,"periodo")
+		li_anio = lds_mats_revalid_proced.GetItemNumber(ll_row_actual,"anio")
+		ll_cve_mat = lds_mats_revalid_proced.GetItemNumber(ll_row_actual,"cve_mat")
+		ls_gpo = lds_mats_revalid_proced.GetItemString(ll_row_actual,"gpo")
+		ls_calificacion = lds_mats_revalid_proced.GetItemString(ll_row_actual,"calificacion")
+		li_pase_realizado= lds_mats_revalid_proced.GetItemNumber(ll_row_actual,"pase_realizado")
+
+		if isnull(ls_gpo) then
+			ls_gpo = "Z"
+		end if
+
+		if isnull(li_pase_realizado) then
+			li_pase_realizado = 0
+		end if
+
+		//REVISA SU EXISTENCIA EN historico
+		SELECT dbo.historico.cve_mat
+		INTO	:ll_cve_mat_busc_hist
+		FROM	dbo.historico
+		WHERE dbo.historico.cve_mat = :ll_cve_mat
+		AND	dbo.historico.cve_carrera = :li_cve_carrera
+		AND	dbo.historico.cve_plan = :li_cve_plan
+		AND	dbo.historico.cuenta = :al_cuenta
+		AND	dbo.historico.calificacion not in ('5', 'NA', 'BA')
+		USING gtr_sce;
+		ls_mensaje_sql=gtr_sce.SqlErrText
+		li_codigo_sql_hist=gtr_sce.SqlCode
+		ls_mensaje_aux = "Error de lectura en historico cuenta: "
+		
+		if li_codigo_sql_hist = -1 then
+			rollback using gtr_sce;
+			MessageBox(ls_mensaje_aux+string(al_cuenta),  ls_mensaje_sql)
+		else
+			commit using gtr_sce;
+		end if
+
+		//REVISA SU EXISTENCIA EN mat_inscritas
+		SELECT dbo.mat_inscritas.cve_mat
+		INTO	:ll_cve_mat_busc_mi
+		FROM	dbo.mat_inscritas
+		WHERE dbo.mat_inscritas.cve_mat = :ll_cve_mat
+		AND	dbo.mat_inscritas.periodo = :li_periodo
+		AND	dbo.mat_inscritas.anio = :li_anio
+		AND	dbo.mat_inscritas.cuenta = :al_cuenta
+		AND	dbo.mat_inscritas.cve_condicion not in (1, 2, 3)
+		AND	dbo.mat_inscritas.calificacion <> "BA"		
+		USING gtr_sce;
+		
+		ls_mensaje_sql=gtr_sce.SqlErrText
+		li_codigo_sql_mi=gtr_sce.SqlCode
+		ls_mensaje_aux = "Error de lectura en mat_inscritas cuenta: "
+		
+		if li_codigo_sql_mi = -1 then
+			rollback using gtr_sce;
+			MessageBox(ls_mensaje_aux+string(al_cuenta),  ls_mensaje_sql)
+		end if
+
+		//5 REVALIDADA
+		li_observacion= 5
+		if (li_codigo_sql_hist = 100 or isnull(ll_cve_mat_busc_hist)) and &
+		   (li_codigo_sql_mi = 100 or isnull(ll_cve_mat_busc_mi)) then
+//			li_pase_realizado = 0 then
+		//No existe la materia en historico, es necesario un INSERT
+			ls_mensaje_aux="Error al insertar registro en la tabla historico con cuenta : "
+			INSERT INTO	dbo.historico
+			(dbo.historico.cuenta,	dbo.historico.cve_mat, 		dbo.historico.gpo, 		
+			dbo.historico.periodo, 	dbo.historico.anio,	 		dbo.historico.cve_carrera, 
+			dbo.historico.cve_plan,	dbo.historico.calificacion,dbo.historico.observacion)
+			VALUES
+			(:ll_cuenta, 				:ll_cve_mat,					:ls_gpo,
+			 :li_periodo,				:li_anio,						:li_cve_carrera,
+			 :li_cve_plan,				:ls_calificacion,				:li_observacion)
+			USING gtr_sce;
+				
+//		elseif not isnull(ll_cve_mat_busc_hist) then
+//		//Existe la materia en historico, es suficiente un UPDATE
+//			ls_mensaje_aux="Error al actualizar registro en la tabla historico con cuenta : "
+//			
+//			UPDATE dbo.historico
+//			SET dbo.historico.gpo = :ls_gpo,
+//			    dbo.historico.calificacion = :ls_calificacion
+//			FROM dbo.historico
+//			WHERE dbo.historico.cve_mat = :ll_cve_mat
+//			AND	dbo.historico.periodo = :li_periodo
+//			AND	dbo.historico.anio = :li_anio
+//			AND	dbo.historico.cuenta = :al_cuenta
+//			USING gtr_sce;
+			
+		
+
+			ls_mensaje_sql=gtr_sce.SqlErrText
+			li_codigo_sql=gtr_sce.SqlCode
+
+			if li_codigo_sql = -1 then
+				rollback using gtr_sce;
+				MessageBox(ls_mensaje_aux+string(al_cuenta),  ls_mensaje_sql)
+			else
+				commit using gtr_sce;
+				ll_mats_insertadas= ll_mats_insertadas + 1
+			
+				ls_mensaje_aux="Error al actualizar la materia: "+string(ll_cve_mat)
+				li_pase_realizado= 1
+				lds_mats_revalid_proced.SetItem(ll_row_actual,"pase_realizado", li_pase_realizado )
+			
+				li_rtn_update = lds_mats_revalid_proced.Update()
+				ls_mensaje_sql=gtr_sce.SqlErrText
+				li_codigo_sql=gtr_sce.SqlCode	
+	
+				IF li_rtn_update = 1 THEN
+					COMMIT USING gtr_sce;
+				ELSE
+					ROLLBACK USING gtr_sce;
+					MessageBox(ls_mensaje_aux,  ls_mensaje_sql)
+				END IF
+			
+			end if
+		end if
+	next				
+end if
+
+return ll_mats_insertadas
+
+
+end function
+

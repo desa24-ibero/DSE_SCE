@@ -1,0 +1,11 @@
+﻿$PBExportHeader$dw_prerreq.srd
+$PBExportComments$Materias que tienen prerrequisito, leído de SCE. Pide carrera y plan
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cve_mat dbname="prerrequisitos.cve_mat" )
+ retrieve="PBSELECT( VERSION(400) DISTINCT ()TABLE(NAME=~"prerrequisitos~" )  TABLE(NAME=~"area_mat~" )  TABLE(NAME=~"plan_estudios~" ) COLUMN(NAME=~"prerrequisitos.cve_mat~")    JOIN (LEFT=~"area_mat.cve_area~"    OP =~"=~"RIGHT=~"plan_estudios.cve_area_basica~" )    JOIN (LEFT=~"prerrequisitos.cve_mat~"    OP =~"=~"RIGHT=~"area_mat.cve_mat~" )WHERE(    EXP1 =~"prerrequisitos.cve_carrera~"   OP =~"=~"    EXP2 =~":carr~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"prerrequisitos.cve_plan~"   OP =~"=~"    EXP2 =~":plan~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"plan_estudios.cve_carrera~"   OP =~"=~"    EXP2 =~":carr~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"plan_estudios.cve_plan~"   OP =~"=~"    EXP2 =~":plan~" ) ) ARG(NAME = ~"carr~" TYPE = number)  ARG(NAME = ~"plan~" TYPE = number) " arguments=(("carr", number),("plan", number))  sort="cve_mat A " )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="1" y="4" height="77" width="1212" format="[general]"  name=cve_mat edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

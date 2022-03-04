@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_img_info.srs
+global type str_img_info from structure
+    integer width
+    integer height
+    integer bitspix
+end type
+

@@ -1,0 +1,14 @@
+﻿$PBExportHeader$d_hist_reingreso.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=221 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes key=yes name=banderas_cuenta dbname="banderas.cuenta" )
+ column=(type=long update=yes updatewhereclause=yes name=banderas_insc_sem_ant dbname="banderas.insc_sem_ant" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"hist_reingreso~" )  TABLE(NAME=~"banderas~" ) COLUMN(NAME=~"banderas.cuenta~") COLUMN(NAME=~"banderas.insc_sem_ant~")    JOIN (LEFT=~"hist_reingreso.cuenta~"    OP =~"=~"RIGHT=~"banderas.cuenta~" )WHERE(    EXP1 =~"hist_reingreso.periodo_ing~"   OP =~"=~"    EXP2 =~":per~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"hist_reingreso.anio_ing~"   OP =~"=~"    EXP2 =~":ani~" ) ) ARG(NAME = ~"per~" TYPE = number)  ARG(NAME = ~"ani~" TYPE = number) " update="banderas" updatewhere=0 updatekeyinplace=yes filter=" banderas_insc_sem_ant <>1" arguments=(("per", number),("ani", number)) )
+compute(band=header alignment="1" expression="count(banderas_cuenta for all) "border="0" color="255" x="339" y="96" height="81" width="330" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cuenta"border="0" color="0" x="78" y="4" height="65" width="188"  name=cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="357" y="4" height="77" width="266" format="[general]"  name=banderas_insc_sem_ant edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="78" y="4" height="77" width="188" format="[general]"  name=banderas_cuenta edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

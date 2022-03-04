@@ -1,0 +1,18 @@
+﻿$PBExportHeader$d_pago_anticipado_cuenta_sit.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=92 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=horas dbname="horas" )
+ retrieve="SELECT horas = isnull(Sum(CASE (cve_estatus_tarjata)
+                   WHEN 1 THEN -horas WHEN 2 THEN -horas
+                   WHEN 3 THEN horas  WHEN 4 THEN horas
+                   ELSE 0 END),0)
+FROM pa_tarjeta_horas
+WHERE pa_tarjeta_horas.cuenta = :cuenta " arguments=(("cuenta", number)) )
+text(band=header alignment="2" text="Horas" border="0" color="0" x="18" y="4" height="64" width="334"  name=cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="2" color="0" x="18" y="0" height="76" width="334" format="[general]"  name=horas edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

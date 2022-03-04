@@ -1,0 +1,177 @@
+﻿$PBExportHeader$dw_resultados_examen_ing.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=141 color="536870912" )
+summary(height=80 color="536870912" )
+footer(height=45 color="536870912" )
+detail(height=90 color="536870912" )
+table(column=(type=char(20) updatewhereclause=yes name=version_version dbname="version.version" )
+ column=(type=char(9) updatewhereclause=yes name=periodo_periodo dbname="periodo.periodo" )
+ column=(type=long updatewhereclause=yes name=aspiran_anio dbname="aspiran.anio" )
+ column=(type=long updatewhereclause=yes name=aspiran_folio dbname="aspiran.folio" )
+ column=(type=char(10) updatewhereclause=yes name=status_nombre dbname="status.nombre" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_carr dbname="aspiran.clv_carr" )
+ column=(type=char(1) updatewhereclause=yes name=general_sexo dbname="general.sexo" )
+ column=(type=long updatewhereclause=yes name=general_transporte dbname="general.transporte" )
+ column=(type=long updatewhereclause=yes name=general_bachillera dbname="general.bachillera" )
+ column=(type=real updatewhereclause=yes name=aspiran_promedio dbname="aspiran.promedio" )
+ column=(type=number updatewhereclause=yes name=verbal dbname="cali_sec.calif" )
+ column=(type=number updatewhereclause=yes name=numerico dbname="cali_sec.calif" )
+ column=(type=number updatewhereclause=yes name=ingles dbname="cali_sec.calif" )
+ column=(type=number updatewhereclause=yes name=mundo dbname="cali_sec.calif" )
+ column=(type=number updatewhereclause=yes name=naturales dbname="cali_sec.calif" )
+ column=(type=number updatewhereclause=yes name=sociales dbname="cali_sec.calif" )
+ column=(type=number updatewhereclause=yes name=matematicas dbname="cali_sec.calif" )
+ column=(type=number updatewhereclause=yes name=espaniol dbname="cali_sec.calif" )
+ column=(type=long updatewhereclause=yes name=aspiran_status dbname="aspiran.status" )
+ column=(type=real updatewhereclause=yes name=aspiran_puntaje dbname="aspiran.puntaje" )
+ column=(type=long updatewhereclause=yes name=general_cuenta dbname="general.cuenta" )
+ retrieve="  SELECT version.version,   
+         periodo.periodo,   
+         aspiran.anio,   
+         aspiran.folio,   
+         status.nombre,   
+         aspiran.clv_carr,   
+         general.sexo,   
+         general.transporte,   
+         general.bachillera,   
+         aspiran.promedio,   
+         cali_sec_a.calif,   
+         cali_sec_b.calif,   
+         cali_sec_c.calif,   
+         cali_sec_d.calif,   
+         cali_sec_e.calif,   
+         cali_sec_f.calif,   
+         cali_sec_g.calif,   
+         cali_sec_h.calif,   
+         aspiran.status,   
+         aspiran.puntaje,   
+         general.cuenta  
+    FROM aspiran,   
+         general,   
+         status,   
+         version,   
+         periodo,   
+         cali_sec cali_sec_a,   
+         cali_sec cali_sec_b,   
+         cali_sec cali_sec_c,   
+         cali_sec cali_sec_d,   
+         cali_sec cali_sec_e,   
+         cali_sec cali_sec_f,   
+         cali_sec cali_sec_g,   
+         cali_sec cali_sec_h  
+   WHERE ( cali_sec_a.folio =* aspiran.folio) and  
+         ( cali_sec_a.clv_ver =* aspiran.clv_ver) and  
+         ( cali_sec_a.clv_per =* aspiran.clv_per) and  
+         ( cali_sec_a.anio =* aspiran.anio) and  
+         ( cali_sec_b.folio =* aspiran.folio) and  
+         ( cali_sec_b.clv_ver =* aspiran.clv_ver) and  
+         ( cali_sec_b.clv_per =* aspiran.clv_per) and  
+         ( cali_sec_b.anio =* aspiran.anio) and  
+         ( cali_sec_c.folio =* aspiran.folio) and  
+         ( cali_sec_c.clv_ver =* aspiran.clv_ver) and  
+         ( cali_sec_c.clv_per =* aspiran.clv_per) and  
+         ( cali_sec_c.anio =* aspiran.anio) and  
+         ( cali_sec_d.folio =* aspiran.folio) and  
+         ( cali_sec_d.clv_ver =* aspiran.clv_ver) and  
+         ( cali_sec_d.clv_per =* aspiran.clv_per) and  
+         ( cali_sec_d.anio =* aspiran.anio) and  
+         ( cali_sec_e.folio =* aspiran.folio) and  
+         ( cali_sec_e.clv_ver =* aspiran.clv_ver) and  
+         ( cali_sec_e.clv_per =* aspiran.clv_per) and  
+         ( cali_sec_e.anio =* aspiran.anio) and  
+         ( cali_sec_f.folio =* aspiran.folio) and  
+         ( cali_sec_f.clv_ver =* aspiran.clv_ver) and  
+         ( cali_sec_f.clv_per =* aspiran.clv_per) and  
+         ( cali_sec_f.anio =* aspiran.anio) and  
+         ( cali_sec_g.folio =* aspiran.folio) and  
+         ( cali_sec_g.clv_ver =* aspiran.clv_ver) and  
+         ( cali_sec_g.clv_per =* aspiran.clv_per) and  
+         ( cali_sec_g.anio =* aspiran.anio) and  
+         ( cali_sec_h.folio =* aspiran.folio) and  
+         ( cali_sec_h.clv_ver =* aspiran.clv_ver) and  
+         ( cali_sec_h.clv_per =* aspiran.clv_per) and  
+         ( cali_sec_h.anio =* aspiran.anio) and  
+         ( aspiran.folio = general.folio ) and  
+         ( aspiran.clv_ver = general.clv_ver ) and  
+         ( aspiran.clv_per = general.clv_per ) and  
+         ( aspiran.anio = general.anio ) and  
+         ( aspiran.status = status.status ) and  
+         ( aspiran.clv_ver = version.clv_ver ) and  
+         ( aspiran.clv_per = periodo.clv_per ) and  
+         aspiran.ing_per = :per AND  
+         aspiran.ing_anio = :ani AND  
+         cali_sec_a.clv_area = 1 AND  
+         cali_sec_a.clv_sec = 1 AND  
+         cali_sec_b.clv_area = 1 AND  
+         cali_sec_b.clv_sec = 2 AND  
+         cali_sec_c.clv_area = 1 AND  
+         cali_sec_c.clv_sec = 3 AND  
+         cali_sec_d.clv_area = 2 AND  
+         cali_sec_d.clv_sec = 1 AND  
+         cali_sec_e.clv_area = 2 AND  
+         cali_sec_e.clv_sec = 2 AND  
+         cali_sec_f.clv_area = 2 AND  
+         cali_sec_f.clv_sec = 3 AND  
+         cali_sec_g.clv_area = 2 AND  
+         cali_sec_g.clv_sec = 4 AND  
+         cali_sec_h.clv_area = 2 AND  
+         cali_sec_h.clv_sec = 5    
+" arguments=(("ver", number),("per", number),("ani", number))  sort="aspiran_folio A " )
+text(band=header alignment="2" text="Aspiran
+Anio"border="0" color="0" x="673" y="3" height="131" width="329"  name=aspiran_anio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Folio"border="0" color="0" x="1006" y="3" height="131" width="333"  name=aspiran_folio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Clv Carr"border="0" color="0" x="1679" y="3" height="131" width="329"  name=aspiran_clv_carr_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Transporte"border="0" color="0" x="2224" y="3" height="131" width="333"  name=general_transporte_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Bachillera"border="0" color="0" x="2560" y="3" height="131" width="333"  name=general_bachillera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Sexo"border="0" color="0" x="2011" y="3" height="131" width="205"  name=general_sexo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Status"border="0" color="0" x="1346" y="3" height="131" width="329"  name=aspiran_status_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Clv Ver"border="0" color="0" x="4" y="3" height="131" width="333"  name=aspiran_clv_ver_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Clv Per"border="0" color="0" x="340" y="3" height="131" width="329"  name=aspiran_clv_per_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Promedio"border="0" color="0" x="2929" y="3" height="131" width="252"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Razona.
+Verbal"border="0" color="0" x="3277" y="3" height="131" width="219"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Razona.
+Numérico"border="0" color="0" x="3588" y="3" height="131" width="252"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Razona.
+Inglés"border="0" color="0" x="3931" y="3" height="131" width="219"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cono.
+Mundo Con."border="0" color="0" x="4209" y="3" height="131" width="322"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cono.
+C. Naturales"border="0" color="0" x="4535" y="3" height="131" width="329"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cono.
+C. Sociales"border="0" color="0" x="4879" y="3" height="131" width="307"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cono.
+Matemá."border="0" color="0" x="5244" y="3" height="131" width="234"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cono.
+Español"border="0" color="0" x="5581" y="3" height="131" width="216"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="1679" y="3" height="77" width="329" format="[general]"  name=aspiran_clv_carr edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="2224" y="3" height="77" width="333" format="[general]"  name=general_transporte edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="2085" y="3" height="77" width="55" format="[general]"  name=general_sexo edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="1006" y="3" height="77" width="333" format="[general]"  name=aspiran_folio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="1346" y="3" height="77" width="329" format="[general]"  name=status_nombre edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="673" y="3" height="77" width="329" format="[general]"  name=aspiran_anio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="340" y="3" height="77" width="329" format="[general]"  name=periodo_periodo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="4" y="3" height="77" width="333" format="[general]"  name=version_version edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="0" x="2560" y="3" height="77" width="333" format="[general]"  name=general_bachillera edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="0" x="2893" y="3" height="77" width="333" format="[general]"  name=aspiran_promedio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="0" x="3222" y="3" height="77" width="333" format="#,##0.00"  name=verbal edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="2" tabsequence=32766 border="0" color="0" x="3555" y="3" height="77" width="329" format="#,##0.00"  name=numerico edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="2" tabsequence=32766 border="0" color="0" x="3877" y="3" height="77" width="333" format="#,##0.00"  name=ingles edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="2" tabsequence=32766 border="0" color="0" x="4206" y="3" height="77" width="333" format="#,##0.00"  name=mundo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="2" tabsequence=32766 border="0" color="0" x="4535" y="3" height="77" width="333" format="#,##0.00"  name=naturales edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="2" tabsequence=32766 border="0" color="0" x="4864" y="3" height="77" width="336" format="#,##0.00"  name=sociales edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="2" tabsequence=32766 border="0" color="0" x="5193" y="3" height="77" width="336" format="#,##0.00"  name=matematicas edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=18 alignment="2" tabsequence=32766 border="0" color="0" x="5522" y="3" height="77" width="336" format="#,##0.00"  name=espaniol edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="count(aspiran_folio for all)"border="0" color="0" x="1006" y="4" height="74" width="333" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="<dw_resultados_examen_ing>"border="0" color="0" x="0" y="0" height="42" width="878"  font.face="Arial" font.height="-6" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

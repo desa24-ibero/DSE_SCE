@@ -1,0 +1,79 @@
+﻿$PBExportHeader$prerrequisito_opcterm.srf
+$PBExportComments$regresa "true" si las claves de perrequisito para acreditar la opción terminal estan acreditadas en la tabla de histórico.Se recibe 3 parametros cuenta alumno, cvesemtit, cveproyopcterm.~r~nJuan Campos. Febrero-1997.
+global type prerrequisito_opcterm from function_object
+end type
+
+forward prototypes
+global function boolean prerrequisito_opcterm (long cuenta, long cvesemtit, long cveproyopcterm)
+end prototypes
+
+global function boolean prerrequisito_opcterm (long cuenta, long cvesemtit, long cveproyopcterm);// Regresa "true" si las claves de perrequisito para acreditar la opción terminal
+// estan acreditadas en la tabla de histórico.
+// Se recibe 3 parametros cuenta alumno, cvesemtit, cveproyopcterm.
+// Juan Campos. Febrero-1997.
+
+//Mod.: Roberto Novoa Jul/2016.
+
+Integer Contsemtit = 0, Contproyopcterm = 0, Pregunta = 2
+Boolean ConsultaOk = False
+
+///*    REDUNDANTE 
+if cvesemtit < 0 AND cveproyopcterm < 0 then
+	return true
+end if
+//*/
+ 
+SELECT count(calificacion)
+  INTO :Contsemtit
+  FROM historico
+ WHERE (cuenta = :cuenta) And
+       (cve_mat = :cvesemtit) And
+		 (calificacion = "AC")
+ USING gtr_sce;		 
+ 
+ If gtr_sce.sqlcode = -1 Then
+	MessageBox("Error",gtr_sce.sqlerrtext)
+ Else
+   SELECT count(calificacion)
+    INTO :Contproyopcterm 
+    FROM historico
+   WHERE (cuenta = :cuenta) And
+         (cve_mat = :cveproyopcterm) And
+		   (calificacion = "AC")
+   USING gtr_sce;		
+	
+   If gtr_sce.sqlcode = -1 Then
+	  MessageBox("Error",gtr_sce.sqlerrtext)
+   Else  
+ 	  ConsultaOk = True 	
+	End IF	
+End If
+
+If ConsultaOk And Contproyopcterm = 1 and Contsemtit = 1 Then 
+	Return True
+Else
+	// Se modifico a petición de Fantine Medina.
+	// Segun platica del 16 de enero 1998.
+	// Juan Campos 16-Enero-1998.
+	
+	If Contproyopcterm <> 1 Then
+		Pregunta = Messagebox("AVISO","EL ALUMNO NO TIENE ACREDITADA LA MATERIA DE PROYECTO OPCIÓN TERMINAL~nAUN DESEA CONTINUAR",Question!,YesNo!,1)
+	End if	
+	If Contsemtit <> 1 AND Pregunta = 1 Then
+		Pregunta = Messagebox("AVISO","EL ALUMNO NO TIENE ACREDITADA LA MATERIA DE SEMINARIO DE TITULACIÓN~nAUN DESEA CONTINUAR",Question!,YesNo!,1)
+	End if	
+   if Pregunta = 1 Then
+		Return True
+	Else	
+  		Return False // Valor original antes de la modificación.
+	End if
+End If
+
+
+
+
+
+
+
+end function
+

@@ -1,0 +1,36 @@
+﻿$PBExportHeader$f_set_res_comite.srf
+global type f_set_res_comite from function_object
+end type
+
+forward prototypes
+global function integer f_set_res_comite (long al_folio, integer ai_res_comite)
+end prototypes
+
+global function integer f_set_res_comite (long al_folio, integer ai_res_comite);integer li_codigo
+string ls_mensaje_error
+
+UPDATE aspirantes_revalidacion
+SET res_comite = :ai_res_comite
+FROM aspirantes_revalidacion
+WHERE aspirantes_revalidacion.folio = :al_folio
+USING gtr_sce;
+
+li_codigo= gtr_sce.SqlCode
+ls_mensaje_error= gtr_sce.SqlErrText
+
+if li_codigo = -1  then
+	ROLLBACK USING gtr_sce;
+	MessageBox("Error al actualizar res_comite en el folio actual",ls_mensaje_error, StopSign!)
+	return -1
+elseif li_codigo = 100  then
+	ROLLBACK USING gtr_sce;
+	MessageBox("No existe el folio ["+string(al_folio)+"]",ls_mensaje_error, StopSign!)
+	return -1	
+elseif li_codigo = 0  then
+	COMMIT USING gtr_sce;
+	return 0
+end if
+
+
+end function
+

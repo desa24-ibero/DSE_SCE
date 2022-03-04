@@ -1,0 +1,14 @@
+﻿$PBExportHeader$dw_tipo_indulto.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=77 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=char(1) updatewhereclause=yes name=cve_indulto dbname="tipo_indulto.cve_indulto" )
+ column=(type=char(12) updatewhereclause=yes name=indulto dbname="tipo_indulto.indulto" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"tipo_indulto~" ) COLUMN(NAME=~"tipo_indulto.cve_indulto~") COLUMN(NAME=~"tipo_indulto.indulto~")) " )
+text(band=header alignment="2" text="Cve Indulto"border="0" color="0" x="5" y="4" height="65" width="289"  name=cve_indulto_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Indulto"border="0" color="0" x="298" y="4" height="65" width="357"  name=indulto_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="55" format="[general]"  name=cve_indulto edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="298" y="4" height="77" width="357" format="[general]"  name=indulto edit.limit=12 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

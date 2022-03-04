@@ -1,0 +1,44 @@
+﻿$PBExportHeader$f_obten_ordinal_decena.srf
+global type f_obten_ordinal_decena from function_object
+end type
+
+forward prototypes
+global function string f_obten_ordinal_decena (integer a_numero)
+end prototypes
+
+global function string f_obten_ordinal_decena (integer a_numero);
+integer li_decena
+string ls_ordinal
+
+li_decena =a_numero
+
+
+choose case li_decena
+	case 1
+		ls_ordinal = "DÉCIMO"
+	case 2
+		ls_ordinal = "VIGÉSIMO"		
+	case 3
+		ls_ordinal = "TRIGÉSIMO"
+	case 4
+		ls_ordinal = "CUADRAGÉSIMO"
+	case 5
+		ls_ordinal = "QUINCUAGÉSIMO"
+	case 6
+		ls_ordinal = "SEXAGÉSIMO"
+	case 7
+		ls_ordinal = "SEPTUAGÉSIMO"
+	case 8
+		ls_ordinal = "OCTAGÉSIMO"
+	case 9
+		ls_ordinal = "NONAGÉSIMO"
+	case else		
+		ls_ordinal = ""
+end choose
+
+return ls_ordinal
+		
+		
+
+end function
+

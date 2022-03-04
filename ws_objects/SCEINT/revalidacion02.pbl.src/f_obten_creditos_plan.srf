@@ -1,0 +1,42 @@
+﻿$PBExportHeader$f_obten_creditos_plan.srf
+global type f_obten_creditos_plan from function_object
+end type
+
+forward prototypes
+global function decimal f_obten_creditos_plan (integer ai_cve_carrera, integer ai_cve_plan)
+end prototypes
+
+global function decimal f_obten_creditos_plan (integer ai_cve_carrera, integer ai_cve_plan);//
+//f_obten_creditos_plan
+//
+//integer	ai_cve_carrera
+//integer	ai_cve_plan
+
+integer li_codigo
+string ls_mensaje_error
+decimal ldc_creditos
+
+select dbo.plan_estudios.cred_total
+into :ldc_creditos
+from dbo.plan_estudios
+where dbo.plan_estudios.cve_carrera = :ai_cve_carrera
+and   dbo.plan_estudios.cve_plan = :ai_cve_plan
+using gtr_sce;
+
+li_codigo= gtr_sce.SqlCode
+ls_mensaje_error= gtr_sce.SqlErrText
+
+if isnull(ldc_creditos) then
+	ldc_creditos = 0
+end if
+
+if li_codigo = -1  then
+	MessageBox("Error al obtener los creditos del plan",ls_mensaje_error, StopSign!)
+	return -1
+else
+	return ldc_creditos	
+end if
+
+
+end function
+

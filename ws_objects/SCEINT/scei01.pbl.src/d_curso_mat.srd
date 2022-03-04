@@ -1,0 +1,13 @@
+﻿$PBExportHeader$d_curso_mat.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=77 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cuenta dbname="historico.cuenta" )
+ column=(type=long updatewhereclause=yes name=cve_mat dbname="historico.cve_mat" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"dbo.historico~" ) COLUMN(NAME=~"dbo.historico.cuenta~") COLUMN(NAME=~"dbo.historico.cve_mat~")WHERE(    EXP1 =~"dbo.historico.cuenta~"   OP =~"=~"    EXP2 =~":cuenta~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"dbo.historico.cve_carrera~"   OP =~"=~"    EXP2 =~":cve_carrera~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"dbo.historico.cve_plan~"   OP =~"=~"    EXP2 =~":cve_plan~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"dbo.historico.cve_mat~"   OP =~"=~"    EXP2 =~":cve_mat~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"dbo.historico.calificacion~"   OP =~"like~"    EXP2 =~"~~~"AC~~~"~" ) ) ARG(NAME = ~"cuenta~" TYPE = number)  ARG(NAME = ~"cve_carrera~" TYPE = number)  ARG(NAME = ~"cve_plan~" TYPE = number)  ARG(NAME = ~"cve_mat~" TYPE = number) " arguments=(("cuenta", number),("cve_carrera", number),("cve_plan", number),("cve_mat", number)) )
+text(band=detail alignment="1" text="cursada"border="0" color="0" x="119" y="8" height="65" width="229"  name=c  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="16777215" x="19" y="4" height="29" width="46" format="[general]"  name=cuenta edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="16777215" x="19" y="44" height="29" width="46" format="[general]"  name=cve_mat edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

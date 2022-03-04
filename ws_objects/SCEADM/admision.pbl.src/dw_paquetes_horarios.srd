@@ -1,0 +1,100 @@
+﻿$PBExportHeader$dw_paquetes_horarios.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+header(height=328 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=60 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=grupos_periodo dbname="grupos.periodo" )
+ column=(type=long updatewhereclause=yes name=grupos_anio dbname="grupos.anio" )
+ column=(type=long updatewhereclause=yes name=v_paquetes_materias_num_paq dbname="v_paquetes_materias.num_paq" )
+ column=(type=long updatewhereclause=yes name=v_paquetes_materias_clv_mat dbname="v_paquetes_materias.clv_mat" )
+ column=(type=char(42) updatewhereclause=yes name=materias_materia dbname="materias.materia" )
+ column=(type=char(6) updatewhereclause=yes name=materias_sigla dbname="materias.sigla" )
+ column=(type=char(2) updatewhereclause=yes name=v_paquetes_materias_grupo dbname="v_paquetes_materias.grupo" )
+ column=(type=long updatewhereclause=yes name=horario_cve_dia dbname="horario.cve_dia" )
+ column=(type=char(9) updatewhereclause=yes name=dias_dia dbname="dias.dia" )
+ column=(type=char(16) updatewhereclause=yes name=horario_cve_salon dbname="horario.cve_salon" )
+ column=(type=long updatewhereclause=yes name=horario_hora_inicio dbname="horario.hora_inicio" )
+ column=(type=long updatewhereclause=yes name=horario_hora_final dbname="horario.hora_final" )
+ column=(type=long updatewhereclause=yes name=materias_cve_coordinacion dbname="materias.cve_coordinacion" )
+ retrieve="  SELECT dbo.grupos.periodo,   
+         dbo.grupos.anio,   
+         dbo.v_paquetes_materias.num_paq,   
+         dbo.v_paquetes_materias.clv_mat,   
+         dbo.materias.materia,   
+         dbo.materias.sigla,   
+         dbo.v_paquetes_materias.grupo,   
+         dbo.horario.cve_dia,   
+         dbo.dias.dia,   
+         dbo.horario.cve_salon,   
+         dbo.horario.hora_inicio,   
+         dbo.horario.hora_final,
+         dbo.materias.cve_coordinacion
+    FROM dbo.grupos,   
+         dbo.horario,   
+         dbo.materias,   
+         dbo.v_paquetes,   
+         dbo.v_paquetes_materias,   
+         dbo.dias  
+   WHERE ( dbo.grupos.cve_mat = dbo.horario.cve_mat ) and  
+         ( dbo.horario.cve_mat = dbo.materias.cve_mat ) and  
+         ( dbo.v_paquetes.num_paq = dbo.v_paquetes_materias.num_paq ) and  
+         ( dbo.horario.cve_dia = dbo.dias.cve_dia ) and  
+         ( ( dbo.v_paquetes_materias.clv_per = :a_periodo ) AND  
+         ( dbo.v_paquetes_materias.anio = :a_anio ) AND  
+         ( dbo.v_paquetes_materias.num_paq = dbo.v_paquetes.num_paq ) AND  
+         ( dbo.v_paquetes_materias.clv_mat = dbo.materias.cve_mat ) AND  
+         ( dbo.v_paquetes_materias.grupo = dbo.grupos.gpo ) AND  
+         ( dbo.v_paquetes_materias.clv_mat = dbo.grupos.cve_mat ) AND  
+         ( dbo.v_paquetes_materias.clv_per = dbo.grupos.periodo ) AND  
+         ( dbo.v_paquetes_materias.anio = dbo.grupos.anio ) AND  
+         ((dbo.grupos.tipo <>  2 AND  
+         dbo.horario.cve_mat = dbo.grupos.cve_mat AND  
+         dbo.horario.gpo = dbo.grupos.gpo) OR  
+         (dbo.grupos.tipo = 2 AND  
+         dbo.horario.cve_mat = dbo.grupos.cve_asimilada AND  
+         dbo.horario.gpo = dbo.grupos.gpo_asimilado)) AND  
+         (dbo.v_paquetes_materias.clv_mat = :a_materia OR  
+         :a_materia = 9999) AND  
+         (dbo.v_paquetes_materias.grupo = :a_gpo OR  
+         :a_gpo = ~"Z~") )    
+" arguments=(("a_periodo", number),("a_anio", number),("a_materia", number),("a_gpo", string)) )
+text(band=header alignment="2" text="Relación de Materias/Grupos pertenecientes a 
+  Paquetes de Primer Ingreso" border="0" color="0" x="576" y="28" height="192" width="2208" html.valueishtml="0"  name=t_1 visible="1"  font.face="Arial" font.height="-14" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="N. Paq" border="0" color="0" x="27" y="252" height="64" width="187" html.valueishtml="0"  name=v_paquetes_materias_num_paq_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve. Mat" border="0" color="0" x="242" y="252" height="64" width="251" html.valueishtml="0"  name=v_paquetes_materias_clv_mat_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Materia" border="0" color="0" x="1001" y="252" height="64" width="224" html.valueishtml="0"  name=materias_materia_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Sigla" border="0" color="0" x="1746" y="252" height="64" width="142" html.valueishtml="0"  name=materias_sigla_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Coord" border="0" color="0" x="1957" y="252" height="64" width="192" html.valueishtml="0"  name=t_2 visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Grupo" border="0" color="0" x="2181" y="252" height="64" width="183" html.valueishtml="0"  name=v_paquetes_materias_grupo_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Día Clase" border="0" color="0" x="2418" y="252" height="64" width="274" html.valueishtml="0"  name=dias_dia_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Horario" border="0" color="0" x="2898" y="252" height="64" width="215" html.valueishtml="0"  name=horario_hora_inicio_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Salon" border="0" color="0" x="3154" y="252" height="64" width="293" html.valueishtml="0"  name=horario_cve_salon_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="1" expression="~"Pág: ~"+string(page())+~" / ~"+string(pageCount())"border="0" color="0" x="3099" y="36" height="68" width="347" format="[general]" html.valueishtml="0"  name=cf_paginas visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="59" y="152" height="72" width="352" format="[general]" html.valueishtml="0"  name=grupos_periodo visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="411" y="152" height="72" width="352" format="[general]" html.valueishtml="0"  name=grupos_anio visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="0" x="2953" y="104" height="72" width="178" format="[general]" html.valueishtml="0"  name=horario_hora_inicio visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="2" tabsequence=32766 border="0" color="0" x="3209" y="108" height="76" width="183" format="[general]" html.valueishtml="0"  name=horario_hora_final visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="27" y="8" height="68" width="187" format="##0" html.valueishtml="0"  name=v_paquetes_materias_num_paq visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="242" y="8" height="68" width="251" format="###0" html.valueishtml="0"  name=v_paquetes_materias_clv_mat visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="539" y="8" height="68" width="1152" format="[general]" html.valueishtml="0"  name=materias_materia visible="1" edit.limit=42 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="1714" y="8" height="68" width="201" format="[general]" html.valueishtml="0"  name=materias_sigla visible="1" edit.limit=6 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="2" tabsequence=32766 border="0" color="0" x="1975" y="8" height="64" width="155" format="[general]" html.valueishtml="0"  name=materias_cve_coordinacion visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="2226" y="8" height="68" width="87" format="[general]" html.valueishtml="0"  name=v_paquetes_materias_grupo visible="1" edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="0" x="2400" y="8" height="68" width="69" format="##" html.valueishtml="0"  name=horario_cve_dia visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="2491" y="8" height="68" width="370" format="[general]" html.valueishtml="0"  name=dias_dia visible="1" edit.limit=9 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="string( horario_hora_inicio ) + ~"-~" +string( horario_hora_final )"border="0" color="0" x="2889" y="8" height="68" width="229" format="[general]" html.valueishtml="0"  name=cf_horario visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="3168" y="8" height="68" width="206" format="[general]" html.valueishtml="0"  name=horario_cve_salon visible="1" edit.limit=16 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="2" text="<dw_paquetes_horarios>" border="0" color="0" x="32" y="4" height="48" width="544" html.valueishtml="0"  name=t_3 visible="1"  font.face="Arial" font.height="-7" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

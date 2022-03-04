@@ -1,0 +1,30 @@
+﻿$PBExportHeader$f_decodifica_nivel.srf
+global type f_decodifica_nivel from function_object
+end type
+
+forward prototypes
+global function string f_decodifica_nivel (string as_nivel)
+end prototypes
+
+global function string f_decodifica_nivel (string as_nivel);
+STRING ls_descripcion
+
+
+SELECT desc_corta  
+INTO :ls_descripcion
+FROM nivel 
+WHERE cve_nivel = :as_nivel 
+USING gtr_sce; 
+IF ISNULL(ls_descripcion) THEN ls_descripcion = "" 
+
+
+RETURN ls_descripcion 
+
+
+
+
+
+
+
+end function
+

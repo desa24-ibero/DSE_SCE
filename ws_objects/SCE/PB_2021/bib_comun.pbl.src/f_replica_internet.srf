@@ -1,0 +1,31 @@
+﻿$PBExportHeader$f_replica_internet.srf
+global type f_replica_internet from function_object
+end type
+
+forward prototypes
+global function integer f_replica_internet (window aw_ventana, long al_cuenta)
+end prototypes
+
+global function integer f_replica_internet (window aw_ventana, long al_cuenta);//INICIO:Replica a Internet
+transaction ltr_web
+n_transfiere_sybase_sql ln_transfiere_sybase_sql
+ln_transfiere_sybase_sql =  create n_transfiere_sybase_sql
+string ls_classname
+long ll_cuentas[]
+integer  li_res_actualizacion
+
+ls_classname =	 aw_ventana.ClassName()
+ll_cuentas[1] = al_cuenta
+li_res_actualizacion = ln_transfiere_sybase_sql.of_actualizacion_objeto_replica(ll_cuentas, ls_classname, gtr_sce, ltr_web)
+//FIN:Replica a Internet				
+		
+if li_res_actualizacion = -1 then
+	MessageBox("Error","Error en of_actualizacion_objeto_replica",StopSign!)			
+	return -1
+else
+	Return 1
+end if
+		
+
+end function
+

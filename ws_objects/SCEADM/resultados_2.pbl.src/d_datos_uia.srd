@@ -1,0 +1,47 @@
+﻿$PBExportHeader$d_datos_uia.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=136 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=124 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=folio dbname="general.folio" )
+ column=(type=char(152) updatewhereclause=yes name=nombre_completo dbname="nombre_completo" )
+ column=(type=datetime updatewhereclause=yes name=fecha_nac dbname="general.fecha_nac" )
+ column=(type=char(1) updatewhereclause=yes name=sexo dbname="general.sexo" )
+ column=(type=long updatewhereclause=yes name=edo_civil dbname="general.edo_civil" )
+ column=(type=long updatewhereclause=yes name=trabajo dbname="general.trabajo" )
+ column=(type=long updatewhereclause=yes name=trab_hor dbname="general.trab_hor" )
+ column=(type=long updatewhereclause=yes name=clv_carr dbname="aspiran.clv_carr" )
+ column=(type=number updatewhereclause=yes name=promedio dbname="aspiran.promedio" )
+ column=(type=long updatewhereclause=yes name=bachillera dbname="general.bachillera" )
+ column=(type=long updatewhereclause=yes name=lugar_nac dbname="general.lugar_nac" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"general~" )  TABLE(NAME=~"aspiran~" ) COLUMN(NAME=~"general.folio~") COMPUTE(NAME=~"apaterno + ' ' + amaterno + ' ' + nombre as nombre_completo~") COLUMN(NAME=~"general.fecha_nac~") COLUMN(NAME=~"general.sexo~") COLUMN(NAME=~"general.edo_civil~") COLUMN(NAME=~"general.trabajo~") COLUMN(NAME=~"general.trab_hor~") COLUMN(NAME=~"aspiran.clv_carr~") COLUMN(NAME=~"aspiran.promedio~") COLUMN(NAME=~"general.bachillera~") COLUMN(NAME=~"general.lugar_nac~")    JOIN (LEFT=~"general.folio~"    OP =~"=~"RIGHT=~"aspiran.folio~" )    JOIN (LEFT=~"general.clv_ver~"    OP =~"=~"RIGHT=~"aspiran.clv_ver~" )    JOIN (LEFT=~"general.clv_per~"    OP =~"=~"RIGHT=~"aspiran.clv_per~" )    JOIN (LEFT=~"general.anio~"    OP =~"=~"RIGHT=~"aspiran.anio~" )WHERE(    EXP1 =~"general.clv_ver~"   OP =~"=~"    EXP2 =~":li_version~"    LOGIC =~"And~" ) WHERE(    EXP1 =~"general.clv_per~"   OP =~"=~"    EXP2 =~":li_periodo~"    LOGIC =~"And~" ) WHERE(    EXP1 =~"general.anio~"   OP =~"=~"    EXP2 =~":li_anio~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"general.tiporegistro~"   OP =~"=~"    EXP2 =~"1~" ) ) ARG(NAME = ~"li_anio~" TYPE = number)  ARG(NAME = ~"li_periodo~" TYPE = number)  ARG(NAME = ~"li_version~" TYPE = number) " arguments=(("li_anio", number),("li_periodo", number),("li_version", number)) )
+text(band=header alignment="2" text="Nombre Completo" border="0" color="0" x="297" y="4" height="64" width="3511"  name=nombre_completo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Fecha Nac" border="0" color="0" x="3813" y="4" height="128" width="603"  name=general_fecha_nac_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Sexo" border="0" color="0" x="4421" y="4" height="128" width="206"  name=general_sexo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Edo Civil" border="0" color="0" x="4631" y="4" height="128" width="329"  name=general_edo_civil_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Trabajo" border="0" color="0" x="4965" y="4" height="128" width="329"  name=general_trabajo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="General
+Trab Hor" border="0" color="0" x="5298" y="4" height="128" width="329"  name=general_trab_hor_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Clv Carr" border="0" color="0" x="5632" y="4" height="128" width="329"  name=aspiran_clv_carr_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aspiran
+Promedio" border="0" color="0" x="5966" y="4" height="128" width="329"  name=aspiran_promedio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="14" y="12" height="64" width="270" format="[general]"  name=folio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="297" y="4" height="76" width="3511" format="[general]"  name=nombre_completo edit.limit=152 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="3813" y="4" height="76" width="603" format="[shortdate] [time]"  name=fecha_nac edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="4421" y="4" height="76" width="55" format="[general]"  name=sexo edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="4631" y="4" height="76" width="329" format="[general]"  name=edo_civil edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="4965" y="4" height="76" width="329" format="[general]"  name=trabajo edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="5298" y="4" height="76" width="329" format="[general]"  name=trab_hor edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="0" x="5632" y="4" height="76" width="329" format="[general]"  name=clv_carr edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="0" x="5966" y="4" height="76" width="329" format="[general]"  name=promedio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="6295" y="0" height="64" width="137" format="[general]"  name=bachillera edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="0" tabsequence=0 border="0" color="0" x="6432" y="0" height="64" width="137"  name=lugar_nac  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

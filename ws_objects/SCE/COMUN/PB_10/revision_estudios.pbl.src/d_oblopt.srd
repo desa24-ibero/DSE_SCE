@@ -1,0 +1,18 @@
+﻿$PBExportHeader$d_oblopt.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=77 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=1 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=area_mat_cve_mat dbname="area_mat.cve_mat" )
+ retrieve="  SELECT area_mat.cve_mat  
+    FROM area_mat,   
+         plan_estudios  
+   WHERE (( plan_estudios.cve_area_basica = area_mat.cve_area ) or  
+         ( plan_estudios.cve_area_mayor_oblig = area_mat.cve_area )) and  
+         ( ( area_mat.cve_mat = :cve_mat ) ) AND  
+         plan_estudios.cve_carrera = :cve_carrera AND  
+         plan_estudios.cve_plan = 4    
+" arguments=(("cve_mat", number),("cve_carrera", number)) )
+compute(band=header alignment="0" expression="if(rowcount()=1, ~"OBLIGATORIA~",~"OPTATIVA~" )"border="0" color="0" x="5" y="8" height="65" width="581" format="[general]"  name=tipo_area  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

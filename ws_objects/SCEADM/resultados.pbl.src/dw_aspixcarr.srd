@@ -1,0 +1,12 @@
+﻿$PBExportHeader$dw_aspixcarr.srd
+$PBExportComments$Da el número de aspitantes a una carrera dada, aceptados y/o rechazados (Agrega 10)
+release 5;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=101 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=compute_0001 dbname="compute_0001" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"aspiran~" ) COMPUTE(NAME=~"count(aspiran.folio)~")WHERE(    EXP1 =~"( aspiran.clv_ver~"   OP =~"=~"    EXP2 =~":ver )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( aspiran.clv_per~"   OP =~"=~"    EXP2 =~":per )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( aspiran.anio~"   OP =~"=~"    EXP2 =~":ani )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( aspiran.clv_carr~"   OP =~"=~"    EXP2 =~":car )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"(( :status~"   OP =~"=~"    EXP2 =~"255 )~"    LOGIC =~"or~" ) WHERE(    EXP1 =~"( aspiran.status~"   OP =~"=~"    EXP2 =~":status ))~" ) ) ARG(NAME = ~"ver~" TYPE = number)  ARG(NAME = ~"per~" TYPE = number)  ARG(NAME = ~"ani~" TYPE = number)  ARG(NAME = ~"car~" TYPE = number)  ARG(NAME = ~"status~" TYPE = number) " arguments=(("ver", number),("per", number),("ani", number),("car", number),("status", number)) )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="1" y="100" height="77" width="330" format="[general]"  name=compute_0001 edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression=" compute_0001 +10"border="0" color="0" x="1" y="8" height="77" width="330" format="[general]"  name=total  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

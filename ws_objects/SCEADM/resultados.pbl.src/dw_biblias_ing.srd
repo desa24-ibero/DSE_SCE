@@ -1,0 +1,109 @@
+﻿$PBExportHeader$dw_biblias_ing.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=128 color="536870912" )
+summary(height=6 color="536870912" )
+footer(height=45 color="536870912" )
+detail(height=1024 color="536870912"  height.autosize=yes)
+table(column=(type=real updatewhereclause=yes name=promedio dbname="aspiran.promedio" )
+ column=(type=real updatewhereclause=yes name=puntaje dbname="aspiran.puntaje" )
+ column=(type=long updatewhereclause=yes name=lugar_gen dbname="aspiran.lugar_gen" )
+ column=(type=long updatewhereclause=yes name=lugar_car dbname="aspiran.lugar_car" )
+ column=(type=long updatewhereclause=yes name=folio dbname="aspiran.folio" )
+ column=(type=long updatewhereclause=yes name=clv_carr dbname="aspiran.clv_carr" )
+ column=(type=char(50) updatewhereclause=yes name=general_nombre dbname="general.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=general_apaterno dbname="general.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=general_amaterno dbname="general.amaterno" )
+ column=(type=long updatewhereclause=yes name=aspiran_status dbname="aspiran.status" values="No Aceptado	0/Aceptado	1/Inscrito	2/" )
+ column=(type=char(1) updatewhereclause=yes name=general_sexo dbname="general.sexo" values="Masculino	M/Femenino	F/" )
+ column=(type=datetime updatewhereclause=yes name=general_fecha_nac dbname="general.fecha_nac" )
+ column=(type=long updatewhereclause=yes name=general_edo_civil dbname="general.edo_civil" )
+ column=(type=long updatewhereclause=yes name=general_lugar_nac dbname="general.lugar_nac" )
+ column=(type=char(50) updatewhereclause=yes name=general_calle dbname="general.calle" )
+ column=(type=char(6) updatewhereclause=yes name=general_codigo_pos dbname="general.codigo_pos" )
+ column=(type=char(50) updatewhereclause=yes name=general_colonia dbname="general.colonia" )
+ column=(type=long updatewhereclause=yes name=general_estado dbname="general.estado" )
+ column=(type=char(9) updatewhereclause=yes name=general_telefono dbname="general.telefono" )
+ column=(type=long updatewhereclause=yes name=general_bachillera dbname="general.bachillera" )
+ column=(type=char(16) updatewhereclause=yes name=aspiran_salon dbname="aspiran.salon" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_ver dbname="aspiran.clv_ver" )
+ retrieve="  SELECT aspiran.promedio,   
+         aspiran.puntaje,   
+         aspiran.lugar_gen,   
+         aspiran.lugar_car,   
+         aspiran.folio,   
+         aspiran.clv_carr,   
+         general.nombre,   
+         general.apaterno,   
+         general.amaterno,   
+         aspiran.status,   
+         general.sexo,   
+         general.fecha_nac,   
+         general.edo_civil,   
+         general.lugar_nac,   
+         general.calle,   
+         general.codigo_pos,   
+         general.colonia,   
+         general.estado,   
+         general.telefono,   
+         general.bachillera,   
+         aspiran.salon,
+         aspiran.clv_ver
+    FROM aspiran,   
+         general  
+   WHERE ( aspiran.folio = general.folio ) and  
+         ( general.clv_ver = aspiran.clv_ver ) and  
+         ( aspiran.clv_per = general.clv_per ) and  
+         ( general.anio = aspiran.anio ) and  
+         ( aspiran.ing_per = :per ) AND  
+         ( aspiran.ing_anio = :ani ) AND  
+         ( aspiran.folio between :min and :max) AND  
+         aspiran.pago_exam = 1" arguments=(("ver", number),("per", number),("ani", number),("min", number),("max", number))  sort="folio A " )
+text(band=header alignment="2" text=""border="0" color="0" x="4" y="10" height="64" width="3507"  name=st_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="662" y="112" height="64" width="530" format="[shortdate] [time]"  name=general_fecha_nac editmask.mask="DD/MM/YYYY" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="0" x="1280" y="122" height="64" width="658" format="[general]"  name=general_edo_civil dddw.name=dw_edo_civil dddw.displaycolumn=edo_civil dddw.datacolumn=cve_edocivil dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="1997" y="125" height="64" width="801" format="[general]"  name=general_lugar_nac dddw.name=dw_estado dddw.displaycolumn=estado dddw.datacolumn=cve_estado dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="0" x="2725" y="3" height="67" width="439" format="[general]"  name=aspiran_status ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="general_apaterno+' '+general_amaterno+' '+general_nombre"border="0" color="0" x="713" y="3" height="67" width="1799" format="[general]"  name=nom  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="folio"border="0" color="0" x="4" y="3" height="67" width="377" format="[general]"  name=fol  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="0" x="11" y="112" height="64" width="552" format="[general]"  name=general_sexo ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=19 alignment="0" tabsequence=32766 border="0" color="0" x="1412" y="307" height="67" width="622" format="[general]"  name=general_telefono editmask.mask="01-XX-XX-XX-XX" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=18 alignment="0" tabsequence=32766 border="0" color="0" x="2107" y="240" height="64" width="878" format="[general]"  name=general_estado dddw.name=dw_estado dddw.displaycolumn=estado dddw.datacolumn=cve_estado dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="0" color="0" x="4" y="314" height="64" width="1401" format="[general]"  name=general_colonia edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="0" color="0" x="1404" y="237" height="64" width="695" format="[general]"  name=general_codigo_pos edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="0" x="4" y="237" height="64" width="1401" format="[general]"  name=general_calle edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=21 alignment="0" tabsequence=32766 border="0" color="0" x="1913" y="426" height="64" width="556" format="[general]"  name=aspiran_salon editmask.mask="XXXXXXXXXXXXXXXX" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=20 alignment="0" tabsequence=32766 border="0" color="0" x="124" y="426" height="64" width="1719" format="[general]"  name=general_bachillera dddw.name=dw_escuelas dddw.displaycolumn=escuela dddw.datacolumn=cve_escuela dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="11" y="515" height="67" width="1733" format="[general]"  name=clv_carr dddw.name=dw_carrera dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="0" y1="1008" x2="3449" y2="1011" pen.style="3" pen.width="4" pen.color="0"  background.mode="1" background.color="553648127" )
+report(band=detail dataobject="dw_area" x="2483" y="602" height="77" width="380" border="0" criteria="" nest_arguments=(("2")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_area" x="1302" y="602" height="77" width="380" border="0" criteria="" nest_arguments=(("1")) trail_footer = yes  slideup=directlyabove )
+text(band=detail alignment="2" text="Lugar General"border="0" color="0" x="11" y="605" height="67" width="369"  name=lugar_gen_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="Lugar Carrera"border="0" color="0" x="249" y="701" height="67" width="355"  name=lugar_car_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="Puntaje Total"border="0" color="0" x="530" y="605" height="67" width="347"  name=puntaje_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="Promedio Bachillerato"border="0" color="0" x="695" y="701" height="67" width="581"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="Prom"border="0" color="0" x="3028" y="778" height="77" width="388"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="Prom"border="0" color="0" x="1547" y="778" height="77" width="388"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+report(band=detail dataobject="dw_seccion" x="1039" y="771" height="77" width="450" border="0" criteria="" nest_arguments=(("1"),("1")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_seccion" x="1284" y="698" height="77" width="450" border="0" criteria="" nest_arguments=(("1"),("2")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_seccion" x="1777" y="698" height="77" width="450" border="0" criteria="" nest_arguments=(("2"),("1")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_seccion" x="2026" y="771" height="77" width="450" border="0" criteria="" nest_arguments=(("2"),("2")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_seccion" x="2275" y="698" height="77" width="446" border="0" criteria="" nest_arguments=(("2"),("5")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_seccion" x="2520" y="771" height="77" width="450" border="0" criteria="" nest_arguments=(("2"),("4")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_seccion" x="2765" y="698" height="77" width="450" border="0" criteria="" nest_arguments=(("2"),("3")) trail_footer = yes  slideup=directlyabove )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="571" y="883" height="77" width="271" format="#0"  name=puntaje edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="852" y="883" height="77" width="271" format="[general]"  name=promedio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+report(band=detail dataobject="dw_cal_are" x="3101" y="883" height="77" width="245" border="0"  height.autosize=yes criteria="" nest_arguments=(("folio"),("aspiran_clv_ver"),("per"),("ani"),("2")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_cal_are" x="1620" y="883" height="77" width="245" border="0"  height.autosize=yes criteria="" nest_arguments=(("folio"),("aspiran_clv_ver"),("per"),("ani"),("1")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_cal_sec" x="1126" y="883" height="77" width="245" border="0"  height.autosize=yes criteria="" nest_arguments=(("folio"),("aspiran_clv_ver"),("per"),("ani"),("1"),("1")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_cal_sec" x="1371" y="883" height="77" width="249" border="0"  height.autosize=yes criteria="" nest_arguments=(("folio"),("aspiran_clv_ver"),("per"),("ani"),("1"),("2")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_cal_sec" x="1865" y="883" height="77" width="249" border="0"  height.autosize=yes criteria="" nest_arguments=(("folio"),("aspiran_clv_ver"),("per"),("ani"),("2"),("1")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_cal_sec" x="2114" y="883" height="77" width="245" border="0"  height.autosize=yes criteria="" nest_arguments=(("folio"),("aspiran_clv_ver"),("per"),("ani"),("2"),("2")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_cal_sec" x="2359" y="883" height="77" width="249" border="0"  height.autosize=yes criteria="" nest_arguments=(("folio"),("aspiran_clv_ver"),("per"),("ani"),("2"),("5")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_cal_sec" x="2608" y="883" height="77" width="245" border="0"  height.autosize=yes criteria="" nest_arguments=(("folio"),("aspiran_clv_ver"),("per"),("ani"),("2"),("4")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_cal_sec" x="2853" y="883" height="77" width="249" border="0"  height.autosize=yes criteria="" nest_arguments=(("folio"),("aspiran_clv_ver"),("per"),("ani"),("2"),("3")) trail_footer = yes  slideup=directlyabove )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="0" y="883" height="77" width="282" format="[general]"  name=lugar_gen edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="if(aspiran_status=0,lugar_car+10,lugar_car)"border="0" color="0" x="289" y="883" height="77" width="274" format="[general]"  name=lugar  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=22 alignment="0" tabsequence=32766 border="0" color="0" x="3511" y="0" height="64" width="227" format="[general]"  name=aspiran_clv_ver edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="<dw_biblias_ing>"border="0" color="33554432" x="4" y="4" height="38" width="494"  font.face="Arial" font.height="-6" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

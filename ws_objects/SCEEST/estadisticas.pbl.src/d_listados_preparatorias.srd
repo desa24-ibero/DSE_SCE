@@ -1,0 +1,150 @@
+﻿$PBExportHeader$d_listados_preparatorias.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=225 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=alumnos_cuenta dbname="alumnos.cuenta" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_nombre dbname="alumnos.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_apaterno dbname="alumnos.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_amaterno dbname="alumnos.amaterno" )
+ column=(type=long updatewhereclause=yes name=carreras_cve_carrera dbname="carreras.cve_carrera" )
+ column=(type=char(100) updatewhereclause=yes name=carreras_carrera dbname="carreras.carrera" )
+ column=(type=long updatewhereclause=yes name=subsistema_cve_plan dbname="subsistema.cve_plan" )
+ column=(type=long updatewhereclause=yes name=subsistema_cve_subsistema dbname="subsistema.cve_subsistema" )
+ column=(type=char(40) updatewhereclause=yes name=subsistema_subsistema dbname="subsistema.subsistema" )
+ column=(type=real updatewhereclause=yes name=academicos_promedio dbname="academicos.promedio" )
+ column=(type=long updatewhereclause=yes name=academicos_sem_cursados dbname="academicos.sem_cursados" )
+ column=(type=long updatewhereclause=yes name=academicos_creditos_cursados dbname="academicos.creditos_cursados" )
+ column=(type=long updatewhereclause=yes name=academicos_periodo_ing dbname="academicos.periodo_ing" )
+ column=(type=long updatewhereclause=yes name=academicos_anio_ing dbname="academicos.anio_ing" )
+ column=(type=char(1) updatewhereclause=yes name=alumnos_sexo dbname="alumnos.sexo" )
+ column=(type=real updatewhereclause=yes name=alumnos_promedio_bach dbname="alumnos.promedio_bach" )
+ column=(type=long updatewhereclause=yes name=escuelas_cve_escuela dbname="escuelas.cve_escuela" )
+ column=(type=char(100) updatewhereclause=yes name=escuelas_escuela dbname="escuelas.escuela" )
+ column=(type=long updatewhereclause=yes name=estados_cve_estado dbname="estados.cve_estado" )
+ column=(type=char(31) updatewhereclause=yes name=estados_estado dbname="estados.estado" )
+ column=(type=char(50) updatewhereclause=yes name=municipio_localidad_municipio dbname="municipio_localidad.municipio" )
+ column=(type=char(50) updatewhereclause=yes name=municipio_localidad_localidad dbname="municipio_localidad.localidad" )
+ column=(type=char(1) updatewhereclause=yes name=academicos_nivel dbname="academicos.nivel" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_formaingreso dbname="academicos.cve_formaingreso" )
+ retrieve="  SELECT DISTINCT alumnos.cuenta,   
+         alumnos.nombre,   
+         alumnos.apaterno,   
+         alumnos.amaterno,   
+         carreras.cve_carrera,   
+         carreras.carrera,   
+         subsistema.cve_plan,   
+         subsistema.cve_subsistema,   
+         subsistema.subsistema,   
+         academicos.promedio,   
+         academicos.sem_cursados,   
+         academicos.creditos_cursados,   
+         academicos.periodo_ing,   
+         academicos.anio_ing,   
+         alumnos.sexo,   
+         alumnos.promedio_bach,   
+         escuelas.cve_escuela,   
+         escuelas.escuela,   
+         estados.cve_estado,   
+         estados.estado,   
+         municipio_localidad.municipio,   
+         municipio_localidad.localidad,   
+         academicos.nivel,   
+         academicos.cve_formaingreso  
+    FROM academicos,   
+         alumnos,   
+         escuelas,   
+         estudio_ant,   
+         carreras,   
+         subsistema,   
+         estados,   
+         municipio_localidad  
+   WHERE ( alumnos.cuenta = academicos.cuenta ) and  
+         ( academicos.cve_carrera = carreras.cve_carrera ) and  
+         ( academicos.cve_plan *= subsistema.cve_plan) and  
+         ( academicos.cve_carrera *= subsistema.cve_carrera) and  
+         ( academicos.cve_subsistema *= subsistema.cve_subsistema) and  
+         ( alumnos.cuenta = estudio_ant.cuenta ) and  
+         ( estudio_ant.cve_escuela = escuelas.cve_escuela ) and  
+         ( escuelas.cve_sep = estados.cve_sep ) and  
+         ( escuelas.cve_mun_loc = municipio_localidad.cve_mun_loc ) and  
+         ( academicos.periodo_ing = :peri ) AND  
+         ( academicos.anio_ing = :anio ) AND  
+         ( :carr = 9999 OR  
+         academicos.cve_carrera = :carr)    
+" arguments=(("peri", number),("anio", number),("carr", number)) )
+text(band=header alignment="2" text="Alumnos
+Cuenta"border="0" color="0" x="5" y="4" height="129" width="330"  name=alumnos_cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Alumnos
+Nombre"border="0" color="0" x="339" y="4" height="129" width="1399"  name=alumnos_nombre_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Alumnos
+Apaterno"border="0" color="0" x="1742" y="4" height="129" width="1399"  name=alumnos_apaterno_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Alumnos
+Amaterno"border="0" color="0" x="3146" y="4" height="129" width="1399"  name=alumnos_amaterno_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Carreras
+Cve Carrera"border="0" color="0" x="4549" y="4" height="129" width="330"  name=carreras_cve_carrera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Carreras
+Carrera"border="0" color="0" x="4887" y="4" height="129" width="2743"  name=carreras_carrera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Subsistema
+Cve Plan"border="0" color="0" x="7635" y="4" height="129" width="330"  name=subsistema_cve_plan_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Subsistema
+Cve Subsistema"border="0" color="0" x="7969" y="4" height="129" width="430"  name=subsistema_cve_subsistema_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Subsistema
+Subsistema"border="0" color="0" x="8403" y="4" height="129" width="1125"  name=subsistema_subsistema_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Academicos
+Promedio"border="0" color="0" x="9532" y="4" height="129" width="330"  name=academicos_promedio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Academicos
+Sem Cursados"border="0" color="0" x="9870" y="4" height="129" width="394"  name=academicos_sem_cursados_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Academicos
+Creditos Cursados"border="0" color="0" x="10268" y="4" height="129" width="490"  name=academicos_creditos_cursados_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Academicos
+Periodo Ing"border="0" color="0" x="10762" y="4" height="129" width="330"  name=academicos_periodo_ing_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Academicos
+Anio Ing"border="0" color="0" x="11095" y="4" height="129" width="334"  name=academicos_anio_ing_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Alumnos
+Sexo"border="0" color="0" x="11434" y="4" height="129" width="234"  name=alumnos_sexo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Alumnos
+Promedio Bach"border="0" color="0" x="11671" y="4" height="129" width="407"  name=alumnos_promedio_bach_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Escuelas
+Cve Escuela"border="0" color="0" x="12083" y="4" height="129" width="330"  name=escuelas_cve_escuela_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Estados
+Cve Estado"border="0" color="0" x="13825" y="4" height="129" width="330"  name=estados_cve_estado_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Estados
+Estado"border="0" color="0" x="14158" y="4" height="129" width="878"  name=estados_estado_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Municipio Localidad
+Municipio"border="0" color="0" x="15041" y="4" height="129" width="1399"  name=municipio_localidad_municipio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Municipio Localidad
+Localidad"border="0" color="0" x="16444" y="4" height="129" width="1399"  name=municipio_localidad_localidad_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Academicos
+Nivel"border="0" color="0" x="17847" y="4" height="129" width="330"  name=academicos_nivel_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Academicos
+Cve Formaingreso"border="0" color="0" x="18181" y="4" height="129" width="481"  name=academicos_cve_formaingreso_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="1" expression="count(alumnos_cuenta for all)"border="0" color="255" x="5" y="140" height="81" width="330" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="330" format="[general]"  name=alumnos_cuenta edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="339" y="4" height="77" width="1399" format="[general]"  name=alumnos_nombre edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1742" y="4" height="77" width="1399" format="[general]"  name=alumnos_apaterno edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="3146" y="4" height="77" width="1399" format="[general]"  name=alumnos_amaterno edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="4549" y="4" height="77" width="330" format="[general]"  name=carreras_cve_carrera edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="4887" y="4" height="77" width="2743" format="[general]"  name=carreras_carrera edit.limit=100 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="7635" y="4" height="77" width="330" format="[general]"  name=subsistema_cve_plan edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="0" x="7969" y="4" height="77" width="330" format="[general]"  name=subsistema_cve_subsistema edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="8403" y="4" height="77" width="1125" format="[general]"  name=subsistema_subsistema edit.limit=40 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="0" x="9532" y="4" height="77" width="330" format="[general]"  name=academicos_promedio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="1" tabsequence=32766 border="0" color="0" x="9870" y="4" height="77" width="330" format="[general]"  name=academicos_sem_cursados edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="1" tabsequence=32766 border="0" color="0" x="10268" y="4" height="77" width="330" format="[general]"  name=academicos_creditos_cursados edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="1" tabsequence=32766 border="0" color="0" x="10762" y="4" height="77" width="330" format="[general]"  name=academicos_periodo_ing edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="1" tabsequence=32766 border="0" color="0" x="11095" y="4" height="77" width="334" format="[general]"  name=academicos_anio_ing edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="0" x="11434" y="4" height="77" width="55" format="[general]"  name=alumnos_sexo edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="1" tabsequence=32766 border="0" color="0" x="11671" y="4" height="77" width="330" format="[general]"  name=alumnos_promedio_bach edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=19 alignment="1" tabsequence=32766 border="0" color="0" x="13825" y="4" height="77" width="330" format="[general]"  name=estados_cve_estado edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=20 alignment="0" tabsequence=32766 border="0" color="0" x="14158" y="4" height="77" width="878" format="[general]"  name=estados_estado edit.limit=31 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=21 alignment="0" tabsequence=32766 border="0" color="0" x="15041" y="4" height="77" width="1399" format="[general]"  name=municipio_localidad_municipio edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=22 alignment="0" tabsequence=32766 border="0" color="0" x="16444" y="4" height="77" width="1399" format="[general]"  name=municipio_localidad_localidad edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=23 alignment="0" tabsequence=32766 border="0" color="0" x="17847" y="4" height="77" width="55" format="[general]"  name=academicos_nivel edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=24 alignment="1" tabsequence=32766 border="0" color="0" x="18181" y="4" height="77" width="334" format="[general]"  name=academicos_cve_formaingreso edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="1" tabsequence=32766 border="0" color="0" x="12083" y="4" height="77" width="330" format="[general]"  name=escuelas_cve_escuela  tag=" " edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Escuelas
+Escuela"border="0" color="0" x="12417" y="4" height="129" width="1399"  name=escuelas_escuela_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=18 alignment="0" tabsequence=32766 border="0" color="0" x="12417" y="4" height="77" width="1399"  name=escuelas_escuela  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

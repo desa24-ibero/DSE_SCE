@@ -1,0 +1,46 @@
+﻿$PBExportHeader$f_obten_numero_calificacion.srf
+global type f_obten_numero_calificacion from function_object
+end type
+
+forward prototypes
+global function integer f_obten_numero_calificacion (string as_calificacion)
+end prototypes
+
+global function integer f_obten_numero_calificacion (string as_calificacion);
+integer li_calificacion
+string ls_calificacion
+
+ls_calificacion =trim(as_calificacion)
+
+
+
+
+choose case ls_calificacion
+	case "MB"
+		li_calificacion = 10
+	case "B"
+		li_calificacion = 8
+	case "S"
+		li_calificacion = 6
+	case "5"
+		li_calificacion = 5
+	case "6"
+		li_calificacion = 6
+	case "7"
+		li_calificacion = 7
+	case "8"
+		li_calificacion = 8
+	case "9"
+		li_calificacion = 9
+	case "10"
+		li_calificacion = 10
+	case else		
+		li_calificacion = 0
+end choose
+
+return li_calificacion
+		
+		
+
+end function
+

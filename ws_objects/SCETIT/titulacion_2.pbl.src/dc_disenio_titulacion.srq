@@ -1,0 +1,2 @@
+﻿$PBExportHeader$dc_disenio_titulacion.srq
+PBSELECT( VERSION(400) TABLE(NAME="dbo.diseño_titulacion" ) COLUMN(NAME="dbo.diseño_titulacion.cuenta") COLUMN(NAME="dbo.diseño_titulacion.cve_plan") COLUMN(NAME="dbo.diseño_titulacion.cve_carrera") COLUMN(NAME="dbo.diseño_titulacion.numero_titulo") COLUMN(NAME="dbo.diseño_titulacion.fecha_envio") COLUMN(NAME="dbo.diseño_titulacion.fecha_regreso") COLUMN(NAME="dbo.diseño_titulacion.observaciones") COLUMN(NAME="dbo.diseño_titulacion.fecha_expedicion"))

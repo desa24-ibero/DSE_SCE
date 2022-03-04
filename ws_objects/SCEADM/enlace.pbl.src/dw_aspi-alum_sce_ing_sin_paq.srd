@@ -1,0 +1,122 @@
+﻿$PBExportHeader$dw_aspi-alum_sce_ing_sin_paq.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=237 color="536870912" )
+summary(height=80 color="536870912" )
+footer(height=3 color="536870912" )
+detail(height=83 color="536870912" )
+table(column=(type=real updatewhereclause=yes name=aspiran_promedio dbname="aspiran.promedio" )
+ column=(type=char(50) updatewhereclause=yes name=general_nombre dbname="general.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=general_apaterno dbname="general.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=general_amaterno dbname="general.amaterno" )
+ column=(type=char(50) updatewhereclause=yes name=general_calle dbname="general.calle" )
+ column=(type=char(6) updatewhereclause=yes name=general_codigo_pos dbname="general.codigo_pos" )
+ column=(type=char(50) updatewhereclause=yes name=general_colonia dbname="general.colonia" )
+ column=(type=long updatewhereclause=yes name=general_estado dbname="general.estado" )
+ column=(type=char(9) updatewhereclause=yes name=general_telefono dbname="general.telefono" )
+ column=(type=datetime updatewhereclause=yes name=general_fecha_nac dbname="general.fecha_nac" )
+ column=(type=long updatewhereclause=yes name=general_lugar_nac dbname="general.lugar_nac" )
+ column=(type=long updatewhereclause=yes name=general_nacional dbname="general.nacional" )
+ column=(type=char(1) updatewhereclause=yes name=general_sexo dbname="general.sexo" )
+ column=(type=long updatewhereclause=yes name=general_edo_civil dbname="general.edo_civil" )
+ column=(type=long updatewhereclause=yes name=general_religion dbname="general.religion" )
+ column=(type=long updatewhereclause=yes name=general_bachillera dbname="general.bachillera" )
+ column=(type=long updatewhereclause=yes name=general_trabajo dbname="general.trabajo" )
+ column=(type=long updatewhereclause=yes name=general_trab_hor dbname="general.trab_hor" )
+ column=(type=long updatewhereclause=yes name=general_ya_inscri dbname="general.ya_inscri" )
+ column=(type=long updatewhereclause=yes name=general_cuenta dbname="general.cuenta" )
+ column=(type=long updatewhereclause=yes name=general_transporte dbname="general.transporte" )
+ column=(type=char(50) updatewhereclause=yes name=padres_nombre dbname="padres.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=padres_apaterno dbname="padres.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=padres_amaterno dbname="padres.amaterno" )
+ column=(type=char(50) updatewhereclause=yes name=padres_calle dbname="padres.calle" )
+ column=(type=char(6) updatewhereclause=yes name=padres_codigo_pos dbname="padres.codigo_pos" )
+ column=(type=char(50) updatewhereclause=yes name=padres_colonia dbname="padres.colonia" )
+ column=(type=long updatewhereclause=yes name=padres_estado dbname="padres.estado" )
+ column=(type=char(9) updatewhereclause=yes name=padres_telefono dbname="padres.telefono" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_carr dbname="aspiran.clv_carr" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_ver dbname="aspiran.clv_ver" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_per dbname="aspiran.clv_per" )
+ column=(type=long updatewhereclause=yes name=aspiran_folio dbname="aspiran.folio" )
+ column=(type=long updatewhereclause=yes name=aspiran_anio dbname="aspiran.anio" )
+ retrieve="  SELECT dbo.aspiran.promedio,   
+         dbo.general.nombre,   
+         dbo.general.apaterno,   
+         dbo.general.amaterno,   
+         dbo.general.calle,   
+         dbo.general.codigo_pos,   
+         dbo.general.colonia,   
+         dbo.general.estado,   
+         dbo.general.telefono,   
+         dbo.general.fecha_nac,   
+         dbo.general.lugar_nac,   
+         dbo.general.nacional,   
+         dbo.general.sexo,   
+         dbo.general.edo_civil,   
+         dbo.general.religion,   
+         dbo.general.bachillera,   
+         dbo.general.trabajo,   
+         dbo.general.trab_hor,   
+         dbo.general.ya_inscri,   
+         dbo.general.cuenta,   
+         dbo.general.transporte,   
+         dbo.padres.nombre,   
+         dbo.padres.apaterno,   
+         dbo.padres.amaterno,   
+         dbo.padres.calle,   
+         dbo.padres.codigo_pos,   
+         dbo.padres.colonia,   
+         dbo.padres.estado,   
+         dbo.padres.telefono,   
+         dbo.aspiran.clv_carr,
+			dbo.aspiran.clv_ver,
+			dbo.aspiran.clv_per,
+			dbo.aspiran.folio,
+			dbo.aspiran.anio  
+    FROM dbo.aspiran,   
+         dbo.general,   
+         dbo.padres
+   WHERE ( dbo.aspiran.folio = dbo.padres.folio ) and  
+         ( dbo.aspiran.clv_ver = dbo.padres.clv_ver ) and  
+         ( dbo.aspiran.clv_per = dbo.padres.clv_per ) and  
+         ( dbo.aspiran.anio = dbo.padres.anio ) and  
+         ( dbo.aspiran.folio = dbo.general.folio ) and  
+         ( dbo.general.clv_ver = dbo.aspiran.clv_ver ) and  
+         ( dbo.aspiran.clv_per = dbo.general.clv_per ) and  
+         ( dbo.general.anio = dbo.aspiran.anio ) and  
+         ( (dbo.aspiran.clv_ver = :ver) OR
+           (:ver = 99) ) AND  
+         ( dbo.aspiran.ing_per = :per ) AND  
+         ( dbo.aspiran.ing_anio = :ani ) AND  
+         dbo.general.cuenta <> 0 AND  
+         dbo.aspiran.pago_insc = 1 and
+         ( dbo.aspiran.clv_per = :per ) AND  
+         ( dbo.aspiran.anio = :ani )   AND
+			( dbo.aspiran.num_paq in (0, null))
+ORDER BY dbo.aspiran.folio" arguments=(("ver", number),("per", number),("ani", number))  sort="aspiran_anio A aspiran_clv_per A aspiran_clv_ver A general_cuenta A " )
+group(level=1 header.height=80 trailer.height=0 by=("aspiran_anio" , "aspiran_clv_per" , "aspiran_clv_ver" ) header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="1" text="TOTALES:"border="0" color="0" x="22" y="16" height="64" width="296"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="1" expression="count(aspiran_promedio for all)"border="0" color="0" x="501" y="16" height="64" width="329" format="[general]"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="Versión"border="0" color="0" x="91" y="163" height="64" width="223"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="Periodo"border="0" color="0" x="446" y="163" height="64" width="227"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="Año"border="0" color="0" x="856" y="163" height="64" width="117"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="Folio"border="0" color="0" x="1189" y="163" height="64" width="139"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="Cuenta"border="0" color="0" x="1499" y="163" height="64" width="212"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="Nombre"border="0" color="0" x="2322" y="160" height="64" width="230"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header.1 id=31 alignment="0" tabsequence=32766 border="0" color="0" x="66" y="9" height="64" width="304" format="[general]"  name=aspiran_clv_ver edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header.1 id=32 alignment="0" tabsequence=32766 border="0" color="0" x="413" y="9" height="64" width="304" format="[general]"  name=aspiran_clv_per edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header.1 id=34 alignment="0" tabsequence=32766 border="0" color="0" x="753" y="9" height="64" width="304" format="[general]"  name=aspiran_anio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=31 alignment="0" tabsequence=32766 border="0" color="0" x="4571" y="0" height="64" width="1247" format="[general]" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=32 alignment="0" tabsequence=32766 border="0" color="0" x="5819" y="0" height="64" width="1247" format="[general]" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=34 alignment="0" tabsequence=32766 border="0" color="0" x="7066" y="0" height="64" width="1247" format="[general]" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=31 alignment="0" tabsequence=32766 border="0" color="0" x="51" y="9" height="64" width="304" format="[general]" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=32 alignment="0" tabsequence=32766 border="0" color="0" x="406" y="9" height="64" width="304" format="[general]" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=33 alignment="0" tabsequence=32766 border="0" color="0" x="8313" y="0" height="64" width="1247" format="[general]"  name=aspiran_folio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=34 alignment="0" tabsequence=32766 border="0" color="0" x="761" y="9" height="64" width="304" format="[general]" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=33 alignment="0" tabsequence=32766 border="0" color="0" x="1104" y="9" height="64" width="304" format="[general]" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression=" general_apaterno + ~" ~"+ general_amaterno +~" ~"+ general_nombre "border="0" color="0" x="1829" y="9" height="64" width="1221" format="[general]"  name=cf_nombre_completo  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="string(general_cuenta) + ~"-~"+string( obten_digito( general_cuenta ))"border="0" color="0" x="1463" y="13" height="64" width="282" format="[general]"  name=cf_cuenta_digito  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=31 alignment="0" tabsequence=32766 border="0" color="0" x="51" y="9" height="64" width="304" format="[general]" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=summary alignment="1" text="TOTALES:"border="0" color="0" x="29" y="10" height="64" width="296"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="count(aspiran_promedio for all)"border="0" color="0" x="508" y="10" height="64" width="329" format="[general]"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

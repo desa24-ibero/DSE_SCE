@@ -1,0 +1,30 @@
+﻿$PBExportHeader$f_obten_ultima_aparicion.srf
+global type f_obten_ultima_aparicion from function_object
+end type
+
+forward prototypes
+global function long f_obten_ultima_aparicion (string as_cadena_base, string as_cadena_buscada, long al_tamanio_maximo)
+end prototypes
+
+global function long f_obten_ultima_aparicion (string as_cadena_base, string as_cadena_buscada, long al_tamanio_maximo);//f_obten_ultima_aparicion
+//Recibe		as_cadena_base		string
+//				as_cadena_buscada	string
+//				al_tamanio_maximo	long
+//Devuelve long en que se muestra la ultima posicion de la cadena
+
+long ll_posicion_buscada
+
+if len(as_cadena_base) < al_tamanio_maximo then
+	return 0
+else
+	ll_posicion_buscada= 0
+	DO WHILE pos(as_cadena_base, as_cadena_buscada, ll_posicion_buscada + 1) <> 0 and &
+		      pos(as_cadena_base, as_cadena_buscada, ll_posicion_buscada + 1) < al_tamanio_maximo
+	   ll_posicion_buscada= pos(as_cadena_base, as_cadena_buscada, ll_posicion_buscada + 1)
+	LOOP
+end if
+
+return ll_posicion_buscada
+
+end function
+

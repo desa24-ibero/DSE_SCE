@@ -1,0 +1,41 @@
+﻿$PBExportHeader$f_actual_inscritos_grupo.srf
+global type f_actual_inscritos_grupo from function_object
+end type
+
+forward prototypes
+global function integer f_actual_inscritos_grupo (long al_cve_mat, string as_gpo, integer ai_periodo, integer ai_anio, integer ai_inscritos)
+end prototypes
+
+global function integer f_actual_inscritos_grupo (long al_cve_mat, string as_gpo, integer ai_periodo, integer ai_anio, integer ai_inscritos);integer li_inscritos, li_codigo_sql
+string ls_mensaje_sql
+
+if isnull(ai_inscritos) then
+	ai_inscritos= 0
+end if
+
+UPDATE dbo.grupos
+SET	dbo.grupos.inscritos = :ai_inscritos
+FROM	dbo.grupos
+WHERE dbo.grupos.cve_mat = :al_cve_mat
+AND	dbo.grupos.gpo = :as_gpo
+AND	dbo.grupos.periodo = :ai_periodo
+AND	dbo.grupos.anio = :ai_anio
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 then
+	MessageBox("Grupo no existente al actualizar los inscritos del grupo", ls_mensaje_sql)
+	COMMIT USING gtr_sce;
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al actualizar los inscritos del grupo", ls_mensaje_sql)
+	ROLLBACK USING gtr_sce;
+elseif li_codigo_sql = 0 then
+	COMMIT USING gtr_sce;
+end if
+
+return li_codigo_sql
+
+end function
+

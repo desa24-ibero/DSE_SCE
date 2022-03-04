@@ -1,0 +1,46 @@
+﻿$PBExportHeader$f_obten_periodo_activacion_su.srf
+global type f_obten_periodo_activacion_su from function_object
+end type
+
+forward prototypes
+global function long f_obten_periodo_activacion_su (ref integer ai_periodo, ref integer ai_anio)
+end prototypes
+
+global function long f_obten_periodo_activacion_su (ref integer ai_periodo, ref integer ai_anio);//f_obten_periodo_activacion_su
+//Recibe 	ai_periodo	integer
+//				ai_anio		integer
+//
+//Obtiene los créditos que tiene registrados la materia
+
+integer li_periodo, li_anio
+string ls_mensaje_sql
+integer li_codigo_sql
+
+SELECT periodo, 
+		anio
+INTO :li_periodo, 
+		:li_anio
+FROM activacion_su 
+WHERE tipo_periodo = :gs_tipo_periodo 
+USING gtr_sce;
+
+ls_mensaje_sql= gtr_sce.SqlErrtext
+li_codigo_sql= gtr_sce.SqlCode
+
+IF li_codigo_sql= -1 THEN
+	MessageBox("No es posible consultar los parámetros de activacion_su", ls_mensaje_sql, StopSign!)
+	RETURN  -1
+ELSEIF  li_codigo_sql = 100 THEN	
+	MessageBox("No se encuentran registros en parámetros de activacion_su", ls_mensaje_sql, StopSign!)
+	Return 100
+ELSE	
+	ai_periodo = li_periodo
+	ai_anio = li_anio	
+	RETURN li_codigo_sql
+END IF
+
+
+
+
+end function
+

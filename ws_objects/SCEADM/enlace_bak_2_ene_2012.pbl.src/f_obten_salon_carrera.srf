@@ -1,0 +1,59 @@
+﻿$PBExportHeader$f_obten_salon_carrera.srf
+global type f_obten_salon_carrera from function_object
+end type
+
+forward prototypes
+global function integer f_obten_salon_carrera (integer ai_clv_ver, integer ai_clv_per, integer ai_anio, integer ai_clv_carr, ref string as_cve_salon)
+end prototypes
+
+global function integer f_obten_salon_carrera (integer ai_clv_ver, integer ai_clv_per, integer ai_anio, integer ai_clv_carr, ref string as_cve_salon);//f_obten_salon_carrera
+//Recibe:
+//				ai_clv_ver	int
+//				ai_clv_per	int
+//				ai_anio		int
+//				ai_clv_carr int
+//				as_cve_salon str
+//Obtiene un salon disponible
+integer li_codigo_sql
+string ls_mensaje_sql, ls_cve_salon
+
+as_cve_salon= ""
+
+li_codigo_sql=0
+
+select MAX(s.cve_salon)
+INTO :ls_cve_salon
+from carr_sal cs, v_salon s, varios v 
+where clv_ver = :ai_clv_ver
+and clv_per = :ai_clv_per 
+and anio = :ai_anio
+and cs.salon = s.cve_salon
+and v.indice = 1
+and clv_carr = :ai_clv_carr
+and cs.folios <= (s.cupo * v.valor )/100
+and s.cve_salon in (select s.cve_salon
+from carr_sal cs, v_salon s, varios v 
+where clv_ver = :ai_clv_ver
+and clv_per = :ai_clv_per
+and anio = :ai_anio
+and cs.salon = s.cve_salon
+and v.indice = 1
+group by s.cve_salon
+having sum(cs.folios)<= (s.cupo * v.valor )/100)
+USING gtr_sadm;
+
+li_codigo_sql = gtr_sadm.SQLCode
+ls_mensaje_sql = gtr_sadm.SQLErrText
+if li_codigo_sql = 100 then
+	MessageBox("Carrera sin folios","No existen salones/folios disponibles para la carrera["+string(ai_clv_carr)+"]~n"+ls_mensaje_sql,StopSign!)
+	return -1
+elseif li_codigo_sql = -1 then
+	MessageBox("Error de consulta","No se pueden consultar salones/folios disponibles~n"+ls_mensaje_sql,StopSign!)
+	return -1
+else	
+	as_cve_salon = ls_cve_salon
+	return 0	
+end if
+
+end function
+

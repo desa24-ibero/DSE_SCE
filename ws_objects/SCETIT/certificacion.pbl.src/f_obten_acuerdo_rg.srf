@@ -1,0 +1,49 @@
+﻿$PBExportHeader$f_obten_acuerdo_rg.srf
+global type f_obten_acuerdo_rg from function_object
+end type
+
+forward prototypes
+global function long f_obten_acuerdo_rg (string as_numero_resolucion, ref string as_fecha_resolucion)
+end prototypes
+
+global function long f_obten_acuerdo_rg (string as_numero_resolucion, ref string as_fecha_resolucion);//f_obten_acuerdo_rg
+//Recibe	as_numero_resolucion		string
+//			as_fecha_resolucion		string
+//Devuelve  codigo de base de datos y la fecha de resolucion
+
+long ll_cve_concepto, ll_cve_subconcepto, ll_num_registros, ll_folio_mov_alumnos
+string ls_mensaje, ls_numero_resolucion, ls_fecha_resolucion
+integer li_codigo_sql, li_parcial
+
+	SELECT num_resolucion,
+	fecha_resolucion
+	INTO
+	:ls_numero_resolucion,
+	:ls_fecha_resolucion
+	FROM dbo.acuerdos_rg 
+	WHERE dbo.acuerdos_rg.num_resolucion = :as_numero_resolucion
+	USING gtr_sce;
+
+	li_codigo_sql = gtr_sce.SqlCode
+	ls_mensaje = gtr_sce.SqlErrText
+	
+	IF li_codigo_sql= -1 THEN
+		MessageBox("Error al consultar acuerdos_rg",ls_mensaje,StopSign! )
+		ls_numero_resolucion =""
+		ls_fecha_resolucion= ""
+		return  -1
+	ELSEIF li_codigo_sql = 100 THEN
+		ls_numero_resolucion = "219/2004/2223"
+		ls_fecha_resolucion = "1 DE SEPTIEMBRE DE 2004"
+		li_codigo_sql = 0
+//		MessageBox("Carrera sin Información","No existen registros en acuerdos_rg",StopSign! )
+//		return  -1
+	END IF
+	
+	as_fecha_resolucion = ls_fecha_resolucion
+
+
+return li_codigo_sql			
+
+end function
+

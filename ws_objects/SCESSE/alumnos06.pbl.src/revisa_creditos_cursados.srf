@@ -1,0 +1,40 @@
+﻿$PBExportHeader$revisa_creditos_cursados.srf
+$PBExportComments$Funcion que regresa el número de creditos cursados por un alumno~r~nEntrada cuenta,carrera y plan Salida Numero de creditos cursados~r~nMarzo 1998 CAMP DkWf
+global type revisa_creditos_cursados from function_object
+end type
+
+forward prototypes
+global function decimal revisa_creditos_cursados (long cta, integer carrera, integer plan)
+end prototypes
+
+global function decimal revisa_creditos_cursados (long cta, integer carrera, integer plan);//Funcion que regresa el número de creditos cursados por un alumno
+//Entrada cuenta,carrera y plan
+//Salida Numero de creditos cursados
+//Marzo 1998 CAMP DkWf
+decimal cred_curs
+real punt_alumno
+
+//  SELECT sum( materias.creditos)  
+//    INTO :cred_curs  
+//    FROM historico,   
+//         materias  
+//   WHERE ( materias.cve_mat = historico.cve_mat ) and  
+//         ( ( historico.cuenta = :cta ) AND  
+//         ( historico.cve_carrera = :carrera ) AND  
+//         ( historico.cve_plan = :plan ) AND  
+//         ( historico.calificacion IN ("AC","6","7","8","9","10", "MB","B","S","E","RE") ) ) using gtr_sce;
+if cred_prom(cta,cred_curs,punt_alumno) = 1 then
+	if isnull(cred_curs) then
+		messagebox("ERROR en la busqueda de CREDITOS del CURSADOS","No se puede obtener los creditos  de la cuenta "+string(cta)+".",stopsign!)
+		return - 1
+	else
+		return cred_curs
+	end if
+else
+	messagebox("ERROR en la busqueda de CREDITOS del CURSADOS","No se puede obtener los creditos  de la cuenta "+string(cta)+".",stopsign!)
+	return  - 1
+end if
+
+
+end function
+

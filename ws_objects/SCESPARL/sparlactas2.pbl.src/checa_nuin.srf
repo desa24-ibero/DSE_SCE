@@ -1,0 +1,36 @@
+﻿$PBExportHeader$checa_nuin.srf
+global type checa_nuin from function_object
+end type
+
+forward prototypes
+global function string checa_nuin (string calif_num, string calif_alfa, integer inscritos)
+end prototypes
+
+global function string checa_nuin (string calif_num, string calif_alfa, integer inscritos);long indice
+string corregida, ls_sub_num, ls_sub_alfa
+
+FOR indice=1 TO inscritos -len(calif_num) 
+	calif_num=calif_num +space(1)
+NEXT
+
+FOR indice=1 TO inscritos -len(calif_alfa) 
+	calif_alfa=calif_alfa+space(1)
+NEXT
+
+FOR indice=1 TO inscritos
+	ls_sub_num= mid(calif_num,indice,1)
+	ls_sub_alfa = mid(calif_alfa,indice,1)
+	IF ls_sub_alfa='I' THEN
+		if ls_sub_num =' ' or ls_sub_num='' THEN
+			corregida=corregida+ls_sub_alfa
+		ELSE
+			corregida=corregida+'*'
+		END IF
+	ELSE
+		corregida=corregida+ls_sub_num
+	END IF
+NEXT
+
+return corregida
+end function
+

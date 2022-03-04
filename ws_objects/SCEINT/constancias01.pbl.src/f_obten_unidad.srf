@@ -1,0 +1,43 @@
+﻿$PBExportHeader$f_obten_unidad.srf
+global type f_obten_unidad from function_object
+end type
+
+forward prototypes
+global function string f_obten_unidad (integer a_numero)
+end prototypes
+
+global function string f_obten_unidad (integer a_numero);
+integer li_unidad
+string ls_unidad
+
+li_unidad =a_numero
+
+choose case li_unidad
+	case 1
+		ls_unidad = "UNO"
+	case 2
+		ls_unidad = "DOS"
+	case 3
+		ls_unidad = "TRES"
+	case 4
+		ls_unidad = "CUATRO"
+	case 5
+		ls_unidad = "CINCO"
+	case 6
+		ls_unidad = "SEIS"
+	case 7
+		ls_unidad = "SIETE"
+	case 8
+		ls_unidad = "OCHO"
+	case 9
+		ls_unidad = "NUEVE"
+	case else		
+		ls_unidad = ""
+end choose
+
+return ls_unidad
+		
+		
+
+end function
+

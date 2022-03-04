@@ -1,0 +1,36 @@
+﻿$PBExportHeader$f_reasigna_orden_cobro_plant.srf
+global type f_reasigna_orden_cobro_plant from function_object
+end type
+
+forward prototypes
+global function integer f_reasigna_orden_cobro_plant (string as_orden_origen, string as_orden_destino)
+end prototypes
+
+global function integer f_reasigna_orden_cobro_plant (string as_orden_origen, string as_orden_destino);//f_reasigna_orden_cobro_plant
+//
+//as_orden_origen			string
+//as_orden_destino			string
+//Reasigna una orden de cobro temporal a la definitiva
+
+
+string ls_orden_cobro
+integer li_codigo_sql
+string ls_mensaje_sql
+long ll_cant_orden_cobro
+
+UPDATE dbo.control_sep_planteles
+SET dbo.orden_cobro= :as_orden_destino
+WHERE dbo.control_sep_planteles.orden_cobro = :as_orden_origen
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = -1 then
+	MessageBox("Error al actualizar control_sep_planteles", ls_mensaje_sql)
+end if
+
+return li_codigo_sql
+
+end function
+

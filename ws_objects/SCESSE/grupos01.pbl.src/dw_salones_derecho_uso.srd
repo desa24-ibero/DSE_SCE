@@ -1,0 +1,35 @@
+﻿$PBExportHeader$dw_salones_derecho_uso.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=10789024 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=186 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=77 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cve_coordinacion dbname="salones_derecho_uso.cve_coordinacion" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=cve_dia dbname="salones_derecho_uso.cve_dia" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=hora_inicio dbname="salones_derecho_uso.hora_inicio" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=cupo dbname="salones_derecho_uso.cupo" )
+ column=(type=long update=yes updatewhereclause=yes name=derecho dbname="salones_derecho_uso.derecho" )
+ column=(type=long update=yes updatewhereclause=yes name=ocupados dbname="salones_derecho_uso.ocupados" )
+ retrieve="  SELECT salones_derecho_uso.cve_coordinacion,   
+         salones_derecho_uso.cve_dia,   
+         salones_derecho_uso.hora_inicio,   
+         salones_derecho_uso.cupo,   
+         salones_derecho_uso.derecho,   
+         salones_derecho_uso.ocupados  
+    FROM salones_derecho_uso  
+   WHERE (salones_derecho_uso.cve_coordinacion = :coordinacion) and
+         (salones_derecho_uso.cve_dia   = :dia) and
+         (salones_derecho_uso.cupo      = :cupo) 
+ORDER BY cve_dia,hora_inicio,cupo" update="salones_derecho_uso" updatewhere=0 updatekeyinplace=yes arguments=(("coordinacion", number),("dia", number),("cupo", number)) )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="22" y="3" height="179" width="516" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="4" pen.color="16777215"  background.mode="2" background.color="10789024" )
+text(band=header alignment="2" text="H_Ini"border="0" color="0" x="48" y="106" height="64" width="132"  name=hora_inicio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Der"border="0" color="0" x="230" y="106" height="64" width="91"  name=derecho_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Ocup"border="0" color="0" x="362" y="99" height="67" width="143"  name=ocupados_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=header id=2 alignment="2" tabsequence=32766 border="2" color="15793151" x="51" y="19" height="70" width="457" format="[general]"  name=cve_dia dddw.name=dw_dias dddw.displaycolumn=dia dddw.datacolumn=cve_dia dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="8388608" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="16777215" x="673" y="3" height="70" width="59" format="[general]"  name=cupo edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="5" color="0" x="362" y="3" height="67" width="143" format="[general]"  name=ocupados edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=5 alignment="2" tabsequence=10 border="5" color="8388608" x="205" y="3" height="67" width="143" format="[general]"  name=derecho edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="5" color="0" x="40" y="3" height="67" width="143" format="[general]"  name=hora_inicio edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="15793151" x="746" y="3" height="67" width="84" format="[general]"  name=cve_coordinacion edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="8388608" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

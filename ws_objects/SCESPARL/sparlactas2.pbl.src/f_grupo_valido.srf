@@ -1,0 +1,36 @@
+﻿$PBExportHeader$f_grupo_valido.srf
+global type f_grupo_valido from function_object
+end type
+
+forward prototypes
+global function boolean f_grupo_valido (string as_gpo)
+end prototypes
+
+global function boolean f_grupo_valido (string as_gpo);integer li_lon_max, li_lon_gpo, li_pos_esp
+string ls_primer_letra
+li_lon_max = 2
+li_lon_gpo= len(as_gpo)
+ls_primer_letra= mid(as_gpo,1,1)
+
+if as_gpo = "" or as_gpo = " " or as_gpo = "  " or isnull(as_gpo) then
+	return false
+end if
+
+li_pos_esp=  pos(as_gpo, " ")
+
+if li_pos_esp > 0 or isnull(li_pos_esp) then
+	return false	
+end if
+
+if li_lon_gpo <= li_lon_max and li_lon_gpo > 0 then
+	if Asc(ls_primer_letra) > 64 and Asc(ls_primer_letra) < 91 then
+		return true
+	else
+		return false
+	end if
+else
+	return false
+end if
+
+end function
+

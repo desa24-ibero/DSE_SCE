@@ -1,0 +1,84 @@
+﻿$PBExportHeader$f_sit_dat_apoyos.srf
+$PBExportComments$Funcion para obtener los datos del apoyos por alumno
+global type f_sit_dat_apoyos from function_object
+end type
+
+forward prototypes
+global function integer f_sit_dat_apoyos (ref long al_cuenta, ref integer ai_anio_pro, ref integer ai_periodo_pro, ref string as_tipo_apoyo, ref integer ai_cve_apoyo, ref long al_porcentaje, ref integer ai_horas, ref string as_mensaje_fun)
+end prototypes
+
+global function integer f_sit_dat_apoyos (ref long al_cuenta, ref integer ai_anio_pro, ref integer ai_periodo_pro, ref string as_tipo_apoyo, ref integer ai_cve_apoyo, ref long al_porcentaje, ref integer ai_horas, ref string as_mensaje_fun);//----------------------------------------------------------------------------------//
+//		Funcion		: f_dat_apoyos
+//		Objetivo		: validar y obtener los datos del apoyo otorgado al alumno
+//		Autor			: R. Gracida E. 
+//		fecha			: agosto-2001
+//		entradas		: cuenta, año y periodo de proceso
+//		salidas		: tipo, clave, porcentaje del apoyo,horas, mensaje de error
+//----------------------------------------------------------------------------------//
+//
+integer	li_regresa_fun, li_renglon, li_cve_status_apoyo
+//
+//		Becas financiamiento 
+//
+uo_sit_datastore 	lds_tabla_becasfin
+lds_tabla_becasfin = CREATE uo_sit_datastore
+lds_tabla_becasfin.dataobject = "d_sit_fdatapo_tabla_becapo"
+lds_tabla_becasfin.settransobject ( gtr_sfeb ) 
+//
+li_regresa_fun = 0
+as_mensaje_fun = ""
+//
+li_renglon = lds_tabla_becasfin.retrieve( al_cuenta, ai_anio_pro, ai_periodo_pro ) 
+choose case li_renglon
+	case is <0
+		li_regresa_fun = -1
+		as_mensaje_fun = "fdatapo: problemas de acceso bd becas-financiamiento " + &
+								lds_tabla_becasfin.ds_sqlerrtext
+	case 0
+		li_regresa_fun = 0
+		as_mensaje_fun = "alumno sin apoyo "
+		as_tipo_apoyo = ""
+		ai_cve_apoyo = 0
+		al_porcentaje = 0
+	case is >0
+		as_tipo_apoyo 			= lds_tabla_becasfin.getitemstring( li_renglon, "becas_fin_tipo_apoyo")
+		ai_cve_apoyo 			= lds_tabla_becasfin.getitemnumber( li_renglon, "becas_fin_cve_apoyo") 
+		ai_horas					= lds_tabla_becasfin.getitemnumber( li_renglon, "becas_fin_horas") 
+		li_cve_status_apoyo	= lds_tabla_becasfin.getitemnumber( li_renglon, "becas_fin_cve_status_apoyo") 
+		al_porcentaje 			= lds_tabla_becasfin.getitemnumber( li_renglon, "apoyos_porcentaje") 
+		choose case as_tipo_apoyo
+			case  "B"
+				choose case li_cve_status_apoyo
+					case 0,1,2
+						// ok status valido 
+						li_regresa_fun = 1
+					case else
+						li_regresa_fun = 0
+						as_mensaje_fun = "alumno sin apoyo "
+						as_tipo_apoyo  = ""
+						ai_cve_apoyo   = 0
+						al_porcentaje  = 0
+						ai_horas			= 0
+				end choose 
+			case  "F"
+				choose case li_cve_status_apoyo
+					case 0,2,21
+						// ok status valido 
+						li_regresa_fun = 1
+					case else
+						li_regresa_fun = 0
+						as_mensaje_fun = "alumno sin apoyo "
+						as_tipo_apoyo  = ""
+						ai_cve_apoyo   = 0
+						al_porcentaje  = 0
+						ai_horas			= 0
+				end choose 
+		end choose
+end choose
+//
+destroy	lds_tabla_becasfin
+//
+return li_regresa_fun 
+
+end function
+

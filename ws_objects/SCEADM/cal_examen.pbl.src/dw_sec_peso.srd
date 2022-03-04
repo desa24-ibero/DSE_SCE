@@ -1,0 +1,19 @@
+﻿$PBExportHeader$dw_sec_peso.srd
+$PBExportComments$DataWindow con los pesos de las secciones
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=225 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=85 color="536870912"  height.autosize=yes)
+table(column=(type=long updatewhereclause=yes key=yes name=clv_carr dbname="sec_peso.clv_carr" )
+ column=(type=long updatewhereclause=yes key=yes name=clv_area dbname="sec_peso.clv_area" )
+ column=(type=long updatewhereclause=yes key=yes name=clv_sec dbname="sec_peso.clv_sec" )
+ column=(type=real update=yes updatewhereclause=yes name=peso dbname="sec_peso.peso" )
+ column=(type=char(25) updatewhereclause=yes name=sec_nom_nombre dbname="sec_nom.nombre" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"sec_peso~" )  TABLE(NAME=~"sec_nom~" ) COLUMN(NAME=~"sec_peso.clv_carr~") COLUMN(NAME=~"sec_peso.clv_area~") COLUMN(NAME=~"sec_peso.clv_sec~") COLUMN(NAME=~"sec_peso.peso~") COLUMN(NAME=~"sec_nom.nombre~")    JOIN (LEFT=~"sec_peso.clv_area~"    OP =~"=~"RIGHT=~"sec_nom.clv_area~" )    JOIN (LEFT=~"sec_peso.clv_sec~"    OP =~"=~"RIGHT=~"sec_nom.clv_sec~" )WHERE(    EXP1 =~"( ( sec_peso.clv_carr~"   OP =~"=~"    EXP2 =~":carr )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( sec_peso.clv_area~"   OP =~"=~"    EXP2 =~":area ) )~" ) ) ARG(NAME = ~"carr~" TYPE = number)  ARG(NAME = ~"area~" TYPE = number) " update="sec_peso" updatewhere=1 updatekeyinplace=yes arguments=(("carr", number),("area", number))  sort="clv_carr A clv_area A clv_sec A " )
+text(band=header alignment="2" text=""border="0" color="0" x="10" y="32" height="65" width="1907"  name=st_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Peso"border="0" color="0" x="1093" y="124" height="65" width="334"  name=peso_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Exámen"border="0" color="0" x="572" y="128" height="65" width="220"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=10 border="0" color="0" x="1098" y="12" height="65" width="334" format="[general]"  name=peso editmask.mask="###.#####" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="334" y="12" height="65" width="700" format="[general]"  name=sec_nom_nombre edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

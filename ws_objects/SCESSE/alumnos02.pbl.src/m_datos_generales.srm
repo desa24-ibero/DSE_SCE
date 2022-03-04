@@ -1,0 +1,628 @@
+﻿$PBExportHeader$m_datos_generales.srm
+forward
+global type m_datos_generales from m_menu
+end type
+type m_datosdelpadreotutor from menu within m_registro
+end type
+type m_agregarescueladeprocedencia from menu within m_registro
+end type
+type m_modificar from menu within m_registro
+end type
+type m_registro from m_menu`m_registro within m_datos_generales
+m_datosdelpadreotutor m_datosdelpadreotutor
+m_agregarescueladeprocedencia m_agregarescueladeprocedencia
+m_modificar m_modificar
+end type
+end forward
+
+global type m_datos_generales from m_menu
+end type
+global m_datos_generales m_datos_generales
+
+type variables
+
+end variables
+
+on m_datos_generales.create
+m_datos_generales=this
+call super::create
+end on
+
+on m_datos_generales.destroy
+call super::destroy
+end on
+
+type m_archivo from m_menu`m_archivo within m_datos_generales
+end type
+
+on m_archivo.create
+call super::create
+end on
+
+on m_archivo.destroy
+call super::destroy
+end on
+
+type m_leer from m_menu`m_leer within m_archivo
+end type
+
+on m_leer.create
+call super::create
+end on
+
+on m_leer.destroy
+call super::destroy
+end on
+
+type m_salvar from m_menu`m_salvar within m_archivo
+end type
+
+on m_salvar.create
+call super::create
+end on
+
+on m_salvar.destroy
+call super::destroy
+end on
+
+type m_configurarimpresora from m_menu`m_configurarimpresora within m_archivo
+end type
+
+on m_configurarimpresora.create
+call super::create
+end on
+
+on m_configurarimpresora.destroy
+call super::destroy
+end on
+
+type m_imprimir from m_menu`m_imprimir within m_archivo
+end type
+
+event m_imprimir::clicked;call super::clicked;//open(w_prev_datos_generales)
+
+end event
+
+on m_imprimir.create
+call super::create
+this.visible = false
+this.enabled = false
+end on
+
+on m_imprimir.destroy
+call super::destroy
+end on
+
+type m_- from m_menu`m_- within m_archivo
+end type
+
+on m_-.create
+call super::create
+end on
+
+on m_-.destroy
+call super::destroy
+end on
+
+type m_salir from m_menu`m_salir within m_archivo
+end type
+
+on m_salir.create
+call super::create
+end on
+
+on m_salir.destroy
+call super::destroy
+end on
+
+type m_edicion from m_menu`m_edicion within m_datos_generales
+end type
+
+on m_edicion.create
+call super::create
+end on
+
+on m_edicion.destroy
+call super::destroy
+end on
+
+type m_deshacer from m_menu`m_deshacer within m_edicion
+end type
+
+on m_deshacer.create
+call super::create
+end on
+
+on m_deshacer.destroy
+call super::destroy
+end on
+
+type m_cortar from m_menu`m_cortar within m_edicion
+end type
+
+on m_cortar.create
+call super::create
+end on
+
+on m_cortar.destroy
+call super::destroy
+end on
+
+type m_copiar from m_menu`m_copiar within m_edicion
+end type
+
+on m_copiar.create
+call super::create
+end on
+
+on m_copiar.destroy
+call super::destroy
+end on
+
+type m_pegar from m_menu`m_pegar within m_edicion
+end type
+
+on m_pegar.create
+call super::create
+end on
+
+on m_pegar.destroy
+call super::destroy
+end on
+
+type m_registro from m_menu`m_registro within m_datos_generales
+m_datosdelpadreotutor m_datosdelpadreotutor
+m_agregarescueladeprocedencia m_agregarescueladeprocedencia
+m_modificar m_modificar
+end type
+
+on m_registro.create
+call super::create
+this.m_datosdelpadreotutor=create m_datosdelpadreotutor
+this.m_agregarescueladeprocedencia=create m_agregarescueladeprocedencia
+this.m_modificar=create m_modificar
+this.Item[UpperBound(this.Item)+1]=this.m_datosdelpadreotutor
+this.Item[UpperBound(this.Item)+1]=this.m_agregarescueladeprocedencia
+this.Item[UpperBound(this.Item)+1]=this.m_modificar
+end on
+
+on m_registro.destroy
+call super::destroy
+destroy(this.m_datosdelpadreotutor)
+destroy(this.m_agregarescueladeprocedencia)
+destroy(this.m_modificar)
+end on
+
+type m_nuevo from m_menu`m_nuevo within m_registro
+end type
+
+event m_nuevo::clicked;call super::clicked;long cuenta,res
+
+if isvalid(w_datosgenerales) then
+
+	res = MessageBox("¿Genero un nuevo número de cuenta?", "",Exclamation!, YesNo!, 1)
+IF res = 1 THEN 
+		SELECT min(dbo.cuentas_disponibles.cuenta)
+		INTO :cuenta
+		FROM dbo.cuentas_disponibles
+		USING gtr_sce;
+		
+		if isnull(cuenta) then
+			cuenta=0
+		end if
+		
+		if cuenta = 0 or gtr_sce.sqlcode = 100 then
+			messagebox("No hay números de cuenta disponibles","Consúlte a Servicios Escolares")
+			return
+		end if
+		w_datosgenerales.uo_nombre.em_cuenta.text = string(cuenta)
+		w_datosgenerales.uo_nombre.em_digito.text = obten_digito(cuenta)
+		w_datosgenerales.uo_nombre.em_cuenta.enabled = false
+ELSE
+	w_datosgenerales.uo_nombre.em_cuenta.text = ""
+		w_datosgenerales.uo_nombre.em_digito.text = ""
+	w_datosgenerales.uo_nombre.em_cuenta.enabled = true
+END IF
+	
+	w_datosgenerales.uo_nombre.cbx_nuevo.text = "Nuevo"
+		
+	w_datosgenerales.uo_nombre.cbx_nuevo.checked = true
+	w_datosgenerales.uo_nombre.dw_nombre_alumno.reset()
+	w_datosgenerales.uo_nombre.dw_nombre_alumno.insertrow(w_datosgenerales.uo_nombre.dw_nombre_alumno.getrow())
+	w_datosgenerales.uo_nombre.dw_nombre_alumno.setfocus()
+	
+	w_datosgenerales.dw_nacimiento.reset()
+	w_datosgenerales.dw_domicilio.reset()
+	w_datosgenerales.dw_procedencia.reset()
+	
+	w_datosgenerales.dw_nacimiento.insertrow(w_datosgenerales.dw_nacimiento.getrow())
+	//w_datosgenerales.dw_domicilio.insertrow(w_datosgenerales.dw_domicilio.getrow()) Por el trigger.
+	w_datosgenerales.dw_procedencia.insertrow(w_datosgenerales.dw_procedencia.getrow())
+	
+//	w_datosgenerales.dw_domicilio.update()/*row(w_datosgenerales.dw_domicilio.getrow())*/
+//	w_datosgenerales.dw_nacimiento.update()/*row(w_datosgenerales.dw_nacimiento.getrow())*/
+//	w_datosgenerales.dw_procedencia.update()/*row(w_datosgenerales.dw_procedencia.getrow())*/
+// w_datosgenerales.dw_ingreso.insertrow(w_datosgenerales.dw_ingreso.getrow())
+
+//	w_datosgenerales.dw_procedencia.setitem(w_datosgenerales.dw_procedencia.getrow(),"cve_grado","B")
+end if
+end event
+
+on m_nuevo.create
+call super::create
+this.text = "Nuevo"
+this.shortcut = 0
+end on
+
+on m_nuevo.destroy
+call super::destroy
+end on
+
+type m_actualiza from m_menu`m_actualiza within m_registro
+end type
+
+event m_actualiza::clicked;call super::clicked;long cuenta, cuenta1
+string nombre,apaterno,amaterno
+string nombre1,apaterno1,amaterno1
+int RenglonNac, RenglonNombre
+
+if isvalid(w_datosgenerales) then
+	w_datosgenerales.uo_nombre.em_cuenta.enabled = true
+	cuenta = long(w_datosgenerales.uo_nombre.em_cuenta.text)
+	w_datosgenerales.dw_domicilio.setitem(w_datosgenerales.dw_domicilio.getrow(),"cuenta",cuenta)
+	//w_datosgenerales.dw_nacimiento.setitem(w_datosgenerales.dw_nacimiento.getrow(),"cuenta",cuenta)
+	w_datosgenerales.dw_procedencia.setitem(w_datosgenerales.dw_procedencia.getrow(),"cuenta",cuenta)
+	w_datosgenerales.uo_nombre.dw_nombre_alumno.accepttext()
+	
+	//RenglonNac = w_datosgenerales.dw_nacimiento.getrow()
+	//RenglonNombre = w_datosgenerales.uo_nombre.dw_nombre_alumno.getrow()
+	RenglonNac = 1
+	RenglonNombre = 1
+	
+	//cuenta = w_datosgenerales.uo_nombre.dw_nombre_alumno.getitemnumber(RenglonNombre,"cuenta")
+	cuenta1 = w_datosgenerales.dw_nacimiento.getitemnumber(RenglonNac,"cuenta")
+	if cuenta <> cuenta1 or isnull(cuenta1) then w_datosgenerales.dw_nacimiento.setitem(RenglonNac,"cuenta",cuenta)
+
+	
+	nombre = w_datosgenerales.uo_nombre.dw_nombre_alumno.getitemstring(RenglonNombre,"nombre")
+	nombre1 = w_datosgenerales.dw_nacimiento.getitemstring(RenglonNac,"nombre")
+	if nombre <> nombre1 or isnull(nombre1) then w_datosgenerales.dw_nacimiento.setitem(RenglonNac,"nombre",nombre)
+
+	apaterno = w_datosgenerales.uo_nombre.dw_nombre_alumno.getitemstring(RenglonNombre,"apaterno")
+	apaterno1 = w_datosgenerales.dw_nacimiento.getitemstring(RenglonNac,"apaterno")
+	if apaterno <> apaterno1 or isnull(apaterno1) then	w_datosgenerales.dw_nacimiento.setitem(RenglonNac,"apaterno",apaterno)
+	
+	amaterno = w_datosgenerales.uo_nombre.dw_nombre_alumno.getitemstring(RenglonNombre,"amaterno")
+	amaterno1 = w_datosgenerales.dw_nacimiento.getitemstring(RenglonNac,"amaterno")
+	if amaterno <> amaterno1 or isnull(apaterno1) then	w_datosgenerales.dw_nacimiento.setitem(RenglonNac,"amaterno",amaterno)
+	//w_datosgenerales.dw_nacimiento.setitem(w_datosgenerales.dw_nacimiento.getrow(),"nombre",w_datosgenerales.uo_nombre.dw_nombre_alumno.getitemstring(w_datosgenerales.uo_nombre.dw_nombre_alumno.getrow(),"nombre"))
+	//w_datosgenerales.dw_nacimiento.setitem(w_datosgenerales.dw_nacimiento.getrow(),"apaterno",w_datosgenerales.uo_nombre.dw_nombre_alumno.getitemstring(w_datosgenerales.uo_nombre.dw_nombre_alumno.getrow(),"apaterno"))
+	//w_datosgenerales.dw_nacimiento.setitem(w_datosgenerales.dw_nacimiento.getrow(),"amaterno",w_datosgenerales.uo_nombre.dw_nombre_alumno.getitemstring(w_datosgenerales.uo_nombre.dw_nombre_alumno.getrow(),"amaterno"))
+	
+	if w_datosgenerales.dw_nacimiento.update(true) > 0 then
+		commit using gtr_sce;
+		if w_datosgenerales.dw_domicilio.update(true) > 0 then
+			if w_datosgenerales.dw_procedencia.update(true) > 0 then
+					commit using gtr_sce;			
+					
+					//INICIO:Replica a Internet
+					transaction ltr_web
+					n_transfiere_sybase_sql ln_transfiere_sybase_sql
+					ln_transfiere_sybase_sql =  create n_transfiere_sybase_sql
+					string ls_classname
+					long ll_cuentas[]
+					integer li_replica_activa, li_obten_parametros_replicacion, li_res_actualizacion
+						li_obten_parametros_replicacion = ln_transfiere_sybase_sql.of_obten_parametros_replica(li_replica_activa)
+						if li_replica_activa = 1 then
+							w_datosgenerales.st_replica.text = 'A'
+							w_datosgenerales.st_replica.BackColor =RGB(0,255,0)
+							ls_classname =	w_datosgenerales.ClassName()
+							ll_cuentas[1] = cuenta
+							li_res_actualizacion = ln_transfiere_sybase_sql.of_actualizacion_objeto_replica(ll_cuentas, ls_classname, gtr_sce, ltr_web)
+						else
+							w_datosgenerales.st_replica.text = 'I'
+							w_datosgenerales.st_replica.BackColor =RGB(255,0,0)
+						end if
+					//FIN:Replica a Internet				
+					
+					messagebox("Información","Se han guardado los cambios")				
+			else
+					rollback using gtr_sce;		
+					messagebox("Información","No se han guardado los cambios",stopsign!)
+			end if
+		else
+			rollback using gtr_sce;
+			messagebox("Información","No se han guardado los cambios",stopsign!)
+		end if
+	else
+		rollback using gtr_sce;					
+		messagebox("Información","No se han guardado los cambios")	
+	end if
+end if
+	
+		//w_datosgenerales.uo_nombre.cbx_nuevo.text = "Nuevo"
+end event
+
+on m_actualiza.create
+call super::create
+this.text = "Actualizar Datos Generales"
+this.shortcut = 0
+end on
+
+on m_actualiza.destroy
+call super::destroy
+end on
+
+type m_borraregistro from m_menu`m_borraregistro within m_registro
+end type
+
+event m_borraregistro::clicked;call super::clicked;string cuenta
+int respuesta
+
+cuenta = w_datosgenerales.uo_nombre.em_cuenta.text
+
+respuesta = messagebox("Atención","Esta seguro de querer borrar al alumno "+cuenta+ ".",StopSign!,YesNo!,2)
+
+if respuesta = 1 then
+	if isvalid(w_datosgenerales) then
+		//w_datosgenerales.uo_nombre.dw_nombre_alumno.deleterow(w_datosgenerales.uo_nombre.dw_nombre_alumno.getrow())
+		w_datosgenerales.dw_domicilio.deleterow(w_datosgenerales.dw_domicilio.getrow())
+		//w_datosgenerales.dw_nacimiento.deleterow(w_datosgenerales.dw_nacimiento.getrow())
+		//w_datosgenerales.dw_procedencia.deleterow(w_datosgenerales.dw_procedencia.getrow())	
+	end if	
+	if isvalid(w_datosgenerales) then
+	 if w_datosgenerales.dw_domicilio.update() = 1 then
+	 	commit using gtr_sce;
+		w_datosgenerales.uo_nombre.dw_nombre_alumno.reset()			
+		w_datosgenerales.dw_procedencia.reset()
+		w_datosgenerales.dw_nacimiento.reset()
+		messagebox("Información","Se ha borrado el alumno con número de cuenta "+cuenta+".")
+	  else
+		rollback using gtr_sce;		
+	   messagebox("Información","No se han guardado los cambios",stopsign!)
+	  end if
+	end if
+elseif respuesta = 2 then
+	rollback using gtr_sce;
+end if
+end event
+
+on m_borraregistro.create
+call super::create
+this.text = "Borra Datos Generales"
+this.shortcut = 0
+end on
+
+on m_borraregistro.destroy
+call super::destroy
+end on
+
+type m_cargaregistro from m_menu`m_cargaregistro within m_registro
+end type
+
+on m_cargaregistro.create
+call super::create
+end on
+
+on m_cargaregistro.destroy
+call super::destroy
+end on
+
+type m_-1 from m_menu`m_-1 within m_registro
+end type
+
+on m_-1.create
+call super::create
+end on
+
+on m_-1.destroy
+call super::destroy
+end on
+
+type m_primero from m_menu`m_primero within m_registro
+end type
+
+on m_primero.create
+call super::create
+end on
+
+on m_primero.destroy
+call super::destroy
+end on
+
+type m_anterior from m_menu`m_anterior within m_registro
+end type
+
+on m_anterior.create
+call super::create
+end on
+
+on m_anterior.destroy
+call super::destroy
+end on
+
+type m_siguiente from m_menu`m_siguiente within m_registro
+end type
+
+on m_siguiente.create
+call super::create
+end on
+
+on m_siguiente.destroy
+call super::destroy
+end on
+
+type m_ltimo from m_menu`m_ltimo within m_registro
+end type
+
+on m_ltimo.create
+call super::create
+end on
+
+on m_ltimo.destroy
+call super::destroy
+end on
+
+type m_-2 from m_menu`m_-2 within m_registro
+end type
+
+on m_-2.create
+call super::create
+end on
+
+on m_-2.destroy
+call super::destroy
+end on
+
+type m_filtrar from m_menu`m_filtrar within m_registro
+end type
+
+on m_filtrar.create
+call super::create
+end on
+
+on m_filtrar.destroy
+call super::destroy
+end on
+
+type m_ordenar from m_menu`m_ordenar within m_registro
+end type
+
+on m_ordenar.create
+call super::create
+end on
+
+on m_ordenar.destroy
+call super::destroy
+end on
+
+type m_ventana from m_menu`m_ventana within m_datos_generales
+end type
+
+on m_ventana.create
+call super::create
+end on
+
+on m_ventana.destroy
+call super::destroy
+end on
+
+type m_horizontal from m_menu`m_horizontal within m_ventana
+end type
+
+on m_horizontal.create
+call super::create
+end on
+
+on m_horizontal.destroy
+call super::destroy
+end on
+
+type m_vertical from m_menu`m_vertical within m_ventana
+end type
+
+on m_vertical.create
+call super::create
+end on
+
+on m_vertical.destroy
+call super::destroy
+end on
+
+type m_primerplano from m_menu`m_primerplano within m_ventana
+end type
+
+on m_primerplano.create
+call super::create
+end on
+
+on m_primerplano.destroy
+call super::destroy
+end on
+
+type m_cascada from m_menu`m_cascada within m_ventana
+end type
+
+on m_cascada.create
+call super::create
+end on
+
+on m_cascada.destroy
+call super::destroy
+end on
+
+type m_ayuda from m_menu`m_ayuda within m_datos_generales
+end type
+
+on m_ayuda.create
+call super::create
+end on
+
+on m_ayuda.destroy
+call super::destroy
+end on
+
+type m_datosdelpadreotutor from menu within m_registro
+end type
+
+event clicked;open(w_datos_padre)
+
+end event
+
+on m_datosdelpadreotutor.create
+call super::create
+this.text = "Datos del Padre o Tutor"
+end on
+
+on m_datosdelpadreotutor.destroy
+call super::destroy
+end on
+
+type m_agregarescueladeprocedencia from menu within m_registro
+end type
+
+on m_agregarescueladeprocedencia.create
+call super::create
+this.text = "Agregar Escuela de Procedencia"
+this.microhelp = "Agrega escuela de procedencia"
+this.toolbaritemname = "Library5!"
+this.toolbaritemtext = "Agregar escuela"
+this.toolbaritemorder = 13
+this.toolbaritemspace = 3
+end on
+
+event clicked;long cuenta, reng
+
+cuenta = long(w_datosgenerales.uo_nombre.em_cuenta.text)
+reng = w_datosgenerales.dw_procedencia.insertrow(0)
+
+w_datosgenerales.dw_procedencia.setitem(reng,"cuenta",cuenta)
+w_datosgenerales.dw_procedencia.scrolltorow(reng)
+end event
+
+on m_agregarescueladeprocedencia.destroy
+call super::destroy
+end on
+
+type m_modificar from menu within m_registro
+end type
+
+event clicked;if isvalid(w_datosgenerales) then
+	if w_datosgenerales.uo_nombre.cbx_nuevo.checked = true then
+		w_datosgenerales.uo_nombre.cbx_nuevo.checked = false
+	else
+		w_datosgenerales.uo_nombre.cbx_nuevo.checked = true
+	end if
+end if
+end event
+
+on m_modificar.create
+call super::create
+this.visible = false
+this.text = "modificar"
+end on
+
+on m_modificar.destroy
+call super::destroy
+end on
+

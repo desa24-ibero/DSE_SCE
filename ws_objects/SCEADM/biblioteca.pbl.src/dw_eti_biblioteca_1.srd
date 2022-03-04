@@ -1,0 +1,33 @@
+﻿$PBExportHeader$dw_eti_biblioteca_1.srd
+release 7;
+datawindow(units=3 timer_interval=0 color=16777215 processing=2 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 795 print.margin.right = 0 print.margin.top = 1300 print.margin.bottom = 0 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no label.name="Laser Address 1.00 x 2.63 5160,5260" label.width=6567 label.height=2540 label.rows=10 label.rows.spacing=0 label.columns=3 label.columns.spacing=400 label.topdown=no label.sheet=yes label.shape=roundrectangle label.ellipse_height=176 label.ellipse_width=176 )
+detail(height=2540 color="536870912"  height.autosize=yes)
+table(column=(type=long updatewhereclause=yes name=general_cuenta dbname="general.cuenta" )
+ column=(type=long updatewhereclause=yes name=clv_carr dbname="aspiran.clv_carr" )
+ column=(type=char(50) updatewhereclause=yes name=general_nombre dbname="general.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=general_apaterno dbname="general.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=general_amaterno dbname="general.amaterno" )
+ retrieve="  SELECT general.cuenta,   
+         aspiran.clv_carr,   
+         general.nombre,   
+         general.apaterno,   
+         general.amaterno  
+    FROM aspiran,   
+         general  
+   WHERE ( aspiran.folio = general.folio ) and  
+         ( aspiran.clv_ver = general.clv_ver ) and  
+         ( aspiran.clv_per = general.clv_per ) and  
+         ( aspiran.anio = general.anio ) and  
+         ( aspiran.clv_per = :per ) AND  
+         ( aspiran.anio = :ani ) AND  
+         (( :carr = 9999 ) OR  
+         ( aspiran.clv_carr = :carr )) AND  
+         ( aspiran.pago_insc = 1 ) AND
+			general.cuenta >0 
+" arguments=(("per", number),("ani", number),("carr", number))  sort="general_cuenta A " )
+text(band=detail alignment="0" text="SANTA FE, CIUDAD DE MÉXICO" border="0" color="0" x="338" y="359" height="423" width="5630"  name=t_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="if(isnull(general_apaterno),'',general_apaterno)+' '+if(isnull(general_amaterno),'',general_amaterno)+' '+if(isnull(general_nombre),'',general_nombre)"border="0" color="0" x="338" y="2010" height="423" width="6117" format="[general]"  name=nombr  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression="'NÚMERO :130'+ string(general_cuenta,~"000000~")+'-'+obten_digito(general_cuenta)"border="0" color="0" x="2518" y="1206" height="423" width="3915" format="[general]"  name=compute_1  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="TIPO : ALUM" border="0" color="0" x="338" y="1185" height="402" width="1799"  name=t_2  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

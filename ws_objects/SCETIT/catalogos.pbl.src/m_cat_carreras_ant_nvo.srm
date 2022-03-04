@@ -1,0 +1,435 @@
+﻿$PBExportHeader$m_cat_carreras_ant_nvo.srm
+forward
+global type m_cat_carreras_ant_nvo from m_ancestro_menu_catalogos
+end type
+end forward
+
+global type m_cat_carreras_ant_nvo from m_ancestro_menu_catalogos
+end type
+global m_cat_carreras_ant_nvo m_cat_carreras_ant_nvo
+
+on m_cat_carreras_ant_nvo.create
+m_cat_carreras_ant_nvo=this
+call super::create
+this.text = "m_cat_carreras_ant_nvo"
+end on
+
+on m_cat_carreras_ant_nvo.destroy
+call super::destroy
+end on
+
+type m_archivo from m_ancestro_menu_catalogos`m_archivo within m_cat_carreras_ant_nvo
+end type
+
+on m_archivo.create
+call super::create
+end on
+
+on m_archivo.destroy
+call super::destroy
+end on
+
+type m_leer from m_ancestro_menu_catalogos`m_leer within m_archivo
+end type
+
+on m_leer.create
+call super::create
+end on
+
+on m_leer.destroy
+call super::destroy
+end on
+
+type m_salvar from m_ancestro_menu_catalogos`m_salvar within m_archivo
+end type
+
+on m_salvar.create
+call super::create
+end on
+
+on m_salvar.destroy
+call super::destroy
+end on
+
+type m_configurarimpresora from m_ancestro_menu_catalogos`m_configurarimpresora within m_archivo
+end type
+
+on m_configurarimpresora.create
+call super::create
+end on
+
+on m_configurarimpresora.destroy
+call super::destroy
+end on
+
+type m_imprimir from m_ancestro_menu_catalogos`m_imprimir within m_archivo
+end type
+
+on m_imprimir.create
+call super::create
+this.visible = true
+this.enabled = true
+end on
+
+on m_imprimir.destroy
+call super::destroy
+end on
+
+event m_imprimir::clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	openwithparm(conf_impr,dw)
+end if
+end event
+
+type m_- from m_ancestro_menu_catalogos`m_- within m_archivo
+end type
+
+on m_-.create
+call super::create
+end on
+
+on m_-.destroy
+call super::destroy
+end on
+
+type m_salir from m_ancestro_menu_catalogos`m_salir within m_archivo
+end type
+
+on m_salir.create
+call super::create
+end on
+
+on m_salir.destroy
+call super::destroy
+end on
+
+type m_edicion from m_ancestro_menu_catalogos`m_edicion within m_cat_carreras_ant_nvo
+end type
+
+on m_edicion.create
+call super::create
+end on
+
+on m_edicion.destroy
+call super::destroy
+end on
+
+type m_deshacer from m_ancestro_menu_catalogos`m_deshacer within m_edicion
+end type
+
+on m_deshacer.create
+call super::create
+end on
+
+on m_deshacer.destroy
+call super::destroy
+end on
+
+type m_cortar from m_ancestro_menu_catalogos`m_cortar within m_edicion
+end type
+
+on m_cortar.create
+call super::create
+end on
+
+on m_cortar.destroy
+call super::destroy
+end on
+
+type m_copiar from m_ancestro_menu_catalogos`m_copiar within m_edicion
+end type
+
+on m_copiar.create
+call super::create
+end on
+
+on m_copiar.destroy
+call super::destroy
+end on
+
+type m_pegar from m_ancestro_menu_catalogos`m_pegar within m_edicion
+end type
+
+on m_pegar.create
+call super::create
+end on
+
+on m_pegar.destroy
+call super::destroy
+end on
+
+type m_tipodecuota from m_ancestro_menu_catalogos`m_tipodecuota within m_cat_carreras_ant_nvo
+end type
+
+on m_tipodecuota.create
+call super::create
+end on
+
+on m_tipodecuota.destroy
+call super::destroy
+end on
+
+type m_registro from m_ancestro_menu_catalogos`m_registro within m_cat_carreras_ant_nvo
+end type
+
+on m_registro.create
+call super::create
+end on
+
+on m_registro.destroy
+call super::destroy
+end on
+
+type m_nuevo from m_ancestro_menu_catalogos`m_nuevo within m_registro
+end type
+
+on m_nuevo.create
+call super::create
+end on
+
+on m_nuevo.destroy
+call super::destroy
+end on
+
+type m_actualizar from m_ancestro_menu_catalogos`m_actualizar within m_registro
+end type
+
+on m_actualizar.create
+call super::create
+end on
+
+on m_actualizar.destroy
+call super::destroy
+end on
+
+type m_borraregistro from m_ancestro_menu_catalogos`m_borraregistro within m_registro
+end type
+
+on m_borraregistro.create
+call super::create
+end on
+
+on m_borraregistro.destroy
+call super::destroy
+end on
+
+type m_cargaregistro from m_ancestro_menu_catalogos`m_cargaregistro within m_registro
+end type
+
+on m_cargaregistro.create
+call super::create
+end on
+
+on m_cargaregistro.destroy
+call super::destroy
+end on
+
+type m_-1 from m_ancestro_menu_catalogos`m_-1 within m_registro
+end type
+
+on m_-1.create
+call super::create
+end on
+
+on m_-1.destroy
+call super::destroy
+end on
+
+type m_primero from m_ancestro_menu_catalogos`m_primero within m_registro
+end type
+
+on m_primero.create
+call super::create
+end on
+
+on m_primero.destroy
+call super::destroy
+end on
+
+type m_anterior from m_ancestro_menu_catalogos`m_anterior within m_registro
+end type
+
+on m_anterior.create
+call super::create
+end on
+
+on m_anterior.destroy
+call super::destroy
+end on
+
+type m_siguiente from m_ancestro_menu_catalogos`m_siguiente within m_registro
+end type
+
+on m_siguiente.create
+call super::create
+end on
+
+on m_siguiente.destroy
+call super::destroy
+end on
+
+type m_ltimo from m_ancestro_menu_catalogos`m_ltimo within m_registro
+end type
+
+on m_ltimo.create
+call super::create
+end on
+
+on m_ltimo.destroy
+call super::destroy
+end on
+
+type m_-2 from m_ancestro_menu_catalogos`m_-2 within m_registro
+end type
+
+on m_-2.create
+call super::create
+end on
+
+on m_-2.destroy
+call super::destroy
+end on
+
+type m_filtrar from m_ancestro_menu_catalogos`m_filtrar within m_registro
+end type
+
+on m_filtrar.create
+call super::create
+end on
+
+on m_filtrar.destroy
+call super::destroy
+end on
+
+type m_ordenar from m_ancestro_menu_catalogos`m_ordenar within m_registro
+end type
+
+on m_ordenar.create
+call super::create
+end on
+
+on m_ordenar.destroy
+call super::destroy
+end on
+
+type m_procesos from m_ancestro_menu_catalogos`m_procesos within m_cat_carreras_ant_nvo
+end type
+
+on m_procesos.create
+call super::create
+end on
+
+on m_procesos.destroy
+call super::destroy
+end on
+
+type m_reporte from m_ancestro_menu_catalogos`m_reporte within m_procesos
+end type
+
+on m_reporte.create
+call super::create
+end on
+
+on m_reporte.destroy
+call super::destroy
+end on
+
+type m_pasos from m_ancestro_menu_catalogos`m_pasos within m_cat_carreras_ant_nvo
+end type
+
+on m_pasos.create
+call super::create
+end on
+
+on m_pasos.destroy
+call super::destroy
+end on
+
+type m_ver from m_ancestro_menu_catalogos`m_ver within m_cat_carreras_ant_nvo
+end type
+
+on m_ver.create
+call super::create
+end on
+
+on m_ver.destroy
+call super::destroy
+end on
+
+type m_animacion from m_ancestro_menu_catalogos`m_animacion within m_cat_carreras_ant_nvo
+end type
+
+on m_animacion.create
+call super::create
+end on
+
+on m_animacion.destroy
+call super::destroy
+end on
+
+type m_ventana from m_ancestro_menu_catalogos`m_ventana within m_cat_carreras_ant_nvo
+end type
+
+on m_ventana.create
+call super::create
+end on
+
+on m_ventana.destroy
+call super::destroy
+end on
+
+type m_horizontal from m_ancestro_menu_catalogos`m_horizontal within m_ventana
+end type
+
+on m_horizontal.create
+call super::create
+end on
+
+on m_horizontal.destroy
+call super::destroy
+end on
+
+type m_vertical from m_ancestro_menu_catalogos`m_vertical within m_ventana
+end type
+
+on m_vertical.create
+call super::create
+end on
+
+on m_vertical.destroy
+call super::destroy
+end on
+
+type m_primerplano from m_ancestro_menu_catalogos`m_primerplano within m_ventana
+end type
+
+on m_primerplano.create
+call super::create
+end on
+
+on m_primerplano.destroy
+call super::destroy
+end on
+
+type m_cascada from m_ancestro_menu_catalogos`m_cascada within m_ventana
+end type
+
+on m_cascada.create
+call super::create
+end on
+
+on m_cascada.destroy
+call super::destroy
+end on
+
+type m_ayuda from m_ancestro_menu_catalogos`m_ayuda within m_cat_carreras_ant_nvo
+end type
+
+on m_ayuda.create
+call super::create
+end on
+
+on m_ayuda.destroy
+call super::destroy
+end on
+

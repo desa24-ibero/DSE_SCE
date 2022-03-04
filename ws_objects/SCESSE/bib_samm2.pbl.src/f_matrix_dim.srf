@@ -1,0 +1,90 @@
+﻿$PBExportHeader$f_matrix_dim.srf
+$PBExportComments$Matrices nxm. Emula a la función dim de VB.
+global type f_matrix_dim from function_object
+end type
+
+forward prototypes
+global function any f_matrix_dim (long al_rows, long al_cols, string as_datatype)
+end prototypes
+
+global function any f_matrix_dim (long al_rows, long al_cols, string as_datatype);////////////////////////////////////////////////////////////////////////////////
+////
+////	Function:  f_matrix_dim
+////
+////	Access:  public
+////
+////	Arguments:
+////	al_rows			Las filas.
+////	al_cols			Las columnas.
+//// as_datatype		El tipo de dato con el que va a inicializar el arreglo.
+////
+////	Returns:
+////	Any			
+////
+////	Description:
+////	Emula a la función dim de VB. Tambien inicializa el arreglo con el tipo
+////	de dato apropiado. Se usa cuando es necesario manejar un arreglo de PB
+////	como una matriz bidimensional.
+////
+////////////////////////////////////////////////////////////////////////////////
+////
+////	Revision History
+////
+////	Version
+////	1.0   Initial version
+////
+////////////////////////////////////////////////////////////////////////////////
+//long		ll_x, ll_y
+any		la_resultado
+//
+//any		la_null
+//
+//CHOOSE CASE as_datatype
+//	CASE "string"
+//		string	la_matriz[]
+//		string	la_tempo[]
+//		string	ls_null
+//		
+//		setnull(ls_null)
+//		la_null = ls_null
+//	CASE "integer"
+//		integer	la_matriz[]
+//		integer	la_tempo[]
+//		integer	li_null
+//		
+//		setnull(li_null)
+//		la_null = li_null
+//	CASE "long"
+//		long		la_matriz[]
+//		long		la_tempo[]
+//		long		ll_null
+//		
+//		setnull(ll_null)
+//		la_null = ll_null
+//	CASE "boolean"
+//		boolean	la_matriz[]
+//		boolean	la_tempo[]
+//		boolean	lb_null
+//		
+//		setnull(lb_null)
+//		la_null = lb_null
+//	CASE "any"
+//		any		la_matriz[]
+//		any		la_tempo[]
+//		
+//		setnull(la_null)
+//END CHOOSE
+//
+//for ll_y = 1 to al_cols
+//	la_tempo[ll_y] = la_null
+//next
+//
+//for ll_x = 1 to al_rows
+//	la_matriz[ll_x] = la_tempo
+//next
+//
+//la_resultado = la_matriz
+//
+return la_resultado
+end function
+

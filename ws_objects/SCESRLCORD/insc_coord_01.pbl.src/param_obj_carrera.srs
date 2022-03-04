@@ -1,0 +1,21 @@
+﻿$PBExportHeader$param_obj_carrera.srs
+global type param_obj_carrera from structure
+	string		str_carrera		descriptor "comment" = "desc_carrera+des_plan+des_subsistema"
+	integer		str_vigente		descriptor "comment" = "1 carrera vigente"
+	long		str_cve_carrera
+	long		str_cve_plan
+	long		str_cve_subsist
+	string		str_nivel
+	decimal		str_promedio
+	integer		str_sem_cursados
+	integer		str_cred_cursados
+	integer		str_egresado
+	integer		str_periodo_ing
+	integer		str_anio_ing
+	integer		str_periodo_egre
+	integer		str_anio_egre
+	integer		str_cve_formaing
+	integer		str_ceremonia_mes
+	integer		str_ceremonia_anio
+end type
+

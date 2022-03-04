@@ -1,0 +1,19 @@
+﻿$PBExportHeader$carreras_equiv.srf
+global type carreras_equiv from function_object
+end type
+
+forward prototypes
+global function long carreras_equiv (long nueva)
+end prototypes
+
+global function long carreras_equiv (long nueva);long anterior
+
+	SELECT dbo.carrera_equiv.cve_carrera_ant
+	INTO :anterior
+	FROM dbo.carrera_equiv
+	WHERE dbo.carrera_equiv.cve_carrera_act = :nueva
+	USING gtr_sce;
+
+return anterior
+end function
+

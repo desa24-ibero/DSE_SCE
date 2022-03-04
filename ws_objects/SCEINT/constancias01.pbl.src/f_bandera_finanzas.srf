@@ -1,0 +1,43 @@
+﻿$PBExportHeader$f_bandera_finanzas.srf
+global type f_bandera_finanzas from function_object
+end type
+
+forward prototypes
+global function integer f_bandera_finanzas (long a_cuenta)
+end prototypes
+
+global function integer f_bandera_finanzas (long a_cuenta);//Función que regresa la bandera de finanzas un alumno 
+//
+//f_bandera_finanzas
+//
+//Parámetros:		a_cuenta		
+
+long ll_cuenta
+int li_res
+int li_nip, li_hora, li_finanzas
+datetime ldt_fecha
+DataStore lds_banderas_por_cuenta
+lds_banderas_por_cuenta = Create DataStore
+lds_banderas_por_cuenta.DataObject = "d_banderas_por_cuenta"
+lds_banderas_por_cuenta.SetTransObject(gtr_sce)
+ll_cuenta= a_cuenta
+
+li_res = lds_banderas_por_cuenta.Retrieve(ll_cuenta)
+if li_res = 1 then
+	li_finanzas = lds_banderas_por_cuenta.GetItemNumber(1,"adeuda_finanzas")
+	if li_finanzas = 1 then
+		li_finanzas = 1
+	else
+		li_finanzas = 0
+	end if
+else
+	li_finanzas = 0
+	Messagebox("Error de Comunicación","Error con la consulta de banderas BD: adeuda_finanzas. Favor de intentar nuevamente", None!)
+end if
+
+
+return li_finanzas
+
+
+end function
+

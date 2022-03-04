@@ -1,0 +1,20 @@
+﻿$PBExportHeader$hayerror.srf
+global type hayerror from function_object
+end type
+
+forward prototypes
+global function integer hayerror (transaction tran, string mensaje)
+end prototypes
+
+global function integer hayerror (transaction tran, string mensaje);/**********Fantine Medina, julio 1998
+*			Funcion para revisar si hay un error
+*			en la transaction que recibe como parametro
+***********/
+if tran.sqlcode <> 0 then
+	MessageBox(Mensaje,tran.sqlerrtext)
+	return 1
+else
+	return 0
+end if
+end function
+

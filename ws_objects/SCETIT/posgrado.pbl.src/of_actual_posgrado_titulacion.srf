@@ -1,0 +1,47 @@
+﻿$PBExportHeader$of_actual_posgrado_titulacion.srf
+global type of_actual_posgrado_titulacion from function_object
+end type
+
+forward prototypes
+global function long of_actual_posgrado_titulacion (long al_cuenta, long al_cve_carrera, long al_cve_plan)
+end prototypes
+
+global function long of_actual_posgrado_titulacion (long al_cuenta, long al_cve_carrera, long al_cve_plan);//Función que inserta la solicitud de posgrado en las tablas de titulacion
+
+//
+//of_actual_posgrado_titulacion
+//
+//Parámetros:		al_cuenta		
+//						al_cve_carrera
+//						al_cve_plan
+
+int li_codigo_error, li_cve_documento
+long ll_cuenta, ll_max_folio, ll_folio_siguiente, ll_cve_concepto, ll_folio_mov_alumnos
+string ls_carrera, ls_nivel, ls_mensaje, ls_sexo, ls_mensaje_aux
+boolean 	lb_nueva_insercion 
+	
+	DECLARE spactualposgradotitulacion procedure for sp_actual_posgrado_titulacion
+	@cuenta   = :al_cuenta,
+	@cve_carrera   = :al_cve_carrera,
+	@cve_plan      = :al_cve_plan
+	using gtr_sce;
+	
+	EXECUTE spactualposgradotitulacion;
+	
+	li_codigo_error= gtr_sce.SQLCode
+	ls_mensaje= gtr_sce.SQLErrText
+	CLOSE spactualposgradotitulacion;
+	
+	if li_codigo_error = -1 then
+		MessageBox("Error al ejecutar sp_actual_posgrado_titulacion: ", ls_mensaje)
+		return -1
+	else
+		COMMIT USING gtr_sce;
+		return 0
+	end if
+
+return 0
+
+
+end function
+

@@ -1,0 +1,115 @@
+﻿$PBExportHeader$f_genera_horario_paquete.srf
+global type f_genera_horario_paquete from function_object
+end type
+
+forward prototypes
+global function integer f_genera_horario_paquete (integer a_num_paq, integer a_periodo, integer a_anio, boolean a_incluye_salon, ref string as_array_horario[7, 15])
+end prototypes
+
+global function integer f_genera_horario_paquete (integer a_num_paq, integer a_periodo, integer a_anio, boolean a_incluye_salon, ref string as_array_horario[7, 15]);//f_genera_horario_paquete
+//Recibe:
+//		a_num_paq			integer
+//		a_periodo			integer
+//		a_anio				integer
+//		a_incluye_salon	boolean
+//		as_array_horario[7, 15]	string
+//
+//Genera un arreglo con el horario correspondiente al paquete en cuestión
+//
+
+uds_datastore	luds_horario_paquete
+long ll_rows, ll_row_actual
+long  ll_hora_menor = 7, ll_hora_mayor = 21, ll_cve_dia_menor = 1, ll_cve_dia_mayor =6, ll_indice_horario =7, ll_indice_dia =1 
+long  ll_cve_dia_anterior = 0, ll_hora_relativa = 7, ll_factor_hora = 6 , ll_dia_actual, ll_hora_actual 			
+string ls_array_horario[7, 15]
+long ll_cve_mat, ll_cve_dia, ll_hora_inicio, ll_hora_final, ll_horas_faltantes, ll_hora_inicio_menos_uno,ll_hora_final_menos_uno
+string ls_gpo, ls_cve_mat_gpo, ls_cve_salon, ls_contenido_celda
+
+
+IF not isvalid(luds_horario_paquete) THEN
+	luds_horario_paquete = CREATE uds_datastore
+END IF
+
+luds_horario_paquete.dataobject = 'd_horario_paquete'
+luds_horario_paquete.SetTransObject(gtr_sce)
+
+ll_rows = luds_horario_paquete.Retrieve(a_num_paq, a_periodo, a_anio)
+
+if ll_rows = -1 then
+	MessageBox("Error de consulta","Error en la generación del horario",StopSign!)
+	return -1
+end if
+
+if ll_rows >= 0 then
+		
+	  ll_hora_menor = 7 
+	  ll_hora_mayor = 21  
+	  ll_cve_dia_menor = 1 
+	  ll_cve_dia_mayor =6 
+	  ll_indice_horario =7  
+	  ll_indice_dia =1 
+		
+	  ll_cve_dia_anterior = 0  
+	  ll_hora_relativa = 7  
+	  ll_factor_hora = 6  			
+
+		for ll_dia_actual=ll_cve_dia_menor to ll_cve_dia_mayor
+			for ll_hora_actual=ll_hora_menor to ll_hora_mayor
+				  ll_hora_relativa = ll_hora_actual - ll_factor_hora  
+				  ls_array_horario[ll_dia_actual,ll_hora_relativa]= '-' 				
+			next
+		next
+
+
+		for ll_row_actual=1 to ll_rows
+
+		  ll_cve_mat = luds_horario_paquete.GetItemNumber(ll_row_actual, "cve_mat") 
+		  ls_gpo = luds_horario_paquete.GetItemString(ll_row_actual, "gpo")
+		  ls_cve_mat_gpo = String(ll_cve_mat) +'-'+ls_gpo 				
+		  ll_cve_dia = luds_horario_paquete.GetItemNumber(ll_row_actual, "cve_dia")
+		  ll_hora_inicio = luds_horario_paquete.GetItemNumber(ll_row_actual, "hora_inicio")
+		  ll_hora_final = luds_horario_paquete.GetItemNumber(ll_row_actual, "hora_final")
+
+//		 Las horas faltantes es la hora inicio - ll_hora_menor 
+		  ll_horas_faltantes = ll_hora_inicio - ll_hora_menor 
+		  ll_hora_inicio_menos_uno = ll_hora_inicio - 1 
+		  ll_hora_final_menos_uno = ll_hora_final - 1 
+		  ls_cve_salon = luds_horario_paquete.GetItemString(ll_row_actual, "cve_salon")
+
+			if isnull(ls_cve_salon) or len(ls_cve_salon) = 0  then
+				  ls_cve_salon = " " 
+			end if
+
+//			 Para el horario actual, debe poner la materia-grupo en la matriz de la hora inicial a la hora final menos uno 
+
+			for ll_hora_actual=ll_hora_inicio to ll_hora_final_menos_uno		
+				  ll_hora_relativa = ll_hora_actual - ll_factor_hora  
+				  ls_contenido_celda = ls_array_horario[ll_cve_dia, ll_hora_relativa]
+					if  a_incluye_salon then
+						  if ls_contenido_celda<> '-' then
+							  ls_array_horario[ll_cve_dia, ll_hora_relativa]= ls_contenido_celda+ '~n*'+ ls_cve_mat_gpo + '   ['+ls_cve_salon+']' 
+						  else							
+							  ls_array_horario[ll_cve_dia, ll_hora_relativa]= ls_cve_mat_gpo + '   ['+ls_cve_salon+']' 
+		   				end if
+					else
+						  if ls_contenido_celda<> '-' then
+							  ls_array_horario[ll_cve_dia, ll_hora_relativa]=  ls_contenido_celda+ '~n*'+ ls_cve_mat_gpo 					
+						  else
+							  ls_array_horario[ll_cve_dia, ll_hora_relativa]= ls_cve_mat_gpo 					
+							end if
+					end if
+			next				
+		next
+
+ end if
+
+as_array_horario=ls_array_horario
+
+return 0
+
+
+
+
+
+end function
+

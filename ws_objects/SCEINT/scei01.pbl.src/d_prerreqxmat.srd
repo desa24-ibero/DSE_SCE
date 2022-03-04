@@ -1,0 +1,17 @@
+﻿$PBExportHeader$d_prerreqxmat.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=77 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cve_prerreq dbname="prerrequisitos.cve_prerreq" )
+ column=(type=char(1) updatewhereclause=yes name=enlace dbname="prerrequisitos.enlace" )
+ column=(type=long updatewhereclause=yes name=orden dbname="prerrequisitos.orden" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"dbo.prerrequisitos~" ) COLUMN(NAME=~"dbo.prerrequisitos.cve_prerreq~") COLUMN(NAME=~"dbo.prerrequisitos.enlace~") COLUMN(NAME=~"dbo.prerrequisitos.orden~")WHERE(    EXP1 =~"dbo.prerrequisitos.cve_mat~"   OP =~"=~"    EXP2 =~":materia~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"dbo.prerrequisitos.cve_carrera~"   OP =~"=~"    EXP2 =~":carrera~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"dbo.prerrequisitos.cve_plan~"   OP =~"=~"    EXP2 =~":plan~" ) ) ARG(NAME = ~"materia~" TYPE = number)  ARG(NAME = ~"carrera~" TYPE = number)  ARG(NAME = ~"plan~" TYPE = number) " arguments=(("materia", number),("carrera", number),("plan", number))  sort="orden A " )
+text(band=header alignment="2" text="Cve Prerreq"border="0" color="0" x="5" y="4" height="65" width="330"  name=cve_prerreq_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Enlace"border="0" color="0" x="339" y="4" height="65" width="183"  name=enlace_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Orden"border="0" color="0" x="526" y="4" height="65" width="330"  name=orden_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="330" format="[general]"  name=cve_prerreq edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="394" y="4" height="77" width="55" format="[general]"  name=enlace edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="526" y="4" height="77" width="330" format="[general]"  name=orden edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

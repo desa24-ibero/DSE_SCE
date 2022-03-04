@@ -1,0 +1,35 @@
+﻿$PBExportHeader$f_es_coordinacion_integ_ru.srf
+global type f_es_coordinacion_integ_ru from function_object
+end type
+
+forward prototypes
+global function boolean f_es_coordinacion_integ_ru (integer ai_cve_coordinacion)
+end prototypes
+
+global function boolean f_es_coordinacion_integ_ru (integer ai_cve_coordinacion);integer li_cve_coordinacion, li_codigo_sql
+string ls_mensaje_sql
+
+if ai_cve_coordinacion = 0 then
+	return false	
+end if
+
+SELECT dbo.coordinaciones.cve_coordinacion
+INTO	:li_cve_coordinacion
+FROM	dbo.coordinaciones
+WHERE dbo.coordinaciones.cve_coordinacion in (6000,6010,6020,6030,6040,6050,6060,6070,6071,6072,6073)
+AND dbo.coordinaciones.cve_coordinacion in (:ai_cve_coordinacion)
+USING sqlca;
+
+li_codigo_sql = sqlca.SqlCode
+ls_mensaje_sql = sqlca.SqlErrText
+
+if li_codigo_sql = 100 or isnull(li_cve_coordinacion) then
+	return false
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar coordinaciones", ls_mensaje_sql)
+	return false
+end if
+
+return true
+end function
+

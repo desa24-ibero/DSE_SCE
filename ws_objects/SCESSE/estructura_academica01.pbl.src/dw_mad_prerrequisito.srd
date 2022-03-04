@@ -1,0 +1,23 @@
+﻿$PBExportHeader$dw_mad_prerrequisito.srd
+$PBExportComments$Datawindow de la ventana de Prerrequisitos, en donde solo se actualizan las claves y los enlaces
+release 5;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=113 color="536870912" )
+table(column=(type=char(1) update=yes updatewhereclause=yes name=prerrequisitos_enlace dbname="prerrequisitos.enlace" values="Y	Y/O	O/" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=prerrequisitos_cve_prerreq dbname="prerrequisitos.cve_prerreq" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=prerrequisitos_cve_mat dbname="prerrequisitos.cve_mat" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=prerrequisitos_cve_carrera dbname="prerrequisitos.cve_carrera" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=prerrequisitos_cve_plan dbname="prerrequisitos.cve_plan" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=prerrequisitos_orden dbname="prerrequisitos.orden" )
+ retrieve="PBSELECT( VERSION(400) DISTINCT ()TABLE(NAME=~"prerrequisitos~" ) COLUMN(NAME=~"prerrequisitos.enlace~") COLUMN(NAME=~"prerrequisitos.cve_prerreq~") COLUMN(NAME=~"prerrequisitos.cve_mat~") COLUMN(NAME=~"prerrequisitos.cve_carrera~") COLUMN(NAME=~"prerrequisitos.cve_plan~") COLUMN(NAME=~"prerrequisitos.orden~")WHERE(    EXP1 =~"prerrequisitos.cve_mat~"   OP =~"=~"    EXP2 =~":clave~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"prerrequisitos.cve_carrera~"   OP =~"=~"    EXP2 =~":carrera~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"prerrequisitos.cve_plan~"   OP =~"=~"    EXP2 =~":plan~" ) ) ORDER(NAME=~"prerrequisitos.orden~" ASC=yes ) ARG(NAME = ~"clave~" TYPE = number)  ARG(NAME = ~"carrera~" TYPE = number)  ARG(NAME = ~"plan~" TYPE = number) " update="prerrequisitos" updatewhere=1 updatekeyinplace=yes arguments=(("clave", number),("carrera", number),("plan", number))  sort="prerrequisitos_orden A prerrequisitos_cve_prerreq A " )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="910" y="4" height="97" width="490" brush.hatch="6" brush.color="8421504" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="165" y="4" height="97" width="686" brush.hatch="6" brush.color="8421504" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+column(band=detail id=2 alignment="2" tabsequence=10 border="5" color="0" x="613" y="20" height="61" width="206" format="[general]"  name=prerrequisitos_cve_prerreq edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+text(band=detail alignment="1" text="Clave Prerreq :"border="0" color="0" x="188" y="20" height="61" width="389"  name=prerrequisitos_cve_prerreq_t  font.face="Arial" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="8421504" )
+line(band=detail x1="165" y1="104" x2="1404" y2="104" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="1" text="Enlace :"border="0" color="0" x="938" y="24" height="61" width="211"  name=prerrequisitos_enlace_t  font.face="Arial" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="8421504" )
+column(band=detail id=1 alignment="2" tabsequence=20 border="5" color="0" x="1185" y="20" height="61" width="174" format="[general]"  name=prerrequisitos_enlace ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="12632256" x="1468" y="16" height="77" width="133" format="[general]"  name=prerrequisitos_orden edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )

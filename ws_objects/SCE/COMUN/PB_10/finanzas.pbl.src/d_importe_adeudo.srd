@@ -1,0 +1,18 @@
+﻿$PBExportHeader$d_importe_adeudo.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=70 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cuenta dbname="saldos.cuenta" )
+ column=(type=decimal(4) updatewhereclause=yes name=importe_adeudo dbname="compute_0002" )
+ retrieve="  SELECT dbo.saldos.cuenta, 
+			sum( dbo.saldos.importe)    
+        FROM dbo.saldos      
+        WHERE ( dbo.saldos.cuenta = :cuenta ) and          ( dbo.saldos.status = 0 ) and          ( dbo.saldos.fecha_ven < getdate() )  
+        GROUP BY dbo.saldos.cuenta    
+        HAVING ( sum( dbo.saldos.importe) > 0 )   " arguments=(("cuenta", number)) )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="4" y="0" height="77" width="1419" format="[general]"  name=cuenta edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="1423" y="4" height="77" width="1419" format="[general]"  name=importe_adeudo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

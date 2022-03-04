@@ -1,0 +1,17 @@
+﻿$PBExportHeader$d_consulta_profesor_tot.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=99 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=96 color="536870912" )
+table(column=(type=char(50) updatewhereclause=yes name=apaterno dbname="profesor.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=amaterno dbname="profesor.amaterno" )
+ column=(type=char(50) updatewhereclause=yes name=nombre dbname="profesor.nombre" )
+ column=(type=long updatewhereclause=yes key=yes name=cve_profesor dbname="profesor.cve_profesor" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"profesor~" ) COLUMN(NAME=~"profesor.apaterno~") COLUMN(NAME=~"profesor.amaterno~") COLUMN(NAME=~"profesor.nombre~") COLUMN(NAME=~"profesor.cve_profesor~")WHERE(    EXP1 =~"(profesor.nombre~"   OP =~"like~"    EXP2 =~":nombre~"    LOGIC =~"or~" ) WHERE(    EXP1 =~"profesor.apaterno~"   OP =~"like~"    EXP2 =~":apat~"    LOGIC =~"or~" ) WHERE(    EXP1 =~"profesor.amaterno~"   OP =~"like~"    EXP2 =~":amat)~" ) ) ARG(NAME = ~"nombre~" TYPE = string)  ARG(NAME = ~"apat~" TYPE = string)  ARG(NAME = ~"amat~" TYPE = string) " update="profesor" updatewhere=0 updatekeyinplace=no arguments=(("nombre", string),("apat", string),("amat", string)) )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="33" y="3" height="80" width="625" format="[general]"  name=apaterno edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="680" y="3" height="80" width="625" format="[general]"  name=amaterno edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1331" y="3" height="80" width="625" format="[general]"  name=nombre edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1971" y="3" height="80" width="435" format="[general]"  name=cve_profesor edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

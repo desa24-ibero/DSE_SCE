@@ -1,0 +1,74 @@
+﻿$PBExportHeader$f_trunca_y_pon_ceros.srf
+global type f_trunca_y_pon_ceros from function_object
+end type
+
+forward prototypes
+global function string f_trunca_y_pon_ceros (decimal a_numero, integer a_precision)
+end prototypes
+
+global function string f_trunca_y_pon_ceros (decimal a_numero, integer a_precision);//El objetivo de esta función es truncar un número 
+//y rellenar a la derecha del punto decimal con ceros para devolver un string
+//
+//f_trunca_y_pon_ceros 
+//
+
+string ls_texto, ls_texto_entero, ls_texto_decimal, ls_real, ls_string_decimal, ls_texto_ceros
+string ls_string_entero, ls_string_ceros
+decimal lr_real
+integer li_posicion_punto, li_longitud, li_precision, li_lon_decimal, li_indice, li_num_ceros
+long ll_entero, ll_decimal
+if a_precision >4 then 
+	li_precision = 4
+else 
+	li_precision = a_precision 
+end if
+
+lr_real =a_numero
+
+//lr_real =truncate(lr_real, li_precision)
+
+lr_real =round(lr_real, li_precision)
+
+ls_real = string(lr_real)
+
+li_longitud = len(ls_real)
+
+li_posicion_punto = pos(ls_real, ".")
+
+li_indice= 1
+
+ls_string_ceros= ""
+
+if li_posicion_punto > 0 then
+	ls_string_entero = mid(ls_real,1,li_posicion_punto - 1)
+	ll_entero = long(ls_string_entero)
+	ls_string_decimal = mid(ls_real,li_posicion_punto + 1, li_precision)
+	ll_decimal = long(ls_string_decimal)
+	li_lon_decimal = len(ls_string_decimal)
+//	li_num_ceros = li_precision - 
+//	do while li_indice <= li_precision
+//		ls_string_ceros = ls_string_ceros +"0"
+//	
+//	loop
+
+else
+	ls_string_entero =ls_real
+	do while li_indice <= li_precision
+		ls_string_ceros = ls_string_ceros +"0"
+		li_indice= li_indice +1
+	loop
+end if
+
+
+
+if li_posicion_punto > 0 then
+	ls_texto = ls_string_entero +"."+ ls_string_decimal
+else
+	ls_texto = ls_string_entero +"."+ls_string_ceros
+end if
+
+return ls_texto
+
+
+end function
+

@@ -1,0 +1,50 @@
+﻿$PBExportHeader$f_es_ceneval_2014.srf
+global type f_es_ceneval_2014 from function_object
+end type
+
+forward prototypes
+global function boolean f_es_ceneval_2014 (integer ai_clv_per, integer ai_anio)
+end prototypes
+
+global function boolean f_es_ceneval_2014 (integer ai_clv_per, integer ai_anio);//f_es_ceneval_2014
+//
+//Recibe:  (ninguno)
+//ai_clv_per		integer
+//ai_anio			integer
+
+//Devuelve:
+//  boolean
+
+string ls_cve_opcion_aplicacion 
+integer li_cve_tipo_examen, li_cve_modulo_examen    
+int li_codigo_sql, li_SQLNRows
+string ls_mensaje
+decimal ld_calificacion_global_examen
+int li_clv_per_ceneval_2014
+int li_anio_ceneval_2014, li_obten_parametros_ceneval_2014
+
+
+   
+	IF gi_anio_ceneval_2014 = -1 OR gi_clv_per_ceneval_2014 = -1 THEN
+		li_obten_parametros_ceneval_2014 = f_obten_parametros_ceneval_2014(li_clv_per_ceneval_2014, li_anio_ceneval_2014)
+		if li_obten_parametros_ceneval_2014 = 0 then
+			gi_clv_per_ceneval_2014 = li_clv_per_ceneval_2014
+			gi_anio_ceneval_2014 =li_anio_ceneval_2014		
+		else
+			gi_clv_per_ceneval_2014 = -1
+			gi_anio_ceneval_2014 =-1
+		end if
+	END IF
+	
+IF (ai_clv_per >= gi_clv_per_ceneval_2014  AND ai_anio = gi_anio_ceneval_2014) OR (ai_clv_per >= gi_clv_per_ceneval_2014   AND ai_anio >= gi_anio_ceneval_2014) THEN
+	return true
+ELSE
+	return false
+END IF
+
+
+	
+
+
+end function
+

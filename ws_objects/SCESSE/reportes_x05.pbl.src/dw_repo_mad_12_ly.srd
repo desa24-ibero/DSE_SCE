@@ -1,0 +1,49 @@
+﻿$PBExportHeader$dw_repo_mad_12_ly.srd
+$PBExportComments$Datawindow DE CONTEO para el reporte de Alumnos que Adeudan Documentos (Dados o NO de Baja), pero de una Lista de Alumnos y DE IMPRESION
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=541 color="536870912" )
+summary(height=125 color="536870912" )
+footer(height=53 color="536870912" )
+detail(height=5 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=academicos_cuenta dbname="academicos.cuenta" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_carrera dbname="academicos.cve_carrera" )
+ column=(type=char(100) updatewhereclause=yes name=carreras_carrera dbname="carreras.carrera" )
+ retrieve="  SELECT DISTINCT academicos.cuenta,   
+         academicos.cve_carrera,   
+         carreras.carrera  
+    FROM academicos,   
+         documentos,   
+         carreras  
+   WHERE ( academicos.cuenta = documentos.cuenta ) and  
+         ( academicos.cve_carrera = carreras.cve_carrera ) and  
+         ( documentos.cve_flag_documento IN(0,5) ) AND  
+         ( academicos.cuenta in ( :cuenta ))    
+" arguments=(("cuenta", numberlist))  sort="academicos_cve_carrera A " )
+group(level=1 header.height=1 trailer.height=81 by=("academicos_cve_carrera" ) header.color="536870912" trailer.color="536870912" )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="3777" y="120" height="125" width="746" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="1390" y="36" height="365" width="1797" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="12632256" )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="55" y="120" height="125" width="746" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="12632256" )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="421" y="120" height="125" width="380" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Fecha"border="0" color="0" x="174" y="148" height="69" width="165"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+rectangle(band=header x="417" y="124" height="117" width="51" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="5" pen.color="16777215"  background.mode="2" background.color="16777215" )
+line(band=header x1="417" y1="120" x2="417" y2="240" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="12632256" )
+compute(band=header alignment="2" expression="today()"border="0" color="0" x="439" y="144" height="77" width="334" format="dd/mm/yyyy"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Periodo :"border="0" color="0" x="51" y="348" height="65" width="855"  name=st_periodo  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" font.italic="1" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Universidad Iberoamericana"border="0" color="0" x="1546" y="68" height="121" width="1463"  font.face="Arial" font.height="-18" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Direccion de Servicios Escolares"border="0" color="0" x="1646" y="196" height="93" width="1281"  font.face="Arial" font.height="-14" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="4142" y="120" height="125" width="380" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Página "border="0" color="0" x="3877" y="148" height="69" width="202"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+rectangle(band=header x="4138" y="124" height="117" width="51" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="5" pen.color="16777215"  background.mode="2" background.color="16777215" )
+compute(band=header alignment="2" expression="page()"border="0" color="0" x="4174" y="148" height="69" width="289" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+line(band=header x1="4138" y1="120" x2="4138" y2="240" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="12632256" )
+line(band=header x1="14" y1="528" x2="4609" y2="528" pen.style="0" pen.width="14" pen.color="0"  background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="Resumen del Reporte :"border="0" color="0" x="74" y="444" height="65" width="663"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Reporte de Alumnos que Adeudan Documentos"border="0" color="0" x="1532" y="296" height="77" width="1514"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1765" y="40" height="77" width="549" format="[general]"  name=carreras_carrera edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="919" y="56" height="65" width="691" format="[general]"  name=academicos_cve_carrera edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression=" academicos_cuenta +~" - ~"+obten_digito( academicos_cuenta )"border="0" color="0" x="14" y="4" height="53" width="718" format="[general]"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="0" expression="~"Existe(n)  ~" + count(academicos_cve_carrera for group 1) + ~"  Alumno(s) de la Carrera de  ~"+   carreras_carrera "border="0" color="0" x="348" y="8" height="65" width="3013" format="[general]"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="~" El Total de Alumnos en Todas las Carreras es de : ~"+count(academicos_cve_carrera)"border="2" color="0" x="1084" y="40" height="65" width="2401" format="[general]"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=summary x1="10" y1="12" x2="4604" y2="12" pen.style="0" pen.width="14" pen.color="0"  background.mode="1" background.color="553648127" )
+text(band=footer alignment="0" text="M.a.d."border="0" color="0" x="14" y="4" height="53" width="133"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

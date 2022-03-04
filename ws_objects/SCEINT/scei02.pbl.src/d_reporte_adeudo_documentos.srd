@@ -1,0 +1,54 @@
+﻿$PBExportHeader$d_reporte_adeudo_documentos.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=136 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=alumnos_cuenta dbname="alumnos.cuenta" )
+ column=(type=char(30) updatewhereclause=yes name=v_sce_alumno_digito_digito dbname="v_sce_alumno_digito.digito" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_apaterno dbname="alumnos.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_amaterno dbname="alumnos.amaterno" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_nombre dbname="alumnos.nombre" )
+ column=(type=long updatewhereclause=yes name=documentos_cve_documento dbname="documentos.cve_documento" )
+ column=(type=char(60) updatewhereclause=yes name=tipo_documento_documento dbname="tipo_documento.documento" )
+ column=(type=long updatewhereclause=yes name=documentos_cve_flag_documento dbname="documentos.cve_flag_documento" )
+ column=(type=char(15) updatewhereclause=yes name=flag_documentos_desc_flag_documento dbname="flag_documentos.desc_flag_documento" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_carrera dbname="academicos.cve_carrera" )
+ column=(type=char(100) updatewhereclause=yes name=carreras_carrera dbname="carreras.carrera" )
+ column=(type=char(1) updatewhereclause=yes name=carreras_cve_grado dbname="carreras.cve_grado" )
+ column=(type=char(12) updatewhereclause=yes name=grado_grado dbname="grado.grado" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"alumnos~" )  TABLE(NAME=~"documentos~" )  TABLE(NAME=~"v_sce_alumno_digito~" )  TABLE(NAME=~"tipo_documento~" )  TABLE(NAME=~"flag_documentos~" )  TABLE(NAME=~"academicos~" )  TABLE(NAME=~"carreras~" )  TABLE(NAME=~"grado~" ) COLUMN(NAME=~"alumnos.cuenta~") COLUMN(NAME=~"v_sce_alumno_digito.digito~") COLUMN(NAME=~"alumnos.apaterno~") COLUMN(NAME=~"alumnos.amaterno~") COLUMN(NAME=~"alumnos.nombre~") COLUMN(NAME=~"documentos.cve_documento~") COLUMN(NAME=~"tipo_documento.documento~") COLUMN(NAME=~"documentos.cve_flag_documento~") COLUMN(NAME=~"flag_documentos.desc_flag_documento~") COLUMN(NAME=~"academicos.cve_carrera~") COLUMN(NAME=~"carreras.carrera~") COLUMN(NAME=~"carreras.cve_grado~") COLUMN(NAME=~"grado.grado~")    JOIN (LEFT=~"documentos.cuenta~"    OP =~"=~"RIGHT=~"alumnos.cuenta~" )    JOIN (LEFT=~"documentos.cuenta~"    OP =~"=~"RIGHT=~"v_sce_alumno_digito.cuenta~" )    JOIN (LEFT=~"documentos.cve_documento~"    OP =~"=~"RIGHT=~"tipo_documento.cve_documento~" )    JOIN (LEFT=~"documentos.cve_flag_documento~"    OP =~"=~"RIGHT=~"flag_documentos.cve_flag_documento~" )    JOIN (LEFT=~"academicos.cuenta~"    OP =~"=~"RIGHT=~"alumnos.cuenta~" )    JOIN (LEFT=~"academicos.cve_carrera~"    OP =~"=~"RIGHT=~"carreras.cve_carrera~" )    JOIN (LEFT=~"carreras.cve_grado~"    OP =~"=~"RIGHT=~"grado.cve_grado~" )) " )
+text(band=header alignment="2" text="Alumnos
+Cuenta" border="0" color="0" x="5" y="4" height="128" width="329"  name=alumnos_cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="V Sce Alumno Digito
+Digito" border="0" color="0" x="338" y="4" height="128" width="850"  name=v_sce_alumno_digito_digito_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Alumnos
+Apaterno" border="0" color="0" x="1193" y="4" height="128" width="1399"  name=alumnos_apaterno_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Alumnos
+Amaterno" border="0" color="0" x="2597" y="4" height="128" width="1399"  name=alumnos_amaterno_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Alumnos
+Nombre" border="0" color="0" x="4000" y="4" height="128" width="1399"  name=alumnos_nombre_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Documentos
+Cve Documento" border="0" color="0" x="5408" y="4" height="128" width="416"  name=documentos_cve_documento_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Tipo Documento
+Documento" border="0" color="0" x="5829" y="4" height="128" width="1673"  name=tipo_documento_documento_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Documentos
+Cve Flag Documento" border="0" color="0" x="7506" y="4" height="128" width="549"  name=documentos_cve_flag_documento_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Flag Documentos
+Desc Flag Documento" border="0" color="0" x="8059" y="4" height="128" width="590"  name=flag_documentos_desc_flag_documento_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="76" width="329" format="[general]"  name=alumnos_cuenta edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="338" y="4" height="76" width="850" format="[general]"  name=v_sce_alumno_digito_digito edit.limit=30 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1193" y="4" height="76" width="1399" format="[general]"  name=alumnos_apaterno edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="2597" y="4" height="76" width="1399" format="[general]"  name=alumnos_amaterno edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="4000" y="4" height="76" width="1399" format="[general]"  name=alumnos_nombre edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="5408" y="4" height="76" width="329" format="[general]"  name=documentos_cve_documento edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="5829" y="4" height="76" width="1673" format="[general]"  name=tipo_documento_documento edit.limit=60 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="0" x="7506" y="4" height="76" width="329" format="[general]"  name=documentos_cve_flag_documento edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="8059" y="4" height="76" width="439" format="[general]"  name=flag_documentos_desc_flag_documento edit.limit=15 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=0 border="0" color="0" x="8649" y="0" height="64" width="270"  name=academicos_cve_carrera  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="0" tabsequence=0 border="0" color="0" x="8919" y="0" height="64" width="2702"  name=carreras_carrera  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=0 border="0" color="0" x="11621" y="0" height="64" width="27"  name=carreras_cve_grado  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="0" tabsequence=0 border="0" color="0" x="11648" y="0" height="64" width="325"  name=grado_grado  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

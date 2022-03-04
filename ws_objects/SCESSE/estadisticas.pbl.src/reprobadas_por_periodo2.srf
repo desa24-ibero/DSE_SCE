@@ -1,0 +1,36 @@
+﻿$PBExportHeader$reprobadas_por_periodo2.srf
+global type reprobadas_por_periodo2 from function_object
+end type
+
+forward prototypes
+global function string reprobadas_por_periodo2 (integer año, integer periodo, long materia, integer tipo)
+end prototypes
+
+global function string reprobadas_por_periodo2 (integer año, integer periodo, long materia, integer tipo);
+Long	Tot = 0
+
+	SELECT count(historico.cve_mat) INTO :Tot FROM historico, hist_grupos
+	WHERE historico.cve_mat = hist_grupos.cve_mat AND
+	historico.gpo = hist_grupos.gpo AND
+	historico.periodo = hist_grupos.periodo AND
+	historico.anio = hist_grupos.anio AND
+	historico.anio = :año AND
+	historico.periodo = :periodo AND
+	historico.cve_mat = :materia AND
+  	historico.calificacion in ('5','NA') AND
+	hist_grupos.tipo = :tipo using gtr_sce;
+	IF IsNull(tot) Then Tot = 0		
+  
+Return String(Tot)
+
+
+
+
+
+
+
+
+
+
+end function
+

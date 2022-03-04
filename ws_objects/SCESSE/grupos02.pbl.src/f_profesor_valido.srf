@@ -1,0 +1,32 @@
+﻿$PBExportHeader$f_profesor_valido.srf
+global type f_profesor_valido from function_object
+end type
+
+forward prototypes
+global function boolean f_profesor_valido (long al_cve_profesor)
+end prototypes
+
+global function boolean f_profesor_valido (long al_cve_profesor);integer li_codigo_sql
+string ls_mensaje_sql
+long ll_cve_profesor
+
+SELECT dbo.profesor.cve_profesor
+INTO	:ll_cve_profesor
+FROM	dbo.profesor
+WHERE dbo.profesor.cve_profesor = :al_cve_profesor
+AND   dbo.profesor.status = "A"
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 or isnull(ll_cve_profesor) then
+	return false
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar profesores", ls_mensaje_sql)
+	return false
+end if
+
+return true
+end function
+

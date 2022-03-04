@@ -1,0 +1,42 @@
+﻿$PBExportHeader$f_obten_periodo_cob.srf
+global type f_obten_periodo_cob from function_object
+end type
+
+forward prototypes
+global function string f_obten_periodo_cob (integer ai_periodo)
+end prototypes
+
+global function string f_obten_periodo_cob (integer ai_periodo);// f_obten_periodo_cob
+// Regresa el periodo equivalente de cobranzas
+// 
+// Recibe:
+// ai_periodo	:integer
+
+datetime ldttm_fecha
+string ls_mensaje, ls_periodo_cob
+integer li_codigo
+
+ls_mensaje = ""
+ls_periodo_cob = ""
+
+choose case ai_periodo
+	case 0
+		ls_periodo_cob= "P"
+	case 1
+		ls_periodo_cob= "V"
+	case 2
+		ls_periodo_cob= "O"
+	case else
+		ls_mensaje="El periodo utilizado no es valido"
+end choose
+
+
+if len(ls_mensaje) > 1 then
+	MessageBox("Error en la conversion de periodos", ls_mensaje )
+end if
+
+return ls_periodo_cob
+
+
+end function
+

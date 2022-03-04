@@ -1,0 +1,43 @@
+﻿$PBExportHeader$f_dddw_converter.srf
+global type f_dddw_converter from function_object
+end type
+
+forward prototypes
+global function integer f_dddw_converter (datawindow aw_dw, datawindowchild dwc_periodo, string as_campo)
+end prototypes
+
+global function integer f_dddw_converter (datawindow aw_dw, datawindowchild dwc_periodo, string as_campo);String ls_line
+
+ls_line=as_campo+".dddw.name=d_lista_peroidos"
+aw_dw.modify(ls_line)
+
+ls_line=as_campo+".dddw.displaycolumn=descripcion"
+aw_dw.modify(ls_line)
+
+ls_line=as_campo+".dddw.datacolumn=periodo"
+aw_dw.modify(ls_line)
+
+ls_line=as_campo+".dddw.percentwidth=0"
+aw_dw.modify(ls_line)
+
+ls_line=as_campo+".dddw.name=d_lista_peroidos"
+aw_dw.modify(ls_line)
+
+ls_line=as_campo+".dddw.displaycolumn=descripcion"
+aw_dw.modify(ls_line)
+
+ls_line=as_campo+".dddw.datacolumn=periodo"
+aw_dw.modify(ls_line)
+
+ls_line=as_campo+".dddw.percentwidth=0"
+aw_dw.modify(ls_line)
+
+
+aw_dw.Getchild(as_campo,dwc_periodo)
+dwc_periodo.settransobject(gtr_sce)
+dwc_periodo.retrieve(gs_tipo_periodo)
+
+return 1
+
+end function
+

@@ -1,0 +1,22 @@
+﻿$PBExportHeader$dw_promedio_peso_rep.srd
+$PBExportComments$DataWindow con el reporte de pesos de áreas y secciones
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=276 color="536870912" )
+summary(height=84 color="536870912" )
+footer(height=116 color="536870912" )
+detail(height=88 color="536870912" )
+table(column=(type=long updatewhereclause=yes key=yes name=clv_carr dbname="promedio_peso.clv_carr" )
+ column=(type=real updatewhereclause=yes name=peso dbname="promedio_peso.peso" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"promedio_peso~" ) COLUMN(NAME=~"promedio_peso.clv_carr~") COLUMN(NAME=~"promedio_peso.peso~")) ORDER(NAME=~"promedio_peso.clv_carr~" ASC=yes ) " update="promedio_peso" updatewhere=0 updatekeyinplace=no )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="33554432" x="174" y="4" height="76" width="238" format="[general]"  name=clv_carr edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="439" y="4" height="76" width="2098" format="[general]"  name=clv_carr_1 dddw.name=dddw_carreras dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=summary alignment="2" text="Num Carrs." border="0" color="0" x="78" y="8" height="64" width="320"  name=t_1  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="0" expression="count(clv_carr for all)"border="0" color="33554432" x="439" y="8" height="64" width="366" format="[general]"  name=compute_2  font.face="Arial" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=footer alignment="0" expression="'Página ' + page() + ' de ' + pageCount()"border="0" color="0" x="27" y="20" height="88" width="823" format="[general]"  name=compute_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="33554432" x="2574" y="4" height="76" width="462" format="#,##0.0000"  name=peso edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="Carrera" border="0" color="0" x="485" y="204" height="64" width="219"  name=sec_peso_clv_carr_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text=" Peso Promedio" border="0" color="0" x="2574" y="204" height="64" width="462"  name=sec_peso_peso_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Reporte de Peso de Promedio por Carrera" border="0" color="0" x="599" y="48" height="92" width="2025"  name=t_2  font.face="Arial" font.height="-14" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="0" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

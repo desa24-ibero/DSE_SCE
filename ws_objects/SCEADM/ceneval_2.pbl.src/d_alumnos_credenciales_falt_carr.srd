@@ -1,0 +1,47 @@
+﻿$PBExportHeader$d_alumnos_credenciales_falt_carr.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=120 color="536870912" )
+summary(height=76 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=188 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=matricula dbname="matricula" )
+ column=(type=char(30) updatewhereclause=yes name=apellidos dbname="apellidos" )
+ column=(type=char(30) updatewhereclause=yes name=alumnos_nombre dbname="nombre" )
+ column=(type=char(30) updatewhereclause=yes name=carrera dbname="carrera" )
+ column=(type=char(1) updatewhereclause=yes name=grabacion_causa dbname="grabacion_causa" )
+ column=(type=char(2) updatewhereclause=yes name=tipo_de_grupo dbname="tipo_de_grupo" )
+ column=(type=char(12) updatewhereclause=yes name=nombre_de_la_imagen dbname="nombre_de_la_imagen" )
+ retrieve="  SELECT matricula = academicos.cuenta,   
+         apellidos = convert(varchar(30),alumnos.apaterno +~" ~"+alumnos.amaterno),   
+         nombre = convert(varchar(30),alumnos.nombre),   
+         carrera = convert(varchar(30),carreras.carrera),   
+			grabacion_causa = convert(varchar(1),~"N~"),
+         tipo_de_grupo = CASE academicos.nivel  WHEN ~"L~" THEN ~"01~" 
+                           WHEN ~"P~" THEN ~"02~"
+									ELSE ~" ~" END,
+			nombre_de_la_imagen = convert(varchar(12),~"A~")
+    FROM academicos,   
+         alumnos,   
+         carreras
+   WHERE ( academicos.cuenta = alumnos.cuenta ) and  
+         ( academicos.cve_carrera = carreras.cve_carrera ) and
+			( academicos.cuenta in (select bi.cuenta from banderas_inscrito bi, academicos ac, alumnos al
+											where bi.cuenta = ac.cuenta
+											and	bi.cuenta = al.cuenta 
+											and	ac.cve_carrera = :al_cve_carrera))
+	ORDER BY academicos.cuenta
+" arguments=(("al_cve_carrera", number)) )
+text(band=header alignment="0" text="REGISTROS TOTALES:" border="0" color="0" x="448" y="32" height="64" width="672"  name=t_1  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="count(matricula for all)"border="0" color="0" x="1147" y="32" height="64" width="302" format="#,##0"  name=compute_1  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="329" y="112" height="64" width="2807" format="[general]"  name=carrera edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="18" y="8" height="64" width="302" format="[general]"  name=matricula edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="343" y="8" height="64" width="1115" format="[general]"  name=apellidos edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1490" y="8" height="72" width="782" format="[general]"  name=alumnos_nombre edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="2299" y="8" height="64" width="229" format="[general]"  name=grabacion_causa edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="2565" y="8" height="64" width="128" format="[general]"  name=tipo_de_grupo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="2798" y="8" height="64" width="613" format="[general]"  name=nombre_de_la_imagen edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=summary alignment="0" text="REGISTROS TOTALES:" border="0" color="0" x="361" y="8" height="64" width="672"  name=t_2  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="0" expression="count(matricula for all)"border="0" color="0" x="1051" y="8" height="64" width="302" format="#,##0"  name=compute_2  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

@@ -1,0 +1,59 @@
+﻿$PBExportHeader$f_existe_salon.srf
+global type f_existe_salon from function_object
+end type
+
+forward prototypes
+global function boolean f_existe_salon (string as_cve_salon, ref string as_clase_aula, ref integer ai_bloqueado)
+end prototypes
+
+global function boolean f_existe_salon (string as_cve_salon, ref string as_clase_aula, ref integer ai_bloqueado);//f_existe_salon
+// Parametros:	string as_cve_salon  value
+// 				string as_clase_aula reference
+// Regresa	 : booleano que indica si existe el salon
+
+integer li_codigo_sql, li_bloqueado
+string ls_mensaje_sql, ls_clase_aula, ls_cve_salon
+
+ls_clase_aula= ""
+
+if as_cve_salon = "" or isnull(as_cve_salon) then
+	as_cve_salon = ls_clase_aula
+	return false	
+end if
+
+
+
+SELECT dbo.salon.cve_salon, 
+		dbo.salon.clase_aula,
+		dbo.salon.bloqueado
+INTO	:ls_cve_salon, 
+		:ls_clase_aula,
+		:li_bloqueado
+FROM	dbo.salon
+WHERE dbo.salon.cve_salon = :as_cve_salon
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if isnull(ls_cve_salon) then
+	SetNull(ls_clase_aula)
+end if
+as_clase_aula= ls_clase_aula
+
+if isnull(li_bloqueado) then
+	li_bloqueado = 0
+end if
+ai_bloqueado= li_bloqueado
+
+if li_codigo_sql = 100 or isnull(ls_cve_salon) then
+	return false
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar salon", ls_mensaje_sql)
+	return false
+end if
+
+return true
+
+end function
+

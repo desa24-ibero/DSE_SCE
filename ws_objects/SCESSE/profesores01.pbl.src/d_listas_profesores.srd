@@ -1,0 +1,103 @@
+﻿$PBExportHeader$d_listas_profesores.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=451 color="536870912" )
+summary(height=3 color="536870912" )
+footer(height=160 color="536870912" )
+detail(height=163 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=chora_inicio dbname="horario.hora_inicio" )
+ column=(type=long updatewhereclause=yes name=chora_final dbname="horario.hora_final" )
+ column=(type=long updatewhereclause=yes name=ccve_mat dbname="horario.cve_mat" )
+ column=(type=char(2) updatewhereclause=yes name=cgpo dbname="horario.gpo" )
+ column=(type=char(42) updatewhereclause=yes name=cmateria dbname="materias.materia" )
+ column=(type=char(70) updatewhereclause=yes name=cnombre_completo dbname="profesor.nombre_completo" )
+ column=(type=long updatewhereclause=yes name=ccve_profesor dbname="grupos.cve_profesor" )
+ column=(type=char(16) updatewhereclause=yes name=ccve_salon dbname="horario.cve_salon" )
+ column=(type=long updatewhereclause=yes name=ccve_coordinacion dbname="materias.cve_coordinacion" )
+ column=(type=char(9) updatewhereclause=yes name=cdia dbname="dias.dia" )
+ column=(type=char(70) updatewhereclause=yes name=ccoordinacion dbname="coordinaciones.coordinacion" )
+ column=(type=long updatewhereclause=yes name=cve_asistencia dbname="profesor_lista_asistencia.cve_asistencia" )
+ column=(type=long updatewhereclause=yes name=periodo dbname="horario.periodo" values="Primavera	0/Verano	1/Otoño	2/" )
+ column=(type=long updatewhereclause=yes name=anio dbname="horario.anio" )
+ column=(type=long updatewhereclause=yes name=no_semana dbname="profesor_lista_asistencia.no_semana" )
+ column=(type=long updatewhereclause=yes name=cve_dia dbname="horario.cve_dia" )
+ retrieve=" SELECT 	horario.hora_inicio,
+			horario.hora_final,
+			horario.cve_mat,
+			horario.gpo,
+			materias.materia,
+			profesor.nombre_completo,
+			grupos.cve_profesor,
+			horario.cve_salon, 
+			materias.cve_coordinacion,
+			dias.dia,
+			coordinaciones.coordinacion,
+			profesor_lista_asistencia.cve_asistencia,
+			profesor_lista_asistencia.periodo,
+			profesor_lista_asistencia.anio,
+			profesor_lista_asistencia.no_semana,
+			profesor_lista_asistencia.cve_dia
+    FROM horario,   
+         grupos,   
+         profesor,   
+         dias,   
+         materias,
+			coordinaciones,
+			profesor_lista_asistencia
+   WHERE ( horario.cve_mat = grupos.cve_mat ) and  
+         ( grupos.cve_profesor = profesor.cve_profesor ) and  
+         ( horario.cve_dia = dias.cve_dia ) and  
+         ( horario.gpo = grupos.gpo ) and  
+         ( grupos.cve_mat = materias.cve_mat ) and  
+			( grupos.anio = horario.anio) and
+			( grupos.periodo = horario.periodo) and
+			( grupos.anio = :a_anio ) and
+			( grupos.periodo = :a_periodo ) and
+			( profesor_lista_asistencia.cve_mat = grupos.cve_mat ) and
+			( profesor_lista_asistencia.gpo = grupos.gpo ) and
+			( profesor_lista_asistencia.periodo = horario.periodo) and
+			( profesor_lista_asistencia.anio = horario.anio ) and
+			( profesor_lista_asistencia.no_semana = :a_no_semana ) and
+			( profesor_lista_asistencia.cve_dia = horario.cve_dia ) and
+			( profesor_lista_asistencia.hora_inicio = horario.hora_inicio ) and
+			( materias.cve_coordinacion = coordinaciones.cve_coordinacion ) and
+			(( horario.cve_dia IN (:a_dia) ) AND
+         ( materias.cve_coordinacion = :a_coordinacion OR :a_coordinacion = 9999 ))
+ORDER BY coordinaciones.cve_coordinacion ASC,horario.cve_dia ASC,horario.hora_inicio ASC,horario.cve_mat ASC" arguments=(("a_periodo", number),("a_anio", number),("a_coordinacion", number),("a_dia", numberlist),("a_no_semana", number)) )
+group(level=1 header.height=0 trailer.height=0 by=("ccve_coordinacion" ) header.color="536870912" trailer.color="536870912" )
+group(level=2 header.height=0 trailer.height=0 by=("cdia" ) newpage=yes header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="2" text="Materia"border="0" color="0" x="1185" y="371" height="64" width="223"  name=cmateria_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" font.italic="1" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Nombre del Profesor"border="0" color="0" x="2534" y="371" height="64" width="603"  name=cnombre_completo_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" font.italic="1" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Num Emp."border="0" color="0" x="3577" y="371" height="64" width="285"  name=ccve_profesor_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" font.italic="1" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Salón"border="0" color="0" x="3880" y="371" height="64" width="293"  name=ccve_salon_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" font.italic="1" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Horario"border="0" color="0" x="26" y="371" height="64" width="219"  name=chora_inicio_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" font.italic="1" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="Cve Mat"border="0" color="0" x="260" y="371" height="64" width="238"  name=ccve_mat_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" font.italic="1" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Gpo"border="0" color="0" x="530" y="371" height="64" width="117"  name=cgpo_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" font.italic="1" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="UNIVERSIDAD IBEROAMERICANA"border="0" color="0" x="1861" y="13" height="80" width="1295"  font.face="Arial" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=header id=13 alignment="0" tabsequence=32766 border="0" color="0" x="3182" y="13" height="80" width="267" format="[general]"  name=periodo ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=14 alignment="0" tabsequence=32766 border="0" color="0" x="3471" y="13" height="80" width="187" format="[general]"  name=anio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="1" expression="~"Pag:~"+string(page()) +~"/~"+string(pageCount())"border="0" color="0" x="4392" y="45" height="64" width="369" format="[general]"  name=cf_pagina  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text=""border="0" color="0" x="26" y="109" height="64" width="3635"  name=st_leyenda1  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Día:"border="0" color="0" x="26" y="189" height="64" width="110"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" font.italic="1" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression=" cdia "border="0" color="0" x="530" y="189" height="64" width="453" format="[general]"  name=cf_dia  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Departamento:"border="0" color="0" x="26" y="266" height="64" width="435"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" font.italic="1" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="string( ccve_coordinacion )+ ~" ~"+string( ccoordinacion)"border="0" color="0" x="530" y="266" height="64" width="1298" format="[general]"  name=cf_coordinacion  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="string( chora_inicio ) +~" - ~"+string( chora_final )"border="0" color="0" x="26" y="13" height="64" width="201" format=""  name=cf_horario  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="26" y1="77" x2="4769" y2="77" pen.style="0" pen.width="4" pen.color="0"  background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="263" y="13" height="64" width="234" format="#####"  name=ccve_mat edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="538" y="13" height="64" width="91" format="[general]"  name=cgpo edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="658" y="13" height="64" width="1412" format="[general]"  name=cmateria edit.limit=42 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="2139" y="13" height="64" width="1412" format="[general]"  name=cnombre_completo edit.limit=70 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="3588" y="13" height="64" width="263" format="#####"  name=ccve_profesor edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="40" y="173" height="74" width="351" format="[general]"  name=chora_inicio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="435" y="173" height="74" width="157" format="[general]"  name=chora_final edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="0" x="695" y="173" height="74" width="161" format="#####"  name=ccve_coordinacion edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="0" x="870" y="173" height="74" width="2030" format="[general]"  name=ccoordinacion edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="2959" y="173" height="74" width="263" format="[general]"  name=cdia edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="3920" y="13" height="64" width="179" format="[general]"  name=ccve_salon edit.limit=16 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0~tif(  cve_asistencia = 1, rgb(255,255,255), rgb(0,0,0) )" x="4129" y="13" height="64" width="633" format="[general]"  name=cve_asistencia dddw.name=d_profesor_asistencia dddw.displaycolumn=asistencia dddw.datacolumn=cve_asistencia dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"border="0" color="0" x="26" y="3" height="64" width="4696"  name=st_leyenda2  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="<d_listas_profesores>"border="0" color="0" x="33" y="108" height="38" width="644"  font.face="Arial" font.height="-6" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=footer alignment="0" expression="f_fecha_servidor()"border="0" color="0" x="706" y="108" height="38" width="680" format="dd/mm/yyyy"  name=cf_fecha  font.face="Arial" font.height="-6" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=footer alignment="1" expression="f_obten_descripcion_usuario()"border="0" color="0" x="4272" y="108" height="38" width="446" format="[general]"  name=cf_usuario  font.face="Arial" font.height="-6" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

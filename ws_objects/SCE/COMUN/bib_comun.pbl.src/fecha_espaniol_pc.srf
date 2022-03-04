@@ -1,0 +1,49 @@
+﻿$PBExportHeader$fecha_espaniol_pc.srf
+$PBExportComments$Regresa la fecha y hora en español de la PC , en un string con el formato sig: ejemplo  "20-Ene-1997 09:55".         Juan Campos Enero 1997.
+global type fecha_espaniol_pc from function_object
+end type
+
+forward prototypes
+global function string fecha_espaniol_pc ()
+end prototypes
+
+global function string fecha_espaniol_pc ();// Esta función optiene la fecha de la pc en ingles, y regreasa la fecha en español,
+// con el siguiente formato, ejemplo: "20-Ene-1997 09:55".
+// Juan Campos. Enero 1997.
+
+
+string fecha, Dia, Mes, Anio, Hora
+
+fecha = string(today(),"dd-mmm-yyyy h:mm")
+
+Dia  = Mid(Fecha, 1, 2)
+Mes  = Mid(Fecha, 4, 3)
+Anio = Mid(Fecha, 8, 4)
+Hora = mid(fecha,12, 10)   
+
+if Mes = "Jan" then
+  Mes = "Ene"	
+End if
+
+if Mes = "Apr" then
+  Mes = "Abr"	
+End if
+
+if Mes = "Dec" then
+  Mes = "Dic"	
+End if
+		
+Fecha = Dia + "-" + Mes + "-" + Anio + " " + Hora
+
+return fecha
+ 
+ 
+
+
+ 
+ 
+
+
+
+end function
+

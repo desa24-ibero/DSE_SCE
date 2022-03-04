@@ -1,0 +1,81 @@
+﻿$PBExportHeader$d_seriacion_int_inscritas_prov.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no grid.lines=0 )
+header(height=144 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=92 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cuenta dbname="cuenta" )
+ column=(type=char(30) updatewhereclause=yes name=digito dbname="digito" )
+ column=(type=long updatewhereclause=yes name=cve_mat_base dbname="cve_mat_base" )
+ column=(type=char(42) updatewhereclause=yes name=materia_base dbname="materia_base" )
+ column=(type=long updatewhereclause=yes name=cve_mat dbname="cve_mat" )
+ column=(type=char(42) updatewhereclause=yes name=materia dbname="materia" )
+ column=(type=char(2) updatewhereclause=yes name=gpo dbname="gpo" )
+ column=(type=long updatewhereclause=yes name=anio dbname="anio" )
+ column=(type=long updatewhereclause=yes name=periodo dbname="periodo" )
+ column=(type=char(2) updatewhereclause=yes name=calificacion dbname="calificacion" )
+ column=(type=long updatewhereclause=yes name=seriacion_revisada dbname="seriacion_revisada" )
+ column=(type=long updatewhereclause=yes name=seriacion_violada dbname="seriacion_violada" )
+ retrieve="SELECT 
+cuenta =d.cuenta, 
+digito =d.digito,
+cve_mat_base = pi.cve_mat_base,   
+materia_base = m2.materia,   
+cve_mat = pi.cve_mat, 
+materia = m.materia, 
+gpo = mi.gpo, 
+anio = mi.anio, 
+periodo = mi.periodo, 
+calificacion = mi.calificacion,
+seriacion_revisada = 0,
+seriacion_violada = 0
+FROM v_sce_alumno_digito d, posrrequisitos_intercambio pi, materias m, mat_inscritas mi, materias m2 , historico_temp_intercambio h   
+WHERE d.cuenta = mi.cuenta
+AND  d.cuenta = pi.cuenta
+AND pi.cve_posrreq = m.cve_mat
+AND pi.cve_posrreq = mi.cve_mat
+AND d.cuenta  = :al_cuenta
+AND  pi.cve_mat_base = m2.cve_mat
+AND  mi.cuenta = h.cuenta
+AND  pi.cve_mat_base = h.cve_mat
+AND  h.gpo = 'ZZ'
+AND  h.calificacion in ('5')" arguments=(("al_cuenta", number)) )
+text(band=header alignment="2" text="Cve Mat
+Base " border="6" color="33554432" x="503" y="4" height="136" width="265" html.valueishtml="0"  name=cve_mat_base_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217728" )
+text(band=header alignment="2" text="Cuenta" border="6" color="33554432" x="229" y="8" height="136" width="265" html.valueishtml="0"  name=t_1 visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217728" )
+text(band=header alignment="2" text="Gpo" border="6" color="33554432" x="3072" y="8" height="136" width="183" html.valueishtml="0"  name=gpo_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217728" )
+text(band=header alignment="2" text="Anio" border="6" color="33554432" x="3264" y="8" height="136" width="224" html.valueishtml="0"  name=anio_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217728" )
+text(band=header alignment="2" text="Periodo" border="6" color="33554432" x="3497" y="8" height="136" width="329" html.valueishtml="0"  name=periodo_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217728" )
+text(band=header alignment="2" text="Calificación" border="6" color="33554432" x="3835" y="8" height="136" width="357" html.valueishtml="0"  name=calificacion_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217728" )
+text(band=header alignment="2" text="Seriación
+Revisada" border="6" color="33554432" x="4201" y="8" height="136" width="347" html.valueishtml="0"  name=seriacion_revisada_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217728" )
+text(band=header alignment="2" text="Seriación
+Violada" border="6" color="33554432" x="4558" y="8" height="136" width="329" html.valueishtml="0"  name=seriacion_violada_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217728" )
+text(band=header alignment="2" text="Cve Mat
+ Seriada" border="6" color="33554432" x="1842" y="4" height="136" width="283" html.valueishtml="0"  name=cve_mat_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217728" )
+text(band=header alignment="2" text="Materia Seriada" border="6" color="33554432" x="2135" y="8" height="136" width="928" html.valueishtml="0"  name=materia_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217728" )
+text(band=header alignment="2" text="Materia Base" border="6" color="33554432" x="777" y="4" height="136" width="1056" html.valueishtml="0"  name=materia_base_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217728" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="33554432" x="3072" y="8" height="76" width="183" format="[general]" html.valueishtml="0"  name=gpo visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="33554432" x="3264" y="8" height="76" width="224" format="[general]" html.valueishtml="0"  name=anio visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="33554432" x="3497" y="8" height="76" width="329" format="[general]" html.valueishtml="0"  name=periodo visible="1" dddw.name=dddw_periodo dddw.displaycolumn=descripcion dddw.datacolumn=periodo dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="33554432" x="3835" y="8" height="76" width="357" format="[general]" html.valueishtml="0"  name=calificacion visible="1" edit.limit=2 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+compute(band=detail alignment="0" expression="getrow()"border="0" color="33554432" x="9" y="8" height="76" width="210" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+compute(band=detail alignment="1" expression="string( cuenta )+~"-~"+ digito "border="0" color="33554432" x="229" y="8" height="76" width="265" format="[GENERAL]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="33554432" x="1842" y="8" height="76" width="283" format="[general]" html.valueishtml="0"  name=cve_mat visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="33554432" x="503" y="8" height="76" width="265" format="[general]" html.valueishtml="0"  name=cve_mat_base visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="33554432" x="4201" y="8" height="76" width="347" format="[general]" html.valueishtml="0"  name=seriacion_revisada visible="0" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=12 alignment="2" tabsequence=32766 border="0" color="33554432" x="4558" y="8" height="76" width="329" format="[general]" html.valueishtml="0"  name=seriacion_violada visible="0" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="33554432" x="2135" y="8" height="76" width="928" format="[general]" html.valueishtml="0"  name=materia visible="1" edit.limit=42 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="777" y="8" height="76" width="1056" format="[general]" html.valueishtml="0"  name=materia_base visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0  template=(comment="" encoding="UTF-16LE" name="d_seriacion_int_inscritas" xml="<?xml version=~"1.0~" encoding=~"UTF-16LE~" standalone=~"no~"?><untitled><untitled_row __pbband=~"detail~"><cuenta/><digito/><cve_mat>cve_mat</cve_mat><materia>materia</materia><gpo>gpo</gpo><anio>anio</anio><periodo>periodo</periodo><calificacion>calificacion</calificacion><seriacion_revisada>seriacion_revisada</seriacion_revisada><seriacion_violada>seriacion_violada</seriacion_violada></untitled_row></untitled>"))
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

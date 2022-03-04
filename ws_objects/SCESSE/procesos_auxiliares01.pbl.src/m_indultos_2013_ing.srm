@@ -1,0 +1,372 @@
+﻿$PBExportHeader$m_indultos_2013_ing.srm
+forward
+global type m_indultos_2013_ing from m_menu_general_2013
+end type
+end forward
+
+global type m_indultos_2013_ing from m_menu_general_2013
+end type
+global m_indultos_2013_ing m_indultos_2013_ing
+
+on m_indultos_2013_ing.create
+m_indultos_2013_ing=this
+call super::create
+this.text = "m_indultos_2013_ing"
+end on
+
+on m_indultos_2013_ing.destroy
+call super::destroy
+end on
+
+type m_archivo from m_menu_general_2013`m_archivo within m_indultos_2013_ing
+end type
+
+on m_archivo.create
+call super::create
+end on
+
+on m_archivo.destroy
+call super::destroy
+end on
+
+type m_leer from m_menu_general_2013`m_leer within m_archivo
+end type
+
+on m_leer.create
+call super::create
+end on
+
+on m_leer.destroy
+call super::destroy
+end on
+
+type m_salvar from m_menu_general_2013`m_salvar within m_archivo
+end type
+
+on m_salvar.create
+call super::create
+end on
+
+on m_salvar.destroy
+call super::destroy
+end on
+
+type m_configurarimpresora from m_menu_general_2013`m_configurarimpresora within m_archivo
+end type
+
+on m_configurarimpresora.create
+call super::create
+end on
+
+on m_configurarimpresora.destroy
+call super::destroy
+end on
+
+type m_imprimir from m_menu_general_2013`m_imprimir within m_archivo
+end type
+
+on m_imprimir.create
+call super::create
+end on
+
+on m_imprimir.destroy
+call super::destroy
+end on
+
+type m_- from m_menu_general_2013`m_- within m_archivo
+end type
+
+on m_-.create
+call super::create
+end on
+
+on m_-.destroy
+call super::destroy
+end on
+
+type m_salir from m_menu_general_2013`m_salir within m_archivo
+end type
+
+on m_salir.create
+call super::create
+end on
+
+on m_salir.destroy
+call super::destroy
+end on
+
+type m_edicion from m_menu_general_2013`m_edicion within m_indultos_2013_ing
+end type
+
+on m_edicion.create
+call super::create
+end on
+
+on m_edicion.destroy
+call super::destroy
+end on
+
+type m_deshacer from m_menu_general_2013`m_deshacer within m_edicion
+end type
+
+on m_deshacer.create
+call super::create
+end on
+
+on m_deshacer.destroy
+call super::destroy
+end on
+
+type m_cortar from m_menu_general_2013`m_cortar within m_edicion
+end type
+
+on m_cortar.create
+call super::create
+end on
+
+on m_cortar.destroy
+call super::destroy
+end on
+
+type m_copiar from m_menu_general_2013`m_copiar within m_edicion
+end type
+
+on m_copiar.create
+call super::create
+end on
+
+on m_copiar.destroy
+call super::destroy
+end on
+
+type m_pegar from m_menu_general_2013`m_pegar within m_edicion
+end type
+
+on m_pegar.create
+call super::create
+end on
+
+on m_pegar.destroy
+call super::destroy
+end on
+
+type m_registro from m_menu_general_2013`m_registro within m_indultos_2013_ing
+end type
+
+on m_registro.create
+call super::create
+end on
+
+on m_registro.destroy
+call super::destroy
+end on
+
+type m_nuevo from m_menu_general_2013`m_nuevo within m_registro
+end type
+
+on m_nuevo.create
+call super::create
+this.visible = false
+end on
+
+on m_nuevo.destroy
+call super::destroy
+end on
+
+type m_actualiza from m_menu_general_2013`m_actualiza within m_registro
+end type
+
+on m_actualiza.create
+call super::create
+end on
+
+on m_actualiza.destroy
+call super::destroy
+end on
+
+type m_borraregistro from m_menu_general_2013`m_borraregistro within m_registro
+end type
+
+on m_borraregistro.create
+call super::create
+this.visible = false
+this.enabled = false
+this.toolbaritemvisible = false
+end on
+
+on m_borraregistro.destroy
+call super::destroy
+end on
+
+type m_cargaregistro from m_menu_general_2013`m_cargaregistro within m_registro
+end type
+
+on m_cargaregistro.create
+call super::create
+end on
+
+on m_cargaregistro.destroy
+call super::destroy
+end on
+
+type m_-1 from m_menu_general_2013`m_-1 within m_registro
+end type
+
+on m_-1.create
+call super::create
+end on
+
+on m_-1.destroy
+call super::destroy
+end on
+
+type m_primero from m_menu_general_2013`m_primero within m_registro
+end type
+
+on m_primero.create
+call super::create
+end on
+
+on m_primero.destroy
+call super::destroy
+end on
+
+type m_anterior from m_menu_general_2013`m_anterior within m_registro
+end type
+
+on m_anterior.create
+call super::create
+end on
+
+on m_anterior.destroy
+call super::destroy
+end on
+
+type m_siguiente from m_menu_general_2013`m_siguiente within m_registro
+end type
+
+on m_siguiente.create
+call super::create
+end on
+
+on m_siguiente.destroy
+call super::destroy
+end on
+
+type m_ltimo from m_menu_general_2013`m_ltimo within m_registro
+end type
+
+on m_ltimo.create
+call super::create
+end on
+
+on m_ltimo.destroy
+call super::destroy
+end on
+
+type m_-2 from m_menu_general_2013`m_-2 within m_registro
+end type
+
+on m_-2.create
+call super::create
+end on
+
+on m_-2.destroy
+call super::destroy
+end on
+
+type m_filtrar from m_menu_general_2013`m_filtrar within m_registro
+end type
+
+event m_filtrar::clicked;SetPointer(HourGlass!)
+parentwindow.triggerevent("ue_filtrar")
+end event
+
+on m_filtrar.create
+call super::create
+this.visible = true
+this.enabled = true
+this.toolbaritemvisible = true
+end on
+
+on m_filtrar.destroy
+call super::destroy
+end on
+
+type m_ordenar from m_menu_general_2013`m_ordenar within m_registro
+end type
+
+on m_ordenar.create
+call super::create
+end on
+
+on m_ordenar.destroy
+call super::destroy
+end on
+
+type m_ventana from m_menu_general_2013`m_ventana within m_indultos_2013_ing
+end type
+
+on m_ventana.create
+call super::create
+end on
+
+on m_ventana.destroy
+call super::destroy
+end on
+
+type m_horizontal from m_menu_general_2013`m_horizontal within m_ventana
+end type
+
+on m_horizontal.create
+call super::create
+end on
+
+on m_horizontal.destroy
+call super::destroy
+end on
+
+type m_vertical from m_menu_general_2013`m_vertical within m_ventana
+end type
+
+on m_vertical.create
+call super::create
+end on
+
+on m_vertical.destroy
+call super::destroy
+end on
+
+type m_primerplano from m_menu_general_2013`m_primerplano within m_ventana
+end type
+
+on m_primerplano.create
+call super::create
+end on
+
+on m_primerplano.destroy
+call super::destroy
+end on
+
+type m_cascada from m_menu_general_2013`m_cascada within m_ventana
+end type
+
+on m_cascada.create
+call super::create
+end on
+
+on m_cascada.destroy
+call super::destroy
+end on
+
+type m_ayuda from m_menu_general_2013`m_ayuda within m_indultos_2013_ing
+end type
+
+on m_ayuda.create
+call super::create
+end on
+
+on m_ayuda.destroy
+call super::destroy
+end on
+

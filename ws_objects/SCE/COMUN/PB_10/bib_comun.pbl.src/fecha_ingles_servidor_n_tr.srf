@@ -1,0 +1,37 @@
+﻿$PBExportHeader$fecha_ingles_servidor_n_tr.srf
+global type fecha_ingles_servidor_n_tr from function_object
+end type
+
+forward prototypes
+global function string fecha_ingles_servidor_n_tr (n_tr trans)
+end prototypes
+
+global function string fecha_ingles_servidor_n_tr (n_tr trans);// Se regresa un string con la fecha del servidor, ejemplo: "Jan 20 1997 4:02:01PM" 
+// Se declara un nombre de procediminto para power builder  y se la asigna el procedimiento 
+// almacenado del servidor de sybase.
+// Juan Campos. Enero-1997.
+
+string fecha
+int status = 0
+
+ if isvalid(trans) = false then	
+	conecta_bd_n_tr (trans,"SCE",gs_usuario,gs_password)
+	status = 1
+ end if
+ 
+DECLARE Fecha_Servidor procedure for fechaservidor
+  @fecha = : Fecha out
+  using trans;
+   	
+EXECUTE Fecha_Servidor;
+
+FETCH Fecha_Servidor INTO :Fecha;
+
+CLOSE Fecha_Servidor;
+if status = 1 then
+	desconecta_bd (trans)
+end if
+
+Return Fecha
+end function
+

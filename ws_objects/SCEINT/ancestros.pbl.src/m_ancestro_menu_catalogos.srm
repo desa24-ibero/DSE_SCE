@@ -1,0 +1,56 @@
+﻿$PBExportHeader$m_ancestro_menu_catalogos.srm
+forward
+global type m_ancestro_menu_catalogos from m_ancestro_general
+end type
+type m_reporte from menu within m_procesos
+end type
+end forward
+
+global type m_ancestro_menu_catalogos from m_ancestro_general
+end type
+global m_ancestro_menu_catalogos m_ancestro_menu_catalogos
+
+on m_ancestro_menu_catalogos.create
+m_ancestro_menu_catalogos=this
+call super::create
+end on
+
+on m_ancestro_menu_catalogos.destroy
+call super::destroy
+end on
+
+on m_imprimir.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_registro.create
+call super::create
+this.Visible=true
+end on
+
+type m_procesos from m_ancestro_general`m_procesos within m_ancestro_menu_catalogos
+m_reporte m_reporte
+end type
+
+on m_procesos.create
+call super::create
+this.Text="Consulta"
+this.Visible=true
+this.m_reporte=create m_reporte
+this.Item[UpperBound(this.item)+1]=this.m_reporte
+end on
+
+on m_procesos.destroy
+call super::destroy
+destroy(this.m_reporte)
+end on
+
+type m_reporte from menu within m_procesos
+end type
+
+on m_reporte.create
+this.Text="Reporte"
+end on
+

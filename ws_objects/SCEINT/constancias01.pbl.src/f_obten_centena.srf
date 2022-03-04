@@ -1,0 +1,47 @@
+﻿$PBExportHeader$f_obten_centena.srf
+global type f_obten_centena from function_object
+end type
+
+forward prototypes
+global function string f_obten_centena (integer a_numero, boolean a_sin_unidades)
+end prototypes
+
+global function string f_obten_centena (integer a_numero, boolean a_sin_unidades);
+integer li_centena
+string ls_centena
+
+li_centena =a_numero
+
+choose case li_centena
+	case 1
+		if a_sin_unidades then
+			ls_centena = "CIEN"
+		else
+			ls_centena = "CIENTO"
+		end if
+	case 2
+		ls_centena = "DOSCIENTOS"	
+	case 3
+		ls_centena = "TRESCIENTOS"
+	case 4
+		ls_centena = "CUATROCIENTOS"
+	case 5
+		ls_centena = "QUINIENTOS"
+	case 6
+		ls_centena = "SEISCIENTOS"
+	case 7
+		ls_centena = "SETECIENTOS"
+	case 8
+		ls_centena = "OCHOCIENTOS"
+	case 9
+		ls_centena = "NOVECIENTOS"
+	case else		
+		ls_centena = ""
+end choose
+
+return ls_centena
+		
+		
+
+end function
+

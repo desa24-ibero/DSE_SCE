@@ -1,0 +1,37 @@
+﻿$PBExportHeader$f_quita_comillas.srf
+global type f_quita_comillas from function_object
+end type
+
+forward prototypes
+global function string f_quita_comillas (string as_texto)
+end prototypes
+
+global function string f_quita_comillas (string as_texto);string ls_texto_libre
+int li_pos
+
+//Comillas dobles
+ls_texto_libre = as_texto
+li_pos = pos(ls_texto_libre,char(34),1)
+if li_pos > 0 then
+	do while li_pos <= len(ls_texto_libre)
+		ls_texto_libre = replace(ls_texto_libre,li_pos,1,char(96))
+		li_pos ++
+		li_pos = pos(ls_texto_libre,char(34),li_pos)
+		if li_pos = 0 then exit
+	loop
+end if
+
+//Comillas sencillas
+li_pos = pos(ls_texto_libre,char(39),1)
+if li_pos > 0 then
+	do while li_pos <= len(ls_texto_libre)
+		ls_texto_libre = replace(ls_texto_libre,li_pos,1,char(96))
+		li_pos ++
+		li_pos = pos(ls_texto_libre,char(39),li_pos)
+		if li_pos = 0 then exit
+	loop
+end if
+
+return ls_texto_libre
+end function
+

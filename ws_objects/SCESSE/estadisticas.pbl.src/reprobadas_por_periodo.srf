@@ -1,0 +1,51 @@
+﻿$PBExportHeader$reprobadas_por_periodo.srf
+global type reprobadas_por_periodo from function_object
+end type
+
+forward prototypes
+global function string reprobadas_por_periodo (integer año, integer periodo, long materia)
+end prototypes
+
+global function string reprobadas_por_periodo (integer año, integer periodo, long materia);// Regresa en un string con el total de alumnos que reprobaron la 
+// materia y si la materia tiene asimiladas se suman tambien. 
+// Juan Campos Sánchez.     Mar-1998.
+
+Long	Mat_Asimiladas[],Mat,i,j,Cont=0,Tot = 0
+
+Declare MatRepro Cursor For
+Select Distinct(cve_mat)
+From hist_grupos
+Where anio = :año And periodo = :periodo and cve_asimilada = :Materia using gtr_sce;
+Open MatRepro;
+Fetch MatRepro Into :Mat;
+I = 0
+Do While gtr_sce.sqlcode <> 100
+	I ++
+	Mat_Asimiladas[i] = Mat
+	Fetch MatRepro Into :Mat;	
+loop
+Close MatRepro;
+ 
+Mat_Asimiladas[UpperBound(Mat_Asimiladas)+1] = Materia 
+
+For j = 1 To UpperBound(Mat_Asimiladas)	
+	Select count(cve_mat) Into :Cont From historico
+	Where anio = :año And periodo = :periodo and cve_mat = :Mat_Asimiladas[j] and
+      	calificacion in ('5','NA') using gtr_sce;
+	IF IsNull(Cont) Then Cont = 0		
+	Tot = Tot +	Cont	
+Next
+  
+Return String(Tot)
+
+
+
+
+
+
+
+
+
+
+end function
+

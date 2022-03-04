@@ -1,0 +1,40 @@
+﻿$PBExportHeader$existe_mat_acreditada.srf
+global type existe_mat_acreditada from function_object
+end type
+
+forward prototypes
+global function boolean existe_mat_acreditada (long cuenta, long materia, integer carrera, integer plan)
+end prototypes
+
+global function boolean existe_mat_acreditada (long cuenta, long materia, integer carrera, integer plan);// Recibe dos parametros Cuenta y Materia
+// Regresa "true" si la materia existe en la tabla de historico, y si tiene calificacion 6..10 ó AC
+// Juan Campos. Marzo.1997
+
+Integer Num = 0
+
+select count(*)
+into :Num
+from historico
+where (cuenta		= :cuenta)  and 
+      (cve_mat		= :materia) and
+		(cve_carrera= :Carrera) and
+		(cve_plan 	= :Plan) and
+		(calificacion = "6" or
+		calificacion = "7" or
+		calificacion = "8" or
+		calificacion = "9" or
+		calificacion = "10" or
+		calificacion = "AC" )			
+ Using gtr_sce;
+ 
+ if gtr_sce.sqlcode = -1 or gtr_sce.sqlcode = 100 then
+	Num = 0
+ End If
+ 
+if Num > 0 Then 
+ 	Return True 
+Else
+ 	Return False	
+End If
+end function
+

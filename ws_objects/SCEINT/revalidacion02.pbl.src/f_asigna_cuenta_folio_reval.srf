@@ -1,0 +1,38 @@
+﻿$PBExportHeader$f_asigna_cuenta_folio_reval.srf
+global type f_asigna_cuenta_folio_reval from function_object
+end type
+
+forward prototypes
+global function integer f_asigna_cuenta_folio_reval (long al_folio, long al_cuenta)
+end prototypes
+
+global function integer f_asigna_cuenta_folio_reval (long al_folio, long al_cuenta);//f_asigna_cuenta_folio_reval
+//long al_folio
+//long al_cuenta
+
+integer li_codigo
+string ls_mensaje_error
+integer li_anio_ing
+
+UPDATE dbo.aspirantes_revalidacion
+SET 	dbo.aspirantes_revalidacion.cuenta = :al_cuenta
+FROM dbo.aspirantes_revalidacion
+WHERE dbo.aspirantes_revalidacion.folio = :al_folio
+USING gtr_sce;
+
+li_codigo= gtr_sce.SqlCode
+ls_mensaje_error= gtr_sce.SqlErrText
+
+if li_codigo = -1  then
+	ROLLBACK USING gtr_sce;
+	MessageBox("Error al asignar la cuenta en el folio actual",ls_mensaje_error, StopSign!)
+	return -1
+else
+	COMMIT USING gtr_sce;
+	return 0
+end if
+
+
+
+end function
+

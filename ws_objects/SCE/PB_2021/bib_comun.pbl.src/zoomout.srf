@@ -1,0 +1,25 @@
+﻿$PBExportHeader$zoomout.srf
+$PBExportComments$Función que reduce el zoom de 10 en 10 de un preview de cualquier datawindow zoomout(datawindow:dataw) se debe llamar a esta función (por estandarización) desde el evento rbuttondown del data window.
+global type zoomout from function_object
+end type
+
+forward prototypes
+global subroutine zoomout (datawindow dataw)
+end prototypes
+
+global subroutine zoomout (datawindow dataw);/*
+DESCRIPCIÓN:  Función que reduce el zoom de 10 en 10 de un preview de cualquier datawindow
+	zoomout(datawindow:dataw)
+	se debe llamar a esta función (por estandarización) desde el evento rbuttondown del data window.
+PARÁMETROS: datawindow dataw
+REGRESA: 
+AUTOR: Alejandro Daniel Marroquín S.
+FECHA: Algún día en el último cuarto de 1995
+MODIFICACIÓN:
+*/
+
+int zoom
+zoom=integer(dataw.describe("datawindow.print.preview.zoom")) - 10	//obtiene el factor de zoom actual y lo incrementa en 10
+dataw.modify("datawindow.print.preview.zoom="+string(zoom))	//aplica el factor de zoom
+end subroutine
+

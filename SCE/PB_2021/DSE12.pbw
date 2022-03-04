@@ -1,0 +1,21 @@
+Save Format v3.0(19990112)
+@begin Unchecked
+@end;
+@begin Targets
+ 0 "..\\SCEADM\\admision.pbt";
+ 10 "..\\SCEACTUAL\\actualizacion.pbt";
+ 1 "..\\SECURITY\\pfcsecurity_admin.pbt";
+ 11 "..\\varios\\varios.pbt";
+ 2 "..\\SECURITY\\pfcsecurity_scanner.pbt";
+ 12 "..\\Migracion ASE15_ASE155\\Codigo fuente\\migracion.pbt";
+ 3 "..\\SCEEST\\estadisticas.pbt";
+ 13 "..\\SAGI\\sagi.pbt";
+ 4 "..\\SCEINT\\scei.pbt";
+ 5 "..\\SCESPARL\\sparl.pbt";
+ 6 "..\\SCESRL\\srl.pbt";
+ 7 "..\\SCESRLCORD\\insc_coord.pbt";
+ 8 "..\\SCETIT\\titulacion.pbt";
+ 9 "..\\SCESSE\\control_escolar.pbt";
+@end;
+DefaultTarget "..\\SCEADM\\admision.pbt";
+DefaultRemoteTarget "..\\SCEADM\\admision.pbt";

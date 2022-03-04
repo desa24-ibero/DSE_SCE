@@ -1,0 +1,51 @@
+﻿$PBExportHeader$f_usuario_especial.srf
+global type f_usuario_especial from function_object
+end type
+
+forward prototypes
+global function boolean f_usuario_especial (string as_name)
+end prototypes
+
+global function boolean f_usuario_especial (string as_name);//f_usuario_especial
+//
+//Objetivo:
+//		Revisa si el usuario esta autorizado a consultar alumnos restringidos
+//
+//Recibe:
+//		as_name	string
+
+integer  li_codigo_sql, li_user_special
+string ls_mensaje_sql, ls_name
+
+if as_name = "" or isnull(as_name)  then
+	return false	
+end if
+
+SELECT dbo.security_users.name,   
+       isnull(dbo.security_users.user_special,0)   
+INTO :ls_name,	
+     :li_user_special    
+FROM dbo.security_users  
+WHERE dbo.security_users.name = :as_name    
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 or isnull(ls_name) then
+	return false
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar security_users", ls_mensaje_sql)
+	return false
+end if
+
+if li_user_special = 0 or isnull(li_user_special) then
+	return false
+else
+	return true
+end if
+
+
+
+end function
+

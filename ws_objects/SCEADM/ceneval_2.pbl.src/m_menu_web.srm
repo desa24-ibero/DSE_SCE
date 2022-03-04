@@ -1,0 +1,1369 @@
+﻿$PBExportHeader$m_menu_web.srm
+$PBExportComments$Menú genérico de ventanas
+forward
+global type m_menu_web from menu
+end type
+type m_archivo from menu within m_menu_web
+end type
+type m_leer from menu within m_archivo
+end type
+type m_salvar from menu within m_archivo
+end type
+type m_configurarimpresora from menu within m_archivo
+end type
+type m_imprimir from menu within m_archivo
+end type
+type m_- from menu within m_archivo
+end type
+type m_salir from menu within m_archivo
+end type
+type m_archivo from menu within m_menu_web
+m_leer m_leer
+m_salvar m_salvar
+m_configurarimpresora m_configurarimpresora
+m_imprimir m_imprimir
+m_- m_-
+m_salir m_salir
+end type
+type m_edicion from menu within m_menu_web
+end type
+type m_deshacer from menu within m_edicion
+end type
+type m_cortar from menu within m_edicion
+end type
+type m_copiar from menu within m_edicion
+end type
+type m_pegar from menu within m_edicion
+end type
+type m_edicion from menu within m_menu_web
+m_deshacer m_deshacer
+m_cortar m_cortar
+m_copiar m_copiar
+m_pegar m_pegar
+end type
+type m_registro from menu within m_menu_web
+end type
+type m_nuevo from menu within m_registro
+end type
+type m_actualiza from menu within m_registro
+end type
+type m_borraregistro from menu within m_registro
+end type
+type m_cargaregistro from menu within m_registro
+end type
+type m_-1 from menu within m_registro
+end type
+type m_primero from menu within m_registro
+end type
+type m_anterior from menu within m_registro
+end type
+type m_siguiente from menu within m_registro
+end type
+type m_ltimo from menu within m_registro
+end type
+type m_-2 from menu within m_registro
+end type
+type m_filtrar from menu within m_registro
+end type
+type m_ordenar from menu within m_registro
+end type
+type m_registro from menu within m_menu_web
+m_nuevo m_nuevo
+m_actualiza m_actualiza
+m_borraregistro m_borraregistro
+m_cargaregistro m_cargaregistro
+m_-1 m_-1
+m_primero m_primero
+m_anterior m_anterior
+m_siguiente m_siguiente
+m_ltimo m_ltimo
+m_-2 m_-2
+m_filtrar m_filtrar
+m_ordenar m_ordenar
+end type
+type m_ventana from menu within m_menu_web
+end type
+type m_horizontal from menu within m_ventana
+end type
+type m_vertical from menu within m_ventana
+end type
+type m_primerplano from menu within m_ventana
+end type
+type m_cascada from menu within m_ventana
+end type
+type m_ventana from menu within m_menu_web
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+type m_ayuda from menu within m_menu_web
+end type
+global type m_menu_web from menu
+m_archivo m_archivo
+m_edicion m_edicion
+m_registro m_registro
+m_ventana m_ventana
+m_ayuda m_ayuda
+end type
+end forward
+
+global type m_menu_web from menu
+m_archivo m_archivo
+m_edicion m_edicion
+m_registro m_registro
+m_ventana m_ventana
+m_ayuda m_ayuda
+end type
+global m_menu_web m_menu_web
+
+type variables
+datawindow dw, dw_2
+userobject objeto
+end variables
+
+forward prototypes
+public function integer asigna_dw (datawindow a_dw)
+end prototypes
+
+public function integer asigna_dw (datawindow a_dw);dw = a_dw
+return 1
+end function
+
+on m_menu_web.create
+m_menu_web=this
+call super::create
+this.text = "m_menu_web"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_archivo=create m_archivo
+this.m_edicion=create m_edicion
+this.m_registro=create m_registro
+this.m_ventana=create m_ventana
+this.m_ayuda=create m_ayuda
+this.Item[UpperBound(this.Item)+1]=this.m_archivo
+this.Item[UpperBound(this.Item)+1]=this.m_edicion
+this.Item[UpperBound(this.Item)+1]=this.m_registro
+this.Item[UpperBound(this.Item)+1]=this.m_ventana
+this.Item[UpperBound(this.Item)+1]=this.m_ayuda
+end on
+
+on m_menu_web.destroy
+call super::destroy
+destroy(this.m_archivo)
+destroy(this.m_edicion)
+destroy(this.m_registro)
+destroy(this.m_ventana)
+destroy(this.m_ayuda)
+end on
+
+type m_archivo from menu within m_menu_web
+m_leer m_leer
+m_salvar m_salvar
+m_configurarimpresora m_configurarimpresora
+m_imprimir m_imprimir
+m_- m_-
+m_salir m_salir
+end type
+
+on m_archivo.create
+call super::create
+this.text = "Archivo"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_leer=create m_leer
+this.m_salvar=create m_salvar
+this.m_configurarimpresora=create m_configurarimpresora
+this.m_imprimir=create m_imprimir
+this.m_-=create m_-
+this.m_salir=create m_salir
+this.Item[UpperBound(this.Item)+1]=this.m_leer
+this.Item[UpperBound(this.Item)+1]=this.m_salvar
+this.Item[UpperBound(this.Item)+1]=this.m_configurarimpresora
+this.Item[UpperBound(this.Item)+1]=this.m_imprimir
+this.Item[UpperBound(this.Item)+1]=this.m_-
+this.Item[UpperBound(this.Item)+1]=this.m_salir
+end on
+
+on m_archivo.destroy
+call super::destroy
+destroy(this.m_leer)
+destroy(this.m_salvar)
+destroy(this.m_configurarimpresora)
+destroy(this.m_imprimir)
+destroy(this.m_-)
+destroy(this.m_salir)
+end on
+
+type m_leer from menu within m_archivo
+end type
+
+event clicked;string nulo
+
+setnull(nulo)
+
+if isvalid(dw) then
+	SetPointer(HourGlass!)
+	if dw.ImportFile(nulo)<1 then
+		messagebox("No se pudo leer el archivo","")
+	end if
+end if
+end event
+
+on m_leer.create
+call super::create
+this.text = "Leer"
+this.toolbaritemname = "custom050!"
+this.toolbaritemtext = "Leer"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_leer.destroy
+call super::destroy
+end on
+
+type m_salvar from menu within m_archivo
+end type
+
+event clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	if dw.SaveAs("",Excel!, TRUE)<>1 then
+		dw.SaveAs("",Clipboard!, TRUE)
+		messagebox("No se pudo guardar el archivo","La información se encuentra en el Clipboard")	
+	end if
+end if
+end event
+
+on m_salvar.create
+call super::create
+this.text = "Salvar"
+this.toolbaritemname = "save!"
+this.toolbaritemtext = "Salvar"
+this.toolbaritemorder = 1
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_salvar.destroy
+call super::destroy
+end on
+
+type m_configurarimpresora from menu within m_archivo
+end type
+
+event clicked;printsetup()
+
+end event
+
+on m_configurarimpresora.create
+call super::create
+this.text = "C&onfigurar Impresora"
+this.toolbaritemorder = 2
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_configurarimpresora.destroy
+call super::destroy
+end on
+
+type m_imprimir from menu within m_archivo
+end type
+
+on m_imprimir.create
+call super::create
+this.text = "&Imprimir~tCtrl+I"
+this.shortcut = 329
+this.microhelp = "Imprimir "
+this.toolbaritemname = "print!"
+this.toolbaritemtext = "Imprimir"
+this.toolbaritemorder = 3
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;if isvalid(dw) then
+	dw.modify("Datawindow.print.preview = Yes")
+	SetPointer(HourGlass!)
+	openwithparm(conf_impr,dw)
+end if
+end event
+
+on m_imprimir.destroy
+call super::destroy
+end on
+
+type m_- from menu within m_archivo
+end type
+
+on m_-.create
+call super::create
+this.text = "-"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_-.destroy
+call super::destroy
+end on
+
+type m_salir from menu within m_archivo
+end type
+
+event clicked;Close(ParentWindow)
+end event
+
+on m_salir.create
+call super::create
+this.text = "Salir"
+this.microhelp = "Salir de la Ventana Actual"
+this.toolbaritemname = "exit!"
+this.toolbaritemtext = "Salir"
+this.toolbaritemorder = 99
+this.toolbaritemspace = 3
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_salir.destroy
+call super::destroy
+end on
+
+type m_edicion from menu within m_menu_web
+m_deshacer m_deshacer
+m_cortar m_cortar
+m_copiar m_copiar
+m_pegar m_pegar
+end type
+
+on m_edicion.create
+call super::create
+this.text = "Editar"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_deshacer=create m_deshacer
+this.m_cortar=create m_cortar
+this.m_copiar=create m_copiar
+this.m_pegar=create m_pegar
+this.Item[UpperBound(this.Item)+1]=this.m_deshacer
+this.Item[UpperBound(this.Item)+1]=this.m_cortar
+this.Item[UpperBound(this.Item)+1]=this.m_copiar
+this.Item[UpperBound(this.Item)+1]=this.m_pegar
+end on
+
+on m_edicion.destroy
+call super::destroy
+destroy(this.m_deshacer)
+destroy(this.m_cortar)
+destroy(this.m_copiar)
+destroy(this.m_pegar)
+end on
+
+type m_deshacer from menu within m_edicion
+end type
+
+on m_deshacer.create
+call super::create
+this.text = "Deshacer~tCtrl+U"
+this.shortcut = 341
+this.microhelp = "Deshacer la última edición"
+this.toolbaritemname = "undo!"
+this.toolbaritemtext = "Deshacer"
+this.toolbaritemorder = 4
+this.toolbaritemspace = 3
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;if isvalid(dw) then
+	dw.undo()
+end if
+end event
+
+on m_deshacer.destroy
+call super::destroy
+end on
+
+type m_cortar from menu within m_edicion
+end type
+
+on m_cortar.create
+call super::create
+this.text = "C&ortar~tCtrl+X"
+this.shortcut = 344
+this.microhelp = "Borra la selección actual y la pone en el portapapeles"
+this.toolbaritemname = "cut!"
+this.toolbaritemtext = "Cortar"
+this.toolbaritemorder = 5
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;if isvalid(dw) then
+	dw.cut()
+end if
+end event
+
+on m_cortar.destroy
+call super::destroy
+end on
+
+type m_copiar from menu within m_edicion
+end type
+
+on m_copiar.create
+call super::create
+this.text = "&Copiar~tCtrl+C"
+this.shortcut = 323
+this.microhelp = "Copia la selección actual en el portapapeles"
+this.toolbaritemname = "copy!"
+this.toolbaritemtext = "Copiar"
+this.toolbaritemorder = 6
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;if isvalid(dw) then
+	dw.copy()
+end if
+end event
+
+on m_copiar.destroy
+call super::destroy
+end on
+
+type m_pegar from menu within m_edicion
+end type
+
+on m_pegar.create
+call super::create
+this.text = "&Pegar~tCtrl+V"
+this.shortcut = 342
+this.microhelp = "Pega el contenido del portapapeles en el campo actual"
+this.toolbaritemname = "paste!"
+this.toolbaritemtext = "Pegar"
+this.toolbaritemorder = 7
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;if isvalid(dw) then
+	dw.paste()
+end if
+end event
+
+on m_pegar.destroy
+call super::destroy
+end on
+
+type m_registro from menu within m_menu_web
+m_nuevo m_nuevo
+m_actualiza m_actualiza
+m_borraregistro m_borraregistro
+m_cargaregistro m_cargaregistro
+m_-1 m_-1
+m_primero m_primero
+m_anterior m_anterior
+m_siguiente m_siguiente
+m_ltimo m_ltimo
+m_-2 m_-2
+m_filtrar m_filtrar
+m_ordenar m_ordenar
+end type
+
+on m_registro.create
+call super::create
+this.text = "Registro"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_nuevo=create m_nuevo
+this.m_actualiza=create m_actualiza
+this.m_borraregistro=create m_borraregistro
+this.m_cargaregistro=create m_cargaregistro
+this.m_-1=create m_-1
+this.m_primero=create m_primero
+this.m_anterior=create m_anterior
+this.m_siguiente=create m_siguiente
+this.m_ltimo=create m_ltimo
+this.m_-2=create m_-2
+this.m_filtrar=create m_filtrar
+this.m_ordenar=create m_ordenar
+this.Item[UpperBound(this.Item)+1]=this.m_nuevo
+this.Item[UpperBound(this.Item)+1]=this.m_actualiza
+this.Item[UpperBound(this.Item)+1]=this.m_borraregistro
+this.Item[UpperBound(this.Item)+1]=this.m_cargaregistro
+this.Item[UpperBound(this.Item)+1]=this.m_-1
+this.Item[UpperBound(this.Item)+1]=this.m_primero
+this.Item[UpperBound(this.Item)+1]=this.m_anterior
+this.Item[UpperBound(this.Item)+1]=this.m_siguiente
+this.Item[UpperBound(this.Item)+1]=this.m_ltimo
+this.Item[UpperBound(this.Item)+1]=this.m_-2
+this.Item[UpperBound(this.Item)+1]=this.m_filtrar
+this.Item[UpperBound(this.Item)+1]=this.m_ordenar
+end on
+
+on m_registro.destroy
+call super::destroy
+destroy(this.m_nuevo)
+destroy(this.m_actualiza)
+destroy(this.m_borraregistro)
+destroy(this.m_cargaregistro)
+destroy(this.m_-1)
+destroy(this.m_primero)
+destroy(this.m_anterior)
+destroy(this.m_siguiente)
+destroy(this.m_ltimo)
+destroy(this.m_-2)
+destroy(this.m_filtrar)
+destroy(this.m_ordenar)
+end on
+
+type m_nuevo from menu within m_registro
+end type
+
+on m_nuevo.create
+call super::create
+this.text = "&Nuevo~tCtrl+N"
+this.shortcut = 334
+this.microhelp = "Inserta un renglon al final para agregar un dato"
+this.toolbaritemname = "selectscript!"
+this.toolbaritemdownname = "Nuevo"
+this.toolbaritemtext = "Nuevo"
+this.toolbaritemorder = 8
+this.toolbaritemspace = 3
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	dw.triggerevent("nuevo")
+end if
+
+end event
+
+on m_nuevo.destroy
+call super::destroy
+end on
+
+type m_actualiza from menu within m_registro
+end type
+
+on m_actualiza.create
+call super::create
+this.text = "&Actualizar~tCtrl+A"
+this.shortcut = 321
+this.microhelp = "Guarda los cambios en la base de datos"
+this.toolbaritemname = "custom044!"
+this.toolbaritemdownname = "Actualizar"
+this.toolbaritemtext = "Actualizar"
+this.toolbaritemorder = 9
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	dw.triggerevent("actualiza")
+end if
+end event
+
+on m_actualiza.destroy
+call super::destroy
+end on
+
+type m_borraregistro from menu within m_registro
+end type
+
+on m_borraregistro.create
+call super::create
+this.visible = false
+this.text = "&Borra registro~tB"
+this.enabled = false
+this.shortcut = 66
+this.microhelp = "Borra el renglón actual"
+this.toolbaritemname = "clear!"
+this.toolbaritemdownname = "Borrar"
+this.toolbaritemtext = "Borrar"
+this.toolbaritemorder = 10
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	dw.triggerevent("borra")
+end if
+end event
+
+on m_borraregistro.destroy
+call super::destroy
+end on
+
+type m_cargaregistro from menu within m_registro
+end type
+
+event clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	dw.triggerevent("carga")
+end if
+end event
+
+on m_cargaregistro.create
+call super::create
+this.text = "&Carga registro~tCtrl+C"
+this.shortcut = 323
+this.toolbaritemname = "update!"
+this.toolbaritemtext = "Cargar"
+this.toolbaritemorder = 11
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_cargaregistro.destroy
+call super::destroy
+end on
+
+type m_-1 from menu within m_registro
+end type
+
+on m_-1.create
+call super::create
+this.text = "-"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_-1.destroy
+call super::destroy
+end on
+
+type m_primero from menu within m_registro
+end type
+
+on m_primero.create
+call super::create
+this.text = "Primero~tAlt+P"
+this.shortcut = 592
+this.toolbaritemname = "vcrfirst!"
+this.toolbaritemdownname = "Primero"
+this.toolbaritemtext = "Primero"
+this.toolbaritemorder = 12
+this.toolbaritemspace = 3
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;if isvalid(dw) then
+	dw.triggerevent("primero")
+end if
+
+if isvalid(objeto) then
+	objeto.triggerevent("primero")
+end if
+
+//dw.scrolltorow(1)
+
+end event
+
+on m_primero.destroy
+call super::destroy
+end on
+
+type m_anterior from menu within m_registro
+end type
+
+on m_anterior.create
+call super::create
+this.text = "Anterior~tAlt+A"
+this.shortcut = 577
+this.toolbaritemname = "vcrprior!"
+this.toolbaritemdownname = "Anterior"
+this.toolbaritemtext = "Anterior"
+this.toolbaritemorder = 13
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;if isvalid(dw) then
+	dw.triggerevent("anterior")
+end if
+
+if isvalid(objeto) then
+	objeto.triggerevent("anterior")
+end if
+
+//dw.scrollpriorpage ( )
+end event
+
+on m_anterior.destroy
+call super::destroy
+end on
+
+type m_siguiente from menu within m_registro
+end type
+
+on m_siguiente.create
+call super::create
+this.text = "Siguiente~tAlt+S"
+this.shortcut = 595
+this.toolbaritemname = "vcrnext!"
+this.toolbaritemdownname = "Siguiente"
+this.toolbaritemtext = "Siguiente"
+this.toolbaritemorder = 14
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;if isvalid(dw) then
+	dw.triggerevent("siguiente")
+end if
+
+if isvalid(objeto) then
+	objeto.triggerevent("siguiente")
+end if
+
+//dw.scrollnextpage ( )
+end event
+
+on m_siguiente.destroy
+call super::destroy
+end on
+
+type m_ltimo from menu within m_registro
+end type
+
+on m_ltimo.create
+call super::create
+this.text = "Último~tAlt+U"
+this.shortcut = 597
+this.toolbaritemname = "vcrlast!"
+this.toolbaritemdownname = "Ultimo"
+this.toolbaritemtext = "Último"
+this.toolbaritemorder = 15
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;if isvalid(dw) then
+	dw.triggerevent("ultimo")
+end if
+
+if isvalid(objeto) then
+	objeto.triggerevent("ultimo")
+end if
+
+//dw.scrolltorow(dw.rowcount())
+end event
+
+on m_ltimo.destroy
+call super::destroy
+end on
+
+type m_-2 from menu within m_registro
+end type
+
+on m_-2.create
+call super::create
+this.text = "-"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_-2.destroy
+call super::destroy
+end on
+
+type m_filtrar from menu within m_registro
+end type
+
+event clicked;string filtro
+
+if isvalid(dw) then
+	SetPointer(HourGlass!)
+	SetNull(filtro)
+	dw.SetFilter(filtro)
+	dw.Filter( )
+	dw.sort()
+	dw.groupcalc()
+end if
+end event
+
+on m_filtrar.create
+call super::create
+this.text = "Filtrar~tAlt+F"
+this.shortcut = 582
+this.toolbaritemname = "custom096!"
+this.toolbaritemtext = "Filtrar"
+this.toolbaritemorder = 16
+this.toolbaritemspace = 3
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_filtrar.destroy
+call super::destroy
+end on
+
+type m_ordenar from menu within m_registro
+end type
+
+event clicked;string orden
+
+if isvalid(dw) then
+	SetPointer(HourGlass!)
+	SetNull(orden)
+	dw.setsort(orden)
+	SetPointer(HourGlass!)
+	dw.sort()
+	dw.groupcalc()
+end if
+end event
+
+on m_ordenar.create
+call super::create
+this.text = "Ordenar~tAlt+O"
+this.shortcut = 591
+this.toolbaritemname = "richtextedit!"
+this.toolbaritemtext = "Ordenar"
+this.toolbaritemorder = 17
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_ordenar.destroy
+call super::destroy
+end on
+
+type m_ventana from menu within m_menu_web
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+
+on m_ventana.create
+call super::create
+this.text = "Ventana"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_horizontal=create m_horizontal
+this.m_vertical=create m_vertical
+this.m_primerplano=create m_primerplano
+this.m_cascada=create m_cascada
+this.Item[UpperBound(this.Item)+1]=this.m_horizontal
+this.Item[UpperBound(this.Item)+1]=this.m_vertical
+this.Item[UpperBound(this.Item)+1]=this.m_primerplano
+this.Item[UpperBound(this.Item)+1]=this.m_cascada
+end on
+
+on m_ventana.destroy
+call super::destroy
+destroy(this.m_horizontal)
+destroy(this.m_vertical)
+destroy(this.m_primerplano)
+destroy(this.m_cascada)
+end on
+
+type m_horizontal from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Tilehorizontal!)
+end event
+
+on m_horizontal.create
+call super::create
+this.text = "Horizontal"
+this.microhelp = "Organiza las ventanas horizontalmente"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_horizontal.destroy
+call super::destroy
+end on
+
+type m_vertical from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Tile!)
+end event
+
+on m_vertical.create
+call super::create
+this.text = "Vertical"
+this.microhelp = "Organiza las ventanas verticalmente"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_vertical.destroy
+call super::destroy
+end on
+
+type m_primerplano from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Layer!)
+end event
+
+on m_primerplano.create
+call super::create
+this.text = "Primer Plano"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_primerplano.destroy
+call super::destroy
+end on
+
+type m_cascada from menu within m_ventana
+end type
+
+event clicked;w_principal.arrangesheets(Cascade!)
+end event
+
+on m_cascada.create
+call super::create
+this.text = "Cascada"
+this.microhelp = "Organiza las ventanas en cascada"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_cascada.destroy
+call super::destroy
+end on
+
+type m_ayuda from menu within m_menu_web
+end type
+
+on m_ayuda.create
+call super::create
+this.text = "Ayuda"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_ayuda.destroy
+call super::destroy
+end on
+

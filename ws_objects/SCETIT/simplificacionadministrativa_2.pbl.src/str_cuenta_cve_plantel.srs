@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_cuenta_cve_plantel.srs
+global type str_cuenta_cve_plantel from structure
+	long		cuenta
+	long		cve_plantel
+end type
+

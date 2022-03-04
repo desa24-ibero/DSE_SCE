@@ -1,0 +1,43 @@
+﻿$PBExportHeader$f_cuenta_nips_insertados.srf
+global type f_cuenta_nips_insertados from function_object
+end type
+
+forward prototypes
+global function long f_cuenta_nips_insertados (long al_clv_ver, long al_clv_per, long al_anio)
+end prototypes
+
+global function long f_cuenta_nips_insertados (long al_clv_ver, long al_clv_per, long al_anio);//f_cuenta_nips_insertados
+//Recibe:
+//	al_clv_ver		long
+//	al_clv_per		long
+//	al_anio			long
+//Devuelve:
+//	Long que indica cuandos alumnos han sido insertados en la tabla de nips de admision
+
+long ll_num_insertados
+integer li_codigo_sql
+string ls_mensaje_sql
+
+SELECT count(*) 
+INTO	:ll_num_insertados
+FROM cnv_folio_nip cfn                               
+WHERE cfn.clv_ver = :al_clv_ver
+AND   cfn.clv_per = :al_clv_per
+AND   cfn.anio = :al_anio
+USING gtr_sadm;
+
+li_codigo_sql = gtr_sadm.SqlCode
+ls_mensaje_sql = gtr_sadm.SqlErrText
+
+if li_codigo_sql = 100 or isnull(ll_num_insertados) then
+	return 0
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar cnv_folio_nip", ls_mensaje_sql)
+	return -1
+end if
+
+return ll_num_insertados
+
+
+end function
+

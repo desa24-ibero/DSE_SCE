@@ -1,0 +1,31 @@
+﻿$PBExportHeader$dw_reporte_carreras_ing.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=138 color="536870912" )
+summary(height=86 color="536870912" )
+footer(height=51 color="536870912" )
+detail(height=0 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=aspiran_clv_carr dbname="aspiran.clv_carr" )
+ retrieve="  SELECT aspiran.clv_carr  
+    FROM aspiran,   
+         general  
+   WHERE ( aspiran.folio = general.folio ) and  
+         ( aspiran.clv_ver = general.clv_ver ) and  
+         ( aspiran.clv_per = general.clv_per ) and  
+         ( aspiran.anio = general.anio ) and  
+         ( aspiran.ing_per = :per ) AND  
+         ( aspiran.ing_anio = :ani ) AND  
+         (( :concep = 0 AND  
+         aspiran.pago_exam = :pago ) OR  
+         ( :concep = 1 AND  
+         aspiran.pago_insc = :pago AND  
+         aspiran.status <> 0 and aspiran.status <> 3))    
+" arguments=(("ver", number),("per", number),("ani", number),("pago", number),("concep", number))  sort="aspiran_clv_carr A " )
+group(level=1 header.height=106 trailer.height=0 by=("aspiran_clv_carr" ) header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="2" text=""border="0" color="0" x="11" y="26" height="64" width="3215"  name=st_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=header.1 alignment="2" expression="count(aspiran_clv_carr for group 1)"border="0" color="0" x="1430" y="9" height="70" width="307" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=header.1 id=1 alignment="0" tabsequence=32766 border="0" color="0" x="48" y="12" height="64" width="1339" format="[general]"  name=aspiran_clv_carr dddw.name=dw_carrera dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="count(aspiran_clv_carr for all)"border="0" color="0" x="1430" y="3" height="74" width="304" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=summary alignment="0" text="Universidad Iberoamericana:"border="0" color="0" x="48" y="7" height="67" width="819"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=footer alignment="0" text="<dw_reporte_carreras_ing>"border="0" color="33554432" x="37" y="3" height="42" width="812"  font.face="Arial" font.height="-6" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

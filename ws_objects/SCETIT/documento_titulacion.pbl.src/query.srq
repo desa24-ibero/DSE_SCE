@@ -1,0 +1,2 @@
+﻿$PBExportHeader$query.srq
+PBSELECT( VERSION(400) TABLE(NAME="documento_titulacion" ) COLUMN(NAME="documento_titulacion.cve_documento_titulacion") COLUMN(NAME="documento_titulacion.documento_titulacion")WHERE(    EXP1 ="documento_titulacion.cve_documento_titulacion"   OP ="="    EXP2 =":al_cve_documento" ) ) ARG(NAME = "al_cve_documento" TYPE = number)

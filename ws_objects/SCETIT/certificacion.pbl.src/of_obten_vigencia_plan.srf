@@ -1,0 +1,50 @@
+﻿$PBExportHeader$of_obten_vigencia_plan.srf
+global type of_obten_vigencia_plan from function_object
+end type
+
+forward prototypes
+global function integer of_obten_vigencia_plan (long al_cve_carrera, long al_cve_plan, ref string as_vigencia)
+end prototypes
+
+global function integer of_obten_vigencia_plan (long al_cve_carrera, long al_cve_plan, ref string as_vigencia);//of_obten_vigencia_plan
+//Recibe	
+//			al_cve_carrera	long
+//			al_cve_plan
+
+long ll_cve_concepto, ll_cve_subconcepto
+string ls_mensaje, ls_vigencia
+integer li_codigo_sql
+
+SELECT vigencia
+INTO
+:ls_vigencia
+FROM plan_estudios
+WHERE cve_carrera = :al_cve_carrera
+AND 	cve_plan = :al_cve_plan
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje = gtr_sce.SqlErrText
+
+as_vigencia=""
+
+IF li_codigo_sql= -1 THEN
+	MessageBox("Error al consultar plan_estudios",ls_mensaje,StopSign! )	
+	return  -1
+ELSEIF li_codigo_sql=100 THEN 
+	MessageBox("No existe registro en plan_estudios",ls_mensaje,StopSign! )	
+	return  100
+ELSEIF li_codigo_sql=0 THEN 
+	IF isnull(ls_vigencia)  THEN
+		ls_vigencia = ""
+	END IF
+END IF
+
+as_vigencia = ls_vigencia
+
+return li_codigo_sql
+
+
+			
+end function
+

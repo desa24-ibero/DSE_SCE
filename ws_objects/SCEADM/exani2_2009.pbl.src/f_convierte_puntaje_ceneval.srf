@@ -1,0 +1,25 @@
+﻿$PBExportHeader$f_convierte_puntaje_ceneval.srf
+global type f_convierte_puntaje_ceneval from function_object
+end type
+
+forward prototypes
+global function decimal f_convierte_puntaje_ceneval (decimal ad_puntaje)
+end prototypes
+
+global function decimal f_convierte_puntaje_ceneval (decimal ad_puntaje);//f_convierte_puntaje_ceneval
+//Recibe
+//ad_puntaje	en escala 700-1300
+//Regresa
+//Decimal en escala 0-100
+
+decimal ld_puntaje_base_100
+
+if ad_puntaje> 0.01 then
+	ld_puntaje_base_100 = (ad_puntaje -700)/6
+else
+	ld_puntaje_base_100 = 0.0000
+end if
+
+return ld_puntaje_base_100
+end function
+

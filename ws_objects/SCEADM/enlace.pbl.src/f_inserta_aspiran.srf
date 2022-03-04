@@ -1,0 +1,124 @@
+﻿$PBExportHeader$f_inserta_aspiran.srf
+global type f_inserta_aspiran from function_object
+end type
+
+forward prototypes
+global function integer f_inserta_aspiran (long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio, long al_folio_apartado, integer ai_clv_ver_apartado, string as_cve_salon, boolean ab_existe_nuevo_registro)
+end prototypes
+
+global function integer f_inserta_aspiran (long al_folio, integer ai_clv_ver, integer ai_clv_per, integer ai_anio, long al_folio_apartado, integer ai_clv_ver_apartado, string as_cve_salon, boolean ab_existe_nuevo_registro);//f_inserta_aspiran
+//Recibe 	:	al_folio	long
+//		ai_clv_ver	integer
+//		ai_clv_per	integer
+//		ai_anio		integer
+//		al_folio_apartado		long
+//		ai_clv_ver_apartado	integer
+//		as_cve_salon	string
+//		ab_existe_nuevo_registro	boolean
+//Devuelve : 0 Inserción/Actualización exitosa
+//			100 No existe el registro
+//			 -1 Error al insertar/actualizar
+long ll_cuenta, ll_folio_anterior
+int li_codigo_sql
+string ls_mensaje, ls_operacion
+
+IF al_folio = al_folio_apartado THEN
+	ll_folio_anterior = al_folio
+else
+	ll_folio_anterior = al_folio
+END IF
+IF ab_existe_nuevo_registro THEN
+	UPDATE aspiran
+	SET 
+	clv_carr = a_origen.clv_carr,
+	promedio = a_origen.promedio,
+	status = a_origen.status,
+	puntaje = a_origen.puntaje,
+	pago_exam = a_origen.pago_exam,
+	salon = :as_cve_salon,
+	lugar_gen = a_origen.lugar_gen,
+	lugar_car = a_origen.lugar_car,
+	num_paq = a_origen.num_paq,
+	pago_insc = a_origen.pago_insc,
+	ing_per = a_origen.ing_per,
+	ing_anio = a_origen.ing_anio,
+	sol_per = a_origen.sol_per,
+	sol_anio = a_origen.sol_anio,
+	tiporegistro = a_origen.tiporegistro,
+	cve_tipo_examen = a_origen.cve_tipo_examen,
+	folio_original = :ll_folio_anterior
+	FROM aspiran a_destino , v_aspiran a_origen
+	WHERE a_destino.folio = :al_folio_apartado
+	AND a_destino.clv_ver = :ai_clv_ver_apartado
+	AND a_destino.clv_per = :ai_clv_per
+	AND a_destino.anio = :ai_anio
+	AND a_destino.clv_per = a_origen.clv_per
+	AND a_destino.anio = a_origen.anio
+	AND a_origen.clv_ver = :ai_clv_ver
+	AND a_origen.folio = :al_folio
+	USING gtr_sadm;
+	ls_operacion = "Actualizar"
+ELSE
+	INSERT INTO aspiran(
+	folio,
+	clv_ver,
+	clv_per,
+	anio,
+	clv_carr,
+	promedio,
+	status,
+	puntaje,
+	pago_exam,
+	salon,
+	lugar_gen,
+	lugar_car,
+	num_paq,
+	pago_insc,
+	ing_per,
+	ing_anio,
+	sol_per,
+	sol_anio,
+	tiporegistro,
+	cve_tipo_examen,
+	folio_original)
+	SELECT
+	:al_folio_apartado,
+	:ai_clv_ver_apartado,
+	clv_per,
+	anio,
+	clv_carr,
+	promedio,
+	status,
+	puntaje,
+	pago_exam,
+	:as_cve_salon,
+	lugar_gen,
+	lugar_car,
+	num_paq,
+	pago_insc,
+	ing_per,
+	ing_anio,
+	sol_per,
+	sol_anio,
+	tiporegistro,
+	cve_tipo_examen,
+	:ll_folio_anterior
+	FROM aspiran
+	WHERE folio = :al_folio
+	AND clv_ver = :ai_clv_ver
+	AND clv_per = :ai_clv_per 
+	AND anio = :ai_anio
+	USING gtr_sadm;
+	ls_operacion = "Insertar"
+END IF
+
+li_codigo_sql = gtr_sadm.SqlCode
+ls_mensaje = gtr_sadm.SqlErrText
+
+IF li_codigo_sql = -1 THEN
+	MessageBox("Error al "+ls_operacion+" en aspiran", ls_mensaje, StopSign!)
+END IF
+
+RETURN li_codigo_sql
+end function
+

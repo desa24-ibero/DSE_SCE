@@ -1,0 +1,81 @@
+﻿$PBExportHeader$d_alumno_acta_evaluacion_sin_conf_ets.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+header(height=120 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=alumno_acta_evaluacion_preelim_cuenta dbname="cuenta" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=alumno_acta_evaluacion_preelim_cve_mat dbname="cve_mat" )
+ column=(type=char(2) update=yes updatewhereclause=yes key=yes name=alumno_acta_evaluacion_preelim_gpo dbname="gpo" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=alumno_acta_evaluacion_preelim_periodo dbname="periodo" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=alumno_acta_evaluacion_preelim_anio dbname="anio" )
+ column=(type=char(4) updatewhereclause=yes name=materias_evaluacion dbname="evaluacion" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=calificacion dbname="calificacion" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=calificacion_confirmada dbname="calificacion_confirmada" )
+ column=(type=long updatewhereclause=yes name=examen_extrao_titulo_cve_condicion dbname="cve_condicion" )
+ column=(type=long updatewhereclause=yes key=yes name=alumno_acta_evaluacion_preelim_cve_tipo_examen dbname="cve_tipo_examen" )
+ retrieve="  SELECT alumno_acta_evaluacion_preelim.cuenta,   
+         alumno_acta_evaluacion_preelim.cve_mat,   
+         alumno_acta_evaluacion_preelim.gpo,   
+         alumno_acta_evaluacion_preelim.periodo,   
+         alumno_acta_evaluacion_preelim.anio,   
+         materias.evaluacion,
+         calificacion = alumno_acta_evaluacion_preelim.calificacion,   
+         calificacion_confirmada = alumno_acta_evaluacion_preelim.calificacion_confirmada,
+			mat_inscritas.cve_condicion ,
+			alumno_acta_evaluacion_preelim.cve_tipo_examen
+    FROM alumno_acta_evaluacion_preelim,   
+         materias,  
+		   acta_evaluacion_preeliminar,
+			examen_extrao_titulo mat_inscritas   
+   WHERE (  alumno_acta_evaluacion_preelim.cve_mat = materias.cve_mat ) AND  
+         ( alumno_acta_evaluacion_preelim.cve_mat = :an_cve_mat ) AND  
+         (  alumno_acta_evaluacion_preelim.gpo = :as_gpo ) AND  
+         (  alumno_acta_evaluacion_preelim.periodo = :an_periodo ) AND  
+         (  alumno_acta_evaluacion_preelim.anio = :an_anio ) AND  
+			(  acta_evaluacion_preeliminar.cve_tipo_examen =  :cve_tipo_examen ) AND
+			(  acta_evaluacion_preeliminar.cve_mat =  alumno_acta_evaluacion_preelim.cve_mat ) AND
+			(  acta_evaluacion_preeliminar.gpo =  alumno_acta_evaluacion_preelim.gpo ) AND
+			(  acta_evaluacion_preeliminar.periodo =  alumno_acta_evaluacion_preelim.periodo ) AND
+			(  acta_evaluacion_preeliminar.anio =  alumno_acta_evaluacion_preelim.anio ) AND
+			(  acta_evaluacion_preeliminar.cve_tipo_examen =  alumno_acta_evaluacion_preelim.cve_tipo_examen ) AND
+         (  acta_evaluacion_preeliminar.cve_estatus_acta <= 2 )     AND
+			(  alumno_acta_evaluacion_preelim.cve_mat =  mat_inscritas.cve_mat ) AND
+			(  alumno_acta_evaluacion_preelim.gpo =  mat_inscritas.gpo COLLATE DATABASE_DEFAULT) AND
+			(  alumno_acta_evaluacion_preelim.periodo =  mat_inscritas.periodo ) AND
+			(  alumno_acta_evaluacion_preelim.anio =  mat_inscritas.anio ) AND
+			(  alumno_acta_evaluacion_preelim.cuenta =  mat_inscritas.cuenta ) AND
+			(  alumno_acta_evaluacion_preelim.cve_tipo_examen =  mat_inscritas.tipo_examen ) AND
+			(  mat_inscritas.cve_condicion=0 ) 
+
+" update="alumno_acta_evaluacion_preelim" updatewhere=1 updatekeyinplace=yes arguments=(("an_cve_mat", number),("as_gpo", string),("an_periodo", number),("an_anio", number),("cve_tipo_examen", number)) )
+text(band=header alignment="2" text="Cuenta" border="0" color="33554432" x="146" y="36" height="64" width="311" html.valueishtml="0"  name=alumno_acta_evaluacion_preelim_cuenta_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Mat" border="0" color="33554432" x="475" y="36" height="64" width="311" html.valueishtml="0"  name=alumno_acta_evaluacion_preelim_cve_mat_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Gpo" border="0" color="33554432" x="823" y="36" height="64" width="311" html.valueishtml="0"  name=alumno_acta_evaluacion_preelim_gpo_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Calificacion" border="0" color="33554432" x="1157" y="36" height="64" width="311" html.valueishtml="0"  name=alumno_acta_evaluacion_preelim_calificacion_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Calificacion Confirmada" border="0" color="33554432" x="1490" y="36" height="64" width="663" html.valueishtml="0"  name=alumno_acta_evaluacion_preelim_calificacion_confirmada_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Evaluacion" border="0" color="33554432" x="2171" y="36" height="64" width="279" html.valueishtml="0"  name=materias_evaluacion_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Periodo" border="0" color="33554432" x="2487" y="36" height="64" width="279" html.valueishtml="0"  name=t_1 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Año" border="0" color="33554432" x="2775" y="36" height="64" width="279" html.valueishtml="0"  name=t_2 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="33554432" x="137" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=alumno_acta_evaluacion_preelim_cuenta visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="33554432" x="466" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=alumno_acta_evaluacion_preelim_cve_mat visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="937" y="4" height="76" width="82" format="[general]" html.valueishtml="0"  name=alumno_acta_evaluacion_preelim_gpo visible="1" edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="2537" y="4" height="76" width="174" format="[general]" html.valueishtml="0"  name=alumno_acta_evaluacion_preelim_periodo visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="33554432" x="2825" y="4" height="76" width="174" format="[general]" html.valueishtml="0"  name=alumno_acta_evaluacion_preelim_anio visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="33554432" x="2222" y="4" height="76" width="174" format="[general]" html.valueishtml="0"  name=materias_evaluacion visible="1" edit.limit=4 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=20 border="0" color="33554432" x="1719" y="4" height="76" width="119" format="[general]" html.valueishtml="0"  name=calificacion_confirmada visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=10 border="0" color="33554432" x="1248" y="4" height="76" width="119" format="[general]" html.valueishtml="0"  name=calificacion visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=40 border="0" color="33554432" x="5189" y="0" height="64" width="2135" format="[general]" html.valueishtml="0"  name=alumno_acta_evaluacion_preelim_cve_tipo_examen visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=50 border="0" color="33554432" x="7323" y="0" height="64" width="192" format="[general]" html.valueishtml="0"  name=examen_extrao_titulo_cve_condicion visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

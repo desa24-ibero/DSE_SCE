@@ -1,0 +1,57 @@
+﻿$PBExportHeader$f_inserta_criterio_horario_insc.srf
+global type f_inserta_criterio_horario_insc from function_object
+end type
+
+forward prototypes
+global function long f_inserta_criterio_horario_insc (integer ai_periodo, integer ai_anio, string as_cond_preinsc, string as_grado)
+end prototypes
+
+global function long f_inserta_criterio_horario_insc (integer ai_periodo, integer ai_anio, string as_cond_preinsc, string as_grado);//NOMBRE
+//f_inserta_criterio_horario_insc
+//
+//REGRESA
+//long
+//
+//RECIBE	
+//ai_periodo				int
+//ai_anio					int
+//as_cond_preinsc			string
+//as_grado					string
+
+
+integer li_codigo_sql, li_codigo_sql2
+string ls_mensaje_sql, ls_mensaje_sql2, ls_calificacion_anterior , ls_criterio
+long	ll_cuenta, ll_rows
+
+ls_criterio = as_grado + as_cond_preinsc
+
+INSERT INTO	criterio_horario_insc (periodo, anio, cond_preinsc, grado, criterio)
+VALUES (:ai_periodo, :ai_anio, :as_cond_preinsc, :as_grado, :ls_criterio)
+USING gtr_sce;
+
+li_codigo_sql =gtr_sce.SqlCode
+ls_mensaje_sql =gtr_sce.SqlErrText
+
+//Hubo algún problema al realizar la inserción
+if li_codigo_sql = -1 then
+	ROLLBACK USING gtr_sce;
+	MessageBox("Error al insertar en criterio_horario_insc", ls_mensaje_sql)	
+	return li_codigo_sql
+elseif li_codigo_sql = 100 then
+	ROLLBACK USING gtr_sce;
+	MessageBox("No existen registros a insertar en criterio_horario_insc", ls_mensaje_sql)	
+	return li_codigo_sql		
+end if
+
+if li_codigo_sql = 0 then
+	COMMIT USING gtr_sce;
+	MessageBox("Inserción de criterio exitoso", ls_mensaje_sql)	
+	return li_codigo_sql		
+end if
+
+
+return li_codigo_sql
+	
+
+end function
+

@@ -1,0 +1,131 @@
+﻿$PBExportHeader$f_inserta_actas_transf.srf
+global type f_inserta_actas_transf from function_object
+end type
+
+forward prototypes
+global function long f_inserta_actas_transf (integer ai_periodo, integer ai_anio, integer ai_cve_tipo_examen, transaction atr_transaction)
+end prototypes
+
+global function long f_inserta_actas_transf (integer ai_periodo, integer ai_anio, integer ai_cve_tipo_examen, transaction atr_transaction);//f_inserta_actas_transf
+//
+//Recibe:
+//ai_periodo	integer
+//ai_anio		integer
+//ai_cve_tipo_examen	integer
+//Devuelve:
+//				-1		Error de base de datos
+//				 0		Exito
+//				100   No hay registros a insertar
+
+
+integer li_codigo_sql
+long li_no_acta, ll_num_alumnos
+string ls_mensaje_sql
+
+
+ll_num_alumnos = f_num_actas_transf(ai_periodo,ai_anio, ai_cve_tipo_examen, atr_transaction )
+
+if ll_num_alumnos>0 then
+	MessageBox("Se encontraron alumnos materia insertados","No es posible insertar en alumno_acta_evaluacion_transf", StopSign!)
+	return -1	
+end if
+
+if ai_cve_tipo_examen = 3 then
+	INSERT INTO acta_evaluacion_transf(  cve_mat,   
+          gpo,   
+          periodo,   
+          anio,   
+          no_acta,   
+          cve_tipo_examen,   
+          nivel,   
+          cve_profesor,   
+          cve_profesor_rh,   
+          inscritos,   
+          status,   
+          cve_tipo_calificacion,   
+          cve_estatus_acta,   
+          fecha_generacion,   
+          cve_origen_confirmacion,   
+          cve_tipo_recepcion )
+    SELECT  cve_mat,   
+          gpo,   
+          periodo,   
+          anio,   
+          no_acta,   
+          cve_tipo_examen,   
+          nivel,   
+          cve_profesor,   
+          cve_profesor_rh,   
+          inscritos,   
+          status,   
+          cve_tipo_calificacion,   
+          cve_estatus_acta,   
+          fecha_generacion,   
+          cve_origen_confirmacion,   
+          cve_tipo_recepcion  
+    FROM acta_evaluacion_preeliminar   
+	 WHERE periodo = :ai_periodo
+	 AND anio = :ai_anio
+	 AND	cve_tipo_examen in (:ai_cve_tipo_examen)	 
+    USING atr_transaction;
+elseif ai_cve_tipo_examen = 26 then
+	INSERT INTO acta_evaluacion_transf(  cve_mat,   
+          gpo,   
+          periodo,   
+          anio,   
+          no_acta,   
+          cve_tipo_examen,   
+          nivel,   
+          cve_profesor,   
+          cve_profesor_rh,   
+          inscritos,   
+          status,   
+          cve_tipo_calificacion,   
+          cve_estatus_acta,   
+          fecha_generacion,   
+          cve_origen_confirmacion,   
+          cve_tipo_recepcion )
+    SELECT  cve_mat,   
+          gpo,   
+          periodo,   
+          anio,   
+          no_acta,   
+          cve_tipo_examen,   
+          nivel,   
+          cve_profesor,   
+          cve_profesor_rh,   
+          inscritos,   
+          status,   
+          cve_tipo_calificacion,   
+          cve_estatus_acta,   
+          fecha_generacion,   
+          cve_origen_confirmacion,   
+          cve_tipo_recepcion  
+    FROM acta_evaluacion_preeliminar   
+	 WHERE periodo = :ai_periodo
+	 AND anio = :ai_anio
+	 AND	cve_tipo_examen in (2,6)	 
+    USING atr_transaction;
+
+end if
+
+li_codigo_sql = atr_transaction.SqlCode
+ls_mensaje_sql = atr_transaction.SqlErrText
+
+if li_codigo_sql = 100 then	
+//No se insertaron actas de ese periodo
+	return li_codigo_sql
+elseif li_codigo_sql = -1 then
+//No fue posible insertar}
+	rollback using atr_transaction;
+	MessageBox("Error al insertar en acta_evaluacion_transf", ls_mensaje_sql)
+	return li_codigo_sql
+elseif li_codigo_sql = 0 then
+	commit using atr_transaction;	
+end if
+
+
+return li_codigo_sql
+
+end function
+

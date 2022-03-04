@@ -1,0 +1,52 @@
+﻿$PBExportHeader$f_aplica_pago_tramite.srf
+global type f_aplica_pago_tramite from function_object
+end type
+
+forward prototypes
+global function long f_aplica_pago_tramite (long al_cuenta, integer ai_cve_tramite)
+end prototypes
+
+global function long f_aplica_pago_tramite (long al_cuenta, integer ai_cve_tramite);//f_aplica_pago_tramite
+//Revisa si se ha realizado el pago del tramite
+//Recibe		al_cuenta  long
+//				ai_cve_tramite	int
+//Devuelve	long
+//          0  No se pudo aplicar
+//          1  Se pudo aplicar correctamente
+
+integer li_codigo_sql, li_resultado
+string ls_mensaje_sql
+long ll_num_tramites, ll_null
+
+SetNull(ll_null)
+gtr_scob.autocommit= true
+
+DECLARE aplica_pago PROCEDURE FOR dbo.sp_aplica_pago_tramite  
+         @cuenta = :al_cuenta,   
+         @tramite = :ai_cve_tramite,   
+         @resultado = :li_resultado OUTPUT 
+USING gtr_scob;
+
+
+EXECUTE aplica_pago;
+
+li_codigo_sql = gtr_scob.SqlCode
+ls_mensaje_sql = gtr_scob.SqlErrText
+
+if li_codigo_sql = -1 then
+	MessageBox("Error al aplicar el pago del trámite", ls_mensaje_sql,StopSign!)
+   gtr_scob.autocommit= false
+	return  0
+end if
+
+FETCH aplica_pago INTO :li_resultado;
+
+CLOSE aplica_pago;
+
+gtr_scob.autocommit= false
+
+
+return li_resultado
+
+end function
+

@@ -1,0 +1,49 @@
+﻿$PBExportHeader$f_obten_coordinaciones_division.srf
+global type f_obten_coordinaciones_division from function_object
+end type
+
+forward prototypes
+global function integer f_obten_coordinaciones_division (ref long al_cve_division[], ref long al_cve_coordinacion[], ref string as_coordinacion[], ref string as_nivel[])
+end prototypes
+
+global function integer f_obten_coordinaciones_division (ref long al_cve_division[], ref long al_cve_coordinacion[], ref string as_coordinacion[], ref string as_nivel[]);//f_obten_coordinaciones_division
+//		al_cve_division			long
+//		al_cve_coordinacion[]	long
+//		as_coordinacion[]			string
+//		as_nivel[]					string
+
+long ll_row_actual, ll_clave, ll_num_registros
+long ll_tamanio_array, ll_indice_array, ll_cve_division, ll_indice_coordinaciones = 1
+string ls_texto, ls_datawindow = 'd_coordinaciones', ls_nivel
+uds_datastore lds_datastore
+
+lds_datastore = create uds_datastore
+lds_datastore.dataobject= ls_datawindow
+lds_datastore.SetTransObject(gtr_sce)
+
+ll_tamanio_array = upperBound(al_cve_division)
+
+//FOR ll_indice_array = 1 TO ll_tamanio_array
+//	ll_cve_division = al_cve_division[ll_indice_array]
+if ll_tamanio_array > 0 then
+	ll_num_registros = lds_datastore.Retrieve(al_cve_division)
+	if ll_num_registros >0 then
+		for ll_row_actual= 1 to ll_num_registros	
+			ll_clave = lds_datastore.GetItemNumber(ll_row_actual,1)
+			al_cve_coordinacion[ll_indice_coordinaciones] = ll_clave	
+			ls_texto = lds_datastore.GetItemString(ll_row_actual,2)			
+			as_coordinacion[ll_indice_coordinaciones] = ls_texto	
+			ls_nivel= lds_datastore.GetItemString(ll_row_actual,3)			
+			as_nivel[ll_indice_coordinaciones] = ls_nivel	
+			ll_indice_coordinaciones = ll_indice_coordinaciones +1
+		next	
+	elseif ll_num_registros< 0 then
+		MessageBox("Datastore con error", "El datastore["+ls_datawindow+"] no puede devolver registros", StopSign!)
+		return -1
+	end if
+//NEXT
+end if
+
+return ll_indice_coordinaciones - 1
+end function
+

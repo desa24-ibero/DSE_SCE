@@ -1,0 +1,42 @@
+﻿$PBExportHeader$f_obten_arreglo_de_string.srf
+global type f_obten_arreglo_de_string from function_object
+end type
+
+forward prototypes
+global function integer f_obten_arreglo_de_string (string as_cadena, ref string as_arreglo_cadenas[])
+end prototypes
+
+global function integer f_obten_arreglo_de_string (string as_cadena, ref string as_arreglo_cadenas[]);//f_obten_arreglo_de_string
+//	Recibe	ls_cadena	string
+//				ls_arreglo_cadenas[] string
+
+long ll_posicion_coma, ll_indice_arreglo
+string ls_subcadena, ls_cadena
+
+ls_cadena= as_cadena
+ll_posicion_coma= POS(ls_cadena,",",1)
+ll_indice_arreglo=1
+
+DO WHILE ll_posicion_coma<>0 
+
+	ls_subcadena = TRIM(MID(ls_cadena,1,ll_posicion_coma - 1))
+	
+	as_arreglo_cadenas[ll_indice_arreglo] = ls_subcadena
+	ll_indice_arreglo= ll_indice_arreglo + 1
+	ls_cadena = MID(ls_cadena,ll_posicion_coma + 1)
+	ll_posicion_coma= POS(ls_cadena,",",1)
+	IF isnull(ll_posicion_coma) THEN
+		ll_posicion_coma= 0
+	END IF	
+LOOP
+
+IF len(ls_cadena)>0 THEN
+	ls_subcadena= TRIM(ls_cadena)
+	as_arreglo_cadenas[ll_indice_arreglo] = ls_subcadena	
+END IF
+
+RETURN 0
+
+
+end function
+

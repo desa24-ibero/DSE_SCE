@@ -1,0 +1,61 @@
+﻿$PBExportHeader$f_obten_estatus_proceso_actas.srf
+global type f_obten_estatus_proceso_actas from function_object
+end type
+
+forward prototypes
+global function integer f_obten_estatus_proceso_actas (integer ai_cve_proceso, integer ai_periodo, integer ai_anio, transaction atr_trans)
+end prototypes
+
+global function integer f_obten_estatus_proceso_actas (integer ai_cve_proceso, integer ai_periodo, integer ai_anio, transaction atr_trans);/*
+ *		Nombre	f_obten_estatus_proceso_actas
+ *		Recibe	 ai_cve_proceso integer,
+ 					 ai_anio        integer,
+					 ai_periodo		 integer,
+					 atr_trans		 transaction
+ *		Regresa	1	si el proceso en cuestión ya ha sido ejecutado o se encuentra abierto
+ *					0	si el proceso en cuestión aún no ha sido ejecutado o se encuentra pendiente
+ * 				>1 si existe un estado adicional
+ *					-1	error de comunicacion
+ *					APR 20100626
+ */
+
+string ls_nombre_datastore, ls_control_correcto
+int li_res, li_ret, li_periodo, li_anio, li_cve_estatus_proceso
+long ll_row_actual
+char lc_periodo
+DataStore lds_procesos_actas
+
+li_periodo = ai_periodo
+li_anio = ai_anio
+
+lds_procesos_actas = Create DataStore
+ls_nombre_datastore = "d_procesos_actas"
+
+lds_procesos_actas.DataObject = ls_nombre_datastore
+lds_procesos_actas.SetTransObject(atr_trans)
+
+li_res = lds_procesos_actas.Retrieve(ai_cve_proceso,li_periodo,li_anio)
+
+if li_res >= 1 then
+	ll_row_actual =lds_procesos_actas.GetRow()
+	if ll_row_actual>0 then
+		li_cve_estatus_proceso= lds_procesos_actas.GetItemNumber(ll_row_actual,"cve_estatus_proceso")
+		if isnull(li_cve_estatus_proceso) then
+			li_cve_estatus_proceso = 0
+		end if
+	else 
+		li_cve_estatus_proceso = 0
+	end if
+	li_ret = li_cve_estatus_proceso
+elseif li_res = 0 then
+	li_ret = 0
+else
+	li_ret = -1
+	messagebox("Error de Comunicación","Error con la consulta de proceso de actas BD. Favor de intentar nuevamente", StopSign!)
+end if
+
+Destroy lds_procesos_actas
+return li_ret
+
+end function
+

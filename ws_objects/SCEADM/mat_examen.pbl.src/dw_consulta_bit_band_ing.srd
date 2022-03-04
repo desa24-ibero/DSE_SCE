@@ -1,0 +1,130 @@
+﻿$PBExportHeader$dw_consulta_bit_band_ing.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=192 color="536870912" )
+summary(height=90 color="536870912" )
+footer(height=45 color="536870912" )
+detail(height=77 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=ccuenta dbname="general.cuenta" )
+ column=(type=long updatewhereclause=yes name=cstatus dbname="aspiran.status" )
+ column=(type=char(50) updatewhereclause=yes name=general_nombre dbname="general.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=general_apaterno dbname="general.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=general_amaterno dbname="general.amaterno" )
+ column=(type=char(10) updatewhereclause=yes name=cnombre_status dbname="nombre_status" )
+ column=(type=char(152) updatewhereclause=yes name=cnombre_completo dbname="nombre_completo" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_ver dbname="aspiran.clv_ver" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_per dbname="aspiran.clv_per" )
+ column=(type=long updatewhereclause=yes name=aspiran_anio dbname="aspiran.anio" )
+ column=(type=char(100) updatewhereclause=yes name=v_carreras_carrera dbname="v_carreras.carrera" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_carr dbname="aspiran.clv_carr" )
+ column=(type=real updatewhereclause=yes name=aspiran_puntaje dbname="aspiran.puntaje" )
+ column=(type=long updatewhereclause=yes name=aspiran_pago_exam dbname="aspiran.pago_exam" values="No	0/Si	1/" )
+ column=(type=long updatewhereclause=yes name=aspiran_pago_insc dbname="aspiran.pago_insc" values="No	0/Si	1/" )
+ column=(type=long updatewhereclause=yes name=aspiran_folio dbname="aspiran.folio" )
+ column=(type=long updatewhereclause=yes name=bit_aspiran_bandera dbname="bit_aspiran.bandera" )
+ column=(type=char(30) updatewhereclause=yes name=bandera_columna dbname="bandera.columna" )
+ column=(type=char(30) updatewhereclause=yes name=bit_aspiran_usuario dbname="bit_aspiran.usuario" )
+ column=(type=datetime updatewhereclause=yes name=bit_aspiran_fecha dbname="bit_aspiran.fecha" )
+ column=(type=long updatewhereclause=yes name=bit_aspiran_anterior dbname="bit_aspiran.anterior" )
+ column=(type=long updatewhereclause=yes name=bit_aspiran_actual dbname="bit_aspiran.actual" )
+ retrieve="  SELECT g.cuenta,   
+         a.status,   
+         g.nombre,   
+         g.apaterno,   
+         g.amaterno,   
+         nombre_status= s.nombre,   
+         nombre_completo = g.apaterno+~" ~"+g.amaterno+~" ~"+g.nombre,   
+         a.clv_ver,   
+         a.clv_per,   
+         a.anio,   
+         c.carrera,   
+         a.clv_carr,   
+         a.puntaje,   
+         a.pago_exam,   
+         a.pago_insc,   
+         a.folio,   
+         b.bandera,   
+         bandera.columna,   
+         b.usuario,   
+         b.fecha,   
+         b.anterior,   
+         b.actual  
+    FROM aspiran a,   
+         general g,   
+         v_carreras c,   
+         bit_aspiran b,   
+         status s,
+         bandera  
+   WHERE ( a.folio = g.folio ) and  
+         ( a.clv_ver = g.clv_ver ) and  
+         ( a.clv_per = g.clv_per ) and  
+         ( a.anio = g.anio ) and  
+         ( a.status = s.status ) and  
+         ( a.clv_carr = c.cve_carrera ) and  
+         ( g.folio = b.folio ) and  
+         ( b.bandera = bandera.bandera ) and  
+         ( ( a.ing_anio = :ani ) AND  
+         ( a.ing_per = :per ) AND  
+         ( b.bandera in ( :banderas) ) ) AND  
+         ( (a.clv_carr = :carrera) OR  
+         (:carrera = 9999)      ) AND  
+         (:folio in ( a.folio, 999999))   
+ORDER BY a.anio ASC,   
+         a.clv_per ASC,   
+         a.clv_ver ASC,   
+         a.status ASC,   
+         g.cuenta ASC   
+" arguments=(("ver", number),("per", number),("ani", number),("banderas", numberlist),("carrera", number),("folio", number))  sort="aspiran_anio A aspiran_clv_per A aspiran_clv_ver A aspiran_folio A bit_aspiran_bandera A bit_aspiran_fecha A " )
+group(level=1 header.height=208 trailer.height=80 by=("aspiran_anio" , "aspiran_clv_per" , "aspiran_clv_ver" , "cstatus" ) header.color="536870912" trailer.color="536870912" )
+compute(band=header alignment="0" expression="~"Pagina: ~"+ string(page())+ ~"/~" +string( pageCount())"border="0" color="33554432" x="6327" y="13" height="67" width="432" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="Bitácora de Cambios a Aspirantes"border="0" color="0" x="2505" y="64" height="102" width="1708"  font.face="Arial" font.height="-16" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=header.1 alignment="2" expression="/* case ( carr_sal_clv_per when 0 then ~"PRIMAVERA ~" when 1 then ~"VERANO ~" when  2 then ~"OTOÑO ~") + string( carr_sal_anio ) +   ~"   Versión   ~"+ string( carr_sal_clv_ver ) */"border="0" color="0" x="955" y="237" height="77" width="1379" format="[general]"  name=cf_titulo  font.face="Arial" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header.1 alignment="2" text="Folio"border="0" color="33554432" x="55" y="131" height="67" width="146"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header.1 alignment="0" text="Pago Insc"border="0" color="33554432" x="4081" y="138" height="64" width="285"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header.1 alignment="0" text="Status"border="0" color="33554432" x="4480" y="138" height="64" width="179"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header.1 alignment="0" text="Carrera"border="0" color="33554432" x="2363" y="138" height="64" width="223"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header.1 alignment="2" text="Puntaje"border="0" color="33554432" x="3379" y="131" height="67" width="223"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header.1 alignment="0" text="Pago Exam"border="0" color="33554432" x="3708" y="138" height="64" width="333"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header.1 alignment="0" text="Posterior"border="0" color="33554432" x="5625" y="138" height="64" width="260"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header.1 alignment="0" text="Anterior"border="0" color="33554432" x="5029" y="138" height="64" width="234"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=header.1 alignment="0" expression=" case (  per when 0 then ~"PRIMAVERA ~" when 1 then ~"VERANO ~" when  2 then ~"OTOÑO ~") + string(  ani ) +   ~"   Versión   ~"+ string(   aspiran_clv_ver ) + ~"   Status   ~"+  cnombre_status "border="0" color="0" x="2571" y="3" height="83" width="1671" format="[general]"  name=cf_titulo_periodo  font.face="Arial" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header.1 alignment="2" text="Cuenta"border="0" color="33554432" x="249" y="131" height="67" width="205"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header.1 alignment="0" text="Nombre"border="0" color="33554432" x="1229" y="131" height="67" width="249"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header.1 alignment="2" text="Columna"border="0" color="33554432" x="636" y="131" height="67" width="260"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header.1 alignment="0" text="Usuario"border="0" color="33554432" x="5990" y="138" height="64" width="219"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header.1 alignment="2" text="Fecha/Hora"border="0" color="33554432" x="6382" y="138" height="64" width="333"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="1317" y="109" height="67" width="508" format="[general]"  name=general_apaterno edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="33554432" x="1851" y="109" height="67" width="508" format="[general]"  name=general_amaterno edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="33554432" x="2337" y="208" height="64" width="673" format="[general]"  name=aspiran_clv_per edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="801" y="109" height="67" width="508" format="[general]"  name=general_nombre edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=detail alignment="0" expression="/* case(  bit_aspiran_bandera  when 1 then  bit_aspiran_anterior else  cf_anterior_no_status ) */"border="0" color="255" x="4089" y="112" height="64" width="461" format=""  name=cf_anterior  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=detail alignment="0" expression=" bit_aspiran_anterior +~"---------~" +cf_anterior_no_status "border="0" color="255" x="3584" y="109" height="64" width="464" format="[general]"  name=cf_ant  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=14 alignment="1" tabsequence=32766 border="0" color="33554432" x="3763" y="3" height="67" width="223" format=""  name=aspiran_pago_exam ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=15 alignment="1" tabsequence=32766 border="0" color="33554432" x="4111" y="3" height="67" width="223" format="[general]"  name=aspiran_pago_insc ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="33554432" x="5661" y="138" height="64" width="362" format="[general]"  name=cnombre_status edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="33554432" x="2838" y="122" height="64" width="567" format="[general]"  name=aspiran_clv_ver edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="33554432" x="2377" y="125" height="64" width="417" format="[general]"  name=aspiran_anio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="33554432" x="4389" y="3" height="67" width="428" format="[general]"  name=cstatus dddw.name=d_dddw_status dddw.displaycolumn=nombre dddw.datacolumn=status dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=12 alignment="1" tabsequence=32766 border="0" color="33554432" x="2154" y="3" height="67" width="165" format="[general]"  name=aspiran_clv_carr edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="33554432" x="2363" y="3" height="67" width="965" format="[general]"  name=v_carreras_carrera edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=13 alignment="1" tabsequence=32766 border="0" color="33554432" x="3361" y="10" height="64" width="267" format="#,##0.00"  name=aspiran_puntaje edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=detail alignment="0" expression="if(  bit_aspiran_actual =0,~"No~", ~"Si~" )"border="0" color="0" x="5606" y="3" height="67" width="223" format="[general]"  name=cf_actual_no_status visible="1~tif( bit_aspiran_bandera <>1, 1,0)"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=detail alignment="1" expression=" bit_aspiran_actual "border="0" color="0" x="5391" y="3" height="67" width="69" format="[general]"  name=cf_bit_aspiran_actual  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=detail alignment="0" expression="if( bit_aspiran_anterior =0,~"No~", ~"Si~" )"border="0" color="0" x="5032" y="3" height="67" width="227" format="[general]"  name=cf_anterior_no_status visible="1~tif( bit_aspiran_bandera <>1, 1,0)"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=21 alignment="0" tabsequence=32766 border="0" color="0" x="4930" y="3" height="67" width="435" format="[general]"  name=bit_aspiran_anterior visible="1~tif( bit_aspiran_bandera =1, 1,0)" dddw.name=d_dddw_status dddw.displaycolumn=nombre dddw.datacolumn=status dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=detail alignment="1" expression=" bit_aspiran_anterior "border="0" color="0" x="4838" y="3" height="67" width="62" format="[general]"  name=cf_bit_aspiran_anterior  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=22 alignment="0" tabsequence=32766 border="0" color="0" x="5482" y="3" height="67" width="468" format="[general]"  name=bit_aspiran_actual visible="1~tif( bit_aspiran_bandera =1, 1,0)" dddw.name=d_dddw_status dddw.displaycolumn=nombre dddw.datacolumn=status dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=17 alignment="1" tabsequence=32766 border="0" color="33554432" x="578" y="3" height="67" width="33" format="[general]"  name=bit_aspiran_bandera edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=detail alignment="0" expression="~"-~"+obten_digito( ccuenta )"border="0" color="33554432" x="475" y="3" height="67" width="77" format=""  name=cf_digito  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="33554432" x="260" y="3" height="67" width="208" format="[general]"  name=ccuenta edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="0" color="33554432" x="15" y="3" height="67" width="219" format="[general]"  name=aspiran_folio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="33554432" x="1075" y="3" height="67" width="1061" format="[general]"  name=cnombre_completo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=18 alignment="0" tabsequence=32766 border="0" color="0" x="640" y="3" height="67" width="410" format="[general]"  name=bandera_columna edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=19 alignment="0" tabsequence=32766 border="0" color="0" x="5976" y="3" height="67" width="260" format="[general]"  name=bit_aspiran_usuario edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=20 alignment="1" tabsequence=32766 border="0" color="33554432" x="6257" y="3" height="67" width="589" format="dd/mm/yyyy h:mm:ss"  name=bit_aspiran_fecha edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=trailer.1 alignment="1" expression="count(ccuenta for group 1)"border="0" color="33554432" x="1009" y="3" height="70" width="249" format="#,##0"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=summary alignment="1" expression="count(ccuenta for all)"border="0" color="33554432" x="1009" y="3" height="70" width="249" format="#,##0"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=footer alignment="2" text="<dw_consulta_bit_band_ing>"border="0" color="0" x="0" y="4" height="42" width="841"  font.face="Arial" font.height="-6" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=trailer.1 alignment="1" text="Modificaciones Por Grupo:"border="0" color="33554432" x="91" y="9" height="64" width="750"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=summary alignment="1" text="Modificaciones Totales:"border="0" color="33554432" x="110" y="3" height="67" width="731"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

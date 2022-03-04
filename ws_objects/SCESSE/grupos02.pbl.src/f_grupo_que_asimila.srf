@@ -1,0 +1,36 @@
+﻿$PBExportHeader$f_grupo_que_asimila.srf
+global type f_grupo_que_asimila from function_object
+end type
+
+forward prototypes
+global function boolean f_grupo_que_asimila (long al_cve_mat, string as_gpo, integer ai_periodo, integer ai_anio)
+end prototypes
+
+global function boolean f_grupo_que_asimila (long al_cve_mat, string as_gpo, integer ai_periodo, integer ai_anio);
+integer li_codigo_sql
+string ls_mensaje_sql
+long ll_cuenta
+
+SELECT count(dbo.grupos.cve_mat)
+INTO	:ll_cuenta
+FROM	dbo.grupos
+WHERE dbo.grupos.cve_asimilada = :al_cve_mat
+AND	dbo.grupos.gpo_asimilado = :as_gpo
+AND	dbo.grupos.periodo = :ai_periodo
+AND	dbo.grupos.anio = :ai_anio
+AND	dbo.grupos.cond_gpo = 1
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 or isnull(ll_cuenta) or ll_cuenta = 0 then
+	return false
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar grupos que asimilan", ls_mensaje_sql)
+	return false
+end if
+
+return true
+end function
+

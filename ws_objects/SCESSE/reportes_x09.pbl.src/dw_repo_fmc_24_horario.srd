@@ -1,0 +1,50 @@
+﻿$PBExportHeader$dw_repo_fmc_24_horario.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no rows_per_detail = 3 )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(9) updatewhereclause=yes name=dias_dia dbname="dias.dia" )
+ column=(type=long updatewhereclause=yes name=horario_hora_inicio dbname="horario.hora_inicio" )
+ column=(type=long updatewhereclause=yes name=horario_hora_final dbname="horario.hora_final" )
+ column=(type=char(12) updatewhereclause=yes name=clase_aula_nombre_aula dbname="clase_aula.nombre_aula" )
+ column=(type=char(16) updatewhereclause=yes name=horario_cve_salon dbname="horario.cve_salon" )
+ retrieve="SELECT dias.dia,   
+         horario.hora_inicio,   
+         horario.hora_final,   
+         clase_aula.nombre_aula,   
+         horario.cve_salon  
+    FROM horario,   
+         clase_aula,   
+         dias  
+   WHERE ( horario.cve_dia = dias.cve_dia ) and  
+         ( horario.clase_aula = clase_aula.clase ) and  
+         ( ( horario.cve_mat = :cve_mat ) AND  
+         ( horario.gpo = :grupo ) AND  
+         ( horario.periodo = :periodo ) AND  
+         ( horario.anio = :anio ) )    
+
+	ORDER BY horario.cve_dia" arguments=(("cve_mat", number),("grupo", string),("periodo", number),("anio", number)) )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="2153" y="4" height="76" width="347" format="[general]" html.valueishtml="0" row_in_detail=3  name=dias_dia_2 visible="1" edit.limit=9 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="0" y="4" height="76" width="334" format="[general]" html.valueishtml="0" row_in_detail=1  name=dias_dia visible="1~tif(rowcount() >=1 OR  rowcount() >=4  OR  rowcount() >=7,1,0 )" edit.limit=9 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="338" y="4" height="76" width="265" format="[general]" html.valueishtml="0" row_in_detail=1  name=horario_hora_inicio visible="1" editmask.mask="/ ## Hrs.-" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="613" y="4" height="76" width="206" format="[general]" html.valueishtml="0" row_in_detail=1  name=horario_hora_final visible="1" editmask.mask="## Hrs." editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="827" y="4" height="76" width="233" format="/[general]" html.valueishtml="0" row_in_detail=1  name=horario_cve_salon visible="1" edit.limit=16 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" font.italic="1" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="1074" y="4" height="76" width="338" format="[general]" html.valueishtml="0" row_in_detail=2  name=dias_dia_1 visible="1" edit.limit=9 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="1902" y="4" height="76" width="238" format="/[general]" html.valueishtml="0" row_in_detail=2  name=horario_cve_salon_1 visible="1" edit.limit=16 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" font.italic="1" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="1422" y="4" height="76" width="265" format="[general]" html.valueishtml="0" row_in_detail=2  name=horario_hora_inicio_1 visible="1" edit.name="/ ## Hrs.-" editmask.mask="/ ## Hrs.-" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="1696" y="4" height="76" width="201" format="[general]" html.valueishtml="0" row_in_detail=2  name=horario_hora_final_1 visible="1" edit.name="## Hrs." editmask.mask="## Hrs." editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="2510" y="4" height="76" width="265" format="[general]" html.valueishtml="0" row_in_detail=3  name=horario_hora_inicio_2 visible="1" edit.name="/ ## Hrs.-" editmask.mask="/ ## Hrs.-" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="2789" y="4" height="76" width="206" format="0.00" html.valueishtml="0" row_in_detail=3  name=horario_hora_final_2 visible="1" edit.name="## Hrs." editmask.mask="## Hrs." editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="3003" y="4" height="76" width="238" format="/[general]" html.valueishtml="0" row_in_detail=3  name=horario_cve_salon_2 visible="1" edit.limit=16 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" font.italic="1" background.mode="1" background.color="536870912" )
+htmltable(border="0" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

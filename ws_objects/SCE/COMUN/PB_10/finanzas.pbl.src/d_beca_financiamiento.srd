@@ -1,0 +1,23 @@
+﻿$PBExportHeader$d_beca_financiamiento.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=141 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=apoyos_porcentaje dbname="apoyos.porcentaje" )
+ retrieve="SELECT 	dbo.apoyos.porcentaje
+		FROM 	dbo.becas_fin,
+				dbo.apoyos
+		WHERE ( dbo.becas_fin.cve_apoyo = dbo.apoyos.cve_apoyo ) AND
+				( dbo.becas_fin.tipo_apoyo = dbo.apoyos.tipo_apoyo ) AND
+				( ( dbo.becas_fin.cuenta = :cuenta ) AND
+				( dbo.becas_fin.anio = :anio ) AND
+				( dbo.becas_fin.periodo = :periodo ) AND
+				(( ( dbo.becas_fin.cve_status_apoyo IN (0,1,2) ) AND
+				( dbo.becas_fin.tipo_apoyo LIKE ~"B~" ) ) OR
+				( ( dbo.becas_fin.cve_status_apoyo IN (0,1,21) ) AND
+				( dbo.becas_fin.tipo_apoyo LIKE ~"F~" ) ) ) )" arguments=(("cuenta", number),("anio", number),("periodo", number)) )
+text(band=header alignment="2" text="Apoyos
+Porcentaje"border="0" color="0" x="5" y="4" height="129" width="330"  name=apoyos_porcentaje_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="330" format="[general]"  name=apoyos_porcentaje edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

@@ -1,0 +1,672 @@
+﻿$PBExportHeader$m_inscrip_posgrado.srm
+forward
+global type m_inscrip_posgrado from m_menu
+end type
+type m_modificar from menu within m_registro
+end type
+type m_registro from m_menu`m_registro within m_inscrip_posgrado
+m_modificar m_modificar
+end type
+end forward
+
+global type m_inscrip_posgrado from m_menu
+end type
+global m_inscrip_posgrado m_inscrip_posgrado
+
+type variables
+
+end variables
+
+on m_inscrip_posgrado.create
+m_inscrip_posgrado=this
+call super::create
+end on
+
+on m_inscrip_posgrado.destroy
+call super::destroy
+end on
+
+type m_archivo from m_menu`m_archivo within m_inscrip_posgrado
+end type
+
+on m_archivo.create
+call super::create
+end on
+
+on m_archivo.destroy
+call super::destroy
+end on
+
+type m_leer from m_menu`m_leer within m_archivo
+end type
+
+on m_leer.create
+call super::create
+end on
+
+on m_leer.destroy
+call super::destroy
+end on
+
+type m_salvar from m_menu`m_salvar within m_archivo
+end type
+
+on m_salvar.create
+call super::create
+end on
+
+on m_salvar.destroy
+call super::destroy
+end on
+
+type m_configurarimpresora from m_menu`m_configurarimpresora within m_archivo
+end type
+
+on m_configurarimpresora.create
+call super::create
+end on
+
+on m_configurarimpresora.destroy
+call super::destroy
+end on
+
+type m_imprimir from m_menu`m_imprimir within m_archivo
+end type
+
+on m_imprimir.create
+call super::create
+this.visible = false
+this.enabled = false
+end on
+
+on m_imprimir.destroy
+call super::destroy
+end on
+
+type m_- from m_menu`m_- within m_archivo
+end type
+
+on m_-.create
+call super::create
+end on
+
+on m_-.destroy
+call super::destroy
+end on
+
+type m_salir from m_menu`m_salir within m_archivo
+end type
+
+on m_salir.create
+call super::create
+end on
+
+on m_salir.destroy
+call super::destroy
+end on
+
+type m_edicion from m_menu`m_edicion within m_inscrip_posgrado
+end type
+
+on m_edicion.create
+call super::create
+end on
+
+on m_edicion.destroy
+call super::destroy
+end on
+
+type m_deshacer from m_menu`m_deshacer within m_edicion
+end type
+
+on m_deshacer.create
+call super::create
+end on
+
+on m_deshacer.destroy
+call super::destroy
+end on
+
+type m_cortar from m_menu`m_cortar within m_edicion
+end type
+
+on m_cortar.create
+call super::create
+end on
+
+on m_cortar.destroy
+call super::destroy
+end on
+
+type m_copiar from m_menu`m_copiar within m_edicion
+end type
+
+on m_copiar.create
+call super::create
+end on
+
+on m_copiar.destroy
+call super::destroy
+end on
+
+type m_pegar from m_menu`m_pegar within m_edicion
+end type
+
+on m_pegar.create
+call super::create
+end on
+
+on m_pegar.destroy
+call super::destroy
+end on
+
+type m_registro from m_menu`m_registro within m_inscrip_posgrado
+m_modificar m_modificar
+end type
+
+on m_registro.create
+call super::create
+this.m_modificar=create m_modificar
+this.Item[UpperBound(this.Item)+1]=this.m_modificar
+end on
+
+on m_registro.destroy
+call super::destroy
+destroy(this.m_modificar)
+end on
+
+type m_nuevo from m_menu`m_nuevo within m_registro
+end type
+
+event m_nuevo::clicked;call super::clicked;long cuenta
+string fecha,mes,nivel
+int coordinacion
+
+coordinacion=w_inscrip_posgrado.ii_coordinacion
+if coordinacion <> 0 then
+	setnull(nivel)
+	SELECT dbo.carreras.nivel
+	INTO :nivel
+	FROM dbo.carreras,dbo.coordinaciones
+	WHERE ( dbo.coordinaciones.cve_coordinacion = dbo.carreras.cve_coordinacion ) and
+		( ( dbo.carreras.cve_coordinacion = :coordinacion ) ) and
+		dbo.carreras.nivel = 'P'
+	USING gtr_sce;
+	if isnull(nivel) then
+		nivel=' '
+	end if
+else
+	nivel = 'P'
+end if
+	
+if nivel<>'P' then
+	messagebox("Sólo pueden dar de alta","los coordinadores de posgrado.")
+	return
+end if
+
+fecha = fecha_ingles_servidor(gtr_sce)
+gi_anio = long(mid(fecha,8,4))
+mes = upper(mid(fecha,1,3))
+		if f_obten_periodo(gi_periodo, gi_anio, 2) = 1 then
+		else
+			MessageBox("Atención","No se pudo cargar el periodo de inscripción posgrado")
+			return
+		end if
+		if gi_periodo = 1 then
+			messagebox("No es época de inscripciones de posgrado","Intente mas tarde")
+			return
+		end if
+
+
+//if mes = "JAN" or mes = "NOV" or mes = "DEC" then
+//	gi_periodo = 0
+//	if mes = "NOV" or mes = "DEC" then
+//		gi_anio = gi_anio + 1
+//	end if
+//elseif mes = "JUN" or mes = "JUL" or mes = "AUG" then
+//	gi_periodo = 2
+//else
+//	messagebox("No es época de inscripciones de posgrado","Intente mas tarde")
+//	return
+//end if
+//
+if isvalid(w_inscrip_posgrado) then
+
+	SELECT min(dbo.cuentas_disponibles.cuenta)
+	INTO :cuenta
+	FROM dbo.cuentas_disponibles
+	USING gtr_sce;
+	
+	if isnull(cuenta) then
+		cuenta=0
+	end if
+	
+	if cuenta = 0 or gtr_sce.sqlcode = 100 then
+		messagebox("No hay números de cuenta disponibles","Consúlte a Servicios Escolares")
+		return
+	end if
+		
+	w_inscrip_posgrado.uo_nombre.cbx_nuevo.text = "Nuevo"
+
+	w_inscrip_posgrado.uo_nombre.em_digito.text = ''
+	w_inscrip_posgrado.uo_nombre.em_cuenta.text = ''
+	w_inscrip_posgrado.uo_nombre.cbx_nuevo.checked = true
+	
+	w_inscrip_posgrado.uo_nombre.dw_nombre_alumno.reset()
+	w_inscrip_posgrado.dw_academico.reset()
+	w_inscrip_posgrado.dw_domicilio.reset()
+	w_inscrip_posgrado.dw_nacimiento.reset()
+	w_inscrip_posgrado.dw_indulto.reset()
+	w_inscrip_posgrado.dw_procedencia.reset()
+	w_inscrip_posgrado.dw_reingreso.reset()	
+
+	w_inscrip_posgrado.uo_nombre.dw_nombre_alumno.insertrow(w_inscrip_posgrado.uo_nombre.dw_nombre_alumno.getrow())
+	w_inscrip_posgrado.dw_nacimiento.insertrow(w_inscrip_posgrado.dw_academico.getrow())
+	
+	w_inscrip_posgrado.uo_nombre.em_cuenta.text = string(cuenta)
+	w_inscrip_posgrado.uo_nombre.em_digito.text = obten_digito(cuenta)
+	w_inscrip_posgrado.uo_nombre.em_cuenta.enabled = false
+	w_inscrip_posgrado.uo_nombre.dw_nombre_alumno.setfocus()
+end if
+end event
+
+on m_nuevo.create
+call super::create
+end on
+
+on m_nuevo.destroy
+call super::destroy
+end on
+
+type m_actualiza from m_menu`m_actualiza within m_registro
+end type
+
+event m_actualiza::clicked;call super::clicked;long cuenta, cuenta1, carrera, coordinacion, cuento
+string nombre,apaterno,amaterno
+string nombre1,apaterno1,amaterno1
+string ls_nivel
+
+
+transaction ltr_web
+n_transfiere_sybase_sql ln_transfiere_sybase_sql
+string ls_classname
+long ll_cuentas[]
+integer li_replica_activa, li_obten_parametros_replicacion, li_res_actualizacion
+
+
+if isvalid(w_inscrip_posgrado) then
+	
+	cuenta = long(w_inscrip_posgrado.uo_nombre.em_cuenta.text)
+		
+	w_inscrip_posgrado.uo_nombre.dw_nombre_alumno.accepttext()
+		
+	cuenta1 = w_inscrip_posgrado.dw_nacimiento.getitemnumber(1,"cuenta")
+	if cuenta <> cuenta1 or isnull(cuenta1) then 
+		w_inscrip_posgrado.dw_nacimiento.setitem(1,"cuenta",cuenta)
+	end if
+		
+	nombre = w_inscrip_posgrado.uo_nombre.dw_nombre_alumno.getitemstring(1,"nombre")
+	nombre1 = w_inscrip_posgrado.dw_nacimiento.getitemstring(1,"nombre")
+	if nombre <> nombre1 or isnull(nombre1) then w_inscrip_posgrado.dw_nacimiento.setitem(1,"nombre",nombre)
+	
+	apaterno = w_inscrip_posgrado.uo_nombre.dw_nombre_alumno.getitemstring(1,"apaterno")
+	apaterno1 = w_inscrip_posgrado.dw_nacimiento.getitemstring(1,"apaterno")
+	if apaterno <> apaterno1 or isnull(apaterno1) then	w_inscrip_posgrado.dw_nacimiento.setitem(1,"apaterno",apaterno)
+		
+	amaterno = w_inscrip_posgrado.uo_nombre.dw_nombre_alumno.getitemstring(1,"amaterno")
+	amaterno1 = w_inscrip_posgrado.dw_nacimiento.getitemstring(1,"amaterno")
+	if amaterno <> amaterno1 or isnull(apaterno1) then	w_inscrip_posgrado.dw_nacimiento.setitem(1,"amaterno",amaterno)
+	
+	nombre="%"+quita_espacios(apaterno)+"%"+quita_espacios(amaterno)+"%"+quita_espacios(nombre)+"%"
+	
+	setnull(cuento)
+	SELECT dbo.alumnos.cuenta
+	INTO :cuento  
+	FROM dbo.alumnos  
+	WHERE dbo.alumnos.nombre_completo like :nombre
+	USING gtr_sce;
+
+	if gtr_sce.sqlcode = 100 or isnull(cuento) then
+		cuento = cuenta
+	end if
+	if cuento<>cuenta then
+		messagebox("Cuenta: "+string(cuento)+'-'+string(obten_digito(cuento)), &
+			"Ese nombre ya existe, Verificar con Servicios Escolares")
+		return
+	end if
+
+	if w_inscrip_posgrado.dw_academico.rowcount()>0 then
+		
+		carrera=w_inscrip_posgrado.dw_academico.object.cve_carrera[1]
+		if w_inscrip_posgrado.ii_coordinacion <> 0 then
+			SELECT dbo.carreras.cve_coordinacion
+			INTO :coordinacion
+			FROM dbo.carreras
+			WHERE dbo.carreras.cve_carrera = :carrera
+			USING gtr_sce;
+
+			if coordinacion<>w_inscrip_posgrado.ii_coordinacion then
+				messagebox("Solo puede editar","alumnos de su Coordinación")
+				w_inscrip_posgrado.uo_nombre.em_cuenta.enabled = true
+				return
+			end if
+		else
+			SELECT dbo.carreras.nivel
+			INTO :ls_nivel
+			FROM dbo.carreras
+			WHERE dbo.carreras.cve_carrera = :carrera
+			USING gtr_sce;
+			if ls_nivel<>'P' then
+				messagebox("Solo puede editar","alumnos de Posgrado")
+				w_inscrip_posgrado.uo_nombre.em_cuenta.enabled = true
+				return
+			end if
+		end if
+		
+		if w_inscrip_posgrado.dw_academico.object.periodo_ing[1]<>gi_periodo or &
+			w_inscrip_posgrado.dw_academico.object.anio_ing[1]<>gi_anio or &
+			w_inscrip_posgrado.dw_academico.object.cve_formaingreso[1]<>8 then
+			messagebox("Solo puedes cambiar los datos","de los alumnos de primer ingreso.")
+			w_inscrip_posgrado.uo_nombre.em_cuenta.enabled = true
+			return
+		end if
+			
+		w_inscrip_posgrado.dw_nacimiento.accepttext()
+		if w_inscrip_posgrado.dw_nacimiento.update(true) > 0 then
+			commit USING gtr_sce;
+			w_inscrip_posgrado.dw_academico.accepttext()
+			if w_inscrip_posgrado.dw_academico.update(true) > 0 then
+				commit USING gtr_sce;
+
+				//INICIO:Replica a Internet
+
+				ln_transfiere_sybase_sql =  create n_transfiere_sybase_sql
+					li_obten_parametros_replicacion = ln_transfiere_sybase_sql.of_obten_parametros_replica(li_replica_activa)
+					if li_replica_activa = 1 then
+						w_inscrip_posgrado.st_replica.text = 'A'
+						w_inscrip_posgrado.st_replica.BackColor =RGB(0,255,0)
+						ls_classname =	w_inscrip_posgrado.ClassName()
+						ll_cuentas[1] = cuenta
+						li_res_actualizacion = ln_transfiere_sybase_sql.of_actualizacion_objeto_replica(ll_cuentas, ls_classname, gtr_sce, ltr_web)
+					else
+						w_inscrip_posgrado.st_replica.text = 'I'
+						w_inscrip_posgrado.st_replica.BackColor =RGB(255,0,0)
+					end if
+				//FIN:Replica a Internet				
+				
+			else
+				rollback USING gtr_sce;
+				messagebox("Información","No se guardaron bien los cambios",stopsign!)
+			end if
+		else
+			rollback USING gtr_sce;
+			messagebox("Información","No se han guardado los cambios",stopsign!)
+		end if
+	else
+		w_inscrip_posgrado.dw_nacimiento.accepttext()
+		if w_inscrip_posgrado.dw_nacimiento.update(true) > 0 then
+			w_inscrip_posgrado.dw_academico.retrieve(cuenta)
+			
+			DataWindowChild carr
+			w_inscrip_posgrado.dw_academico.getchild("cve_carrera",carr)
+			carr.settransobject(gtr_sce)
+			carr.retrieve(w_inscrip_posgrado.ii_coordinacion)
+			DataWindowChild subs
+			w_inscrip_posgrado.dw_academico.getchild("cve_subsistema",subs)
+			subs.settransobject(gtr_sce)
+			subs.retrieve(0,0)
+			
+			//w_inscrip_posgrado.dw_academico.object.cve_carrera[1]=w_inscrip_posgrado.dw_academico.object.carr[1]
+			w_inscrip_posgrado.dw_academico.object.cve_formaingreso[1]=8
+			w_inscrip_posgrado.dw_academico.object.periodo_ing[1]=gi_periodo
+			w_inscrip_posgrado.dw_academico.object.anio_ing[1]=gi_anio
+			w_inscrip_posgrado.dw_academico.object.nivel[1]='P'
+			w_inscrip_posgrado.dw_academico.accepttext()
+			if w_inscrip_posgrado.dw_nacimiento.update(true) > 0 and &
+				w_inscrip_posgrado.dw_academico.update(true) > 0 then
+//				DELETE FROM dbo.cuentas_disponibles
+//				WHERE dbo.cuentas_disponibles.cuenta = :cuenta
+//				USING gtr_sce;
+				commit USING gtr_sce;
+				
+				//INICIO:Replica a Internet
+					ln_transfiere_sybase_sql =  create n_transfiere_sybase_sql
+					li_obten_parametros_replicacion = ln_transfiere_sybase_sql.of_obten_parametros_replica(li_replica_activa)
+					if li_replica_activa = 1 then
+						w_inscrip_posgrado.st_replica.text = 'A'
+						w_inscrip_posgrado.st_replica.BackColor =RGB(0,255,0)
+						ls_classname =	w_inscrip_posgrado.ClassName()
+						ll_cuentas[1] = cuenta
+						li_res_actualizacion = ln_transfiere_sybase_sql.of_actualizacion_objeto_replica(ll_cuentas, ls_classname, gtr_sce, ltr_web)
+					else
+						w_inscrip_posgrado.st_replica.text = 'I'
+						w_inscrip_posgrado.st_replica.BackColor =RGB(255,0,0)
+					end if
+				//FIN:Replica a Internet								
+				
+			else
+				rollback USING gtr_sce;
+				messagebox("Información","No se han guardado los cambios",stopsign!)
+			end if
+		else
+			rollback USING gtr_sce;
+			messagebox("Información","No se han guardado los cambios",stopsign!)
+		end if
+	end if
+end if
+
+w_inscrip_posgrado.uo_nombre.em_cuenta.enabled = true
+end event
+
+on m_actualiza.create
+call super::create
+this.text = "&Actualizar Datos Generales~tCtrl+A"
+end on
+
+on m_actualiza.destroy
+call super::destroy
+end on
+
+type m_borraregistro from m_menu`m_borraregistro within m_registro
+end type
+
+event m_borraregistro::clicked;/*No pueden borrar...*/
+end event
+
+on m_borraregistro.create
+call super::create
+this.text = "&Borra Datos Generales~tCtrl+B"
+end on
+
+on m_borraregistro.destroy
+call super::destroy
+end on
+
+type m_cargaregistro from m_menu`m_cargaregistro within m_registro
+end type
+
+on m_cargaregistro.create
+call super::create
+end on
+
+on m_cargaregistro.destroy
+call super::destroy
+end on
+
+type m_-1 from m_menu`m_-1 within m_registro
+end type
+
+on m_-1.create
+call super::create
+end on
+
+on m_-1.destroy
+call super::destroy
+end on
+
+type m_primero from m_menu`m_primero within m_registro
+end type
+
+on m_primero.create
+call super::create
+end on
+
+on m_primero.destroy
+call super::destroy
+end on
+
+type m_anterior from m_menu`m_anterior within m_registro
+end type
+
+on m_anterior.create
+call super::create
+end on
+
+on m_anterior.destroy
+call super::destroy
+end on
+
+type m_siguiente from m_menu`m_siguiente within m_registro
+end type
+
+on m_siguiente.create
+call super::create
+end on
+
+on m_siguiente.destroy
+call super::destroy
+end on
+
+type m_ltimo from m_menu`m_ltimo within m_registro
+end type
+
+on m_ltimo.create
+call super::create
+end on
+
+on m_ltimo.destroy
+call super::destroy
+end on
+
+type m_-2 from m_menu`m_-2 within m_registro
+end type
+
+on m_-2.create
+call super::create
+end on
+
+on m_-2.destroy
+call super::destroy
+end on
+
+type m_filtrar from m_menu`m_filtrar within m_registro
+end type
+
+on m_filtrar.create
+call super::create
+end on
+
+on m_filtrar.destroy
+call super::destroy
+end on
+
+type m_ordenar from m_menu`m_ordenar within m_registro
+end type
+
+on m_ordenar.create
+call super::create
+end on
+
+on m_ordenar.destroy
+call super::destroy
+end on
+
+type m_ventana from m_menu`m_ventana within m_inscrip_posgrado
+end type
+
+on m_ventana.create
+call super::create
+end on
+
+on m_ventana.destroy
+call super::destroy
+end on
+
+type m_horizontal from m_menu`m_horizontal within m_ventana
+end type
+
+on m_horizontal.create
+call super::create
+end on
+
+on m_horizontal.destroy
+call super::destroy
+end on
+
+type m_vertical from m_menu`m_vertical within m_ventana
+end type
+
+on m_vertical.create
+call super::create
+end on
+
+on m_vertical.destroy
+call super::destroy
+end on
+
+type m_primerplano from m_menu`m_primerplano within m_ventana
+end type
+
+on m_primerplano.create
+call super::create
+end on
+
+on m_primerplano.destroy
+call super::destroy
+end on
+
+type m_cascada from m_menu`m_cascada within m_ventana
+end type
+
+on m_cascada.create
+call super::create
+end on
+
+on m_cascada.destroy
+call super::destroy
+end on
+
+type m_ayuda from m_menu`m_ayuda within m_inscrip_posgrado
+end type
+
+on m_ayuda.create
+call super::create
+end on
+
+on m_ayuda.destroy
+call super::destroy
+end on
+
+type m_modificar from menu within m_registro
+end type
+
+event clicked;if isvalid(w_inscrip_posgrado) then
+	if w_inscrip_posgrado.uo_nombre.cbx_nuevo.checked = true then
+		w_inscrip_posgrado.uo_nombre.cbx_nuevo.checked = false
+	else
+		w_inscrip_posgrado.uo_nombre.cbx_nuevo.checked = true
+	end if
+end if
+end event
+
+on m_modificar.create
+call super::create
+this.visible = false
+this.text = "modificar~tAlt+M"
+this.shortcut = 589
+end on
+
+on m_modificar.destroy
+call super::destroy
+end on
+

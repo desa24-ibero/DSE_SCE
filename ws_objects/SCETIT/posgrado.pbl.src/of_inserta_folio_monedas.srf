@@ -1,0 +1,99 @@
+﻿$PBExportHeader$of_inserta_folio_monedas.srf
+global type of_inserta_folio_monedas from function_object
+end type
+
+forward prototypes
+global function long of_inserta_folio_monedas (long al_cuenta, long al_cve_carrera, long al_cve_plan, datetime adttm_fecha_examen, integer ai_opcion_titulacion, integer ai_periodo, integer ai_anio)
+end prototypes
+
+global function long of_inserta_folio_monedas (long al_cuenta, long al_cve_carrera, long al_cve_plan, datetime adttm_fecha_examen, integer ai_opcion_titulacion, integer ai_periodo, integer ai_anio);//Función que registra el folio de las monedas
+
+//
+//of_inserta_folio_monedas
+//
+//Parámetros:		al_cuenta		
+//						al_cve_carrera
+//						al_cve_plan
+//						adttm_fecha_examen
+//						ai_opcion_titulacion
+//						ai_periodo
+//						ai_anio
+
+int li_codigo_sql, li_cve_documento
+long ll_cuenta, ll_max_folio, ll_folio_siguiente, ll_cve_concepto, ll_folio_mov_alumnos
+string ls_carrera, ls_nivel, ls_mensaje_sql, ls_sexo, ls_mensaje_aux
+boolean 	lb_nueva_insercion 
+
+
+//gtr_sce.AutoCommit = true
+lb_nueva_insercion = false
+	
+ll_cuenta = al_cuenta
+
+SELECT max(dbo.folio_monedas.folio)
+INTO	:ll_max_folio
+FROM	dbo.folio_monedas
+USING gtr_sce;
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	MessageBox("Error al recuperar el folio máximo de la moneda en la opcion:"+string(ai_opcion_titulacion),  ls_mensaje_sql)
+	return -1
+elseif li_codigo_sql=100 then
+	ll_max_folio = 0
+else
+end if
+
+if isnull(ll_max_folio) then
+	lb_nueva_insercion = true
+	ll_max_folio = 0
+end if
+
+
+
+ll_folio_siguiente= ll_max_folio +1
+
+if lb_nueva_insercion then
+
+	ls_mensaje_aux="Error al insertar en folio_monedas en la opcion : "
+
+	INSERT INTO	dbo.folio_monedas
+	(dbo.folio_monedas.folio, dbo.folio_monedas.cuenta, dbo.folio_monedas.cve_carrera, dbo.folio_monedas.cve_plan, dbo.folio_monedas.opcion_titulacion, dbo.folio_monedas.fecha_examen)
+	VALUES
+	(:ll_folio_siguiente, :ll_cuenta, :al_cve_carrera, :al_cve_plan, :ai_opcion_titulacion, :adttm_fecha_examen)
+	USING gtr_sce;
+else
+
+	ls_mensaje_aux="Error al actualizar en folio_monedas en la opcion : "
+
+	UPDATE dbo.folio_monedas
+	SET dbo.folio_monedas.folio = :ll_folio_siguiente,
+	    dbo.folio_monedas.cuenta = :ll_cuenta,
+	    dbo.folio_monedas.cve_carrera = :al_cve_carrera,
+		 dbo.folio_monedas.cve_plan = :al_cve_plan, 
+		 dbo.folio_monedas.opcion_titulacion = :ai_opcion_titulacion, 
+		 dbo.folio_monedas.fecha_examen = :adttm_fecha_examen
+	FROM dbo.folio_monedas
+	USING gtr_sce;
+end if
+
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	rollback using gtr_sce;
+	MessageBox(ls_mensaje_aux+string(ai_opcion_titulacion),  ls_mensaje_sql)
+	return -1
+else
+	commit using gtr_sce;
+end if
+
+
+return ll_folio_siguiente
+
+
+end function
+

@@ -1,0 +1,203 @@
+﻿$PBExportHeader$m_acreditacion_altasbajascambios_2013.srm
+forward
+global type m_acreditacion_altasbajascambios_2013 from menu
+end type
+type m_altas from menu within m_acreditacion_altasbajascambios_2013
+end type
+type m_bajas from menu within m_acreditacion_altasbajascambios_2013
+end type
+type m_cambios from menu within m_acreditacion_altasbajascambios_2013
+end type
+type m_salir from menu within m_acreditacion_altasbajascambios_2013
+end type
+global type m_acreditacion_altasbajascambios_2013 from menu
+m_altas m_altas
+m_bajas m_bajas
+m_cambios m_cambios
+m_salir m_salir
+end type
+end forward
+
+global type m_acreditacion_altasbajascambios_2013 from menu
+m_altas m_altas
+m_bajas m_bajas
+m_cambios m_cambios
+m_salir m_salir
+end type
+global m_acreditacion_altasbajascambios_2013 m_acreditacion_altasbajascambios_2013
+
+type variables
+userobject objeto
+end variables
+
+on m_acreditacion_altasbajascambios_2013.create
+m_acreditacion_altasbajascambios_2013=this
+call super::create
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_altas=create m_altas
+this.m_bajas=create m_bajas
+this.m_cambios=create m_cambios
+this.m_salir=create m_salir
+this.Item[UpperBound(this.Item)+1]=this.m_altas
+this.Item[UpperBound(this.Item)+1]=this.m_bajas
+this.Item[UpperBound(this.Item)+1]=this.m_cambios
+this.Item[UpperBound(this.Item)+1]=this.m_salir
+end on
+
+on m_acreditacion_altasbajascambios_2013.destroy
+call super::destroy
+destroy(this.m_altas)
+destroy(this.m_bajas)
+destroy(this.m_cambios)
+destroy(this.m_salir)
+end on
+
+type m_altas from menu within m_acreditacion_altasbajascambios_2013
+end type
+
+on m_altas.create
+call super::create
+this.text = "Altas"
+this.toolbaritemname = "editdatagrid!"
+this.toolbaritemtext = "Altas"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_altas.destroy
+call super::destroy
+end on
+
+event clicked;SetPointer(Hourglass!) 
+parentwindow.triggerevent('ue_actualiza')
+
+   
+	
+ 
+end event
+
+type m_bajas from menu within m_acreditacion_altasbajascambios_2013
+end type
+
+on m_bajas.create
+call super::create
+this.text = "Bajas"
+this.toolbaritemname = "custom094!"
+this.toolbaritemtext = "Bajas"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_bajas.destroy
+call super::destroy
+end on
+
+event clicked;SetPointer(Hourglass!) 
+parentwindow.triggerevent('ue_borra')
+end event
+
+type m_cambios from menu within m_acreditacion_altasbajascambios_2013
+end type
+
+on m_cambios.create
+call super::create
+this.text = "Cambios"
+this.toolbaritemname = "dosedit!"
+this.toolbaritemtext = "Cambios"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_cambios.destroy
+call super::destroy
+end on
+
+event clicked;SetPointer(Hourglass!) 
+parentwindow.triggerevent('ue_actualiza')
+end event
+
+type m_salir from menu within m_acreditacion_altasbajascambios_2013
+end type
+
+event clicked;Close(parentwindow)
+end event
+
+on m_salir.create
+call super::create
+this.text = "Salir"
+this.toolbaritemname = "exit!"
+this.toolbaritemtext = "Salir de la ventana Acreditación"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_salir.destroy
+call super::destroy
+end on
+

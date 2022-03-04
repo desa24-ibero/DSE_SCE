@@ -1,0 +1,24 @@
+﻿$PBExportHeader$quita_no_abiertas.srf
+global type quita_no_abiertas from function_object
+end type
+
+forward prototypes
+global subroutine quita_no_abiertas (ref datastore dw_materiasxcursar, datastore dw_materias_abiertas)
+end prototypes
+
+global subroutine quita_no_abiertas (ref datastore dw_materiasxcursar, datastore dw_materias_abiertas);/*Elimina las materias que no están abiertas*/
+long ll_cont_1,ll_found
+
+dw_materiasxcursar.SetFilter("")
+dw_materiasxcursar.Filter( )
+
+FOR ll_cont_1=dw_materiasxcursar.rowcount() TO 1 STEP -1
+
+		ll_found = dw_materias_abiertas.Find("cve_mat="+string(dw_materiasxcursar.object.cve_mat[ll_cont_1]),&
+			1, dw_materias_abiertas.RowCount( ))
+		if ll_found=0 then
+			dw_materiasxcursar.deleterow(ll_cont_1)
+		end if
+NEXT
+end subroutine
+

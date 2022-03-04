@@ -1,0 +1,11 @@
+﻿$PBExportHeader$d_extraordinario_titulo.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=77 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cuenta dbname="examen_extrao_titulo.cuenta" )
+ retrieve="PBSELECT( VERSION(400) DISTINCT ()TABLE(NAME=~"academicos~" )  TABLE(NAME=~"examen_extrao_titulo~" ) COLUMN(NAME=~"examen_extrao_titulo.cuenta~")    JOIN (LEFT=~"academicos.cuenta~"    OP =~"=~"RIGHT=~"examen_extrao_titulo.cuenta~" )WHERE(    EXP1 =~"academicos.egresado~"   OP =~"=~"    EXP2 =~"0~" ) ) " )
+text(band=header alignment="2" text="Cuenta"border="0" color="33554432" x="5" y="4" height="65" width="330"  name=cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="33" y="8" height="77" width="348" format="[general]"  name=cuenta edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )

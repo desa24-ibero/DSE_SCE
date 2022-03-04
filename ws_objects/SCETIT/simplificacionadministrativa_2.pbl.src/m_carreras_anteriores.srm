@@ -1,0 +1,156 @@
+﻿$PBExportHeader$m_carreras_anteriores.srm
+forward
+global type m_carreras_anteriores from m_titulacion
+end type
+end forward
+
+global type m_carreras_anteriores from m_titulacion
+end type
+global m_carreras_anteriores m_carreras_anteriores
+
+on m_carreras_anteriores.create
+m_carreras_anteriores=this
+call super::create
+end on
+
+on m_carreras_anteriores.destroy
+call super::destroy
+end on
+
+on m_archivo.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_configurarimpresora.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_imprimir.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_edicion.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_deshacer.create
+call super::create
+this.Text="&Deshacer~tCtrl+U"
+this.MergeOption=Exclude!
+this.Shortcut=341
+end on
+
+on m_cortar.create
+call super::create
+this.Text="C&ortar~tCtrl+X"
+this.MergeOption=Exclude!
+this.Shortcut=344
+end on
+
+on m_copiar.create
+call super::create
+this.Text="&Copiar~tCtrl+C"
+this.MergeOption=Exclude!
+this.Shortcut=323
+end on
+
+on m_pegar.create
+call super::create
+this.Text="&Pegar~tCtrl+V"
+this.MergeOption=Exclude!
+this.Shortcut=342
+end on
+
+on m_registro.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_nuevo.create
+call super::create
+this.Text="&Nuevo~tCtrl+N"
+this.MergeOption=Exclude!
+this.Shortcut=334
+end on
+
+on m_actualiza.create
+call super::create
+this.Text="&Actualizar~tCtrl+A"
+this.MergeOption=Exclude!
+this.Shortcut=321
+end on
+
+on m_borraregistro.create
+call super::create
+this.Text="&Borra registro~tCtrl+B"
+this.MergeOption=Exclude!
+this.Shortcut=322
+end on
+
+on m_-2.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_primero.create
+call super::create
+this.Text="&Primero~tAlt+P"
+this.MergeOption=Exclude!
+this.Shortcut=592
+end on
+
+on m_siguiente.create
+call super::create
+this.Text="&Siguiente~tAlt+S"
+this.MergeOption=Exclude!
+this.Shortcut=595
+end on
+
+on m_anterior.create
+call super::create
+this.Text="&Anterior~tAlt+A"
+this.MergeOption=Exclude!
+this.Shortcut=577
+end on
+
+on m_ultimo.create
+call super::create
+this.Text="&Ultimo~tAlt+U"
+this.MergeOption=Exclude!
+this.Shortcut=597
+end on
+
+on m_ventana.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_horizontal.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_vertical.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_primerplano.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_cascada.create
+call super::create
+this.MergeOption=Exclude!
+end on
+
+on m_cerrar.create
+call super::create
+this.MergeOption=Exclude!
+end on
+

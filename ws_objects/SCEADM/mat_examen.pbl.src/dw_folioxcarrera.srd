@@ -1,0 +1,12 @@
+﻿$PBExportHeader$dw_folioxcarrera.srd
+$PBExportComments$Catálogo de Folios-Carrera, parámetros: Carrera y Versión
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=81 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=compute_0001 dbname="compute_0001" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"carr_sal~" ) COMPUTE(NAME=~"sum(folios)      ~")WHERE(    EXP1 =~"( carr_sal.clv_carr~"   OP =~"=~"    EXP2 =~":carr )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( carr_sal.clv_ver~"   OP =~"=~"    EXP2 =~":ver )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( carr_sal.clv_per~"   OP =~"=~"    EXP2 =~":per )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( carr_sal.anio~"   OP =~"=~"    EXP2 =~":ani )~" ) ) ARG(NAME = ~"carr~" TYPE = number)  ARG(NAME = ~"ver~" TYPE = number)  ARG(NAME = ~"per~" TYPE = number)  ARG(NAME = ~"ani~" TYPE = number) " arguments=(("carr", number),("ver", number),("per", number),("ani", number)) )
+text(band=header alignment="0" text="Folios dados a la carrera"border="0" color="0" x="10" y="8" height="65" width="654"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="330" format="[general]"  name=compute_0001 edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

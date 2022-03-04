@@ -1,0 +1,65 @@
+﻿$PBExportHeader$d_bit_acceso_uia_27_mar_2006.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 1 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=296 color="536870912" )
+summary(height=72 color="536870912" )
+footer(height=68 color="536870912" )
+detail(height=84 color="536870912"  height.autosize=yes)
+table(column=(type=long updatewhereclause=yes name=bit_acceso_uia_cuenta dbname="cuenta" )
+ column=(type=char(1) updatewhereclause=yes name=bit_acceso_uia_digito dbname="digito" )
+ column=(type=char(32) updatewhereclause=yes name=bit_acceso_uia_password dbname="password" )
+ column=(type=char(23) updatewhereclause=yes name=bit_acceso_uia_ip_cliente dbname="ip_cliente" )
+ column=(type=long updatewhereclause=yes name=bit_acceso_uia_cve_tipo_acceso dbname="cve_tipo_acceso" )
+ column=(type=char(255) updatewhereclause=yes name=tipo_acceso_tipo_acceso dbname="tipo_acceso" )
+ column=(type=char(30) updatewhereclause=yes name=bit_acceso_uia_usuario dbname="usuario" )
+ column=(type=datetime updatewhereclause=yes name=bit_acceso_uia_fecha dbname="fecha" )
+ column=(type=long updatewhereclause=yes name=cve_aplicacion_uia dbname="cve_aplicacion_uia" )
+ column=(type=char(255) updatewhereclause=yes name=aplicacion_uia dbname="aplicacion_uia" )
+ retrieve="SELECT  bit_acceso_uia.cuenta ,
+           bit_acceso_uia.digito ,
+           bit_acceso_uia.password ,
+           bit_acceso_uia.ip_cliente ,
+           bit_acceso_uia.cve_tipo_acceso ,
+           tipo_acceso.tipo_acceso ,
+           bit_acceso_uia.usuario ,
+           bit_acceso_uia.fecha,
+			  bit_acceso_uia.cve_aplicacion_uia,
+		     aplicacion_uia.aplicacion_uia
+        FROM bit_acceso_uia ,
+           tipo_acceso ,
+			  aplicacion_uia    
+        WHERE ( bit_acceso_uia.cve_tipo_acceso = tipo_acceso.cve_tipo_acceso ) and
+			 (bit_acceso_uia.cve_aplicacion_uia = aplicacion_uia.cve_aplicacion_uia ) and
+          (bit_acceso_uia.cve_tipo_usuario = 'A') And
+          (bit_acceso_uia.cuenta = :an_cuenta or
+          ( :an_cuenta = 9999999) ) and
+          ( bit_acceso_uia.fecha <= :adttm_fecha_final ) and
+          ( bit_acceso_uia.fecha >= :adttm_fecha_inicial )  
+        ORDER BY bit_acceso_uia.fecha          ASC  " arguments=(("an_cuenta", number),("adttm_fecha_inicial", datetime),("adttm_fecha_final", datetime)) )
+text(band=header alignment="2" text="DATOS ESCRITOS" border="0" color="0" x="242" y="152" height="64" width="526"  name=t_1  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cuenta" border="0" color="0" x="146" y="228" height="64" width="224"  name=bit_acceso_uia_cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Dígito" border="0" color="0" x="389" y="228" height="64" width="155"  name=bit_acceso_uia_digito_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Contraseña" border="0" color="0" x="558" y="228" height="64" width="325"  name=bit_acceso_uia_password_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Tipo Acceso" border="0" color="0" x="1390" y="228" height="64" width="398"  name=tipo_acceso_tipo_acceso_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="IP Comp." border="0" color="0" x="896" y="228" height="64" width="480"  name=bit_acceso_uia_ip_cliente_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Usuario" border="0" color="0" x="2811" y="228" height="64" width="398"  name=bit_acceso_uia_usuario_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="BITACORA DE ACCESOS A SERVICIOS EN LINEA" border="0" color="0" x="846" y="32" height="92" width="2062"  name=t_2  font.face="Arial" font.height="-14" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="1" expression="~"Pag: ~"+string(page()) +~"/~" +string(pageCount())"border="0" color="0" x="3451" y="8" height="68" width="297" format="[GENERAL]"  name=compute_1  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Fecha" border="0" color="0" x="3227" y="228" height="64" width="521"  name=bit_acceso_uia_fecha_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Aplicación" border="0" color="0" x="3854" y="228" height="64" width="521"  name=t_5  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="1390" y="4" height="76" width="87" format="[general]"  name=bit_acceso_uia_cve_tipo_acceso edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="2807" y="4" height="76" width="407" format="[general]"  name=bit_acceso_uia_usuario edit.limit=30 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="137" y="4" height="76" width="247" format="[general]"  name=bit_acceso_uia_cuenta edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="896" y="4" height="76" width="480" format="[general]"  name=bit_acceso_uia_ip_cliente edit.limit=23 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="1490" y="4" height="76" width="1303" format="[general]"  name=tipo_acceso_tipo_acceso height.autosize=yes edit.limit=255 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="439" y="4" height="76" width="55" format="[general]"  name=bit_acceso_uia_digito edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="558" y="4" height="76" width="325" format="[general]"  name=bit_acceso_uia_password edit.limit=32 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="3227" y="4" height="76" width="521" format="[shortdate] [time]"  name=bit_acceso_uia_fecha edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="0" x="3767" y="4" height="76" width="82" format="[general]"  name=cve_aplicacion_uia edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="1" color="0" x="3867" y="4" height="76" width="645" format="[general]"  name=aplicacion_uia edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=summary alignment="1" text="REGISTROS" border="0" color="0" x="133" y="4" height="64" width="361"  name=t_4  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="count(bit_acceso_uia_cuenta for all)"border="0" color="0" x="558" y="4" height="64" width="247" format="[general]"  name=compute_2  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="<d_bit_acceso_uia>" border="0" color="0" x="137" y="12" height="40" width="357"  name=t_3  font.face="Arial" font.height="-6" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="1" text="" border="0" color="0" x="3227" y="4" height="56" width="521"  name=t_fecha_servidor  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

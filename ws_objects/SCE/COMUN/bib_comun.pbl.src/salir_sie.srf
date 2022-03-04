@@ -1,0 +1,74 @@
+﻿$PBExportHeader$salir_sie.srf
+$PBExportComments$Función 3 de encriptamiento
+global type salir_sie from function_object
+end type
+
+forward prototypes
+global subroutine salir_sie (ref string password, ref string crazy, ref integer estrafal, ref boolean what)
+end prototypes
+
+global subroutine salir_sie (ref string password, ref string crazy, ref integer estrafal, ref boolean what);int i
+char loc
+real psic
+for i=1 to len(password) 
+	loc=mid(password,i,1)
+	psic=asc(loc)
+
+   if estrafal=1 then
+
+	   if what=true then
+         psic=psic + 36
+         revmay(psic)
+      else
+         psic=psic - 12
+         revmay(psic)
+		end if
+      loc=char(psic)
+		estrafal++
+
+   elseif estrafal=2 then
+
+	   if what=false then
+         psic=psic + 28
+			revmay(psic)
+      else
+         psic=psic - 45 
+			revmay(psic)
+		end if
+      loc=char(psic)
+
+		estrafal++
+
+   elseif estrafal=3 then
+
+	   if what=true then
+         psic=psic + 82
+			revmay(psic)
+      else
+         psic=psic - 27
+			revmay(psic)
+		end if
+      loc=char(psic)
+
+		estrafal++
+
+   elseif estrafal=4 then
+
+	   if what=false then
+         psic=psic + 8
+			revmay(psic)
+      else
+         psic=psic - 69
+			revmay(psic)
+		end if
+      loc=char(psic)
+ 
+		estrafal=1
+		what=false
+   end if
+	
+	crazy=crazy+loc
+next
+password=crazy
+end subroutine
+

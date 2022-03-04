@@ -1,0 +1,54 @@
+﻿$PBExportHeader$f_horario_por_asignar_valido.srf
+global type f_horario_por_asignar_valido from function_object
+end type
+
+forward prototypes
+global function boolean f_horario_por_asignar_valido (integer ai_cve_dia, integer ai_hora_inicio, integer ai_hora_final)
+end prototypes
+
+global function boolean f_horario_por_asignar_valido (integer ai_cve_dia, integer ai_hora_inicio, integer ai_hora_final);////f_horario_por_asignar_valido
+//Recibe:		integer	ai_cve_dia
+//				integer	ai_hora_inicio
+//				integer 	ai_hora_final
+//				
+//Devuelve:
+//	True: El horario es válido y se puede utilizar
+//	False: El horario está bloqueado y NO se puede utilizar
+//	
+
+uo_datastore lds_datastore 
+
+long ll_rows, ll_habilitado= 0, ll_row, ll_hora
+if not(isvalid(lds_datastore)) then
+	lds_datastore = CREATE uo_datastore
+end if
+
+lds_datastore.dataobject = 'd_matriz_por_asignar_dia'
+lds_datastore.SetTransObject(gtr_sce)
+
+
+ll_rows = 	lds_datastore.Retrieve(ai_cve_dia, ll_habilitado)
+if ll_rows= -1 then
+	MessageBox("Error","No es posible consultar la matriz por asignar",StopSign!)
+	return false
+end if
+
+for ll_row=1  to ll_rows
+	ll_hora = lds_datastore.GetItemNumber(ll_row,"hora_inicio")
+	if (ai_hora_inicio) <= ll_hora AND & 
+		(ai_hora_final) > ll_hora then
+	//Si entró en condición de error, devuelve false		
+		return false
+	end if
+next
+
+//Si no entró en condición de error, devuelve true
+return true
+
+
+
+
+return false
+
+end function
+

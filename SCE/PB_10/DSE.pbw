@@ -1,0 +1,15 @@
+Save Format v3.0(19990112)
+@begin Targets
+ 0 "SCEACTUAL - Sistema de Actualizaci\u00f3n\\actualizacion.pbt";
+ 10 "SECURITY - Sistema Administrador de Seguridad\\pfcsecurity_admin.pbt";
+ 1 "SCEADM - Sistema de Admisi\u00f3n\\admision.pbt";
+ 11 "SECURITY - Sistema Administrador de Seguridad\\pfcsecurity_scanner.pbt";
+ 2 "SCEEST - Sistema de Estad\u00edsticas\\estadisticas.pbt";
+ 3 "SCEHOR - Sistema de Horarios HTTP\\horarioshttp.pbt";
+ 4 "SCEINT - Sistema de Control Escolar Interno\\scei.pbt";
+ 5 "SCESPARL - Sistema de Procesos Auxiliares a la Reinscripci\u00f3n en L\u00ednea\\sparl.pbt";
+ 6 "SCESRL -Sistema de Reinscripci\u00f3n en L\u00ednea\\srl.pbt";
+ 7 "SCESRLCORD - Sistema de Reinscripci\u00f3n para Coordinaci\u00f3n\\insc_coord.pbt";
+ 8 "SCESSE - Sistema de Control Escolar\\control_escolar.pbt";
+ 9 "SCETIT - Sistema de Titulaci\u00f3n\\titulacion.pbt";
+@end;

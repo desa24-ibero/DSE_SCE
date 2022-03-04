@@ -1,0 +1,6 @@
+﻿$PBExportHeader$st_confirma_usuario.srs
+global type st_confirma_usuario from structure
+	string		usuario
+	string		password
+end type
+

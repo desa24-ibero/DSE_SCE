@@ -1,0 +1,41 @@
+﻿$PBExportHeader$f_bandera_flag_promedio.srf
+global type f_bandera_flag_promedio from function_object
+end type
+
+forward prototypes
+global function integer f_bandera_flag_promedio (long a_cuenta)
+end prototypes
+
+global function integer f_bandera_flag_promedio (long a_cuenta);//Función que regresa la bandera de cve_flag_promedio un alumno 
+//
+//f_bandera_flag_promedio
+//
+//Parámetros:		a_cuenta		
+
+long ll_cuenta
+int li_res
+int li_nip, li_hora, li_cve_flag_promedio, li_finanzas
+datetime ldt_fecha
+DataStore lds_banderas_por_cuenta
+lds_banderas_por_cuenta = Create DataStore
+lds_banderas_por_cuenta.DataObject = "d_banderas_por_cuenta"
+lds_banderas_por_cuenta.SetTransObject(gtr_sce)
+ll_cuenta= a_cuenta
+
+li_res = lds_banderas_por_cuenta.Retrieve(ll_cuenta)
+if li_res = 1 then
+	li_cve_flag_promedio = lds_banderas_por_cuenta.GetItemNumber(1,"cve_flag_promedio")
+	if isnull(li_cve_flag_promedio) or li_cve_flag_promedio>3 then
+		li_cve_flag_promedio = 2
+	end if
+else
+	li_cve_flag_promedio = 2
+	Messagebox("Error de Comunicación","Error con la consulta de banderas BD: cve_flag_promedio. Favor de intentar nuevamente", None!)
+end if
+
+
+return li_cve_flag_promedio
+
+
+end function
+

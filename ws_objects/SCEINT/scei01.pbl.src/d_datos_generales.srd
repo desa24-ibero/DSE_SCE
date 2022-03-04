@@ -1,0 +1,141 @@
+﻿$PBExportHeader$d_datos_generales.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=4 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=3248 color="536870912" )
+table(column=(type=char(50) updatewhereclause=yes name=alumnos_nombre dbname="alumnos.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_apaterno dbname="alumnos.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_amaterno dbname="alumnos.amaterno" )
+ column=(type=char(15) updatewhereclause=yes name=religion_religion dbname="religion.religion" )
+ column=(type=char(11) updatewhereclause=yes name=edo_civil_edo_civil dbname="edo_civil.edo_civil" )
+ column=(type=char(20) updatewhereclause=yes name=trabajo_trabajo dbname="trabajo.trabajo" )
+ column=(type=long updatewhereclause=yes name=alumnos_horas_trabajo dbname="alumnos.horas_trabajo" )
+ column=(type=char(20) updatewhereclause=yes name=transporte_transporte dbname="transporte.transporte" )
+ column=(type=char(50) updatewhereclause=yes name=domicilio_calle dbname="domicilio.calle" )
+ column=(type=char(150) updatewhereclause=yes name=domicilio_colonia dbname="domicilio.colonia" )
+ column=(type=char(31) updatewhereclause=yes name=estados_estado dbname="estados.estado" )
+ column=(type=char(6) updatewhereclause=yes name=domicilio_cod_postal dbname="domicilio.cod_postal" )
+ column=(type=char(13) updatewhereclause=yes name=domicilio_telefono dbname="domicilio.telefono" )
+ column=(type=char(1) updatewhereclause=yes name=estudio_ant_cve_grado dbname="estudio_ant.cve_grado" )
+ column=(type=char(100) updatewhereclause=yes name=escuelas_escuela dbname="escuelas.escuela" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_fotografia dbname="alumnos.fotografia" )
+ column=(type=long updatewhereclause=yes name=alumnos_cuenta dbname="alumnos.cuenta" )
+ retrieve="  SELECT dbo.alumnos.nombre,   
+         dbo.alumnos.apaterno,   
+         dbo.alumnos.amaterno,   
+         dbo.religion.religion,   
+         dbo.edo_civil.edo_civil,   
+         dbo.trabajo.trabajo,   
+         dbo.alumnos.horas_trabajo,   
+         dbo.transporte.transporte,   
+         dbo.domicilio.calle,   
+         dbo.domicilio.colonia,   
+         dbo.estados.estado,   
+         dbo.domicilio.cod_postal,   
+         dbo.domicilio.telefono,
+			dbo.estudio_ant.cve_grado,   
+         dbo.escuelas.escuela,
+			dbo.alumnos.fotografia,
+			dbo.alumnos.cuenta  
+    FROM dbo.alumnos,   
+         dbo.domicilio,   
+         dbo.edo_civil,   
+         dbo.escuelas,   
+         dbo.estados,   
+         dbo.estudio_ant,   
+         dbo.religion,   
+         dbo.trabajo,   
+         dbo.transporte  
+   WHERE ( dbo.domicilio.cuenta = dbo.alumnos.cuenta ) and  
+         ( dbo.alumnos.cuenta *= dbo.estudio_ant.cuenta ) and  
+         ( dbo.alumnos.cve_edocivil *= dbo.edo_civil.cve_edocivil ) and  
+         ( dbo.escuelas.cve_escuela =* dbo.estudio_ant.cve_escuela ) and  
+         ( dbo.domicilio.cve_estado = dbo.estados.cve_estado ) and  
+         ( dbo.alumnos.cve_religion *= dbo.religion.cve_religion ) and  
+         ( dbo.alumnos.cve_trabajo *= dbo.trabajo.cve_trabajo ) and  
+         ( dbo.alumnos.cve_transp *= dbo.transporte.cve_transp ) and  
+         ( ( dbo.alumnos.cuenta = :cuenta ) )    
+" arguments=(("cuenta", number)) )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="16777215" x="3131" y="24" height="52" width="73" format="[general]"  name=estudio_ant_cve_grado edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="777" y="184" height="56" width="1399" format="[general]"  name=alumnos_nombre edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Nombre:" border="0" color="0" x="64" y="184" height="56" width="224"  name=t_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Incorrecto(    )                   Correcto(    )" border="0" color="0" x="64" y="256" height="56" width="1051"  name=t_2  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Nombre:" border="0" color="0" x="64" y="184" height="56" width="224"  name=t_3  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="777" y="184" height="56" width="1399" format="[general]"  name=alumnos_nombre_1 edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="string( alumnos_cuenta )+~"-~"+obten_digito(alumnos_cuenta)"border="0" color="0" x="288" y="100" height="64" width="631" format="[general]"  name=compute_1  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="0" text="Actualización de datos generales" border="0" color="0" x="654" y="4" height="64" width="965"  name=t_4  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="0" text="Cuenta:" border="0" color="0" x="64" y="100" height="64" width="224"  name=t_5  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Datos Correctos:" border="0" color="0" x="1550" y="100" height="64" width="471"  name=t_6  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Apellido paterno:" border="0" color="0" x="64" y="380" height="64" width="443"  name=t_7  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Incorrecto(    )                   Correcto(    )" border="0" color="0" x="64" y="460" height="56" width="1051"  name=t_8  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Apellido materno:" border="0" color="0" x="64" y="580" height="64" width="462"  name=t_9  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Incorrecto(    )                   Correcto(    )" border="0" color="0" x="64" y="660" height="56" width="1051"  name=t_10  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="777" y="380" height="68" width="1399" format="[general]"  name=alumnos_apaterno edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="777" y="580" height="68" width="1399" format="[general]"  name=alumnos_amaterno edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="364" x2="3259" y2="364"  name=l_1 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="564" x2="3259" y2="564"  name=l_2 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="364" x2="3259" y2="364"  name=l_3 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="564" x2="3259" y2="564"  name=l_4 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Trabajo:" border="0" color="0" x="64" y="1168" height="64" width="210"  name=t_11  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Religión:" border="0" color="0" x="64" y="776" height="64" width="229"  name=t_12  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Incorrecto(    )                   Correcto(    )" border="0" color="0" x="64" y="856" height="56" width="1051"  name=t_13  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Estado Civil:" border="0" color="0" x="64" y="972" height="64" width="329"  name=t_14  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Transporte:" border="0" color="0" x="64" y="1560" height="64" width="297"  name=t_15  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Calle:" border="0" color="0" x="64" y="1752" height="64" width="151"  name=t_16  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Colonia:" border="0" color="0" x="64" y="1976" height="64" width="215"  name=t_17  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Estado:" border="0" color="0" x="64" y="2164" height="64" width="206"  name=t_18  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Teléfono:" border="0" color="0" x="64" y="2548" height="64" width="238"  name=t_19  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="777" y="776" height="68" width="439" format="[general]"  name=religion_religion edit.limit=15 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="760" x2="3259" y2="760"  name=l_5 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="760" x2="3259" y2="760"  name=l_6 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Incorrecto(    )                   Correcto(    )" border="0" color="0" x="64" y="1052" height="56" width="1051"  name=t_20  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="777" y="972" height="68" width="329" format="[general]"  name=edo_civil_edo_civil edit.limit=11 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="956" x2="3259" y2="956"  name=l_7 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="956" x2="3259" y2="956"  name=l_8 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Incorrecto(    )                   Correcto(    )" border="0" color="0" x="64" y="1248" height="56" width="1051"  name=t_21  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="777" y="1168" height="68" width="946" format="[general]"  name=trabajo_trabajo edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="1152" x2="3259" y2="1152"  name=l_9 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="1152" x2="3259" y2="1152"  name=l_10 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="1348" x2="3259" y2="1348"  name=l_11 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="1733" y="1364" height="68" width="329" format="[general]"  name=alumnos_horas_trabajo edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Horario de trabajo:                                  Horas de trabajo" border="0" color="0" x="64" y="1364" height="64" width="1541"  name=t_22  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Incorrecto(    )                   Correcto(    )" border="0" color="0" x="64" y="1444" height="56" width="1051"  name=t_23  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="1348" x2="3259" y2="1348"  name=l_12 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="1544" x2="3259" y2="1544"  name=l_13 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Incorrecto(    )                   Correcto(    )" border="0" color="0" x="64" y="1640" height="56" width="1051"  name=t_24  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="777" y="1560" height="68" width="946" format="[general]"  name=transporte_transporte edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="1544" x2="3259" y2="1544"  name=l_14 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Escuela Proc:" border="0" color="0" x="64" y="2736" height="64" width="375"  name=t_25  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Código postal:" border="0" color="0" x="64" y="2348" height="64" width="379"  name=t_26  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Incorrecto(    )                   Correcto(    )" border="0" color="0" x="64" y="1832" height="56" width="1051"  name=t_27  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="1736" x2="3259" y2="1736"  name=l_15 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="777" y="1752" height="68" width="1399" format="[general]"  name=domicilio_calle edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="1736" x2="3259" y2="1736"  name=l_16 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Incorrecto(    )                   Correcto(    )" border="0" color="0" x="64" y="2056" height="56" width="1051"  name=t_28  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Incorrecto(    )                   Correcto(    )" border="0" color="0" x="64" y="2240" height="56" width="1051"  name=t_29  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Incorrecto(    )                   Correcto(    )" border="0" color="0" x="64" y="2424" height="56" width="1051"  name=t_30  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Incorrecto(    )                   Correcto(    )" border="0" color="0" x="64" y="2624" height="56" width="1051"  name=t_31  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Incorrecto(    )                   Correcto(    )" border="0" color="0" x="64" y="2816" height="56" width="1051"  name=t_32  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="0" x="777" y="2144" height="68" width="878" format="[general]"  name=estados_estado edit.limit=31 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="0" x="777" y="2544" height="68" width="384" format="[general]"  name=domicilio_telefono edit.limit=13 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="777" y="2348" height="68" width="192" format="[general]"  name=domicilio_cod_postal edit.limit=6 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="777" y="1944" height="68" width="1399" format="[general]"  name=domicilio_colonia edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="1928" x2="3259" y2="1928"  name=l_17 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="1928" x2="3259" y2="1928"  name=l_18 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="0" x="777" y="2736" height="56" width="2482" format="[general]"  name=escuelas_escuela edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="3076" x2="3259" y2="3076"  name=l_19 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="2720" x2="3259" y2="2720"  name=l_20 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="2128" x2="3259" y2="2128"  name=l_21 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="2524" x2="3259" y2="2524"  name=l_22 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+line(band=detail x1="18" y1="2896" x2="3259" y2="2896"  name=l_23 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Incorrecto(    )                   Correcto(    )" border="0" color="0" x="64" y="2996" height="56" width="1051"  name=t_33  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="0" color="0" x="777" y="2912" height="56" width="1399" format="[general]"  name=alumnos_fotografia edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Correo electrónico:" border="0" color="0" x="64" y="2920" height="64" width="498"  name=t_34  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="En caso de que algún dato este incorrecto, favor de corregirlo a la derecha del mismo." border="0" color="0" x="55" y="3092" height="64" width="2272"  name=t_35  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="18" y1="2332" x2="3259" y2="2332"  name=l_24 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Firma" border="0" color="0" x="2738" y="3188" height="56" width="169"  name=t_36  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="2514" y1="3192" x2="3259" y2="3192"  name=l_25 pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+htmltable(border="0" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

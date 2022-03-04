@@ -1,0 +1,74 @@
+﻿$PBExportHeader$dw_ceneval.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 1 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=81 color="536870912" )
+summary(height=93 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=73 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=ceneval_2_folio dbname="ceneval_2.folio" )
+ column=(type=char(45) updatewhereclause=yes name=ceneval_2_nombre dbname="ceneval_2.nombre" )
+ column=(type=char(1) updatewhereclause=yes name=ceneval_2_p10 dbname="ceneval_2.p10" )
+ column=(type=char(1) updatewhereclause=yes name=ceneval_2_p8 dbname="ceneval_2.p8" )
+ column=(type=char(4) updatewhereclause=yes name=ceneval_2_p3 dbname="ceneval_2.p3" )
+ column=(type=char(1) updatewhereclause=yes name=ceneval_2_p28 dbname="ceneval_2.p28" )
+ column=(type=char(1) updatewhereclause=yes name=ceneval_2_p29 dbname="ceneval_2.p29" )
+ column=(type=char(11) updatewhereclause=yes name=hor_trab_nombre dbname="hor_trab.nombre" )
+ column=(type=char(63) updatewhereclause=yes name=ocupacion_prop_nombre dbname="ocupacion_prop.nombre" )
+ column=(type=char(35) updatewhereclause=yes name=edo_civil_2_nombre dbname="edo_civil_2.nombre" )
+ column=(type=char(1) updatewhereclause=yes name=ceneval_2_p30 dbname="ceneval_2.p30" )
+ retrieve="  SELECT ceneval_2.folio,   
+         ceneval_2.nombre,   
+         ceneval_2.p10,   
+         ceneval_2.p8,   
+         ceneval_2.p3,   
+         ceneval_2.p28,   
+         ceneval_2.p29,  
+         hor_trab.nombre,   
+         ocupacion_prop.nombre,
+			edo_civil_2.nombre,
+         ceneval_2.p30  
+    FROM hor_trab,   
+         ocupacion_prop,   
+         ceneval_2,
+			edo_civil_2  
+   WHERE ( ceneval_2.p30 *= hor_trab.clave) AND           
+			(( ceneval_2.p32_1 *= ocupacion_prop.clave) OR
+			 ( ceneval_2.p32_2 *= ocupacion_prop.clave) OR	
+			 ( ceneval_2.p32_3 *= ocupacion_prop.clave) OR
+			 ( ceneval_2.p32_4 *= ocupacion_prop.clave) OR 	
+			 ( ceneval_2.p32_5 *= ocupacion_prop.clave) OR
+			 ( ceneval_2.p32_6 *= ocupacion_prop.clave) OR	
+			 ( ceneval_2.p32_7 *= ocupacion_prop.clave) OR
+			 ( ceneval_2.p32_8 *= ocupacion_prop.clave) OR
+			 ( ceneval_2.p32_9 *= ocupacion_prop.clave) OR
+			 ( ceneval_2.p32_10 *= ocupacion_prop.clave) OR	
+			 ( ceneval_2.p32_11 *= ocupacion_prop.clave))AND  
+			 ( ceneval_2.p8 *= edo_civil_2.clave) AND
+       ( (( ceneval_2.clv_ver = :ver ) OR
+          (:ver = 99))  AND  
+          ( ceneval_2.clv_per = :per ) AND  
+          ( ceneval_2.anio = :ani ) )    
+" arguments=(("ver", number),("per", number),("ani", number))  sort="ceneval_2_folio A " )
+text(band=header alignment="2" text="Sexo"border="0" color="0" x="1642" y="12" height="65" width="138"  name=p10_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Folio"border="0" color="0" x="33" y="12" height="65" width="330"  name=folio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Estado Civil"border="0" color="0" x="1788" y="12" height="65" width="947"  name=p8_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Ocupación"border="0" color="0" x="3676" y="12" height="65" width="979"  name=ocupacion_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="C. E."border="0" color="0" x="2757" y="12" height="65" width="138"  name=p3_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Trab."border="0" color="0" x="2917" y="12" height="65" width="133"  name=p28_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="T. T."border="0" color="0" x="3068" y="12" height="65" width="119"  name=p29_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Horas Trabajadas"border="0" color="0" x="3201" y="12" height="65" width="462"  name=horas_trabajadas_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Nombre"border="0" color="0" x="366" y="12" height="65" width="1262"  name=nombre_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="33554432" x="1751" y="148" height="65" width="106" format="[general]"  name=ceneval_2_p8 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="33554432" x="1934" y="148" height="65" width="1765" format="[general]"  name=ocupacion_prop_nombre visible="1~t0" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="33554432" x="3722" y="144" height="65" width="979" format="[general]"  name=edo_civil_2_nombre edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="33554432" x="33" y="4" height="65" width="330" format="[general]"  name=ceneval_2_folio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="366" y="4" height="65" width="1262" format="[general]"  name=ceneval_2_nombre edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="33554432" x="1651" y="4" height="65" width="106" format="[general]"  name=ceneval_2_p10 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=detail alignment="0" expression=" edo_civil_2_nombre "border="0" color="33554432" x="1788" y="4" height="65" width="947" format="[general]"  name=cf_edo_civil  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=detail alignment="0" expression=" ocupacion_prop_nombre "border="0" color="0~tif(  ceneval_2_folio[- 1] = ceneval_2_folio, rgb( 255, 0, 0), rgb(0, 0,  0))" x="3676" y="4" height="65" width="979" format="[general]"  name=p32  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="33554432" x="2757" y="4" height="65" width="138" format="[general]"  name=ceneval_2_p3 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="33554432" x="2917" y="4" height="65" width="133" format="[general]"  name=ceneval_2_p28 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="33554432" x="3068" y="4" height="65" width="119" format="[general]"  name=ceneval_2_p29 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=detail alignment="0" expression="hor_trab_nombre"border="0" color="0" x="3201" y="4" height="65" width="462" format="[general]"  name=p29  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="33554432" x="1230" y="144" height="73" width="476" format="[general]"  name=ceneval_2_p30 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=summary alignment="0" expression=" count( ceneval_2_folio  for all) "border="0" color="0" x="33" y="4" height="81" width="330" format="[general]" visible="1~t0"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

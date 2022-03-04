@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_blob_info.srs
+global type str_blob_info from structure
+	unsignedinteger		width
+	unsignedinteger		height
+	unsignedinteger		bitsperpix
+	unsignedinteger		typecode
+end type
+

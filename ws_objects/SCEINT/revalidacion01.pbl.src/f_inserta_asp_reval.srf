@@ -1,0 +1,47 @@
+﻿$PBExportHeader$f_inserta_asp_reval.srf
+global type f_inserta_asp_reval from function_object
+end type
+
+forward prototypes
+global function integer f_inserta_asp_reval (long al_cuenta, integer ai_periodo, integer ai_anio)
+end prototypes
+
+global function integer f_inserta_asp_reval (long al_cuenta, integer ai_periodo, integer ai_anio);//
+// f_inserta_asp_reval
+//
+// Inserta un aspirante por revalidación como alumno
+// Recibe
+// long al_cuenta
+//
+
+string ls_mensaje
+integer li_codigo_error
+
+gtr_sce.Autocommit = true
+
+DECLARE spenlacereval procedure for sp_enlace_revalidacion
+@cuenta = :al_cuenta, 
+@periodo = :ai_periodo, 
+@anio = :ai_anio
+using gtr_sce;
+
+EXECUTE spenlacereval;
+
+li_codigo_error= gtr_sce.SQLCode
+
+ls_mensaje= gtr_sce.SQLErrText
+
+if li_codigo_error = -1 then
+	ROLLBACK USING gtr_sce;
+	MessageBox("Error al ejecutar sp_enlace_revalidacion", ls_mensaje)
+	gtr_sce.Autocommit = false
+	return -1
+else
+	COMMIT USING gtr_sce;
+	gtr_sce.Autocommit = false
+	return 0
+end if
+
+
+end function
+

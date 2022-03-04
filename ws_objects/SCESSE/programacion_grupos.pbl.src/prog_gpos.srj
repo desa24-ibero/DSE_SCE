@@ -1,0 +1,25 @@
+﻿$PBExportHeader$prog_gpos.srj
+EXE:c:\oscar\programacion de grupos\programacion_grupos.exe,,0,0,1
+CMP:0,0,0,2,0,0
+COM:Sybase, Inc.
+DES:Sybase, Inc. Product File
+CPY:
+PRD:PowerBuilder Enterprise Series
+PVS:1,0,0,1
+PVN:1,0,0,1
+FVS:1,0,0,1
+FVN:1,0,0,1
+PBD:C:\Oscar\Programacion de Grupos\programacion_grupos.pbl,,1
+OBJ:C:\Oscar\Programacion de Grupos\programacion_grupos.pbl,dw_grupos_clase_por_departamento,d
+OBJ:C:\Oscar\Programacion de Grupos\programacion_grupos.pbl,dw_tipos_grupo_clase,d
+OBJ:C:\Oscar\Programacion de Grupos\programacion_grupos.pbl,dw_grafica_de_porcentaje_por_dias,d
+OBJ:C:\Oscar\Programacion de Grupos\programacion_grupos.pbl,dw_grupos_clase_por_coordinacion,d
+OBJ:C:\Oscar\Programacion de Grupos\programacion_grupos.pbl,w_analisis_programacion_grupos,w
+OBJ:C:\Oscar\Programacion de Grupos\programacion_grupos.pbl,dw_grupos_clase_por_division_condensado,d
+OBJ:C:\Oscar\Programacion de Grupos\programacion_grupos.pbl,dw_descripcion_tipo_grupo_clase,d
+OBJ:C:\Oscar\Programacion de Grupos\programacion_grupos.pbl,programacion_grupos,a
+OBJ:C:\Oscar\Programacion de Grupos\programacion_grupos.pbl,dw_grafica_de_porcentaje_por_diass,d
+OBJ:C:\Oscar\Programacion de Grupos\programacion_grupos.pbl,w_mtto_tipo_grupo_clase,w
+OBJ:C:\Oscar\Programacion de Grupos\programacion_grupos.pbl,m_principal,m
+OBJ:C:\Oscar\Programacion de Grupos\programacion_grupos.pbl,dw_grupos_clase_por_division,d
+OBJ:C:\Oscar\Programacion de Grupos\programacion_grupos.pbl,w_mdi,w

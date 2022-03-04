@@ -1,0 +1,75 @@
+﻿$PBExportHeader$f_dec_derecho_uso_sc.srf
+global type f_dec_derecho_uso_sc from function_object
+end type
+
+forward prototypes
+global function boolean f_dec_derecho_uso_sc (long al_cve_mat, integer ai_dia, integer ai_hor_ini, integer ai_hor_fin, integer ai_cupo, boolean ab_desc_sdu_se)
+end prototypes
+
+global function boolean f_dec_derecho_uso_sc (long al_cve_mat, integer ai_dia, integer ai_hor_ini, integer ai_hor_fin, integer ai_cupo, boolean ab_desc_sdu_se);//f_dec_derecho_uso_sc
+//Disminuye el derecho uso en base a los valores recibidos
+//al_cve_mat			long
+//ai_dia					integer
+//ai_hor_ini			integer
+//ai_hor_fin			integer
+//ai_cupo				integer	
+//ab_desc_sdu_se		boolean
+//*! NOTA IMPORTANTE
+//En este procedimiento no se efectua un COMMIT/ROLLBACK sobre la operación de 
+//decremento al derecho y uso de los salones, por lo tanto, es necesrio que la función que la llame
+//lleve a cabo la finalización de la transacción ya sea con un COMMIT USING gtr_sce; 
+//o con un ROLLBACK USING gtr_sce;
+// NOTA IMPORTANTE !*
+
+
+Integer Depto=0, li_diferencia,hora_inicio_sdu,li_ciclo
+Boolean ConsultaDepto = False
+String ls_mensaje
+
+If ab_desc_sdu_se Then
+// Servicios Escolares
+	Depto = 7300 
+	ConsultaDepto = False
+Else
+	ConsultaDepto = True
+End If	
+
+
+If ConsultaDepto Then
+	Select cve_coordinacion
+	Into 	:depto
+	From 	materias
+	Where	cve_mat = :al_cve_mat using gtr_sce;
+	//Tabla bloqueada o coordinación inexistente
+	If gtr_sce.sqlcode <> 0 Then 
+		Messagebox("Error al consultar la coordinacion [f_dec_derecho_uso_sc]",gtr_sce.sqlerrtext,StopSign!)
+   	Return False
+	End if
+End If
+If gtr_sce.sqlcode = 0 or Depto = 7300 Then	
+	If ai_hor_fin > ai_hor_ini Then
+		li_diferencia = ai_hor_fin - ai_hor_ini
+		hora_inicio_sdu = ai_hor_ini
+		FOR li_ciclo=1 TO li_diferencia
+			Update salones_derecho_uso
+			Set ocupados = ocupados - 1 // decrementa uno en el campo de ocupados 
+			Where (cve_coordinacion	= :depto) and (cve_dia	= :ai_dia) and
+					(hora_inicio = :Hora_inicio_sdu) using gtr_sce;
+			hora_inicio_sdu ++
+			If gtr_sce.sqlcode = -1 Then
+				ls_mensaje = gtr_sce.sqlerrtext
+				MessageBox("Error al decrementar el derecho y uso [f_dec_derecho_uso_sc]",ls_mensaje,StopSign!)
+				Return False
+			End If	
+		Next
+		Return True
+	Else
+		Messagebox("Aviso","el horario no es valido, favor de verificar",StopSign!)
+		Return False
+	End If
+	Messagebox("Error","al obtener la clave del departamento",StopSign!)
+	Return False
+End If 
+
+end function
+

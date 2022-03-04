@@ -1,0 +1,107 @@
+﻿$PBExportHeader$f_curso_prerreq_reval_sep.srf
+global type f_curso_prerreq_reval_sep from function_object
+end type
+
+forward prototypes
+global function integer f_curso_prerreq_reval_sep (integer ai_folio, long al_cve_mat, integer ai_cve_carrera, integer ai_cve_plan)
+end prototypes
+
+global function integer f_curso_prerreq_reval_sep (integer ai_folio, long al_cve_mat, integer ai_cve_carrera, integer ai_cve_plan);///*
+// *		Nombre	f_curso_prerreq_reval_sep
+// *		Recibe	ai_folio,al_cve_mat,ai_cve_carrera,ai_cve_plan
+// *		Regresa	1  si el alumno ai_folio ha cursado los prerrequisitos necesarios
+// *						para cursar la materia al_cve_mat dada la carrera ai_cve_carrera ai_cve_plan
+// *					0  en caso contrario
+// *					-1	error de comunicacion
+// *					FMC19011999
+// */
+
+long cvmat,respuesta
+int cont, verifica,c,bandera=0,op3=0
+char enlace,cumple='N'/*Variable que indica si se cumplieron los prerrequisitos*/
+long ll_mats_prerreq[]
+int li_tam_mats, li_ind_mats, li_indice_mats
+long ll_cve_mat
+
+li_indice_mats = 1
+c= 0
+DataStore lds_prerrequisito
+lds_prerrequisito = Create DataStore
+lds_prerrequisito.DataObject = "dw_prerrequisitos"
+lds_prerrequisito.SetTransObject(gtr_sce)
+respuesta = lds_prerrequisito.Retrieve(al_cve_mat,ai_cve_carrera,ai_cve_plan)
+gl_mats_prerreq[]= ll_mats_prerreq[]
+
+if respuesta = 0 then  //Consulta los prerrequisitos de la materia 
+	Destroy lds_prerrequisito
+	return 1
+elseif respuesta > 0 then/*Si la materia tiene prerrequisitos se revisa si se cumplen*/
+	for cont = 1 to lds_prerrequisito.rowcount() // Revisión de los prerrequisitos en la tabla historico
+		cvmat	=	lds_prerrequisito.object.cve_prerreq[cont]
+		enlace	=	lds_prerrequisito.object.enlace[cont]
+		
+		SELECT max(dbo.materias_revalidacion.cve_mat)  
+		INTO :cvmat  
+		FROM dbo.materias_revalidacion,   dbo.aspirantes_revalidacion
+		WHERE ( dbo.materias_revalidacion.folio = :ai_folio ) AND  
+		      ( dbo.materias_revalidacion.folio = dbo.aspirantes_revalidacion.folio ) AND  
+				( dbo.materias_revalidacion.cve_mat =  :cvmat) AND 
+				( dbo.aspirantes_revalidacion.cve_carrera	=	:ai_cve_carrera ) AND
+				( dbo.aspirantes_revalidacion.cve_plan	=	:ai_cve_plan ) AND
+				( dbo.materias_revalidacion.calificacion IN ("AC","6","7","8","9","10", "MB","B","S","E","RE")) AND
+				( dbo.materias_revalidacion.aceptada_sep = 1 )
+				using gtr_sce;
+
+		if gtr_sce.sqlcode = 100 or isnull(cvmat) then//Este if se ejecuta si el alumno no ha llevado esa materia
+// Se ha procesado más de un prerrequisito
+			if cont > 1 then
+//Require varios prerrequisitos y este es el ultimo revisado con enlace 'Y'				
+				if (isnull(enlace) and lds_prerrequisito.object.enlace[cont - 1]	=	'Y')	 then
+					op3 = 1
+				else
+					op3 = 0
+				end if
+			else
+// Es el primer prerrequisito revisado				
+				op3 = 0
+			end if
+//(Este es requerido de n)	(Es requerido de 1) (La anterior era requerida)
+			if (	(	enlace = 'Y'	) or (isnull(enlace) and cont	=	1) or op3 = 1	)	then	
+				//Si el	alumno no ha cursado la materia y es requerida se le niega la inscripción de la materia				
+				Destroy lds_prerrequisito
+				return 0	
+			end if
+		elseif gtr_sce.sqlcode = 0 then//Si el alumno ya curso la materia
+	      ll_mats_prerreq[li_indice_mats]= cvmat
+			li_indice_mats = li_indice_mats + 1
+//	Prerrequisito opcional
+			if enlace = 'O' then
+				cumple	=	'S'
+				cont++
+			else 
+//	Prerrequisito obligatorio
+				bandera = 1
+			end if
+		elseif gtr_sce.sqlcode < 0 then
+			Destroy lds_prerrequisito
+			return -1		//			error bd						
+		end if
+		commit using gtr_sce;
+	next
+else 			//if respuesta < 0 
+	Destroy lds_prerrequisito
+	return -1			//Error en la comunicación con la base de datos .
+end if	
+// (Cumple alguno de los prerrequisitos opcionales) (Cumple prerrequisitos obligatorios)
+if (	(	bandera	=	0 and cumple	=	'S'	) or bandera	=	1	) then
+	Destroy lds_prerrequisito
+	gl_mats_prerreq[] = ll_mats_prerreq
+	return 1
+else
+	Destroy lds_prerrequisito
+	return 0
+end if
+
+
+end function
+

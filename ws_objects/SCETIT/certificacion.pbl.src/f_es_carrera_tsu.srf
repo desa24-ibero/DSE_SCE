@@ -1,0 +1,77 @@
+﻿$PBExportHeader$f_es_carrera_tsu.srf
+global type f_es_carrera_tsu from function_object
+end type
+
+forward prototypes
+global function long f_es_carrera_tsu (long al_cve_carrera, long al_cve_plan)
+global function long f_es_carrera_tsu (long al_cve_carrera)
+end prototypes
+
+global function long f_es_carrera_tsu (long al_cve_carrera, long al_cve_plan);//f_es_carrera_resol_adm_rg
+//Recibe	al_cve_carrera				long
+//			al_cve_plan  				long
+//Devuelve el numero de registros 
+
+long ll_cve_concepto, ll_cve_subconcepto, ll_num_registros, ll_folio_mov_alumnos
+string ls_mensaje
+integer li_codigo_sql, li_parcial
+
+	SELECT
+	COUNT(*)
+	INTO
+	:ll_num_registros
+	FROM dbo.carreras_resol_adm_rg 
+	WHERE dbo.carreras_resol_adm_rg.cve_carrera = :al_cve_carrera
+	AND dbo.carreras_resol_adm_rg.cve_plan = :al_cve_plan
+	USING gtr_sce;
+
+	li_codigo_sql = gtr_sce.SqlCode
+	ls_mensaje = gtr_sce.SqlErrText
+	
+	IF li_codigo_sql= -1 THEN
+		MessageBox("Error al consultar carreras_resol_adm_rg",ls_mensaje,StopSign! )
+		return  -1
+	ELSE
+		IF ll_num_registros = 0 THEN
+			return 0
+		END IF		
+	END IF
+
+return ll_num_registros			
+
+end function
+
+global function long f_es_carrera_tsu (long al_cve_carrera);//f_es_carrera_tsu
+//Recibe	al_cve_carrera				long
+
+//Devuelve el numero de registros 
+
+long ll_cve_concepto, ll_cve_subconcepto, ll_num_registros, ll_folio_mov_alumnos
+string ls_mensaje
+integer li_codigo_sql, li_parcial
+
+	SELECT
+	COUNT(*)
+	INTO
+	:ll_num_registros
+	FROM dbo.carreras_tsu 
+	WHERE dbo.carreras_tsu.cve_carrera = :al_cve_carrera
+	USING gtr_sce;
+
+	li_codigo_sql = gtr_sce.SqlCode
+	ls_mensaje = gtr_sce.SqlErrText
+	
+	IF li_codigo_sql= -1 THEN
+		MessageBox("Error al consultar carreras_tsu",ls_mensaje,StopSign! )
+		return  -1
+	ELSE
+		IF ll_num_registros = 0 THEN
+			return 0
+		END IF		
+	END IF
+
+return ll_num_registros			
+
+
+end function
+

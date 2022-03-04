@@ -1,0 +1,44 @@
+﻿$PBExportHeader$f_obten_numero_tramites_web.srf
+global type f_obten_numero_tramites_web from function_object
+end type
+
+forward prototypes
+global function long f_obten_numero_tramites_web (integer ai_cve_tramite, transaction atr_transaction)
+end prototypes
+
+global function long f_obten_numero_tramites_web (integer ai_cve_tramite, transaction atr_transaction);//f_obten_numero_tramites_web
+//Obtiene el numero de tramites solicitados
+//Recibe			ai_cve_tramite		int
+//					atr_transaction 	transaction
+//Devuelve		long
+
+integer li_codigo_sql
+string ls_mensaje_sql
+long ll_num_tramites, ll_null
+
+SetNull(ll_null)
+
+SELECT count(*) 
+INTO :ll_num_tramites
+FROM estado_alumno_tramite
+WHERE ( cve_tramite = :ai_cve_tramite
+OR  :ai_cve_tramite = 9999)
+USING atr_transaction;
+
+li_codigo_sql = atr_transaction.SqlCode
+ls_mensaje_sql = atr_transaction.SqlErrText
+
+if li_codigo_sql = 100 then
+	MessageBox("Tramite no encontrado", "El tramite["+string(ai_cve_tramite)+"] no existe", StopSign!)
+	return 0
+elseif isnull(ll_num_tramites) then
+	return 0
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar trámite", ls_mensaje_sql,StopSign!)
+	return  0
+end if
+
+return ll_num_tramites
+
+end function
+

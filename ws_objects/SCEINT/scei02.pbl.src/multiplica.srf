@@ -1,0 +1,25 @@
+﻿$PBExportHeader$multiplica.srf
+global type multiplica from function_object
+end type
+
+forward prototypes
+global subroutine multiplica (integer indice, integer creditos_dif, ref integer matriz[3, 30], integer acumulado, decimal tope)
+end prototypes
+
+global subroutine multiplica (integer indice, integer creditos_dif, ref integer matriz[3, 30], integer acumulado, decimal tope);long num_materias
+
+FOR num_materias=0 TO matriz[2, indice]
+	if indice<creditos_dif then
+		multiplica(indice+1,creditos_dif,matriz,acumulado+matriz[1, indice]*num_materias,tope)
+	end if
+	if acumulado+matriz[1, indice]*num_materias=tope then
+		comb_encontre=1
+	end if
+	if comb_encontre=1 then
+		matriz[3, indice]=num_materias
+		EXIT
+	end if
+NEXT
+
+end subroutine
+

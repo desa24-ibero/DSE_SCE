@@ -1,0 +1,305 @@
+﻿$PBExportHeader$m_acreditacion_altasbajascambios.srm
+forward
+global type m_acreditacion_altasbajascambios from menu
+end type
+type m_altas from menu within m_acreditacion_altasbajascambios
+end type
+type m_bajas from menu within m_acreditacion_altasbajascambios
+end type
+type m_cambios from menu within m_acreditacion_altasbajascambios
+end type
+type m_salir from menu within m_acreditacion_altasbajascambios
+end type
+global type m_acreditacion_altasbajascambios from menu
+m_altas m_altas
+m_bajas m_bajas
+m_cambios m_cambios
+m_salir m_salir
+end type
+end forward
+
+global type m_acreditacion_altasbajascambios from menu
+m_altas m_altas
+m_bajas m_bajas
+m_cambios m_cambios
+m_salir m_salir
+end type
+global m_acreditacion_altasbajascambios m_acreditacion_altasbajascambios
+
+on m_acreditacion_altasbajascambios.create
+m_acreditacion_altasbajascambios=this
+call super::create
+this.m_altas=create m_altas
+this.m_bajas=create m_bajas
+this.m_cambios=create m_cambios
+this.m_salir=create m_salir
+this.Item[UpperBound(this.Item)+1]=this.m_altas
+this.Item[UpperBound(this.Item)+1]=this.m_bajas
+this.Item[UpperBound(this.Item)+1]=this.m_cambios
+this.Item[UpperBound(this.Item)+1]=this.m_salir
+end on
+
+on m_acreditacion_altasbajascambios.destroy
+call super::destroy
+destroy(this.m_altas)
+destroy(this.m_bajas)
+destroy(this.m_cambios)
+destroy(this.m_salir)
+end on
+
+type m_altas from menu within m_acreditacion_altasbajascambios
+end type
+
+on m_altas.create
+call super::create
+this.text = "Altas"
+this.toolbaritemname = "Table!"
+this.toolbaritemtext = "Altas"
+end on
+
+on m_altas.destroy
+call super::destroy
+end on
+
+event clicked;// Actualiza los cambios hechos en el data window y los refleja en la tabla de historico.
+// Todos los cambios se registran en la tabla bitacora.
+// Juan Campos Febrero-1997.
+
+long    Cuenta
+SetPointer(Hourglass!) 
+
+If w_acred_sersoc_opcterm.title = "ACREDITACIÓN OPCIÓN TERMINAL" Then 
+  	w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.accepttext()	
+  	IF w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.update(True) = 1 THEN
+    	Cuenta= w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.GetItemNumber(w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.GetRow(),"cuenta")
+			COMMIT using gtr_sce;
+			m_acreditacion_altasbajascambios.m_altas.enabled = False
+	   	m_acreditacion_altasbajascambios.m_bajas.enabled = False
+	   	m_acreditacion_altasbajascambios.m_cambios.enabled = False
+			MessageBox("Aviso","Alta Realizada")
+      	If Not actualiza_bandera(Cuenta,1) then
+        		Messagebox("ATENCIÓN","Los catálogos de Banderas de bloqueos de servicios escolares, NO SE ACTUALIZARON")
+        		MessageBox("IMPORTANTE","Revisar Banderas bloqueos del alumno, en sus respectivos catalogos")		  	  	
+	   	End If  
+			w_acred_sersoc_opcterm.uo_nombre.em_cuenta.Setfocus()
+  	Else 
+	 	ROLLBACK using gtr_sce;
+	 	MessageBox("Aviso","La Alta No se realizo")
+	END IF	
+END IF	
+
+SetPointer(Arrow!)
+
+   
+	
+ 
+end event
+
+type m_bajas from menu within m_acreditacion_altasbajascambios
+end type
+
+on m_bajas.create
+call super::create
+this.text = "bajas"
+this.toolbaritemname = "Custom094!"
+this.toolbaritemtext = "Bajas"
+end on
+
+on m_bajas.destroy
+call super::destroy
+end on
+
+event clicked;// Actualiza los cambios hechos en el data window y los refleja en la tabla de historico.
+// Todos los cambios se registran en la tabla bitacora.
+// Juan Campos Febrero-1997.
+
+long    Cuenta
+SetPointer(Hourglass!) 
+If w_acred_sersoc_opcterm.title = "ACREDITACIÓN OPCIÓN TERMINAL" Then 
+  Cuenta          = w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.GetItemNumber(w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.GetRow(),"cuenta")
+  w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.DeleteRow(w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.GetRow())
+  w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.accepttext()	
+  IF w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.update(True) = 1 THEN
+		COMMIT using gtr_sce;
+		m_acreditacion_altasbajascambios.m_altas.enabled = False
+	   m_acreditacion_altasbajascambios.m_bajas.enabled = False
+	   m_acreditacion_altasbajascambios.m_cambios.enabled = False
+		MessageBox("Aviso","Baja Realizada")
+		w_acred_sersoc_opcterm.uo_nombre.em_cuenta.Setfocus()
+      If Not actualiza_bandera(Cuenta,1) then
+        Messagebox("ATENCIÓN","Los catálogos, Académicos, Banderas de bloqueos de servicios escolares, NO SE ACTUALIZARON")
+        MessageBox("IMPORTANTE","Revisar promedio, créditos y Banderas bloqueos del alumno, en sus respectivos catalogos")		  	  	
+	   End If  
+  Else 
+	 ROLLBACK using gtr_sce;
+	 MessageBox("Aviso","La Baja No se realizo")
+  END IF
+  
+END IF	
+
+If w_acred_sersoc_opcterm.title = "ACREDITACIÓN PRERREQUISITO DE INGLÉS" Then 
+  Cuenta          = w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.GetItemNumber(w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.GetRow(),"cuenta")
+  w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.DeleteRow(w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.GetRow())
+  w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.accepttext()	
+  IF w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.update(True) = 1 THEN
+		COMMIT using gtr_sce;
+		m_acreditacion_altasbajascambios.m_altas.enabled = False
+	   m_acreditacion_altasbajascambios.m_bajas.enabled = False
+	   m_acreditacion_altasbajascambios.m_cambios.enabled = False
+		MessageBox("Aviso","Baja Realizada")
+		w_acred_sersoc_opcterm.uo_nombre.em_cuenta.Setfocus()
+      If Not actualiza_bandera(Cuenta,1) then
+        Messagebox("ATENCIÓN","Los catálogos, Académicos, Banderas de bloqueos de servicios escolares, NO SE ACTUALIZARON")
+        MessageBox("IMPORTANTE","Revisar promedio, créditos y Banderas bloqueos del alumno, en sus respectivos catalogos")		  	  	
+	   End If  
+  Else 
+	 ROLLBACK using gtr_sce;
+	 MessageBox("Aviso","La Baja No se realizo")
+  END IF
+  
+END IF	
+
+
+
+SetPointer(Arrow!)
+
+ 
+end event
+
+type m_cambios from menu within m_acreditacion_altasbajascambios
+end type
+
+on m_cambios.create
+call super::create
+this.text = "Cambios"
+this.toolbaritemname = "DosEdit!"
+this.toolbaritemtext = "Cambios"
+end on
+
+on m_cambios.destroy
+call super::destroy
+end on
+
+event clicked;// Actualiza los cambios hechos en el data window y los refleja en la tabla de historico.
+// Todos los cambios se registran en la tabla bitacora.
+// Juan Campos Febrero-1997.
+
+long    Cuenta
+String Calificacion
+
+SetPointer(Hourglass!) 
+IF w_acred_sersoc_opcterm.title = "ACREDITACIÓN SERVICIO SOCIAL" THEN   
+   w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.accepttext()	
+	if w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.ModifiedCount( ) = 1 THEN 	
+   IF w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.update(True) = 1 THEN
+		Cuenta          = w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.GetItemNumber(w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.GetRow(),"cuenta")
+     	Calificacion    = w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.GetItemString(w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.GetRow(),"calificacion")
+			  COMMIT using gtr_sce;
+			  m_acreditacion_altasbajascambios.m_altas.enabled = False
+	   	  m_acreditacion_altasbajascambios.m_bajas.enabled = False
+	   	  m_acreditacion_altasbajascambios.m_cambios.enabled = False
+			  MessageBox("Aviso","El cambio Fue Realizado")
+      	  If Not actualiza_bandera(Cuenta,1) then
+        		  Messagebox("ATENCIÓN","Los catálogos, Académicos, Banderas de bloqueos de servicios escolares, NO SE ACTUALIZARON")
+        		  MessageBox("IMPORTANTE","Revisar promedio, créditos y Banderas bloqueos del alumno, en sus respectivos catalogos")		  	  	
+	   	  Else
+		  		  If Calificacion = "AC" Then
+	       		  UPDATE banderas
+             		  SET cve_flag_serv_social = 2  // Esta o  Ya curso
+           		  WHERE cuenta = :cuenta
+           		  USING gtr_sce;
+		    		  if gtr_sce.sqlcode = -1 or  gtr_sce.sqlcode = 100 Then
+							rollback using gtr_sce;
+      	   		  MessageBox("ATENCIÓN","Revisar la bandera Flag_Servicio_Social, que se encuentre actualizada correctamente "+gtr_sce.sqlerrtext)	 
+					  else
+						commit using gtr_sce;
+          		  End if
+        		  End If
+	       End If  
+    Else
+		 ROLLBACK using gtr_sce;
+	    MessageBox("Error","El Cambio No fue Realizado")
+    end if  
+	Else
+		ROLLBACK using gtr_sce;
+	 	MessageBox("Solo puedes dar de alta una materia","La Alta No se realizo")
+	end if
+END IF  // ACREDITACIÓN SERVICIO SOCIAL
+
+If w_acred_sersoc_opcterm.title = "ACREDITACIÓN OPCIÓN TERMINAL" Then 
+   w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.accepttext()	
+	if w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.ModifiedCount( ) = 1 THEN 	
+   IF w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.update(True) = 1 THEN
+     Cuenta          = w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.GetItemNumber(w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.GetRow(),"cuenta")
+     Calificacion    = w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.GetItemString(w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.GetRow() ,"calificacion")
+		 		COMMIT using gtr_sce;
+				m_acreditacion_altasbajascambios.m_altas.enabled = False
+	         m_acreditacion_altasbajascambios.m_bajas.enabled = False
+	         m_acreditacion_altasbajascambios.m_cambios.enabled = False
+		 		MessageBox("Aviso","El Cambio Fue Realizada")
+       		If Not actualiza_bandera(Cuenta,0) then
+         		Messagebox("ATENCIÓN","Los catálogos, Académicos, Banderas de bloqueos de servicios escolares, NO SE ACTUALIZARON")
+         		MessageBox("IMPORTANTE","Revisar promedio, créditos y Banderas bloqueos del alumno, en sus respectivos catalogos")		  	  	
+	    		End If  
+		 		w_acred_sersoc_opcterm.uo_nombre.em_cuenta.Setfocus()
+   else
+		ROLLBACK using gtr_sce;
+	  	MessageBox("Aviso","El Cambio No se realizo")
+   end if
+	Else
+		ROLLBACK using gtr_sce;
+	 	MessageBox("Solo puedes dar de alta una materia","La Alta No se realizo")
+	end if
+END IF  // ACREDITACIÓN OPCIÓN TERMINAL
+
+
+If w_acred_sersoc_opcterm.title = "ACREDITACIÓN PRERREQUISITO DE INGLÉS" Then 
+   w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.accepttext()	
+	if w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.ModifiedCount( ) = 1 THEN 	
+   IF w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.update(True) = 1 THEN
+     Cuenta          = w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.GetItemNumber(w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.GetRow(),"cuenta")
+     Calificacion    = w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.GetItemString(w_acred_sersoc_opcterm.dw_acred_sersoc_opcterm.GetRow() ,"calificacion")
+		 		COMMIT using gtr_sce;
+				m_acreditacion_altasbajascambios.m_altas.enabled = False
+	         m_acreditacion_altasbajascambios.m_bajas.enabled = False
+	         m_acreditacion_altasbajascambios.m_cambios.enabled = False
+		 		MessageBox("Aviso","El Cambio Fue Realizada")
+       		If Not actualiza_bandera(Cuenta,0) then
+         		Messagebox("ATENCIÓN","Los catálogos, Académicos, Banderas de bloqueos de servicios escolares, NO SE ACTUALIZARON")
+         		MessageBox("IMPORTANTE","Revisar promedio, créditos y Banderas bloqueos del alumno, en sus respectivos catalogos")		  	  	
+	    		End If  
+		 		w_acred_sersoc_opcterm.uo_nombre.em_cuenta.Setfocus()
+   else
+		ROLLBACK using gtr_sce;
+	  	MessageBox("Aviso","El Cambio No se realizo")
+   end if
+	Else
+		ROLLBACK using gtr_sce;
+	 	MessageBox("Solo puedes dar de alta una materia","La Alta No se realizo")
+	end if
+END IF  // ACREDITACIÓN OPCIÓN TERMINAL
+
+
+SetPointer(Arrow!)
+	
+ 
+end event
+
+type m_salir from menu within m_acreditacion_altasbajascambios
+end type
+
+event clicked;Rollback Using gtr_sce;
+Close(w_acred_sersoc_opcterm)
+end event
+
+on m_salir.create
+call super::create
+this.text = "Salir"
+this.toolbaritemname = "Exit!"
+this.toolbaritemtext = "Salir de la ventana Acreditación"
+end on
+
+on m_salir.destroy
+call super::destroy
+end on
+

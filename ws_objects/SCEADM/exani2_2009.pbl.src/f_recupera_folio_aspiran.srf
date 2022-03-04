@@ -1,0 +1,39 @@
+﻿$PBExportHeader$f_recupera_folio_aspiran.srf
+global type f_recupera_folio_aspiran from function_object
+end type
+
+forward prototypes
+global function long f_recupera_folio_aspiran (transaction a_tr)
+end prototypes
+
+global function long f_recupera_folio_aspiran (transaction a_tr);
+LONG ll_folio 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+DECLARE siguiente_folio procedure for sp_obten_siguiente_folio
+  using a_tr;
+   	
+EXECUTE siguiente_folio;
+
+FETCH siguiente_folio INTO :ll_folio;
+
+CLOSE siguiente_folio;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//SELECT MAX(folio) 
+//INTO :ll_folio 
+//FROM aspiran 
+//USING a_tr;
+//IF a_tr.SQLCODE < 0 THEN 
+//	MESSAGEBOX("Error", "Se produjo un error al recuperar el folio.") 
+//	RETURN -1 
+//END IF
+//IF ISNULL(ll_folio) THEN ll_folio = 0 
+//ll_folio++
+
+RETURN ll_folio 
+
+
+end function
+

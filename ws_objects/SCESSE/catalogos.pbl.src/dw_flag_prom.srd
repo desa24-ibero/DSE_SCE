@@ -1,0 +1,15 @@
+﻿$PBExportHeader$dw_flag_prom.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=31436382 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=213 color="536870912" )
+summary(height=5 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=145 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cve_flag_promedio dbname="flag_promedio.cve_flag_promedio" )
+ column=(type=char(20) updatewhereclause=yes name=flag_promedio dbname="flag_promedio.flag_promedio" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"flag_promedio~" ) COLUMN(NAME=~"flag_promedio.cve_flag_promedio~") COLUMN(NAME=~"flag_promedio.flag_promedio~")) " )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="23" y="32" height="125" width="1171" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Situación"border="0" color="0" x="673" y="56" height="77" width="348"  name=biblioteca_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Flag promedio"border="0" color="0" x="119" y="56" height="77" width="485"  name=flag_biblioteca_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=1 alignment="0" tabsequence=0 border="5" color="0" x="193" y="28" height="77" width="179"  name=cve_flag_promedio  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=0 border="5" color="0" x="508" y="28" height="77" width="659"  name=flag_promedio  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

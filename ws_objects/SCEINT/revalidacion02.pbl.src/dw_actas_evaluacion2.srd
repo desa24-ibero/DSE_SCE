@@ -1,0 +1,52 @@
+﻿$PBExportHeader$dw_actas_evaluacion2.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=69 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=examen_extrao_titulo_cve_mat dbname="examen_extrao_titulo.cve_mat" )
+ column=(type=long updatewhereclause=yes name=compute_0002 dbname="compute_0002" )
+ column=(type=long updatewhereclause=yes name=alumnos_cuenta dbname="alumnos.cuenta" )
+ column=(type=char(70) updatewhereclause=yes name=alumnos_nombre_completo dbname="alumnos.nombre_completo" )
+ column=(type=long updatewhereclause=yes name=actanum dbname="compute_0005" )
+ column=(type=char(70) updatewhereclause=yes name=coordinaciones_coordinacion dbname="coordinaciones.coordinacion" )
+ column=(type=char(42) updatewhereclause=yes name=materias_materia dbname="materias.materia" )
+ retrieve="  SELECT examen_extrao_titulo.cve_mat,   
+         COUNT(examen_extrao_titulo.cve_mat),   
+         alumnos.cuenta,   
+         alumnos.nombre_completo,
+			1,
+			coordinaciones.coordinacion,materias.materia 
+    FROM alumnos,   
+         coordinaciones,   
+         examen_extrao_titulo,   
+         materias  
+   WHERE ( alumnos.cuenta = examen_extrao_titulo.cuenta ) and  
+         ( examen_extrao_titulo.cve_mat = materias.cve_mat ) and  
+         ( coordinaciones.cve_coordinacion = materias.cve_coordinacion ) and
+			( examen_extrao_titulo.anio = :anio ) and
+			( examen_extrao_titulo.periodo = :periodo ) and  
+         ( ( examen_extrao_titulo.tipo_examen = :tipo ) )   
+GROUP BY examen_extrao_titulo.cve_mat,   
+			examen_extrao_titulo.tipo_examen,  
+         coordinaciones.cve_coordinacion,
+			coordinaciones.coordinacion,materias.materia 
+  HAVING ( examen_extrao_titulo.cuenta = alumnos.cuenta  and
+			 coordinaciones.cve_coordinacion = materias.cve_coordinacion and
+			 examen_extrao_titulo.cve_mat = materias.cve_mat and
+			 examen_extrao_titulo.tipo_examen = :tipo)   
+ORDER BY coordinaciones.cve_coordinacion ASC,
+			examen_extrao_titulo.cve_mat ASC,   
+         alumnos.nombre_completo ASC   
+" arguments=(("tipo", number),("anio", number),("periodo", number)) )
+group(level=1 header.height=77 trailer.height=1 by=("coordinaciones_coordinacion" ) header.color="536870912" trailer.color="536870912" )
+column(band=header.1 id=6 alignment="0" tabsequence=32766 border="0" color="0" x="51" y="8" height="65" width="2305" format="[general]"  name=coordinaciones_coordinacion edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="677" y="8" height="53" width="1093" format="[general]"  name=materias_materia edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1802" y="8" height="53" width="252" format="[general]"  name=alumnos_cuenta edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="2081" y="12" height="53" width="1367" format="[general]"  name=alumnos_nombre_completo edit.limit=70 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="522" y="12" height="53" width="101" format="[general]"  name=compute_0002 edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="362" y="12" height="53" width="115" format="[general]"  name=actanum edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="60" y="12" height="53" width="238" format="[general]"  name=examen_extrao_titulo_cve_mat edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+
+sparse(names="examen_extrao_titulo_cve_mat	actanum	compute_0002	materias_materia")

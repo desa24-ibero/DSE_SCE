@@ -1,0 +1,55 @@
+﻿$PBExportHeader$f_es_fecha_menor_aplicacion_ets.srf
+global type f_es_fecha_menor_aplicacion_ets from function_object
+end type
+
+forward prototypes
+global function integer f_es_fecha_menor_aplicacion_ets (integer ai_periodo, integer ai_anio, ref integer ai_es_fecha_menor_ets)
+end prototypes
+
+global function integer f_es_fecha_menor_aplicacion_ets (integer ai_periodo, integer ai_anio, ref integer ai_es_fecha_menor_ets);//f_es_fecha_menor_aplicacion_ets
+//	Devuelve si la fecha actual es menor a las fechas de Aplicación Extraordinario y a Título de Suf.
+//Recibe:integer	ai_periodo
+//			integer	ai_anio
+//			integer	ai_es_fecha_menor_ets
+//Devuelve:
+//			integer	ai_es_fecha_menor_ets
+//El código de la base de datos de la transacción
+//			-1 Error
+//			0  Exito
+
+string ls_mensaje_sql
+integer li_codigo_sql, li_es_fecha_menor_ets
+datetime ldttm_fecha_actual, ldttm_fecha_inicial, ldttm_fecha_final
+
+SELECT getdate(),
+		fecha_inicial,
+		fecha_final,
+		es_fecha_menor_ets = CASE  WHEN getdate() <= fecha_inicial AND getdate() <= fecha_final   THEN 1 
+										  ELSE 0
+								  END				  
+INTO
+	:ldttm_fecha_actual,
+	:ldttm_fecha_inicial,
+	:ldttm_fecha_final,
+	:li_es_fecha_menor_ets
+FROM periodos_por_procesos
+WHERE cve_proceso = 12
+AND	periodo = :ai_periodo
+AND	anio = :ai_anio
+USING gtr_sce;
+
+ls_mensaje_sql= gtr_sce.SqlErrtext
+li_codigo_sql= gtr_sce.SqlCode
+
+IF li_codigo_sql = 100 THEN
+		Messagebox("Registro Inexistente","NO se encuentra la fecha de Aplicación Extraordinario y a Título de Suf. en periodos_por_procesos",StopSign!)
+ELSEIF li_codigo_sql = -1 THEN
+		Messagebox("Error en la consulta de periodos_por_procesos",ls_mensaje_sql,StopSign!)
+END IF
+
+ai_es_fecha_menor_ets = li_es_fecha_menor_ets
+
+return li_codigo_sql
+
+end function
+

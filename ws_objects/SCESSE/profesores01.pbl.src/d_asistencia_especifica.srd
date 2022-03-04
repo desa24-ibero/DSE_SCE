@@ -1,0 +1,10 @@
+﻿$PBExportHeader$d_asistencia_especifica.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=70 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cantidad dbname="cantidad" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"profesor_lista_asistencia~" ) COMPUTE(NAME=~"cantidad = count(*)~")WHERE(    EXP1 =~"profesor_lista_asistencia.periodo~"   OP =~"=~"    EXP2 =~":ai_periodo~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"profesor_lista_asistencia.anio~"   OP =~"=~"    EXP2 =~":ai_anio~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"(profesor_lista_asistencia.cve_mat~"   OP =~"=~"    EXP2 =~":al_cve_mat~"    LOGIC =~"or~" ) WHERE(    EXP1 =~":al_cve_mat~"   OP =~"=~"    EXP2 =~"99999)~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"(profesor_lista_asistencia.gpo~"   OP =~"=~"    EXP2 =~":as_gpo~"    LOGIC =~"or~" ) WHERE(    EXP1 =~":as_gpo~"   OP =~"=~"    EXP2 =~"~~~"**~~~")~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"profesor_lista_asistencia.cve_asistencia~"   OP =~"in~"    EXP2 =~"(:ai_cve_asistencia)~" ) ) ARG(NAME = ~"ai_periodo~" TYPE = number)  ARG(NAME = ~"ai_anio~" TYPE = number)  ARG(NAME = ~"al_cve_mat~" TYPE = number)  ARG(NAME = ~"as_gpo~" TYPE = string)  ARG(NAME = ~"ai_cve_asistencia~" TYPE = numberlist) " arguments=(("ai_periodo", number),("ai_anio", number),("al_cve_mat", number),("as_gpo", string),("ai_cve_asistencia", numberlist)) )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="40" y="3" height="64" width="428" format="[general]"  name=cantidad edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

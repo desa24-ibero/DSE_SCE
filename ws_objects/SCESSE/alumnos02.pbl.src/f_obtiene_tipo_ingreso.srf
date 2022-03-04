@@ -1,0 +1,80 @@
+﻿$PBExportHeader$f_obtiene_tipo_ingreso.srf
+global type f_obtiene_tipo_ingreso from function_object
+end type
+
+forward prototypes
+global function integer f_obtiene_tipo_ingreso (long ar_cuenta, ref string ar_tipo_ingreso)
+end prototypes
+
+global function integer f_obtiene_tipo_ingreso (long ar_cuenta, ref string ar_tipo_ingreso);/*Esta funcion recibe la cuenta de un alumno, se realizan validaciones para determinar si es un alumno de primer ingreso o de reingreso*/
+/*La funcion Regresa un estatus de ejecución y por referencia regresa el Tipo de Ingreso: P - Primer Ingreso, R - Reingreso */
+
+Integer li_rows
+String ls_tipo_ingreso, ls_nivel
+
+ls_tipo_ingreso = ''
+ar_tipo_ingreso = ''
+
+SELECT nivel
+   INTO :ls_nivel
+  FROM academicos ac
+ WHERE ac.cuenta = :ar_cuenta
+  USING  gtr_sce;
+  
+//If ls_nivel <> 'L' Then
+If ls_nivel = 'P' Then	
+	//Messagebox('Mensaje del Sistema', 'Este proceso solo puede ser realizado para cuentas de licenciatura...', StopSign!)
+	Messagebox('Mensaje del Sistema', 'Este proceso no puede ser realizado para cuentas de posgrado...', StopSign!) 
+	return -1
+End If
+
+/*Validaciones para determinar si es de primer ingreso*/
+SELECT IsNull(count(*), 0)
+	INTO :li_rows
+  FROM academicos ac, activacion c, v_sce_alumno_digito d
+ WHERE ac.anio_ing = c.anio
+	AND ac.periodo_ing = c.periodo
+	AND ac.cuenta = d.cuenta
+	AND ac.cuenta = :ar_cuenta
+ USING gtr_sce;
+ 
+ If li_rows > 0 Then
+	ls_tipo_ingreso = 'P'
+Else
+	ls_tipo_ingreso = 'R'
+End If
+
+If ls_tipo_ingreso = 'R' Then
+	/*Validamos si tiene una solicitud de reingreso del periodo actual*/
+	SELECT IsNull(count(*), 0)
+        INTO :li_rows
+	  FROM hist_reingreso
+	 WHERE cuenta = :ar_cuenta
+	 	 AND periodo_ing  = :gi_periodo
+  		 AND anio_ing = :gi_anio
+ 	  USING gtr_sce;
+	
+	If li_rows <= 0 Then
+		Messagebox('Mensaje del Sistema', 'Esta cuenta no tiene una solicitud de reingreso no es posible continuar...', StopSign!)
+		return -1
+	End If
+	
+	/* Valida si a cursado alguna materia*/
+	SELECT IsNull(count(*), 0)
+	    INTO :li_rows
+	  FROM historico 
+	 WHERE cuenta = :ar_cuenta
+	 USING  gtr_sce;
+	
+	If li_rows > 0 Then
+		Messagebox('Mensaje del Sistema', 'Este alumno ya ha cursado materias previamente, no es posible continuar...', StopSign!)
+		return -1
+	End If
+	
+End If
+ 
+ar_tipo_ingreso = ls_tipo_ingreso 
+
+return 0
+end function
+

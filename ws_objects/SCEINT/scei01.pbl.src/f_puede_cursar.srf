@@ -1,0 +1,72 @@
+﻿$PBExportHeader$f_puede_cursar.srf
+global type f_puede_cursar from function_object
+end type
+
+forward prototypes
+global function integer f_puede_cursar (long al_cuenta, long al_materia, integer al_carrera, integer al_plan)
+end prototypes
+
+global function integer f_puede_cursar (long al_cuenta, long al_materia, integer al_carrera, integer al_plan);DataStore dw_prerreqxmat
+int li_cont
+long ll_materia_req
+int li_puede
+string ls_calif
+
+dw_prerreqxmat = CREATE DataStore
+dw_prerreqxmat.DataObject = "d_prerreqxmat"
+dw_prerreqxmat.Settransobject(gtr_sce)
+
+dw_prerreqxmat.retrieve(al_materia,al_carrera,al_plan)
+
+li_puede=1
+FOR li_cont=1 TO dw_prerreqxmat.rowcount()
+	ll_materia_req=dw_prerreqxmat.object.cve_prerreq[li_cont]
+		
+	setnull(ls_calif)
+	SELECT dbo.historico.calificacion
+	INTO :ls_calif
+	FROM dbo.historico
+	WHERE ( dbo.historico.cuenta = :al_cuenta ) AND
+		( dbo.historico.cve_mat = :ll_materia_req ) AND
+		( dbo.historico.cve_carrera = :al_carrera ) AND
+		( dbo.historico.cve_plan = :al_plan ) AND
+		( dbo.historico.calificacion IN ("AC","6","7","8","9","10", "MB","B","S","E","RE"))
+	USING gtr_sce;
+	
+	if isnull(ls_calif) then
+		ls_calif='NA'
+	end if
+
+	CHOOSE CASE ls_calif
+		CASE '6','7','8','9','10','AC','MB','B','S','RE','E'
+			if li_puede=0 then
+				if li_cont=1 then
+					li_puede=1
+				else
+					if dw_prerreqxmat.object.enlace[li_cont - 1]='O' then
+						li_puede=1
+					end if					
+				end if
+			end if
+		CASE ELSE
+			if li_puede=1 then
+				if li_cont=1 then
+					li_puede=0
+				else
+					if dw_prerreqxmat.object.enlace[li_cont - 1]='Y' then
+						li_puede=0
+					end if
+				end if
+			end if
+	END CHOOSE	
+NEXT
+
+DESTROY dw_prerreqxmat
+
+if li_puede=1 then
+	return 32
+else
+	return 0
+end if
+end function
+

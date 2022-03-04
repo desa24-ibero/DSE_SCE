@@ -1,0 +1,63 @@
+﻿$PBExportHeader$dw_ctrl_docum_ing.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 1 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 5 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=608 color="536870912" )
+summary(height=125 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=157 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=general_cuenta dbname="general.cuenta" )
+ column=(type=char(50) updatewhereclause=yes name=general_nombre dbname="general.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=general_apaterno dbname="general.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=general_amaterno dbname="general.amaterno" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_carr dbname="aspiran.clv_carr" )
+ column=(type=long updatewhereclause=yes name=aspiran_status dbname="aspiran.status" )
+ retrieve="  SELECT general.cuenta,   
+         general.nombre,   
+         general.apaterno,   
+         general.amaterno,   
+         aspiran.clv_carr,
+         aspiran.status  
+    FROM aspiran,   
+         general  
+   WHERE ( general.folio = aspiran.folio ) and  
+         ( general.clv_ver = aspiran.clv_ver ) and  
+         ( general.clv_per = aspiran.clv_per ) and  
+         ( general.anio = aspiran.anio ) and  
+         ( aspiran.ing_per = :per ) AND  
+         ( aspiran.ing_anio = :ani ) AND  
+         ( aspiran.status <> 0 and aspiran.status <> 3 )    
+" arguments=(("per", number),("ani", number))  sort="general_cuenta A " )
+compute(band=header alignment="1" expression="'Página ' + page() + ' de ' + pageCount()"border="0" color="0" x="4996" y="163" height="70" width="823" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=header alignment="1" expression="today()"border="0" color="0" x="4996" y="67" height="77" width="823" format="[shortdate] [time]"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=header alignment="1" expression="'Periodo:  '+string(ani)+'--'+ case( per when 0 then 'P' when 1 then 'V' else 'O')"border="0" color="0" x="4996" y="339" height="74" width="823" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="PLANTEL: MÉXICO"border="0" color="0" x="340" y="368" height="64" width="519"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="N        O        M        B        R        E"border="0" color="0" x="1463" y="506" height="64" width="995"  name=general_amaterno_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="ACTA DE NAC."border="0" color="0" x="2926" y="509" height="64" width="417"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="CERT. SEC."border="0" color="0" x="3511" y="509" height="64" width="333"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="CERT. BAC."border="0" color="0" x="4056" y="512" height="64" width="336"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="OTROS"border="0" color="0" x="4677" y="512" height="64" width="205"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="OBSERVACIONES"border="0" color="0" x="5263" y="512" height="64" width="516"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+line(band=header x1="5910" y1="467" x2="5910" y2="602" pen.style="2" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="NÚM. CTA."border="0" color="0" x="753" y="506" height="64" width="304"  name=general_cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="CARR."border="0" color="0" x="399" y="506" height="64" width="183"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Relación para Control de Documentos de Aspirantes Inscritos a Primer Ingreso Alfabético"border="0" color="0" x="1477" y="275" height="77" width="2838"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="DIRECCIÓN DE SERVICIOS ESCOLARES"border="0" color="0" x="2198" y="186" height="77" width="1401"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="SISTEMA DE EXAMEN DE ADMISIÓN"border="0" color="0" x="2275" y="93" height="77" width="1258"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="U N I V E R S I D A D    I B E R O A M E R I C A N A"border="0" color="0" x="2085" y="0" height="77" width="1635"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+line(band=header x1="322" y1="467" x2="322" y2="608" pen.style="2" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="333" y1="464" x2="5910" y2="458" pen.style="2" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="333" y1="490" x2="5906" y2="480" pen.style="2" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="322" y1="586" x2="5892" y2="595" pen.style="2" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=detail alignment="0" expression="general_apaterno+' '+general_amaterno+' '+general_nombre"border="0" color="0" x="1123" y="32" height="64" width="1748" format="[general]"  name=nom  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="5910" y1="10" x2="5910" y2="144" pen.style="2" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="5102" y1="10" x2="5102" y2="144" pen.style="2" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2882" y1="10" x2="2882" y2="141" pen.style="2" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3412" y1="3" x2="3412" y2="141" pen.style="2" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3942" y1="3" x2="3942" y2="141" pen.style="2" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="4473" y1="3" x2="4473" y2="141" pen.style="2" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=detail alignment="2" expression=" general_cuenta +'--'+obten_digito( general_cuenta )"border="0" color="0" x="709" y="32" height="64" width="399" format="[general]"  name=cuen  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="417" y="32" height="64" width="143" format="[general]"  name=aspiran_clv_carr editmask.mask="0000" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+line(band=detail x1="322" y1="3" x2="322" y2="128" pen.style="2" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="322" y1="141" x2="5892" y2="154" pen.style="2" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="~"TOTAL U. I. A.  :  ~"+string(count( general_cuenta for all))"border="0" color="0" x="4996" y="51" height="70" width="823" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

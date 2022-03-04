@@ -1,0 +1,113 @@
+﻿$PBExportHeader$m_carga_historia_acad_2013.srm
+$PBExportComments$Solo Tiene la opción de salir de la ventana w_carga_historia_acad_2013.
+forward
+global type m_carga_historia_acad_2013 from m_menu_general_base_2013
+end type
+end forward
+
+global type m_carga_historia_acad_2013 from m_menu_general_base_2013
+end type
+global m_carga_historia_acad_2013 m_carga_historia_acad_2013
+
+on m_carga_historia_acad_2013.create
+m_carga_historia_acad_2013=this
+call super::create
+end on
+
+on m_carga_historia_acad_2013.destroy
+call super::destroy
+end on
+
+type m_imprime from m_menu_general_base_2013`m_imprime within m_carga_historia_acad_2013
+end type
+
+event m_imprime::clicked;call super::clicked;//*/*/**//dw.print() //
+//m_carga_historia_acad_2013.triggerevent('ue_imprime')
+
+end event
+
+on m_imprime.create
+call super::create
+end on
+
+on m_imprime.destroy
+call super::destroy
+end on
+
+type m_salvar from m_menu_general_base_2013`m_salvar within m_carga_historia_acad_2013
+end type
+
+on m_salvar.create
+call super::create
+end on
+
+on m_salvar.destroy
+call super::destroy
+end on
+
+type m_registro from m_menu_general_base_2013`m_registro within m_carga_historia_acad_2013
+end type
+
+on m_registro.create
+call super::create
+end on
+
+on m_registro.destroy
+call super::destroy
+end on
+
+type m_primero from m_menu_general_base_2013`m_primero within m_registro
+end type
+
+on m_primero.create
+call super::create
+end on
+
+on m_primero.destroy
+call super::destroy
+end on
+
+type m_anterior from m_menu_general_base_2013`m_anterior within m_registro
+end type
+
+on m_anterior.create
+call super::create
+end on
+
+on m_anterior.destroy
+call super::destroy
+end on
+
+type m_siguiente from m_menu_general_base_2013`m_siguiente within m_registro
+end type
+
+on m_siguiente.create
+call super::create
+end on
+
+on m_siguiente.destroy
+call super::destroy
+end on
+
+type m_ultimo from m_menu_general_base_2013`m_ultimo within m_registro
+end type
+
+on m_ultimo.create
+call super::create
+end on
+
+on m_ultimo.destroy
+call super::destroy
+end on
+
+type m_salir from m_menu_general_base_2013`m_salir within m_carga_historia_acad_2013
+end type
+
+on m_salir.create
+call super::create
+end on
+
+on m_salir.destroy
+call super::destroy
+end on
+

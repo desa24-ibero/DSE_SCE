@@ -1,0 +1,80 @@
+﻿$PBExportHeader$dw_repo_mad_02_gz.srd
+$PBExportComments$Datawindow para los reportes de Directorio de Alumnos Extranjeros, y de VISUALIZACION
+release 7;
+datawindow(units=0 timer_interval=60000 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=160 color="536870912" )
+summary(height=4 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=144 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=academicos_cuenta dbname="academicos.cuenta" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_apaterno dbname="alumnos.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_amaterno dbname="alumnos.amaterno" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_nombre dbname="alumnos.nombre" )
+ column=(type=char(13) updatewhereclause=yes name=domicilio_telefono dbname="domicilio.telefono" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_carrera dbname="academicos.cve_carrera" )
+ column=(type=char(50) updatewhereclause=yes name=domicilio_calle dbname="domicilio.calle" )
+ column=(type=char(150) updatewhereclause=yes name=domicilio_colonia dbname="domicilio.colonia" )
+ column=(type=char(6) updatewhereclause=yes name=domicilio_cod_postal dbname="domicilio.cod_postal" )
+ column=(type=char(100) updatewhereclause=yes name=carreras_carrera dbname="carreras.carrera" )
+ column=(type=long updatewhereclause=yes name=compute_0011 dbname="compute_0011" )
+ column=(type=real updatewhereclause=yes name=academicos_promedio dbname="academicos.promedio" )
+ column=(type=long updatewhereclause=yes name=academicos_creditos_cursados dbname="academicos.creditos_cursados" )
+ column=(type=char(16) updatewhereclause=yes name=nacionalidad_nacionalidad dbname="nacionalidad.nacionalidad" )
+ column=(type=char(70) updatewhereclause=yes name=alumnos_nombre_completo dbname="alumnos.nombre_completo" )
+ retrieve="  SELECT academicos.cuenta,   
+         alumnos.apaterno,   
+         alumnos.amaterno,   
+         alumnos.nombre,   
+         domicilio.telefono,   
+         academicos.cve_carrera,   
+         domicilio.calle,   
+         domicilio.colonia,   
+         domicilio.cod_postal,
+			carreras.carrera,   
+         0,   
+         academicos.promedio,   
+         academicos.creditos_cursados,   
+         nacionalidad.nacionalidad,   
+         alumnos.nombre_completo  
+    FROM academicos,   
+         alumnos,   
+         domicilio,   
+         nacionalidad,
+			carreras,   
+         banderas_inscrito  
+   WHERE ( academicos.cuenta = alumnos.cuenta ) and  
+         ( academicos.cuenta = domicilio.cuenta ) and  
+         ( academicos.cuenta = banderas_inscrito.cuenta ) and 
+			( academicos.cve_carrera = carreras.cve_carrera ) and 
+         ( alumnos.cve_nacion = nacionalidad.cve_nacion ) and  
+         ( alumnos.cve_nacion <> 1) AND  
+         ( academicos.cve_carrera in ( :carrera ) ) AND  
+         ( academicos.cve_plan in ( :plan ) )    
+" arguments=(("orden", number),("plan", numberlist),("carrera", numberlist),("prom_on", number),("cred_on", number),("dir_on", number))  sort="academicos_cve_carrera A alumnos_nombre_completo A " )
+group(level=1 header.height=80 trailer.height=68 by=("case(  orden  when 1 then academicos_cve_carrera  when 2 then  compute_0011)" ) newpage=yes header.color="553648127" trailer.color="536870912" )
+line(band=header x1="14" y1="148" x2="4608" y2="148"  name=l_1 pen.style="0" pen.width="14" pen.color="0"  background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="Cuenta /" border="0" color="0" x="27" y="8" height="56" width="242"  name=academicos_cuenta_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Domicilio " border="0" color="0" x="3634" y="8" height="56" width="293"  name=t_1 visible="1~t if(  dir_on   =1, 1, 0 )"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="(Calle / Colonia)" border="0" color="0" x="3547" y="72" height="56" width="466"  name=t_2 visible="1~t if(  dir_on   =1, 1, 0 )"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Teléfono /" border="0" color="0" x="2112" y="8" height="64" width="293"  name=domicilio_telefono_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Cod. Post." border="0" color="0" x="2112" y="72" height="56" width="293"  name=t_3 visible="1~t if(  dir_on   =1, 1, 0 )"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Promedio /" border="0" color="0" x="2606" y="4" height="64" width="320"  name=t_4 visible="1~t if(  prom_on =1, 1, 0 )"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Núm. de Cred." border="0" color="0" x="2569" y="68" height="64" width="416"  name=t_5 visible="1~t if(  cred_on  =1, 1, 0 )"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Carrera" border="0" color="0" x="1216" y="72" height="56" width="229"  name=t_6  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Nombre / " border="0" color="0" x="1216" y="8" height="56" width="283"  name=alumnos_nombre_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Nacionalidad" border="0" color="0" x="9" y="72" height="64" width="384"  name=t_7  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header.1 alignment="0" expression="case( orden when 1 then (~"Carrera: ~"+  carreras_carrera) when 2 then ~"Todas las Carreras~")"border="0" color="0" x="14" y="12" height="60" width="1422" format="[general]"  name=compute_1  font.face="Arial" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="14" y="304" height="52" width="197" format="[general]"  name=academicos_cve_carrera edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression=" academicos_cuenta +~" - ~"+obten_digito( academicos_cuenta )"border="0" color="0" x="9" y="4" height="52" width="288" format="[general]"  name=compute_2  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="64" height="52" width="571" format="[general]"  name=nacionalidad_nacionalidad edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" font.italic="1" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="3063" y="4" height="52" width="1536" format="[general]"  name=domicilio_calle visible="1~t if(  dir_on   =1, 1, 0 )" edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="3063" y="64" height="52" width="1536" format="[general]"  name=domicilio_colonia visible="1~t if(  dir_on   =1, 1, 0 )" edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="2688" y="4" height="52" width="137" format=""  name=academicos_promedio visible="1~t if(  prom_on =1, 1, 0 )" editmask.mask="###,###.00" editmask.focusrectangle=no  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="0" x="2688" y="64" height="52" width="197" format="[general]"  name=academicos_creditos_cursados visible="1~t if(  cred_on  =1, 1, 0 )" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="2158" y="4" height="52" width="315" format="[general]"  name=domicilio_telefono edit.limit=13 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="2158" y="64" height="52" width="256" format="[general]"  name=domicilio_cod_postal visible="1~t if(  dir_on   =1, 1, 0 )" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="alumnos_apaterno +~"  ~"+ alumnos_amaterno +~"  ~"+alumnos_nombre "border="0" color="0" x="645" y="4" height="52" width="1431" format="[general]"  name=compute_3  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression=" academicos_cve_carrera +~" - ~"+ carreras_carrera "border="0" color="0" x="645" y="64" height="52" width="1431" format="[general]"  name=compute_4  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="2" expression="~"El Total de Alumnos es de : ~" +count(academicos_cve_carrera for group 1)"border="2" color="0" x="1399" y="8" height="56" width="1774" format="[general]"  name=compute_5  font.face="Arial" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="0" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

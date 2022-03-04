@@ -1,0 +1,16 @@
+﻿$PBExportHeader$dw_carr_bus.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=30976088 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=153 color="536870912" )
+summary(height=5 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=125 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cve_carrera dbname="carreras.cve_carrera" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=carrera dbname="carreras.carrera" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"carreras~" ) COLUMN(NAME=~"carreras.cve_carrera~") COLUMN(NAME=~"carreras.carrera~")WHERE(    EXP1 =~"carreras.carrera~"   OP =~"like~"    EXP2 =~":valor~" ) ) ARG(NAME = ~"valor~" TYPE = string) " update="carreras" updatewhere=1 updatekeyinplace=no arguments=(("valor", string)) )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="37" y="16" height="121" width="1783" brush.hatch="6" brush.color="12632256" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="12632256" )
+text(band=header alignment="1" text="Carrera"border="0" color="0" x="1066" y="36" height="81" width="229"  name=carrera_t  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="1" text="Clave"border="0" color="0" x="101" y="36" height="81" width="174"  name=cve_escuela_t  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="5" color="0" x="403" y="12" height="77" width="1399" format="[general]"  name=carrera edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=1 alignment="1" tabsequence=10 border="5" color="0" x="74" y="12" height="77" width="261" format="[general]"  name=cve_carrera edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+compute(band=detail alignment="0" expression=" cve_carrera "border="0" color="0" x="494" y="156" height="77" width="261" format="[general]"  name=clave  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

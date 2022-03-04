@@ -1,0 +1,13 @@
+﻿$PBExportHeader$d_ole_paint.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no ole.client.class="DataWindow" ole.client.name="Untitled" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=884 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cuenta dbname="fotos_alumnos.cuenta" )
+ column=(type=blob name=blob_1 dbname="foto" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"dbo.fotos_alumnos~" ) COLUMN(NAME=~"dbo.fotos_alumnos.cuenta~")WHERE(    EXP1 =~"dbo.fotos_alumnos.cuenta~"   OP =~"=~"    EXP2 =~":al_cuenta~" ) ) ARG(NAME = ~"al_cuenta~" TYPE = number) " arguments=(("al_cuenta", number)) )
+column(band=detail id=1 alignment="1" tabsequence=10 border="0" color="0" x="23" y="8" height="76" width="293" format="[general]"  name=cuenta edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+tableblob (band=detail table="dbo.fotos_alumnos" keyclause="cuenta = :cuenta" template="C:\SourceSafe\controlescolar\Codigo Fuente7\photo_117710.jpg" id=2 x="457" y="60" height="792" width="1184" border="0"  oleclass="Imaging.Document" clientname="~"Alumno ~"+string(cuenta)" name=blob_1 )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

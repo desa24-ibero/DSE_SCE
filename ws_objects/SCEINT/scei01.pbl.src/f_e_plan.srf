@@ -1,0 +1,49 @@
+﻿$PBExportHeader$f_e_plan.srf
+global type f_e_plan from function_object
+end type
+
+forward prototypes
+global function integer f_e_plan (string as_nivel, integer ai_carr, integer ai_plan, long al_materia)
+end prototypes
+
+global function integer f_e_plan (string as_nivel, integer ai_carr, integer ai_plan, long al_materia);/*
+DESCRIPCIÓN: Verifica la existencia en el plan de una materia dada
+PARÁMETROS: as_nivel,ai_carr,ai_plan,al_materia
+REGRESA: 0 si la materia no existe, 4 si existe
+AUTOR: Víctor Manuel Iniestra Álvarez
+FECHA: 18 Junio 1998
+MODIFICACIÓN:
+*/
+long ll_mate
+
+//IF trim(as_nivel)='L' THEN
+IF trim(as_nivel) <> 'P' THEN 
+	SELECT mat_prerrequisito.cve_mat
+	INTO :ll_mate
+	FROM mat_prerrequisito
+	WHERE ( mat_prerrequisito.cve_carrera = :ai_carr ) AND
+		( mat_prerrequisito.cve_plan = :ai_plan ) AND
+		( mat_prerrequisito.cve_mat = :al_materia )
+	USING gtr_sce;
+ELSE
+	SELECT mat_prerreq_pos.cve_mat  
+	INTO :ll_mate  
+	FROM mat_prerreq_pos  
+	WHERE ( mat_prerreq_pos.cve_carrera = :ai_carr ) AND  
+		( mat_prerreq_pos.cve_plan = :ai_plan ) AND
+		( mat_prerreq_pos.cve_mat = :al_materia )
+	USING gtr_sce;
+END IF
+
+
+if isnull(ll_mate) then
+	ll_mate=0
+end if
+
+if al_materia<>ll_mate then
+	return 0
+else
+	return 4
+end if
+end function
+

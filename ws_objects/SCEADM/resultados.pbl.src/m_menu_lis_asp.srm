@@ -1,0 +1,32 @@
+﻿$PBExportHeader$m_menu_lis_asp.srm
+forward
+global type m_menu_lis_asp from m_menu
+end type
+end forward
+
+global type m_menu_lis_asp from m_menu
+end type
+global m_menu_lis_asp m_menu_lis_asp
+
+type variables
+
+end variables
+
+on m_menu_lis_asp.create
+m_menu_lis_asp=this
+call super::create
+end on
+
+on m_menu_lis_asp.destroy
+call super::destroy
+end on
+
+event m_salvar::clicked;if isvalid(dw_2) then
+	SetPointer(HourGlass!)
+	if dw_2.SaveAs("",Excel!, TRUE)<>1 then
+		dw_2.SaveAs("",Clipboard!, TRUE)
+		messagebox("No se pudo guardar el archivo","La información se encuentra en el Clipboard")	
+	end if
+end if
+end event
+

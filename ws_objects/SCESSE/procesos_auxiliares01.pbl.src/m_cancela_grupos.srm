@@ -1,0 +1,122 @@
+﻿$PBExportHeader$m_cancela_grupos.srm
+forward
+global type m_cancela_grupos from m_catalogo
+end type
+end forward
+
+global type m_cancela_grupos from m_catalogo
+end type
+global m_cancela_grupos m_cancela_grupos
+
+on m_cancela_grupos.create
+m_cancela_grupos=this
+call super::create
+end on
+
+on m_cancela_grupos.destroy
+call super::destroy
+end on
+
+on m_imprimir.create
+call super::create
+this.ToolBarItemName=""
+this.Visible=false
+this.Enabled=false
+this.ToolBarItemVisible=false
+end on
+
+on m_edicion.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_deshacer.create
+call super::create
+this.ToolBarItemName=" "
+this.Visible=false
+this.Enabled=false
+this.ToolBarItemVisible=false
+end on
+
+on m_cortar.create
+call super::create
+this.ToolBarItemName=" "
+this.Visible=false
+this.Enabled=false
+this.ToolBarItemVisible=false
+end on
+
+on m_copiar.create
+call super::create
+this.ToolBarItemName=" "
+this.Visible=false
+this.Enabled=false
+this.ToolBarItemVisible=false
+end on
+
+on m_pegar.create
+call super::create
+this.ToolBarItemName=" "
+this.Visible=false
+this.Enabled=false
+this.ToolBarItemVisible=false
+end on
+
+on m_borrar.create
+call super::create
+this.Visible=false
+this.Enabled=false
+this.ToolBarItemVisible=false
+end on
+
+on m_registro.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_nuevo.create
+call super::create
+this.ToolBarItemName=""
+this.Visible=false
+this.Enabled=false
+this.ToolBarItemVisible=false
+end on
+
+on m_actualiza.create
+call super::create
+this.ToolBarItemName=" "
+this.Visible=false
+this.Enabled=false
+this.ToolBarItemVisible=false
+end on
+
+on m_borraregistro.create
+call super::create
+this.ToolBarItemName=" "
+this.Visible=false
+this.Enabled=false
+this.ToolBarItemVisible=false
+end on
+
+on m_ordenarporclave.create
+call super::create
+this.Visible=false
+this.Enabled=false
+this.ToolBarItemVisible=false
+end on
+
+on m_ordenarpordescripcin.create
+call super::create
+this.Visible=false
+this.Enabled=false
+this.ToolBarItemVisible=false
+end on
+
+on m_salir.create
+call super::create
+this.ToolBarItemOrder=9
+this.ToolBarItemSpace=3
+end on
+

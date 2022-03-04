@@ -1,0 +1,26 @@
+﻿$PBExportHeader$periodo_string.srf
+$PBExportComments$Convierte el periodo entero en un string. No es recomendable que se use  está función si se llama varias veces en un proceso.  Juan Campos Sánchez. ~tEnero-1998.
+global type periodo_string from function_object
+end type
+
+forward prototypes
+global function string periodo_string (integer periodo)
+end prototypes
+
+global function string periodo_string (integer periodo);// Convierte el periodo entero en un string. No es recomendable que se use 
+// está función si se llama varias veces en un proceso. 
+// Juan Campos Sánchez. 	Enero-1998.
+
+
+CHOOSE CASE Periodo
+CASE 0
+	Return "PRIMAVERA"
+CASE 1
+	Return "VERANO"
+CASE 2
+	Return "OTOÑO"
+CASE ELSE
+	Return ""
+END CHOOSE
+end function
+

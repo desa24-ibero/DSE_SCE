@@ -1,0 +1,11 @@
+﻿$PBExportHeader$dw_cal_sec.srd
+$PBExportComments$Da la calificación de la sección
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=real updatewhereclause=yes name=calif dbname="cali_sec.calif" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"cali_sec~" ) COLUMN(NAME=~"cali_sec.calif~")WHERE(    EXP1 =~"cali_sec.folio~"   OP =~"=~"    EXP2 =~":fol~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"cali_sec.clv_ver~"   OP =~"=~"    EXP2 =~":ver~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"cali_sec.clv_per~"   OP =~"=~"    EXP2 =~":per~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"cali_sec.anio~"   OP =~"=~"    EXP2 =~":ani~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"cali_sec.clv_area~"   OP =~"=~"    EXP2 =~":are~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"cali_sec.clv_sec~"   OP =~"=~"    EXP2 =~":sec~" ) ) ARG(NAME = ~"fol~" TYPE = number)  ARG(NAME = ~"ver~" TYPE = number)  ARG(NAME = ~"per~" TYPE = number)  ARG(NAME = ~"ani~" TYPE = number)  ARG(NAME = ~"are~" TYPE = number)  ARG(NAME = ~"sec~" TYPE = number) " arguments=(("fol", number),("ver", number),("per", number),("ani", number),("are", number),("sec", number)) )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="330" format="#0"  name=calif edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )

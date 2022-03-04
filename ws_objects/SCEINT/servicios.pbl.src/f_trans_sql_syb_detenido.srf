@@ -1,0 +1,44 @@
+﻿$PBExportHeader$f_trans_sql_syb_detenido.srf
+global type f_trans_sql_syb_detenido from function_object
+end type
+
+forward prototypes
+global function integer f_trans_sql_syb_detenido (ref string as_error)
+end prototypes
+
+global function integer f_trans_sql_syb_detenido (ref string as_error);//
+//****************************************************************************************************
+// Consulta si el proceso de transferencia de datos SqlServer/Sybase, esta detenido por algun proceso.
+// Regresa 0, Si el proceso no esta detenido.
+//			  1, Si el proceso si esta detenido.
+//        -1, Si hay un error
+//****************************************************************************************************
+
+IF Not IsValid(gtr_sit) THEN RETURN -1
+
+datastore lds_detenido
+lds_detenido = CREATE datastore
+lds_detenido.Dataobject = "d_trans_detenido"
+lds_detenido.settransobject(gtr_sit)
+
+integer li_regresa, li_recupera
+SetNull(as_error)
+
+li_recupera = lds_detenido.Retrieve()
+if li_recupera = 1 then 		
+	li_regresa = lds_detenido.object.detenido[li_recupera]
+	if li_regresa < 0 or li_regresa > 1 then
+		as_error = "Error al recuperar el estatus del proceso de transferencia de datos SqlServer/Sybase"
+		li_regresa = -1			
+	end if
+else	
+	as_error = "Error al recuperar el estatus del proceso de transferencia de datos SqlServer/Sybase. " 
+	li_regresa = -1	
+end if	
+ 
+destroy lds_detenido
+ 
+return li_regresa
+
+end function
+

@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_grupo.srs
+global type str_grupo from structure
+	long		cve_mat
+	string		gpo
+	integer		periodo
+	integer		anio
+end type
+

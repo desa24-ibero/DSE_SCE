@@ -1,0 +1,47 @@
+﻿$PBExportHeader$f_obten_desc_larga_perido_anio_2.srf
+global type f_obten_desc_larga_perido_anio_2 from function_object
+end type
+
+forward prototypes
+global function string f_obten_desc_larga_perido_anio_2 (integer ai_periodo, integer ai_anio)
+end prototypes
+
+global function string f_obten_desc_larga_perido_anio_2 (integer ai_periodo, integer ai_anio);date ld_fecha_ini,ld_fecha_fin
+string ls_fecha_ini,ls_fecha_fin,ls_periodo,ls_desc_periodo
+
+select fecha
+	into :ld_fecha_ini
+from calendario
+where periodo = :ai_periodo
+and anio = :ai_anio
+and cve_evento = 1 using gtr_sce;
+
+select fecha
+	into :ld_fecha_fin
+from calendario
+where periodo = :ai_periodo
+and anio = :ai_anio
+and cve_evento = 2 using gtr_sce;
+
+
+Select descripcion into :ls_periodo from periodo where periodo=:ai_periodo using gtr_sce;
+
+/*
+choose case ai_periodo
+	case 0
+		ls_periodo = 'primavera'
+	case 1
+		ls_periodo = 'verano'
+	case 2
+		ls_periodo = 'otoño'
+end choose
+*/
+
+ls_fecha_ini = lower(f_obten_fecha_simple_en_texto(ld_fecha_ini))
+ls_fecha_fin = lower(f_obten_fecha_simple_en_texto(ld_fecha_fin))
+
+ls_desc_periodo = ls_periodo + ' ' +string(ai_anio) + ' (del ' + ls_fecha_ini + ' al ' +ls_fecha_fin +')'
+
+return ls_desc_periodo
+end function
+

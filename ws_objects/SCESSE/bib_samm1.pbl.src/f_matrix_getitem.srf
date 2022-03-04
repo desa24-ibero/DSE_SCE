@@ -1,0 +1,56 @@
+﻿$PBExportHeader$f_matrix_getitem.srf
+$PBExportComments$Matrices nxm. Permite obtener el valor de una celda (arreglo de PB). Ejemplo: valor = (x,y).
+global type f_matrix_getitem from function_object
+end type
+
+forward prototypes
+global function any f_matrix_getitem (ref any aa_matrix[], long al_rowid, long al_colid)
+end prototypes
+
+global function any f_matrix_getitem (ref any aa_matrix[], long al_rowid, long al_colid);//////////////////////////////////////////////////////////////////////////////
+//
+//	Function:  f_array_getitem
+//
+//	Access:  public
+//
+//	Arguments:
+//	aa_matrix		La matriz con la que vamos a trabajar.
+//	al_rowid			La fila.
+//	al_colid			La columna.
+//
+//	Returns:
+//	any				Valor de la celda (x,y).
+//
+//	Description:
+//	Permite obtener el valor de una celda de una matriz bidimensional.
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+//	Revision History
+//
+//	Version
+//	1.0   Initial version
+//
+//////////////////////////////////////////////////////////////////////////////
+any la_tempo[]
+any la_resultado
+
+if al_rowid > 0 and al_colid > 0 then
+
+	if upperbound(aa_matrix) >= al_rowid then
+		la_tempo = aa_matrix[al_rowid]
+		if upperbound(la_tempo) >= al_colid then
+			la_resultado = la_tempo[al_colid]
+		else
+			setnull(la_resultado)	
+		end if
+	else
+		setnull(la_resultado)
+	end if
+else
+	setnull(la_resultado)
+end if
+
+return la_resultado
+end function
+

@@ -1,0 +1,40 @@
+﻿$PBExportHeader$f_obtiene_anio_proc_tit.srf
+global type f_obtiene_anio_proc_tit from function_object
+end type
+
+forward prototypes
+global function integer f_obtiene_anio_proc_tit ()
+end prototypes
+
+global function integer f_obtiene_anio_proc_tit ();//f_obten_folio_documento
+//	Recibe	
+
+long ll_posicion_coma, ll_indice_arreglo 
+string ls_mensaje
+integer li_resultado, li_anio
+
+
+SELECT anio
+    INTO :li_anio
+   FROM periodos_por_procesos
+ WHERE cve_proceso = 14 
+ AND tipo_periodo = :gs_tipo_periodo
+USING gtr_sce;
+
+li_resultado= gtr_sce.SqlCode
+ls_mensaje= gtr_sce.SqlErrText
+
+if li_resultado = -1 then
+	MessageBox("Error de consulta en periodos_por_procesos", ls_mensaje, StopSign!)
+	return li_resultado
+elseif li_resultado = 100 then
+	MessageBox("Error de consulta en periodos_por_procesos", "No se encontro el registro", StopSign!)
+	return li_resultado
+else
+	return li_anio
+end if
+
+
+
+end function
+

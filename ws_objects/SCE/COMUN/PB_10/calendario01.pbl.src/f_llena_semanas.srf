@@ -1,0 +1,79 @@
+﻿$PBExportHeader$f_llena_semanas.srf
+global type f_llena_semanas from function_object
+end type
+
+forward prototypes
+global function integer f_llena_semanas (integer ai_periodo, integer ai_anio, ref string asa_descripcion[50, 2], ref date ada_descanso[64], ref integer ai_actual[2])
+end prototypes
+
+global function integer f_llena_semanas (integer ai_periodo, integer ai_anio, ref string asa_descripcion[50, 2], ref date ada_descanso[64], ref integer ai_actual[2]);int li_i, li_descansos, li_dia_semana, li_nosemana, li_ret
+datastore lds_calendario
+date ld_inicio, ld_fin, ld_dia_actual, ld_fecha_servidor
+lds_calendario = CREATE DataStore
+lds_calendario.DataObject = "d_calendario_anioperiodoevento"
+lds_calendario.SetTransObject(gtr_sce)
+
+
+ai_actual = {0,0}
+li_ret = 0
+for li_i = 1 to 50
+	asa_descripcion[li_i,1] = ""
+next
+
+if lds_calendario.retrieve(ai_periodo,ai_anio,1) = 1 then //fecha_inicio
+	ld_inicio = Date(lds_calendario.GetItemDatetime(1,"fecha"))
+	ld_fecha_servidor = Date(lds_calendario.GetItemDatetime(1,"getdate"))
+	if lds_calendario.retrieve(ai_periodo,ai_anio,2) = 1 then //fecha_fin
+		ld_fin = Date(lds_calendario.GetItemDatetime(1,"fecha"))
+		li_ret = lds_calendario.retrieve(ai_periodo,ai_anio,3)
+		if li_ret >= 0 then //descanso
+			for li_i = 1 to li_ret
+				ada_descanso[li_i] = Date(lds_calendario.GetItemDatetime(li_i,"fecha"))
+			next
+			li_descansos = li_ret
+		else
+			li_ret = -1
+		end if
+	else
+		li_ret = -1
+	end if
+else
+	li_ret = -1
+end if
+if li_ret <> -1 and ld_inicio < ld_fin then
+	ld_dia_actual = ld_inicio
+	li_nosemana++
+	asa_descripcion[li_nosemana,1] = "Semana "+string(li_nosemana,"00")+" ** "+f_dia_espaniol(ld_dia_actual)+" al "
+	asa_descripcion[li_nosemana,2] = string(ld_dia_actual,"yyyy-mm-dd")
+	ld_dia_actual = RelativeDate(ld_dia_actual,1)
+	do while ld_dia_actual <= ld_fin
+		li_dia_semana = DayNumber(ld_dia_actual)
+		if li_dia_semana = 1 and f_DiaHabil(ld_dia_actual,ada_descanso,1) < RelativeDate(ld_dia_actual,7) then
+			li_nosemana++
+			if ai_actual[1] = 0 then
+				if ld_fecha_servidor >= ld_dia_actual and ld_fecha_servidor <= RelativeDate(ld_dia_actual,7) then
+					ai_actual[1] = li_nosemana
+					ai_actual[2] = DayNumber(ld_fecha_servidor)
+				end if
+			end if
+			asa_descripcion[li_nosemana - 1,1] += f_dia_espaniol(f_DiaHabil(RelativeDate(ld_dia_actual,-1),ada_descanso,-1)) + " **"
+			asa_descripcion[li_nosemana,1] = "Semana "+string(li_nosemana,"00")+" ** "+&
+					f_dia_espaniol(f_DiaHabil(ld_dia_actual,ada_descanso,1))+" al "
+			asa_descripcion[li_nosemana,2] = string(f_DiaHabil(ld_dia_actual,ada_descanso,1),"yyyy-mm-dd")		
+		end if
+		ld_dia_actual = RelativeDate(ld_dia_actual,1)
+		li_dia_semana = DayNumber(ld_dia_actual)
+	loop
+	asa_descripcion[li_nosemana,1] += f_dia_espaniol(ld_fin) + " **"
+end if
+
+Destroy lds_calendario
+if ai_actual[1] = 0 then
+	ai_actual[1] = 1
+	ai_actual[2] = DayNumber(ld_fecha_servidor)
+end if
+return li_ret
+//return 1
+
+end function
+

@@ -1,0 +1,33 @@
+﻿$PBExportHeader$f_cuenta_grupos_bloqueados.srf
+global type f_cuenta_grupos_bloqueados from function_object
+end type
+
+forward prototypes
+global function long f_cuenta_grupos_bloqueados ()
+end prototypes
+
+global function long f_cuenta_grupos_bloqueados ();//f_cuenta_grupos_bloqueados
+//Cuenta todos los grupos bloqueados registrados en la tabla reinscripcion_materias
+
+
+Integer  li_codigo_sql
+String ls_mensaje_sql
+long ll_cant_grupos
+
+SELECT count(*)
+INTO :ll_cant_grupos
+FROM reinscripcion_materias
+USING gtr_sce;
+
+ls_mensaje_sql= gtr_sce.SqlErrtext
+li_codigo_sql= gtr_sce.SqlCode
+
+IF li_codigo_sql =-1 THEN
+	Messagebox("Error al contar reinscripcion_materias en f_cuenta_grupos_bloqueados",ls_mensaje_sql,StopSign!)
+END IF
+
+RETURN ll_cant_grupos
+
+
+end function
+

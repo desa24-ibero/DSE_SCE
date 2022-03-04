@@ -1,0 +1,60 @@
+﻿$PBExportHeader$f_calc_prom_revalid.srf
+global type f_calc_prom_revalid from function_object
+end type
+
+forward prototypes
+global subroutine f_calc_prom_revalid (long al_folio, ref decimal a_o_promedio)
+end prototypes
+
+global subroutine f_calc_prom_revalid (long al_folio, ref decimal a_o_promedio);//Función
+//
+//f_calc_prom_revalid
+//
+//Objetivo: Regresa en dos parámetros el promedio y número de créditos
+//				correspondiente a los datos del alumno
+//
+//Parámetros:	al_cuenta 		long		val	Número de cuenta del alumno
+//					a_o_promedio	decimal	ref	Resultado del promedio del alumno
+//
+
+decimal ld_promedio
+integer li_codigo_sql
+string ls_mensaje_sql
+
+DECLARE  spcalcpromrevalid PROCEDURE FOR dbo.sp_calc_prom_revalid @folio= :al_folio, 
+@promedio = :ld_promedio OUT
+USING gtr_sce;
+
+EXECUTE spcalcpromrevalid;
+
+
+FETCH spcalcpromrevalid INTO :ld_promedio;
+li_codigo_sql = gtr_sce.SQLCode
+ls_mensaje_sql = gtr_sce.SQLErrText
+
+if li_codigo_sql = -1 then
+	
+	rollback using gtr_sce;
+	MessageBox("Error en la ejecución del stored procedure: sp_calc_prom_revalid", ls_mensaje_sql)				
+	a_o_promedio = 0
+else
+	commit using gtr_sce;
+	a_o_promedio = ld_promedio
+end if
+
+CLOSE spcalcpromrevalid;
+
+return
+
+
+
+
+
+
+
+
+
+
+
+end subroutine
+

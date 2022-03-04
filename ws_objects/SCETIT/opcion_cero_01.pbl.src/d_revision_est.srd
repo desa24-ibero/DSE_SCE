@@ -1,0 +1,14 @@
+﻿$PBExportHeader$d_revision_est.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=number updatewhereclause=no name=minimos dbname="minimos" )
+ column=(type=number updatewhereclause=no name=cursados dbname="cursados" )
+ )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="339" y="4" height="77" width="275" format="[general]"  name=cursados edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=detail alignment="0" expression=" minimos - cursados "border="0" color="33554432" x="645" y="4" height="77" width="261" format="[general]"  name=faltantes visible="1~tif(  minimos=1,0,1 )"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=detail alignment="0" expression="if(  faltantes > 0, ~"no~", ~"si~" )"border="0" color="33554432" x="645" y="4" height="77" width="275" format="[general]"  name=completa  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=1 alignment="0" tabsequence=10 border="0" color="33554432" x="33" y="4" height="77" width="275" format="[general]"  name=minimos visible="1~tif(  minimos=1,0,1 )" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )

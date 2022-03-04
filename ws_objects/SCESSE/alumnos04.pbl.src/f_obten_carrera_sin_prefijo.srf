@@ -1,0 +1,41 @@
+﻿$PBExportHeader$f_obten_carrera_sin_prefijo.srf
+global type f_obten_carrera_sin_prefijo from function_object
+end type
+
+forward prototypes
+global function string f_obten_carrera_sin_prefijo (long al_cve_carrera)
+end prototypes
+
+global function string f_obten_carrera_sin_prefijo (long al_cve_carrera);//f_obten_carrera_sin_prefijo
+//Obtiene el nombre de carrrera correspondiente a la clave de grado recibida
+//Recibe			al_cve_carrera	long 
+//Devuelve		string
+
+integer li_codigo_sql
+string ls_mensaje_sql,  ls_carrera_sin_prefijo, ls_null
+
+SetNull(ls_null)
+
+SELECT isnull(dbo.carreras.carrera_sin_prefijo,"")
+INTO	:ls_carrera_sin_prefijo
+FROM	dbo.carreras
+WHERE dbo.carreras.cve_carrera = :al_cve_carrera
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 then
+	MessageBox("Carrera inexistente", "La carrera ["+string(al_cve_carrera)+"] no existe", StopSign!)
+	return ls_null
+elseif isnull(ls_carrera_sin_prefijo) then
+	return ""
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar carreras", ls_mensaje_sql,StopSign!)
+	return  ls_null
+end if
+
+return ls_carrera_sin_prefijo
+
+end function
+

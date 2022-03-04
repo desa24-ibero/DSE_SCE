@@ -1,0 +1,152 @@
+﻿$PBExportHeader$f_obten_cve_plantel_vigente.srf
+global type f_obten_cve_plantel_vigente from function_object
+end type
+
+forward prototypes
+global function string f_obten_materia_idioma (long al_cve_carrera)
+global function string f_obten_calificacion_idioma (long al_cve_mat, integer ai_cve_idioma)
+global function string f_obten_plantel_vigente (string as_cve_observacion, integer ai_cve_idioma)
+global function integer f_obten_cve_plantel_vigente ()
+end prototypes
+
+global function string f_obten_materia_idioma (long al_cve_carrera);//f_obten_nivel_carrera
+//Obtiene la clave del grado de la carrrera correspondiente recibida
+//Recibe			al_cve_carrera	long 
+//Devuelve		string
+
+integer li_codigo_sql
+string ls_mensaje_sql,  ls_nivel_carrera, ls_null
+
+SetNull(ls_null)
+
+SELECT isnull(dbo.carreras.nivel,"")
+INTO	:ls_nivel_carrera
+FROM	dbo.carreras
+WHERE dbo.carreras.cve_carrera = :al_cve_carrera
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 then
+	MessageBox("Carrera inexistente", "El nivel/carrera ["+string(al_cve_carrera)+"] no existe", StopSign!)
+	return ls_null
+elseif isnull(ls_nivel_carrera) then
+	return ""
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar nivel/carreras", ls_mensaje_sql,StopSign!)
+	return  ls_null
+end if
+
+return ls_nivel_carrera
+
+end function
+
+global function string f_obten_calificacion_idioma (long al_cve_mat, integer ai_cve_idioma);//f_obten_materia_idioma
+//Obtiene la clave del grado de la carrrera correspondiente recibida
+//Recibe			al_cve_carrera	long 
+//					ai_cve_idioma	integer
+//Devuelve		string
+
+integer li_codigo_sql
+string ls_mensaje_sql,  ls_nivel_carrera, ls_null, ls_materia_idioma
+
+SetNull(ls_null)
+
+
+SELECT isnull(materia,"")
+INTO :ls_materia_idioma
+FROM v_materias_idioma
+WHERE cve_mat = :al_cve_mat
+AND cve_idioma = :ai_cve_idioma
+AND 0 < :al_cve_mat AND :al_cve_mat <= 987654
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 then
+	MessageBox("Traducción inexistente", "La materia ["+string(al_cve_mat)+"] no cuenta con traducción", StopSign!)
+	return ls_null
+elseif isnull(ls_materia_idioma) then
+	return ""
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar v_materias_idioma", ls_mensaje_sql,StopSign!)
+	return  ls_null
+end if
+
+return ls_materia_idioma
+
+end function
+
+global function string f_obten_plantel_vigente (string as_cve_observacion, integer ai_cve_idioma);//f_obten_observacion_idioma
+//Obtiene la observación en base al valor y el idioma recibido
+//Recibe			as_cve_observacion	long 
+//					ai_cve_idioma	integer
+//Devuelve		string
+
+integer li_codigo_sql
+string ls_mensaje_sql,  ls_nivel_carrera, ls_null, ls_observacion_idioma
+
+SetNull(ls_null)
+
+
+SELECT isnull(observacion,"")
+INTO :ls_observacion_idioma
+FROM observacion_idioma
+WHERE cve_observacion = :as_cve_observacion
+AND cve_idioma = :ai_cve_idioma
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 then
+	MessageBox("Traducción inexistente", "La observación ["+as_cve_observacion+"] no cuenta con traducción", StopSign!)
+	return ls_null
+elseif isnull(ls_observacion_idioma) then
+	return ""
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar observacion_idioma", ls_mensaje_sql,StopSign!)
+	return  ls_null
+end if
+
+return ls_observacion_idioma
+
+end function
+
+global function integer f_obten_cve_plantel_vigente ();//f_obten_cve_plantel_vigente
+//Obtiene la clave del plantel vigente
+//
+//Devuelve		integer
+
+integer li_codigo_sql, li_cve_plantel
+string ls_mensaje_sql,  ls_nivel_carrera, ls_null, ls_plantel
+
+SetNull(ls_null)
+
+
+SELECT isnull(cve_plantel,0)
+INTO :li_cve_plantel
+FROM planteles
+WHERE actual = 1
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 then
+	MessageBox("Plantel inexistente", "El plantel vigente no existe", StopSign!)
+	return -1
+elseif isnull(li_cve_plantel) then
+	return -1
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar planteles", ls_mensaje_sql,StopSign!)
+	return  -1
+end if
+
+return li_cve_plantel
+
+
+end function
+

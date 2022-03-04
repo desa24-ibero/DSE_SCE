@@ -1,0 +1,34 @@
+﻿$PBExportHeader$f_conecta_base_ceneval.srf
+global type f_conecta_base_ceneval from function_object
+end type
+
+forward prototypes
+global function integer f_conecta_base_ceneval (string as_dsn)
+end prototypes
+
+global function integer f_conecta_base_ceneval (string as_dsn);//f_conecta_base_ceneval
+//Se conecta a las bases de datos del Ceneval para obtener resultados de los examenes
+
+////
+
+if not isvalid(gtr_ceneval) then
+		gtr_ceneval = CREATE n_tr
+
+
+	gtr_ceneval.DBMS = "ODBC"
+	gtr_ceneval.AutoCommit = False
+//gtr_ceneval.DBParm = "ConnectString='DSN='CENEVAL';UID=wwww;PWD=cuitlahuac'disablebind=1"
+	gtr_ceneval.DBParm = "ConnectString='DSN=CENEVAL;UID=;PWD=' disablebind=1"
+	connect using gtr_ceneval;
+
+	if gtr_ceneval.sqlcode=0 then
+//		 MessageBox("Conexión correcta", "Se pudo conectar a las bases de datos correctamente", Information!)
+		 return 1
+	else
+		 MessageBox("Error de Conexion", "Se pudo conectar a las bases de datos correctamente ~n"+gtr_ceneval.sqlerrtext,stopsign!)
+ 		 return -1
+	end if
+end if
+return 1
+end function
+

@@ -1,0 +1,22 @@
+﻿$PBExportHeader$d_total_derecho_uso.srd
+$PBExportComments$total de derecho y uso de salones a determinado cupo.
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=106 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cve_dia dbname="salones_derecho_uso.cve_dia" )
+ column=(type=long updatewhereclause=yes name=hora_inicio dbname="salones_derecho_uso.hora_inicio" )
+ column=(type=long updatewhereclause=yes name=compute_0003 dbname="compute_0003" )
+ column=(type=long updatewhereclause=yes name=compute_0004 dbname="compute_0004" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"dbo.salones_derecho_uso~" ) COLUMN(NAME=~"dbo.salones_derecho_uso.cve_dia~") COLUMN(NAME=~"dbo.salones_derecho_uso.hora_inicio~") COMPUTE(NAME=~"SUM(derecho)~") COMPUTE(NAME=~"SUM(ocupados)~")WHERE(    EXP1 =~"dbo.salones_derecho_uso.cupo~"   OP =~"=~"    EXP2 =~":a_cupo~"    LOGIC =~"or~" ) WHERE(    EXP1 =~":a_cupo~"   OP =~"=~"    EXP2 =~"0~" )  GROUP(NAME=~"dbo.salones_derecho_uso.cve_dia~") GROUP(NAME=~"dbo.salones_derecho_uso.hora_inicio~")) ARG(NAME = ~"a_cupo~" TYPE = number) " arguments=(("a_cupo", number)) )
+text(band=header alignment="1" text="Día"border="0" color="0" x="40" y="35" height="64" width="95"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="Hora"border="0" color="0" x="464" y="35" height="64" width="143"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="Asignados"border="0" color="0" x="794" y="35" height="64" width="307"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="Usados"border="0" color="0" x="1141" y="35" height="64" width="219"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="40" y="3" height="74" width="351" format="[general]"  name=cve_dia dddw.name=dw_dias dddw.displaycolumn=dia dddw.datacolumn=cve_dia dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="464" y="3" height="74" width="219" format="[general]"  name=hora_inicio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="794" y="3" height="74" width="216" format="[general]"  name=compute_0003 edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="0" x="1141" y="3" height="74" width="219" format="[general]"  name=compute_0004 edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

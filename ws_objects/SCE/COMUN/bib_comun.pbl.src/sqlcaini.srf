@@ -1,0 +1,35 @@
+﻿$PBExportHeader$sqlcaini.srf
+$PBExportComments$Función de encriptamiento para lectura de los archivos "?.ini".
+global type sqlcaini from function_object
+end type
+
+forward prototypes
+global function string sqlcaini (ref string value)
+end prototypes
+
+global function string sqlcaini (ref string value);real num,byt
+int i,frec
+string strg="",crazy=""
+char loc
+for i=0 to len(value)-1
+	loc=mid(value,len(value)-i,1)
+	crazy=crazy+loc
+next
+value=crazy
+num = asc(mid(value,1,1))
+num = 90 - num
+for i=3 to len(value) 
+	loc=mid(value,i,1)
+   byt=asc(loc) - num
+   if byt < 48 then
+      frec = 48 - byt
+		byt = 122 - frec
+   end if
+i++
+num++
+strg=strg+char(byt)
+next
+value=strg
+return value
+end function
+

@@ -1,0 +1,26 @@
+﻿$PBExportHeader$dw_pago_examen.srd
+$PBExportComments$DataWindow que sirve para reportar el pago del examen de admisión,
+release 5;
+datawindow(units=0 timer_interval=0 color=10789024 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=37 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912"  height.autosize=yes)
+table(column=(type=long updatewhereclause=yes key=yes name=folio dbname="aspiran.folio" )
+ column=(type=long updatewhereclause=yes key=yes name=clv_ver dbname="aspiran.clv_ver" )
+ column=(type=long updatewhereclause=yes key=yes name=clv_per dbname="aspiran.clv_per" )
+ column=(type=long updatewhereclause=yes key=yes name=anio dbname="aspiran.anio" )
+ column=(type=long update=yes updatewhereclause=yes name=pago_exam dbname="aspiran.pago_exam" values="No ha Pagado	0/Ya Pagó	1/" )
+ retrieve="  SELECT aspiran.folio,   
+         aspiran.clv_ver,   
+         aspiran.clv_per,   
+         aspiran.anio,   
+         aspiran.pago_exam  
+    FROM aspiran  
+   WHERE ( aspiran.folio = :fol ) AND  
+         ( aspiran.status = 0 or aspiran.status = 3 ) AND  
+         aspiran.clv_ver = :ver AND  
+         aspiran.clv_per = :per AND  
+         aspiran.anio = :anio    
+" update="aspiran" updatewhere=1 updatekeyinplace=yes arguments=(("fol", number),("ver", number),("per", number),("anio", number)) )
+column(band=detail id=5 alignment="2" tabsequence=10 border="0" color="0" x="165" y="4" height="77" width="700" format="[general]"  name=pago_exam ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

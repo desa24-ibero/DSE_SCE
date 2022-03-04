@@ -1,0 +1,12 @@
+﻿$PBExportHeader$d_dddw_opc_titulacion.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cve_titulacion dbname="opc_titulacion.cve_titulacion" )
+ column=(type=char(21) update=yes updatewhereclause=yes name=tipo_titulacion dbname="opc_titulacion.tipo_titulacion" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"dbo.opc_titulacion~" ) COLUMN(NAME=~"dbo.opc_titulacion.cve_titulacion~") COLUMN(NAME=~"dbo.opc_titulacion.tipo_titulacion~")) " update="dbo.opc_titulacion" updatewhere=1 updatekeyinplace=no )
+column(band=detail id=1 alignment="1" tabsequence=10 border="0" color="0" x="5" y="4" height="76" width="137" format="[general]"  name=cve_titulacion edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="0" color="0" x="160" y="4" height="76" width="736" format="[general]"  name=tipo_titulacion edit.limit=21 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

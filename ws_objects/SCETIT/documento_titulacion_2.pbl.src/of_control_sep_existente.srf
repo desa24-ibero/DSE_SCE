@@ -1,0 +1,54 @@
+﻿$PBExportHeader$of_control_sep_existente.srf
+global type of_control_sep_existente from function_object
+end type
+
+forward prototypes
+global function long of_control_sep_existente (long al_cuenta, long al_cve_carrera, integer al_cve_plan, long al_cve_doc_control_sep)
+end prototypes
+
+global function long of_control_sep_existente (long al_cuenta, long al_cve_carrera, integer al_cve_plan, long al_cve_doc_control_sep);//of_control_sep_existente
+//Recibe 	al_cuenta
+//				al_cve_carrera
+//				al_cve_plan
+//				al_cve_doc_control_sep
+
+long ll_hologramas_sf, ll_hologramas_plant, ll_hologramas_totales
+int li_codigo_sql
+string ls_mensaje
+
+//Los certificados parciales no requieren revisión, pues
+//pueden emitirse sin limitación
+
+IF al_cve_doc_control_sep  = 2 THEN
+	RETURN 0
+ELSE
+	SELECT count(*) 
+	INTO :ll_hologramas_sf
+	FROM control_sep
+	WHERE cuenta = :al_cuenta
+	AND  cve_carrera = :al_cve_carrera
+	AND cve_plan = :al_cve_plan
+	AND cve_doc_control_sep = :al_cve_doc_control_sep
+	AND ISNULL(cancelado,0) = 0	
+	USING gtr_sce;
+END IF
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje = gtr_sce.SqlErrText
+
+IF li_codigo_sql = -1 THEN
+	MessageBox("Error al contar hologramas locales",ls_mensaje, StopSign!)	
+	return -1
+END IF
+IF ISNULL(ll_hologramas_sf) THEN
+	ll_hologramas_sf= 0
+END IF
+
+ll_hologramas_totales = ll_hologramas_sf 
+
+
+RETURN ll_hologramas_totales
+
+
+end function
+

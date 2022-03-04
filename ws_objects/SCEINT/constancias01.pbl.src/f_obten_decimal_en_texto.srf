@@ -1,0 +1,63 @@
+﻿$PBExportHeader$f_obten_decimal_en_texto.srf
+global type f_obten_decimal_en_texto from function_object
+end type
+
+forward prototypes
+global function string f_obten_decimal_en_texto (decimal a_numero, integer a_precision)
+end prototypes
+
+global function string f_obten_decimal_en_texto (decimal a_numero, integer a_precision);//El objetivo de esta función es convertir un número a su representación escrita
+//
+//f_obten_decimal_en_texto
+//
+ 
+string ls_texto, ls_texto_entero, ls_texto_decimal, ls_real, ls_string_decimal, ls_texto_ceros
+decimal lr_real
+integer li_posicion_punto, li_longitud, li_precision
+long ll_entero, ll_decimal
+if a_precision >4 then 
+	li_precision = 4
+else 
+	li_precision = a_precision
+end if
+
+lr_real =a_numero
+
+//lr_real =truncate(lr_real, li_precision)
+lr_real =round(lr_real, li_precision)
+
+ls_real = string(lr_real)
+
+li_longitud = len(ls_real)
+
+li_posicion_punto = pos(ls_real, ".")
+
+
+
+
+if li_posicion_punto > 0 then
+	ll_entero = long(mid(ls_real,1,li_posicion_punto))
+	ls_string_decimal = mid(ls_real,li_posicion_punto + 1, li_precision)
+	ll_decimal = long(ls_string_decimal)
+	ls_texto_entero = f_obten_numero_en_texto(ll_entero)
+	ls_texto_ceros = f_obten_ceros_dec_en_texto(ls_string_decimal, li_precision)
+	ls_texto_decimal = f_obten_numero_en_texto(ll_decimal)
+	if ls_texto_decimal = "CERO" then
+		ls_texto_decimal = ""
+	end if
+	ls_texto_decimal = ls_texto_ceros + ls_texto_decimal
+else
+	ll_entero = long(ls_real)
+	ls_texto_entero = f_obten_numero_en_texto(ll_entero)	
+end if
+
+if li_posicion_punto > 0 then
+	ls_texto = ls_texto_entero +" PUNTO "+ ls_texto_decimal
+else
+	ls_texto = ls_texto_entero 
+end if
+
+return ls_texto
+
+end function
+

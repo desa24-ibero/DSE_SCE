@@ -1,0 +1,44 @@
+﻿$PBExportHeader$f_adeuda_primer_ingreso.srf
+global type f_adeuda_primer_ingreso from function_object
+end type
+
+forward prototypes
+global function integer f_adeuda_primer_ingreso (long al_cuenta, integer ai_periodo, integer ai_anio, transaction atr_scob, transaction atr_sfeb)
+end prototypes
+
+global function integer f_adeuda_primer_ingreso (long al_cuenta, integer ai_periodo, integer ai_anio, transaction atr_scob, transaction atr_sfeb);//
+//f_adeuda_primer_ingreso
+//Recibe:		al_cuenta	long
+//					ai_periodo	integer
+//					ai_anio		integer
+//					atr_scob		transaction
+//					atr_sfeb		transaction
+
+long ll_cuenta
+long ll_tot,ll_i, ll_adeuda_finanzas
+
+if not isvalid(atr_scob) then
+	if conecta_bd(atr_scob,gs_scob,gs_usuario,gs_password) = 0 then
+		return -1
+	end if
+end if
+
+if not isvalid(atr_sfeb) then
+	if conecta_bd(atr_sfeb,gs_sfeb,gs_usuario,gs_password) = 0 then
+		return -1
+	end if
+end if
+
+ll_cuenta = al_cuenta
+//(f_pago_anticipado(ll_cuenta, atr_scob) = 1 )	
+if ( (f_pago_inscripcion_prim_ing(ll_cuenta, ai_anio ,ai_periodo, atr_scob) = 1) OR (f_pago_anticipado(ll_cuenta, atr_scob) = 1 ) OR (tiene_beca(ll_cuenta,ai_anio,ai_periodo, atr_sfeb) = 100) ) then
+		ll_adeuda_finanzas = 0 
+else
+		ll_adeuda_finanzas = 1
+end if
+
+return ll_adeuda_finanzas
+	
+
+end function
+

@@ -1,0 +1,16 @@
+﻿$PBExportHeader$dw_aplicadores.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=numero dbname="aplicadores.numero" )
+ column=(type=char(50) updatewhereclause=yes name=nombre dbname="aplicadores.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=apaterno dbname="aplicadores.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=amaterno dbname="aplicadores.amaterno" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"aplicadores~" ) COLUMN(NAME=~"aplicadores.numero~") COLUMN(NAME=~"aplicadores.nombre~") COLUMN(NAME=~"aplicadores.apaterno~") COLUMN(NAME=~"aplicadores.amaterno~")WHERE(    EXP1 =~"aplicadores.clv_ver~"   OP =~"=~"    EXP2 =~":ver~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"aplicadores.clv_per~"   OP =~"=~"    EXP2 =~":per~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"aplicadores.anio~"   OP =~"=~"    EXP2 =~":ani~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"aplicadores.salon~"   OP =~"=~"    EXP2 =~":sal~" ) ) ARG(NAME = ~"ver~" TYPE = number)  ARG(NAME = ~"per~" TYPE = number)  ARG(NAME = ~"ani~" TYPE = number)  ARG(NAME = ~"sal~" TYPE = string) " arguments=(("ver", number),("per", number),("ani", number),("sal", string)) )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="5" y="4" height="65" width="197" format="[General]"  name=numero  tag=" " edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="215" y="4" height="65" width="970" format="[general]"  name=nombre  tag=" " edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1189" y="4" height="65" width="970" format="[general]"  name=apaterno  tag=" " edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="2163" y="4" height="65" width="974" format="[general]"  name=amaterno  tag=" " edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

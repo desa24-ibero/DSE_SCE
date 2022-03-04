@@ -1,0 +1,121 @@
+﻿$PBExportHeader$agrega_historico_internet.srf
+global type agrega_historico_internet from function_object
+end type
+
+forward prototypes
+global function integer agrega_historico_internet (ref datastore dw_historico, long il_cuenta, ref datawindow dw_materias_inscritas, ref string is_respuesta)
+end prototypes
+
+global function integer agrega_historico_internet (ref datastore dw_historico, long il_cuenta, ref datawindow dw_materias_inscritas, ref string is_respuesta);/*
+DESCRIPCIÓN: Manda por correo como quedó el kardex.
+PARÁMETROS: linea leída por correo.
+REGRESA: Nada
+AUTOR: Víctor Manuel Iniestra Álvarez
+FECHA: 22 Septiembre 1998
+MODIFICACIÓN:
+*/
+long ll_cont_1,ll_renglon
+boolean boleana
+
+uo_periodo_servicios luo_periodo_servicios
+luo_periodo_servicios = CREATE uo_periodo_servicios
+
+dw_historico.retrieve(il_cuenta,"5","9","10","AC","NA","RE","IN","BA","BJ","E","MB","B","S")
+
+/*Checa materias que estás cursando*/
+dw_materias_inscritas.retrieve(il_cuenta)
+
+FOR ll_cont_1=1 TO dw_materias_inscritas.rowcount()
+	ll_renglon=dw_historico.insertrow(0)
+	dw_historico.object.historico_cve_mat[ll_renglon]=dw_materias_inscritas.object.mat_inscritas_cve_mat[ll_cont_1]
+	dw_historico.object.materias_sigla[ll_renglon]=dw_materias_inscritas.object.materias_sigla[ll_cont_1]
+	dw_historico.object.historico_gpo[ll_renglon]=dw_materias_inscritas.object.mat_inscritas_gpo[ll_cont_1]
+	dw_historico.object.materias_creditos[ll_renglon]=dw_materias_inscritas.object.materias_creditos[ll_cont_1]
+	if isnull(dw_materias_inscritas.object.mat_inscritas_calificacion[ll_cont_1]) then
+		dw_historico.object.historico_calificacion[ll_renglon]='AC'
+	else
+		dw_historico.object.historico_calificacion[ll_renglon]=dw_materias_inscritas.object.mat_inscritas_calificacion[ll_cont_1]
+	end if	
+	dw_historico.object.materias_materia[ll_renglon]=dw_materias_inscritas.object.materias_materia[ll_cont_1]
+	dw_historico.object.historico_anio[ll_renglon]=dw_materias_inscritas.object.mat_inscritas_anio[ll_cont_1]
+	dw_historico.object.historico_periodo[ll_renglon]=dw_materias_inscritas.object.mat_inscritas_periodo[ll_cont_1]
+NEXT
+/**/
+
+dw_historico.SetFilter('')
+dw_historico.Filter( )
+dw_historico.Sort( )
+
+is_respuesta=is_respuesta+'				MATERIAS CURSADAS:~n~r~n~r'
+is_respuesta=is_respuesta+'CVE	SIGLA	CRED	CAL	GPO	OBS	MATERIA~n~r'
+FOR ll_renglon=1 TO dw_historico.rowcount()
+	if ll_renglon=1 then
+		is_respuesta=is_respuesta+'~n~r				'
+
+		is_respuesta=is_respuesta+UPPER(luo_periodo_servicios.f_recupera_desc_periodo(gtr_sce, dw_historico.object.historico_periodo[ll_renglon]))
+
+		IF luo_periodo_servicios.ierror = -1 THEN 
+			MessageBox(luo_periodo_servicios.ititulo, luo_periodo_servicios.imensaje, StopSign!)
+			RETURN luo_periodo_servicios.ierror
+		END IF		
+		
+//		CHOOSE CASE dw_historico.object.historico_periodo[ll_renglon]
+//			CASE 0
+//				is_respuesta=is_respuesta+'PRIMAVERA '
+//			CASE 1
+//				is_respuesta=is_respuesta+'VERANO '
+//			CASE 2
+//				is_respuesta=is_respuesta+'OTONO '
+//		END CHOOSE		
+		
+		is_respuesta=is_respuesta+string(dw_historico.object.historico_anio[ll_renglon],"0000;****")+'~n~r'
+	elseif dw_historico.object.historico_periodo[ll_renglon]<>dw_historico.object.historico_periodo[ll_renglon -1] or &
+			dw_historico.object.historico_anio[ll_renglon]<>dw_historico.object.historico_anio[ll_renglon -1] then
+		is_respuesta=is_respuesta+'~n~r				'
+		
+		is_respuesta=is_respuesta+UPPER(luo_periodo_servicios.f_recupera_desc_periodo(gtr_sce, dw_historico.object.historico_periodo[ll_renglon]))
+
+		IF luo_periodo_servicios.ierror = -1 THEN 
+			MessageBox(luo_periodo_servicios.ititulo, luo_periodo_servicios.imensaje, StopSign!)
+			RETURN luo_periodo_servicios.ierror
+		END IF		
+		
+//		CHOOSE CASE dw_historico.object.historico_periodo[ll_renglon]
+//			CASE 0
+//				is_respuesta=is_respuesta+'PRIMAVERA '
+//			CASE 1
+//				is_respuesta=is_respuesta+'VERANO '
+//			CASE 2
+//				is_respuesta=is_respuesta+'OTONO '
+//		END CHOOSE
+
+		is_respuesta=is_respuesta+string(dw_historico.object.historico_anio[ll_renglon],"0000;****")+'~n~r'
+	end if
+	is_respuesta=is_respuesta+string(dw_historico.object.historico_cve_mat[ll_renglon],"0000;****")+'	'
+	if isnull(dw_historico.object.materias_sigla[ll_renglon]) then
+		is_respuesta=is_respuesta+' 	'
+	else
+		is_respuesta=is_respuesta+string(dw_historico.object.materias_sigla[ll_renglon],"@@@@@")+'	'
+	end if
+	is_respuesta=is_respuesta+string(dw_historico.object.materias_creditos[ll_renglon],"00;**")+'	'
+	is_respuesta=is_respuesta+string(dw_historico.object.historico_calificacion[ll_renglon],"@@")+'	'
+		
+	if isnull(dw_historico.object.historico_gpo[ll_renglon]) then
+		is_respuesta=is_respuesta+' 	'
+	else
+		is_respuesta=is_respuesta+string(dw_historico.object.historico_gpo[ll_renglon],"@@")+'	'
+	end if
+	is_respuesta=is_respuesta+convierteobservacion(dw_historico.object.historico_observacion[ll_renglon],boleana)+'	'
+	if isnull(dw_historico.object.materias_materia[ll_renglon]) then
+		is_respuesta=is_respuesta+'~n~r'
+	else
+		is_respuesta=is_respuesta+string(dw_historico.object.materias_materia[ll_renglon])+'~n~r'
+	end if
+NEXT
+if dw_historico.rowcount()>=1 then
+	is_respuesta=is_respuesta+'~n~r           CREDITOS                                    PROMEDIO~n~r'+dw_historico.object.avance[1]+'~n~r'
+end if
+
+RETURN 0
+end function
+

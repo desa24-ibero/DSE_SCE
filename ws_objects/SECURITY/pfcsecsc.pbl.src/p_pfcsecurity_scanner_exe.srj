@@ -1,0 +1,30 @@
+﻿$PBExportHeader$p_pfcsecurity_scanner_exe.srj
+$PBExportComments$Generated Application Executable Project
+EXE:pfcsecurity_scanner.exe,,0,1,0
+CMP:0,0,0,2,0,0,1
+COM:Universidad Iberoamericana
+DES:
+CPY:UIA - Antonio Pica Ruiz
+PRD:Security Scanner
+PVS:10,2,1,9761
+PVN:10,2,1,9761
+FVS:1,0,0,2
+FVN:1,0,0,2
+MAN:0,asInvoker,0
+PBD:pfcsecsc.pbl,,1
+OBJ:C:\SourceSafe\Migración 2009\SECURITY\pfcsecsc.pbl,pfcscanner_n_cst_filesrvwin32,u
+OBJ:C:\SourceSafe\Migración 2009\SECURITY\pfcsecsc.pbl,pfcscanner_n_cst_filesrvhpux,u
+OBJ:C:\SourceSafe\Migración 2009\SECURITY\pfcsecsc.pbl,pfcscanner_n_cst_filesrvsol2,u
+OBJ:C:\SourceSafe\Migración 2009\SECURITY\pfcsecsc.pbl,pfcscanner_n_cst_securityscanner,u
+OBJ:C:\SourceSafe\Migración 2009\SECURITY\pfcsecsc.pbl,pfcscanner_n_cst_string,u
+OBJ:C:\SourceSafe\Migración 2009\SECURITY\pfcsecsc.pbl,pfcscanner_n_cst_filesrv,u
+OBJ:C:\SourceSafe\Migración 2009\SECURITY\pfcsecsc.pbl,d_pfcsecurity_objectlist,d
+OBJ:C:\SourceSafe\Migración 2009\SECURITY\pfcsecsc.pbl,pfcscanner_n_cst_filesrvunicode,u
+OBJ:C:\SourceSafe\Migración 2009\SECURITY\pfcsecsc.pbl,pfcscanner_u_dw,u
+OBJ:C:\SourceSafe\Migración 2009\SECURITY\pfcsecsc.pbl,f_setfilesrv,f
+OBJ:C:\SourceSafe\Migración 2009\SECURITY\pfcsecsc.pbl,pfcscanner_n_ds,u
+OBJ:C:\SourceSafe\Migración 2009\SECURITY\pfcsecsc.pbl,w_pfcsecurity_objectlist,w
+OBJ:C:\SourceSafe\Migración 2009\SECURITY\pfcsecsc.pbl,pfcscanner_n_cst_filesrvaix,u
+OBJ:C:\SourceSafe\Migración 2009\SECURITY\pfcsecsc.pbl,w_pfcsecurity_targetselection,w
+OBJ:C:\SourceSafe\Migración 2009\SECURITY\pfcsecsc.pbl,base_librarylist,u
+OBJ:C:\SourceSafe\Migración 2009\SECURITY\pfcsecsc.pbl,pfcsecurity_scanner,a

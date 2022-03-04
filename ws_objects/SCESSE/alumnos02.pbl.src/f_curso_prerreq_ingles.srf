@@ -1,0 +1,51 @@
+﻿$PBExportHeader$f_curso_prerreq_ingles.srf
+global type f_curso_prerreq_ingles from function_object
+end type
+
+forward prototypes
+global function boolean f_curso_prerreq_ingles (long al_cuenta, long al_cve_carrera, integer ai_cve_plan)
+end prototypes
+
+global function boolean f_curso_prerreq_ingles (long al_cuenta, long al_cve_carrera, integer ai_cve_plan);//f_curso_prerreq_ingles
+//Recibe:		al_cuenta			long
+//					al_cve_carrera		long
+//					ai_cve_plan			integer
+
+integer li_codigo_sql
+string ls_mensaje_sql
+integer li_activo, li_num_aprobadas
+
+SELECT count(dbo.historico.cve_mat)
+INTO	:li_num_aprobadas
+FROM	dbo.historico
+WHERE dbo.historico.cuenta = :al_cuenta
+AND	dbo.historico.cve_carrera = :al_cve_carrera
+AND	dbo.historico.cve_plan = :ai_cve_plan
+AND	dbo.historico.cve_mat IN (SELECT cve_mat 
+											FROM materias_requisito 
+											WHERE id_prerrequisito = 'ING')
+AND	dbo.historico.calificacion IN ("AC")
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 or isnull(li_num_aprobadas) then
+	return false
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar historico prerreq de Inglés", ls_mensaje_sql)
+	return false
+end if
+
+if li_num_aprobadas= 1 then
+	return true
+elseif li_num_aprobadas=0 then
+	return false	
+else
+	MessageBox("Error en historico en el prerreq de Inglés", ls_mensaje_sql)
+	return false
+end if
+	
+
+end function
+

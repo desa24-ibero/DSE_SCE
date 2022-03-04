@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_open_page.srs
+global type str_open_page from structure
+	string		filename
+	string		pages
+end type
+

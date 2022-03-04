@@ -1,0 +1,98 @@
+﻿$PBExportHeader$m_simplificacionadministrativa.srm
+forward
+global type m_simplificacionadministrativa from m_titulacion
+end type
+end forward
+
+global type m_simplificacionadministrativa from m_titulacion
+end type
+global m_simplificacionadministrativa m_simplificacionadministrativa
+
+on m_simplificacionadministrativa.create
+m_simplificacionadministrativa=this
+call super::create
+end on
+
+on m_simplificacionadministrativa.destroy
+call super::destroy
+end on
+
+on m_registro.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_nuevo.create
+call super::create
+this.Text="&Nuevo"
+this.Microhelp=""
+this.ToolBarItemName=""
+this.ToolBarItemText=""
+this.Visible=false
+this.Enabled=false
+this.Shortcut=0
+end on
+
+on m_actualiza.create
+call super::create
+this.Text="&Actualizar"
+this.Microhelp=""
+this.ToolBarItemName=""
+this.ToolBarItemText=""
+this.Visible=false
+this.Enabled=false
+this.Shortcut=0
+end on
+
+on m_borraregistro.create
+call super::create
+this.Text="&Borra registro"
+this.Microhelp=""
+this.ToolBarItemName=""
+this.ToolBarItemText=""
+this.Visible=false
+this.Enabled=false
+this.Shortcut=0
+end on
+
+on m_primero.create
+call super::create
+this.Text="&Primero"
+this.ToolBarItemName=""
+this.ToolBarItemText=""
+this.Visible=false
+this.Enabled=false
+this.Shortcut=0
+end on
+
+on m_siguiente.create
+call super::create
+this.Text="&Siguiente"
+this.ToolBarItemName=""
+this.ToolBarItemText=""
+this.Visible=false
+this.Enabled=false
+this.Shortcut=0
+end on
+
+on m_anterior.create
+call super::create
+this.Text="&Anterior"
+this.ToolBarItemName=""
+this.ToolBarItemText=""
+this.Visible=false
+this.Enabled=false
+this.Shortcut=0
+end on
+
+on m_ultimo.create
+call super::create
+this.Text="&Ultimo"
+this.ToolBarItemName=""
+this.ToolBarItemText=""
+this.Visible=false
+this.Enabled=false
+this.Shortcut=0
+end on
+

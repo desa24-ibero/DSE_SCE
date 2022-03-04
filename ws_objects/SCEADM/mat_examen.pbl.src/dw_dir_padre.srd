@@ -1,0 +1,66 @@
+﻿$PBExportHeader$dw_dir_padre.srd
+$PBExportComments$Directorio de Padres de Inscritos
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=294 color="536870912" )
+summary(height=150 color="536870912" )
+footer(height=42 color="536870912" )
+detail(height=192 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=folio dbname="folio" )
+ column=(type=long updatewhereclause=yes name=anio dbname="anio" )
+ column=(type=char(50) updatewhereclause=yes name=padres_nombre dbname="nombre" )
+ column=(type=char(50) updatewhereclause=yes name=padres_apaterno dbname="apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=padres_amaterno dbname="amaterno" )
+ column=(type=char(50) updatewhereclause=yes name=padres_calle dbname="calle" )
+ column=(type=char(6) updatewhereclause=yes name=padres_codigo_pos dbname="codigo_pos" )
+ column=(type=char(50) updatewhereclause=yes name=padres_colonia dbname="colonia" )
+ column=(type=long updatewhereclause=yes name=padres_estado dbname="estado" )
+ column=(type=char(9) updatewhereclause=yes name=padres_telefono dbname="telefono" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_carr dbname="clv_carr" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_ver dbname="clv_ver" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_per dbname="clv_per" )
+ retrieve="  SELECT aspiran.folio,   
+         aspiran.anio,   
+         padres.nombre,   
+         padres.apaterno,   
+         padres.amaterno,   
+         padres.calle,   
+         padres.codigo_pos,   
+         padres.colonia,   
+         padres.estado,   
+         padres.telefono,   
+         aspiran.clv_carr,   
+         aspiran.clv_ver,   
+         aspiran.clv_per  
+    FROM aspiran,   
+         padres  
+   WHERE ( aspiran.folio = padres.folio ) and  
+         ( aspiran.anio = padres.anio ) and  
+         ( aspiran.clv_ver = padres.clv_ver ) and  
+         ( aspiran.clv_per = padres.clv_per ) and  
+         (( :ver=99 or aspiran.clv_ver = :ver ) AND  
+         ( aspiran.clv_per = :per ) AND  
+         ( aspiran.anio = :ani )) AND  
+         (( :carr = 9999 ) OR  
+         ( aspiran.clv_carr = :carr )) AND  
+         ( :ai_pago_insc = 99 OR
+            aspiran.pago_insc = :ai_pago_insc)
+    
+" arguments=(("ver", number),("per", number),("ani", number),("carr", number),("ai_pago_insc", number)) )
+text(band=header alignment="2" text=""border="0" color="0" x="26" y="26" height="64" width="3248"  name=st_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Padres"border="0" color="0" x="33" y="10" height="64" width="201"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Folio"border="0" color="0" x="26" y="125" height="64" width="538"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Nombre"border="0" color="0" x="571" y="125" height="64" width="1686"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Carrera"border="0" color="0" x="2267" y="125" height="64" width="563"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Teléfono"border="0" color="0" x="2838" y="125" height="64" width="439"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Dirección"border="0" color="0" x="26" y="192" height="64" width="538"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="0" expression="folio"border="0" color="0" x="33" y="4" height="64" width="534" format="[general]"  name=digito  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="0" expression="padres_apaterno+' '+padres_amaterno+' '+padres_nombre"border="0" color="0" x="574" y="4" height="64" width="1690" format="[general]"  name=nombre  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="0" x="2267" y="4" height="64" width="563" format="[general]"  name=aspiran_clv_carr edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="2849" y="4" height="64" width="428" format="[general]"  name=padres_telefono editmask.mask="xxxxxxxxxxxxxx" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="0" expression="padres_calle+' '+padres_colonia+' '+string(padres_codigo_pos)"border="0" color="0" x="33" y="80" height="64" width="2428" format="[general]"  name=direccion  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="2472" y="80" height="64" width="805" format="[general]"  name=padres_estado dddw.name=dw_estado dddw.displaycolumn=estado dddw.datacolumn=cve_estado dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=summary alignment="2" text="Total:"border="0" color="0" x="260" y="4" height="64" width="150"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="count(string(folio)+'--'+string(obten_digito(folio)) for all)"border="0" color="0" x="15" y="74" height="67" width="644" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=footer alignment="0" text="<dw_dir_padre>"border="0" color="0" x="7" y="0" height="42" width="468"  font.face="Arial" font.height="-6" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

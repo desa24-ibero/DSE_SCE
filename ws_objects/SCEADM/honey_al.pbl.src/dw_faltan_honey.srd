@@ -1,0 +1,29 @@
+﻿$PBExportHeader$dw_faltan_honey.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.columns=2 print.columns.width=1881 )
+header(height=165 color="536870912" )
+summary(height=93 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=ccuenta dbname="cuenta" )
+ column=(type=char(50) updatewhereclause=yes name=apaterno dbname="apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=amaterno dbname="amaterno" )
+ column=(type=char(50) updatewhereclause=yes name=nombre dbname="nombre" )
+ retrieve=" SELECT general.cuenta,
+  general.apaterno,
+  general.amaterno,
+  general.nombre
+ FROM general
+ WHERE (:ver = 99 or general.clv_ver = :ver) and
+  general.clv_per = :per and
+  general.anio = :ani and
+  general.cuenta <> 0 and
+  general.cuenta not in (  SELECT honey_datos.cuenta FROM honey_datos )" arguments=(("ver", number),("per", number),("ani", number))  sort="ani A per A ver A name A " )
+text(band=header alignment="0" text=""border="0" color="0" x="1651" y="0" height="65" width="1454"  name=st_1  hidesnaked=1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Honey's Faltantes"border="0" color="0" x="1139" y="0" height="65" width="476"  hidesnaked=1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Nombre"border="0" color="0" x="1015" y="96" height="65" width="206"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cuenta"border="0" color="0" x="33" y="96" height="65" width="188"  name=folio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression=" apaterno +' '+ amaterno +' '+ nombre "border="0" color="0" x="293" y="4" height="77" width="1651" format="[general]"  name=name  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="0" expression=" ccuenta +'-'+obten_digito( ccuenta )"border="0" color="0" x="5" y="4" height="77" width="266" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=summary alignment="2" text="Total:"border="0" color="0" x="51" y="16" height="65" width="147"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="0" expression="count(ccuenta for all) "border="0" color="0" x="261" y="8" height="81" width="330" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

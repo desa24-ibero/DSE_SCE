@@ -1,0 +1,43 @@
+﻿$PBExportHeader$f_historico_actualizado.srf
+global type f_historico_actualizado from function_object
+end type
+
+forward prototypes
+global function long f_historico_actualizado (long al_cuenta, long al_periodo, long al_anio)
+end prototypes
+
+global function long f_historico_actualizado (long al_cuenta, long al_periodo, long al_anio);//f_historico_actualizado
+//Recibe 	al_cuenta	long
+//				al_periodo	long
+//				al_anio		long
+//
+//Devuelve si esta actualizado el historico del alumno  para el periodo en cuestion
+
+long ll_num_actualizados
+string ls_mensaje_sql
+integer li_codigo_sql
+
+SELECT count(cuenta)
+INTO :ll_num_actualizados
+FROM historico_reinsc_actual
+WHERE historico_reinsc_actual.cuenta = :al_cuenta
+AND   historico_reinsc_actual.periodo = :al_periodo
+AND   historico_reinsc_actual.anio = :al_anio
+USING SQLCA;
+
+ls_mensaje_sql= SQLCA.SqlErrtext
+li_codigo_sql= SQLCA.SqlCode
+
+IF li_codigo_sql= -1 THEN
+	MessageBox("No es posible consultar el historico_reinsc_actual del alumno ["+string(al_cuenta)+"]", ls_mensaje_sql, StopSign!)
+	RETURN  -1
+ELSEIF  li_codigo_sql = 100 THEN	
+	Return 100
+ELSE	
+	RETURN ll_num_actualizados
+END IF
+
+
+
+end function
+

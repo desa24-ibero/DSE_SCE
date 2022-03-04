@@ -1,0 +1,55 @@
+﻿$PBExportHeader$f_inserta_paquetes_materias.srf
+global type f_inserta_paquetes_materias from function_object
+end type
+
+forward prototypes
+global function integer f_inserta_paquetes_materias ()
+end prototypes
+
+global function integer f_inserta_paquetes_materias ();//f_inserta_paquetes_materias
+//Devuelve
+//		 0 Inserción Exitosa
+//		-1	Error de Inserción
+//   100 No existen registros a Insertar
+integer li_inscritos, li_codigo_sql
+string ls_mensaje_sql
+
+INSERT INTO paquetes_materias
+         (clv_per,   
+          anio,   
+          num_paq,   
+          clv_mat,   
+          grupo)
+SELECT  DISTINCT clv_per,   
+          anio,   
+          num_paq,   
+          clv_mat,   
+          grupo  
+FROM bit_paquetes_materias  
+WHERE movimiento = 'IN'
+AND num_paq > 0
+AND num_paq not in (SELECT num_paq FROM paquetes_materias 
+                    WHERE anio = bit_paquetes_materias.anio 
+                    AND   clv_per = bit_paquetes_materias.clv_per
+                    AND   clv_mat = bit_paquetes_materias.clv_mat
+                    AND   grupo = bit_paquetes_materias.grupo)
+USING gtr_sadm;
+
+li_codigo_sql = gtr_sadm.SqlCode
+ls_mensaje_sql = gtr_sadm.SqlErrText
+
+if li_codigo_sql = 100 then
+	MessageBox("Paquete no existente al Insertar", ls_mensaje_sql)
+	COMMIT USING gtr_sadm;
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al Insertar los paquetes", ls_mensaje_sql)
+	ROLLBACK USING gtr_sadm;
+elseif li_codigo_sql = 0 then
+	COMMIT USING gtr_sadm;
+end if
+
+return li_codigo_sql
+
+
+end function
+

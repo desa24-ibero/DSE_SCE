@@ -1,0 +1,95 @@
+﻿$PBExportHeader$dw_datos_gpo_alumno_mat_en_linea.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=134217728 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=92 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=alumnos_cuenta dbname="cuenta" )
+ column=(type=char(70) updatewhereclause=yes name=alumnos_nombre_completo dbname="nombre_completo" )
+ column=(type=char(70) updatewhereclause=yes name=coordinaciones_coordinacion dbname="coordinacion" )
+ column=(type=char(42) updatewhereclause=yes name=materias_materia dbname="materia" )
+ column=(type=char(1) updatewhereclause=yes name=materias_nivel dbname="nivel" )
+ column=(type=long updatewhereclause=yes name=mat_inscritas_cve_mat dbname="cve_mat" )
+ column=(type=char(2) updatewhereclause=yes name=mat_inscritas_gpo dbname="gpo" )
+ column=(type=long updatewhereclause=yes name=mat_inscritas_periodo dbname="periodo" )
+ column=(type=long updatewhereclause=yes name=mat_inscritas_anio dbname="anio" )
+ column=(type=char(70) updatewhereclause=yes name=profesor_nombre_completo dbname="nombre_completo" )
+ column=(type=long updatewhereclause=yes name=coordinaciones_cve_coordinacion dbname="cve_coordinacion" )
+ column=(type=char(4) updatewhereclause=yes name=materias_evaluacion dbname="evaluacion" )
+ column=(type=long updatewhereclause=yes name=cve_profesor dbname="cve_profesor" )
+ retrieve="  SELECT alumnos.cuenta,   
+         alumnos.nombre_completo,   
+         coordinaciones.coordinacion,   
+         materias.materia,   
+         materias.nivel,   
+         mat_inscritas.cve_mat,   
+         mat_inscritas.gpo,   
+         mat_inscritas.periodo,   
+         mat_inscritas.anio,   
+         profesor.nombre_completo,   
+         coordinaciones.cve_coordinacion,
+			materias.evaluacion,
+			profesor.cve_profesor/*,		
+			actas_evaluacion.no_acta*/ 
+    FROM alumnos,   
+         coordinaciones,   
+         mat_inscritas,   
+         materias,   
+         grupos,   
+         profesor/*,
+		   actas_evaluacion  */
+   WHERE ( coordinaciones.cve_coordinacion = materias.cve_coordinacion ) and  
+         ( materias.cve_mat = mat_inscritas.cve_mat ) and  
+         ( alumnos.cuenta = mat_inscritas.cuenta ) and  
+         ( grupos.cve_mat = mat_inscritas.cve_mat ) and  
+         ( grupos.gpo = mat_inscritas.gpo ) and  
+         ( grupos.periodo = mat_inscritas.periodo ) and  
+         ( grupos.anio = mat_inscritas.anio ) and  
+         ( profesor.cve_profesor = grupos.cve_profesor ) and 
+			/*( materias.cve_mat = actas_evaluacion.cve_mat) AND
+			( grupos.gpo = actas_evaluacion.gpo ) AND*/
+         ( ( mat_inscritas.periodo = :periodo ) AND  
+         ( mat_inscritas.anio = :year ) AND  
+         ( mat_inscritas.cve_condicion IN (0,3)) AND 
+			( mat_inscritas.calificacion IS NULL) AND 
+         ( materias.nivel = :nivel ) ) AND
+			(( materias.creditos > 0 ) OR 
+			( materias.cve_mat NOT IN (SELECT cve_lab FROM teoria_lab))) 
+
+" arguments=(("periodo", number),("year", number),("nivel", string))  sort="coordinaciones_cve_coordinacion A mat_inscritas_cve_mat A mat_inscritas_gpo A alumnos_nombre_completo A " )
+group(level=1 header.height=268 trailer.height=8 by=("mat_inscritas_cve_mat" , "mat_inscritas_gpo" ) header.color="536870912" trailer.color="536870912" )
+roundrectangle(band=header.1 ellipseheight="60" ellipsewidth="69"x="50" y="16" height="124" width="4978"  name=rr_1 visible="1" brush.hatch="6" brush.color="67108864" pen.style="0" pen.width="5" pen.color="16777215"  background.mode="2" background.color="12632256" )
+column(band=header.1 id=4 alignment="0" tabsequence=32766 border="5" color="0" x="517" y="156" height="72" width="1445" format="[general]" html.valueishtml="0"  name=materias_materia visible="1" edit.limit=42 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=header.1 id=7 alignment="0" tabsequence=32766 border="5" color="0" x="402" y="156" height="72" width="78" format="[general]" html.valueishtml="0"  name=mat_inscritas_gpo visible="1" edit.limit=2 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=header.1 id=6 alignment="1" tabsequence=32766 border="5" color="0" x="41" y="156" height="72" width="329" format="[general]" html.valueishtml="0"  name=mat_inscritas_cve_mat visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=header.1 id=8 alignment="0" tabsequence=32766 border="5" color="0" x="3365" y="156" height="72" width="224" format="[general]" html.valueishtml="0"  name=mat_inscritas_periodo visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=header.1 id=9 alignment="0" tabsequence=32766 border="5" color="0" x="3616" y="156" height="72" width="183" format="[general]" html.valueishtml="0"  name=mat_inscritas_anio visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=header.1 id=5 alignment="0" tabsequence=32766 border="5" color="0" x="1989" y="156" height="72" width="59" format="[general]" html.valueishtml="0"  name=materias_nivel visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=header.1 id=3 alignment="0" tabsequence=32766 border="5" color="0" x="2208" y="156" height="72" width="1138" format="[general]" html.valueishtml="0"  name=coordinaciones_coordinacion visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=header.1 id=11 alignment="0" tabsequence=32766 border="5" color="0" x="2071" y="156" height="72" width="119" format="[general]" html.valueishtml="0"  name=coordinaciones_cve_coordinacion visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header.1 alignment="1" text="Clave" border="0" color="0" x="133" y="44" height="64" width="142" html.valueishtml="0"  name=t_1 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+text(band=header.1 alignment="1" text="Grupo" border="0" color="0" x="361" y="44" height="64" width="160" html.valueishtml="0"  name=t_2 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+text(band=header.1 alignment="1" text="Materia" border="0" color="0" x="1138" y="44" height="64" width="197" html.valueishtml="0"  name=t_3 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+text(band=header.1 alignment="1" text="Nivel" border="0" color="0" x="1957" y="44" height="64" width="123" html.valueishtml="0"  name=t_4 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+text(band=header.1 alignment="1" text="Coordinacion" border="0" color="0" x="2546" y="44" height="64" width="343" html.valueishtml="0"  name=t_5 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+text(band=header.1 alignment="0" text="Periodo" border="0" color="0" x="3378" y="44" height="64" width="197" html.valueishtml="0"  name=t_7 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+text(band=header.1 alignment="0" text="Año" border="0" color="0" x="3653" y="44" height="64" width="105" html.valueishtml="0"  name=t_8 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+text(band=header.1 alignment="0" text="Profesor" border="0" color="0" x="4110" y="44" height="64" width="219" html.valueishtml="0"  name=t_6 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+text(band=header.1 alignment="0" text="Inscritos" border="0" color="0" x="4745" y="44" height="64" width="224" html.valueishtml="0"  name=t_9 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+column(band=header.1 id=10 alignment="0" tabsequence=32766 border="5" color="0" x="3826" y="156" height="72" width="841" format="[general]" html.valueishtml="0"  name=profesor_nombre_completo visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=header.1 alignment="1" expression="count(alumnos_cuenta for group 1)"border="5" color="0" x="4695" y="156" height="72" width="329" format="[general]" html.valueishtml="0"  name=inscritos visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=header.1 id=13 alignment="0" tabsequence=32766 border="5" color="0" x="5042" y="156" height="72" width="187" format="[general]" html.valueishtml="0"  name=cve_profesor visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="5" color="0" x="393" y="16" height="60" width="329" format="[general]" html.valueishtml="0"  name=alumnos_cuenta visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="5" color="0" x="768" y="16" height="60" width="1947" format="[general]" html.valueishtml="0"  name=alumnos_nombre_completo visible="1" edit.limit=70 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="2821" y="16" height="60" width="160" format="[general]" html.valueishtml="0"  name=materias_evaluacion visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

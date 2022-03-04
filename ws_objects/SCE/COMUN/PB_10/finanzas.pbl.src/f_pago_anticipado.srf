@@ -1,0 +1,56 @@
+﻿$PBExportHeader$f_pago_anticipado.srf
+global type f_pago_anticipado from function_object
+end type
+
+forward prototypes
+global function integer f_pago_anticipado (long al_cuenta, transaction atr_trans)
+end prototypes
+
+global function integer f_pago_anticipado (long al_cuenta, transaction atr_trans);/*
+ *		Nombre	f_pago_anticipado
+ *		Recibe	al_cuenta,ai_anio,ai_periodo,atr_trans
+ *		Regresa	1	si el alumno al_cuenta registrado su pago de horas anticipadas
+ *					0	el alumno al_cuenta no tiene su pago de horas anticipadas
+ *					-1	error de comunicacion
+ *					APR:29/06/2005
+ */
+
+string ls_nombre_datastore, ls_control_correcto
+int li_res, li_ret, li_horas
+char lc_periodo
+DataStore lds_pago_anticipado_cuenta
+
+
+lds_pago_anticipado_cuenta = Create DataStore
+
+ls_nombre_datastore = "d_pago_anticipado_cuenta_sit"
+
+lds_pago_anticipado_cuenta.DataObject = ls_nombre_datastore
+lds_pago_anticipado_cuenta.SetTransObject(atr_trans)
+
+li_res = lds_pago_anticipado_cuenta.Retrieve(al_cuenta)
+
+choose case li_res
+	case 1
+		li_horas = lds_pago_anticipado_cuenta.GetItemNumber(1,"horas")
+		if li_horas>0 then
+			li_ret = 1
+		else
+			li_ret = 0
+		end if
+	case 0
+		li_ret = 0
+	case else
+		messagebox("Error de Comunicación","Error con la consulta de pagos anticipados BD. Favor de intentar nuevamente", None!)
+		li_ret = -1
+end choose
+
+if li_ret <-1 then 
+	li_ret = -1
+end if
+
+Destroy lds_pago_anticipado_cuenta
+return li_ret
+
+end function
+

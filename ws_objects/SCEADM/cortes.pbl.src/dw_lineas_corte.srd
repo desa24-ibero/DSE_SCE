@@ -1,0 +1,18 @@
+﻿$PBExportHeader$dw_lineas_corte.srd
+$PBExportComments$DataWindow para definir número de aceptados por carrera y calificación mínima para aprobar el examen de inglés
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=77 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=clv_carr dbname="lineas_corte.clv_carr" )
+ column=(type=number update=yes updatewhereclause=yes name=puntaje_acep dbname="lineas_corte.puntaje_acep" )
+ column=(type=number update=yes updatewhereclause=yes name=puntaje_dif dbname="lineas_corte.puntaje_dif" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"dbo.lineas_corte~" ) COLUMN(NAME=~"dbo.lineas_corte.clv_carr~") COLUMN(NAME=~"dbo.lineas_corte.puntaje_acep~") COLUMN(NAME=~"dbo.lineas_corte.puntaje_dif~")) " update="dbo.lineas_corte" updatewhere=1 updatekeyinplace=yes  sort="clv_carr A " )
+text(band=header alignment="2" text="Clv Carr"border="0" color="0" x="133" y="4" height="65" width="1619"  name=clv_carr_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=10 border="0" color="0" x="133" y="4" height="77" width="1619" format="[general]"  name=clv_carr dddw.name=dw_carrera dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Puntaje a Dif."border="0" color="0" x="2186" y="0" height="65" width="357"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=30 border="0" color="0" x="2195" y="4" height="77" width="357" format="[General]"  name=puntaje_dif edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Puntaje a Acep."border="0" color="0" x="1756" y="4" height="65" width="426"  name=num_adm_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=20 border="0" color="0" x="1788" y="4" height="77" width="357"  name=puntaje_acep  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

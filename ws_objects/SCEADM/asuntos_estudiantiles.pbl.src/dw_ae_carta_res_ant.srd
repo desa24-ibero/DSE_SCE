@@ -1,0 +1,55 @@
+﻿$PBExportHeader$dw_ae_carta_res_ant.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=6 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=3376 color="536870912"  height.autosize=yes)
+table(column=(type=real updatewhereclause=yes name=puntaje dbname="aspiran.puntaje" )
+ column=(type=long updatewhereclause=yes name=lugar_car dbname="aspiran.lugar_car" )
+ column=(type=long updatewhereclause=yes name=folio dbname="aspiran.folio" )
+ column=(type=long updatewhereclause=yes name=clv_carr dbname="aspiran.clv_carr" )
+ column=(type=char(50) updatewhereclause=yes name=general_nombre dbname="general.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=general_apaterno dbname="general.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=general_amaterno dbname="general.amaterno" )
+ column=(type=char(1) updatewhereclause=yes name=general_sexo dbname="general.sexo" )
+ column=(type=long updatewhereclause=yes name=aspiran_status dbname="aspiran.status" values="NO ACEPTADO	0/ACEPTADO	1/INSCRITO	2/DIFERIDO	3/ACEPTADO	4/" )
+ column=(type=long updatewhereclause=yes name=general_cuenta dbname="general.cuenta" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_ver dbname="aspiran.clv_ver" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_carr dbname="aspiran.clv_carr" )
+ retrieve="  SELECT dbo.aspiran.puntaje,   
+         dbo.aspiran.lugar_car,   
+         dbo.aspiran.folio,   
+         dbo.aspiran.clv_carr,   
+         dbo.general.nombre,   
+         dbo.general.apaterno,   
+         dbo.general.amaterno,   
+		dbo.general.sexo,   
+         dbo.aspiran.status,   
+         dbo.general.cuenta,   
+         dbo.aspiran.clv_ver,
+		dbo.aspiran.clv_carr
+    FROM dbo.aspiran,   
+         dbo.general,  
+        sexo_padres
+   WHERE ( dbo.aspiran.folio = dbo.general.folio ) and  
+         ( dbo.general.clv_ver = dbo.aspiran.clv_ver ) and  
+         ( dbo.aspiran.clv_per = dbo.general.clv_per ) and  
+         ( dbo.general.anio = dbo.aspiran.anio ) and  
+         ( dbo.aspiran.clv_per = :per ) AND  
+         ( dbo.aspiran.anio = :ani ) AND  
+	   ( dbo.aspiran.folio = sexo_padres.folio  ) and
+         (sexo_padres.cargado = 2) and
+         dbo.aspiran.pago_insc = 1    
+" arguments=(("per", number),("ani", number),("mensa_1", string),("mensa_2", string),("mensa_3", string),("mensa_4", string))  sort="aspiran_clv_carr A general_apaterno A general_amaterno A general_nombre A " )
+compute(band=background alignment="3" expression="mensa_1"border="0" color="0" x="669" y="1565" height="1098" width="2556" format="[general]"  name=resultado  font.face="Galliard BT" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215"  height.autosize=yes)
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="16777215" x="2436" y="819" height="86" width="37" format="[general]"  name=aspiran_clv_carr edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Bookman Old Style" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression="fecha_cartas_invitacion(string(date(today())))"border="0" color="0" x="2432" y="547" height="83" width="947" format="[general]"  name=fecha  font.face="Bookman Old Style" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="3" text="Rector"border="0" color="0" x="669" y="3283" height="86" width="395"  font.face="Bookman Old Style" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=detail alignment="3" text="Mtro. Enrique González Torres, S.J."border="0" color="0" x="673" y="3184" height="77" width="1558"  font.face="Bookman Old Style" font.height="-12" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="0" expression="general_nombre+' '+general_apaterno+' '+general_amaterno"border="0" color="0" x="669" y="941" height="80" width="2516" format="[general]"  name=nom  font.face="Bookman Old Style" font.height="-11" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression="if( general_sexo = ~"M~", ~"Estimado ~"+general_nombre+':', ~"Estimada ~"+general_nombre+':')"border="0" color="33554432" x="669" y="1312" height="80" width="2516" format="[general]"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="0" text="~"LA VERDAD NOS HARA LIBRES~""border="0" color="33554432" x="669" y="2762" height="83" width="1225"  font.face="Bookman Old Style" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="0" text="A t e n t a m e n t e,"border="0" color="33554432" x="669" y="2656" height="86" width="907"  font.face="Bookman Old Style" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="0" text="P r e s e n t e"border="0" color="0" x="669" y="1130" height="80" width="464"  font.face="Bookman Old Style" font.height="-11" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="16777215" x="2498" y="819" height="90" width="33" format="[general]"  name=general_sexo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Bookman Old Style" font.height="-12" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

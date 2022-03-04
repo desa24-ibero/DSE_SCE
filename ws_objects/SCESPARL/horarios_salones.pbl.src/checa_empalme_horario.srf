@@ -1,0 +1,59 @@
+﻿$PBExportHeader$checa_empalme_horario.srf
+global type checa_empalme_horario from function_object
+end type
+
+forward prototypes
+global function long checa_empalme_horario (integer cve_mat_param, string gpo_param, string salon_param, integer dia, date fecha_inicio, date fecha_fin, integer hora_inicio, integer hora_fin, transaction conexion_escolares_param)
+end prototypes
+
+global function long checa_empalme_horario (integer cve_mat_param, string gpo_param, string salon_param, integer dia, date fecha_inicio, date fecha_fin, integer hora_inicio, integer hora_fin, transaction conexion_escolares_param);/******************************************************************************
+
+Funcion para checar empalmes de salones-horarios en semestrales, trimestrales y postécnicos
+
+Análisis, Diseño y Programación
+
+César Ponce Hdz.
+
+Ibero - Tijuana, Nov/2016
+
+
+
+******************************************************************************/
+w_asigna_salones.title="Asignación de Salones Ibero-Tijuana                                                                             CPH. Ene/2017"
+
+long conteo_horarios
+  SELECT count(*) INTO  :conteo_horarios
+    FROM v_grupos_asig_salones g,   
+         v_horario_hr_min_miles h  
+   WHERE ( g.cve_mat = h.cve_mat ) and  
+         ( g.gpo = h.gpo ) and  
+( g.anio = h.anio ) and  
+         ( g.periodo = h.periodo ) and  			
+		 ( h.cve_salon<>'0' ) and  
+         ( ( h.cve_dia = :dia ) AND  
+         (h.cve_mat <> :cve_mat_param OR  
+         h.gpo <> :gpo_param) AND  
+         (h.cve_salon = :salon_param) AND  
+         (((:fecha_inicio >= fecha_inicio_curso AND  
+         :fecha_inicio <= fecha_fin_curso) OR  
+         (:fecha_fin >= fecha_inicio_curso AND  
+         :fecha_fin <= fecha_fin_curso) OR  
+         (:fecha_inicio >= fecha_inicio_curso AND  
+         :fecha_fin <= fecha_fin_curso) OR  
+         (fecha_inicio_curso >= :fecha_inicio AND  
+         fecha_fin_curso <= :fecha_fin)) AND  
+         ((:hora_inicio >= hora_inicio AND  
+         :hora_inicio <= hora_final) OR  
+         (:hora_fin >= hora_inicio AND  
+         :hora_fin <= hora_final) OR  
+         (:hora_inicio >= hora_inicio AND  
+         :hora_fin <= hora_final) OR  
+         (hora_inicio >= :hora_inicio AND  
+         hora_final <= :hora_fin))) )    USING conexion_escolares_param;
+
+
+return conteo_horarios
+
+
+end function
+

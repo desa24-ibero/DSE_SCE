@@ -1,0 +1,18 @@
+﻿$PBExportHeader$dw_version_examen.srd
+$PBExportComments$Catálogo de Versiones del Exámen.
+release 7;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=90 color="536870912" )
+table(column=(type=long updatewhereclause=yes key=yes name=clv_ver dbname="version.clv_ver" )
+ column=(type=char(20) updatewhereclause=yes name=version dbname="version.version" )
+ retrieve="  SELECT version.clv_ver,   
+         version.version  
+    FROM version  
+   WHERE version.clv_ver not in (0,99)              
+ORDER BY version.clv_ver ASC   
+" update="version" updatewhere=0 updatekeyinplace=no )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="4" y="3" height="77" width="666" format="[general]"  name=version edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+htmltable(border="0" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

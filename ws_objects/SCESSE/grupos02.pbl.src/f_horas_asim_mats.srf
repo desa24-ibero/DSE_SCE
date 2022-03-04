@@ -1,0 +1,52 @@
+﻿$PBExportHeader$f_horas_asim_mats.srf
+global type f_horas_asim_mats from function_object
+end type
+
+forward prototypes
+global function boolean f_horas_asim_mats (long al_cve_mat_a, long al_cve_mat_b)
+end prototypes
+
+global function boolean f_horas_asim_mats (long al_cve_mat_a, long al_cve_mat_b);integer  li_codigo_sql
+string ls_mensaje_sql
+int li_horas_reales_a, li_horas_reales_b
+
+Select m.horas_reales
+Into :li_horas_reales_a
+From  dbo.materias m
+Where m.cve_mat = :al_cve_mat_a 
+using gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 or isnull(li_horas_reales_a) then
+	li_horas_reales_a = 0
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar materia A", ls_mensaje_sql)
+end if
+
+Select m.horas_reales
+Into :li_horas_reales_b
+From  dbo.materias m
+Where m.cve_mat = :al_cve_mat_b 
+using gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 or isnull(li_horas_reales_b) then
+	li_horas_reales_b = 0
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar materia B", ls_mensaje_sql)
+end if
+
+IF li_horas_reales_a < li_horas_reales_b Then
+	Return True
+Else
+	Return False	
+End If	
+
+
+
+end function
+

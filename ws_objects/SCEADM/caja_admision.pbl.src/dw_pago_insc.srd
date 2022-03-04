@@ -1,0 +1,26 @@
+﻿$PBExportHeader$dw_pago_insc.srd
+$PBExportComments$DataWindow que sirve para reportar el pago de la inscripción,
+release 5;
+datawindow(units=0 timer_interval=0 color=10789024 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=37 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912"  height.autosize=yes)
+table(column=(type=long updatewhereclause=yes key=yes name=folio dbname="aspiran.folio" )
+ column=(type=long update=yes updatewhereclause=yes name=pago_insc dbname="aspiran.pago_insc" values="No ha Pagado	0/Ya Pagó	1/" )
+ column=(type=long updatewhereclause=yes key=yes name=clv_ver dbname="aspiran.clv_ver" )
+ column=(type=long updatewhereclause=yes key=yes name=clv_per dbname="aspiran.clv_per" )
+ column=(type=long updatewhereclause=yes key=yes name=anio dbname="aspiran.anio" )
+ retrieve="  SELECT aspiran.folio,   
+         aspiran.pago_insc,   
+         aspiran.clv_ver,   
+         aspiran.clv_per,   
+         aspiran.anio  
+    FROM aspiran  
+   WHERE ( aspiran.folio = :fol ) AND  
+         ( aspiran.status = 1 or aspiran.status = 4 ) AND  
+         aspiran.clv_ver = :ver AND  
+         aspiran.clv_per = :per AND  
+         aspiran.anio = :anio    
+" update="aspiran" updatewhere=0 updatekeyinplace=no arguments=(("fol", number),("ver", number),("per", number),("anio", number)) )
+column(band=detail id=2 alignment="2" tabsequence=10 border="0" color="0" x="170" y="4" height="77" width="691" format="[General]"  name=pago_insc ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

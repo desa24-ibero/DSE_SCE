@@ -1,0 +1,80 @@
+﻿$PBExportHeader$f_dec_derecho_uso.srf
+global type f_dec_derecho_uso from function_object
+end type
+
+forward prototypes
+global function boolean f_dec_derecho_uso (long al_cve_mat, integer ai_dia, integer ai_hor_ini, integer ai_hor_fin, integer ai_cupo, boolean ab_desc_sdu_se)
+end prototypes
+
+global function boolean f_dec_derecho_uso (long al_cve_mat, integer ai_dia, integer ai_hor_ini, integer ai_hor_fin, integer ai_cupo, boolean ab_desc_sdu_se);//f_dec_derecho_uso
+//Disminuye el derecho uso en base a los valores recibidos
+//al_cve_mat			long
+//ai_dia					integer
+//ai_hor_ini			integer
+//ai_hor_fin			integer
+//ai_cupo				integer	
+//ab_desc_sdu_se		boolean
+
+Integer Depto=0, li_diferencia,hora_inicio_sdu,li_ciclo
+Boolean ConsultaDepto = False
+String ls_mensaje
+//IF Isvalid(w_grupos_impartidos_dse) Then
+//	If w_grupos_impartidos_dse.cbx_ServiciosEscolares.Checked Then
+//		Depto = 7300 // Servicios Escolares
+//	Else
+//		ConsultaDepto = True
+// 	End IF
+//Else
+//End If	
+
+If ab_desc_sdu_se Then
+// Servicios Escolares
+	Depto = 7300 
+	ConsultaDepto = False
+Else
+	ConsultaDepto = True
+End If	
+
+
+If ConsultaDepto Then
+	Select cve_coordinacion
+	Into 	:depto
+	From 	materias
+	Where	cve_mat = :al_cve_mat using gtr_sce;
+	If gtr_sce.sqlcode <> 0 Then 
+		Messagebox("Error al consultar la coordinacion",gtr_sce.sqlerrtext)
+   	Return False
+	End if
+End If
+If gtr_sce.sqlcode = 0 or Depto = 7300 Then	
+	If ai_hor_fin > ai_hor_ini Then
+		li_diferencia = ai_hor_fin - ai_hor_ini
+		hora_inicio_sdu = ai_hor_ini
+		FOR li_ciclo=1 TO li_diferencia
+			Update salones_derecho_uso
+			Set ocupados = ocupados - 1 // decrementa uno en el campo de ocupados 
+			Where (cve_coordinacion	= :depto) and (cve_dia	= :ai_dia) and
+					(hora_inicio = :Hora_inicio_sdu) using gtr_sce;
+//					and (ocupados <> 0) 
+//					and (cupo	= :ai_cupo) 
+			hora_inicio_sdu ++
+			If gtr_sce.sqlcode = -1 Then
+				ls_mensaje = gtr_sce.sqlerrtext
+				ROLLBACK USING gtr_sce;
+				MessageBox("Error al decrementar el derecho y uso",ls_mensaje)
+				Return False
+			Else
+				COMMIT USING gtr_sce;
+			End If	
+		Next
+		Return True
+	Else
+		Messagebox("Aviso","el horario no es valido, favor de verificar")
+		Return False
+	End If
+	Messagebox("Error","al obtener la clave del departamento")
+	Return False
+End If 
+
+end function
+

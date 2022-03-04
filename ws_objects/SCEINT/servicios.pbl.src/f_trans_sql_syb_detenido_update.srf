@@ -1,0 +1,51 @@
+﻿$PBExportHeader$f_trans_sql_syb_detenido_update.srf
+global type f_trans_sql_syb_detenido_update from function_object
+end type
+
+forward prototypes
+global function integer f_trans_sql_syb_detenido_update (integer ai_detenido, ref string as_error)
+end prototypes
+
+global function integer f_trans_sql_syb_detenido_update (integer ai_detenido, ref string as_error);//
+//****************************************************************************************************
+// Actualiza detenido = 0 (Proceso no detenido).
+// Actualiza detenido = 1 (Proceso detenido).
+// Regresa 1, Si el proceso se actualizo correctamente 
+//        -1, Si hay un error 
+//****************************************************************************************************
+datastore lds_detenido
+lds_detenido = CREATE datastore
+lds_detenido.Dataobject = "d_trans_detenido"
+lds_detenido.settransobject(gtr_sit)
+
+integer li_regresa, li_recupera
+SetNull(as_error)
+
+li_recupera = lds_detenido.Retrieve()
+if li_recupera = 1 then 		
+	li_regresa = lds_detenido.object.detenido[li_recupera]
+	if li_regresa < 0 or li_regresa > 1 then
+		as_error = "Error al recuperar el estatus del proceso de transferencia de datos SqlServer/Sybase."
+		li_regresa = -1			
+	else
+		lds_detenido.object.detenido[li_recupera] = ai_detenido
+		if lds_detenido.Update(true,true) = 1 then
+			commit using gtr_sit;
+			li_regresa = 1
+		else
+			as_error = "Error al actualizar estatus transferencia de datos. " 
+			rollback using gtr_sit;
+			li_regresa = -1
+		end if
+	end if	
+else	
+	as_error = "Error al recuperar el estatus del proceso de transferencia de datos SqlServer/Sybase. " 
+	li_regresa = -1	
+end if	
+ 
+destroy lds_detenido
+ 
+return li_regresa
+
+end function
+

@@ -1,0 +1,38 @@
+﻿$PBExportHeader$f_cuenta_extrao_tit_falt.srf
+global type f_cuenta_extrao_tit_falt from function_object
+end type
+
+forward prototypes
+global function long f_cuenta_extrao_tit_falt (integer ai_periodo, integer ai_anio)
+end prototypes
+
+global function long f_cuenta_extrao_tit_falt (integer ai_periodo, integer ai_anio);//f_cuenta_extrao_tit_falt
+//Devuelve la cantidad de alumnos sin calificar de extraodinario y titulo
+//Recibe:	ai_periodo	integer	Periodo a contabilizar
+//				ai_periodo	integer	Periodo a contabilizar
+//Devuelve:	long						Cantidad de materias sin calificar
+
+integer li_codigo
+string ls_mensaje
+long ll_faltantes
+
+SELECT count(*)
+INTO	:ll_faltantes
+FROM dbo.examen_extrao_titulo
+WHERE dbo.examen_extrao_titulo.periodo = :ai_periodo
+AND	dbo.examen_extrao_titulo.anio = :ai_anio
+AND	dbo.examen_extrao_titulo.calificacion in (null)
+USING gtr_sce;
+
+li_codigo  = gtr_sce.SqlCode
+ls_mensaje = gtr_sce.SqlErrText
+
+if li_codigo = -1 then 
+	MessageBox("Error al contar en examen_extrao_titulo", ls_mensaje, StopSign! )	
+end if
+
+return ll_faltantes
+
+
+end function
+

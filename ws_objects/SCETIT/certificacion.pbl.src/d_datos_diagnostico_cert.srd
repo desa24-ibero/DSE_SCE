@@ -1,0 +1,63 @@
+﻿$PBExportHeader$d_datos_diagnostico_cert.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=80269524 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=3 color="536870912" )
+detail(height=442 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cuenta dbname="cuenta" )
+ column=(type=char(70) updatewhereclause=yes name=nombre_completo dbname="nombre_completo" )
+ column=(type=long updatewhereclause=yes name=cve_carrera dbname="cve_carrera" )
+ column=(type=char(100) updatewhereclause=yes name=carrera dbname="carrera" )
+ column=(type=long updatewhereclause=yes name=cve_plan dbname="cve_plan" )
+ column=(type=char(20) updatewhereclause=yes name=nombre_plan dbname="nombre_plan" )
+ column=(type=long updatewhereclause=yes name=cve_subsistema dbname="cve_subsistema" )
+ retrieve="SELECT cuenta = hist_carreras.cuenta,   
+       nombre_completo = alumnos.nombre_completo,   
+       cve_carrera = carreras.cve_carrera,   
+       carrera = carreras.carrera,   
+       cve_plan = nombre_plan.cve_plan,   
+       nombre_plan = nombre_plan.nombre_plan,
+		 cve_subsistema = hist_carreras.cve_subsistema_ant	
+    FROM hist_carreras,
+			carreras,   
+         nombre_plan,   
+         alumnos  
+   WHERE ( hist_carreras.cve_carrera_ant = carreras.cve_carrera ) and  
+         ( hist_carreras.cve_plan_ant = nombre_plan.cve_plan ) and  
+         ( hist_carreras.cuenta = alumnos.cuenta ) and  
+         ( ( hist_carreras.cuenta = :al_cuenta ) AND  
+         ( hist_carreras.cve_carrera_ant = :al_cve_carrera ) AND  
+         ( hist_carreras.cve_plan_ant = :al_cve_plan ) )    
+UNION all
+SELECT cuenta = academicos.cuenta,   
+       nombre_completo = alumnos.nombre_completo,   
+       cve_carrera = carreras.cve_carrera,   
+       carrera = carreras.carrera,   
+       cve_plan = nombre_plan.cve_plan,   
+       nombre_plan = nombre_plan.nombre_plan,
+		 cve_subsistema = academicos.cve_subsistema
+    FROM academicos,
+			carreras,   
+         nombre_plan,   
+         alumnos  
+   WHERE ( academicos.cve_carrera = carreras.cve_carrera ) and  
+         ( academicos.cve_plan = nombre_plan.cve_plan ) and  
+         ( academicos.cuenta = alumnos.cuenta ) and  
+         ( ( academicos.cuenta = :al_cuenta ) AND  
+         ( academicos.cve_carrera = :al_cve_carrera ) AND  
+         ( academicos.cve_plan = :al_cve_plan ) )    
+" arguments=(("al_cuenta", number),("al_cve_carrera", number),("al_cve_plan", number)) )
+text(band=detail alignment="1" text="Cuenta:" border="0" color="0" x="29" y="3" height="74" width="494"  name=cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Nombre:" border="0" color="0" x="29" y="90" height="74" width="494"  name=nombre_completo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Carrera:" border="0" color="0" x="29" y="176" height="74" width="494"  name=cve_carrera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Nombre Plan:" border="0" color="0" x="29" y="266" height="74" width="494"  name=nombre_plan_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Subsistema:" border="0" color="0" x="29" y="352" height="64" width="494"  name=cve_subsistema_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="2" color="0" x="538" y="176" height="74" width="161" format="[general]"  name=cve_carrera edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="2" color="0" x="538" y="266" height="74" width="161" format="[general]"  name=cve_plan edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="2" color="0" x="538" y="352" height="74" width="161" format="[general]"  name=cve_subsistema edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="2" color="0" x="538" y="90" height="74" width="1730" format="[general]"  name=nombre_completo edit.limit=70 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+compute(band=detail alignment="0" expression="STRING( cuenta )+~"-~"+OBTEN_DIGITO( cuenta )"border="2" color="0" x="538" y="3" height="74" width="267" format="[GENERAL]"  name=compute_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="2" color="0" x="709" y="266" height="74" width="614" format="[general]"  name=nombre_plan edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="2" color="0" x="709" y="176" height="74" width="1551" format="[general]"  name=carrera edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

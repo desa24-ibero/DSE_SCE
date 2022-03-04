@@ -1,0 +1,46 @@
+﻿$PBExportHeader$dw_asigna_cuenta.srd
+$PBExportComments$Listado de los aceptados en orden alfabético para que les sea asignado el número de cuenta
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=yes print.columns=2 print.columns.width=1738 )
+header(height=101 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=aspiran_folio dbname="aspiran.folio" )
+ column=(type=long update=yes updatewhereclause=yes name=general_cuenta dbname="general.cuenta" )
+ column=(type=char(50) updatewhereclause=yes name=general_apaterno dbname="general.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=general_amaterno dbname="general.amaterno" )
+ column=(type=char(50) updatewhereclause=yes name=general_nombre dbname="general.nombre" )
+ column=(type=long updatewhereclause=yes key=yes name=general_folio dbname="general.folio" )
+ column=(type=long updatewhereclause=yes key=yes name=general_clv_ver dbname="general.clv_ver" )
+ column=(type=long updatewhereclause=yes key=yes name=general_clv_per dbname="general.clv_per" )
+ column=(type=long updatewhereclause=yes key=yes name=general_anio dbname="general.anio" )
+ column=(type=long updatewhereclause=yes name=aspiran_status dbname="aspiran.status" )
+ retrieve="  SELECT aspiran.folio,   
+         general.cuenta,   
+         general.apaterno,   
+         general.amaterno,   
+         general.nombre,   
+         general.folio,   
+         general.clv_ver,   
+         general.clv_per,   
+         general.anio,
+         aspiran.status
+    FROM aspiran,   
+         general  
+   WHERE general.folio = aspiran.folio and  
+         general.clv_ver = aspiran.clv_ver and  
+         general.clv_per = aspiran.clv_per and  
+         general.anio = aspiran.anio and  
+         aspiran.clv_per = :per AND  
+         aspiran.anio = :ani AND  
+         general.ya_inscri = 0 AND  
+         general.cuenta = 0 AND
+         ( ( :opcion = 0 AND aspiran.status = 1 ) OR
+           ( :opcion = 1 AND ( aspiran.status = 1 OR aspiran.status = 4 ) ) )
+
+" update="general" updatewhere=1 updatekeyinplace=yes arguments=(("per", number),("ani", number),("opcion", number))  sort="general_apaterno A general_amaterno A general_nombre A " )
+compute(band=header alignment="2" expression="count(aspiran_folio for all)"border="0" color="0" x="1" y="4" height="81" width="330" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="general_cuenta+'--'+obten_digito(general_cuenta)"border="0" color="0" x="366" y="4" height="77" width="330" format="[general]"  name=cue  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="aspiran_folio"border="0" color="0~tif(  aspiran_status =1, rgb(0,0,0), rgb(255,0,0) )" x="23" y="4" height="77" width="330" format="[general]"  name=fol  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="general_apaterno+' '+general_amaterno+' '+general_nombre"border="0" color="0" x="718" y="8" height="65" width="1038" format="[general]"  name=nom  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

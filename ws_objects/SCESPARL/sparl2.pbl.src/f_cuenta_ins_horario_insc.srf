@@ -1,0 +1,51 @@
+﻿$PBExportHeader$f_cuenta_ins_horario_insc.srf
+global type f_cuenta_ins_horario_insc from function_object
+end type
+
+forward prototypes
+global function long f_cuenta_ins_horario_insc (integer a_periodo, integer a_anio, string a_criterio)
+end prototypes
+
+global function long f_cuenta_ins_horario_insc (integer a_periodo, integer a_anio, string a_criterio);//NOMBRE
+//f_cuenta_ins_horario_insc
+//
+//REGRESA
+//integer
+//
+//RECIBE
+//a_periodo		integer
+//a_anio			integer
+//a_criterio 	string
+
+
+integer li_codigo_sql
+string ls_criterio, ls_mensaje_sql
+long	ll_cuenta
+
+ls_criterio = a_criterio + "%"
+
+
+SELECT count(cuenta)
+INTO	:ll_cuenta
+FROM horario_insc
+WHERE periodo = :a_periodo
+AND   anio = :a_anio
+AND   (criterio like :ls_criterio
+OR		:a_criterio = "T")
+USING gtr_sce;
+
+li_codigo_sql =gtr_sce.SqlCode
+ls_mensaje_sql =gtr_sce.SqlErrText
+
+
+if li_codigo_sql = -1 then
+	MessageBox("Error al contar horario_insc", ls_mensaje_sql)	
+elseif li_codigo_sql = 100 then
+	ll_cuenta = 0
+end if
+
+return ll_cuenta
+	
+
+end function
+

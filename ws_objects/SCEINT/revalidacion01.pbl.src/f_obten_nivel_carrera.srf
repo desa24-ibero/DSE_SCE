@@ -1,0 +1,43 @@
+﻿$PBExportHeader$f_obten_nivel_carrera.srf
+global type f_obten_nivel_carrera from function_object
+end type
+
+forward prototypes
+global function string f_obten_nivel_carrera (integer ai_cve_carrera)
+end prototypes
+
+global function string f_obten_nivel_carrera (integer ai_cve_carrera);//Función que regresa el nivel de una carera_plan
+//
+//f_obten_nivel
+//
+//Parámetros:		ai_cve_carrera		
+
+int li_codigo_sql
+int li_cve_carrera
+string ls_carrera, ls_nivel, ls_mensaje_sql
+
+li_cve_carrera = ai_cve_carrera
+
+SELECT dbo.carreras.nivel
+INTO	:ls_nivel
+FROM	dbo.carreras
+WHERE	dbo.carreras.cve_carrera = :li_cve_carrera
+USING gtr_sce;
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	rollback using gtr_sce;
+	MessageBox("Error al recuperar el nivel de la carrera:"+string(li_cve_carrera),  ls_mensaje_sql)
+	setnull(ls_nivel)
+else
+	commit using gtr_sce;
+end if
+
+
+return ls_nivel
+
+
+end function
+

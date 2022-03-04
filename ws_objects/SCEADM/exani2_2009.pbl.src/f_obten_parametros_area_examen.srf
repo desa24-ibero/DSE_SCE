@@ -1,0 +1,105 @@
+﻿$PBExportHeader$f_obten_parametros_area_examen.srf
+global type f_obten_parametros_area_examen from function_object
+end type
+
+forward prototypes
+global function integer f_obten_parametros_area_examen (integer ai_cve_tipo_examen, integer ai_cve_modulo_examen, ref decimal ad_peso_area_1, ref decimal ad_peso_area_2, ref decimal ad_peso_area_3, ref decimal ad_peso_area_4, ref decimal ad_peso_area_5, ref integer ai_cve_area_examen_1, ref integer ai_cve_area_examen_2, ref integer ai_cve_area_examen_3, ref integer ai_cve_area_examen_4, ref integer ai_cve_area_examen_5)
+end prototypes
+
+global function integer f_obten_parametros_area_examen (integer ai_cve_tipo_examen, integer ai_cve_modulo_examen, ref decimal ad_peso_area_1, ref decimal ad_peso_area_2, ref decimal ad_peso_area_3, ref decimal ad_peso_area_4, ref decimal ad_peso_area_5, ref integer ai_cve_area_examen_1, ref integer ai_cve_area_examen_2, ref integer ai_cve_area_examen_3, ref integer ai_cve_area_examen_4, ref integer ai_cve_area_examen_5);//Obtiene la información en base al tipo y modulo de examen para determinar los pesos de cada area
+//f_obten_parametros_area_examen
+//
+//Recibe: 
+//	
+//	ai_cve_tipo_examen       integer       
+//	ai_cve_modulo_examen     integer
+//
+//Devuelve:
+//ad_peso_area_1, 
+//ad_peso_area_2, 
+//ad_peso_area_3, 
+//ad_peso_area_4, 
+//ad_peso_area_5 
+//ai_cve_area_examen_1, 
+//ai_cve_area_examen_2, 
+//ai_cve_area_examen_3, 
+//ai_cve_area_examen_4, 
+//ai_cve_area_examen_5 
+
+
+string ls_cve_opcion_aplicacion 
+integer li_cve_tipo_examen, li_cve_modulo_examen    
+int li_codigo_sql, li_SQLNRows
+string ls_mensaje
+decimal ld_peso_area_1, ld_peso_area_2, ld_peso_area_3, ld_peso_area_4, ld_peso_area_5, ld_peso_total 
+integer li_cve_area_examen_1, li_cve_area_examen_2, li_cve_area_examen_3, li_cve_area_examen_4, li_cve_area_examen_5 
+
+
+ SELECT  parametros_area_examen.cve_tipo_examen,   
+         parametros_area_examen.cve_modulo_examen,   
+         parametros_area_examen.cve_area_examen_1,   
+         parametros_area_examen.peso_area_1,   
+         parametros_area_examen.cve_area_examen_2,   
+         parametros_area_examen.peso_area_2,   
+         parametros_area_examen.cve_area_examen_3,   
+         parametros_area_examen.peso_area_3,   
+         parametros_area_examen.cve_area_examen_4,   
+         parametros_area_examen.peso_area_4,   
+         parametros_area_examen.cve_area_examen_5,   
+         parametros_area_examen.peso_area_5  
+	INTO
+	:li_cve_tipo_examen, 
+	:li_cve_modulo_examen,
+	:li_cve_area_examen_1,
+	:ld_peso_area_1,
+	:li_cve_area_examen_2,
+	:ld_peso_area_2, 
+	:li_cve_area_examen_3,
+	:ld_peso_area_3, 
+	:li_cve_area_examen_4,
+	:ld_peso_area_4, 
+	:li_cve_area_examen_5,	
+	:ld_peso_area_5
+    FROM parametros_area_examen   	 
+	WHERE parametros_area_examen.cve_tipo_examen = :ai_cve_tipo_examen 
+   AND   parametros_area_examen.cve_modulo_examen = :ai_cve_modulo_examen   
+	USING gtr_sadm;
+	
+	li_codigo_sql = gtr_sadm.SqlCode
+	ls_mensaje = gtr_sadm.SqlErrText
+	li_SQLNRows = gtr_sadm.SQLNRows	
+
+	IF li_codigo_sql = -1 THEN
+		MessageBox("Error al consultar parametros_area_examen", ls_mensaje, StopSign!)
+	ELSE
+		
+		ld_peso_total =(ld_peso_area_1 + ld_peso_area_2 + ld_peso_area_3 + ld_peso_area_4 + ld_peso_area_5)
+	 
+		if ld_peso_total >=101 or isnull(ld_peso_total) then
+			MessageBox("Error al consultar parametros_area_examen", "La suma de los pesos es mayor a 100% ["+string(ld_peso_total)+"]", StopSign!)
+			return -1	
+		elseif ld_peso_total <=99 or isnull(ld_peso_total) then
+			MessageBox("Error al consultar parametros_area_examen", "La suma de los pesos es menor a 100% ["+string(ld_peso_total)+"]", StopSign!)
+			return -1	
+		elseif  isnull(ld_peso_total) then
+			MessageBox("Error al consultar parametros_area_examen", "La suma de los pesos es nula", StopSign!)
+			return -1		
+		end if		
+		
+		ai_cve_tipo_examen=li_cve_tipo_examen
+		ai_cve_modulo_examen= li_cve_modulo_examen 
+		ai_cve_area_examen_1 = li_cve_area_examen_1
+		ai_cve_area_examen_2 = li_cve_area_examen_2
+		ai_cve_area_examen_3 = li_cve_area_examen_3
+		ai_cve_area_examen_4 = li_cve_area_examen_4
+		ai_cve_area_examen_5 = li_cve_area_examen_5
+		ad_peso_area_1 = ld_peso_area_1
+		ad_peso_area_2 = ld_peso_area_2
+		ad_peso_area_3 = ld_peso_area_3
+		ad_peso_area_4 = ld_peso_area_4
+		ad_peso_area_5 = ld_peso_area_5
+	END IF
+
+return li_codigo_sql
+end function
+

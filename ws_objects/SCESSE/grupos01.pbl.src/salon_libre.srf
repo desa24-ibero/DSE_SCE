@@ -1,0 +1,34 @@
+﻿$PBExportHeader$salon_libre.srf
+global type salon_libre from function_object
+end type
+
+forward prototypes
+global function boolean salon_libre (string salon, integer dia, integer hor_inicio, integer hor_final)
+end prototypes
+
+global function boolean salon_libre (string salon, integer dia, integer hor_inicio, integer hor_final);// Regresa True si el salón esta disponible en el Dia, y la hora_inicio
+// este entre de [hora_inicio .. hora_final].
+// Juan Campos.		Octubre-1997.
+
+Integer SalonLibre = 0
+
+Select Count(*)
+Into  :SalonLibre
+From  salon_horario 
+Where (cve_salon = :Salon And cve_dia = :Dia) And
+      (hora_inicio Between  :hor_inicio And :hor_final - 1)
+Group By cve_salon Having SUM(ocupado) = 0
+Using gtr_sce;
+
+If gtr_sce.sqlcode = 0 And SalonLibre > 0 Then
+	Return True
+ElseIf gtr_sce.sqlcode = 100 Then
+	Messagebox("El salón no esta disponible","Intente con otro salón")  
+ElseIf gtr_sce.sqlcode = -1 Then
+	Messagebox("Error al consultar salones disponibles",gtr_sce.sqlerrtext)  
+End if
+
+Return False
+
+end function
+

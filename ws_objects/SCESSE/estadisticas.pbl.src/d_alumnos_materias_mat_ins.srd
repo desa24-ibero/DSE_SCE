@@ -1,0 +1,50 @@
+﻿$PBExportHeader$d_alumnos_materias_mat_ins.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=586 color="536870912" )
+summary(height=80 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=0 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=coordinaciones_cve_coordinacion dbname="coordinaciones.cve_coordinacion" )
+ column=(type=long updatewhereclause=yes name=carreras_cve_carrera dbname="carreras.cve_carrera" )
+ column=(type=long updatewhereclause=yes name=mat_inscritas_cve_mat dbname="mat_inscritas.cve_mat" )
+ column=(type=long updatewhereclause=yes name=compute_0004 dbname="compute_0004" )
+ retrieve="SELECT coordinaciones.cve_coordinacion,
+carreras.cve_carrera ,
+mat_inscritas.cve_mat,
+COUNT(mat_inscritas.cve_mat)
+FROM mat_inscritas,
+coordinaciones,
+carreras,
+materias
+WHERE mat_inscritas.cve_mat = materias.cve_mat
+AND	coordinaciones.cve_coordinacion = materias.cve_coordinacion
+AND	coordinaciones.cve_coordinacion = carreras.cve_coordinacion
+AND (   coordinaciones.cve_coordinacion = :al_cve_coordinacion 
+	  OR 9999 = :al_cve_coordinacion )
+AND (   carreras.cve_carrera = :al_cve_carrera
+	  OR 9999 = :al_cve_carrera)
+GROUP BY coordinaciones.cve_coordinacion,
+   carreras.cve_carrera,
+	mat_inscritas.cve_mat
+ORDER BY coordinaciones.cve_coordinacion,
+carreras.cve_carrera 
+" arguments=(("al_cve_coordinacion", number),("al_cve_carrera", number)) )
+group(level=1 header.height=86 trailer.height=80 by=("coordinaciones_cve_coordinacion" , "carreras_cve_carrera" ) header.color="536870912" trailer.color="536870912" )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="878" y="29" height="365" width="1796" brush.hatch="6" brush.color="30791125" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="0" )
+text(band=header alignment="2" text="Universidad Iberoamericana"border="0" color="0" x="951" y="45" height="125" width="1649"  font.face="Century Schoolbook" font.height="-18" font.weight="700"  font.family="1" font.pitch="2" font.charset="0" background.mode="2" background.color="30791125" )
+text(band=header alignment="0" text="fecha_hoy"border="0" color="0" x="183" y="195" height="77" width="486"  name=st_fecha_hoy  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="'Página: ' + page() + ' de ' + pageCount()"border="0" color="0" x="2882" y="192" height="77" width="483" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Dirección de Servicios Escolares"border="0" color="0" x="1134" y="186" height="93" width="1280"  font.face="Arial" font.height="-14" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="30791125" )
+text(band=header alignment="2" text="Alumnos/Materias"border="0" color="0" x="1459" y="291" height="77" width="633"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="30791125" )
+column(band=header.1 id=3 alignment="1" tabsequence=32766 border="0" color="0" x="1737" y="99" height="64" width="351" format="[general]"  name=mat_inscritas_cve_mat edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header.1 alignment="1" expression=" coordinaciones_cve_coordinacion "border="0" color="0" x="48" y="6" height="64" width="183"  name=cf_cve_coordinacion  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve    Coordinacion"border="0" color="0" x="95" y="506" height="64" width="560"  name=coordinaciones_cve_coordinacion_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header.1 alignment="0" expression=" carreras_cve_carrera "border="0" color="0" x="1514" y="9" height="64" width="234"  name=cf_cve_carrera  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve    Carrera"border="0" color="0" x="1584" y="506" height="64" width="402"  name=carreras_cve_carrera_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(  compute_0004  for all )"border="0" color="0" x="3013" y="6" height="64" width="230" format="[general]"  name=cf_suma_total  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression="sum(  compute_0004  for group 1 )"border="0" color="0" x="3013" y="10" height="64" width="230" format="[general]"  name=cf_alumnos_materias  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header.1 id=4 alignment="1" tabsequence=32766 border="0" color="0" x="3013" y="9" height="64" width="230" format="[general]"  name=compute_0004 edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header.1 id=1 alignment="0" tabsequence=32766 border="0" color="0" x="282" y="9" height="64" width="1203" format="[general]"  name=coordinaciones_cve_coordinacion dddw.name=dddw_coordinaciones dddw.displaycolumn=coordinacion dddw.datacolumn=cve_coordinacion dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.hscrollbar=yes dddw.vscrollbar=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header.1 id=2 alignment="0" tabsequence=32766 border="0" color="0" x="1770" y="9" height="64" width="1203" format="[general]"  name=carreras_cve_carrera dddw.name=dddw_carreras dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.hscrollbar=yes dddw.vscrollbar=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

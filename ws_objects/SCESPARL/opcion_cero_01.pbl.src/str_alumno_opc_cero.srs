@@ -1,0 +1,9 @@
+﻿$PBExportHeader$str_alumno_opc_cero.srs
+global type str_alumno_opc_cero from structure
+	long		cuenta
+	long		cve_carrera
+	long		cve_plan
+	boolean		procede_tramite
+	boolean		revisa_cobranzas
+end type
+

@@ -1,0 +1,9 @@
+﻿$PBExportHeader$str_impresion_constancias_2013.srs
+global type str_impresion_constancias_2013 from structure
+	datawindow		sdw_datawindow
+	long		sl_cuenta
+	integer		si_num_constancia
+	window		sw_window
+	uo_nombre_alumno_2013		suo_user_object
+end type
+

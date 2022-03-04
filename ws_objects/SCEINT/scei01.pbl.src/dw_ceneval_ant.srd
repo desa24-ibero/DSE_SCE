@@ -1,0 +1,31 @@
+﻿$PBExportHeader$dw_ceneval_ant.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=141 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=ceneval_cve_escuela dbname="ceneval.cve_escuela" )
+ column=(type=char(50) updatewhereclause=yes name=ceneval_escuela dbname="ceneval.escuela" )
+ column=(type=long updatewhereclause=yes name=ceneval_cve_sep dbname="ceneval.cve_sep" )
+ column=(type=long updatewhereclause=yes name=ceneval_cene_1 dbname="ceneval.cene_1" )
+ column=(type=long updatewhereclause=yes name=ceneval_cene_2 dbname="ceneval.cene_2" )
+ column=(type=long updatewhereclause=yes name=ceneval_cene_3 dbname="ceneval.cene_3" )
+ column=(type=long updatewhereclause=yes name=ceneval_cve_mun_loc dbname="ceneval.cve_mun_loc" )
+ column=(type=char(31) updatewhereclause=yes name=estados_estado dbname="estados.estado" )
+ column=(type=char(50) updatewhereclause=yes name=municipio_localidad_municipio dbname="municipio_localidad.municipio" )
+ column=(type=char(50) updatewhereclause=yes name=municipio_localidad_localidad dbname="municipio_localidad.localidad" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"ceneval~" )  TABLE(NAME=~"estados~" )  TABLE(NAME=~"municipio_localidad~" ) COLUMN(NAME=~"ceneval.cve_escuela~") COLUMN(NAME=~"ceneval.escuela~") COLUMN(NAME=~"ceneval.cve_sep~") COLUMN(NAME=~"ceneval.cene_1~") COLUMN(NAME=~"ceneval.cene_2~") COLUMN(NAME=~"ceneval.cene_3~") COLUMN(NAME=~"ceneval.cve_mun_loc~") COLUMN(NAME=~"estados.estado~") COLUMN(NAME=~"municipio_localidad.municipio~") COLUMN(NAME=~"municipio_localidad.localidad~")    JOIN (LEFT=~"ceneval.cve_sep~"    OP =~"=~"RIGHT=~"estados.cve_sep~" )    JOIN (LEFT=~"ceneval.cve_mun_loc~"    OP =~"=~"RIGHT=~"municipio_localidad.cve_mun_loc~" )WHERE(    EXP1 =~"( ( ceneval.escuela~"   OP =~"like~"    EXP2 =~"( :nombre ) ) )~" ) ) ARG(NAME = ~"nombre~" TYPE = string)  ARG(NAME = ~"cene_1~" TYPE = number)  ARG(NAME = ~"cene_2~" TYPE = number)  ARG(NAME = ~"cene_3~" TYPE = number) " arguments=(("nombre", string),("cene_1", number),("cene_2", number),("cene_3", number)) )
+text(band=header alignment="2" text="Estados
+Estado"border="0" color="0" x="1290" y="0" height="113" width="179"  name=estados_estado_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Municipio Localidad
+Municipio"border="0" color="0" x="1930" y="0" height="113" width="426"  name=municipio_localidad_municipio_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Municipio Localidad
+Localidad"border="0" color="0" x="2958" y="0" height="113" width="426"  name=municipio_localidad_localidad_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Ceneval
+Escuela"border="0" color="0" x="522" y="4" height="113" width="179"  name=ceneval_escuela_t  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="count(ceneval_escuela for all)"border="0" color="255" x="14" y="12" height="81" width="279" format="[general]"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="1710" y="4" height="77" width="1015" format="[general]"  name=municipio_localidad_municipio edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="2739" y="4" height="77" width="1015" format="[general]"  name=municipio_localidad_localidad edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0~tif ( ceneval_cene_1 = cene_1 and  ceneval_cene_2 = cene_2 and  ceneval_cene_3 =  cene_3 , rgb(255,0,0),rgb(0,0,0) )" x="179" y="4" height="77" width="1015" format="[general]"  name=ceneval_escuela  tag=" " edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="1203" y="4" height="77" width="499" format="[general]"  name=estados_estado edit.limit=31 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

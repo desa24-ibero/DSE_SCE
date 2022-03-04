@@ -1,0 +1,11 @@
+﻿$PBExportHeader$d_dddw_estado.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=31436382 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=101 color="536870912" )
+table(column=(type=char(31) updatewhereclause=yes name=estado dbname="estados.estado" )
+ column=(type=long updatewhereclause=yes name=cve_estado dbname="estados.cve_estado" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"estados~" ) COLUMN(NAME=~"estados.estado~") COLUMN(NAME=~"estados.cve_estado~")) " )
+column(band=detail id=1 alignment="0" tabsequence=20 border="5" color="0" x="1" y="8" height="77" width="965" format="[general]"  name=estado editmask.mask="!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

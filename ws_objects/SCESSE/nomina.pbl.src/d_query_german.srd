@@ -1,0 +1,29 @@
+﻿$PBExportHeader$d_query_german.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=134 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=carreras_cve_carrera dbname="carreras.cve_carrera" )
+ column=(type=char(100) updatewhereclause=yes name=carreras_carrera dbname="carreras.carrera" )
+ column=(type=char(1) updatewhereclause=yes name=carreras_nivel dbname="carreras.nivel" )
+ column=(type=long updatewhereclause=yes name=subsistema_cve_subsistema dbname="subsistema.cve_subsistema" )
+ column=(type=char(40) updatewhereclause=yes name=subsistema_subsistema dbname="subsistema.subsistema" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"academicos~" )  TABLE(NAME=~"banderas_inscrito~" )  TABLE(NAME=~"subsistema~" )  TABLE(NAME=~"carreras~" )  TABLE(NAME=~"materias~" )  TABLE(NAME=~"coordinaciones~" ) COLUMN(NAME=~"carreras.cve_carrera~") COLUMN(NAME=~"carreras.carrera~") COLUMN(NAME=~"carreras.nivel~") COLUMN(NAME=~"subsistema.cve_subsistema~") COLUMN(NAME=~"subsistema.subsistema~")    JOIN (LEFT=~"academicos.cuenta~"    OP =~"=~"RIGHT=~"banderas_inscrito.cuenta~" )    JOIN (LEFT=~"subsistema.cve_carrera~"    OP =~"=~"RIGHT=~"carreras.cve_carrera~" )    JOIN (LEFT=~"carreras.nivel~"    OP =~"=~"RIGHT=~"materias.nivel~" )    JOIN (LEFT=~"coordinaciones.cve_coordinacion~"    OP =~"=~"RIGHT=~"materias.cve_coordinacion~" )    JOIN (LEFT=~"coordinaciones.cve_coordinacion~"    OP =~"=~"RIGHT=~"carreras.cve_coordinacion~" )    JOIN (LEFT=~"academicos.cve_subsistema~"    OP =~"=~"RIGHT=~"subsistema.cve_subsistema~" )    JOIN (LEFT=~"academicos.cve_carrera~"    OP =~"=~"RIGHT=~"subsistema.cve_carrera~" )    JOIN (LEFT=~"academicos.cve_plan~"    OP =~"=~"RIGHT=~"subsistema.cve_plan~" )) " )
+text(band=header alignment="2" text="Carreras
+Cve Carrera"border="0" color="0" x="4" y="3" height="128" width="351"  name=carreras_cve_carrera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Carreras
+Carrera"border="0" color="0" x="358" y="3" height="128" width="2809"  name=carreras_carrera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Carreras
+Nivel"border="0" color="0" x="3171" y="3" height="128" width="238"  name=carreras_nivel_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Subsistema
+Cve Subsistema"border="0" color="0" x="3412" y="3" height="128" width="428"  name=subsistema_cve_subsistema_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Subsistema
+Subsistema"border="0" color="0" x="3844" y="3" height="128" width="1200"  name=subsistema_subsistema_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="4" y="4" height="74" width="351" format="[general]"  name=carreras_cve_carrera edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="358" y="4" height="74" width="2809" format="[general]"  name=carreras_carrera edit.limit=100 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="3171" y="4" height="74" width="59" format="[general]"  name=carreras_nivel edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="0" x="3412" y="4" height="74" width="351" format="[general]"  name=subsistema_cve_subsistema edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="3844" y="4" height="74" width="1200" format="[general]"  name=subsistema_subsistema edit.limit=40 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

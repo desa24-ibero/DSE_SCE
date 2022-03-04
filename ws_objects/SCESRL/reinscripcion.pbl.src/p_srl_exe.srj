@@ -1,0 +1,68 @@
+﻿$PBExportHeader$p_srl_exe.srj
+$PBExportComments$Generated Application Executable Project
+EXE:srl.exe,,0,1,1
+CMP:0,0,0,2,0,0,1
+COM:Sybase, Inc.
+DES:Sybase, Inc. Product File
+CPY:
+PRD:PowerBuilder Enterprise Series
+PVS:1.0.0.1
+PVN:1,0,0,1
+FVS:1.0.0.1
+FVN:1,0,0,1
+MAN:0,asInvoker,0
+PBD:reinscripcion.pbl,,1
+PBD:reinscripcion2.pbl,,1
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,dw_ext_horario_2014,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,f_obten_titulo,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,f_obten_creditos_materia,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,obten_digito,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,u_datastore,u
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,revisa_pago_anticipado,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,d_tipo_periodo_lista_seleccion,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,f_conecta_pas_parametros_bd,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,w_pregunta_nip,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,m_reinscripcion_2014,m
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,revisa_rows_cob,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,dw_mat_inscritas_2014,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,dw_cursada_2014,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,revisa_porcentaje_apoyo,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,d_pase_ingreso,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,w_about,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,w_login_srl,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,f_materia_aprobada,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,d_mat_pase_ingreso_2014,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,param_obj_nombre,s
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,revmay,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,horario,s
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,dw_materias_integracion_2014,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,revisa_rows,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,revisa_pago_inscripcion,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,f_usuario_valido_aplicacion,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,dw_carreras_cursadas_lista,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,dw_mat_preinscritas_2014,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,w_profesor,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,salir_sie,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,uo_administrador_liberacion,u
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,srl,a
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,f_proyecto_ss_inscrito,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,f_historico_actualizado,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,w_pase_ingreso,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,dw_labs_2014,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,dw_rev_hor_2014,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,w_srl,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,m_preinscripcion_2014,m
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,w_cambio_tipo_periodo,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,w_reinscripcion_2014,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,uo_carreras_alumno_lista,u
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,w_preinscripción_2014,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,m_principal,m
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,w_alumnosnombre,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,revisa_adeudos,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,dw_nombre_alumno_2013,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,dw_comprobante_insc,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,consulta_sie,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,dw_reinscripcion_materias,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,dw_grupos_libres_2014,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion.pbl,param_obj_carrera,s
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRL\reinscripcion2.pbl,dw_prerrequisito_2014,d

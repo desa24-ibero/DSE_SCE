@@ -1,0 +1,519 @@
+﻿$PBExportHeader$m_bitacora_bajas.srm
+forward
+global type m_bitacora_bajas from menu
+end type
+type m_orden from menu within m_bitacora_bajas
+end type
+type m_cuenta from menu within m_orden
+end type
+type m_usuario from menu within m_orden
+end type
+type m_fecha from menu within m_orden
+end type
+type m_orden from menu within m_bitacora_bajas
+m_cuenta m_cuenta
+m_usuario m_usuario
+m_fecha m_fecha
+end type
+type m_reporte from menu within m_bitacora_bajas
+end type
+type m_bajaacademica from menu within m_reporte
+end type
+type m_bajatotal from menu within m_reporte
+end type
+type m_normalinscrita from menu within m_reporte
+end type
+type m_todoslosmovimientos from menu within m_reporte
+end type
+type m_reporte from menu within m_bitacora_bajas
+m_bajaacademica m_bajaacademica
+m_bajatotal m_bajatotal
+m_normalinscrita m_normalinscrita
+m_todoslosmovimientos m_todoslosmovimientos
+end type
+type m_imprime from menu within m_bitacora_bajas
+end type
+type m_imprime from menu within m_bitacora_bajas
+end type
+type m_salvar from menu within m_bitacora_bajas
+end type
+type m_salvar from menu within m_bitacora_bajas
+end type
+type m_fin from menu within m_bitacora_bajas
+end type
+type m_fin from menu within m_bitacora_bajas
+end type
+end forward
+
+global type m_bitacora_bajas from menu
+m_orden m_orden
+m_reporte m_reporte
+m_imprime m_imprime
+m_salvar m_salvar
+m_fin m_fin
+end type
+global m_bitacora_bajas m_bitacora_bajas
+
+on m_bitacora_bajas.create
+m_bitacora_bajas=this
+this.m_orden=create m_orden
+this.m_reporte=create m_reporte
+this.m_imprime=create m_imprime
+this.m_salvar=create m_salvar
+this.m_fin=create m_fin
+this.Item[]={this.m_orden, &
+this.m_reporte, &
+this.m_imprime, &
+this.m_salvar, &
+this.m_fin}
+end on
+
+on m_bitacora_bajas.destroy
+destroy(this.m_orden)
+destroy(this.m_reporte)
+destroy(this.m_imprime)
+destroy(this.m_salvar)
+destroy(this.m_fin)
+end on
+
+type m_orden from menu within m_bitacora_bajas
+m_cuenta m_cuenta
+m_usuario m_usuario
+m_fecha m_fecha
+end type
+
+on m_orden.create
+this.Text="Orden"
+this.m_cuenta=create m_cuenta
+this.m_usuario=create m_usuario
+this.m_fecha=create m_fecha
+this.Item[]={this.m_cuenta, &
+this.m_usuario, &
+this.m_fecha}
+end on
+
+on m_orden.destroy
+destroy(this.m_cuenta)
+destroy(this.m_usuario)
+destroy(this.m_fecha)
+end on
+
+type m_cuenta from menu within m_orden
+end type
+
+on m_cuenta.create
+this.Text="Cuenta"
+end on
+
+event clicked;// Fija el orden con el cual apareceran los datos en el data window
+// Juan Campos. Febrero-1997.
+
+IF w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR FECHAS"	Then
+ 	w_bitacora_bajas.dw_bitacora_bajas.SetSort("cuenta")
+ElseIf w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR PERIODO" Then
+	w_bitacora_bajas.dw_bitacora_bajas_periodo.SetSort("cuenta")
+Else
+	MessageBox("Aviso","No hay un orden definido")
+End if
+
+m_bitacora_bajas.m_orden.m_cuenta.checked 	=	true
+m_bitacora_bajas.m_orden.m_usuario.checked =	false
+m_bitacora_bajas.m_orden.m_fecha.checked 	=	false
+
+if m_bitacora_bajas.m_reporte.m_bajaacademica.checked then
+	m_bitacora_bajas.m_reporte.m_bajaacademica.triggerevent(clicked!)
+elseif m_bitacora_bajas.m_reporte.m_bajatotal.checked then
+	m_bitacora_bajas.m_reporte.m_bajatotal.triggerevent(clicked!)
+elseif m_bitacora_bajas.m_reporte.m_normalinscrita.checked then
+	m_bitacora_bajas.m_reporte.m_normalinscrita.triggerevent(clicked!)
+elseif m_bitacora_bajas.m_reporte.m_todoslosmovimientos.checked then
+	m_bitacora_bajas.m_reporte.m_todoslosmovimientos.triggerevent(clicked!)
+end if
+
+
+end event
+
+type m_usuario from menu within m_orden
+end type
+
+on m_usuario.create
+this.Text="Usuario"
+end on
+
+event clicked;// Fija el orden con el cual apareceran los datos en el data window
+// Juan Campos. Febrero-1997.
+
+IF w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR FECHAS"	Then
+  	w_bitacora_bajas.dw_bitacora_bajas.SetSort("usuario")
+ElseIf w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR PERIODO" Then
+	w_bitacora_bajas.dw_bitacora_bajas_periodo.SetSort("usuario")
+Else
+ 	MessageBox("Información","No hay un orden definido")
+End if
+
+m_bitacora_bajas.m_orden.m_cuenta.checked =false
+m_bitacora_bajas.m_orden.m_usuario.checked =true
+m_bitacora_bajas.m_orden.m_fecha.checked =false
+
+if m_bitacora_bajas.m_reporte.m_bajaacademica.checked then
+	m_bitacora_bajas.m_reporte.m_bajaacademica.triggerevent(clicked!)
+elseif m_bitacora_bajas.m_reporte.m_bajatotal.checked then
+	m_bitacora_bajas.m_reporte.m_bajatotal.triggerevent(clicked!)
+elseif m_bitacora_bajas.m_reporte.m_normalinscrita.checked then
+	m_bitacora_bajas.m_reporte.m_normalinscrita.triggerevent(clicked!)
+elseif m_bitacora_bajas.m_reporte.m_todoslosmovimientos.checked then
+	m_bitacora_bajas.m_reporte.m_todoslosmovimientos.triggerevent(clicked!)
+end if
+
+
+end event
+
+type m_fecha from menu within m_orden
+end type
+
+on m_fecha.create
+this.Text="Fecha"
+end on
+
+event clicked;// Fija el orden con el cual apareceran los datos en el data window
+// Juan Campos. Febrero-1997.
+
+IF w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR FECHAS"	Then
+  	w_bitacora_bajas.dw_bitacora_bajas.SetSort("fecha_hora")
+ElseIf w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR PERIODO" Then
+	w_bitacora_bajas.dw_bitacora_bajas_periodo.SetSort("fecha_hora")
+Else
+	MessageBox("Información","No hay un orden definido")
+End if
+
+m_bitacora_bajas.m_orden.m_cuenta.checked =false
+m_bitacora_bajas.m_orden.m_usuario.checked =false
+m_bitacora_bajas.m_orden.m_fecha.checked =true
+if m_bitacora_bajas.m_reporte.m_bajaacademica.checked then
+	m_bitacora_bajas.m_reporte.m_bajaacademica.triggerevent(clicked!)
+elseif m_bitacora_bajas.m_reporte.m_bajatotal.checked then
+	m_bitacora_bajas.m_reporte.m_bajatotal.triggerevent(clicked!)
+elseif m_bitacora_bajas.m_reporte.m_normalinscrita.checked then
+	m_bitacora_bajas.m_reporte.m_normalinscrita.triggerevent(clicked!)
+elseif m_bitacora_bajas.m_reporte.m_todoslosmovimientos.checked then
+	m_bitacora_bajas.m_reporte.m_todoslosmovimientos.triggerevent(clicked!)
+end if
+
+
+end event
+
+type m_reporte from menu within m_bitacora_bajas
+m_bajaacademica m_bajaacademica
+m_bajatotal m_bajatotal
+m_normalinscrita m_normalinscrita
+m_todoslosmovimientos m_todoslosmovimientos
+end type
+
+on m_reporte.create
+this.Text="Reporte"
+this.m_bajaacademica=create m_bajaacademica
+this.m_bajatotal=create m_bajatotal
+this.m_normalinscrita=create m_normalinscrita
+this.m_todoslosmovimientos=create m_todoslosmovimientos
+this.Item[]={this.m_bajaacademica, &
+this.m_bajatotal, &
+this.m_normalinscrita, &
+this.m_todoslosmovimientos}
+end on
+
+on m_reporte.destroy
+destroy(this.m_bajaacademica)
+destroy(this.m_bajatotal)
+destroy(this.m_normalinscrita)
+destroy(this.m_todoslosmovimientos)
+end on
+
+type m_bajaacademica from menu within m_reporte
+end type
+
+on m_bajaacademica.create
+this.Text="Baja Académica"
+end on
+
+event clicked;// Se envia 5 parametros al data window, de los cuales los dos primeros equivalen
+// a el rango de fechas, el tercer parametro equivale a cond_insc_nuevo =  1  Baja Académica,
+// Los parametros restantes se usan en otras opciones y se envian con valor de 99 por que
+// no hay  cond_insc_nuevo con este valor.
+// Juan Campos. Febrero-1997.
+
+
+IF w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR FECHAS"	Then
+	w_bitacora_bajas.dw_bitacora_bajas.reset()
+	If w_bitacora_bajas.dw_bitacora_bajas.Retrieve(datetime(date(w_bitacora_bajas.em_fecha_inicio.text),time("00:00:00")),datetime(date(w_bitacora_bajas.em_fecha_final.text),time("23:59:59")),1,99,99) = 0 then
+    		MessageBox("Información","No se encontró información de Bajas Académicas con estas fechas") 		 
+  	End if    
+ElseIf w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR PERIODO" Then
+	w_bitacora_bajas.dw_bitacora_bajas_periodo.reset()
+	If w_bitacora_bajas.dw_bitacora_bajas_periodo.Retrieve(w_bitacora_bajas.uo_cap_periodo.año,w_bitacora_bajas.uo_cap_periodo.periodo,1,99,99) = 0 then
+		MessageBox("Información","No se encontró información de Bajas Académicas con este Periodo") 
+  	End if    
+End if
+
+m_bitacora_bajas.m_reporte.m_bajaacademica.checked =true
+m_bitacora_bajas.m_reporte.m_bajatotal.checked =false
+m_bitacora_bajas.m_reporte.m_normalinscrita.checked =false
+m_bitacora_bajas.m_reporte.m_todoslosmovimientos.checked =false
+
+end event
+
+type m_bajatotal from menu within m_reporte
+end type
+
+on m_bajatotal.create
+this.Text="Baja Total"
+end on
+
+event clicked;// Se envia 5 parametros al data window, de los cuales los dos primeros equivalen
+// a el rango de fechas, el tercer parametro equivale a cond_insc_nuevo =  2  Baja Total,
+// Los parametros restantes se usan en otras opciones y se envian con valor de 99 por que
+// no hay  cond_insc_nuevo con este valor.
+// Juan Campos. Febrero-1997.
+
+IF w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR FECHAS"	Then
+	w_bitacora_bajas.dw_bitacora_bajas.reset()
+  	If w_bitacora_bajas.dw_bitacora_bajas.Retrieve(datetime(date(w_bitacora_bajas.em_fecha_inicio.text),time("00:00:00")),datetime(date(w_bitacora_bajas.em_fecha_final.text),time("23:59:59")),2,99,99) = 0 then
+   		 MessageBox("Información","No se encontró información de Bajas Totales con estas fechas") 
+  	End if    
+ElseIf w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR PERIODO" Then
+	w_bitacora_bajas.dw_bitacora_bajas_periodo.reset()
+	If w_bitacora_bajas.dw_bitacora_bajas_periodo.Retrieve(w_bitacora_bajas.uo_cap_periodo.año,w_bitacora_bajas.uo_cap_periodo.periodo,2,99,99) = 0 then
+        	MessageBox("Información","No se encontró información de Bajas Totales con este Periodo") 
+   	End if    
+End if
+
+m_bitacora_bajas.m_reporte.m_bajaacademica.checked =false
+m_bitacora_bajas.m_reporte.m_bajatotal.checked =true
+m_bitacora_bajas.m_reporte.m_normalinscrita.checked =false
+m_bitacora_bajas.m_reporte.m_todoslosmovimientos.checked =false
+
+end event
+
+type m_normalinscrita from menu within m_reporte
+end type
+
+on m_normalinscrita.create
+this.Text="Normal Inscrita"
+end on
+
+event clicked;// Se envia 5 parametros al data window, de los cuales los dos primeros equivalen
+// a el rango de fechas, el tercer parametro equivale a cond_insc_nuevo =  0  Normal Inscrita,
+// Los parametros restantes se usan en otras opciones y se envian con valor de 99 por que
+// no hay  cond_insc_nuevo con este valor.
+// Juan Campos. Febrero-1997.
+
+IF w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR FECHAS"	Then
+ w_bitacora_bajas.dw_bitacora_bajas.reset()
+  If w_bitacora_bajas.dw_bitacora_bajas.Retrieve(datetime(date(w_bitacora_bajas.em_fecha_inicio.text),time("00:00:00")),datetime(date(w_bitacora_bajas.em_fecha_final.text),time("23:59:59")),0,99,99) = 0 then
+    MessageBox("Información","No se encontró información de Normal Inscrita  con estas fechas") 
+  End if    
+ElseIf w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR PERIODO" Then
+	  w_bitacora_bajas.dw_bitacora_bajas_periodo.reset()
+	   If w_bitacora_bajas.dw_bitacora_bajas_periodo.Retrieve(w_bitacora_bajas.uo_cap_periodo.año,w_bitacora_bajas.uo_cap_periodo.periodo,0,99,99) = 0 then
+        MessageBox("Información","No se encontró información de Normal Inscrita con este Periodo") 
+      End if    
+End if
+
+m_bitacora_bajas.m_reporte.m_bajaacademica.checked =false
+m_bitacora_bajas.m_reporte.m_bajatotal.checked =false
+m_bitacora_bajas.m_reporte.m_normalinscrita.checked =true
+m_bitacora_bajas.m_reporte.m_todoslosmovimientos.checked =false
+
+end event
+
+type m_todoslosmovimientos from menu within m_reporte
+end type
+
+event clicked;// Se envia 5 parametros al data window, de los cuales los dos primeros equivalen
+// a el rango de fechas. Los parametros restantes equivalen a todos los movimientos
+// Juan Campos. Febrero-1997. 
+
+IF w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR FECHAS"	Then
+	w_bitacora_bajas.dw_bitacora_bajas.reset()	
+	If w_bitacora_bajas.dw_bitacora_bajas.Retrieve(datetime(date(w_bitacora_bajas.em_fecha_inicio.text),time("00:00:00")),datetime(date(w_bitacora_bajas.em_fecha_final.text),time("23:59:59")),0,1,2) = 0 then
+		MessageBox("Información","No se encontró información con estas fechas") 
+  	End if    
+ElseIf w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR PERIODO" Then
+	w_bitacora_bajas.dw_bitacora_bajas_periodo.reset()
+	If w_bitacora_bajas.dw_bitacora_bajas_periodo.Retrieve(w_bitacora_bajas.uo_cap_periodo.año,w_bitacora_bajas.uo_cap_periodo.periodo,0,1,2) = 0 then
+    		MessageBox("Información","No se encontró información con este Periodo") 
+   	End if    
+End if
+
+m_bitacora_bajas.m_reporte.m_bajaacademica.checked =false
+m_bitacora_bajas.m_reporte.m_bajatotal.checked =false
+m_bitacora_bajas.m_reporte.m_normalinscrita.checked =false
+m_bitacora_bajas.m_reporte.m_todoslosmovimientos.checked =true
+
+end event
+
+on m_todoslosmovimientos.create
+this.Text="Todos Los Movimientos"
+end on
+
+type m_imprime from menu within m_bitacora_bajas
+end type
+
+on m_imprime.create
+this.Text="Imprime"
+this.ToolBarItemText="Imprime Reporte Bitácora Bajas "
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_imprime.destroy
+end on
+
+event clicked;// Imprime el data window que corresponda al proceso que previamente se seleccionó
+// Juan Campos.   Febrero-1997.
+
+//Long    Job 
+//SetPointer(Hourglass!)  	
+//Job = PrintOpen("Reporte Bitácora Bajas" )  
+//
+//If MessageBox("Aviso","Está seguro que desea imprimir este reporte de bitácora",Question!,YesNo!,1) = 1 Then
+//	IF w_bitacora_bajas.title = "REPORTE BITÁCORA POR FECHAS" Then
+//   	    PrintDataWindow(Job,w_bitacora_bajas.dw_bitacora_bajas)  
+//	ElseIf w_bitacoras.title = "REPORTE BITÁCORA POR PERIODO"  Then
+//	   	PrintDataWindow(Job,w_bitacora_bajas.dw_bitacora_bajas_periodo)   
+//	End if
+//	PrintClose(job)
+//End If
+//
+ 
+ 
+
+
+end event
+
+type m_salvar from menu within m_bitacora_bajas
+end type
+
+event clicked;int in_value
+string st_docname,st_named
+
+in_value = GetFileSaveName("Selecciona Archivo",  & 
+	st_docname, st_named, "CSV",  &
+	" Comma-separated in_values,*.CSV," +&
+	" dBASE-III format,*.DBF," +&
+	" Data Interchange Format,*.DIF," +&
+	" Microsoft Excel format,*.XLS," +&
+	" Text with HTML formatting that approximates the DataWindow layout,*.HTM," +&
+	" Powersoft Report (PSR) format,*.PSR," +&
+	" SQL syntax,*.SQL," +&
+	" Microsoft Multiplan format,*.SYL," +&
+	" Tab-separated columns with a return at the end of each row,*.TXT," +&
+	" Lotus 1-2-3 format,*.WKS," +&
+	" Lotus 1-2-3 format,*.WK1," +&
+	" Windows Metafile format,*.WMF,")
+
+IF in_value = 1 THEN
+	CHOOSE CASE Right (st_named, 3) 
+		CASE "CSV"
+			IF w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR FECHAS" Then
+			  w_bitacora_bajas.dw_bitacora_bajas.SaveAs(st_docname,CSV!, FALSE)
+			ElseIf w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR PERIODO" Then
+				w_bitacora_bajas.dw_bitacora_bajas_periodo.SaveAs(st_docname,CSV!, FALSE)
+			End if
+		CASE "DBF"
+			IF w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR FECHAS" Then
+			  w_bitacora_bajas.dw_bitacora_bajas.SaveAs(st_docname,dBASE3!, FALSE)
+			ElseIf w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR PERIODO" Then
+				w_bitacora_bajas.dw_bitacora_bajas_periodo.SaveAs(st_docname,dBASE3!, FALSE)
+			End if
+		CASE "DIF"
+			IF w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR FECHAS" Then
+			  w_bitacora_bajas.dw_bitacora_bajas.SaveAs(st_docname,DIF!, FALSE)
+			ElseIf w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR PERIODO" Then
+				w_bitacora_bajas.dw_bitacora_bajas_periodo.SaveAs(st_docname,DIF!, FALSE)
+			End if
+		CASE "XLS"
+			IF w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR FECHAS" Then
+			  w_bitacora_bajas.dw_bitacora_bajas.SaveAs(st_docname,Excel!, FALSE)
+			ElseIf w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR PERIODO" Then
+				w_bitacora_bajas.dw_bitacora_bajas_periodo.SaveAs(st_docname,Excel!, FALSE)
+			End if
+		CASE "HTM"
+			IF w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR FECHAS" Then
+			  w_bitacora_bajas.dw_bitacora_bajas.SaveAs(st_docname,HTMLTable!, FALSE)
+			ElseIf w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR PERIODO" Then
+				w_bitacora_bajas.dw_bitacora_bajas_periodo.SaveAs(st_docname,HTMLTable!, FALSE)
+			End if
+		CASE "PSR"
+			IF w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR FECHAS" Then
+			  w_bitacora_bajas.dw_bitacora_bajas.SaveAs(st_docname,PSReport!, FALSE)
+			ElseIf w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR PERIODO" Then
+				w_bitacora_bajas.dw_bitacora_bajas_periodo.SaveAs(st_docname,PSReport!, FALSE)
+			End if
+		CASE "SQL"
+			IF w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR FECHAS" Then
+			  w_bitacora_bajas.dw_bitacora_bajas.SaveAs(st_docname,SQLInsert!, FALSE)
+			ElseIf w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR PERIODO" Then
+				w_bitacora_bajas.dw_bitacora_bajas_periodo.SaveAs(st_docname,SQLInsert!, FALSE)
+			End if
+		CASE "SYL"
+			IF w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR FECHAS" Then
+			  w_bitacora_bajas.dw_bitacora_bajas.SaveAs(st_docname,SYLK!, FALSE)
+			ElseIf w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR PERIODO" Then
+				w_bitacora_bajas.dw_bitacora_bajas_periodo.SaveAs(st_docname,SYLK!, FALSE)
+			End if
+		CASE "TXT"
+			IF w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR FECHAS" Then
+			  w_bitacora_bajas.dw_bitacora_bajas.SaveAs(st_docname,Text!, FALSE)
+			ElseIf w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR PERIODO" Then
+				w_bitacora_bajas.dw_bitacora_bajas_periodo.SaveAs(st_docname,Text!, FALSE)
+			End if
+		CASE "WKS"
+			IF w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR FECHAS" Then
+			  w_bitacora_bajas.dw_bitacora_bajas.SaveAs(st_docname,WKS!, FALSE)
+			ElseIf w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR PERIODO" Then
+				w_bitacora_bajas.dw_bitacora_bajas_periodo.SaveAs(st_docname,WKS!, FALSE)
+			End if
+		CASE "WK1"
+			IF w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR FECHAS" Then
+			  w_bitacora_bajas.dw_bitacora_bajas.SaveAs(st_docname,WK1!, FALSE)
+			ElseIf w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR PERIODO" Then
+				w_bitacora_bajas.dw_bitacora_bajas_periodo.SaveAs(st_docname,WK1!, FALSE)
+			End if
+		CASE "WMF"
+			IF w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR FECHAS" Then
+			  w_bitacora_bajas.dw_bitacora_bajas.SaveAs(st_docname,WMF!, FALSE)
+			ElseIf w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR PERIODO" Then
+				w_bitacora_bajas.dw_bitacora_bajas_periodo.SaveAs(st_docname,WMF!, FALSE)
+			End if
+	END CHOOSE
+else
+	IF w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR FECHAS" Then
+	  w_bitacora_bajas.dw_bitacora_bajas.SaveAs(st_docname,Clipboard!, FALSE)
+	ElseIf w_bitacora_bajas.title = "REPORTE BITÁCORA BAJAS POR PERIODO" Then
+		w_bitacora_bajas.dw_bitacora_bajas_periodo.SaveAs(st_docname,Clipboard!, FALSE)
+	End if
+end if
+end event
+
+on m_salvar.create
+this.Text="Salvar"
+end on
+
+on m_salvar.destroy
+end on
+
+type m_fin from menu within m_bitacora_bajas
+end type
+
+on m_fin.create
+this.Text="Salir"
+this.ToolBarItemName="Exit!"
+this.ToolBarItemText="Salir de reportes de bitácora bajas"
+end on
+
+on m_fin.destroy
+end on
+
+event clicked;Close(w_bitacora_bajas)
+end event
+

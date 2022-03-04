@@ -1,0 +1,48 @@
+﻿$PBExportHeader$of_obten_cve_concepto.srf
+global type of_obten_cve_concepto from function_object
+end type
+
+forward prototypes
+global function integer of_obten_cve_concepto (long al_cve_documento)
+end prototypes
+
+global function integer of_obten_cve_concepto (long al_cve_documento);//of_obten_cve_concepto
+//Recibe	
+//			al_cve_documento	long
+
+long ll_cve_concepto, ll_cve_subconcepto
+string ls_mensaje
+integer li_codigo_sql
+
+SELECT 
+ISNULL(cve_concepto,0),
+ISNULL(cve_subconcepto,0)
+INTO
+:ll_cve_concepto, 
+:ll_cve_subconcepto
+FROM documento_titulacion
+WHERE cve_documento = :al_cve_documento
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje = gtr_sce.SqlErrText
+
+IF li_codigo_sql= -1 THEN
+	MessageBox("Error al consultar documento titulacion",ls_mensaje,StopSign! )	
+	return  -1
+ELSEIF li_codigo_sql=100 THEN 
+	return 0
+ELSEIF li_codigo_sql=0 THEN 
+	IF ll_cve_concepto= 0 AND ll_cve_subconcepto= 0 THEN
+		return 0
+	ELSEIF isnull(ll_cve_concepto) AND isnull(ll_cve_subconcepto) THEN
+		return 0
+	END IF
+END IF
+
+return ll_cve_concepto
+
+
+			
+end function
+

@@ -1,0 +1,15 @@
+﻿$PBExportHeader$dw_areas_peso.srd
+$PBExportComments$DataWindow con los pesos de las áreas
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=93 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes key=yes name=clv_area dbname="clv_area" )
+ column=(type=long updatewhereclause=yes key=yes name=clv_carr dbname="clv_carr" )
+ column=(type=real update=yes updatewhereclause=yes name=peso dbname="peso" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"area_pes~" ) COLUMN(NAME=~"area_pes.clv_area~") COLUMN(NAME=~"area_pes.clv_carr~") COLUMN(NAME=~"area_pes.peso~")WHERE(    EXP1 =~"( clv_carr~"   OP =~"=~"    EXP2 =~":carr )~" ) ) ARG(NAME = ~"carr~" TYPE = number) " update="area_pes" updatewhere=1 updatekeyinplace=yes arguments=(("carr", number)) )
+text(band=header alignment="2" text=""border="0" color="0" x="19" y="20" height="65" width="1541"  name=st_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="10" y="12" height="65" width="1043" format="[general]"  name=clv_area dddw.name=dw_areas dddw.displaycolumn=area dddw.datacolumn=clv_area dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="2" tabsequence=10 border="0" color="0" x="1057" y="12" height="65" width="490" format="[general]"  name=peso editmask.mask="###.#####" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

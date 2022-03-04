@@ -1,0 +1,33 @@
+﻿$PBExportHeader$obten_carrera_plan.srf
+$PBExportComments$Función que regresa la clave de la carrera y el plan de un alumno basandose en su número de cuenta. Marzo 1998 CAMP DkWf
+global type obten_carrera_plan from function_object
+end type
+
+forward prototypes
+global function integer obten_carrera_plan (long cta, ref integer carrera, ref integer plan)
+end prototypes
+
+global function integer obten_carrera_plan (long cta, ref integer carrera, ref integer plan);//Función que regresa la clave de la carrera y el plan de un alumno basandose en su número de cuenta
+//Utiliza 3 parametros
+//1 cta parametro de entrada que contiene la cuenta del alumno
+//2 carrera parametro variable en el cual se almacena la carrera del alumno
+//3 plan parametro variable en el que se almacena el plan 
+//Marzo 1998 CAMP DkWf
+
+SELECT academicos.cve_carrera,   
+			academicos.cve_plan  
+ INTO :carrera,   
+		:plan  
+ FROM academicos  
+WHERE academicos.cuenta = :cta   using gtr_sce;
+
+
+if gtr_sce.sqlcode	=	0 then 
+	return 0
+else
+	messagebox("ERROR en la busqueda de CARRERA y PLAN","No se puede obtener la carrera y el plan de la cuenta "+string(cta)+".",stopsign!)
+	return 1
+end if
+
+end function
+

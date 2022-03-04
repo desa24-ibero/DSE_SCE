@@ -1,0 +1,49 @@
+﻿$PBExportHeader$f_obten_carrera_plan_subsistema.srf
+global type f_obten_carrera_plan_subsistema from function_object
+end type
+
+forward prototypes
+global function integer f_obten_carrera_plan_subsistema (long al_cuenta, ref long al_cve_carrera, ref integer ai_cve_plan, ref integer ai_cve_subsistema)
+end prototypes
+
+global function integer f_obten_carrera_plan_subsistema (long al_cuenta, ref long al_cve_carrera, ref integer ai_cve_plan, ref integer ai_cve_subsistema);//f_obten_carrera_plan_subsistema
+//Recibe:		al_cuenta			long
+//Devuelve:
+//					al_cve_carrera			long
+//					ai_cve_plan				integer
+//					ai_cve_subsistema	integer
+
+integer li_codigo_sql
+string ls_mensaje_sql
+integer li_activo, li_num_aprobadas, li_cve_plan,  li_cve_subsistema
+long ll_cve_carrera
+
+SELECT dbo.academicos.cve_carrera,
+			dbo.academicos.cve_plan,
+			dbo.academicos.cve_subsistema
+INTO		:ll_cve_carrera,
+			:li_cve_plan,
+			:li_cve_subsistema
+FROM	dbo.academicos
+WHERE dbo.academicos.cuenta = :al_cuenta
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+al_cve_carrera =ll_cve_carrera
+ai_cve_plan= li_cve_plan
+ai_cve_subsistema = li_cve_subsistema
+if li_codigo_sql = 100  then
+	MessageBox("El alumno ["+string(al_cuenta)+"-"+obten_digito(al_cuenta)+"]  no existe", ls_mensaje_sql)
+	return -1
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar información de academicos por cuenta", ls_mensaje_sql)
+	return li_codigo_sql
+else
+	return li_codigo_sql
+end if
+
+
+end function
+

@@ -1,0 +1,22 @@
+﻿$PBExportHeader$d_pago_cuenta_anio_periodo_sit.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=77 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=90 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cuenta dbname="cuenta" )
+ column=(type=number updatewhereclause=yes name=saldo dbname="saldo" )
+ retrieve="SELECT cuenta,
+		saldo=isnull(sum(isnull(saldo,0)),0) 
+FROM v_pagos_inscripcion 
+WHERE cuenta = :cuenta 
+AND	periodo= :periodo
+AND	anio = :anio
+GROUP BY cuenta
+HAVING sum(isnull(saldo,0))<0" arguments=(("cuenta", number),("anio", number),("periodo", number)) )
+text(band=header alignment="2" text="Cuenta" border="0" color="0" x="4" y="3" height="67" width="333"  name=cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="4" y="0" height="67" width="333" format="[general]"  name=cuenta edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=0 border="0" color="0" x="336" y="0" height="67" width="344"  name=saldo  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

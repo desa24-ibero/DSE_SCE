@@ -1,0 +1,9 @@
+﻿$PBExportHeader$str_tabledef.srs
+global type str_tabledef from structure
+	string		table_name
+	string		data_type
+	long		length
+	long		prec
+	long		scale
+end type
+

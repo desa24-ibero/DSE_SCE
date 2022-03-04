@@ -1,0 +1,70 @@
+﻿$PBExportHeader$m_cambios_de_carrera.srm
+forward
+global type m_cambios_de_carrera from menu
+end type
+type m_imprimereportecambiosdecarrera from menu within m_cambios_de_carrera
+end type
+type m_imprimereportecambiosdecarrera from menu within m_cambios_de_carrera
+end type
+type m_salir from menu within m_cambios_de_carrera
+end type
+type m_salir from menu within m_cambios_de_carrera
+end type
+end forward
+
+global type m_cambios_de_carrera from menu
+m_imprimereportecambiosdecarrera m_imprimereportecambiosdecarrera
+m_salir m_salir
+end type
+global m_cambios_de_carrera m_cambios_de_carrera
+
+on m_cambios_de_carrera.create
+m_cambios_de_carrera=this
+this.m_imprimereportecambiosdecarrera=create m_imprimereportecambiosdecarrera
+this.m_salir=create m_salir
+this.Item[]={this.m_imprimereportecambiosdecarrera, &
+this.m_salir}
+end on
+
+on m_cambios_de_carrera.destroy
+destroy(this.m_imprimereportecambiosdecarrera)
+destroy(this.m_salir)
+end on
+
+type m_imprimereportecambiosdecarrera from menu within m_cambios_de_carrera
+end type
+
+on m_imprimereportecambiosdecarrera.create
+this.Text="Imprime Reporte Cambios de Carrera"
+this.ToolBarItemName="Print!"
+this.ToolBarItemText="Imprime Reporte Cambios de carrera"
+end on
+
+on m_imprimereportecambiosdecarrera.destroy
+end on
+
+event clicked;// Imprime reporte de cambios de carrera 
+// por:  Juan Campos.  Abril-1997.
+
+setpointer(Hourglass!) 
+
+OpenSheet(w_imprime_hist_carreras,w_cambios_de_carrera,4,Original!)  
+
+
+end event
+
+type m_salir from menu within m_cambios_de_carrera
+end type
+
+event clicked;Close(w_cambios_de_carrera)
+end event
+
+on m_salir.create
+this.Text="Salir"
+this.ToolBarItemName="Exit!"
+this.ToolBarItemText="Salir de Cambios de Carrera"
+end on
+
+on m_salir.destroy
+end on
+

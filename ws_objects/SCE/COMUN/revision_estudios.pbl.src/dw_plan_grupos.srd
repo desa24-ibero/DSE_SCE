@@ -1,0 +1,94 @@
+﻿$PBExportHeader$dw_plan_grupos.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=141 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=grupos_cve_mat dbname="grupos.cve_mat" )
+ column=(type=char(2) updatewhereclause=yes name=grupos_gpo dbname="grupos.gpo" )
+ column=(type=long updatewhereclause=yes name=grupos_cupo dbname="grupos.cupo" )
+ column=(type=long updatewhereclause=yes name=grupos_inscritos dbname="grupos.inscritos" )
+ column=(type=long updatewhereclause=yes name=profesor_cve_profesor dbname="profesor.cve_profesor" )
+ column=(type=char(70) updatewhereclause=yes name=profesor_nombre_completo dbname="profesor.nombre_completo" )
+ column=(type=char(42) updatewhereclause=yes name=materias_materia dbname="materias.materia" )
+ column=(type=long updatewhereclause=yes name=grupos_tipo dbname="grupos.tipo" )
+ column=(type=long updatewhereclause=yes name=horario_cve_dia dbname="horario.cve_dia" )
+ column=(type=long updatewhereclause=yes name=horario_hora_inicio dbname="horario.hora_inicio" )
+ column=(type=long updatewhereclause=yes name=horario_hora_final dbname="horario.hora_final" )
+ column=(type=char(16) updatewhereclause=yes name=horario_cve_salon dbname="horario.cve_salon" )
+ column=(type=long updatewhereclause=yes name=grupos_tipo dbname="grupos.tipo" )
+ column=(type=char(1) updatewhereclause=yes name=materias_nivel dbname="materias.nivel" )
+ retrieve="  SELECT grupos.cve_mat,   
+         grupos.gpo,   
+         grupos.cupo,   
+         grupos.inscritos,   
+         profesor.cve_profesor,   
+         profesor.nombre_completo,   
+         materias.materia, 
+			grupos.tipo,  
+         horario.cve_dia,   
+         horario.hora_inicio,   
+         horario.hora_final,   
+         horario.cve_salon,   
+         grupos.tipo,   
+         materias.nivel  
+    FROM departamentos,   
+         grupos,   
+         materias,   
+         profesor,   
+         horario   
+   WHERE ((( grupos.cve_mat *= horario.cve_mat ) and
+			( grupos.gpo *= horario.gpo )) or
+			(( grupos.cve_asimilada *= horario.cve_mat )  and
+			( grupos.gpo_asimilado *= horario.gpo ))) and
+			( grupos.cve_mat = materias.cve_mat ) and  
+         ( grupos.cve_profesor = profesor.cve_profesor ) and  
+			( materias.cve_depto = departamentos.cve_depto ) and
+			( horario.anio = 1998 ) and
+			( horario.periodo = 1 ) and
+			( grupos.anio = 1998 ) and
+			( grupos.periodo = 1 ) 
+
+
+" )
+text(band=header alignment="2" text="Grupos
+Cve Mat"border="0" color="0" x="5" y="4" height="129" width="330"  name=grupos_cve_mat_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Grupos
+Gpo"border="0" color="0" x="339" y="4" height="129" width="193"  name=grupos_gpo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Grupos
+Cupo"border="0" color="0" x="535" y="4" height="129" width="330"  name=grupos_cupo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Grupos
+Inscritos"border="0" color="0" x="869" y="4" height="129" width="334"  name=grupos_inscritos_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Profesor
+Cve Profesor"border="0" color="0" x="1207" y="4" height="129" width="334"  name=profesor_cve_profesor_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Profesor
+Nombre Completo"border="0" color="0" x="1546" y="4" height="129" width="1948"  name=profesor_nombre_completo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Materias
+Materia"border="0" color="0" x="3498" y="4" height="129" width="1180"  name=materias_materia_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Dias
+Dia"border="0" color="0" x="4682" y="4" height="129" width="279"  name=dias_dia_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Horario
+Hora Inicio"border="0" color="0" x="4965" y="4" height="129" width="330"  name=horario_hora_inicio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Horario
+Hora Final"border="0" color="0" x="5299" y="4" height="129" width="330"  name=horario_hora_final_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Horario
+Cve Salon"border="0" color="0" x="5633" y="4" height="129" width="266"  name=horario_cve_salon_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Tipo Grupo
+Nombre Tipo"border="0" color="0" x="5902" y="4" height="129" width="362"  name=tipo_grupo_nombre_tipo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Materias
+Nivel"border="0" color="0" x="6268" y="4" height="129" width="229"  name=materias_nivel_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="330" format="[general]"  name=grupos_cve_mat edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="339" y="4" height="77" width="83" format="[general]"  name=grupos_gpo edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="535" y="4" height="77" width="330" format="[general]"  name=grupos_cupo edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="0" x="869" y="4" height="77" width="334" format="[general]"  name=grupos_inscritos edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="1207" y="4" height="77" width="330" format="[general]"  name=profesor_cve_profesor edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="1546" y="4" height="77" width="1948" format="[general]"  name=profesor_nombre_completo edit.limit=70 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="3498" y="4" height="77" width="1180" format="[general]"  name=materias_materia edit.limit=42 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="0" x="4965" y="4" height="77" width="330" format="[general]"  name=horario_hora_inicio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="1" tabsequence=32766 border="0" color="0" x="5299" y="4" height="77" width="330" format="[general]"  name=horario_hora_final edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="5633" y="4" height="77" width="138" format="[general]"  name=horario_cve_salon edit.limit=16 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="6268" y="4" height="77" width="55" format="[general]"  name=materias_nivel edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="6497" y="0" height="65" width="225" format="[general]"  name=grupos_tipo edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=0 border="0" color="0" x="6721" y="0" height="65" width="225"  name=horario_cve_dia  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="0" tabsequence=0 border="0" color="0" x="6945" y="0" height="65" width="225"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

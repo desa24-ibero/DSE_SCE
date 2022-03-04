@@ -1,0 +1,50 @@
+﻿$PBExportHeader$f_obten_mes.srf
+global type f_obten_mes from function_object
+end type
+
+forward prototypes
+global function string f_obten_mes (integer a_numero)
+end prototypes
+
+global function string f_obten_mes (integer a_numero);//f_obten_mes
+//Recibe 	a_numero integer
+
+integer li_mes
+string ls_mes
+
+li_mes =a_numero
+
+choose case li_mes
+	case 1
+		ls_mes = "ENERO"
+	case 2
+		ls_mes = "FEBRERO"
+	case 3
+		ls_mes = "MARZO"
+	case 4
+		ls_mes = "ABRIL"
+	case 5
+		ls_mes = "MAYO"
+	case 6
+		ls_mes = "JUNIO"
+	case 7
+		ls_mes = "JULIO"
+	case 8
+		ls_mes = "AGOSTO"
+	case 9
+		ls_mes = "SEPTIEMBRE"
+	case 10
+		ls_mes = "OCTUBRE"
+	case 11
+		ls_mes = "NOVIEMBRE"
+	case 12
+		ls_mes = "DICIEMBRE"		
+end choose
+
+
+return ls_mes
+		
+		
+
+end function
+

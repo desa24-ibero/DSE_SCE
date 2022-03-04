@@ -1,0 +1,97 @@
+﻿$PBExportHeader$m_ocup_sal.srm
+forward
+global type m_ocup_sal from menu
+end type
+type m_archivo from menu within m_ocup_sal
+end type
+type m_configurarimpresora from menu within m_archivo
+end type
+type m_imprimir from menu within m_archivo
+end type
+type m_archivo from menu within m_ocup_sal
+m_configurarimpresora m_configurarimpresora
+m_imprimir m_imprimir
+end type
+type m_salir from menu within m_ocup_sal
+end type
+type m_salir from menu within m_ocup_sal
+end type
+end forward
+
+global type m_ocup_sal from menu
+m_archivo m_archivo
+m_salir m_salir
+end type
+global m_ocup_sal m_ocup_sal
+
+on m_ocup_sal.create
+m_ocup_sal=this
+this.m_archivo=create m_archivo
+this.m_salir=create m_salir
+this.Item[]={this.m_archivo, &
+this.m_salir}
+end on
+
+on m_ocup_sal.destroy
+destroy(this.m_archivo)
+destroy(this.m_salir)
+end on
+
+type m_archivo from menu within m_ocup_sal
+m_configurarimpresora m_configurarimpresora
+m_imprimir m_imprimir
+end type
+
+on m_archivo.create
+this.Text="Archivo"
+this.m_configurarimpresora=create m_configurarimpresora
+this.m_imprimir=create m_imprimir
+this.Item[]={this.m_configurarimpresora, &
+this.m_imprimir}
+end on
+
+on m_archivo.destroy
+destroy(this.m_configurarimpresora)
+destroy(this.m_imprimir)
+end on
+
+type m_configurarimpresora from menu within m_archivo
+end type
+
+event clicked;printsetup()
+
+end event
+
+on m_configurarimpresora.create
+this.Text="Configurar Impresora"
+end on
+
+type m_imprimir from menu within m_archivo
+end type
+
+event clicked;w_ocup_sal.impr()
+end event
+
+on m_imprimir.create
+this.Text="Imprimir"
+this.ToolBarItemName="Print!"
+this.ToolBarItemOrder=1
+end on
+
+type m_salir from menu within m_ocup_sal
+end type
+
+event clicked;rollback using gtr_sce;
+Close(parentwindow)
+end event
+
+on m_salir.create
+this.Text="Cerrar"
+this.ToolBarItemName="Exit!"
+this.ToolBarItemOrder=2
+this.ToolBarItemSpace=3
+end on
+
+on m_salir.destroy
+end on
+

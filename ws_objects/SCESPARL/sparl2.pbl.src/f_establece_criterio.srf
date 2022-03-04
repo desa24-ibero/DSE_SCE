@@ -1,0 +1,172 @@
+﻿$PBExportHeader$f_establece_criterio.srf
+global type f_establece_criterio from function_object
+end type
+
+forward prototypes
+global subroutine f_establece_criterio (integer a_periodo, integer a_anio, string a_criterio)
+end prototypes
+
+global subroutine f_establece_criterio (integer a_periodo, integer a_anio, string a_criterio);//NOMBRE
+//f_establece_criterio
+//
+//REGRESA
+//integer
+//
+//RECIBE
+
+
+integer li_codigo_sql
+string ls_criterio, ls_mensaje_sql, ls_preinsc, ls_nivel
+long	ll_cuenta
+
+ls_preinsc = Mid(a_criterio, 2)
+ls_nivel = Mid(a_criterio, 1,1)
+
+
+choose case ls_preinsc
+		
+	case "P"
+	
+		INSERT orden_inscripcion 
+		(cuenta,
+		periodo,
+		anio,
+		criterio)
+		SELECT  academicos.cuenta ,
+  	 	     :a_periodo,
+  	    	  :a_anio,
+			  :a_criterio
+		FROM academicos ,
+	  	   banderas,
+			  preinsc
+		WHERE ( academicos.cuenta = banderas.cuenta ) and
+   	 ( academicos.nivel in (:ls_nivel) ) and
+	  	 ( academicos.egresado = 0 )  and
+	    ( banderas.insc_sem_ant 	= 1 )	and
+		 ( preinsc.cuenta = academicos.cuenta) and
+		 ( preinsc.periodo = :a_periodo) and
+		 ( preinsc.anio = :a_anio)	and	
+		 not (( academicos.anio_ing = :a_anio ) and
+		 		( academicos.periodo_ing = :a_periodo ) and
+				( academicos.cve_formaingreso = 0 ) )	
+		USING gtr_sce;
+
+	
+	case	"NP"
+		INSERT orden_inscripcion 
+		(cuenta,
+		periodo,
+		anio,
+		criterio)
+		SELECT  academicos.cuenta ,
+  	 	     :a_periodo,
+  	    	  :a_anio,
+			  :a_criterio
+		FROM academicos ,
+	  	   banderas
+		WHERE ( academicos.cuenta = banderas.cuenta ) and
+   	 ( academicos.nivel in ( :ls_nivel) ) and
+	  	 ( academicos.egresado = 0 )  and
+	    ( banderas.insc_sem_ant 	= 1 )	and
+		 academicos.cuenta not in ( select preinsc.cuenta from preinsc where
+						  preinsc.periodo = :a_periodo and
+						  preinsc.anio = :a_anio) and	
+		 not (( academicos.anio_ing = :a_anio ) and
+		 		( academicos.periodo_ing = :a_periodo ) and
+				( academicos.cve_formaingreso = 0 ) )		
+		USING gtr_sce;
+		
+	case else
+		//if ls_nivel = "L" or ls_nivel = "P"  then
+		if ls_nivel <> "I" then
+		
+			IF ls_nivel = "P" THEN 
+				
+				INSERT orden_inscripcion 
+				(cuenta,
+				periodo,
+				anio,	
+				criterio)
+				SELECT  academicos.cuenta ,
+					  :a_periodo,
+						:a_anio,
+					:a_criterio
+				FROM academicos ,
+					banderas     
+				WHERE ( academicos.cuenta = banderas.cuenta ) and
+				 ( academicos.nivel in (:ls_nivel) ) and
+				 ( academicos.egresado = 0 )  and
+				 ( banderas.insc_sem_ant 	= 1 )	and	
+				 not (( academicos.anio_ing = :a_anio ) and
+						( academicos.periodo_ing = :a_periodo ) and
+						( academicos.cve_formaingreso = 0 ) )
+				USING gtr_sce;
+				
+			ELSE 
+
+				// Inserta todos los niveles que no son Posgrado. 
+				INSERT orden_inscripcion 
+				(cuenta,
+				periodo,
+				anio,	
+				criterio)
+				SELECT  academicos.cuenta ,
+					  	:a_periodo,
+						:a_anio,
+						:a_criterio
+				FROM academicos ,
+					banderas     
+				WHERE ( academicos.cuenta = banderas.cuenta ) and
+				 ( academicos.nivel NOT in ('P') ) and 
+				 ( academicos.egresado = 0 )  and
+				 ( banderas.insc_sem_ant 	= 1 )	and	
+				 not (( academicos.anio_ing = :a_anio ) and
+						( academicos.periodo_ing = :a_periodo ) and
+						( academicos.cve_formaingreso = 0 ) )
+				USING gtr_sce;				
+			
+			END IF
+			
+		elseif ls_nivel = "I"  then
+			INSERT orden_inscripcion 
+			(cuenta,
+			periodo,
+			anio,	
+			criterio)
+			SELECT  academicos.cuenta ,
+  		 	     :a_periodo,
+	  	    	  :a_anio,
+				  :a_criterio
+			FROM academicos ,
+		  	   banderas     
+			WHERE ( academicos.cuenta = banderas.cuenta ) and
+  	  	 	 ( academicos.nivel NOT in ("P") ) and
+  	  		 ( academicos.egresado = 0 )  and
+			 ( banderas.insc_sem_ant 	= 1 )	and	
+			   (( academicos.anio_ing = :a_anio ) and
+			 	 ( academicos.periodo_ing = :a_periodo ) and
+				 ( academicos.cve_formaingreso = 0 ) )
+			USING gtr_sce;
+		end if
+	
+		/*( academicos.nivel  in ("L") ) and   CONDICIÓN ORIGINAL */ 
+	
+end choose
+
+
+li_codigo_sql =gtr_sce.SqlCode
+ls_mensaje_sql =gtr_sce.SqlErrText
+
+
+if li_codigo_sql = -1 then
+	ROLLBACK USING gtr_sce;
+	MessageBox("Error al insertar en orden_inscripcion", ls_mensaje_sql)	
+else
+	COMMIT USING gtr_sce;
+end if
+
+return 
+	
+
+end subroutine
+

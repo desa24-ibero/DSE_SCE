@@ -1,0 +1,45 @@
+﻿$PBExportHeader$of_tiene_mats_revalidadas.srf
+global type of_tiene_mats_revalidadas from function_object
+end type
+
+forward prototypes
+global function integer of_tiene_mats_revalidadas (long al_cuenta, long al_cve_carrera, long al_cve_plan)
+end prototypes
+
+global function integer of_tiene_mats_revalidadas (long al_cuenta, long al_cve_carrera, long al_cve_plan);//of_tiene_mats_revalidadas
+//Recibe:	al_cuenta		long
+//				al_cve_carrera	long
+//				al_cve_plan		long
+
+int li_codigo_sql
+string ls_mensaje
+long ll_num_reval
+
+
+SELECT count(observacion)
+INTO :ll_num_reval
+FROM historico
+WHERE cuenta = :al_cuenta
+AND	cve_carrera = :al_cve_carrera
+AND	cve_plan = :al_cve_plan
+AND	observacion = 5
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje = gtr_sce.SqlErrText
+
+IF li_codigo_sql = -1 THEN
+	MessageBox("Error al consultar historico",ls_mensaje, StopSign!)	
+	return -1
+END IF
+
+IF ISNULL(ll_num_reval) THEN
+	ll_num_reval= 0
+END IF
+
+
+RETURN ll_num_reval
+
+
+end function
+

@@ -1,0 +1,23 @@
+﻿$PBExportHeader$str_revision_estudios.srs
+global type str_revision_estudios from structure
+	boolean		ab_bolean
+	integer		an_oficio
+	integer		an_folio
+	integer		an_expediente
+	string		as_numero
+	string		as_fecha
+	datawindow		adw_prueba
+	datawindow		adw_revision
+	string		as_carrera
+	string		as_nivel
+	integer		an_regular
+	long		an_cve_carrera
+	integer		an_cve_plan
+	long		an_cuenta
+	boolean		ab_legal
+	string		as_digito
+	string		as_nombre
+	string		as_apaterno
+	string		as_amaterno
+end type
+

@@ -1,0 +1,87 @@
+﻿$PBExportHeader$d_relacion_titulos_legalizacion.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 1 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=806 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=67 color="536870912" )
+detail(height=70 color="536870912" )
+table(column=(type=char(152) updatewhereclause=yes name=nombre_completo dbname="nombre_completo" )
+ column=(type=char(100) updatewhereclause=yes name=carreras_carrera dbname="carreras.carrera" )
+ column=(type=long updatewhereclause=yes name=carreras_cve_carrera dbname="carreras.cve_carrera" )
+ column=(type=long updatewhereclause=yes name=carrera_equiv_cve_carrera_ant dbname="carrera_equiv.cve_carrera_ant" )
+ column=(type=long updatewhereclause=yes name=titulacion_cuenta dbname="titulacion.cuenta" )
+ column=(type=char(30) updatewhereclause=yes name=v_sce_alumno_digitoverificador_digito_verificador dbname="v_sce_alumno_digitoverificador.digito_verificador" )
+ column=(type=datetime updatewhereclause=yes name=legalizacion_fecha_envio_sep dbname="legalizacion.fecha_envio_sep" )
+ column=(type=datetime updatewhereclause=yes name=legalizacion_fecha_regreso_sep dbname="legalizacion.fecha_regreso_sep" )
+ column=(type=char(24) updatewhereclause=yes name=fecha_envio_sep2 dbname="fecha_envio_sep2" )
+ column=(type=char(24) updatewhereclause=yes name=fecha_regreso_sep2 dbname="fecha_regreso_sep2" )
+ retrieve="  SELECT nombre_completo = alumnos.apaterno+~" ~"+alumnos.nombre+~" ~"+alumnos.amaterno,
+         carreras.carrera,
+         carreras.cve_carrera,   
+			carrera_equiv.cve_carrera_ant,
+			titulacion.cuenta,   
+         v_sce_alumno_digitoverificador.digito_verificador,   
+			legalizacion.fecha_envio_sep,
+			legalizacion.fecha_regreso_sep,
+			fecha_envio_sep2 = CASE datepart(mm, legalizacion.fecha_envio_sep) 
+                             WHEN 1 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_envio_sep)) +~" de Enero de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_envio_sep))
+                             WHEN 2 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_envio_sep)) +~" de Febrero de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_envio_sep))
+                             WHEN 3 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_envio_sep)) +~" de Marzo de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_envio_sep))
+                             WHEN 4 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_envio_sep)) +~" de Abril de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_envio_sep))
+                             WHEN 5 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_envio_sep)) +~" de Mayo de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_envio_sep))
+                             WHEN 6 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_envio_sep)) +~" de Junio de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_envio_sep))
+                             WHEN 7 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_envio_sep)) +~" de Julio de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_envio_sep))
+                             WHEN 8 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_envio_sep)) +~" de Agosto de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_envio_sep))
+                             WHEN 9 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_envio_sep)) +~" de Septiembre de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_envio_sep))
+                             WHEN 10 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_envio_sep)) +~" de Octubre de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_envio_sep))
+                             WHEN 11 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_envio_sep)) +~" de Noviembre de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_envio_sep))
+                             WHEN 12 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_envio_sep)) +~" de Diciembre de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_envio_sep))
+                             ELSE ~"~" END,
+			fecha_regreso_sep2 = CASE datepart(mm, legalizacion.fecha_regreso_sep) 
+                             WHEN 1 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_regreso_sep)) +~" de Enero de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_regreso_sep))
+                             WHEN 2 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_regreso_sep)) +~" de Febrero de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_regreso_sep))
+                             WHEN 3 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_regreso_sep)) +~" de Marzo de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_regreso_sep))
+                             WHEN 4 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_regreso_sep)) +~" de Abril de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_regreso_sep))
+                             WHEN 5 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_regreso_sep)) +~" de Mayo de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_regreso_sep))
+                             WHEN 6 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_regreso_sep)) +~" de Junio de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_regreso_sep))
+                             WHEN 7 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_regreso_sep)) +~" de Julio de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_regreso_sep))
+                             WHEN 8 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_regreso_sep)) +~" de Agosto de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_regreso_sep))
+                             WHEN 9 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_regreso_sep)) +~" de Septiembre de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_regreso_sep))
+                             WHEN 10 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_regreso_sep)) +~" de Octubre de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_regreso_sep))
+                             WHEN 11 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_regreso_sep)) +~" de Noviembre de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_regreso_sep))
+                             WHEN 12 THEN convert(varchar(2),datepart(dd, legalizacion.fecha_regreso_sep)) +~" de Diciembre de ~"+convert(varchar(4),datepart(yy, legalizacion.fecha_regreso_sep))
+                             ELSE ~"~" END
+    FROM legalizacion,   
+         titulacion,   
+         carreras,   
+         carrera_equiv,   
+         v_sce_alumno_digitoverificador,
+			alumnos  
+   WHERE ( legalizacion.cuenta = titulacion.cuenta ) and  
+         ( legalizacion.cve_plan = titulacion.cve_plan ) and  
+         ( legalizacion.cve_carrera = titulacion.cve_carrera ) and  
+         ( titulacion.cve_carrera = carreras.cve_carrera ) and  
+         ( titulacion.cuenta = v_sce_alumno_digitoverificador.cuenta ) and  
+         ( titulacion.cuenta = alumnos.cuenta ) and  
+         ( carrera_equiv.cve_carrera_act = carreras.cve_carrera ) and  
+         ( ( titulacion.aprobado = 1 ) )   and 
+			( legalizacion.fecha_envio_sep >= :adttm_fecha_inicial) and
+			( legalizacion.fecha_envio_sep <= :adttm_fecha_final)
+ORDER BY alumnos.nombre_completo ASC " arguments=(("adttm_fecha_inicial", datetime),("adttm_fecha_final", datetime)) )
+text(band=header alignment="2" text="CARRERA" border="0" color="0" x="1236" y="662" height="51" width="1225"  name=carreras_carrera_t  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="REVISADO Y ASENTADO EN EL LIBRO POR EL DEPTO. DE CONTROL ESCOLAR" border="0" color="0" x="2476" y="582" height="211" width="589"  name=v_sce_alumno_digitoverificador_digito_verificador_t  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="FECHA DE ENVIO" border="0" color="0" x="3076" y="662" height="51" width="578"  name=legalizacion_fecha_envio_sep_t  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="FECHA DE DEVOLUCION" border="0" color="0" x="3686" y="662" height="51" width="578"  name=legalizacion_fecha_regreso_sep_t  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="NOMBRE" border="0" color="0" x="241" y="662" height="51" width="976"  name=nombre_completo_t  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="No." border="0" color="0" x="77" y="659" height="51" width="146"  name=t_1  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+bitmap(band=header filename="logo_uia.bmp" x="128" y="29" height="438" width="508" border="0"  name=p_1 )
+text(band=header alignment="2" text="LEGALIZACION DE TITULOS" border="0" color="0" x="1712" y="381" height="90" width="1221"  name=t_2  font.face="Arial" font.height="-14" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="1240" y="4" height="64" width="1225" format="[general]"  name=carreras_carrera edit.limit=100 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="string( titulacion_cuenta )+~"-~"+ v_sce_alumno_digitoverificador_digito_verificador "border="0" color="0" x="2619" y="4" height="64" width="300" format="[GENERAL]"  name=compute_1  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="3076" y="4" height="64" width="578" format="dd/mm/yyyy"  name=legalizacion_fecha_envio_sep edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="241" y="4" height="64" width="976" format="[general]"  name=nombre_completo edit.limit=152 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="getrow()"border="0" color="0" x="77" y="4" height="64" width="146" format="[GENERAL]"  name=compute_2  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="3686" y="4" height="64" width="578" format="dd/mm/yyyy"  name=legalizacion_fecha_regreso_sep edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=footer alignment="0" expression="string(page())+~"/~"+string(pageCount())"border="0" color="0" x="3829" y="3" height="61" width="435" format="[GENERAL]"  name=compute_3  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

@@ -1,0 +1,164 @@
+﻿$PBExportHeader$dw_titulacion_rep11.srd
+$PBExportComments$Datawindow que ofrece a los alumnos titulados deacuerdo a su opcion de titulacion
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=538 color="536870912" )
+summary(height=77 color="536870912" )
+footer(height=3 color="536870912" )
+detail(height=1053 color="536870912"  height.autosize=yes)
+table(column=(type=char(255) updatewhereclause=yes name=titulacion_nombre_tesis dbname="titulacion.nombre_tesis" )
+ column=(type=datetime updatewhereclause=yes name=titulacion_fecha_examen dbname="titulacion.fecha_examen" )
+ column=(type=long updatewhereclause=yes name=titulacion_mencion dbname="titulacion.mencion" values="Si	1/No	2/" )
+ column=(type=long updatewhereclause=yes name=titulacion_reconocimiento dbname="titulacion.reconocimiento" values="Si	1/No	2/" )
+ column=(type=char(50) updatewhereclause=yes name=titulacion_presidente dbname="titulacion.presidente" )
+ column=(type=char(50) updatewhereclause=yes name=titulacion_vocal dbname="titulacion.vocal" )
+ column=(type=char(50) updatewhereclause=yes name=titulacion_secretario dbname="titulacion.secretario" )
+ column=(type=char(50) updatewhereclause=yes name=domicilio_calle dbname="domicilio.calle" )
+ column=(type=char(50) updatewhereclause=yes name=domicilio_colonia dbname="domicilio.colonia" )
+ column=(type=char(13) updatewhereclause=yes name=domicilio_telefono dbname="domicilio.telefono" )
+ column=(type=long updatewhereclause=yes name=domicilio_cve_estado dbname="domicilio.cve_estado" )
+ column=(type=char(6) updatewhereclause=yes name=domicilio_cod_postal dbname="domicilio.cod_postal" )
+ column=(type=long updatewhereclause=yes name=titulacion_opcion_titulacion dbname="titulacion.opcion_titulacion" )
+ column=(type=long updatewhereclause=yes name=titulacion_cuenta dbname="titulacion.cuenta" )
+ column=(type=long updatewhereclause=yes name=titulacion_cve_plan dbname="titulacion.cve_plan" values="Plan Viejo	1/Plan Nuevo	2/Santa Fe	3/Santa Fe II	4/" )
+ column=(type=long updatewhereclause=yes name=titulacion_cve_carrera dbname="titulacion.cve_carrera" )
+ column=(type=long updatewhereclause=yes name=titulacion_aprobado dbname="titulacion.aprobado" values="Si	1/No	0/" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_apaterno dbname="alumnos.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_amaterno dbname="alumnos.amaterno" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_nombre dbname="alumnos.nombre" )
+ column=(type=char(100) updatewhereclause=yes name=carreras_carrera dbname="carreras.carrera" )
+ column=(type=char(255) updatewhereclause=yes name=titulacion_observaciones dbname="titulacion.observaciones" )
+ column=(type=char(21) updatewhereclause=yes name=opc_titulacion_tipo_titulacion dbname="opc_titulacion.tipo_titulacion" )
+ column=(type=char(70) updatewhereclause=yes name=alumnos_nombre_completo dbname="alumnos.nombre_completo" )
+ retrieve="  SELECT titulacion.nombre_tesis,   
+         titulacion.fecha_examen,   
+         titulacion.mencion,   
+         titulacion.reconocimiento,   
+         titulacion.presidente,   
+         titulacion.vocal,   
+         titulacion.secretario,   
+         domicilio.calle,   
+         domicilio.colonia,   
+         domicilio.telefono,   
+         domicilio.cve_estado,   
+         domicilio.cod_postal,   
+         titulacion.opcion_titulacion,   
+         titulacion.cuenta,   
+         titulacion.cve_plan,   
+         titulacion.cve_carrera,   
+         titulacion.aprobado,   
+         alumnos.apaterno,   
+         alumnos.amaterno,   
+         alumnos.nombre,   
+         carreras.carrera,   
+         titulacion.observaciones,   
+         opc_titulacion.tipo_titulacion,  
+         alumnos.nombre_completo   
+    FROM titulacion,   
+         domicilio,   
+         alumnos,   
+         carreras,   
+         opc_titulacion  
+   WHERE ( titulacion.cuenta = domicilio.cuenta ) and  
+         ( domicilio.cuenta = alumnos.cuenta ) and  
+         ( titulacion.cve_carrera = carreras.cve_carrera ) and  
+         ( opc_titulacion.cve_titulacion = titulacion.opcion_titulacion ) and  
+         ( titulacion.fecha_examen >= :fecha_inicial ) AND  
+         ( titulacion.fecha_examen <= :fecha_final ) AND  
+         ( titulacion.aprobado = 1 ) AND  
+         ( titulacion.opcion_titulacion = :opcion_titulacion) AND  
+         (( titulacion.cve_carrera = :cve_carrera ) OR  
+         ( :cve_carrera = 0 ) )  AND
+			(( carreras.nivel in (:as_nivel) AND (:as_nivel = 'P')) OR 
+			 ( carreras.nivel in (:as_nivel) AND (:as_nivel = 'L')) OR 
+			 ( carreras.nivel in ('P', 'L' ) AND :as_nivel not in ('P','L'))) 
+   
+" arguments=(("fecha_inicial", date),("fecha_final", date),("cve_carrera", number),("opcion_titulacion", number),("as_nivel", string))  sort="titulacion_cve_carrera A alumnos_apaterno A alumnos_amaterno A alumnos_nombre A " )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="2637" y="122" height="122" width="746" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="26" y="122" height="122" width="746" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="12632256" )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="391" y="122" height="122" width="380" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="3003" y="122" height="122" width="380" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Fecha"border="0" color="0" x="146" y="147" height="70" width="165"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+rectangle(band=header x="388" y="125" height="115" width="51" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="4" pen.color="16777215"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Página "border="0" color="0" x="2739" y="147" height="70" width="201"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+rectangle(band=header x="2999" y="125" height="115" width="51" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="4" pen.color="16777215"  background.mode="2" background.color="16777215" )
+compute(band=header alignment="2" expression="page()"border="0" color="0" x="3035" y="147" height="70" width="289" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+line(band=header x1="2999" y1="122" x2="2999" y2="240" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="12632256" )
+line(band=header x1="388" y1="122" x2="388" y2="240" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="12632256" )
+roundrectangle(band=header ellipseheight="61" ellipsewidth="69"x="816" y="35" height="323" width="1796" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="12632256" )
+text(band=header alignment="2" text="Universidad Iberoamericana"border="0" color="0" x="859" y="51" height="102" width="1686"  font.face="CopprplGoth BT" font.height="-18" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="2" expression="today()"border="0" color="0" x="410" y="144" height="77" width="336" format="dd/mm/yyyy"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Direccion de Servicios Escolares"border="0" color="0" x="1072" y="163" height="93" width="1280"  font.face="Arial" font.height="-14" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+text(band=header alignment="2" text="Reporte de Alumnos Titulados"border="0" color="0" x="1211" y="266" height="77" width="955"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="32567536" )
+line(band=header x1="0" y1="525" x2="3449" y2="525" pen.style="0" pen.width="18" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Criterio de Busqueda :"border="0" color="0" x="40" y="291" height="64" width="651"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="De la fecha  "border="0" color="0" x="40" y="371" height="64" width="366"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=header alignment="2" expression=" fecha_inicial "border="0" color="0" x="410" y="371" height="64" width="366" format="dd / mm / yyyy"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="  a la fecha  "border="0" color="0" x="783" y="371" height="64" width="362"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=header alignment="0" expression=" fecha_final "border="0" color="0" x="1148" y="371" height="64" width="358" format="dd / mm/ yyyy"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=header alignment="0" expression="if( ( cve_carrera =0),~". De todas las Carreras~" , ~". De la carrera ~"+  carreras_carrera  ) "border="0" color="0" x="1514" y="371" height="64" width="1957" format=""  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=header alignment="0" expression="~"Con la Opción de Titulación de : ~" +  opc_titulacion_tipo_titulacion"border="0" color="0" x="40" y="445" height="64" width="1957" format=""  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="7" y="3" height="186" width="3471" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="10789024" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="37" y="19" height="80" width="486" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="10789024" )
+text(band=detail alignment="0" text="No. de Cuenta"border="0" color="0" x="88" y="28" height="64" width="377"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="_"border="0" color="0" x="344" y="86" height="61" width="33"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="552" y1="3" x2="552" y2="182" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="589" y="19" height="80" width="2849" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="10789024" )
+text(band=detail alignment="0" text="Apellido Paterno"border="0" color="0" x="856" y="28" height="64" width="432"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="0" text="Apellido Materno"border="0" color="0" x="1799" y="28" height="64" width="446"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="Nombre"border="0" color="0" x="2849" y="28" height="64" width="205"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="1" tabsequence=32766 border="0" color="0" x="91" y="108" height="64" width="245" format="[General]"  name=titulacion_cuenta  tag=" " edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression="obten_digito(titulacion_cuenta)"border="0" color="0" x="384" y="108" height="64" width="80" format="[general]"  name=digito_verificador  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=18 alignment="2" tabsequence=32766 border="0" color="0" x="640" y="108" height="64" width="892" format="[general]"  name=alumnos_apaterno edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=19 alignment="2" tabsequence=32766 border="0" color="0" x="1584" y="108" height="64" width="889" format="[general]"  name=alumnos_amaterno edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=20 alignment="2" tabsequence=32766 border="0" color="0" x="2523" y="108" height="64" width="892" format="[general]"  name=alumnos_nombre edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="7" y="195" height="118" width="3471" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="10789024" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="37" y="211" height="80" width="344" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="10789024" )
+text(band=detail alignment="0" text="Aprobado"border="0" color="0" x="88" y="220" height="64" width="263"  name=titulacion_aprobado_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="0" color="0" x="424" y="220" height="64" width="69" format="[General]"  name=titulacion_aprobado  tag=" " ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="625" y="211" height="80" width="304" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="10789024" )
+text(band=detail alignment="0" text="Carrera "border="0" color="0" x="677" y="220" height="64" width="212"  name=titulacion_cve_carrera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression=" titulacion_cve_carrera "border="0" color="0" x="947" y="220" height="64" width="165" format="#####"  name=cf_cve_carrera  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="0" color="0" x="1137" y="220" height="64" width="1240" format="[General]"  name=titulacion_cve_carrera  tag=" " dddw.name=dw_carrera dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="2417" y="211" height="80" width="545" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="10789024" )
+text(band=detail alignment="1" text="Plan de Estudios"border="0" color="0" x="2469" y="220" height="64" width="453"  name=titulacion_cve_plan_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="0" x="2999" y="220" height="64" width="417" format="[General]"  name=titulacion_cve_plan  tag=" " ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="552" y1="307" x2="552" y2="195" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="2395" y1="307" x2="2395" y2="195" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="7" y="320" height="454" width="3467" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="10789024" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="410" y="332" height="80" width="688" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="10789024" )
+text(band=detail alignment="1" text="Nombre de la Tesis"border="0" color="0" x="512" y="342" height="64" width="512"  name=titulacion_nombre_tesis_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="3" tabsequence=32766 border="0" color="0" x="37" y="425" height="326" width="1481" format="[general]"  name=titulacion_nombre_tesis  tag=" " edit.limit=255 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.hscrollbar=yes edit.vscrollbar=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="2041" y="345" height="80" width="578" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="10789024" )
+text(band=detail alignment="1" text="Fecha de Examen"border="0" color="0" x="2088" y="352" height="64" width="486"  name=titulacion_fecha_examen_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="2655" y="352" height="64" width="384" format="[shortdate] [time]"  name=titulacion_fecha_examen  tag=" " editmask.mask="DD/MM/YYYY" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="1584" y1="448" x2="3471" y2="448" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="1638" y="457" height="80" width="461" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="10789024" )
+text(band=detail alignment="1" text="Presidente"border="0" color="0" x="1730" y="464" height="64" width="282"  name=titulacion_presidente_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="2121" y="467" height="64" width="1306" format="[general]"  name=titulacion_presidente  tag=" " edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="1638" y="569" height="80" width="461" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="10789024" )
+text(band=detail alignment="1" text="Vocal"border="0" color="0" x="1799" y="576" height="64" width="154"  name=titulacion_vocal_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="2121" y="582" height="64" width="1306" format="[general]"  name=titulacion_vocal  tag=" " edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="1638" y="668" height="80" width="461" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="10789024" )
+text(band=detail alignment="0" text="Secretario"border="0" color="0" x="1744" y="678" height="64" width="293"  name=titulacion_secretario_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="2121" y="681" height="64" width="1306" format="[general]"  name=titulacion_secretario  tag=" " edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="1576" y1="768" x2="1576" y2="320" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="7" y="780" height="118" width="3467" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="10789024" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="59" y="796" height="80" width="603" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="10789024" )
+text(band=detail alignment="0" text="Opción de Titulación"border="0" color="0" x="91" y="806" height="64" width="549"  name=titulacion_opcion_titulacion_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="2" tabsequence=32766 border="0" color="0" x="717" y="806" height="64" width="651" format="[General]"  name=titulacion_opcion_titulacion  tag=" " dddw.name=dw_opc_titulacion dddw.displaycolumn=tipo_titulacion dddw.datacolumn=cve_titulacion dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="1616" y="796" height="80" width="581" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="10789024" )
+text(band=detail alignment="1" text="Mención Honorifica"border="0" color="0" x="1649" y="806" height="64" width="523"  name=titulacion_mencion_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="2271" y="806" height="64" width="106" format="[General]"  name=titulacion_mencion  tag=" " ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="2666" y="796" height="80" width="516" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="10789024" )
+text(band=detail alignment="1" text="Reconocimiento"border="0" color="0" x="2714" y="806" height="64" width="428"  name=titulacion_reconocimiento_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="3255" y="806" height="64" width="106" format="[General]"  name=titulacion_reconocimiento  tag=" " ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="1474" y1="892" x2="1474" y2="780" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="2465" y1="892" x2="2465" y2="780" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="0" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="7" y="908" height="118" width="3467" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="10789024" )
+roundrectangle(band=detail ellipseheight="61" ellipsewidth="69"x="59" y="931" height="80" width="603" brush.hatch="6" brush.color="32567536" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="10789024" )
+text(band=detail alignment="1" text="Observaciones"border="0" color="0" x="161" y="937" height="64" width="402"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=22 alignment="0" tabsequence=32766 border="0" color="0" x="709" y="937" height="64" width="2714" format="[general]"  name=titulacion_observaciones edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="11" y1="1040" x2="3460" y2="1040" pen.style="0" pen.width="18" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="~"El Total de Alumnos desplegados es de :  ~"+count(  titulacion_cuenta   for all) "border="2" color="0" x="936" y="4" height="67" width="1675" format="[general]"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

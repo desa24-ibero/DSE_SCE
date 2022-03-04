@@ -1,0 +1,21 @@
+﻿$PBExportHeader$busca_creditos.srf
+global type busca_creditos from function_object
+end type
+
+forward prototypes
+global function integer busca_creditos (integer area)
+end prototypes
+
+global function integer busca_creditos (integer area);integer creditos
+
+SELECT areas.creditos_min
+INTO :creditos
+FROM areas
+WHERE areas.cve_area = :area
+USING gtr_sce;
+commit USING gtr_sce;
+
+return creditos
+
+end function
+

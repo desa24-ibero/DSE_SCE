@@ -1,0 +1,47 @@
+﻿$PBExportHeader$f_dia_espaniol.srf
+global type f_dia_espaniol from function_object
+end type
+
+forward prototypes
+global function string f_dia_espaniol (date ad_dia)
+end prototypes
+
+global function string f_dia_espaniol (date ad_dia);string ls_dia_espaniol
+int li_mes
+
+ls_dia_espaniol = string(day(ad_dia)) + " de "
+li_mes = month(ad_dia)
+choose case li_mes
+	case 1
+		ls_dia_espaniol += "Enero"
+	case 2
+		ls_dia_espaniol += "Febrero"
+	case 3
+		ls_dia_espaniol += "Marzo"
+	case 4
+		ls_dia_espaniol += "Abril"
+	case 5
+		ls_dia_espaniol += "Mayo"
+	case 6
+		ls_dia_espaniol += "Junio"
+	case 7
+		ls_dia_espaniol += "Julio"
+	case 8
+		ls_dia_espaniol += "Agosto"
+	case 9
+		ls_dia_espaniol += "Septiembre "
+	case 10
+		ls_dia_espaniol += "Octubre"
+	case 11
+		ls_dia_espaniol += "Noviembre"
+	case 12
+		ls_dia_espaniol += "Diciembre"
+end choose
+ls_dia_espaniol += " de " + string(year(ad_dia))
+return ls_dia_espaniol
+
+
+
+
+end function
+

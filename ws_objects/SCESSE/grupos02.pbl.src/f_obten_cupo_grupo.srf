@@ -1,0 +1,34 @@
+﻿$PBExportHeader$f_obten_cupo_grupo.srf
+global type f_obten_cupo_grupo from function_object
+end type
+
+forward prototypes
+global function integer f_obten_cupo_grupo (long al_cve_mat, string as_gpo, integer ai_periodo, integer ai_anio)
+end prototypes
+
+global function integer f_obten_cupo_grupo (long al_cve_mat, string as_gpo, integer ai_periodo, integer ai_anio);integer li_cupo, li_codigo_sql
+string ls_mensaje_sql
+
+SELECT dbo.grupos.cupo
+INTO	:li_cupo
+FROM	dbo.grupos
+WHERE dbo.grupos.cve_mat = :al_cve_mat
+AND	dbo.grupos.gpo = :as_gpo
+AND	dbo.grupos.periodo = :ai_periodo
+AND	dbo.grupos.anio = :ai_anio
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100 or isnull(li_cupo) then
+	return 0
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar cupo grupos", ls_mensaje_sql)
+	return 0
+end if
+
+return li_cupo
+
+end function
+

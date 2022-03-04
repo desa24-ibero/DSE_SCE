@@ -1,0 +1,213 @@
+﻿$PBExportHeader$f_transfiere_mov_estac_sin_iberobus.srf
+global type f_transfiere_mov_estac_sin_iberobus from function_object
+end type
+
+forward prototypes
+global function integer f_transfiere_mov_estac_sin_iberobus (long al_cuenta)
+end prototypes
+
+global function integer f_transfiere_mov_estac_sin_iberobus (long al_cuenta);//f_transfiere_mov_estac
+//Recibe:
+//long		al_cuenta
+//
+//Regresa:
+//long 		integer
+
+
+string 		ls_error, ls_instruccion, ls_consulta, ls_error_exec, ls_error_sin
+integer 		li_detenido, li_estatus, li_regresa
+integer 		mov_alumnos_sql
+datetime 	fecha_vencimiento, fecha
+long 			ll_total_leidos, ll_total_procesados, ll_renglon_nvo
+transaction 	ltr_sit, ltr_esta
+datastore 	lds_mov_alumnos, lds_movalumnos_sql, lds_info
+
+//if conecta_bd(ltr_esta,"ESTA",gs_usuario,gs_password) =0 then
+//	messagebox("Atención...", "Problemas al conectarse a la bd de estacionamiento")
+//	return -1
+//end if 
+//
+//if conecta_bd(ltr_sit,"SIT",gs_usuario,gs_password) =0 then
+//	messagebox("Atención...", "Problemas al conectarse a la bd de tesoreria")
+//	return -1
+//end if 
+
+
+if f_conecta_con_parametros_bd(gtr_sce, ltr_esta, 3 )=0 then
+	messagebox("Atención...", "Problemas al conectarse a la bd de estacionamiento")
+	return -1
+end if 
+
+
+if f_conecta_pas_parametros_bd(gtr_sce, ltr_sit, 2, gs_usuario, gs_password )=0 then
+	messagebox("Atención...", "Problemas al conectarse a la bd de tesoreria")
+	return -1
+else
+	gtr_sit = ltr_sit
+end if 
+
+
+
+li_detenido = f_trans_sql_syb_detenido(ls_error)
+
+choose case li_detenido
+	case 0
+		if f_trans_sql_syb_detenido_update(1,ls_error) <> 1 then
+			Messagebox("Error",ls_error)
+			return -1
+		end if
+		
+		// DATASTORE PARA LA TABLA MOV_ALUMNOS
+		lds_mov_alumnos = CREATE datastore
+		lds_mov_alumnos.dataobject = "d_gral_graba_movalumnos"
+		lds_mov_alumnos.settransobject( ltr_sit )
+		
+		/*generacion de consolidados*/
+		ls_instruccion = "sp_GenerarConsolidadosXcta "+ string(al_cuenta)
+		ls_consulta = ltr_esta.SyntaxFromSQL(ls_instruccion,'Style(Type=Grid)', ls_error_exec)
+		if  len(ls_error_exec) > 0 then
+			MessageBox("Control de Estacionamiento ", ls_error_exec )
+			if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then
+				Messagebox("Error",ls_error)
+				return -1
+			end if
+			return -1
+		else
+			lds_info = CREATE datastore
+			lds_info.Create(ls_consulta, ls_error_sin)
+			lds_info.settransobject( ltr_esta)
+			li_regresa = lds_info.retrieve()
+			if li_regresa <> 0 then
+				MessageBox("Advertencia","Error al generar los consolidados de los movimientos de estacionamiento")
+				if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then
+					Messagebox("Error",ls_error)
+					return -1
+				end if
+				return -1
+			end if
+		end if
+		commit using ltr_esta;
+		
+		/*procesamiento de consolidados*/
+		ls_instruccion = "sp_ProcesarConsolidadoxcta "+ string(al_cuenta)
+		ls_consulta = ltr_esta.SyntaxFromSQL(ls_instruccion,'Style(Type=Grid)', ls_error_exec)
+		if  len(ls_error_exec) > 0 then
+			MessageBox("Control de Estacionamiento ", ls_error_exec )
+			if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then
+				Messagebox("Error",ls_error)
+				return -1
+			end if
+			return -1
+		else
+			lds_info = CREATE datastore
+			lds_info.Create(ls_consulta, ls_error_sin)
+			lds_info.settransobject( ltr_esta)
+			li_regresa = lds_info.retrieve()
+			if li_regresa <> 0 then
+				MessageBox("Advertencia","Error al generar los consolidados de los movimientos de estacionamiento")
+				if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then
+					Messagebox("Error",ls_error)
+					return -1
+				end if
+				return -1
+			end if
+		end if
+		
+		commit using ltr_esta;
+		
+		lds_movalumnos_sql = CREATE datastore
+		lds_movalumnos_sql.dataobject = "dw_consolidadoxcta"
+		lds_movalumnos_sql.settransobject( ltr_esta )
+		lds_movalumnos_sql.retrieve(al_cuenta)
+		
+		ll_total_leidos = lds_movalumnos_sql.RowCount()
+		ll_total_procesados = 1
+		
+		if ll_total_leidos = 0 then
+			MessageBox( "Aviso","No hay registros de estacionamiento por transferir" )
+			if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then
+				Messagebox("Error",ls_error)
+				return -1
+			end if
+			return 1
+		end if
+		
+		// DETIENE EL PROCESO DE TRANSFERENCIA
+		li_estatus = 1
+		
+		if f_trans_sql_syb_detenido_update(li_estatus,ls_error) <> 1 then
+			Messagebox("Error",ls_error)
+			return -1
+		end if
+		
+		for ll_total_procesados = 1 to ll_total_leidos
+			// OBTIENE LOS DATOS E INSERTA EN SyBase: tesoreria_bd.mov_alumnos
+			fecha = lds_movalumnos_sql.getitemdatetime(ll_total_procesados,"fecha")
+			fecha_vencimiento = lds_movalumnos_sql.getitemdatetime(ll_total_procesados,"fecha_vencimiento")
+			
+			ll_renglon_nvo = lds_mov_alumnos.insertrow(0)
+			
+			lds_mov_alumnos.object.cve_concepto 			[ll_renglon_nvo]	= 47
+			lds_mov_alumnos.object.cve_subconcepto 		[ll_renglon_nvo]	= 1
+			lds_mov_alumnos.object.cve_descripcion 		[ll_renglon_nvo]	= 14
+			lds_mov_alumnos.object.cve_caja					[ll_renglon_nvo]	= 163
+			lds_mov_alumnos.object.cuenta 					[ll_renglon_nvo]	= lds_movalumnos_sql.GetItemNumber(ll_total_procesados,"cuenta")
+			lds_mov_alumnos.object.periodo 					[ll_renglon_nvo]	= lds_movalumnos_sql.GetItemNumber(ll_total_procesados,"periodo")
+			lds_mov_alumnos.object.anio 						[ll_renglon_nvo]	= lds_movalumnos_sql.GetItemNumber(ll_total_procesados,"anio")
+			lds_mov_alumnos.object.fecha						[ll_renglon_nvo]	= fecha
+			lds_mov_alumnos.object.fecha_vencimiento		[ll_renglon_nvo]	= fecha_vencimiento
+			lds_mov_alumnos.object.importe					[ll_renglon_nvo]	= lds_movalumnos_sql.GetItemNumber(ll_total_procesados,"importe")
+			lds_mov_alumnos.object.corte						[ll_renglon_nvo]	= lds_movalumnos_sql.GetItemNumber(ll_total_procesados,"corte")
+			lds_mov_alumnos.object.operacion				[ll_renglon_nvo]	= 0
+			lds_mov_alumnos.object.folio_mov_alumnos 	[ll_renglon_nvo]	= 0
+			
+			lds_movalumnos_sql.object.traspasado[ll_total_procesados] = 1
+			
+			if lds_movalumnos_sql.update() = 1 then
+				if lds_mov_alumnos.update() = 1 then
+					
+				else
+					MessageBox("Error","Error al insertar los movimientos de estacionamiento en Sybase en la cuenta: "+string(lds_movalumnos_sql.GetItemNumber(ll_total_procesados,"cuenta")) )
+					Rollback using ltr_sit;
+					if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then
+						Messagebox("Error",ls_error)
+						return -1
+					end if
+					return -1
+				end if
+			else
+				MessageBox("Error","Error al actualizar el status de traspasado a los movimientos de estacionamiento: ")
+				Rollback using ltr_sit;
+				if f_trans_sql_syb_detenido_update(0,ls_error) <> 1 then
+					Messagebox("Error",ls_error)
+					return -1
+				end if
+				return -1
+			end if
+			
+		next
+		
+		commit using ltr_esta;
+		Commit using ltr_sit;
+		
+		// LIBERA EL PROCESO DE TRANSFERENCIA
+		li_estatus = 0
+		if f_trans_sql_syb_detenido_update(li_estatus,ls_error) <> 1 then
+			Messagebox("Error",ls_error)
+			return -1
+		end if
+		
+	// PROCESO DE TRANSFERENCIA NO DISPONIBLE
+	case 1
+		Messagebox("Aviso","El proceso de tranferencia de movimientos de estacionamiento esta detenido actualmente por otro proceso, intente mas tarde...")
+		return -1
+	// ERROR AL ls_consultaR EL ESTATUS DEL PROCESO DE TRANSFERENCIA
+	case else
+		Messagebox("Error", "Error al consultar estatus de proceso de transferencia movimientos de estacionamiento~n" + ls_error)
+		return -1
+end choose
+
+return 1
+
+end function
+

@@ -1,0 +1,2885 @@
+﻿$PBExportHeader$m_principal.srm
+$PBExportComments$Menú Principal de la Aplicación
+forward
+global type m_principal from menu
+end type
+type m_catalogos from menu within m_principal
+end type
+type m_ligarceneval from menu within m_catalogos
+end type
+type m_catalogos from menu within m_principal
+m_ligarceneval m_ligarceneval
+end type
+type m_constancias from menu within m_principal
+end type
+type m_alumnoinscrito from menu within m_constancias
+end type
+type m_sincreditopromedio from menu within m_alumnoinscrito
+end type
+type m_concreditospromedios from menu within m_alumnoinscrito
+end type
+type m_imss from menu within m_alumnoinscrito
+end type
+type m_institucional from menu within m_alumnoinscrito
+end type
+type m_defensa from menu within m_alumnoinscrito
+end type
+type m_alumnoinscrito from menu within m_constancias
+m_sincreditopromedio m_sincreditopromedio
+m_concreditospromedios m_concreditospromedios
+m_imss m_imss
+m_institucional m_institucional
+m_defensa m_defensa
+end type
+type m_materiasinscritas from menu within m_constancias
+end type
+type m_materiasinscritassinpromcred from menu within m_constancias
+end type
+type m_semestreanterior from menu within m_constancias
+end type
+type m_telmex from menu within m_constancias
+end type
+type m_terminacin from menu within m_constancias
+end type
+type m_protocolodeopcin from menu within m_constancias
+end type
+type m_-2 from menu within m_constancias
+end type
+type m_bitacoras from menu within m_constancias
+end type
+type m_constancias from menu within m_principal
+m_alumnoinscrito m_alumnoinscrito
+m_materiasinscritas m_materiasinscritas
+m_materiasinscritassinpromcred m_materiasinscritassinpromcred
+m_semestreanterior m_semestreanterior
+m_telmex m_telmex
+m_terminacin m_terminacin
+m_protocolodeopcin m_protocolodeopcin
+m_-2 m_-2
+m_bitacoras m_bitacoras
+end type
+type m_actas from menu within m_principal
+end type
+type m_recepciondeactasimpresion from menu within m_actas
+end type
+type m_recepciondeactasaextraordinarioyatit from menu within m_actas
+end type
+type m_-separado_actas from menu within m_actas
+end type
+type m_reimpresiondeactas from menu within m_actas
+end type
+type m_actas from menu within m_principal
+m_recepciondeactasimpresion m_recepciondeactasimpresion
+m_recepciondeactasaextraordinarioyatit m_recepciondeactasaextraordinarioyatit
+m_-separado_actas m_-separado_actas
+m_reimpresiondeactas m_reimpresiondeactas
+end type
+type m_documentos from menu within m_principal
+end type
+type m_cortededocumentos from menu within m_documentos
+end type
+type m_reportesdeadeudos from menu within m_documentos
+end type
+type m_documentos from menu within m_principal
+m_cortededocumentos m_cortededocumentos
+m_reportesdeadeudos m_reportesdeadeudos
+end type
+type m_nips from menu within m_principal
+end type
+type m_capturanip from menu within m_nips
+end type
+type m_semforo from menu within m_nips
+end type
+type m_cambiodenipacontrasenia from menu within m_nips
+end type
+type m_cambiodenipacontraseñaegresados from menu within m_nips
+end type
+type m_nips from menu within m_principal
+m_capturanip m_capturanip
+m_semforo m_semforo
+m_cambiodenipacontrasenia m_cambiodenipacontrasenia
+m_cambiodenipacontraseñaegresados m_cambiodenipacontraseñaegresados
+end type
+type m_preinscripcin from menu within m_principal
+end type
+type m_preinscripcincuenta from menu within m_preinscripcin
+end type
+type m_ventanilla from menu within m_preinscripcincuenta
+end type
+type m_global from menu within m_preinscripcincuenta
+end type
+type m_preinscripcincuenta from menu within m_preinscripcin
+m_ventanilla m_ventanilla
+m_global m_global
+end type
+type m_capturamaterias from menu within m_preinscripcin
+end type
+type m_lectorptico from menu within m_capturamaterias
+end type
+type m_manualmaterias from menu within m_capturamaterias
+end type
+type m_capturamaterias from menu within m_preinscripcin
+m_lectorptico m_lectorptico
+m_manualmaterias m_manualmaterias
+end type
+type m_- from menu within m_preinscripcin
+end type
+type m_reportespreinscripcion from menu within m_preinscripcin
+end type
+type m_materiaspreinscritas from menu within m_reportespreinscripcion
+end type
+type m_reportespreinscripcion from menu within m_preinscripcin
+m_materiaspreinscritas m_materiaspreinscritas
+end type
+type m_preinscripcin from menu within m_principal
+m_preinscripcincuenta m_preinscripcincuenta
+m_capturamaterias m_capturamaterias
+m_- m_-
+m_reportespreinscripcion m_reportespreinscripcion
+end type
+type m_revalidacion from menu within m_principal
+end type
+type m_solicitudderevalidacion from menu within m_revalidacion
+end type
+type m_propuestaderevalidacion from menu within m_revalidacion
+end type
+type m_pliegoderevalidacion from menu within m_revalidacion
+end type
+type m_inscribeaspirantesporrevalidacion from menu within m_revalidacion
+end type
+type m_formatohorasderevalicacion from menu within m_revalidacion
+end type
+type m_separador from menu within m_revalidacion
+end type
+type m_bitacora from menu within m_revalidacion
+end type
+type m_revalidacion from menu within m_principal
+m_solicitudderevalidacion m_solicitudderevalidacion
+m_propuestaderevalidacion m_propuestaderevalidacion
+m_pliegoderevalidacion m_pliegoderevalidacion
+m_inscribeaspirantesporrevalidacion m_inscribeaspirantesporrevalidacion
+m_formatohorasderevalicacion m_formatohorasderevalicacion
+m_separador m_separador
+m_bitacora m_bitacora
+end type
+type m_reportes from menu within m_principal
+end type
+type m_solicituddematerias from menu within m_reportes
+end type
+type m_solicituddemateriasporcuenta from menu within m_reportes
+end type
+type m_adeudosdeprerrequisitodeingles from menu within m_reportes
+end type
+type m_reportes from menu within m_principal
+m_solicituddematerias m_solicituddematerias
+m_solicituddemateriasporcuenta m_solicituddemateriasporcuenta
+m_adeudosdeprerrequisitodeingles m_adeudosdeprerrequisitodeingles
+end type
+type m_servidores from menu within m_principal
+end type
+type m_trmitesporcorreo from menu within m_servidores
+end type
+type m_-1 from menu within m_servidores
+end type
+type m_reportesservidores from menu within m_servidores
+end type
+type m_estadsticasdecorreo from menu within m_reportesservidores
+end type
+type m_reportesservidores from menu within m_servidores
+m_estadsticasdecorreo m_estadsticasdecorreo
+end type
+type m_separador2 from menu within m_servidores
+end type
+type m_bitacoraaccesos from menu within m_servidores
+end type
+type m_bitacorabloqueos from menu within m_servidores
+end type
+type m_bitácoracontrasenas from menu within m_servidores
+end type
+type m_bitacoracambioacceso from menu within m_servidores
+end type
+type m_-separa from menu within m_servidores
+end type
+type m_desbloqueoalumnos from menu within m_servidores
+end type
+type m_transferenciadealumnosainternet from menu within m_servidores
+end type
+type m_transferenciapreinscripcionsql-sybase from menu within m_servidores
+end type
+type m_consultadesolicituddematerias from menu within m_servidores
+end type
+type m_solicituddetramitesporinternet from menu within m_servidores
+end type
+type m_servidores from menu within m_principal
+m_trmitesporcorreo m_trmitesporcorreo
+m_-1 m_-1
+m_reportesservidores m_reportesservidores
+m_separador2 m_separador2
+m_bitacoraaccesos m_bitacoraaccesos
+m_bitacorabloqueos m_bitacorabloqueos
+m_bitácoracontrasenas m_bitácoracontrasenas
+m_bitacoracambioacceso m_bitacoracambioacceso
+m_-separa m_-separa
+m_desbloqueoalumnos m_desbloqueoalumnos
+m_transferenciadealumnosainternet m_transferenciadealumnosainternet
+m_transferenciapreinscripcionsql-sybase m_transferenciapreinscripcionsql-sybase
+m_consultadesolicituddematerias m_consultadesolicituddematerias
+m_solicituddetramitesporinternet m_solicituddetramitesporinternet
+end type
+type m_enlace from menu within m_principal
+end type
+type m_enlacesce--credenciales from menu within m_enlace
+end type
+type m_enlacesce--informes from menu within m_enlace
+end type
+type m_enlace from menu within m_principal
+m_enlacesce--credenciales m_enlacesce--credenciales
+m_enlacesce--informes m_enlacesce--informes
+end type
+type m_especial from menu within m_principal
+end type
+type m_cambiodepasword from menu within m_especial
+end type
+type m_0 from menu within m_especial
+end type
+type m_cambiodetipodeperiodo from menu within m_especial
+end type
+type m_especial from menu within m_principal
+m_cambiodepasword m_cambiodepasword
+m_0 m_0
+m_cambiodetipodeperiodo m_cambiodetipodeperiodo
+end type
+type m_salir from menu within m_principal
+end type
+global type m_principal from menu
+m_catalogos m_catalogos
+m_constancias m_constancias
+m_actas m_actas
+m_documentos m_documentos
+m_nips m_nips
+m_preinscripcin m_preinscripcin
+m_revalidacion m_revalidacion
+m_reportes m_reportes
+m_servidores m_servidores
+m_enlace m_enlace
+m_especial m_especial
+m_salir m_salir
+end type
+end forward
+
+global type m_principal from menu
+m_catalogos m_catalogos
+m_constancias m_constancias
+m_actas m_actas
+m_documentos m_documentos
+m_nips m_nips
+m_preinscripcin m_preinscripcin
+m_revalidacion m_revalidacion
+m_reportes m_reportes
+m_servidores m_servidores
+m_enlace m_enlace
+m_especial m_especial
+m_salir m_salir
+end type
+global m_principal m_principal
+
+type variables
+
+end variables
+
+on m_principal.create
+m_principal=this
+call super::create
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_catalogos=create m_catalogos
+this.m_constancias=create m_constancias
+this.m_actas=create m_actas
+this.m_documentos=create m_documentos
+this.m_nips=create m_nips
+this.m_preinscripcin=create m_preinscripcin
+this.m_revalidacion=create m_revalidacion
+this.m_reportes=create m_reportes
+this.m_servidores=create m_servidores
+this.m_enlace=create m_enlace
+this.m_especial=create m_especial
+this.m_salir=create m_salir
+this.Item[UpperBound(this.Item)+1]=this.m_catalogos
+this.Item[UpperBound(this.Item)+1]=this.m_constancias
+this.Item[UpperBound(this.Item)+1]=this.m_actas
+this.Item[UpperBound(this.Item)+1]=this.m_documentos
+this.Item[UpperBound(this.Item)+1]=this.m_nips
+this.Item[UpperBound(this.Item)+1]=this.m_preinscripcin
+this.Item[UpperBound(this.Item)+1]=this.m_revalidacion
+this.Item[UpperBound(this.Item)+1]=this.m_reportes
+this.Item[UpperBound(this.Item)+1]=this.m_servidores
+this.Item[UpperBound(this.Item)+1]=this.m_enlace
+this.Item[UpperBound(this.Item)+1]=this.m_especial
+this.Item[UpperBound(this.Item)+1]=this.m_salir
+end on
+
+on m_principal.destroy
+call super::destroy
+destroy(this.m_catalogos)
+destroy(this.m_constancias)
+destroy(this.m_actas)
+destroy(this.m_documentos)
+destroy(this.m_nips)
+destroy(this.m_preinscripcin)
+destroy(this.m_revalidacion)
+destroy(this.m_reportes)
+destroy(this.m_servidores)
+destroy(this.m_enlace)
+destroy(this.m_especial)
+destroy(this.m_salir)
+end on
+
+event clicked;opensheet(w_cambio_nip_password_egre,w_principal,4,Layered!)
+end event
+
+type m_catalogos from menu within m_principal
+m_ligarceneval m_ligarceneval
+end type
+
+on m_catalogos.create
+call super::create
+this.text = "Catalogos"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_ligarceneval=create m_ligarceneval
+this.Item[UpperBound(this.Item)+1]=this.m_ligarceneval
+end on
+
+on m_catalogos.destroy
+call super::destroy
+destroy(this.m_ligarceneval)
+end on
+
+type m_ligarceneval from menu within m_catalogos
+end type
+
+on m_ligarceneval.create
+call super::create
+this.text = "Ligar Ceneval"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;opensheet(w_escuelas_ceneval,w_principal,4,Original!)
+end event
+
+on m_ligarceneval.destroy
+call super::destroy
+end on
+
+type m_constancias from menu within m_principal
+m_alumnoinscrito m_alumnoinscrito
+m_materiasinscritas m_materiasinscritas
+m_materiasinscritassinpromcred m_materiasinscritassinpromcred
+m_semestreanterior m_semestreanterior
+m_telmex m_telmex
+m_terminacin m_terminacin
+m_protocolodeopcin m_protocolodeopcin
+m_-2 m_-2
+m_bitacoras m_bitacoras
+end type
+
+on m_constancias.create
+call super::create
+this.text = "Constancias"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_alumnoinscrito=create m_alumnoinscrito
+this.m_materiasinscritas=create m_materiasinscritas
+this.m_materiasinscritassinpromcred=create m_materiasinscritassinpromcred
+this.m_semestreanterior=create m_semestreanterior
+this.m_telmex=create m_telmex
+this.m_terminacin=create m_terminacin
+this.m_protocolodeopcin=create m_protocolodeopcin
+this.m_-2=create m_-2
+this.m_bitacoras=create m_bitacoras
+this.Item[UpperBound(this.Item)+1]=this.m_alumnoinscrito
+this.Item[UpperBound(this.Item)+1]=this.m_materiasinscritas
+this.Item[UpperBound(this.Item)+1]=this.m_materiasinscritassinpromcred
+this.Item[UpperBound(this.Item)+1]=this.m_semestreanterior
+this.Item[UpperBound(this.Item)+1]=this.m_telmex
+this.Item[UpperBound(this.Item)+1]=this.m_terminacin
+this.Item[UpperBound(this.Item)+1]=this.m_protocolodeopcin
+this.Item[UpperBound(this.Item)+1]=this.m_-2
+this.Item[UpperBound(this.Item)+1]=this.m_bitacoras
+end on
+
+on m_constancias.destroy
+call super::destroy
+destroy(this.m_alumnoinscrito)
+destroy(this.m_materiasinscritas)
+destroy(this.m_materiasinscritassinpromcred)
+destroy(this.m_semestreanterior)
+destroy(this.m_telmex)
+destroy(this.m_terminacin)
+destroy(this.m_protocolodeopcin)
+destroy(this.m_-2)
+destroy(this.m_bitacoras)
+end on
+
+type m_alumnoinscrito from menu within m_constancias
+m_sincreditopromedio m_sincreditopromedio
+m_concreditospromedios m_concreditospromedios
+m_imss m_imss
+m_institucional m_institucional
+m_defensa m_defensa
+end type
+
+on m_alumnoinscrito.create
+call super::create
+this.text = "Alumno Inscrito"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_sincreditopromedio=create m_sincreditopromedio
+this.m_concreditospromedios=create m_concreditospromedios
+this.m_imss=create m_imss
+this.m_institucional=create m_institucional
+this.m_defensa=create m_defensa
+this.Item[UpperBound(this.Item)+1]=this.m_sincreditopromedio
+this.Item[UpperBound(this.Item)+1]=this.m_concreditospromedios
+this.Item[UpperBound(this.Item)+1]=this.m_imss
+this.Item[UpperBound(this.Item)+1]=this.m_institucional
+this.Item[UpperBound(this.Item)+1]=this.m_defensa
+end on
+
+on m_alumnoinscrito.destroy
+call super::destroy
+destroy(this.m_sincreditopromedio)
+destroy(this.m_concreditospromedios)
+destroy(this.m_imss)
+destroy(this.m_institucional)
+destroy(this.m_defensa)
+end on
+
+type m_sincreditopromedio from menu within m_alumnoinscrito
+end type
+
+event clicked;//opensheet(w_constancia_01,w_principal,4,Original!)
+opensheet(w_constancia_01_2013,w_principal,4,Layered!)
+end event
+
+on m_sincreditopromedio.create
+call super::create
+this.text = "Sin Credito/Promedios"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_sincreditopromedio.destroy
+call super::destroy
+end on
+
+type m_concreditospromedios from menu within m_alumnoinscrito
+end type
+
+event clicked;opensheet(w_constancia_02_2013,w_principal,4,layered!)
+//opensheet(w_constancia_02,w_principal,4,layered!)
+end event
+
+on m_concreditospromedios.create
+call super::create
+this.text = "Con Creditos/Promedios"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_concreditospromedios.destroy
+call super::destroy
+end on
+
+type m_imss from menu within m_alumnoinscrito
+end type
+
+event clicked;//opensheet(w_constancia_01_imss,w_principal,4,Layered!)
+opensheet(w_constancia_01_imss_2013,w_principal,4,Layered!)
+
+
+end event
+
+on m_imss.create
+call super::create
+this.text = "IMSS"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_imss.destroy
+call super::destroy
+end on
+
+type m_institucional from menu within m_alumnoinscrito
+end type
+
+event clicked;//opensheet(w_constancia_01_institucional,w_principal,4,Layered!)
+opensheet(w_constancia_01_institucional_2013,w_principal,4,Layered!)
+end event
+
+on m_institucional.create
+call super::create
+this.text = "INSTITUCIONAL"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_institucional.destroy
+call super::destroy
+end on
+
+type m_defensa from menu within m_alumnoinscrito
+event create ( )
+event destroy ( )
+end type
+
+on m_defensa.create
+call super::create
+this.text = "DEFENSA"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_defensa.destroy
+call super::destroy
+end on
+
+event clicked;opensheet(w_constancia_04_defensa_2013,w_principal,4,Layered!)
+//opensheet(w_constancia_04_defensa,w_principal,4,Layered!)
+end event
+
+type m_materiasinscritas from menu within m_constancias
+end type
+
+event clicked;Setpointer(Hourglass!)
+opensheet(w_constancia_03_2013,w_principal,4,layered!)
+//opensheet(w_constancia_03,w_principal,4,layered!)
+
+
+end event
+
+on m_materiasinscritas.create
+call super::create
+this.text = "Materias Inscritas"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_materiasinscritas.destroy
+call super::destroy
+end on
+
+type m_materiasinscritassinpromcred from menu within m_constancias
+end type
+
+event clicked;Setpointer(Hourglass!)
+opensheet(w_constancia_03_spc_2013,w_principal,4,layered!)
+//opensheet(w_constancia_03_spc,w_principal,4,layered!)
+end event
+
+on m_materiasinscritassinpromcred.create
+call super::create
+this.text = "Materias Inscritas (Sin Prom./Cred.)"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_materiasinscritassinpromcred.destroy
+call super::destroy
+end on
+
+type m_semestreanterior from menu within m_constancias
+end type
+
+event clicked;Setpointer(Hourglass!)
+opensheet(w_constancia_04_2013,w_principal,4,layered!)
+//opensheet(w_constancia_04,w_principal,4,layered!)
+
+
+
+end event
+
+on m_semestreanterior.create
+call super::create
+this.text = "Semestre Anterior"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_semestreanterior.destroy
+call super::destroy
+end on
+
+type m_telmex from menu within m_constancias
+end type
+
+on m_telmex.create
+call super::create
+this.text = "TELMEX"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;Setpointer(Hourglass!)
+opensheet(w_constancia_04_telmex_2013,w_principal,4,LAYERED!)
+//opensheet(w_constancia_04_telmex,w_principal,4,LAYERED!)
+end event
+
+on m_telmex.destroy
+call super::destroy
+end on
+
+type m_terminacin from menu within m_constancias
+end type
+
+event clicked;Setpointer(Hourglass!)
+//opensheet(w_constancia_05,w_principal,4,Layered!)
+opensheet(w_constancia_05_2013,w_principal,4,Layered!)
+end event
+
+on m_terminacin.create
+call super::create
+this.text = "Terminación"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_terminacin.destroy
+call super::destroy
+end on
+
+type m_protocolodeopcin from menu within m_constancias
+end type
+
+event clicked;Setpointer(Hourglass!)
+opensheet(w_constancia_06_2013,w_principal,4,Layered!)
+//opensheet(w_constancia_06,w_principal,4,Layered!)
+end event
+
+on m_protocolodeopcin.create
+call super::create
+this.text = "Protocolo de Opción"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_protocolodeopcin.destroy
+call super::destroy
+end on
+
+type m_-2 from menu within m_constancias
+end type
+
+on m_-2.create
+call super::create
+this.text = "-"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_-2.destroy
+call super::destroy
+end on
+
+type m_bitacoras from menu within m_constancias
+end type
+
+event clicked;Setpointer(Hourglass!)
+opensheet(w_bitacora_constancias,w_principal,4,Layered!)
+end event
+
+on m_bitacoras.create
+call super::create
+this.text = "Bitacoras"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_bitacoras.destroy
+call super::destroy
+end on
+
+type m_actas from menu within m_principal
+m_recepciondeactasimpresion m_recepciondeactasimpresion
+m_recepciondeactasaextraordinarioyatit m_recepciondeactasaextraordinarioyatit
+m_-separado_actas m_-separado_actas
+m_reimpresiondeactas m_reimpresiondeactas
+end type
+
+on m_actas.create
+call super::create
+this.text = "Actas"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_recepciondeactasimpresion=create m_recepciondeactasimpresion
+this.m_recepciondeactasaextraordinarioyatit=create m_recepciondeactasaextraordinarioyatit
+this.m_-separado_actas=create m_-separado_actas
+this.m_reimpresiondeactas=create m_reimpresiondeactas
+this.Item[UpperBound(this.Item)+1]=this.m_recepciondeactasimpresion
+this.Item[UpperBound(this.Item)+1]=this.m_recepciondeactasaextraordinarioyatit
+this.Item[UpperBound(this.Item)+1]=this.m_-separado_actas
+this.Item[UpperBound(this.Item)+1]=this.m_reimpresiondeactas
+end on
+
+on m_actas.destroy
+call super::destroy
+destroy(this.m_recepciondeactasimpresion)
+destroy(this.m_recepciondeactasaextraordinarioyatit)
+destroy(this.m_-separado_actas)
+destroy(this.m_reimpresiondeactas)
+end on
+
+type m_recepciondeactasimpresion from menu within m_actas
+end type
+
+event clicked;Setpointer(Hourglass!)
+opensheet(w_acta_lectura_firmada,w_principal,4,Original!)
+end event
+
+on m_recepciondeactasimpresion.create
+call super::create
+this.text = "Recepción de Actas (Impresión)"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_recepciondeactasimpresion.destroy
+call super::destroy
+end on
+
+type m_recepciondeactasaextraordinarioyatit from menu within m_actas
+end type
+
+event clicked;Setpointer(Hourglass!)
+opensheet(w_acta_lectura_firmada_ets,w_principal,4,Original!)
+end event
+
+on m_recepciondeactasaextraordinarioyatit.create
+call super::create
+this.text = "Recepción de Actas a Extraordinario y a Título de Suficiencia (Impresión)"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_recepciondeactasaextraordinarioyatit.destroy
+call super::destroy
+end on
+
+type m_-separado_actas from menu within m_actas
+end type
+
+on m_-separado_actas.create
+call super::create
+this.text = "-"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_-separado_actas.destroy
+call super::destroy
+end on
+
+type m_reimpresiondeactas from menu within m_actas
+end type
+
+event clicked;Setpointer(Hourglass!)
+opensheet(w_acta_oficial_reimpresion,w_principal,4,Original!)
+end event
+
+on m_reimpresiondeactas.create
+call super::create
+this.text = "Reimpresión de Actas"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_reimpresiondeactas.destroy
+call super::destroy
+end on
+
+type m_documentos from menu within m_principal
+m_cortededocumentos m_cortededocumentos
+m_reportesdeadeudos m_reportesdeadeudos
+end type
+
+on m_documentos.create
+call super::create
+this.text = "Documentos"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_cortededocumentos=create m_cortededocumentos
+this.m_reportesdeadeudos=create m_reportesdeadeudos
+this.Item[UpperBound(this.Item)+1]=this.m_cortededocumentos
+this.Item[UpperBound(this.Item)+1]=this.m_reportesdeadeudos
+end on
+
+on m_documentos.destroy
+call super::destroy
+destroy(this.m_cortededocumentos)
+destroy(this.m_reportesdeadeudos)
+end on
+
+type m_cortededocumentos from menu within m_documentos
+end type
+
+event clicked;Setpointer(Hourglass!)
+opensheet(w_corte_documentos,w_principal,4,Original!)
+end event
+
+on m_cortededocumentos.create
+call super::create
+this.text = "Corte de Documentos"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_cortededocumentos.destroy
+call super::destroy
+end on
+
+type m_reportesdeadeudos from menu within m_documentos
+end type
+
+event clicked;Setpointer(Hourglass!)
+opensheet(w_reporte_adeudo_documentos,w_principal,4,Original!)
+end event
+
+on m_reportesdeadeudos.create
+call super::create
+this.text = "Reportes de Adeudos"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_reportesdeadeudos.destroy
+call super::destroy
+end on
+
+type m_nips from menu within m_principal
+m_capturanip m_capturanip
+m_semforo m_semforo
+m_cambiodenipacontrasenia m_cambiodenipacontrasenia
+m_cambiodenipacontraseñaegresados m_cambiodenipacontraseñaegresados
+end type
+
+on m_nips.create
+call super::create
+this.text = "NIPs"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_capturanip=create m_capturanip
+this.m_semforo=create m_semforo
+this.m_cambiodenipacontrasenia=create m_cambiodenipacontrasenia
+this.m_cambiodenipacontraseñaegresados=create m_cambiodenipacontraseñaegresados
+this.Item[UpperBound(this.Item)+1]=this.m_capturanip
+this.Item[UpperBound(this.Item)+1]=this.m_semforo
+this.Item[UpperBound(this.Item)+1]=this.m_cambiodenipacontrasenia
+this.Item[UpperBound(this.Item)+1]=this.m_cambiodenipacontraseñaegresados
+end on
+
+on m_nips.destroy
+call super::destroy
+destroy(this.m_capturanip)
+destroy(this.m_semforo)
+destroy(this.m_cambiodenipacontrasenia)
+destroy(this.m_cambiodenipacontraseñaegresados)
+end on
+
+type m_capturanip from menu within m_nips
+end type
+
+on m_capturanip.create
+call super::create
+this.text = "Captura NIP"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;opensheet(w_cap_password_2013,w_principal,4,Layered!)
+end event
+
+on m_capturanip.destroy
+call super::destroy
+end on
+
+type m_semforo from menu within m_nips
+end type
+
+on m_semforo.create
+call super::create
+this.text = "Semáforo"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;
+opensheet(w_revisa_nip_hora_2013,w_principal,4,Layered!)
+end event
+
+on m_semforo.destroy
+call super::destroy
+end on
+
+type m_cambiodenipacontrasenia from menu within m_nips
+end type
+
+event clicked;opensheet(w_cambio_nip_password_2013,w_principal,4,Layered!)
+end event
+
+on m_cambiodenipacontrasenia.create
+call super::create
+this.text = "Cambio de NIP a Contraseña"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_cambiodenipacontrasenia.destroy
+call super::destroy
+end on
+
+type m_cambiodenipacontraseñaegresados from menu within m_nips
+end type
+
+on m_cambiodenipacontraseñaegresados.create
+call super::create
+this.text = "Cambio de NIP a Contraseña Egresados"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_cambiodenipacontraseñaegresados.destroy
+call super::destroy
+end on
+
+event clicked;opensheet(w_cambio_nip_password_egre,w_principal,4,Layered!)
+end event
+
+type m_preinscripcin from menu within m_principal
+m_preinscripcincuenta m_preinscripcincuenta
+m_capturamaterias m_capturamaterias
+m_- m_-
+m_reportespreinscripcion m_reportespreinscripcion
+end type
+
+on m_preinscripcin.create
+call super::create
+this.text = "Preinscripción"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_preinscripcincuenta=create m_preinscripcincuenta
+this.m_capturamaterias=create m_capturamaterias
+this.m_-=create m_-
+this.m_reportespreinscripcion=create m_reportespreinscripcion
+this.Item[UpperBound(this.Item)+1]=this.m_preinscripcincuenta
+this.Item[UpperBound(this.Item)+1]=this.m_capturamaterias
+this.Item[UpperBound(this.Item)+1]=this.m_-
+this.Item[UpperBound(this.Item)+1]=this.m_reportespreinscripcion
+end on
+
+on m_preinscripcin.destroy
+call super::destroy
+destroy(this.m_preinscripcincuenta)
+destroy(this.m_capturamaterias)
+destroy(this.m_-)
+destroy(this.m_reportespreinscripcion)
+end on
+
+type m_preinscripcincuenta from menu within m_preinscripcin
+m_ventanilla m_ventanilla
+m_global m_global
+end type
+
+on m_preinscripcincuenta.create
+call super::create
+this.text = "Captura cuentas"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_ventanilla=create m_ventanilla
+this.m_global=create m_global
+this.Item[UpperBound(this.Item)+1]=this.m_ventanilla
+this.Item[UpperBound(this.Item)+1]=this.m_global
+end on
+
+on m_preinscripcincuenta.destroy
+call super::destroy
+destroy(this.m_ventanilla)
+destroy(this.m_global)
+end on
+
+type m_ventanilla from menu within m_preinscripcincuenta
+end type
+
+on m_ventanilla.create
+call super::create
+this.visible = false
+this.text = "Ventanilla"
+this.enabled = false
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;opensheet(w_recibos,w_principal,4,Original!)
+end event
+
+on m_ventanilla.destroy
+call super::destroy
+end on
+
+type m_global from menu within m_preinscripcincuenta
+end type
+
+on m_global.create
+call super::create
+this.text = "Global"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;opensheet(w_preinsc,w_principal,4,Original!)
+end event
+
+on m_global.destroy
+call super::destroy
+end on
+
+type m_capturamaterias from menu within m_preinscripcin
+m_lectorptico m_lectorptico
+m_manualmaterias m_manualmaterias
+end type
+
+on m_capturamaterias.create
+call super::create
+this.text = "Captura materias"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_lectorptico=create m_lectorptico
+this.m_manualmaterias=create m_manualmaterias
+this.Item[UpperBound(this.Item)+1]=this.m_lectorptico
+this.Item[UpperBound(this.Item)+1]=this.m_manualmaterias
+end on
+
+on m_capturamaterias.destroy
+call super::destroy
+destroy(this.m_lectorptico)
+destroy(this.m_manualmaterias)
+end on
+
+type m_lectorptico from menu within m_capturamaterias
+end type
+
+on m_lectorptico.create
+call super::create
+this.visible = false
+this.text = "Lector óptico"
+this.enabled = false
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;opensheet(w_mat_preinsc,w_principal,4,Original!)
+end event
+
+on m_lectorptico.destroy
+call super::destroy
+end on
+
+type m_manualmaterias from menu within m_capturamaterias
+end type
+
+on m_manualmaterias.create
+call super::create
+this.text = "Manual"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;opensheet(w_cap_mat_preinsc_2013,w_principal,4,Layered!)
+end event
+
+on m_manualmaterias.destroy
+call super::destroy
+end on
+
+type m_- from menu within m_preinscripcin
+end type
+
+on m_-.create
+call super::create
+this.text = "-"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_-.destroy
+call super::destroy
+end on
+
+type m_reportespreinscripcion from menu within m_preinscripcin
+m_materiaspreinscritas m_materiaspreinscritas
+end type
+
+on m_reportespreinscripcion.create
+call super::create
+this.text = "Reportes"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_materiaspreinscritas=create m_materiaspreinscritas
+this.Item[UpperBound(this.Item)+1]=this.m_materiaspreinscritas
+end on
+
+on m_reportespreinscripcion.destroy
+call super::destroy
+destroy(this.m_materiaspreinscritas)
+end on
+
+type m_materiaspreinscritas from menu within m_reportespreinscripcion
+end type
+
+on m_materiaspreinscritas.create
+call super::create
+this.text = "Materias preinscritas"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;opensheet(w_rep_mat_preinsc,w_principal,4,Original!)
+end event
+
+on m_materiaspreinscritas.destroy
+call super::destroy
+end on
+
+type m_revalidacion from menu within m_principal
+m_solicitudderevalidacion m_solicitudderevalidacion
+m_propuestaderevalidacion m_propuestaderevalidacion
+m_pliegoderevalidacion m_pliegoderevalidacion
+m_inscribeaspirantesporrevalidacion m_inscribeaspirantesporrevalidacion
+m_formatohorasderevalicacion m_formatohorasderevalicacion
+m_separador m_separador
+m_bitacora m_bitacora
+end type
+
+on m_revalidacion.create
+call super::create
+this.text = "Revalidacion"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_solicitudderevalidacion=create m_solicitudderevalidacion
+this.m_propuestaderevalidacion=create m_propuestaderevalidacion
+this.m_pliegoderevalidacion=create m_pliegoderevalidacion
+this.m_inscribeaspirantesporrevalidacion=create m_inscribeaspirantesporrevalidacion
+this.m_formatohorasderevalicacion=create m_formatohorasderevalicacion
+this.m_separador=create m_separador
+this.m_bitacora=create m_bitacora
+this.Item[UpperBound(this.Item)+1]=this.m_solicitudderevalidacion
+this.Item[UpperBound(this.Item)+1]=this.m_propuestaderevalidacion
+this.Item[UpperBound(this.Item)+1]=this.m_pliegoderevalidacion
+this.Item[UpperBound(this.Item)+1]=this.m_inscribeaspirantesporrevalidacion
+this.Item[UpperBound(this.Item)+1]=this.m_formatohorasderevalicacion
+this.Item[UpperBound(this.Item)+1]=this.m_separador
+this.Item[UpperBound(this.Item)+1]=this.m_bitacora
+end on
+
+on m_revalidacion.destroy
+call super::destroy
+destroy(this.m_solicitudderevalidacion)
+destroy(this.m_propuestaderevalidacion)
+destroy(this.m_pliegoderevalidacion)
+destroy(this.m_inscribeaspirantesporrevalidacion)
+destroy(this.m_formatohorasderevalicacion)
+destroy(this.m_separador)
+destroy(this.m_bitacora)
+end on
+
+type m_solicitudderevalidacion from menu within m_revalidacion
+end type
+
+event clicked;Setpointer(Hourglass!)
+opensheet(w_solicitud_revalidacion,w_principal,4,Original!)
+end event
+
+on m_solicitudderevalidacion.create
+call super::create
+this.text = "Solicitud de Revalidacion"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_solicitudderevalidacion.destroy
+call super::destroy
+end on
+
+type m_propuestaderevalidacion from menu within m_revalidacion
+end type
+
+event clicked;Setpointer(Hourglass!)
+opensheet(w_propuesta_revalidacion,w_principal,4,Original!)
+end event
+
+on m_propuestaderevalidacion.create
+call super::create
+this.text = "Propuesta de Revalidacion"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_propuestaderevalidacion.destroy
+call super::destroy
+end on
+
+type m_pliegoderevalidacion from menu within m_revalidacion
+end type
+
+event clicked;Setpointer(Hourglass!)
+opensheet(w_pliego_revalidacion,w_principal,4,Original!)
+end event
+
+on m_pliegoderevalidacion.create
+call super::create
+this.text = "Pliego de Revalidacion"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_pliegoderevalidacion.destroy
+call super::destroy
+end on
+
+type m_inscribeaspirantesporrevalidacion from menu within m_revalidacion
+end type
+
+event clicked;Setpointer(Hourglass!)
+opensheet(w_inscribe_asp_reval,w_principal,4,Original!)
+end event
+
+on m_inscribeaspirantesporrevalidacion.create
+call super::create
+this.text = "Inscribe Aspirantes por Revalidacion"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_inscribeaspirantesporrevalidacion.destroy
+call super::destroy
+end on
+
+type m_formatohorasderevalicacion from menu within m_revalidacion
+end type
+
+event clicked;Setpointer(Hourglass!)
+opensheet(w_formato_horas_revalidacion,w_principal,4,Original!)
+end event
+
+on m_formatohorasderevalicacion.create
+call super::create
+this.text = "Formato Horas de Revalidacion"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_formatohorasderevalicacion.destroy
+call super::destroy
+end on
+
+type m_separador from menu within m_revalidacion
+end type
+
+on m_separador.create
+call super::create
+this.text = "-"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_separador.destroy
+call super::destroy
+end on
+
+type m_bitacora from menu within m_revalidacion
+end type
+
+event clicked;Setpointer(Hourglass!)
+opensheet(w_bitacora_revalidacion,w_principal,4,Original!)
+end event
+
+on m_bitacora.create
+call super::create
+this.text = "Bitácora"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_bitacora.destroy
+call super::destroy
+end on
+
+type m_reportes from menu within m_principal
+m_solicituddematerias m_solicituddematerias
+m_solicituddemateriasporcuenta m_solicituddemateriasporcuenta
+m_adeudosdeprerrequisitodeingles m_adeudosdeprerrequisitodeingles
+end type
+
+on m_reportes.create
+call super::create
+this.text = "Reportes"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_solicituddematerias=create m_solicituddematerias
+this.m_solicituddemateriasporcuenta=create m_solicituddemateriasporcuenta
+this.m_adeudosdeprerrequisitodeingles=create m_adeudosdeprerrequisitodeingles
+this.Item[UpperBound(this.Item)+1]=this.m_solicituddematerias
+this.Item[UpperBound(this.Item)+1]=this.m_solicituddemateriasporcuenta
+this.Item[UpperBound(this.Item)+1]=this.m_adeudosdeprerrequisitodeingles
+end on
+
+on m_reportes.destroy
+call super::destroy
+destroy(this.m_solicituddematerias)
+destroy(this.m_solicituddemateriasporcuenta)
+destroy(this.m_adeudosdeprerrequisitodeingles)
+end on
+
+type m_solicituddematerias from menu within m_reportes
+end type
+
+on m_solicituddematerias.create
+call super::create
+this.text = "Solicitud de Materias"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;opensheet(w_solicitud_materias,w_principal,4,Original!)
+end event
+
+on m_solicituddematerias.destroy
+call super::destroy
+end on
+
+type m_solicituddemateriasporcuenta from menu within m_reportes
+end type
+
+event clicked;opensheet(w_solicitud_materias_cuenta,w_principal,4,Original!)
+end event
+
+on m_solicituddemateriasporcuenta.create
+call super::create
+this.text = "Solicitud de Materias por Cuenta"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_solicituddemateriasporcuenta.destroy
+call super::destroy
+end on
+
+type m_adeudosdeprerrequisitodeingles from menu within m_reportes
+end type
+
+event clicked;opensheet(w_adeudos_prerrequisito_ing,w_principal,4,Original!)
+end event
+
+on m_adeudosdeprerrequisitodeingles.create
+call super::create
+this.text = "Adeudos de Prerrequisito de Inglés"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_adeudosdeprerrequisitodeingles.destroy
+call super::destroy
+end on
+
+type m_servidores from menu within m_principal
+m_trmitesporcorreo m_trmitesporcorreo
+m_-1 m_-1
+m_reportesservidores m_reportesservidores
+m_separador2 m_separador2
+m_bitacoraaccesos m_bitacoraaccesos
+m_bitacorabloqueos m_bitacorabloqueos
+m_bitácoracontrasenas m_bitácoracontrasenas
+m_bitacoracambioacceso m_bitacoracambioacceso
+m_-separa m_-separa
+m_desbloqueoalumnos m_desbloqueoalumnos
+m_transferenciadealumnosainternet m_transferenciadealumnosainternet
+m_transferenciapreinscripcionsql-sybase m_transferenciapreinscripcionsql-sybase
+m_consultadesolicituddematerias m_consultadesolicituddematerias
+m_solicituddetramitesporinternet m_solicituddetramitesporinternet
+end type
+
+on m_servidores.create
+call super::create
+this.text = "Servicios"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_trmitesporcorreo=create m_trmitesporcorreo
+this.m_-1=create m_-1
+this.m_reportesservidores=create m_reportesservidores
+this.m_separador2=create m_separador2
+this.m_bitacoraaccesos=create m_bitacoraaccesos
+this.m_bitacorabloqueos=create m_bitacorabloqueos
+this.m_bitácoracontrasenas=create m_bitácoracontrasenas
+this.m_bitacoracambioacceso=create m_bitacoracambioacceso
+this.m_-separa=create m_-separa
+this.m_desbloqueoalumnos=create m_desbloqueoalumnos
+this.m_transferenciadealumnosainternet=create m_transferenciadealumnosainternet
+this.m_transferenciapreinscripcionsql-sybase=create m_transferenciapreinscripcionsql-sybase
+this.m_consultadesolicituddematerias=create m_consultadesolicituddematerias
+this.m_solicituddetramitesporinternet=create m_solicituddetramitesporinternet
+this.Item[UpperBound(this.Item)+1]=this.m_trmitesporcorreo
+this.Item[UpperBound(this.Item)+1]=this.m_-1
+this.Item[UpperBound(this.Item)+1]=this.m_reportesservidores
+this.Item[UpperBound(this.Item)+1]=this.m_separador2
+this.Item[UpperBound(this.Item)+1]=this.m_bitacoraaccesos
+this.Item[UpperBound(this.Item)+1]=this.m_bitacorabloqueos
+this.Item[UpperBound(this.Item)+1]=this.m_bitácoracontrasenas
+this.Item[UpperBound(this.Item)+1]=this.m_bitacoracambioacceso
+this.Item[UpperBound(this.Item)+1]=this.m_-separa
+this.Item[UpperBound(this.Item)+1]=this.m_desbloqueoalumnos
+this.Item[UpperBound(this.Item)+1]=this.m_transferenciadealumnosainternet
+this.Item[UpperBound(this.Item)+1]=this.m_transferenciapreinscripcionsql-sybase
+this.Item[UpperBound(this.Item)+1]=this.m_consultadesolicituddematerias
+this.Item[UpperBound(this.Item)+1]=this.m_solicituddetramitesporinternet
+end on
+
+on m_servidores.destroy
+call super::destroy
+destroy(this.m_trmitesporcorreo)
+destroy(this.m_-1)
+destroy(this.m_reportesservidores)
+destroy(this.m_separador2)
+destroy(this.m_bitacoraaccesos)
+destroy(this.m_bitacorabloqueos)
+destroy(this.m_bitácoracontrasenas)
+destroy(this.m_bitacoracambioacceso)
+destroy(this.m_-separa)
+destroy(this.m_desbloqueoalumnos)
+destroy(this.m_transferenciadealumnosainternet)
+destroy(this.m_transferenciapreinscripcionsql-sybase)
+destroy(this.m_consultadesolicituddematerias)
+destroy(this.m_solicituddetramitesporinternet)
+end on
+
+type m_trmitesporcorreo from menu within m_servidores
+end type
+
+on m_trmitesporcorreo.create
+call super::create
+this.visible = false
+this.text = "Trámites por correo"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;opensheet(w_correo_electronico,w_principal,4,Original!)
+end event
+
+on m_trmitesporcorreo.destroy
+call super::destroy
+end on
+
+type m_-1 from menu within m_servidores
+end type
+
+on m_-1.create
+call super::create
+this.visible = false
+this.text = "-"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_-1.destroy
+call super::destroy
+end on
+
+type m_reportesservidores from menu within m_servidores
+m_estadsticasdecorreo m_estadsticasdecorreo
+end type
+
+on m_reportesservidores.create
+call super::create
+this.visible = false
+this.text = "Reportes"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_estadsticasdecorreo=create m_estadsticasdecorreo
+this.Item[UpperBound(this.Item)+1]=this.m_estadsticasdecorreo
+end on
+
+on m_reportesservidores.destroy
+call super::destroy
+destroy(this.m_estadsticasdecorreo)
+end on
+
+type m_estadsticasdecorreo from menu within m_reportesservidores
+end type
+
+on m_estadsticasdecorreo.create
+call super::create
+this.text = "Estadísticas de correo"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;opensheet(w_estadisticas_preinsc,w_principal,4,Original!)
+end event
+
+on m_estadsticasdecorreo.destroy
+call super::destroy
+end on
+
+type m_separador2 from menu within m_servidores
+end type
+
+on m_separador2.create
+call super::create
+this.visible = false
+this.text = "-"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_separador2.destroy
+call super::destroy
+end on
+
+type m_bitacoraaccesos from menu within m_servidores
+end type
+
+event clicked;opensheet(w_bit_acceso_uia_2013,w_principal,4,Layered!)
+end event
+
+on m_bitacoraaccesos.create
+call super::create
+this.text = "Bitácora Accesos"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_bitacoraaccesos.destroy
+call super::destroy
+end on
+
+type m_bitacorabloqueos from menu within m_servidores
+end type
+
+event clicked;opensheet(w_bit_bloqueo_uia_2013,w_principal,4,Layered!)
+end event
+
+on m_bitacorabloqueos.create
+call super::create
+this.text = "Bitácora Bloqueos"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_bitacorabloqueos.destroy
+call super::destroy
+end on
+
+type m_bitácoracontrasenas from menu within m_servidores
+end type
+
+event clicked;opensheet(w_bit_password_uia_2013,w_principal,4,layered!)
+end event
+
+on m_bitácoracontrasenas.create
+call super::create
+this.text = "Bitácora Contraseñas"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_bitácoracontrasenas.destroy
+call super::destroy
+end on
+
+type m_bitacoracambioacceso from menu within m_servidores
+end type
+
+event clicked;opensheet(w_bit_alumno_cambio_password_uia_2013,w_principal,4,layered!)
+end event
+
+on m_bitacoracambioacceso.create
+call super::create
+this.text = "Bitácora Cambio Acceso"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_bitacoracambioacceso.destroy
+call super::destroy
+end on
+
+type m_-separa from menu within m_servidores
+end type
+
+on m_-separa.create
+call super::create
+this.text = "-"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_-separa.destroy
+call super::destroy
+end on
+
+type m_desbloqueoalumnos from menu within m_servidores
+end type
+
+event clicked;opensheet(w_desbloqueo_cuenta_uia,w_principal,4,Original!)
+end event
+
+on m_desbloqueoalumnos.create
+call super::create
+this.text = "Desbloqueo Alumnos"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_desbloqueoalumnos.destroy
+call super::destroy
+end on
+
+type m_transferenciadealumnosainternet from menu within m_servidores
+end type
+
+event clicked;opensheet(w_actualiza_sybase_sql_2013,w_principal,4,Layered!)
+end event
+
+on m_transferenciadealumnosainternet.create
+call super::create
+this.text = "Transferencia de Alumnos a Internet"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_transferenciadealumnosainternet.destroy
+call super::destroy
+end on
+
+type m_transferenciapreinscripcionsql-sybase from menu within m_servidores
+end type
+
+event clicked;opensheet(w_actualiza_preinscripcion_2013,w_principal,4,layered!)
+end event
+
+on m_transferenciapreinscripcionsql-sybase.create
+call super::create
+this.text = "Transferencia Preinscripcion SQL - SYBASE"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_transferenciapreinscripcionsql-sybase.destroy
+call super::destroy
+end on
+
+type m_consultadesolicituddematerias from menu within m_servidores
+end type
+
+event clicked;opensheet(w_consulta_sol_mat,w_principal,4,Original!)
+end event
+
+on m_consultadesolicituddematerias.create
+call super::create
+this.text = "Consulta de Solicitud de Materias"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_consultadesolicituddematerias.destroy
+call super::destroy
+end on
+
+type m_solicituddetramitesporinternet from menu within m_servidores
+end type
+
+event clicked;setpointer(Hourglass!)
+opensheet(w_procesa_solicitud_tramite,w_principal,4,Original!)
+
+end event
+
+on m_solicituddetramitesporinternet.create
+call super::create
+this.text = "Solicitud de Trámites por Internet"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_solicituddetramitesporinternet.destroy
+call super::destroy
+end on
+
+type m_enlace from menu within m_principal
+m_enlacesce--credenciales m_enlacesce--credenciales
+m_enlacesce--informes m_enlacesce--informes
+end type
+
+on m_enlace.create
+call super::create
+this.visible = false
+this.text = "Enlace"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_enlacesce--credenciales=create m_enlacesce--credenciales
+this.m_enlacesce--informes=create m_enlacesce--informes
+this.Item[UpperBound(this.Item)+1]=this.m_enlacesce--credenciales
+this.Item[UpperBound(this.Item)+1]=this.m_enlacesce--informes
+end on
+
+on m_enlace.destroy
+call super::destroy
+destroy(this.m_enlacesce--credenciales)
+destroy(this.m_enlacesce--informes)
+end on
+
+type m_enlacesce--credenciales from menu within m_enlace
+end type
+
+event clicked;Setpointer(Hourglass!)
+opensheet(w_enlace_sce_credenciales,w_principal,4,Original!)
+end event
+
+on m_enlacesce--credenciales.create
+call super::create
+this.visible = false
+this.text = "Enlace SCE --> Credenciales"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_enlacesce--credenciales.destroy
+call super::destroy
+end on
+
+type m_enlacesce--informes from menu within m_enlace
+end type
+
+event clicked;Setpointer(Hourglass!)
+opensheet(w_enlace_sce_informes,w_principal,4,Original!)
+end event
+
+on m_enlacesce--informes.create
+call super::create
+this.visible = false
+this.text = "Enlace SCE --> Informes"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_enlacesce--informes.destroy
+call super::destroy
+end on
+
+type m_especial from menu within m_principal
+m_cambiodepasword m_cambiodepasword
+m_0 m_0
+m_cambiodetipodeperiodo m_cambiodetipodeperiodo
+end type
+
+on m_especial.create
+call super::create
+this.text = "Especial"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_cambiodepasword=create m_cambiodepasword
+this.m_0=create m_0
+this.m_cambiodetipodeperiodo=create m_cambiodetipodeperiodo
+this.Item[UpperBound(this.Item)+1]=this.m_cambiodepasword
+this.Item[UpperBound(this.Item)+1]=this.m_0
+this.Item[UpperBound(this.Item)+1]=this.m_cambiodetipodeperiodo
+end on
+
+on m_especial.destroy
+call super::destroy
+destroy(this.m_cambiodepasword)
+destroy(this.m_0)
+destroy(this.m_cambiodetipodeperiodo)
+end on
+
+event clicked;//Se habilita opción de menú para cambiar el periodo.
+IF gs_periodo_default =  "C" THEN 
+	m_principal.m_especial.m_cambiodetipodeperiodo.visible = TRUE
+ELSE
+	m_principal.m_especial.m_cambiodetipodeperiodo.visible = FALSE
+END IF 
+
+end event
+
+type m_cambiodepasword from menu within m_especial
+end type
+
+event clicked;setpointer(Hourglass!)
+open(cambio_password)
+end event
+
+on m_cambiodepasword.create
+call super::create
+this.text = "Cambio de Pasword"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_cambiodepasword.destroy
+call super::destroy
+end on
+
+type m_0 from menu within m_especial
+end type
+
+event clicked;opensheet(w_escogerplantel,w_principal,4,Original!)
+end event
+
+on m_0.create
+call super::create
+this.text = "Escoger Plantel"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_0.destroy
+call super::destroy
+end on
+
+type m_cambiodetipodeperiodo from menu within m_especial
+end type
+
+event clicked;setpointer(Hourglass!)
+open(w_cambio_tipo_periodo)
+end event
+
+on m_cambiodetipodeperiodo.create
+call super::create
+this.visible = false
+this.text = "Cambio de Tipo de Periodo"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_cambiodetipodeperiodo.destroy
+call super::destroy
+end on
+
+type m_salir from menu within m_principal
+end type
+
+event clicked;close(w_principal)
+end event
+
+on m_salir.create
+call super::create
+this.text = "Salir"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_salir.destroy
+call super::destroy
+end on
+

@@ -1,0 +1,40 @@
+﻿$PBExportHeader$f_limpia_status_materias.srf
+global type f_limpia_status_materias from function_object
+end type
+
+forward prototypes
+global function integer f_limpia_status_materias (long al_folio)
+end prototypes
+
+global function integer f_limpia_status_materias (long al_folio);//
+//f_limpia_status_materias
+//
+//long al_folio
+//
+
+integer li_codigo
+string ls_mensaje_error
+integer li_status
+
+li_status = 0
+
+
+UPDATE dbo.materias_revalidacion
+SET dbo.materias_revalidacion.status = :li_status
+WHERE dbo.materias_revalidacion.folio = :al_folio
+USING gtr_sce;
+		
+li_codigo= gtr_sce.SqlCode
+ls_mensaje_error= gtr_sce.SqlErrText
+if li_codigo = -1  then
+	ROLLBACK USING gtr_sce;
+	MessageBox("Error al actualizar el status de materias_revalidacion",ls_mensaje_error, StopSign!)
+	return -1
+else
+	COMMIT USING gtr_sce;
+	return 0
+end if
+
+		
+end function
+

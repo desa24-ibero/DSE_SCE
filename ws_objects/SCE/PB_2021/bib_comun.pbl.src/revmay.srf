@@ -1,0 +1,17 @@
+﻿$PBExportHeader$revmay.srf
+$PBExportComments$Función 2 de encriptamiento
+global type revmay from function_object
+end type
+
+forward prototypes
+global subroutine revmay (ref real val)
+end prototypes
+
+global subroutine revmay (ref real val);real xtrg
+if val > 255 then
+   val=val - 255   
+elseif val < 1 then
+	val= 255 - val   
+end if
+end subroutine
+

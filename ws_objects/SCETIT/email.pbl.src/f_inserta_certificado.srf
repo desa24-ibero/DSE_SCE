@@ -1,0 +1,64 @@
+﻿$PBExportHeader$f_inserta_certificado.srf
+global type f_inserta_certificado from function_object
+end type
+
+forward prototypes
+global function long f_inserta_certificado (long al_cuenta, long al_cve_carrera, long al_cve_plan, integer ai_cve_tramite, datetime adttm_fecha)
+end prototypes
+
+global function long f_inserta_certificado (long al_cuenta, long al_cve_carrera, long al_cve_plan, integer ai_cve_tramite, datetime adttm_fecha);//f_inserta_certificado
+//Inserta el certificado en la base de datos
+//Recibe			al_cuenta			long
+//					al_cve_carrera		long
+//					al_cve_plan			long
+//					ai_cve_tramite		int
+//					adttm_fecha			datetime
+//Devuelve		long
+
+integer li_codigo_sql
+string ls_mensaje_sql, ls_nivel,ls_grado
+long ll_num_tramites, ll_null
+integer  li_en_archivo, li_cve_estado_titulo
+integer li_dia, li_mes, li_anio, li_hora, li_minuto, li_segundo
+date ldt_fecha
+time ltm_fecha
+integer li_parcial=1, li_legalizado = 1, li_entrada_arch = 1
+
+ldt_fecha = date(adttm_fecha)
+ltm_fecha = time(adttm_fecha)
+
+//CERTIFICADO TOTAL
+if ai_cve_tramite = 2 then
+	li_parcial =0
+	li_legalizado= 1
+//CERTIFICADO PARCIAL
+elseif ai_cve_tramite = 3 then
+	li_parcial =1
+	li_legalizado = 1
+end if
+
+
+SetNull(ll_null)
+
+INSERT INTO certificado (cuenta,     cve_carrera,     cve_plan,     fecha_inicio, parcial,     legalizado,     entrada_arch)
+                 VALUES (:al_cuenta, :al_cve_carrera, :al_cve_plan, :adttm_fecha, :li_parcial, :li_legalizado, :li_entrada_arch )
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+//Si hubo error al insertar el registro
+	if li_codigo_sql = -1 then
+		ROLLBACK USING gtr_sce;
+		MessageBox("Error al insertar (-1) Cuenta ["+string(al_cuenta)+"] Carrera["+string(al_cve_carrera)+"] Plan["+string(al_cve_plan)+"]", ls_mensaje_sql,StopSign!)
+		return  -1
+//Si se inserto exitosamente
+	elseif li_codigo_sql = 0 then
+		COMMIT USING gtr_sce;
+		return  0
+	end if
+
+RETURN 0
+
+end function
+

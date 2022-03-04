@@ -1,0 +1,32 @@
+﻿$PBExportHeader$f_corrige_renglon_26.srf
+global type f_corrige_renglon_26 from function_object
+end type
+
+forward prototypes
+global function string f_corrige_renglon_26 (string as_string)
+end prototypes
+
+global function string f_corrige_renglon_26 (string as_string);//FUNCION	f_corrige_renglon_26
+//Recibe	as_string
+//Devuelve string
+//La presente función recibe un string utilizado como una lista de calificaciones
+//y elimina el renglón correspondiente a la linea 26 cuando es mayor a 26 caracteres
+
+string ls_cadena, ls_sub_uno, ls_sub_dos
+long ll_longitud, ll_restante
+//El renglon con guiones se encuentra en la posicion 26 y debe ser ignorado en el proceso
+//de lectura de las actas
+ll_longitud= len(as_string)
+if ll_longitud >25 then
+	ll_restante = ll_longitud - 26
+	ls_sub_uno = mid(as_string, 1, 25)
+	ls_sub_dos = mid(as_string, 27, ll_restante)
+	ls_cadena= ls_sub_uno + ls_sub_dos
+	return ls_cadena
+else
+	return as_string
+end if
+
+
+end function
+

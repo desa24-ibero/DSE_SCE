@@ -1,0 +1,53 @@
+﻿$PBExportHeader$dw_perfiles.srd
+$PBExportComments$Perfiles de aspirantes y/o inscritos. Global y por carrera.
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=81 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=3925 color="536870912"  height.autosize=yes)
+table(column=(type=long updatewhereclause=yes name=clv_carr dbname="clv_carr" )
+ retrieve="  SELECT DISTINCT aspiran.clv_carr  
+    FROM aspiran  
+   WHERE ( :ver=99 or aspiran.clv_ver = :ver ) AND  
+         ( aspiran.clv_per = :per ) AND  
+         ( aspiran.anio = :ani ) AND  
+         ( :carr = 9999 OR  
+         aspiran.clv_carr = :carr ) AND  
+         aspiran.pago_exam = 1    
+" arguments=(("ver", number),("per", number),("ani", number),("carr", number),("status", string)) )
+group(level=1 header.height=1 trailer.height=1 by=("clv_carr" ) newpage=yes header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="2" text=""border="0" color="0" x="5" y="4" height="77" width="3255"  name=st_1  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="1" y="4" height="77" width="1719" format="[general]"  name=clv_carr dddw.name=dw_carrera dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+report(band=detail dataobject="dw_#seccion" x="10" y="3080" height="105" width="1422" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("clv_carr"),("1"),("2"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#bachille" x="1756" y="2872" height="105" width="1390" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("9999"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#seccion" x="1756" y="2976" height="105" width="1422" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("9999"),("1"),("1"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#seccion" x="1756" y="3080" height="105" width="1422" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("9999"),("1"),("2"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#bachille" x="10" y="2872" height="105" width="1390" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("clv_carr"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#area" x="1756" y="3184" height="105" width="1381" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("9999"),("1"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#area" x="10" y="3184" height="105" width="1381" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("clv_carr"),("1"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#seccion" x="1756" y="3288" height="105" width="1422" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("9999"),("2"),("1"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#seccion" x="10" y="3288" height="105" width="1422" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("clv_carr"),("2"),("1"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#area" x="1756" y="3808" height="105" width="1381" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("9999"),("2"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#area" x="10" y="3808" height="105" width="1381" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("clv_carr"),("2"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#seccion" x="1756" y="3392" height="105" width="1422" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("9999"),("2"),("2"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#seccion" x="10" y="3392" height="105" width="1422" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("clv_carr"),("2"),("2"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#seccion" x="1756" y="3704" height="105" width="1422" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("9999"),("2"),("5"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#seccion" x="10" y="3704" height="105" width="1422" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("clv_carr"),("2"),("5"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#seccion" x="10" y="3600" height="105" width="1422" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("clv_carr"),("2"),("4"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#seccion" x="1756" y="3600" height="105" width="1422" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("9999"),("2"),("4"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#seccion" x="10" y="3496" height="105" width="1422" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("clv_carr"),("2"),("3"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#seccion" x="1756" y="3496" height="105" width="1422" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("9999"),("2"),("3"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#seccion" x="10" y="2976" height="105" width="1422" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("clv_carr"),("1"),("1"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#status" x="10" y="84" height="301" width="1395" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("clv_carr")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#nacimiento" x="10" y="404" height="321" width="1390" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("clv_carr"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#status" x="1756" y="84" height="301" width="1395" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("9999")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#nacimiento" x="1756" y="404" height="321" width="1386" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("9999"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#transporte" x="10" y="2040" height="693" width="1431" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("clv_carr"),("status")) trail_footer = yes  name=transporte  slideup=directlyabove )
+report(band=detail dataobject="dw_#transporte" x="1756" y="2040" height="693" width="1431" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("9999"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#trabajo" x="1756" y="1616" height="405" width="1386" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("9999"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#trabajo" x="10" y="1616" height="405" width="1390" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("clv_carr"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#sexo" x="5" y="1304" height="293" width="1390" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("clv_carr"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#sexo" x="1751" y="1304" height="293" width="1390" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("9999"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#edad" x="10" y="744" height="533" width="1390" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("clv_carr"),("status")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_#edad" x="1756" y="744" height="533" width="1390" border="0" criteria="" nest_arguments=(("ver"),("per"),("ani"),("9999"),("status")) trail_footer = yes  slideup=directlyabove )

@@ -1,0 +1,696 @@
+﻿$PBExportHeader$m_bitacoras.srm
+forward
+global type m_bitacoras from menu
+end type
+type m_orden from menu within m_bitacoras
+end type
+type m_porcuenta from menu within m_orden
+end type
+type m_porusuario from menu within m_orden
+end type
+type m_p from menu within m_orden
+end type
+type m_orden from menu within m_bitacoras
+m_porcuenta m_porcuenta
+m_porusuario m_porusuario
+m_p m_p
+end type
+type m_reporte from menu within m_bitacoras
+end type
+type m_cambiodenota from menu within m_reporte
+end type
+type m_altamateria from menu within m_reporte
+end type
+type m_bajamateria from menu within m_reporte
+end type
+type m_borrahistoria from menu within m_reporte
+end type
+type m_acserviciosocail from menu within m_reporte
+end type
+type m_acopcionterminal from menu within m_reporte
+end type
+type m_todoslosmovimientos from menu within m_reporte
+end type
+type m_reporte from menu within m_bitacoras
+m_cambiodenota m_cambiodenota
+m_altamateria m_altamateria
+m_bajamateria m_bajamateria
+m_borrahistoria m_borrahistoria
+m_acserviciosocail m_acserviciosocail
+m_acopcionterminal m_acopcionterminal
+m_todoslosmovimientos m_todoslosmovimientos
+end type
+type m_imprime from menu within m_bitacoras
+end type
+type m_imprime from menu within m_bitacoras
+end type
+type m_salvar from menu within m_bitacoras
+end type
+type m_salvar from menu within m_bitacoras
+end type
+type m_fin from menu within m_bitacoras
+end type
+type m_fin from menu within m_bitacoras
+end type
+end forward
+
+global type m_bitacoras from menu
+m_orden m_orden
+m_reporte m_reporte
+m_imprime m_imprime
+m_salvar m_salvar
+m_fin m_fin
+end type
+global m_bitacoras m_bitacoras
+
+on m_bitacoras.create
+m_bitacoras=this
+this.m_orden=create m_orden
+this.m_reporte=create m_reporte
+this.m_imprime=create m_imprime
+this.m_salvar=create m_salvar
+this.m_fin=create m_fin
+this.Item[]={this.m_orden, &
+this.m_reporte, &
+this.m_imprime, &
+this.m_salvar, &
+this.m_fin}
+end on
+
+on m_bitacoras.destroy
+destroy(this.m_orden)
+destroy(this.m_reporte)
+destroy(this.m_imprime)
+destroy(this.m_salvar)
+destroy(this.m_fin)
+end on
+
+type m_orden from menu within m_bitacoras
+m_porcuenta m_porcuenta
+m_porusuario m_porusuario
+m_p m_p
+end type
+
+on m_orden.create
+this.Text="Orden"
+this.m_porcuenta=create m_porcuenta
+this.m_porusuario=create m_porusuario
+this.m_p=create m_p
+this.Item[]={this.m_porcuenta, &
+this.m_porusuario, &
+this.m_p}
+end on
+
+on m_orden.destroy
+destroy(this.m_porcuenta)
+destroy(this.m_porusuario)
+destroy(this.m_p)
+end on
+
+type m_porcuenta from menu within m_orden
+end type
+
+on m_porcuenta.create
+this.Text="Cuenta"
+end on
+
+event clicked;// Fija el orden con el cual apareceran los datos en el data window
+// Juan Campos. Febrero-1997.
+
+IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS"	Then	
+	w_bitacoras.dw_bitacora.SetSort("")
+ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+	w_bitacoras.dw_bitacora_periodo.SetSort("")
+Else
+	MessageBox("Información","No hay un orden definido")
+End if
+
+m_bitacoras.m_orden.m_porcuenta.checked =True
+m_bitacoras.m_orden.m_porusuario.checked =False
+m_bitacoras.m_orden.m_p.checked =False
+
+
+if m_bitacoras.m_reporte.m_cambiodenota.checked then
+	m_bitacoras.m_reporte.m_cambiodenota.triggerevent(clicked!)
+elseif m_bitacoras.m_reporte.m_altamateria.checked then
+	m_bitacoras.m_reporte.m_altamateria.triggerevent(clicked!)
+elseif m_bitacoras.m_reporte.m_bajamateria.checked then
+	m_bitacoras.m_reporte.m_bajamateria.triggerevent(clicked!)
+elseif m_bitacoras.m_reporte.m_borrahistoria.checked then
+	m_bitacoras.m_reporte.m_borrahistoria.triggerevent(clicked!)
+elseif m_bitacoras.m_reporte.m_acopcionterminal.checked then
+	m_bitacoras.m_reporte.m_acopcionterminal.triggerevent(clicked!)
+elseif m_bitacoras.m_reporte.m_acserviciosocail.checked then
+	m_bitacoras.m_reporte.m_acserviciosocail.triggerevent(clicked!)
+elseif m_bitacoras.m_reporte.m_todoslosmovimientos.checked then
+	m_bitacoras.m_reporte.m_todoslosmovimientos.triggerevent(clicked!)
+end if
+
+end event
+
+type m_porusuario from menu within m_orden
+end type
+
+on m_porusuario.create
+this.Text="Usuario"
+end on
+
+event clicked;// Fija el orden con el cual apareceran los datos en el data window
+// Juan Campos. Febrero-1997.
+IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS"	Then
+  	w_bitacoras.dw_bitacora.SetSort("ui_bicamnot_usuario")
+ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+	w_bitacoras.dw_bitacora_periodo.SetSort("ui_bicamnot_usuario")
+Else
+	MessageBox("Información","No hay un orden definido")
+End if
+
+m_bitacoras.m_orden.m_porcuenta.checked =False
+m_bitacoras.m_orden.m_porusuario.checked =True
+m_bitacoras.m_orden.m_p.checked =False
+
+if m_bitacoras.m_reporte.m_cambiodenota.checked then
+	m_bitacoras.m_reporte.m_cambiodenota.triggerevent(clicked!)
+elseif m_bitacoras.m_reporte.m_altamateria.checked then
+	m_bitacoras.m_reporte.m_altamateria.triggerevent(clicked!)
+elseif m_bitacoras.m_reporte.m_bajamateria.checked then
+	m_bitacoras.m_reporte.m_bajamateria.triggerevent(clicked!)
+elseif m_bitacoras.m_reporte.m_borrahistoria.checked then
+	m_bitacoras.m_reporte.m_borrahistoria.triggerevent(clicked!)
+elseif m_bitacoras.m_reporte.m_acopcionterminal.checked then
+	m_bitacoras.m_reporte.m_acopcionterminal.triggerevent(clicked!)
+elseif m_bitacoras.m_reporte.m_acserviciosocail.checked then
+	m_bitacoras.m_reporte.m_acserviciosocail.triggerevent(clicked!)
+elseif m_bitacoras.m_reporte.m_todoslosmovimientos.checked then
+	m_bitacoras.m_reporte.m_todoslosmovimientos.triggerevent(clicked!)
+end if
+
+end event
+
+type m_p from menu within m_orden
+end type
+
+on m_p.create
+this.Text="Fecha"
+end on
+
+event clicked;// Fija el orden con el cual apareceran los datos en el data window
+// Juan Campos. Febrero-1997.
+IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS"	Then
+  	w_bitacoras.dw_bitacora.SetSort("ui_bicamnot_fecha_hora")
+ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+	w_bitacoras.dw_bitacora_periodo.SetSort("ui_bicamnot_fecha_hora")
+Else
+	MessageBox("Información","No hay un orden definido")
+End if
+
+m_bitacoras.m_orden.m_porcuenta.checked =False
+m_bitacoras.m_orden.m_porusuario.checked =False
+m_bitacoras.m_orden.m_p.checked =True
+
+if m_bitacoras.m_reporte.m_cambiodenota.checked then
+	m_bitacoras.m_reporte.m_cambiodenota.triggerevent(clicked!)
+elseif m_bitacoras.m_reporte.m_altamateria.checked then
+	m_bitacoras.m_reporte.m_altamateria.triggerevent(clicked!)
+elseif m_bitacoras.m_reporte.m_bajamateria.checked then
+	m_bitacoras.m_reporte.m_bajamateria.triggerevent(clicked!)
+elseif m_bitacoras.m_reporte.m_borrahistoria.checked then
+	m_bitacoras.m_reporte.m_borrahistoria.triggerevent(clicked!)
+elseif m_bitacoras.m_reporte.m_acopcionterminal.checked then
+	m_bitacoras.m_reporte.m_acopcionterminal.triggerevent(clicked!)
+elseif m_bitacoras.m_reporte.m_acserviciosocail.checked then
+	m_bitacoras.m_reporte.m_acserviciosocail.triggerevent(clicked!)
+elseif m_bitacoras.m_reporte.m_todoslosmovimientos.checked then
+	m_bitacoras.m_reporte.m_todoslosmovimientos.triggerevent(clicked!)
+end if
+
+
+end event
+
+type m_reporte from menu within m_bitacoras
+m_cambiodenota m_cambiodenota
+m_altamateria m_altamateria
+m_bajamateria m_bajamateria
+m_borrahistoria m_borrahistoria
+m_acserviciosocail m_acserviciosocail
+m_acopcionterminal m_acopcionterminal
+m_todoslosmovimientos m_todoslosmovimientos
+end type
+
+on m_reporte.create
+this.Text="Reporte"
+this.m_cambiodenota=create m_cambiodenota
+this.m_altamateria=create m_altamateria
+this.m_bajamateria=create m_bajamateria
+this.m_borrahistoria=create m_borrahistoria
+this.m_acserviciosocail=create m_acserviciosocail
+this.m_acopcionterminal=create m_acopcionterminal
+this.m_todoslosmovimientos=create m_todoslosmovimientos
+this.Item[]={this.m_cambiodenota, &
+this.m_altamateria, &
+this.m_bajamateria, &
+this.m_borrahistoria, &
+this.m_acserviciosocail, &
+this.m_acopcionterminal, &
+this.m_todoslosmovimientos}
+end on
+
+on m_reporte.destroy
+destroy(this.m_cambiodenota)
+destroy(this.m_altamateria)
+destroy(this.m_bajamateria)
+destroy(this.m_borrahistoria)
+destroy(this.m_acserviciosocail)
+destroy(this.m_acopcionterminal)
+destroy(this.m_todoslosmovimientos)
+end on
+
+type m_cambiodenota from menu within m_reporte
+end type
+
+on m_cambiodenota.create
+this.Text="Cambio de Nota"
+end on
+
+event clicked;// Se envia 10 parametros al data window, de los cuales los dos primeros equivalen
+// a el rango de fechas, el tercer parametro equivale a cve_movimiento =  0 (Cero) Cambios de Nota,
+// Los parametros restantes se usan en otras opciones y se envian con valor de 99 por que
+// no hay cve_movimeinto con este valor.
+// Juan Campos. Febrero-1997.
+
+IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS"	Then
+  If w_bitacoras.dw_bitacora.Retrieve(datetime(date(w_bitacoras.em_fecha_inicio.text),time(00:00:00)),datetime(date(w_bitacoras.em_fecha_final.text),time(00:00:00)),0,99,99,99,99,99,99,99) = 0 then
+    MessageBox("Información","No se encontró información de Cambios de Nota con estas fechas") 
+  Else
+    w_bitacoras.dw_bitacora.setfocus()	
+  End if    
+ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+	   If w_bitacoras.dw_bitacora_periodo.Retrieve(w_bitacoras.uo_cap_periodo.año,w_bitacoras.uo_cap_periodo.periodo,0,99,99,99,99,99,99,99) = 0 then
+        MessageBox("Información","No se encontró información de Cambios de Nota con este Periodo") 
+	   Else
+ 		  w_bitacoras.dw_bitacora_periodo.setfocus()	
+      End if    
+End if
+
+m_bitacoras.m_reporte.m_cambiodenota.checked= True
+m_bitacoras.m_reporte.m_altamateria.checked= False
+m_bitacoras.m_reporte.m_bajamateria.checked= False
+m_bitacoras.m_reporte.m_borrahistoria.checked= False
+m_bitacoras.m_reporte.m_acopcionterminal.checked= False
+m_bitacoras.m_reporte.m_acserviciosocail.checked= False
+m_bitacoras.m_reporte.m_todoslosmovimientos.checked= False
+
+end event
+
+type m_altamateria from menu within m_reporte
+end type
+
+on m_altamateria.create
+this.Text="Alta Materia"
+end on
+
+event clicked;// Se envia 10 parametros al data window, de los cuales los dos primeros equivalen
+// a el rango de fechas, el tercer parametro equivale a cve_movimiento =  1 ALTA MATERIA,
+// Los parametros restantes se usan en otras opciones y se envian con valor de 99 por que
+// no hay cve_movimeinto con este valor.
+// Juan Campos. Febrero-1997.
+
+
+IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS"	Then
+  If w_bitacoras.dw_bitacora.Retrieve(datetime(date(w_bitacoras.em_fecha_inicio.text),time(00:00:00)),datetime(date(w_bitacoras.em_fecha_final.text),time(00:00:00)),1,99,99,99,99,99,99,99) = 0 then
+    MessageBox("Información","No se encontró información de Altas de Materia con estas fechas.")
+  else
+	 w_bitacoras.dw_bitacora.setfocus()	
+  End if    
+ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+	   If w_bitacoras.dw_bitacora_periodo.Retrieve(w_bitacoras.uo_cap_periodo.año,w_bitacoras.uo_cap_periodo.periodo,1,99,99,99,99,99,99,99) = 0 then
+        MessageBox("Información","No se encontró información de Altas de Materia con este Periodo") 
+	   else
+		  w_bitacoras.dw_bitacora_periodo.setfocus()	
+      End if    
+End if
+
+m_bitacoras.m_reporte.m_cambiodenota.checked= False
+m_bitacoras.m_reporte.m_altamateria.checked= True
+m_bitacoras.m_reporte.m_bajamateria.checked= False
+m_bitacoras.m_reporte.m_borrahistoria.checked= False
+m_bitacoras.m_reporte.m_acopcionterminal.checked= False
+m_bitacoras.m_reporte.m_acserviciosocail.checked= False
+m_bitacoras.m_reporte.m_todoslosmovimientos.checked= False
+
+end event
+
+type m_bajamateria from menu within m_reporte
+end type
+
+on m_bajamateria.create
+this.Text="Baja Materia"
+end on
+
+event clicked;// Se envia 10 parametros al data window, de los cuales los dos primeros equivalen
+// a el rango de fechas, el tercer parametro equivale a cve_movimiento =  2 BAJA MATERIA,
+// Los parametros restantes se usan en otras opciones y se envian con valor de 99 por que
+// no hay cve_movimeinto con este valor.
+// Juan Campos. Febrero-1997.
+
+
+IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS"	Then
+  If w_bitacoras.dw_bitacora.Retrieve(datetime(date(w_bitacoras.em_fecha_inicio.text),time(00:00:00)),datetime(date(w_bitacoras.em_fecha_final.text),time(00:00:00)),2,99,99,99,99,99,99,99) = 0 then
+    MessageBox("Información","No se encontró información de bajas de Materias con estas fechas.")
+  else
+	 w_bitacoras.dw_bitacora.setfocus()	
+  End if  
+ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+	   If w_bitacoras.dw_bitacora_periodo.Retrieve(w_bitacoras.uo_cap_periodo.año,w_bitacoras.uo_cap_periodo.periodo,2,99,99,99,99,99,99,99) = 0 then
+        MessageBox("Información","No se encontró información de Bajas de Materias con este Periodo") 
+	   else
+		 w_bitacoras.dw_bitacora_periodo.setfocus()	
+      End if    
+End if
+
+m_bitacoras.m_reporte.m_cambiodenota.checked= False
+m_bitacoras.m_reporte.m_altamateria.checked= False
+m_bitacoras.m_reporte.m_bajamateria.checked= True
+m_bitacoras.m_reporte.m_borrahistoria.checked= False
+m_bitacoras.m_reporte.m_acopcionterminal.checked= False
+m_bitacoras.m_reporte.m_acserviciosocail.checked= False
+m_bitacoras.m_reporte.m_todoslosmovimientos.checked= False
+
+end event
+
+type m_borrahistoria from menu within m_reporte
+end type
+
+on m_borrahistoria.create
+this.Text="Borra Historia"
+end on
+
+event clicked;// Se envia 10 parametros al data window, de los cuales los dos primeros equivalen
+// a el rango de fechas, el tercer parametro equivale a cve_movimiento =  3 BORRA HISTORIA,
+// Los parametros restantes se usan en otras opciones y se envian con valor de 99 por que
+// no hay cve_movimeinto con este valor.
+// Juan Campos. Febrero-1997.
+
+
+IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS"	Then
+  If w_bitacoras.dw_bitacora.Retrieve(datetime(date(w_bitacoras.em_fecha_inicio.text),time(00:00:00)),datetime(date(w_bitacoras.em_fecha_final.text),time(00:00:00)),3,99,99,99,99,99,99,99) = 0 then
+    MessageBox("Información","No se encontró información de Borra Historia con estas fechas.")
+  else
+	 w_bitacoras.dw_bitacora.setfocus()	
+  End if  
+ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+	   If w_bitacoras.dw_bitacora_periodo.Retrieve(w_bitacoras.uo_cap_periodo.año,w_bitacoras.uo_cap_periodo.periodo,3,99,99,99,99,99,99,99) = 0 then
+        MessageBox("Información","No se encontró información de Borra Historia con este Periodo") 
+  	   else
+		  w_bitacoras.dw_bitacora_periodo.setfocus()	
+      End if    
+End if
+
+m_bitacoras.m_reporte.m_cambiodenota.checked= False
+m_bitacoras.m_reporte.m_altamateria.checked= False
+m_bitacoras.m_reporte.m_bajamateria.checked= False
+m_bitacoras.m_reporte.m_borrahistoria.checked= True
+m_bitacoras.m_reporte.m_acopcionterminal.checked= False
+m_bitacoras.m_reporte.m_acserviciosocail.checked= False
+m_bitacoras.m_reporte.m_todoslosmovimientos.checked= False
+
+end event
+
+type m_acserviciosocail from menu within m_reporte
+end type
+
+on m_acserviciosocail.create
+this.Text="Ac Servicio Socail"
+end on
+
+event clicked;// Se envia 10 parametros al data window, de los cuales los dos primeros equivalen
+// a el rango de fechas, el tercer parametro equivale a cve_movimiento =  4 AC_SERVICIO_SOCIAL,
+// Los parametros restantes se usan en otras opciones y se envian con valor de 99 por que
+// no hay cve_movimeinto con este valor.
+// Juan Campos. Febrero-1997.
+
+IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS"	Then
+  If w_bitacoras.dw_bitacora.Retrieve(datetime(date(w_bitacoras.em_fecha_inicio.text),time(00:00:00)),datetime(date(w_bitacoras.em_fecha_final.text),time(00:00:00)),4,99,99,99,99,99,99,99) = 0 then
+    MessageBox("Información","No se encontró información de Acreditación Servicio Social con estas fechas.")
+  else
+	 w_bitacoras.dw_bitacora.setfocus()	
+  End if  
+ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+	   If w_bitacoras.dw_bitacora_periodo.Retrieve(w_bitacoras.uo_cap_periodo.año,w_bitacoras.uo_cap_periodo.periodo,4,99,99,99,99,99,99,99) = 0 then
+        MessageBox("Información","No se encontró información de Acreditación Servicio Social con este Periodo") 
+	   else
+		 w_bitacoras.dw_bitacora_periodo.setfocus()	
+      End if    
+End if
+
+m_bitacoras.m_reporte.m_cambiodenota.checked= False
+m_bitacoras.m_reporte.m_altamateria.checked= False
+m_bitacoras.m_reporte.m_bajamateria.checked= False
+m_bitacoras.m_reporte.m_borrahistoria.checked= False
+m_bitacoras.m_reporte.m_acopcionterminal.checked= False
+m_bitacoras.m_reporte.m_acserviciosocail.checked= True
+m_bitacoras.m_reporte.m_todoslosmovimientos.checked= False
+
+end event
+
+type m_acopcionterminal from menu within m_reporte
+end type
+
+on m_acopcionterminal.create
+this.Text="Ac Opción Terminal"
+end on
+
+event clicked;// Se envia 10 parametros al data window, de los cuales los dos primeros equivalen
+// a el rango de fechas, el tercero, cuarto y quinto equivalen a: cve_movimiento = 5,6,7,
+// ALTA_OPCION_TERMINAL, BAJA_OPCION_TERMINAL, CAMBIO_OPCION_TERMINAL.
+// Los parametros restantes se usan en otras opciones y se envian con valor de 99 por que
+// no hay cve_movimeinto con este valor.
+// Juan Campos. Febrero-1997.
+
+
+IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS"	Then
+  If w_bitacoras.dw_bitacora.Retrieve(datetime(date(w_bitacoras.em_fecha_inicio.text),time(00:00:00)),datetime(date(w_bitacoras.em_fecha_final.text),time(00:00:00)),5,6,7,99,99,99,99,99) = 0 then
+    MessageBox("Información","No se encontró información de Acreditación Opción Terminal con estas fechas.")
+  else
+	 w_bitacoras.dw_bitacora.setfocus()	
+  End if  
+ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+	   If w_bitacoras.dw_bitacora_periodo.Retrieve(w_bitacoras.uo_cap_periodo.año,w_bitacoras.uo_cap_periodo.periodo,5,6,7,99,99,99,99,99) = 0 then
+        MessageBox("Información","No se encontró información de Acreditación Opción Terminal con este Periodo") 
+	   else
+		  w_bitacoras.dw_bitacora_periodo.setfocus()	
+      End if    
+End if
+
+m_bitacoras.m_reporte.m_cambiodenota.checked= False
+m_bitacoras.m_reporte.m_altamateria.checked= False
+m_bitacoras.m_reporte.m_bajamateria.checked= False
+m_bitacoras.m_reporte.m_borrahistoria.checked= False
+m_bitacoras.m_reporte.m_acopcionterminal.checked= True
+m_bitacoras.m_reporte.m_acserviciosocail.checked= False
+m_bitacoras.m_reporte.m_todoslosmovimientos.checked= False
+
+end event
+
+type m_todoslosmovimientos from menu within m_reporte
+end type
+
+event clicked;// Se envia 10 parametros al data window, de los cuales los dos primeros equivalen
+// a el rango de fechas. Los parametros restantes equivalen a todos los movimientos
+// Juan Campos. Febrero-1997.
+
+IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS"	Then
+  	If w_bitacoras.dw_bitacora.Retrieve(datetime(date(w_bitacoras.em_fecha_inicio.text),time(00:00:00)),datetime(date(w_bitacoras.em_fecha_final.text),time(00:00:00)),0,1,2,3,4,5,6,7) = 0 then
+    		MessageBox("Información","No se encontró información con estas fechas.")
+  	else
+	 	w_bitacoras.dw_bitacora.setfocus()	
+  	End if   
+ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+//	messagebox("año",long(w_bitacoras.uo_cap_periodo.año))
+//     messagebox("periodo",long(w_bitacoras.uo_cap_periodo.periodo))
+	If w_bitacoras.dw_bitacora_periodo.Retrieve(w_bitacoras.uo_cap_periodo.año,w_bitacoras.uo_cap_periodo.periodo,0,1,2,3,4,5,6,7) = 0 then
+    		MessageBox("Información","No se encontró información con este periodo") 
+	else
+		 w_bitacoras.dw_bitacora_periodo.setfocus()	
+     End if    
+End if
+
+m_bitacoras.m_reporte.m_cambiodenota.checked= False
+m_bitacoras.m_reporte.m_altamateria.checked= False
+m_bitacoras.m_reporte.m_bajamateria.checked= False
+m_bitacoras.m_reporte.m_borrahistoria.checked= False
+m_bitacoras.m_reporte.m_acopcionterminal.checked= False
+m_bitacoras.m_reporte.m_acserviciosocail.checked= False
+m_bitacoras.m_reporte.m_todoslosmovimientos.checked= True
+ 
+end event
+
+on m_todoslosmovimientos.create
+this.Text="Todos Los Movimientos"
+this.ToolBarItemText="Todos los Movimientos"
+end on
+
+type m_imprime from menu within m_bitacoras
+end type
+
+on m_imprime.create
+this.Text="Imprime"
+this.ToolBarItemName="Print!"
+this.ToolBarItemText="Imprime Bitácora Histórico"
+end on
+
+on m_imprime.destroy
+end on
+
+event clicked;// Imprime el data window que corresponda al proceso que previamente se seleccionó
+// Juan Campos.   Febrero-1997.
+
+Long    Job 
+Integer EstasSeguro
+ 
+SetPointer(Hourglass!)  	
+
+Job = PrintOpen("Reporte Bitacora" )  
+
+EstasSeguro = MessageBox("Aviso","Esta seguro que desea imprimir este reporte de bitacora",Question!,YesNo!,1)
+
+IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" And	EstasSeguro = 1 Then
+  PrintDataWindow(Job,w_bitacoras.dw_bitacora)  
+ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" And	EstasSeguro = 1 Then
+	   PrintDataWindow(Job,w_bitacoras.dw_bitacora_periodo)   
+End if
+ 
+PrintClose(job)
+ 
+ 
+  
+end event
+
+type m_salvar from menu within m_bitacoras
+end type
+
+event clicked;int in_value
+string st_docname,st_named
+
+in_value = GetFileSaveName("Selecciona Archivo",  & 
+	st_docname, st_named, "CSV",  &
+	" Comma-separated in_values,*.CSV," +&
+	" dBASE-III format,*.DBF," +&
+	" Data Interchange Format,*.DIF," +&
+	" Microsoft Excel format,*.XLS," +&
+	" Text with HTML formatting that approximates the DataWindow layout,*.HTM," +&
+	" Powersoft Report (PSR) format,*.PSR," +&
+	" SQL syntax,*.SQL," +&
+	" Microsoft Multiplan format,*.SYL," +&
+	" Tab-separated columns with a return at the end of each row,*.TXT," +&
+	" Lotus 1-2-3 format,*.WKS," +&
+	" Lotus 1-2-3 format,*.WK1," +&
+	" Windows Metafile format,*.WMF,")
+
+IF in_value = 1 THEN
+	CHOOSE CASE Right (st_named, 3) 
+		CASE "CSV"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,CSV!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,CSV!, FALSE)
+			End if
+		CASE "DBF"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,dBASE3!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,dBASE3!, FALSE)
+			End if
+		CASE "DIF"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,DIF!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,DIF!, FALSE)
+			End if
+		CASE "XLS"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,Excel!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,Excel!, FALSE)
+			End if
+		CASE "HTM"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,HTMLTable!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,HTMLTable!, FALSE)
+			End if
+		CASE "PSR"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,PSReport!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,PSReport!, FALSE)
+			End if
+		CASE "SQL"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,SQLInsert!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,SQLInsert!, FALSE)
+			End if
+		CASE "SYL"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,SYLK!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,SYLK!, FALSE)
+			End if
+		CASE "TXT"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,Text!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,Text!, FALSE)
+			End if
+		CASE "WKS"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,WKS!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,WKS!, FALSE)
+			End if
+		CASE "WK1"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,WK1!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,WK1!, FALSE)
+			End if
+		CASE "WMF"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,WMF!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,WMF!, FALSE)
+			End if
+	END CHOOSE
+else
+	IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+	  w_bitacoras.dw_bitacora.SaveAs(st_docname,Clipboard!, FALSE)
+	ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+		w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,Clipboard!, FALSE)
+	End if
+end if
+end event
+
+on m_salvar.create
+this.Text="Salvar"
+this.ToolBarItemName="Save!"
+end on
+
+on m_salvar.destroy
+end on
+
+type m_fin from menu within m_bitacoras
+end type
+
+on m_fin.create
+this.Text="Salir"
+this.ToolBarItemName="Exit!"
+this.ToolBarItemText="Salir Reporte Bitácora"
+end on
+
+on m_fin.destroy
+end on
+
+event clicked;Close(w_bitacoras)
+end event
+

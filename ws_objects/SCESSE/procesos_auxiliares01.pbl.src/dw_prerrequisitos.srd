@@ -1,0 +1,37 @@
+﻿$PBExportHeader$dw_prerrequisitos.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=79741120 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=65 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cve_mat dbname="prerrequisitos.cve_mat" )
+ column=(type=long updatewhereclause=yes name=cve_carrera dbname="prerrequisitos.cve_carrera" )
+ column=(type=long updatewhereclause=yes name=cve_plan dbname="prerrequisitos.cve_plan" )
+ column=(type=long updatewhereclause=yes name=cve_prerreq dbname="prerrequisitos.cve_prerreq" )
+ column=(type=char(1) updatewhereclause=yes name=enlace dbname="prerrequisitos.enlace" )
+ column=(type=long updatewhereclause=yes name=orden dbname="prerrequisitos.orden" )
+ retrieve="  SELECT prerrequisitos.cve_mat,   
+         prerrequisitos.cve_carrera,   
+         prerrequisitos.cve_plan,   
+         prerrequisitos.cve_prerreq,   
+         prerrequisitos.enlace,
+			prerrequisitos.orden
+    FROM prerrequisitos   
+WHERE (prerrequisitos.cve_mat = :Materia) and   
+      (prerrequisitos.cve_carrera = :Carrera) and   
+      (prerrequisitos.cve_plan = :Plan) 
+order by orden
+" arguments=(("materia", number),("carrera", number),("plan", number))  sort="orden A " )
+text(band=header alignment="2" text="Cve Plan"border="0" color="0" x="759" y="4" height="65" width="330"  name=cve_plan_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Prerreq"border="0" color="0" x="1116" y="4" height="65" width="334"  name=cve_prerreq_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Enlace"border="0" color="0" x="1477" y="4" height="65" width="183"  name=enlace_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Orden"border="0" color="0" x="1687" y="4" height="65" width="161"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Mat"border="0" color="0" x="46" y="4" height="65" width="330"  name=cve_mat_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Carrera"border="0" color="0" x="403" y="4" height="65" width="330"  name=cve_carrera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="5" color="0" x="46" y="4" height="77" width="330" format="[general]"  name=cve_mat edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="5" color="0" x="403" y="4" height="77" width="330" format="[general]"  name=cve_carrera edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="5" color="0" x="759" y="4" height="77" width="330" format="[general]"  name=cve_plan edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="5" color="255" x="1116" y="4" height="77" width="334" format="[general]"  name=cve_prerreq edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="5" color="0" x="1477" y="4" height="77" width="183" format="[general]"  name=enlace edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="5" color="0" x="1687" y="4" height="77" width="161" format="[general]"  name=orden edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )

@@ -1,0 +1,1 @@
+REGSVR32 seguro.dll

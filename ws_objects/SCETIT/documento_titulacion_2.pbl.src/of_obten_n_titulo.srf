@@ -1,0 +1,40 @@
+﻿$PBExportHeader$of_obten_n_titulo.srf
+global type of_obten_n_titulo from function_object
+end type
+
+forward prototypes
+global function long of_obten_n_titulo (long al_cve_secuencia)
+end prototypes
+
+global function long of_obten_n_titulo (long al_cve_secuencia);//of_obten_n_titulo
+//Recibe:	al_cve_secuencia	long
+
+int li_codigo_sql
+string ls_mensaje
+long ll_n_titulo
+
+
+SELECT max(n_titulo)
+INTO :ll_n_titulo
+FROM folio_titulacion
+WHERE cve_secuencia = :al_cve_secuencia
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje = gtr_sce.SqlErrText
+
+IF li_codigo_sql = -1 THEN
+	MessageBox("Error al consultar folio_titulacion",ls_mensaje, StopSign!)	
+	return -1
+END IF
+
+IF ISNULL(ll_n_titulo) THEN
+	ll_n_titulo= 0
+END IF
+
+
+RETURN ll_n_titulo
+
+
+end function
+

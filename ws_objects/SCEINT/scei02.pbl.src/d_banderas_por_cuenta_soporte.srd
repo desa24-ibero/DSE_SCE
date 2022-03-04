@@ -1,0 +1,116 @@
+﻿$PBExportHeader$d_banderas_por_cuenta_soporte.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+header(height=72 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=baja_laboratorio dbname="banderas.baja_laboratorio" )
+ column=(type=long updatewhereclause=yes name=insc_sem_ant dbname="banderas.insc_sem_ant" )
+ column=(type=long updatewhereclause=yes name=cve_flag_promedio dbname="banderas.cve_flag_promedio" )
+ column=(type=long updatewhereclause=yes name=baja_3_reprob dbname="banderas.baja_3_reprob" )
+ column=(type=long updatewhereclause=yes name=baja_4_insc dbname="banderas.baja_4_insc" )
+ column=(type=long updatewhereclause=yes name=baja_disciplina dbname="banderas.baja_disciplina" )
+ column=(type=long updatewhereclause=yes name=baja_documentos dbname="banderas.baja_documentos" )
+ column=(type=long updatewhereclause=yes name=invasor_hora dbname="banderas.invasor_hora" )
+ column=(type=long updatewhereclause=yes name=exten_cred dbname="banderas.exten_cred" )
+ column=(type=long updatewhereclause=yes name=cve_flag_prerreq_ingles dbname="banderas.cve_flag_prerreq_ingles" )
+ column=(type=long updatewhereclause=yes name=cve_flag_serv_social dbname="banderas.cve_flag_serv_social" )
+ column=(type=long updatewhereclause=yes name=puede_integracion dbname="banderas.puede_integracion" )
+ column=(type=long updatewhereclause=yes name=tema_fundamental_1 dbname="banderas.tema_fundamental_1" )
+ column=(type=long updatewhereclause=yes name=tema_fundamental_2 dbname="banderas.tema_fundamental_2" )
+ column=(type=long updatewhereclause=yes name=tema_1 dbname="banderas.tema_1" )
+ column=(type=long updatewhereclause=yes name=tema_2 dbname="banderas.tema_2" )
+ column=(type=long updatewhereclause=yes name=tema_3 dbname="banderas.tema_3" )
+ column=(type=long updatewhereclause=yes name=tema_4 dbname="banderas.tema_4" )
+ column=(type=long updatewhereclause=yes name=creditos_integ dbname="banderas.creditos_integ" )
+ column=(type=long updatewhereclause=yes name=cve_flag_biblioteca dbname="banderas.cve_flag_biblioteca" )
+ column=(type=long updatewhereclause=yes name=cve_flag_diapositeca dbname="banderas.cve_flag_diapositeca" )
+ column=(type=long updatewhereclause=yes name=adeuda_finanzas dbname="banderas.adeuda_finanzas" )
+ column=(type=long updatewhereclause=yes name=verano dbname="banderas.verano" )
+ column=(type=long updatewhereclause=yes name=cuenta dbname="banderas.cuenta" )
+ retrieve="  SELECT banderas.baja_laboratorio,    
+			banderas.insc_sem_ant,   
+         banderas.cve_flag_promedio,   
+         banderas.baja_3_reprob,   
+         banderas.baja_4_insc,   
+         banderas.baja_disciplina,   
+         banderas.baja_documentos,   
+         banderas.invasor_hora,   
+         banderas.exten_cred,   
+         banderas.cve_flag_prerreq_ingles,   
+         banderas.cve_flag_serv_social,   
+         banderas.puede_integracion,   
+         banderas.tema_fundamental_1,   
+         banderas.tema_fundamental_2,   
+         banderas.tema_1,   
+         banderas.tema_2,   
+         banderas.tema_3,   
+         banderas.tema_4,   
+         banderas.creditos_integ,   
+         banderas.cve_flag_biblioteca,   
+         banderas.cve_flag_diapositeca,   
+         banderas.adeuda_finanzas,   
+         banderas.verano,   
+         banderas.cuenta
+    FROM banderas  
+   WHERE banderas.cuenta = :cuenta    " arguments=(("cuenta", number)) )
+text(band=header alignment="2" text="Baja Laboratorio" border="0" color="33554432" x="5" y="4" height="64" width="430" html.valueishtml="0"  name=baja_laboratorio_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Insc Sem Ant" border="0" color="33554432" x="439" y="4" height="64" width="361" html.valueishtml="0"  name=insc_sem_ant_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Flag Promedio" border="0" color="33554432" x="805" y="4" height="64" width="498" html.valueishtml="0"  name=cve_flag_promedio_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Baja 3 Reprob" border="0" color="33554432" x="1307" y="4" height="64" width="375" html.valueishtml="0"  name=baja_3_reprob_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Baja 4 Insc" border="0" color="33554432" x="1687" y="4" height="64" width="329" html.valueishtml="0"  name=baja_4_insc_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Baja Disciplina" border="0" color="33554432" x="2025" y="4" height="64" width="393" html.valueishtml="0"  name=baja_disciplina_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Baja Documentos" border="0" color="33554432" x="2423" y="4" height="64" width="471" html.valueishtml="0"  name=baja_documentos_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Invasor Hora" border="0" color="33554432" x="2898" y="4" height="64" width="329" html.valueishtml="0"  name=invasor_hora_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Exten Cred" border="0" color="33554432" x="3232" y="4" height="64" width="329" html.valueishtml="0"  name=exten_cred_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Flag Prerreq Ingles" border="0" color="33554432" x="3566" y="4" height="64" width="613" html.valueishtml="0"  name=cve_flag_prerreq_ingles_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Flag Serv Social" border="0" color="33554432" x="4183" y="4" height="64" width="544" html.valueishtml="0"  name=cve_flag_serv_social_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Puede Integracion" border="0" color="33554432" x="4731" y="4" height="64" width="475" html.valueishtml="0"  name=puede_integracion_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Tema Fundamental 1" border="0" color="33554432" x="5211" y="4" height="64" width="558" html.valueishtml="0"  name=tema_fundamental_1_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Tema Fundamental 2" border="0" color="33554432" x="5774" y="4" height="64" width="558" html.valueishtml="0"  name=tema_fundamental_2_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Tema 1" border="0" color="33554432" x="6336" y="4" height="64" width="329" html.valueishtml="0"  name=tema_1_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Tema 2" border="0" color="33554432" x="6674" y="4" height="64" width="325" html.valueishtml="0"  name=tema_2_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Tema 3" border="0" color="33554432" x="7008" y="4" height="64" width="329" html.valueishtml="0"  name=tema_3_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Tema 4" border="0" color="33554432" x="7342" y="4" height="64" width="329" html.valueishtml="0"  name=tema_4_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Creditos Integ" border="0" color="33554432" x="7675" y="4" height="64" width="366" html.valueishtml="0"  name=creditos_integ_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Flag Biblioteca" border="0" color="33554432" x="8046" y="4" height="64" width="507" html.valueishtml="0"  name=cve_flag_biblioteca_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Flag Diapositeca" border="0" color="33554432" x="8558" y="4" height="64" width="558" html.valueishtml="0"  name=cve_flag_diapositeca_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Adeuda Finanzas" border="0" color="33554432" x="9120" y="4" height="64" width="462" html.valueishtml="0"  name=adeuda_finanzas_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Verano" border="0" color="33554432" x="9586" y="4" height="64" width="329" html.valueishtml="0"  name=verano_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cuenta" border="0" color="33554432" x="9920" y="4" height="64" width="329" html.valueishtml="0"  name=cuenta_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="33554432" x="5" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=baja_laboratorio visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="33554432" x="439" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=insc_sem_ant visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="33554432" x="805" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=cve_flag_promedio visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="33554432" x="1307" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=baja_3_reprob visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="33554432" x="1687" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=baja_4_insc visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="33554432" x="2025" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=baja_disciplina visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="33554432" x="2423" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=baja_documentos visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="33554432" x="2898" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=invasor_hora visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="33554432" x="3232" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=exten_cred visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="33554432" x="3566" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=cve_flag_prerreq_ingles visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="1" tabsequence=32766 border="0" color="33554432" x="4183" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=cve_flag_serv_social visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="1" tabsequence=32766 border="0" color="33554432" x="4731" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=puede_integracion visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="1" tabsequence=32766 border="0" color="33554432" x="5211" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=tema_fundamental_1 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="1" tabsequence=32766 border="0" color="33554432" x="5774" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=tema_fundamental_2 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="1" tabsequence=32766 border="0" color="33554432" x="6336" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=tema_1 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="1" tabsequence=32766 border="0" color="33554432" x="6674" y="4" height="76" width="325" format="[general]" html.valueishtml="0"  name=tema_2 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="1" tabsequence=32766 border="0" color="33554432" x="7008" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=tema_3 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=18 alignment="1" tabsequence=32766 border="0" color="33554432" x="7342" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=tema_4 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=19 alignment="1" tabsequence=32766 border="0" color="33554432" x="7675" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=creditos_integ visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=20 alignment="1" tabsequence=32766 border="0" color="33554432" x="8046" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=cve_flag_biblioteca visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=21 alignment="1" tabsequence=32766 border="0" color="33554432" x="8558" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=cve_flag_diapositeca visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=22 alignment="1" tabsequence=32766 border="0" color="33554432" x="9120" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=adeuda_finanzas visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=23 alignment="1" tabsequence=32766 border="0" color="33554432" x="9586" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=verano visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=24 alignment="1" tabsequence=32766 border="0" color="33554432" x="9920" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=cuenta visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

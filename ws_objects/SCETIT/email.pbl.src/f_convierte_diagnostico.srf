@@ -1,0 +1,37 @@
+﻿$PBExportHeader$f_convierte_diagnostico.srf
+global type f_convierte_diagnostico from function_object
+end type
+
+forward prototypes
+global function string f_convierte_diagnostico (string as_descripcion)
+end prototypes
+
+global function string f_convierte_diagnostico (string as_descripcion);//f_convierte_diagnostico
+//Convierte la descripción de internet a formato de PowerBuilder
+//Recibe	as_descripcion	string
+
+string ls_descripcion, ls_inicio_descripcion, ls_fin_descripcion
+string ls_new_line = "~n"
+long ll_pos
+
+ls_descripcion= as_descripcion
+
+IF LEN(ls_descripcion)=0 THEN
+	return ""
+END IF
+
+
+ll_pos = POS(UPPER(ls_descripcion),"<BR>")
+
+DO WHILE ll_pos > 0 
+	
+	ls_inicio_descripcion = MID(ls_descripcion, 1, ll_pos - 1)
+	ls_fin_descripcion = MID(ls_descripcion, ll_pos + 4)
+	ls_descripcion = ls_inicio_descripcion +ls_new_line+ ls_fin_descripcion
+	ll_pos = POS(UPPER(ls_descripcion),"<BR>")
+LOOP
+
+return ls_descripcion
+
+end function
+

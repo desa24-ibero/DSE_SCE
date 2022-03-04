@@ -1,0 +1,90 @@
+﻿$PBExportHeader$f_obten_fecha_generacion_idioma_str.srf
+global type f_obten_fecha_generacion_idioma_str from function_object
+end type
+
+forward prototypes
+global function string f_obten_fecha_generacion_idioma_str (integer ai_cve_idioma, date adt_fecha_generacion)
+global function string f_obten_fecha_generacion_idioma_str (integer ai_cve_idioma, string as_fecha_generacion)
+end prototypes
+
+global function string f_obten_fecha_generacion_idioma_str (integer ai_cve_idioma, date adt_fecha_generacion);
+//Recibe: f_obten_fecha_generacion_idioma
+//
+//			ai_cve_idioma 		integer
+//			adt_fecha_generacion date
+ 
+String ls_Dia , ls_Mes, ls_Anio, ls_Hora, ls_fecha_idioma, ls_ordinal_ingles
+Date ldt_fecha
+Datetime  ldttm_fecha
+Integer li_dia, li_mes, li_anio
+ 
+ 
+li_dia = day(adt_fecha_generacion)
+li_mes = month(adt_fecha_generacion)
+li_anio = year(adt_fecha_generacion)
+ 
+choose case ai_cve_idioma
+	case 1
+		ls_fecha_idioma = " a "+string(li_dia) +' de '+ f_obten_mes_idioma(li_mes, ai_cve_idioma) +' de '+string(li_anio)
+	case 2
+		choose case li_dia
+			case 1
+			 	ls_ordinal_ingles = 'st'
+			case 2
+			 	ls_ordinal_ingles = 'nd'
+			case 3
+			 	ls_ordinal_ingles = 'rd'
+			case else
+			 	ls_ordinal_ingles = 'th'
+		end choose
+		ls_fecha_idioma = f_obten_mes_idioma(li_mes, ai_cve_idioma)+" " +string(li_dia) +ls_ordinal_ingles+ ' '+string(li_anio)		
+end choose
+
+
+
+return ls_fecha_idioma
+
+end function
+
+global function string f_obten_fecha_generacion_idioma_str (integer ai_cve_idioma, string as_fecha_generacion);
+//Recibe: f_obten_fecha_generacion_idioma_str
+//
+//			ai_cve_idioma 		integer
+//			adt_fecha_generacion string
+ 
+String ls_Dia , ls_Mes, ls_Anio, ls_Hora, ls_fecha_idioma, ls_ordinal_ingles
+Date ldt_fecha_generacion
+Datetime  ldttm_fecha
+Integer li_dia, li_mes, li_anio
+ 
+if isdate(as_fecha_generacion)  then
+	ldt_fecha_generacion = Date(as_fecha_generacion)
+end if
+ 
+li_dia = day(ldt_fecha_generacion)
+li_mes = month(ldt_fecha_generacion)
+li_anio = year(ldt_fecha_generacion)
+ 
+choose case ai_cve_idioma
+	case 1
+		ls_fecha_idioma = " a "+string(li_dia) +' de '+ f_obten_mes_idioma(li_mes, ai_cve_idioma) +' de '+string(li_anio)
+	case 2
+		choose case li_dia
+			case 1
+			 	ls_ordinal_ingles = 'st'
+			case 2
+			 	ls_ordinal_ingles = 'nd'
+			case 3
+			 	ls_ordinal_ingles = 'rd'
+			case else
+			 	ls_ordinal_ingles = 'th'
+		end choose
+		ls_fecha_idioma = f_obten_mes_idioma(li_mes, ai_cve_idioma)+" " +string(li_dia) +ls_ordinal_ingles+ ' '+string(li_anio)		
+end choose
+
+
+
+return ls_fecha_idioma
+
+end function
+

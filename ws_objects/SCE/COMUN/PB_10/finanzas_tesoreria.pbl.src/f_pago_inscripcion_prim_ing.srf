@@ -1,0 +1,47 @@
+﻿$PBExportHeader$f_pago_inscripcion_prim_ing.srf
+global type f_pago_inscripcion_prim_ing from function_object
+end type
+
+forward prototypes
+global function integer f_pago_inscripcion_prim_ing (long al_cuenta, integer ai_anio, integer ai_periodo, transaction atr_trans)
+end prototypes
+
+global function integer f_pago_inscripcion_prim_ing (long al_cuenta, integer ai_anio, integer ai_periodo, transaction atr_trans);/*
+ *		Nombre	f_pago_inscripcion_prim_ing
+ *		Recibe	al_cuenta,ai_anio,ai_periodo,atr_trans
+ *		Regresa	1	si el alumno al_cuenta registrado su pago de inscripcion correspondiente a ai_periodo ai_anio
+ *					0	el alumno al_cuenta no tiene registrado el pago 
+ *					-1	error de comunicacion
+ *					FMC06051999
+ */
+
+string ls_nombre_datastore, ls_control_correcto
+int li_res, li_ret, li_periodo, li_anio
+char lc_periodo
+DataStore lds_pago_inscripcion_prim_ing
+
+li_periodo = ai_periodo
+li_anio = ai_anio
+
+lds_pago_inscripcion_prim_ing = Create DataStore
+ls_nombre_datastore = "d_pago_inscripcion_prim_ing_sit"
+
+lds_pago_inscripcion_prim_ing.DataObject = ls_nombre_datastore
+lds_pago_inscripcion_prim_ing.SetTransObject(atr_trans)
+
+li_res = lds_pago_inscripcion_prim_ing.Retrieve(al_cuenta,li_anio,li_periodo)
+
+if li_res >= 1 then
+	li_ret = 1
+elseif li_res = 0 then
+	li_ret = 0
+else
+	li_ret = -1
+	messagebox("Error de Comunicación","Error con la consulta de pago inscripción para primer ingreso BD. Favor de intentar nuevamente", None!)
+end if
+
+Destroy lds_pago_inscripcion_prim_ing
+return li_ret
+
+end function
+

@@ -1,0 +1,31 @@
+﻿$PBExportHeader$f_existe_alumno.srf
+global type f_existe_alumno from function_object
+end type
+
+forward prototypes
+global function integer f_existe_alumno (long al_cuenta)
+end prototypes
+
+global function integer f_existe_alumno (long al_cuenta);//f_existe_alumno
+//Recibe 	:	al_cuenta	long
+//Devuelve : 0 Existe el alumno
+//			100 No existe el alumno
+//			 -1 Error al consultar
+long ll_cuenta
+int li_codigo_sql
+string ls_mensaje
+
+SELECT cuenta 
+INTO   :ll_cuenta
+FROM controlescolar_bd.dbo.academicos ac
+WHERE ac.cuenta = :al_cuenta
+USING gtr_sce;
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje = gtr_sce.SqlErrText
+IF li_codigo_sql = -1 THEN
+	MessageBox("Error al consultar academicos", ls_mensaje, StopSign!)
+END IF
+
+RETURN li_codigo_sql
+end function
+

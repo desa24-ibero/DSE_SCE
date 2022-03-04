@@ -1,0 +1,59 @@
+﻿$PBExportHeader$f_inserta_historico_intercambio.srf
+global type f_inserta_historico_intercambio from function_object
+end type
+
+forward prototypes
+global function long f_inserta_historico_intercambio (integer ai_periodo, integer ai_anio)
+end prototypes
+
+global function long f_inserta_historico_intercambio (integer ai_periodo, integer ai_anio);//NOMBRE
+//f_inserta_historico_intercambio
+//
+//REGRESA
+//long
+//
+//RECIBE	
+//ai_periodo				int
+//ai_anio					int
+
+
+integer li_codigo_sql, li_codigo_sql2
+string ls_criterio, ls_mensaje_sql, ls_mensaje_sql2, ls_calificacion_anterior 
+long	ll_cuenta, ll_rows
+
+SetNull(ls_calificacion_anterior)
+
+INSERT INTO	historico_temp_intercambio
+SELECT cuenta, cve_mat, gpo, periodo, anio, cve_carrera, cve_plan, calificacion, observacion, :ls_calificacion_anterior
+FROM historico
+WHERE historico.periodo = :ai_periodo
+AND historico.anio = :ai_anio
+AND historico.gpo = 'ZZ'
+USING gtr_sce;
+
+li_codigo_sql =gtr_sce.SqlCode
+ls_mensaje_sql =gtr_sce.SqlErrText
+
+//Hubo algún problema al realizar la inserción
+if li_codigo_sql = -1 then
+	ROLLBACK USING gtr_sce;
+	MessageBox("Error al insertar en historico_temp_intercambio", ls_mensaje_sql)	
+	return li_codigo_sql
+elseif li_codigo_sql = 100 then
+	ROLLBACK USING gtr_sce;
+	MessageBox("No existen registros a insertar en historico_temp_intercambio", ls_mensaje_sql)	
+	return li_codigo_sql		
+end if
+
+if li_codigo_sql = 0 then
+	COMMIT USING gtr_sce;
+	MessageBox("Actualización de materias 'ZZ' exitosa", ls_mensaje_sql)	
+	return li_codigo_sql		
+end if
+
+
+return li_codigo_sql
+	
+
+end function
+

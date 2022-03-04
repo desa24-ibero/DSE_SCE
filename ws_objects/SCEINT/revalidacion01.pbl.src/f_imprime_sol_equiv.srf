@@ -1,0 +1,39 @@
+﻿$PBExportHeader$f_imprime_sol_equiv.srf
+global type f_imprime_sol_equiv from function_object
+end type
+
+forward prototypes
+global function long f_imprime_sol_equiv (long al_folio, datetime adttm_fecha)
+end prototypes
+
+global function long f_imprime_sol_equiv (long al_folio, datetime adttm_fecha);//Argumentos:
+//long 		al_folio
+//datetime 	adttm_fecha
+//
+//Regresa:
+//long		num_de_registros leidos
+
+
+long ll_rows
+DataStore lds_sol_equivalencias
+lds_sol_equivalencias = Create DataStore
+lds_sol_equivalencias.DataObject = "d_solicitud_equivalencias"
+lds_sol_equivalencias.SetTransObject(gtr_sce)
+
+ll_rows = lds_sol_equivalencias.Retrieve(al_folio, adttm_fecha)
+
+if ll_rows = -1 then
+	MessageBox("Error de Datawindow","No se puede leer: d_solicitud_equivalencias",StopSign!)
+elseif ll_rows >0 then
+	lds_sol_equivalencias.Print()
+else
+	MessageBox("No existen registros","Datawindow: d_solicitud_equivalencias~n"+&
+	           "no tiene registros para imprimir",StopSign!)
+end if
+
+return ll_rows		
+
+
+
+end function
+

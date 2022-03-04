@@ -1,0 +1,115 @@
+﻿$PBExportHeader$p_srl_exe_pbd.srj
+$PBExportComments$Generated Application Executable Project
+EXE:insc_coord.exe,,0,1,1
+CMP:0,0,0,2,0,0,1
+COM:Universidad Iberoamericana
+DES:Sistema de Reinscripción para Coordinaciones
+CPY:Antonio Pica Ruiz- Dirección de Informática y Telecomunicaciones
+PRD:Sistema de Reinscripción para Coordinaciones
+PVS:12,0,1,5530
+PVN:12,0,1,5530
+FVS:12,0,1,5530
+FVN:12,0,1,5530
+MAN:0,asInvoker,0
+PBD:insc_coord_01.pbl,,1
+PBD:insc_coord_02.pbl,,1
+PBD:validacionlogin.pbd,,1
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_materias_integracion_2014,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_mat_preinscritas,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,m_reinscripcion_2014,m
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,w_grupos_ligados_sae,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,revisa_pago_inscripcion,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,uo_administrador_liberacion,u
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,d_grupos_existentes_sae,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,f_usuario_valido_aplicacion,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_comprobante_insc,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,st_grupo_ligado_sae,s
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,d_solicitud_autorizacion_especial_coord,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,d_horarios_sae,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,w_about,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,revisa_rows,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,revisa_porcentaje_apoyo,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,m_preinscripcion_2014,m
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_prerrequisito,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,revisa_pago_anticipado,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\validacionlogin.pbd,f_splitparms,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,m_reinscripcion,m
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\validacionlogin.pbd,w_login_cambio_contrasenia,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\validacionlogin.pbd,validacionlogin,u
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\validacionlogin.pbd,tns__obtenerpasswordbd,s
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,f_historico_actualizado,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,w_insc_coord,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_cursada,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,f_proyecto_ss_inscrito,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,f_obten_creditos_materia,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_rev_hor_2014,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,consulta_sie,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_mat_inscritas,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,revisa_adeudos,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,f_materia_aprobada,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\validacionlogin.pbd,gtr_parametros_conn,s
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\validacionlogin.pbd,soapconnection,u
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,w_reinscripcion_2014,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,f_conecta_pas_parametros_bd,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,horario,s
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_reinscripcion_materias,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,u_datastore,u
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\validacionlogin.pbd,d_logini_cambio_contrasenia,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,f_obten_titulo,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,w_reporte_solicitud_aut_esp,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,uo_nombre_alumno,u
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_labs_2014,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_mat_inscritas_2014,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_cursada_2014,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,f_obten_nivel_coordinacion,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,d_solicitud_autorizacion_especial_detalle,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\validacionlogin.pbd,f_valida_login,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_grupos_libres,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,w_alumnosnombre,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,revisa_rows_cob,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,w_pregunta_nip,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,m_principal,m
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,f_obten_coord_de_usuario,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,d_solicitud_autorizacion_especial,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,param_obj_carrera,s
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,m_preinscripcion,m
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,w_preinscripción,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_plan_de_est,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,w_cambio_tipo_periodo,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,insc_coord,a
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\validacionlogin.pbd,n_cryptoapi20,u
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_prerrequisito_2014,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,w_reinscripcion,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_ext_horario,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,uo_carreras_alumno_lista,u
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,d_pase_ingreso,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,d_tipo_periodo_lista_seleccion,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\validacionlogin.pbd,d_cambio_login_nvo,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,w_solicitud_autorizacion_especial,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\validacionlogin.pbd,soapexception,u
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,f_materia_valida,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\validacionlogin.pbd,tns__actualizarpasswordusuariobd,s
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,obten_digito,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,w_login_insc_coord,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\validacionlogin.pbd,tns__buscarusuariobd,s
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,param_obj_nombre,s
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,f_existe_coordinacion,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,w_profesor,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\validacionlogin.pbd,str_admin_contrasena,s
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,w_pase_ingreso,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,dw_carreras_cursadas_lista,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,revmay,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,n_ajustes,u
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\validacionlogin.pbd,px_seguridadsipsoap,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_ext_horario_2014,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_nombre_alumno_2013,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_nombre_alumno,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,d_grupos_ligados_sae,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,salir_sie,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_rev_hor,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,w_preinscripción_2014,w
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_grupos_libres_2014,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_01.pbl,f_es_coordinacion_integ_ru,f
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\validacionlogin.pbd,uo_cambio_contrasena_login,u
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_labs,d
+OBJ:C:\SOURCESAFE\MIGRACION 2009\SCESRLCORD\insc_coord_02.pbl,dw_materias_integracion,d

@@ -1,0 +1,150 @@
+﻿$PBExportHeader$f_obten_num_periodo_max_carreras.srf
+global type f_obten_num_periodo_max_carreras from function_object
+end type
+
+forward prototypes
+global function integer f_obten_num_periodo_max_carreras (long al_cuenta)
+global function integer f_obten_num_periodo_max_carreras (long al_cuenta, long al_carrera)
+end prototypes
+
+global function integer f_obten_num_periodo_max_carreras (long al_cuenta);integer li_periodo_max,li_codigo_sql
+long ll_carrera,ll_plan
+string ls_mensaje_sql
+
+SELECT academicos.cve_carrera
+INTO	:ll_carrera
+FROM	academicos
+WHERE	academicos.cuenta = :al_cuenta
+USING gtr_sce;
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	rollback using gtr_sce;
+	MessageBox("Error al recuperar la cve_carrera del alumno:"+string(al_cuenta),  ls_mensaje_sql)
+	setnull(ll_carrera)
+end if
+
+SELECT academicos.cve_plan
+INTO	:ll_plan
+FROM	academicos
+WHERE	academicos.cuenta = :al_cuenta
+USING gtr_sce;
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	rollback using gtr_sce;
+	MessageBox("Error al recuperar la cve_plan del alumno:"+string(al_cuenta),  ls_mensaje_sql)
+	setnull(ll_plan)
+end if
+
+select max(semestre_ideal)
+	into :li_periodo_max
+from mat_prerrequisito
+where cve_carrera = :ll_carrera
+and cve_plan = :ll_plan
+USING gtr_sce;
+
+if isnull(li_periodo_max) then
+	select max(semestre_ideal)
+		into :li_periodo_max
+	from mat_prerreq_pos
+	where cve_carrera = :ll_carrera
+	and cve_plan = :ll_plan
+	USING gtr_sce;
+end if
+
+
+return li_periodo_max
+
+
+end function
+
+global function integer f_obten_num_periodo_max_carreras (long al_cuenta, long al_carrera);integer li_periodo_max,li_codigo_sql
+long ll_carrera,ll_plan
+string ls_mensaje_sql
+
+
+// Esta función recibe la carrera solicitada 
+/*SELECT academicos.cve_carrera
+INTO	:ll_carrera
+FROM	academicos
+WHERE	academicos.cuenta = :al_cuenta
+USING gtr_sce;
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	rollback using gtr_sce;
+	MessageBox("Error al recuperar la cve_carrera del alumno:"+string(al_cuenta),  ls_mensaje_sql)
+	setnull(ll_carrera)
+end if*/
+
+ll_carrera = al_carrera
+
+SELECT academicos.cve_plan
+INTO	:ll_plan
+FROM	academicos
+WHERE	academicos.cuenta = :al_cuenta 
+AND academicos.cve_carrera = :al_carrera 
+USING gtr_sce;
+
+ls_mensaje_sql=gtr_sce.SqlErrText
+li_codigo_sql=gtr_sce.SqlCode
+
+if li_codigo_sql = -1 then
+	rollback using gtr_sce;
+	MessageBox("Error al recuperar la cve_plan del alumno:"+string(al_cuenta),  ls_mensaje_sql)
+	setnull(ll_plan)
+end if 
+
+// Si no lo encuentra en academicos lo busca en el histórico.
+IF li_codigo_sql  = 100 THEN 
+	
+	SELECT MAX(academicos_hist.cve_plan) 
+	INTO	:ll_plan 
+	FROM	 academicos_hist
+	WHERE	academicos_hist.cuenta = :al_cuenta 
+	AND academicos_hist.cve_carrera = :al_carrera 
+	USING gtr_sce;	
+	IF gtr_sce.SQLCODE < 0 THEN 
+		rollback using gtr_sce;
+		MessageBox("Error al recuperar la cve_plan del alumno:"+string(al_cuenta),  ls_mensaje_sql)
+		setnull(ll_plan)		
+	END IF
+	IF gtr_sce.SQLCODE = 100 THEN 
+		rollback using gtr_sce;
+		MessageBox("No se encontró un Plan de Esctudios válido para el Alumno-Carrera Solicitado( "+string(al_cuenta) + "-" + STRING(al_carrera) ,  ls_mensaje_sql)
+		setnull(ll_plan)				
+		RETURN -1
+	END IF
+	
+END IF 
+
+
+select max(semestre_ideal)
+	into :li_periodo_max
+from mat_prerrequisito
+where cve_carrera = :ll_carrera
+and cve_plan = :ll_plan
+USING gtr_sce;
+
+if isnull(li_periodo_max) then
+	select max(semestre_ideal)
+		into :li_periodo_max
+	from mat_prerreq_pos
+	where cve_carrera = :ll_carrera
+	and cve_plan = :ll_plan
+	USING gtr_sce;
+end if
+
+
+return li_periodo_max
+
+
+end function
+

@@ -1,0 +1,97 @@
+﻿$PBExportHeader$f_trans_sql_syb_detenido.srf
+global type f_trans_sql_syb_detenido from function_object
+end type
+
+forward prototypes
+global function integer f_trans_sql_syb_detenido (ref string as_error, ref string as_usuario_que_detiene, ref string as_nombre_usu_detiene, ref string as_proceso_que_detiene)
+end prototypes
+
+global function integer f_trans_sql_syb_detenido (ref string as_error, ref string as_usuario_que_detiene, ref string as_nombre_usu_detiene, ref string as_proceso_que_detiene);//f_trans_sql_syb_detenido
+//Recibe: 
+//			as_error							string
+//			as_usuario_que_detiene		string
+//			as_nombre_usu_detiene		string
+//			as_proceso_que_detiene		string
+
+
+//****************************************************************************************************
+// Consulta si el proceso de transferencia de datos SqlServer/Sybase, esta detenido por algun proceso.
+// Regresa 0, Si el proceso no esta detenido.
+//			  1, Si el proceso si esta detenido.
+//        -1, Si hay un error 
+// Juan Campos Sánchez. 6-Mayo-2005.
+//****************************************************************************************************
+//
+uo_datastore lds_detenido
+lds_detenido = CREATE uo_datastore
+lds_detenido.Dataobject = "d_trans_detenido"
+lds_detenido.settransobject(gtr_sit)
+//
+uo_datastore lds_users
+lds_users = CREATE uo_datastore
+lds_users.Dataobject = "d_obten_usuario_security_users"
+lds_users.settransobject(gtr_sce)
+
+integer li_regresa, li_recupera, li_busca
+string	  ls_nomb_user
+		
+li_recupera = lds_detenido.Retrieve()
+//
+if li_recupera = 1 then 	
+	//
+	li_regresa = lds_detenido.object.detenido[li_recupera]
+	//
+	choose case li_regresa 
+			//
+		case 0
+			// 
+			// NO Detenido, identifica al usuario
+			//
+			li_busca = lds_users.Retrieve(as_usuario_que_detiene)
+			choose case li_busca 
+				case is > 0
+					// Detenido  agrega el usuario que esta deteniendo
+					as_nombre_usu_detiene = lds_users.object.description[li_busca]
+				case else
+					// No identifico al usuario
+					as_nombre_usu_detiene = " no identificado en security_users."			
+					//
+			end choose
+				//			
+		case 1
+			// Detenido
+			if isnull(lds_detenido.object.proceso_que_detiene[li_recupera]) then
+				as_proceso_que_detiene = " "
+			else
+				as_proceso_que_detiene = lds_detenido.object.proceso_que_detiene[li_recupera]
+			end if
+			//
+			if isnull(lds_detenido.object.usuario[li_recupera]) then
+				as_usuario_que_detiene = " "
+			else
+				as_usuario_que_detiene = lds_detenido.object.usuario[li_recupera]
+			end if	
+			//
+			if isnull(lds_detenido.object.nombre_usuario_detiene[li_recupera]) then
+				as_nombre_usu_detiene = " "
+			else
+				as_nombre_usu_detiene = lds_detenido.object.nombre_usuario_detiene[li_recupera]	
+			end if						
+			//
+		case else
+			as_error = "Error al recuperar el estatus del proceso de transferencia de datos SqlServer/Sybase" + lds_detenido.ds_sqlerrtext
+			as_nombre_usu_detiene = " "
+			li_regresa = -1	
+		//		
+	end choose
+else	
+	as_error = "Error al recuperar el estatus del proceso de transferencia de datos SqlServer/Sybase. " + lds_detenido.ds_sqlerrtext
+	li_regresa = -1	
+end if	 
+ 
+destroy lds_detenido
+destroy  lds_users
+return li_regresa
+
+end function
+

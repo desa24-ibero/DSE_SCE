@@ -1,0 +1,88 @@
+﻿$PBExportHeader$f_inserta_certificado_vent.srf
+global type f_inserta_certificado_vent from function_object
+end type
+
+forward prototypes
+global function long f_inserta_certificado_vent (long al_cuenta, long al_cve_carrera, long al_cve_plan, long al_cve_doc_control_sep, long al_legalizado, datetime adttm_fecha_solicitud)
+end prototypes
+
+global function long f_inserta_certificado_vent (long al_cuenta, long al_cve_carrera, long al_cve_plan, long al_cve_doc_control_sep, long al_legalizado, datetime adttm_fecha_solicitud);//f_inserta_certificado
+//Recibe
+//			al_cuenta					long
+//			al_cve_carrera				long
+//			al_cve_plan					long
+//			al_cve_doc_control_sep	long
+//			al_legalizado				long
+//			adttm_fecha_solicitud	datetime
+
+integer li_parcial, li_codigo_sql
+datetime ldttm_fecha_hoy
+string ls_mensaje_sql
+
+ldttm_fecha_hoy = fecha_servidor(gtr_sce)
+
+//Certificado Total
+if al_cve_doc_control_sep = 1 then
+	li_parcial = 0
+//Certificado Parcial
+elseif al_cve_doc_control_sep = 2 then
+	li_parcial = 1	
+end if
+
+//INSERT INTO certificado
+//(cuenta,
+//cve_carrera,
+//cve_plan,
+//fecha_inicio,
+//fecha_entrada_sep,
+//fecha_salida_tentat_sep,
+//fecha_salida_sep,
+//fecha_checado_sep,
+//fecha_envio_plantel,
+//num_veces_sep,
+//num_reg,
+//parcial,
+//legalizado,
+//checado_sep,
+//entrada_arch,
+//observaciones,
+//fecha_elaboracion
+//)
+
+INSERT INTO certificado
+(cuenta,	
+cve_carrera,
+cve_plan,
+fecha_inicio,
+fecha_entrada_sep,
+parcial,
+legalizado,
+fecha_elaboracion
+)
+VALUES
+(:al_cuenta,
+:al_cve_carrera,
+:al_cve_plan,
+:ldttm_fecha_hoy,
+:adttm_fecha_solicitud,
+:li_parcial,
+:al_legalizado,
+:ldttm_fecha_hoy
+) USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = -1 then
+	ROLLBACK USING gtr_sce;
+	MessageBox("Error al insertar certificado", ls_mensaje_sql, StopSign!)
+	return  -1
+elseif li_codigo_sql = 0 then
+	COMMIT USING gtr_sce;
+	return  0
+end if
+
+return 0
+
+end function
+

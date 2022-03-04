@@ -1,0 +1,40 @@
+﻿$PBExportHeader$f_obten_baja_documentos.srf
+global type f_obten_baja_documentos from function_object
+end type
+
+forward prototypes
+global function integer f_obten_baja_documentos (long al_cuenta)
+end prototypes
+
+global function integer f_obten_baja_documentos (long al_cuenta);//f_obten_baja_documentos
+//Parametros:
+//al_cuenta long
+//Regresa:
+//integer   0 No tiene baja por documentos
+//integer   1 Tiene baja por documentos
+//integer  -1 No tiene registro en la tabla de banderas
+
+integer li_codigo_sql, li_baja_documentos
+string ls_mensaje_sql
+
+SELECT dbo.banderas.baja_documentos
+INTO :li_baja_documentos
+FROM dbo.banderas
+WHERE dbo.banderas.cuenta = :al_cuenta
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql =-1 then
+	MessageBox("Error al consultar el baja_documentos de banderas", ls_mensaje_sql)
+	return -1
+elseif li_codigo_sql =100 then
+	MessageBox("Bandera Inexistente","La bandera "+string(al_cuenta)+" no existe.")
+	return -1
+end if
+
+return li_baja_documentos
+
+end function
+

@@ -1,0 +1,31 @@
+﻿$PBExportHeader$of_cambia_de_base.srf
+global type of_cambia_de_base from function_object
+end type
+
+forward prototypes
+global function integer of_cambia_de_base (string as_base)
+end prototypes
+
+global function integer of_cambia_de_base (string as_base);//of_cambia_de_base
+//	as_base	string
+string ls_nombre_base, ls_error, ls_instruccion_sql
+integer li_codigo_sql
+
+ls_instruccion_sql= "USE "+as_base
+
+EXECUTE IMMEDIATE :ls_instruccion_sql USING gtr_sadm;
+
+li_codigo_sql = gtr_sadm.SqlCode
+ls_error = gtr_sadm.SqlErrText
+
+IF li_codigo_sql= -1 THEN
+	MessageBox("of_cambia_de_base", ls_error, StopSign!)
+END IF
+
+RETURN li_codigo_sql
+
+
+
+
+end function
+

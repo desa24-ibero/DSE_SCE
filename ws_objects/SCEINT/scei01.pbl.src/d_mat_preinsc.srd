@@ -1,0 +1,26 @@
+﻿$PBExportHeader$d_mat_preinsc.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=81 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=85 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cuenta dbname="mat_preinsc.cuenta" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=cve_mat dbname="mat_preinsc.cve_mat" )
+ column=(type=char(2) update=yes updatewhereclause=yes key=yes name=gpo dbname="mat_preinsc.gpo" )
+ column=(type=long update=yes updatewhereclause=yes name=status dbname="mat_preinsc.status" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=periodo dbname="mat_preinsc.periodo" values="Primavera	0/Verano	1/Otoño	2/" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=anio dbname="mat_preinsc.anio" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"mat_preinsc~" ) COLUMN(NAME=~"mat_preinsc.cuenta~") COLUMN(NAME=~"mat_preinsc.cve_mat~") COLUMN(NAME=~"mat_preinsc.gpo~") COLUMN(NAME=~"mat_preinsc.status~") COLUMN(NAME=~"mat_preinsc.periodo~") COLUMN(NAME=~"mat_preinsc.anio~")WHERE(    EXP1 =~":cuenta~"   OP =~"=~"    EXP2 =~"0~"    LOGIC =~"or~" ) WHERE(    EXP1 =~"mat_preinsc.cuenta~"   OP =~"=~"    EXP2 =~":cuenta~" ) ) ARG(NAME = ~"cuenta~" TYPE = number) " update="mat_preinsc" updatewhere=0 updatekeyinplace=no arguments=(("cuenta", number)) )
+compute(band=summary alignment="1" expression="count(cuenta for all)"border="0" color="33554432" x="225" y="8" height="69" width="229" format="[General]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=detail alignment="1" expression=" cuenta +'-'+obten_digito( cuenta )"border="0" color="33554432" x="220" y="8" height="65" width="279" format="[general]"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=6 alignment="0" tabsequence=20 border="0" color="33554432" x="517" y="8" height="65" width="165" format="[general]"  name=anio edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=5 alignment="0" tabsequence=30 border="0" color="33554432" x="700" y="8" height="65" width="293" format="[general]"  name=periodo ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=2 alignment="2" tabsequence=40 border="0" color="33554432" x="1011" y="8" height="65" width="202" format="[General]"  name=cve_mat  tag=" " edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=3 alignment="2" tabsequence=50 border="0" color="33554432" x="1230" y="8" height="65" width="119" format="[general]"  name=gpo  tag=" " edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=detail alignment="0" expression="if ( truncate(status/32,0) = 1 ,'', 'Falta Prerreq. ')+
+if ( mod(truncate(status/16,0),2) = 1 ,'', 'No Puede Integración ')+
+if ( mod(truncate(status/8,0),2) = 1 ,'', 'Ya la cursó ')+
+if ( mod(truncate(status/4,0),2) = 1 ,'', 'No Pert. Plan ')+
+if ( mod(truncate(status/2,0),2) = 1 ,'', 'No Existe Grupo ')+
+if ( mod(status,2) = 1 ,'', 'No Existe Materia')"border="0" color="33554432" x="1367" y="8" height="65" width="2067"  name=diag  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )

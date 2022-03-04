@@ -1,0 +1,61 @@
+﻿$PBExportHeader$f_obten_ceros_dec_en_texto.srf
+global type f_obten_ceros_dec_en_texto from function_object
+end type
+
+forward prototypes
+global function string f_obten_ceros_dec_en_texto (string as_numero, integer a_precision)
+end prototypes
+
+global function string f_obten_ceros_dec_en_texto (string as_numero, integer a_precision);//El objetivo de esta función es regresar los ceros en texto 
+//en una cantidad decimal
+//
+//f_obten_ceros_dec_en_texto
+//
+
+string ls_texto, ls_texto_entero, ls_texto_decimal, ls_real
+decimal lr_real
+integer li_posicion_punto, li_longitud, li_precision
+long ll_entero, ll_decimal
+
+
+boolean li_bandera_no_ceros
+integer li_indice_cadena, li_num_ciclos, li_lon_cadena
+string ls_cadena_ceros, ls_caracter_actual
+
+li_lon_cadena= len(as_numero)
+
+if a_precision >4 then 
+	li_precision = 4
+else 
+	li_precision = a_precision
+end if
+
+li_bandera_no_ceros= false
+li_indice_cadena = 1
+ls_cadena_ceros =""
+
+do while li_indice_cadena <= li_precision and li_indice_cadena <=li_lon_cadena
+	ls_caracter_actual= mid(as_numero,li_indice_cadena,1)
+	if ls_caracter_actual= "0" then
+		ls_cadena_ceros= ls_cadena_ceros + "CERO "
+	else
+		li_bandera_no_ceros = true
+		exit
+	end if
+	li_indice_cadena= li_indice_cadena +1
+loop
+
+if li_bandera_no_ceros  then
+	ls_texto = ls_cadena_ceros
+else
+	ls_texto = "CERO "
+end if
+
+return ls_texto
+
+
+
+
+
+end function
+

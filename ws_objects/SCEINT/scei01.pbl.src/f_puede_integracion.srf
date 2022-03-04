@@ -1,0 +1,225 @@
+﻿$PBExportHeader$f_puede_integracion.srf
+global type f_puede_integracion from function_object
+end type
+
+forward prototypes
+global function integer f_puede_integracion (long al_cuenta, long al_materia)
+end prototypes
+
+global function integer f_puede_integracion (long al_cuenta, long al_materia);
+LONG ll_tema_fun, ll_area1, ll_area2, ll_area3, ll_area4 
+INTEGER le_existe, li_puede
+
+INTEGER le_tema_fundamental_1
+INTEGER le_tema_fundamental_2
+INTEGER le_tema_1
+INTEGER le_tema_2
+INTEGER le_tema_3
+INTEGER le_tema_4
+
+// Se recuperan las éreas de materias correspondientes al plan de estudios.
+SELECT plan_estudios.cve_area_integ_fundamental, plan_estudios.cve_area_integ_tema1, plan_estudios.cve_area_integ_tema2, plan_estudios.cve_area_integ_tema3, plan_estudios.cve_area_integ_tema4 
+INTO :ll_tema_fun, :ll_area1, :ll_area2, :ll_area3, :ll_area4  
+FROM plan_estudios, academicos
+WHERE plan_estudios.cve_carrera = academicos.cve_carrera 
+AND plan_estudios.cve_plan = academicos.cve_plan 
+AND academicos.cuenta = :al_cuenta
+USING gtr_sce; 
+
+// Se recupera la información de temas de integración de banderas.
+SELECT tema_fundamental_1, tema_fundamental_2, tema_1, tema_2, tema_3, tema_4, puede_integracion
+INTO :le_tema_fundamental_1, :le_tema_fundamental_2, :le_tema_1, :le_tema_2, :le_tema_3, :le_tema_4, :li_puede
+FROM banderas
+WHERE cuenta = :al_cuenta
+USING gtr_sce; 
+
+// Se verifica si la materia esta asociada al tema de integración. 
+SELECT COUNT(*) 
+INTO :le_existe 
+FROM area_mat 
+WHERE cve_area = :ll_tema_fun 
+AND cve_mat = :al_materia
+USING gtr_sce; 
+IF le_existe > 0 THEN 
+	IF li_puede = 1 THEN 
+		IF le_tema_fundamental_1 = 0 THEN 
+			RETURN 16
+		ELSE
+			IF 	le_tema_fundamental_2 = 0 THEN 
+				RETURN 16
+			ELSE
+				RETURN 0
+			END IF
+		END IF
+	ELSE
+		RETURN 0
+	END IF
+END IF
+
+// Se verifica si está relacionada con algún tema de integración 
+IF le_existe = 0 THEN 
+	SELECT COUNT(*) 
+	INTO :le_existe 
+	FROM area_mat 
+	WHERE cve_area = :ll_area1
+	AND cve_mat = :al_materia
+	USING gtr_sce; 
+	IF le_existe > 0 THEN 
+		IF li_puede = 1 AND le_tema_1 = 0 THEN 	
+			RETURN 16
+		ELSE
+			RETURN 0
+		END IF
+	END IF
+END IF
+
+IF le_existe = 0 THEN 
+	SELECT COUNT(*) 
+	INTO :le_existe 
+	FROM area_mat 
+	WHERE cve_area = :ll_area2
+	AND cve_mat = :al_materia
+	USING gtr_sce; 
+	IF le_existe > 0 THEN 
+		IF li_puede = 1 AND le_tema_2 = 0 THEN 	
+			RETURN 16
+		ELSE
+			RETURN 0
+		END IF
+	END IF
+END IF
+
+IF le_existe = 0 THEN 
+	SELECT COUNT(*) 
+	INTO :le_existe 
+	FROM area_mat 
+	WHERE cve_area = :ll_area3
+	AND cve_mat = :al_materia
+	USING gtr_sce; 
+	IF le_existe > 0 THEN 
+		IF li_puede = 1 AND le_tema_3 = 0 THEN 	
+			RETURN 16
+		ELSE
+			RETURN 0
+		END IF
+	END IF	
+END IF
+
+IF le_existe = 0 THEN 
+	SELECT COUNT(*) 
+	INTO :le_existe  
+	FROM area_mat 
+	WHERE cve_area = :ll_area4 
+	AND cve_mat = :al_materia
+	USING gtr_sce; 
+	IF le_existe > 0 THEN 
+		IF li_puede = 1 AND le_tema_4 = 0 THEN 	
+			RETURN 16
+		ELSE
+			RETURN 0
+		END IF
+	END IF
+END IF
+
+RETURN 16
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL
+// CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL CODIGO ORIGINAL 
+
+//int li_puede, li_tema
+//
+//if al_materia=8580 then
+//	SELECT dbo.banderas.puede_integracion,dbo.banderas.tema_fundamental_1
+//	INTO :li_puede,:li_tema
+//	FROM dbo.banderas
+//	WHERE dbo.banderas.cuenta = :al_cuenta
+//	USING gtr_sce;
+//	
+//	if li_puede=1 and li_tema=0 then
+//		return 16
+//	else
+//		return 0
+//	end if
+//end if
+//
+//if al_materia=8581 then
+//	SELECT dbo.banderas.puede_integracion,dbo.banderas.tema_fundamental_2
+//	INTO :li_puede,:li_tema
+//	FROM dbo.banderas
+//	WHERE dbo.banderas.cuenta = :al_cuenta
+//	USING gtr_sce;
+//	
+//	if li_puede=1 and li_tema=0 then
+//		return 16
+//	else
+//		return 0
+//	end if
+//end if
+//
+//SELECT dbo.area_mat.cve_area  
+//INTO :li_tema  
+//FROM dbo.area_mat  
+//WHERE dbo.area_mat.cve_mat = :al_materia
+//USING gtr_sce;
+//
+//CHOOSE CASE li_tema
+//	CASE 2202
+//		SELECT dbo.banderas.puede_integracion,dbo.banderas.tema_1
+//		INTO :li_puede,:li_tema
+//		FROM dbo.banderas
+//		WHERE dbo.banderas.cuenta = :al_cuenta
+//		USING gtr_sce;
+//		
+//		if li_puede=1 and li_tema=0 then
+//			return 16
+//		else
+//			return 0
+//		end if
+//	CASE 2203
+//		SELECT dbo.banderas.puede_integracion,dbo.banderas.tema_2
+//		INTO :li_puede,:li_tema
+//		FROM dbo.banderas
+//		WHERE dbo.banderas.cuenta = :al_cuenta
+//		USING gtr_sce;
+//		
+//		if li_puede=1 and li_tema=0 then
+//			return 16
+//		else
+//			return 0
+//		end if
+//	CASE 2204
+//		SELECT dbo.banderas.puede_integracion,dbo.banderas.tema_3
+//		INTO :li_puede,:li_tema
+//		FROM dbo.banderas
+//		WHERE dbo.banderas.cuenta = :al_cuenta
+//		USING gtr_sce;
+//		
+//		if li_puede=1 and li_tema=0 then
+//			return 16
+//		else
+//			return 0
+//		end if
+//	CASE 2205
+//		SELECT dbo.banderas.puede_integracion,dbo.banderas.tema_4
+//		INTO :li_puede,:li_tema
+//		FROM dbo.banderas
+//		WHERE dbo.banderas.cuenta = :al_cuenta
+//		USING gtr_sce;
+//		
+//		if li_puede=1 and li_tema=0 then
+//			return 16
+//		else
+//			return 0
+//		end if
+//END CHOOSE
+//
+//return 16
+end function
+

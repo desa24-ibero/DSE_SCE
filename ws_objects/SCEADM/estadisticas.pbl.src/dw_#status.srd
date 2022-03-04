@@ -1,0 +1,28 @@
+﻿$PBExportHeader$dw_#status.srd
+$PBExportComments$Perfil de status
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=1 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=aspiran_status dbname="status" )
+ retrieve="  SELECT aspiran.status  
+    FROM aspiran,   
+         general  
+   WHERE ( general.folio = aspiran.folio ) and  
+         ( general.clv_ver = aspiran.clv_ver ) and  
+         ( general.clv_per = aspiran.clv_per ) and  
+         ( general.anio = aspiran.anio ) and  
+         ( ( :ver=99 or aspiran.clv_ver = :ver ) AND  
+         ( aspiran.clv_per = :per ) AND  
+         ( aspiran.anio = :ani ) AND  
+         ( :carr = 9999 OR  
+         aspiran.clv_carr = :carr ) ) AND  
+         aspiran.pago_exam = 1    
+" arguments=(("ver", number),("per", number),("ani", number),("carr", number))  sort="aspiran_status A " )
+group(level=1 header.height=1 trailer.height=85 by=("aspiran_status" ) header.color="536870912" trailer.color="536870912" )
+compute(band=trailer.1 alignment="2" expression="round((cuenta/total)*100,2)+'%'"border="0" color="0" x="1139" y="8" height="77" width="421" format="[general]"  name=porcentaje  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="2" expression="count( aspiran_status  for group 1) "border="0" color="0" x="695" y="4" height="85" width="435" format="[general]"  name=cuenta  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=trailer.1 id=1 alignment="0" tabsequence=32766 border="0" color="0" x="1" y="8" height="77" width="577" format="[general]"  name=aspiran_status dddw.name=dw_status dddw.displaycolumn=nombre dddw.datacolumn=status dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="0" expression="count(  aspiran_status  for all )"border="0" color="0" x="1" y="4" height="81" width="247" format="[general]"  name=total  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )

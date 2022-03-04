@@ -1,0 +1,43 @@
+﻿$PBExportHeader$revisa_pago_anticipado.srf
+global type revisa_pago_anticipado from function_object
+end type
+
+forward prototypes
+global function integer revisa_pago_anticipado (long al_cuenta)
+end prototypes
+
+global function integer revisa_pago_anticipado (long al_cuenta);//Funcion que revisa si el alumno tiene pagos anticipados
+//Regresa 0 si no tiene pagos anticipados
+//Regresa 1 si tiene pagos anticipados
+//Junio 2005
+
+Datetime fecha_gen
+string ls_fecha_gen
+integer li_periodo
+decimal ld_saldo
+integer li_horas
+
+   SELECT isnull(sum(CASE (cve_estatus_tarjata)
+              WHEN 1 THEN -horas WHEN 2 THEN -horas
+              WHEN 3 THEN horas  WHEN 4 THEN horas
+              ELSE 0 END),0)
+   INTO :li_horas					
+   FROM pa_tarjeta_horas
+   WHERE pa_tarjeta_horas.cuenta = :al_cuenta
+   USING cobra;
+
+	revisa_rows_cob()		
+
+if cobra.sqlcode = 0 and li_horas>0 then//Consulta exitosa y el alumno tiene pagos anticipados
+	commit using cobra;
+	return 1
+elseif cobra.sqlcode = 0 and li_horas=0 then//Consulta exitosa y el alumno NO tiene pagos anticipados
+	commit using cobra;
+	return 0
+elseif cobra.sqlcode = 100 then//Consulta sin registros, el alumno NO tiene pagos anticipados
+	commit using cobra;
+	return 0
+end if
+return 0
+end function
+

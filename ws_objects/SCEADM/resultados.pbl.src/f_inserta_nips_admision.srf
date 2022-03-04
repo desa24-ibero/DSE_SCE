@@ -1,0 +1,53 @@
+﻿$PBExportHeader$f_inserta_nips_admision.srf
+global type f_inserta_nips_admision from function_object
+end type
+
+forward prototypes
+global function long f_inserta_nips_admision (long al_clv_ver, long al_clv_per, long al_anio)
+end prototypes
+
+global function long f_inserta_nips_admision (long al_clv_ver, long al_clv_per, long al_anio);//f_inserta_nips_admision
+//Recibe:
+//	al_clv_ver		long
+//	al_clv_per		long
+//	al_anio			long
+//Devuelve:
+//	integer de control que indica si se pudo o no realizar la insercion y numero de registros
+
+long ll_num_insertados
+integer li_codigo_sql
+string ls_mensaje_sql
+
+INSERT INTO cnv_folio_nip 
+SELECT folio, clv_ver, clv_per, anio, ltrim(rtrim(replicate("0",2 - char_length(ltrim(rtrim(convert(char,datepart(dd,fecha_nac))))))+convert(char(2),datepart(dd,fecha_nac))))+ltrim(rtrim(replicate("0",2 - char_length(ltrim(rtrim(convert(char,datepart(mm,fecha_nac))))))+convert(char(2),datepart(mm,fecha_nac))))
+FROM general   
+WHERE ( general.anio = :al_anio )   
+AND   ( general.clv_per = :al_clv_per ) 
+AND   ( general.clv_ver = :al_clv_ver ) 
+AND   ( general.fecha_nac not in (null))
+AND	( general.folio not in (SELECT folio FROM cnv_folio_nip cfn 
+                              WHERE cfn.folio = general.folio
+                              AND   cfn.clv_ver = general.clv_ver
+                              AND   cfn.clv_per = general.clv_per
+                              AND   cfn.anio = general.anio) 
+		) 
+USING gtr_sadm;
+
+
+li_codigo_sql =  gtr_sadm.SqlCode
+ls_mensaje_sql = gtr_sadm.SqlErrText
+ll_num_insertados = gtr_sadm.SQLNRows
+
+if li_codigo_sql = -1 then
+	ROLLBACK USING gtr_sadm;
+	MessageBox("Error al insertar en cnv_folio_nip", ls_mensaje_sql)
+	return -1
+elseif li_codigo_sql= 0 then
+	COMMIT USING gtr_sadm;
+end if
+
+return ll_num_insertados
+
+
+end function
+

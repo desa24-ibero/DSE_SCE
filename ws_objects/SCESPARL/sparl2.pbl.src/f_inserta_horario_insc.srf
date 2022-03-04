@@ -1,0 +1,51 @@
+﻿$PBExportHeader$f_inserta_horario_insc.srf
+global type f_inserta_horario_insc from function_object
+end type
+
+forward prototypes
+global function long f_inserta_horario_insc (integer ai_periodo, integer ai_anio, long al_cuenta, datetime adttm_hora_entrada, long al_lugar_fila, string as_criterio)
+end prototypes
+
+global function long f_inserta_horario_insc (integer ai_periodo, integer ai_anio, long al_cuenta, datetime adttm_hora_entrada, long al_lugar_fila, string as_criterio);//NOMBRE
+//f_inserta_horario_insc
+//
+//REGRESA
+//long
+//
+//RECIBE	
+//ai_periodo				int
+//ai_anio					int
+//al_cuenta					long
+//adttm_hora_entrada		datetime
+//al_lugar_fila			long
+//as_criterio				string
+//NOTA IMPORTANTE: 	El control transaccional se remite al código de origen,
+//pues se piensa en commit o rollback transaccional de todo el bloque del horario
+
+integer li_codigo_sql, li_codigo_sql2
+string ls_criterio, ls_mensaje_sql, ls_mensaje_sql2, ls_calificacion_anterior , ls_codigo_sql
+long	ll_cuenta, ll_rows
+
+	INSERT INTO horario_insc  
+					( periodo,
+					  anio,
+					  cuenta,   
+					  hora_entrada,
+					  lugar_fila,
+					  criterio)  
+	VALUES ( :ai_periodo,
+	         :ai_anio,
+	         :al_cuenta,   
+				:adttm_hora_entrada,
+				:al_lugar_fila,
+				:as_criterio)  
+	USING gtr_sce;
+	li_codigo_sql =gtr_sce.Sqlcode
+	ls_mensaje_sql =gtr_sce.SqlErrText	
+	//Si hay algún error envía el error
+
+return li_codigo_sql
+	
+
+end function
+

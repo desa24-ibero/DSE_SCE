@@ -1,0 +1,23 @@
+﻿$PBExportHeader$d_camb_calif.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=141 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes key=yes name=historico_cuenta dbname="historico.cuenta" )
+ column=(type=char(70) updatewhereclause=yes name=alumnos_nombre_completo dbname="alumnos.nombre_completo" )
+ column=(type=long updatewhereclause=yes key=yes name=historico_cve_mat dbname="historico.cve_mat" )
+ column=(type=char(2) updatewhereclause=yes key=yes name=historico_gpo dbname="historico.gpo" )
+ column=(type=long updatewhereclause=yes key=yes name=historico_periodo dbname="historico.periodo" )
+ column=(type=long updatewhereclause=yes key=yes name=historico_anio dbname="historico.anio" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=historico_calificacion dbname="historico.calificacion" )
+ column=(type=char(4) updatewhereclause=yes name=materias_evaluacion dbname="materias.evaluacion" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"alumnos~" )  TABLE(NAME=~"historico~" )  TABLE(NAME=~"dbo.materias~" ) COLUMN(NAME=~"historico.cuenta~") COLUMN(NAME=~"alumnos.nombre_completo~") COLUMN(NAME=~"historico.cve_mat~") COLUMN(NAME=~"historico.gpo~") COLUMN(NAME=~"historico.periodo~") COLUMN(NAME=~"historico.anio~") COLUMN(NAME=~"historico.calificacion~") COLUMN(NAME=~"dbo.materias.evaluacion~")    JOIN (LEFT=~"alumnos.cuenta~"    OP =~"=~"RIGHT=~"historico.cuenta~" )    JOIN (LEFT=~"historico.cve_mat~"    OP =~"=~"RIGHT=~"dbo.materias.cve_mat~" )WHERE(    EXP1 =~"historico.anio~"   OP =~"=~"    EXP2 =~":anio ~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"historico.periodo~"   OP =~"=~"    EXP2 =~":periodo ~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"historico.cve_mat~"   OP =~"=~"    EXP2 =~":materia ~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"historico.gpo~"   OP =~"=~"    EXP2 =~":grupo  ~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"historico.cuenta~"   OP =~"=~"    EXP2 =~":cuenta~" ) ) ARG(NAME = ~"anio~" TYPE = number)  ARG(NAME = ~"periodo~" TYPE = number)  ARG(NAME = ~"materia~" TYPE = number)  ARG(NAME = ~"grupo~" TYPE = string)  ARG(NAME = ~"cuenta~" TYPE = number) " update="historico" updatewhere=1 updatekeyinplace=yes arguments=(("anio", number),("periodo", number),("materia", number),("grupo", string),("cuenta", number))  sort="alumnos_nombre_completo A " )
+text(band=header alignment="2" text="Historico
+Calificacion"border="0" color="33554432" x="2085" y="4" height="129" width="302"  name=mat_inscritas_calificacion_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=header alignment="2" text="Alumnos
+Nombre Completo"border="0" color="33554432" x="1" y="4" height="129" width="1948"  name=alumnos_nombre_completo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="5" y="4" height="77" width="1948" format="[general]"  name=alumnos_nombre_completo edit.limit=70 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="33554432" x="1953" y="4" height="77" width="572" format="[general]"  name=historico_calificacion edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="33554432" x="2561" y="4" height="77" width="183"  name=materias_evaluacion  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )

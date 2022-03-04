@@ -1,0 +1,81 @@
+﻿$PBExportHeader$f_existe_holograma_repetido.srf
+global type f_existe_holograma_repetido from function_object
+end type
+
+forward prototypes
+global function boolean f_existe_holograma_repetido (long al_numeros[], long al_num_holograma, boolean ab_es_plantel)
+end prototypes
+
+global function boolean f_existe_holograma_repetido (long al_numeros[], long al_num_holograma, boolean ab_es_plantel);//f_existe_holograma_repetido
+//
+//al_numeros					long 
+//al_num_holograma			long
+//ab_es_plantel				boolean
+
+string ls_orden_cobro
+integer li_codigo_sql
+string ls_mensaje_sql
+long ll_num_holograma, ll_cant_hologramas, ll_numeros_vacia[]
+datastore lds_holograma_sep, lds_holograma_sep_planteles
+ll_numeros_vacia[1]=-1
+
+lds_holograma_sep= CREATE datastore 
+lds_holograma_sep.dataobject = "d_hologramas_sep"
+lds_holograma_sep.SetTransObject(gtr_sce)
+
+if isnull(al_num_holograma) then
+	al_num_holograma = -1
+end if
+
+
+//Si se esta validando la captura de planteles la lista de numeros debe ser vacia
+if ab_es_plantel then
+	ll_cant_hologramas= lds_holograma_sep.Retrieve(ll_numeros_vacia, al_num_holograma)	
+else
+	ll_cant_hologramas= lds_holograma_sep.Retrieve(al_numeros, al_num_holograma)
+end if
+
+li_codigo_sql = ll_cant_hologramas
+ls_mensaje_sql = gtr_sce.SqlErrText
+if ll_cant_hologramas> 0 then
+	destroy lds_holograma_sep
+	return true	
+end if
+
+if li_codigo_sql = -1 then
+	MessageBox("Error al consultar control_sep", ls_mensaje_sql)
+	destroy lds_holograma_sep
+	return false
+end if
+
+lds_holograma_sep_planteles= CREATE datastore 
+lds_holograma_sep_planteles.dataobject = "d_hologramas_sep_planteles"
+lds_holograma_sep_planteles.SetTransObject(gtr_sce)
+
+//Si se esta validando la captura de planteles la lista de numeros debe ser la recibida
+if ab_es_plantel then
+	ll_cant_hologramas= lds_holograma_sep_planteles.Retrieve(al_numeros, al_num_holograma)	
+else
+	ll_cant_hologramas= lds_holograma_sep_planteles.Retrieve(ll_numeros_vacia, al_num_holograma)
+end if
+
+li_codigo_sql = ll_cant_hologramas
+ls_mensaje_sql = gtr_sce.SqlErrText
+if ll_cant_hologramas> 0 then
+	destroy lds_holograma_sep_planteles
+	return true	
+end if
+
+if li_codigo_sql = -1 then
+	MessageBox("Error al consultar control_sep_planteles", ls_mensaje_sql)
+	destroy lds_holograma_sep_planteles
+	return false
+end if
+
+destroy lds_holograma_sep
+destroy lds_holograma_sep_planteles
+
+return false
+
+end function
+

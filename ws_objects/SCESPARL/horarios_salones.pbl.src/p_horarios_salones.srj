@@ -1,0 +1,13 @@
+﻿$PBExportHeader$p_horarios_salones.srj
+EXE:horarios_salones.exe,,0,1,1
+CMP:1,0,0,2,2,0,1
+COM:Sybase, Inc.
+DES:Sybase, Inc. Product File
+CPY:
+PRD:PowerBuilder Enterprise Series
+PVS:1.0.0.1
+PVN:1,0,0,1
+FVS:1.0.0.1
+FVN:1,0,0,1
+MAN:0,asInvoker,0
+PBD:horarios_salones.pbl,,0

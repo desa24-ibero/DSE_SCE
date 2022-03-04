@@ -1,0 +1,58 @@
+﻿$PBExportHeader$f_materia_en_intercambio_temp.srf
+$PBExportComments$Regreasa "true" si la materia existe en la tabla de historico, en el mismo periodo y año. Juan Campos. Marzo.1997
+global type f_materia_en_intercambio_temp from function_object
+end type
+
+forward prototypes
+global function integer f_materia_en_intercambio_temp (long a_cuenta, long a_cve_mat, string as_gpo, integer a_periodo, integer a_anio)
+end prototypes
+
+global function integer f_materia_en_intercambio_temp (long a_cuenta, long a_cve_mat, string as_gpo, integer a_periodo, integer a_anio);//f_materia_en_intercambio_temp
+//Recibe:
+//a_cuenta		long
+//a_cve_mat		long
+//as_gpo			string
+//a_periodo		integer
+//a_anio			integer
+//
+// Regresa si la materia existe en la tabla de historico_temp_intercambio, 
+// en el mismo periodo y año recibidos.
+//	Devuelve:
+//	1 	si existe
+// 0  si no existe 
+//	-1 si hubo algún error durante la consulta	
+
+
+Integer li_num_materias = 0
+integer li_codigo_sql
+string ls_mensaje_sql
+
+select count(cuenta)
+into :li_num_materias
+from historico_temp_intercambio
+where (cuenta  = :a_cuenta)  
+and	(cve_mat = :a_cve_mat) 
+and	(gpo = :as_gpo) 
+and	(periodo = :a_periodo) 
+and	(anio    = :a_anio)
+Using gtr_sce;
+ 
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+if li_codigo_sql = 100  then
+	return 0
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar historico_temp_intercambio", ls_mensaje_sql)
+	return -1
+end if
+
+
+if li_num_materias > 0 Then 
+ 	Return 1 
+Else
+ 	Return 0	
+End If
+
+end function
+

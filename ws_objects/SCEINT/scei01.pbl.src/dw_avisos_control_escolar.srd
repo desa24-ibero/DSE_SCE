@@ -1,0 +1,11 @@
+﻿$PBExportHeader$dw_avisos_control_escolar.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=121 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=145 color="536870912" )
+table(column=(type=char(200) updatewhereclause=no name=aviso dbname="Aviso" )
+ )
+text(band=header alignment="2" text="AVISOS CONTROL ESCOLAR"border="0" color="0" x="1303" y="32" height="61" width="737"  name=aviso_t  font.face="Arial" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="3" tabsequence=10 border="0" color="0" x="19" y="8" height="121" width="3306" format="[general]"  name=aviso edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )

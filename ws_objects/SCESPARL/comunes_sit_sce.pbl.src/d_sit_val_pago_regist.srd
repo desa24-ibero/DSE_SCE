@@ -1,0 +1,39 @@
+﻿$PBExportHeader$d_sit_val_pago_regist.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=72 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=cuenta dbname="v_pagos_inscripcion.cuenta" )
+ column=(type=long updatewhereclause=yes name=periodo dbname="v_pagos_inscripcion.periodo" )
+ column=(type=long updatewhereclause=yes name=anio dbname="v_pagos_inscripcion.anio" )
+ column=(type=long updatewhereclause=yes name=cve_concepto dbname="v_pagos_inscripcion.cve_concepto" )
+ column=(type=datetime updatewhereclause=yes name=fecha_vencimiento dbname="v_pagos_inscripcion.fecha_vencimiento" )
+ column=(type=number updatewhereclause=yes name=saldo dbname="v_pagos_inscripcion.saldo" )
+ retrieve="  SELECT dbo.v_pagos_inscripcion.cuenta,   
+         dbo.v_pagos_inscripcion.periodo,   
+         dbo.v_pagos_inscripcion.anio,   
+         dbo.v_pagos_inscripcion.cve_concepto,   
+         dbo.v_pagos_inscripcion.fecha_vencimiento,   
+         dbo.v_pagos_inscripcion.saldo  
+    FROM dbo.v_pagos_inscripcion  
+   WHERE ( dbo.v_pagos_inscripcion.anio = :anio ) AND  
+         ( dbo.v_pagos_inscripcion.periodo = :periodo ) AND  
+         ( dbo.v_pagos_inscripcion.cve_concepto in (3,4,5,6,7,30) ) AND  
+         ( dbo.v_pagos_inscripcion.saldo <= 0 )    
+" arguments=(("anio", number),("periodo", number)) )
+text(band=header alignment="2" text="Cuenta" border="0" color="0" x="5" y="4" height="64" width="329"  name=cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Periodo" border="0" color="0" x="338" y="4" height="64" width="329"  name=periodo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Anio" border="0" color="0" x="672" y="4" height="64" width="329"  name=anio_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Concepto" border="0" color="0" x="1006" y="4" height="64" width="366"  name=cve_concepto_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Fecha Vencimiento" border="0" color="0" x="1376" y="4" height="64" width="603"  name=fecha_vencimiento_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Saldo" border="0" color="0" x="1984" y="4" height="64" width="329"  name=saldo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=0 border="0" color="0" x="64" y="0" height="76" width="242"  name=cuenta  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=0 border="0" color="0" x="475" y="0" height="76" width="160"  name=periodo  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=0 border="0" color="0" x="759" y="4" height="76" width="160"  name=anio  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=0 border="0" color="0" x="1147" y="4" height="76" width="160"  name=cve_concepto  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="0" tabsequence=0 border="0" color="0" x="1413" y="4" height="76" width="608"  name=fecha_vencimiento  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="0" tabsequence=0 border="0" color="0" x="1993" y="4" height="76" width="315"  name=saldo  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

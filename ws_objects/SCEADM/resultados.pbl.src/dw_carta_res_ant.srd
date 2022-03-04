@@ -1,0 +1,82 @@
+﻿$PBExportHeader$dw_carta_res_ant.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=3770 color="536870912"  height.autosize=yes)
+table(column=(type=real updatewhereclause=yes name=puntaje dbname="aspiran.puntaje" )
+ column=(type=long updatewhereclause=yes name=lugar_car dbname="aspiran.lugar_car" )
+ column=(type=long updatewhereclause=yes name=folio dbname="aspiran.folio" )
+ column=(type=long updatewhereclause=yes name=clv_carr dbname="aspiran.clv_carr" )
+ column=(type=char(50) updatewhereclause=yes name=general_nombre dbname="general.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=general_apaterno dbname="general.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=general_amaterno dbname="general.amaterno" )
+ column=(type=long updatewhereclause=yes name=aspiran_status dbname="aspiran.status" values="NO ACEPTADO	0/ACEPTADO	1/INSCRITO	2/DIFERIDO	3/ACEPTADO	4/" )
+ column=(type=long updatewhereclause=yes name=general_cuenta dbname="general.cuenta" )
+ column=(type=long updatewhereclause=yes name=aspiran_clv_ver dbname="aspiran.clv_ver" )
+ retrieve="  SELECT aspiran.puntaje,   
+         aspiran.lugar_car,   
+         aspiran.folio,   
+         aspiran.clv_carr,   
+         general.nombre,   
+         general.apaterno,   
+         general.amaterno,   
+         aspiran.status,   
+         general.cuenta, 
+         aspiran.clv_ver
+    FROM aspiran,   
+         general
+   WHERE ( aspiran.folio = general.folio ) and  
+         ( general.clv_ver = aspiran.clv_ver ) and  
+         ( aspiran.clv_per = general.clv_per ) and  
+         ( general.anio = aspiran.anio ) and  
+         ( aspiran.clv_per = :per ) AND  
+         ( aspiran.anio = :ani ) AND  
+         ( aspiran.folio between :min AND :max) AND  
+         aspiran.pago_exam = 1 and
+         ( ( :opcion = 0 AND ((aspiran.clv_ver = :ver) OR 
+                              (:ver = 99)             ) ) OR
+         ( :opcion = 1 AND ( ((aspiran.clv_ver = :ver) OR 
+                              (:ver =99)              ) OR 
+         aspiran.status = 4 OR aspiran.status = 3 ) ) )
+" arguments=(("ver", number),("per", number),("ani", number),("min", number),("max", number),("mensa_1", string),("mensa_2", string),("mensa_3", string),("mensa_4", string),("puntaje_min_plantel", number),("opcion", number))  sort="general_apaterno A general_amaterno A general_nombre A " )
+compute(band=background alignment="3" expression="if (  aspiran_status = 3 , mensa_4, if(  aspiran_status=1 or  aspiran_status =4 , mensa_1, if( aspiran_status=2, 'INSCRITO', if(  puntaje >=puntaje_min_plantel, mensa_2, mensa_3 ) ) ) )"border="0" color="0" x="132" y="2144" height="1632" width="3317" format="[general]"  name=resultado  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215"  height.autosize=yes)
+rectangle(band=detail x="380" y="717" height="429" width="2827" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="0" )
+compute(band=detail alignment="2" expression="truncate(  puntaje , 0 )"border="0" color="0" x="1061" y="899" height="83" width="358" format="#0"  name=cf_puntaje_truncado  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="1057" y="784" height="80" width="358" format="#0"  name=puntaje visible="1~t0" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+rectangle(band=detail x="150" y="1242" height="816" width="3280" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="4" pen.color="0"  background.mode="2" background.color="0" )
+text(band=detail alignment="0" text="Resultados obtenidos en el examen de admisión que presentaste para ingresar a la carrera de:"border="0" color="0" x="384" y="368" height="70" width="2820"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="2790" y="16" height="64" width="651" format="[general]"  name=aspiran_status ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="911" y="547" height="67" width="1733" format="[general]"  name=clv_carr dddw.name=dw_carrera dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=100 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="C) PROMEDIO DE BACHILLERATO: INTEGRADO CON UN 40% EN EL PUNTAJE TOTAL."border="0" color="0" x="322" y="1936" height="70" width="2728"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+report(band=detail dataobject="dw_cal_sec" x="3072" y="1795" height="83" width="227" border="0" criteria="" nest_arguments=(("folio"),("aspiran_clv_ver"),("per"),("ani"),("1"),("2")) trail_footer = yes  slideup=directlyabove )
+text(band=detail alignment="2" text="Razonamiento Matemático"border="0" color="0" x="2326" y="1805" height="64" width="709"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+report(band=detail dataobject="dw_cal_sec" x="1551" y="1795" height="83" width="223" border="0" criteria="" nest_arguments=(("folio"),("aspiran_clv_ver"),("per"),("ani"),("1"),("1")) trail_footer = yes  slideup=directlyabove )
+text(band=detail alignment="2" text="Razonamiento Verbal:"border="0" color="0" x="929" y="1805" height="64" width="585"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="B) RAZONAMIENTO"border="0" color="0" x="322" y="1664" height="70" width="607"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Mundo Contemporáneo:"border="0" color="0" x="881" y="1546" height="64" width="633"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+report(band=detail dataobject="dw_cal_sec" x="1551" y="1536" height="80" width="227" border="0" criteria="" nest_arguments=(("folio"),("aspiran_clv_ver"),("per"),("ani"),("2"),("1")) trail_footer = yes  slideup=directlyabove )
+text(band=detail alignment="1" text="Ciencias Naturales:"border="0" color="0" x="1832" y="1546" height="64" width="519"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+report(band=detail dataobject="dw_cal_sec" x="2388" y="1536" height="80" width="227" border="0" criteria="" nest_arguments=(("folio"),("aspiran_clv_ver"),("per"),("ani"),("2"),("2")) trail_footer = yes  slideup=directlyabove )
+text(band=detail alignment="1" text="Matemáticas:"border="0" color="0" x="2673" y="1546" height="64" width="362"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+report(band=detail dataobject="dw_cal_sec" x="3072" y="1536" height="80" width="230" border="0" criteria="" nest_arguments=(("folio"),("aspiran_clv_ver"),("per"),("ani"),("2"),("4")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_cal_sec" x="3072" y="1408" height="80" width="230" border="0" criteria="" nest_arguments=(("folio"),("aspiran_clv_ver"),("per"),("ani"),("2"),("5")) trail_footer = yes  slideup=directlyabove )
+text(band=detail alignment="1" text="Español:"border="0" color="0" x="2801" y="1418" height="64" width="234"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+report(band=detail dataobject="dw_cal_sec" x="2388" y="1408" height="80" width="227" border="0" criteria="" nest_arguments=(("folio"),("aspiran_clv_ver"),("per"),("ani"),("2"),("3")) trail_footer = yes  slideup=directlyabove )
+text(band=detail alignment="1" text="Ciencias Sociales"border="0" color="0" x="1876" y="1418" height="64" width="475"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="Resultados Parciales:"border="0" color="0" x="1445" y="1293" height="77" width="695"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="Número de Aspirantes a tu carrera:"border="0" color="0" x="1554" y="912" height="64" width="929"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="0" text="Resultados Generales"border="0" color="0" x="1441" y="771" height="77" width="706"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="Puntaje Total"border="0" color="0" x="461" y="909" height="64" width="347"  name=puntaje_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="Lugar Carrera"border="0" color="0" x="461" y="1008" height="64" width="358"  name=lugar_car_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="general_apaterno+' '+general_amaterno+' '+general_nombre"border="0" color="0" x="1660" y="192" height="64" width="1796" format="[general]"  name=nom  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="'México, D.F., a ' +fecha_español(string(date(today())))"border="0" color="0" x="48" y="16" height="64" width="1386" format="[general]"  name=fecha  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="if(  aspiran_status  = 1 or  aspiran_status =4  , 'Número de Cuenta: '+general_cuenta +'-'+obten_digito(general_cuenta), 'Folio: '+string(folio)  )"border="0" color="0" x="48" y="189" height="74" width="1386" format="[general]"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="A) CONOCIMIENTOS"border="0" color="0" x="311" y="1418" height="67" width="651"  font.face="Arial" font.height="-11" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+report(band=detail dataobject="dw_cal_are" x="1112" y="1658" height="80" width="307" border="0"  height.autosize=yes criteria="" nest_arguments=(("folio"),("aspiran_clv_ver"),("per"),("ani"),("1")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_cal_are" x="1112" y="1408" height="86" width="307" border="0" criteria="" nest_arguments=(("folio"),("aspiran_clv_ver"),("per"),("ani"),("2")) trail_footer = yes  slideup=directlyabove )
+report(band=detail dataobject="dw_aspixcarr" x="2820" y="906" height="80" width="351" border="0"  height.autosize=yes criteria="" nest_arguments=(("aspiran_clv_ver"),("per"),("ani"),("clv_carr"),("255")) trail_footer = yes  slideup=directlyabove )
+text(band=detail alignment="0" text="Número de Aspirantes Aceptados a tu carrera:"border="0" color="0" x="1554" y="1008" height="64" width="1232"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+report(band=detail dataobject="dw_aspixcarr" x="2820" y="1002" height="80" width="351" border="0"  height.autosize=yes criteria="" nest_arguments=(("aspiran_clv_ver"),("per"),("ani"),("clv_carr"),("1")) trail_footer = yes  slideup=directlyabove )
+compute(band=detail alignment="2" expression="if(aspiran_status=0 or  aspiran_status =3 ,lugar_car+10,lugar_car)"border="0" color="0" x="1061" y="1002" height="80" width="358" format="[general]"  name=lugar  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

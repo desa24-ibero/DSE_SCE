@@ -1,0 +1,39 @@
+﻿$PBExportHeader$damemes.srf
+global type damemes from function_object
+end type
+
+forward prototypes
+global function string damemes (integer mes)
+end prototypes
+
+global function string damemes (integer mes);CHOOSE CASE Mes
+	CASE 1
+		return "ENERO     "
+	CASE 2
+		return "FEBRERO   "
+	CASE 3
+		return "MARZO     "
+	CASE 4
+		return "ABRIL     "
+	CASE 5
+		return "MAYO      "
+	CASE 6
+		return "JUNIO     "
+	CASE 7
+		return "JULIO     "
+	CASE 8
+		return "AGOSTO    "
+	CASE 9
+		return "SEPTIEMBRE"
+	CASE 10
+		return "OCTUBRE   "
+	CASE 11
+		return "NOVIEMBRE "
+	CASE 12
+		return "DICIEMBRE "
+	CASE ELSE
+		return "          "
+END CHOOSE
+
+end function
+

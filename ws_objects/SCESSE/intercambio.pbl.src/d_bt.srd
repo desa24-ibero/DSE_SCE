@@ -1,0 +1,202 @@
+﻿$PBExportHeader$d_bt.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=3960 color="536870912" )
+table(column=(type=datetime updatewhereclause=yes name=fecha_ingreso dbname="fecha_ingreso" )
+ column=(type=char(10) updatewhereclause=yes name=fecha_publicacion dbname="fecha_publicacion" )
+ column=(type=char(100) updatewhereclause=yes name=nombre_empresa dbname="nombre_empresa" )
+ column=(type=char(100) updatewhereclause=yes name=calle dbname="calle" )
+ column=(type=char(100) updatewhereclause=yes name=colonia dbname="colonia" )
+ column=(type=char(50) updatewhereclause=yes name=pais dbname="pais" )
+ column=(type=char(50) updatewhereclause=yes name=delegacion dbname="delegacion" )
+ column=(type=char(100) updatewhereclause=yes name=ciudad dbname="ciudad" )
+ column=(type=char(13) updatewhereclause=yes name=telefono1 dbname="telefono1" )
+ column=(type=char(6) updatewhereclause=yes name=extencion1 dbname="extencion1" )
+ column=(type=char(13) updatewhereclause=yes name=telefono2 dbname="telefono2" )
+ column=(type=char(6) updatewhereclause=yes name=extencion2 dbname="extencion2" )
+ column=(type=char(13) updatewhereclause=yes name=telefono3 dbname="telefono3" )
+ column=(type=char(6) updatewhereclause=yes name=extencion3 dbname="extencion3" )
+ column=(type=char(13) updatewhereclause=yes name=fax1 dbname="fax1" )
+ column=(type=char(13) updatewhereclause=yes name=fax2 dbname="fax2" )
+ column=(type=char(60) updatewhereclause=yes name=mail dbname="mail" )
+ column=(type=char(50) updatewhereclause=yes name=contacto dbname="contacto" )
+ column=(type=char(50) updatewhereclause=yes name=giro dbname="giro" )
+ column=(type=char(50) updatewhereclause=yes name=puesto dbname="puesto" )
+ column=(type=char(240) updatewhereclause=yes name=nivel dbname="nivel" )
+ column=(type=char(9) updatewhereclause=yes name=nivel2 dbname="nivel2" )
+ column=(type=char(9) updatewhereclause=yes name=nivel3 dbname="nivel3" )
+ column=(type=char(9) updatewhereclause=yes name=nivel4 dbname="nivel4" )
+ column=(type=char(9) updatewhereclause=yes name=nivel5 dbname="nivel5" )
+ column=(type=long updatewhereclause=yes name=id_nivel_escolar dbname="id_nivel_escolar" )
+ column=(type=char(50) updatewhereclause=yes name=posgrado dbname="posgrado" )
+ column=(type=long updatewhereclause=yes name=idioma1 dbname="idioma1" )
+ column=(type=long updatewhereclause=yes name=sueldo_max dbname="sueldo_max" )
+ column=(type=char(200) updatewhereclause=yes name=exper_donde dbname="exper_donde" )
+ column=(type=char(200) updatewhereclause=yes name=paqueteria dbname="paqueteria" )
+ column=(type=long updatewhereclause=yes name=edad1 dbname="edad1" )
+ column=(type=long updatewhereclause=yes name=edad2 dbname="edad2" )
+ column=(type=char(10) updatewhereclause=yes name=sexo dbname="sexo" )
+ column=(type=char(2) updatewhereclause=yes name=automovil dbname="automovil" )
+ column=(type=char(2) updatewhereclause=yes name=viajar dbname="viajar" )
+ column=(type=char(22) updatewhereclause=yes name=automovil_nec dbname="automovil_nec" )
+ column=(type=char(19) updatewhereclause=yes name=viajar_nec dbname="viajar_nec" )
+ column=(type=char(255) updatewhereclause=yes name=observaciones1 dbname="observaciones1" )
+ column=(type=char(255) updatewhereclause=yes name=observaciones2 dbname="observaciones2" )
+ column=(type=long updatewhereclause=yes name=carrera1 dbname="carrera1" )
+ column=(type=long updatewhereclause=yes name=carrera2 dbname="carrera2" )
+ column=(type=long updatewhereclause=yes name=carrera3 dbname="carrera3" )
+ column=(type=long updatewhereclause=yes name=carrera4 dbname="carrera4" )
+ column=(type=long updatewhereclause=yes name=id_nivel_escolar2 dbname="id_nivel_escolar2" )
+ column=(type=long updatewhereclause=yes name=id_nivel_escolar3 dbname="id_nivel_escolar3" )
+ column=(type=long updatewhereclause=yes name=id_nivel_escolar4 dbname="id_nivel_escolar4" )
+ column=(type=long updatewhereclause=yes name=id_nivel_escolar5 dbname="id_nivel_escolar5" )
+ column=(type=long updatewhereclause=yes name=sueldo_min dbname="sueldo_min" )
+ retrieve="SELECT 
+			v_w_bt_dat_of_emp_esc.fecha_ingreso,
+			fecha_publicacion = convert(varchar(10), convert(varchar(2),datepart(dd,v_w_bt_dat_of_emp_esc.fecha_ingreso))+~"/~"+
+                                                              convert(varchar(2),datepart(mm,v_w_bt_dat_of_emp_esc.fecha_ingreso))+~"/~"+
+                                                              convert(varchar(4),datepart(yy,v_w_bt_dat_of_emp_esc.fecha_ingreso))),
+			v_w_bt_dat_of_emp_esc.nombre_empresa,   
+         v_w_bt_dat_of_emp_esc.calle,   
+         v_w_bt_dat_of_emp_esc.colonia,   
+         v_w_bt_dat_of_emp_esc.pais,   
+         v_w_bt_dat_of_emp_esc.delegacion,   
+         v_w_bt_dat_of_emp_esc.ciudad,   
+         v_w_bt_dat_of_emp_esc.telefono1,   
+         v_w_bt_dat_of_emp_esc.extencion1,   
+         v_w_bt_dat_of_emp_esc.telefono2,   
+         v_w_bt_dat_of_emp_esc.extencion2,   
+         v_w_bt_dat_of_emp_esc.telefono3,   
+         v_w_bt_dat_of_emp_esc.extencion3,   
+         v_w_bt_dat_of_emp_esc.fax1,   
+         v_w_bt_dat_of_emp_esc.fax2,   
+         v_w_bt_dat_of_emp_esc.mail,   
+         v_w_bt_dat_of_emp_esc.contacto,   
+         v_w_bt_dat_of_emp_esc.giro,   
+         v_w_bt_dat_of_emp_esc.puesto,   
+         v_w_bt_dat_of_emp_esc.nivel,   
+         v_w_bt_dat_of_emp_esc.nivel2,
+         v_w_bt_dat_of_emp_esc.nivel3,
+         v_w_bt_dat_of_emp_esc.nivel4,
+         v_w_bt_dat_of_emp_esc.nivel5,
+         v_w_bt_dat_of_emp_esc.id_nivel_escolar,   
+         v_w_bt_dat_of_emp_esc.posgrado,   
+         v_w_bt_dat_of_emp_esc.idioma1,   
+         v_w_bt_dat_of_emp_esc.sueldo_max,   
+         v_w_bt_dat_of_emp_esc.exper_donde,  
+         v_w_bt_dat_of_emp_esc.paqueteria,   
+         v_w_bt_dat_of_emp_esc.edad1,
+         v_w_bt_dat_of_emp_esc.edad2,
+	    v_w_bt_dat_of_emp_esc.sexo,
+         v_w_bt_dat_of_emp_esc.automovil,   
+         v_w_bt_dat_of_emp_esc.viajar,   
+			automovil_nec =CASE convert(varchar(50),v_w_bt_dat_of_emp_esc.automovil) WHEN ~"2~" THEN ~"Automovil Necesario~" ELSE ~"Automovil NO Necesario~" END,
+			viajar_nec =CASE convert(varchar(50),v_w_bt_dat_of_emp_esc.viajar) WHEN ~"2~" THEN ~"Necesario Viajar~" ELSE ~"NO Necesario Viajar~" END,		
+         v_w_bt_dat_of_emp_esc.observaciones1,   
+         v_w_bt_dat_of_emp_esc.observaciones2,
+			v_w_bt_dat_of_emp_esc.carrera1,
+			v_w_bt_dat_of_emp_esc.carrera2,
+			v_w_bt_dat_of_emp_esc.carrera3,
+			v_w_bt_dat_of_emp_esc.carrera4,
+         v_w_bt_dat_of_emp_esc.id_nivel_escolar2,   
+         v_w_bt_dat_of_emp_esc.id_nivel_escolar3,   
+         v_w_bt_dat_of_emp_esc.id_nivel_escolar4,   
+         v_w_bt_dat_of_emp_esc.id_nivel_escolar5,
+         v_w_bt_dat_of_emp_esc.sueldo_min
+    FROM v_w_bt_dat_of_emp_esc  
+   WHERE ( v_w_bt_dat_of_emp_esc.carrera1 in (501,502) or 
+			  v_w_bt_dat_of_emp_esc.carrera2 in (501,502) or
+			  v_w_bt_dat_of_emp_esc.carrera3 in (501,502) or
+			  v_w_bt_dat_of_emp_esc.carrera4 in (501,502) or 
+			  v_w_bt_dat_of_emp_esc.exper_donde like ~"%RECURSOS HUMANOS%~") 
+	and 		v_w_bt_dat_of_emp_esc.fecha_ingreso> ~"24-sep-2005~"		
+   and 	 v_w_bt_dat_of_emp_esc.edad1 <=35
+   and    35 <= v_w_bt_dat_of_emp_esc.edad2
+ORDER BY v_w_bt_dat_of_emp_esc.fecha_ingreso desc, v_w_bt_dat_of_emp_esc.id_oferta
+" )
+rectangle(band=detail x="558" y="2388" height="216" width="2601"  name=r_1 brush.hatch="6" brush.color="1090519039" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="Nombre Empresa:" border="0" color="0" x="27" y="108" height="64" width="517"  name=nombre_empresa_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Fecha Publicacion:" border="0" color="0" x="0" y="8" height="64" width="558"  name=fecha_publicacion_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Calle:" border="0" color="0" x="37" y="212" height="64" width="507"  name=calle_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Colonia:" border="0" color="0" x="37" y="348" height="64" width="507"  name=colonia_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Pais:" border="0" color="0" x="37" y="484" height="64" width="507"  name=pais_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Delegacion:" border="0" color="0" x="37" y="620" height="64" width="507"  name=delegacion_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Ciudad:" border="0" color="0" x="37" y="756" height="64" width="507"  name=ciudad_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Telefono1:" border="0" color="0" x="37" y="892" height="64" width="507"  name=telefono1_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Fax2:" border="0" color="0" x="1143" y="1292" height="64" width="507"  name=fax2_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Mail:" border="0" color="0" x="37" y="1400" height="64" width="507"  name=mail_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Contacto:" border="0" color="0" x="37" y="1536" height="64" width="507"  name=contacto_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Giro:" border="0" color="0" x="37" y="1672" height="64" width="507"  name=giro_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Nivel:" border="0" color="0" x="37" y="1944" height="64" width="507"  name=nivel_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Puesto:" border="0" color="0" x="37" y="1808" height="64" width="507"  name=puesto_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Posgrado:" border="0" color="0" x="37" y="2056" height="64" width="507"  name=posgrado_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Extension1:" border="0" color="0" x="1138" y="896" height="64" width="507"  name=extencion1_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Telefono2:" border="0" color="0" x="46" y="1028" height="64" width="507"  name=telefono2_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Extension2:" border="0" color="0" x="1143" y="1028" height="64" width="507"  name=extencion2_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Fax1:" border="0" color="0" x="37" y="1288" height="64" width="507"  name=fax1_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Telefono3:" border="0" color="0" x="50" y="1168" height="64" width="507"  name=telefono3_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Extension3:" border="0" color="0" x="1138" y="1160" height="64" width="507"  name=extencion3_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Idioma1:" border="0" color="0" x="37" y="2164" height="64" width="507"  name=idioma1_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Exper Donde:" border="0" color="0" x="37" y="2396" height="76" width="503"  name=exper_donde_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Sueldo Min:" border="0" color="0" x="41" y="2264" height="64" width="507"  name=t_1  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="8" height="76" width="453" format="[general]"  name=fecha_publicacion edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="484" height="76" width="1399" format="[general]"  name=pais edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="620" height="76" width="1399" format="[general]"  name=delegacion edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="892" height="76" width="384" format="[general]"  name=telefono1 edit.limit=13 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="1400" height="76" width="1673" format="[general]"  name=mail edit.limit=60 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=18 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="1536" height="76" width="1399" format="[general]"  name=contacto edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=19 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="1672" height="76" width="1399" format="[general]"  name=giro edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=20 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="1808" height="76" width="1399" format="[general]"  name=puesto edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=27 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="2056" height="76" width="1399" format="[general]"  name=posgrado edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="2" color="0" x="571" y="1028" height="76" width="384" format="[general]"  name=telefono2 edit.limit=13 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="1288" height="76" width="384" format="[general]"  name=fax1 edit.limit=13 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="2" color="0" x="576" y="1168" height="76" width="384" format="[general]"  name=telefono3 edit.limit=13 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=28 alignment="1" tabsequence=32766 border="2" color="0" x="562" y="2164" height="76" width="329" format="[general]"  name=idioma1 edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=49 alignment="0" tabsequence=32766 border="2" color="0" x="571" y="2264" height="64" width="270" format="[general]"  name=sueldo_min edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=21 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="1944" height="76" width="2578" format="[general]"  name=nivel edit.limit=240 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="756" height="76" width="2587" format="[general]"  name=ciudad edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="348" height="76" width="2587" format="[general]"  name=colonia edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="212" height="76" width="2587" format="[general]"  name=calle edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="2" color="0" x="1669" y="1292" height="76" width="384" format="[general]"  name=fax2 edit.limit=13 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="2" color="0" x="1664" y="896" height="76" width="192" format="[general]"  name=extencion1 edit.limit=6 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="2" color="0" x="1669" y="1028" height="76" width="192" format="[general]"  name=extencion2 edit.limit=6 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="2" color="0" x="1664" y="1160" height="76" width="192" format="[general]"  name=extencion3 edit.limit=6 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=29 alignment="1" tabsequence=32766 border="2" color="0" x="1614" y="2260" height="76" width="329" format="[general]"  name=sueldo_max edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Sueldo Max:" border="0" color="0" x="1088" y="2264" height="64" width="507"  name=sueldo_max_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Edad Min:" border="0" color="0" x="37" y="2740" height="64" width="507"  name=edad1_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Paqueteria:" border="0" color="0" x="37" y="2628" height="64" width="507"  name=paqueteria_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=32 alignment="1" tabsequence=32766 border="2" color="0" x="562" y="2736" height="76" width="329" format="[general]"  name=edad1 edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=31 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="2628" height="76" width="2587" format="[general]"  name=paqueteria edit.limit=200 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=33 alignment="1" tabsequence=32766 border="2" color="0" x="1614" y="2736" height="76" width="329" format="[general]"  name=edad2 edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Edad Max:" border="0" color="0" x="1088" y="2740" height="64" width="507"  name=edad2_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Sexo:" border="0" color="0" x="37" y="2848" height="64" width="507"  name=sexo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=34 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="2848" height="76" width="302" format="[general]"  name=sexo edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Automovil:" border="0" color="0" x="37" y="2952" height="64" width="507"  name=automovil_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=35 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="2952" height="76" width="82" format="[general]"  name=automovil edit.limit=2 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Viajar:" border="0" color="0" x="37" y="3056" height="64" width="507"  name=viajar_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=36 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="3056" height="76" width="82" format="[general]"  name=viajar edit.limit=2 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Automovil Nec:" border="0" color="0" x="37" y="3160" height="64" width="507"  name=automovil_nec_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=37 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="3160" height="76" width="631" format="[general]"  name=automovil_nec edit.limit=22 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Viajar Nec:" border="0" color="0" x="37" y="3268" height="64" width="507"  name=viajar_nec_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=38 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="3268" height="76" width="549" format="[general]"  name=viajar_nec edit.limit=19 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Observaciones1:" border="0" color="0" x="37" y="3380" height="120" width="507"  name=observaciones1_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=39 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="3380" height="132" width="2587" format="[general]"  name=observaciones1 edit.limit=255 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Observaciones2:" border="0" color="0" x="37" y="3544" height="120" width="507"  name=observaciones2_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=40 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="3544" height="132" width="2587" format="[general]"  name=observaciones2 edit.limit=255 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Carrera1:" border="0" color="0" x="37" y="3708" height="64" width="507"  name=carrera1_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Carrera2:" border="0" color="0" x="1609" y="3708" height="64" width="507"  name=carrera2_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=42 alignment="0" tabsequence=32766 border="2" color="0" x="2135" y="3704" height="76" width="1010" format="[general]"  name=carrera2 dddw.name=ddd_bt_carrera dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=41 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="3704" height="76" width="1010" format="[general]"  name=carrera1 dddw.name=ddd_bt_carrera dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Carrera3:" border="0" color="0" x="37" y="3808" height="64" width="507"  name=carrera3_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="Carrera4:" border="0" color="0" x="1609" y="3812" height="64" width="507"  name=carrera4_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=44 alignment="0" tabsequence=32766 border="2" color="0" x="2135" y="3804" height="76" width="1010" format="[general]"  name=carrera4 dddw.name=ddd_bt_carrera dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=43 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="3800" height="76" width="1010" format="[general]"  name=carrera3 dddw.name=ddd_bt_carrera dddw.displaycolumn=carrera dddw.datacolumn=cve_carrera dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="2" color="0" x="562" y="108" height="76" width="2587" format="[general]"  name=nombre_empresa edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression="STRING(page())+~"/~"+STRING(pageCount())"border="0" color="0" x="3186" y="24" height="64" width="215" format="[GENERAL]"  name=compute_1  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="mid(  exper_donde , 1, 70 )"border="0" color="0" x="567" y="2396" height="64" width="2583" format="[GENERAL]"  name=compute_2  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="mid(  exper_donde , 71, 70 )"border="0" color="0" x="567" y="2464" height="64" width="2583" format="[GENERAL]"  name=compute_3  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="mid(  exper_donde , 141, 70 )"border="0" color="0" x="567" y="2532" height="64" width="2583" format="[GENERAL]"  name=compute_4  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

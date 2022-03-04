@@ -1,0 +1,26 @@
+﻿$PBExportHeader$f_ingreso_descripcion.srf
+global type f_ingreso_descripcion from function_object
+end type
+
+forward prototypes
+global function string f_ingreso_descripcion (integer e_forma_ingreso)
+end prototypes
+
+global function string f_ingreso_descripcion (integer e_forma_ingreso);
+STRING ls_descripcion_ingreso
+
+SELECT forma_ingreso
+INTO :ls_descripcion_ingreso
+FROM ingreso 
+WHERE cve_formaingreso = :e_forma_ingreso 
+USING gtr_sce; 
+IF gtr_sce.SQLCODE < 0 THEN 
+	MESSAGEBOX("Error", "Se produjo un error al recuperar la descripción de la forma de ingreso: " + gtr_sce.SQLERRTEXT) 
+	RETURN ""
+END IF
+
+RETURN ls_descripcion_ingreso 
+
+
+end function
+

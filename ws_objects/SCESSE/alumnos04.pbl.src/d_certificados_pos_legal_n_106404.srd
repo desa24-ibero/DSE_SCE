@@ -1,0 +1,159 @@
+﻿$PBExportHeader$d_certificados_pos_legal_n_106404.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 2 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 0 print.paper.source = 0 print.paper.size = 1 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=1072 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=752 color="536870912" )
+detail(height=60 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=alumnos_cuenta dbname="alumnos.cuenta" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_nombre dbname="alumnos.nombre" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_apaterno dbname="alumnos.apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_amaterno dbname="alumnos.amaterno" )
+ column=(type=char(70) updatewhereclause=yes name=datos_certificado_nombre dbname="datos_certificado.nombre" )
+ column=(type=char(100) updatewhereclause=yes name=carreras_carrera dbname="carreras.carrera" )
+ column=(type=char(1) updatewhereclause=yes name=carreras_nivel dbname="carreras.nivel" )
+ column=(type=long updatewhereclause=yes name=cuerpo_reporte_num_renglon dbname="cuerpo_reporte.num_renglon" )
+ column=(type=char(255) updatewhereclause=yes name=cuerpo_reporte_texto_renglon dbname="cuerpo_reporte.texto_renglon" )
+ column=(type=long updatewhereclause=yes name=cuerpo_reporte_pagina dbname="cuerpo_reporte.pagina" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"alumnos~" )  TABLE(NAME=~"datos_certificado~" )  TABLE(NAME=~"academicos~" )  TABLE(NAME=~"carreras~" )  TABLE(NAME=~"cuerpo_reporte~" ) COLUMN(NAME=~"alumnos.cuenta~") COLUMN(NAME=~"alumnos.nombre~") COLUMN(NAME=~"alumnos.apaterno~") COLUMN(NAME=~"alumnos.amaterno~") COLUMN(NAME=~"datos_certificado.nombre~") COLUMN(NAME=~"carreras.carrera~") COLUMN(NAME=~"carreras.nivel~") COLUMN(NAME=~"cuerpo_reporte.num_renglon~") COLUMN(NAME=~"cuerpo_reporte.texto_renglon~") COLUMN(NAME=~"cuerpo_reporte.pagina~")    JOIN (LEFT=~"academicos.cuenta~"    OP =~"=~"RIGHT=~"alumnos.cuenta~" )    JOIN (LEFT=~"academicos.cve_carrera~"    OP =~"=~"RIGHT=~"carreras.cve_carrera~" )    JOIN (LEFT=~"academicos.cuenta~"    OP =~"=~"RIGHT=~"cuerpo_reporte.cuenta~" )WHERE(    EXP1 =~"( ( alumnos.cuenta~"   OP =~"=~"    EXP2 =~":an_cuenta )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( cuerpo_reporte.cve_tipo_doc_rep~"   OP =~"=~"    EXP2 =~":an_cve_tipo_doc_rep )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( datos_certificado.id~"   OP =~"=~"    EXP2 =~":id_certificado )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"((cuerpo_reporte.pagina~"   OP =~"=~"    EXP2 =~":an_pagina)~"    LOGIC =~"or~" ) WHERE(    EXP1 =~"(9999~"   OP =~"=~"    EXP2 =~":an_pagina~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"cuerpo_reporte.pagina~"   OP =~">~"    EXP2 =~"1)) )~" ) ) ARG(NAME = ~"an_cuenta~" TYPE = number)  ARG(NAME = ~"an_cve_tipo_doc_rep~" TYPE = number)  ARG(NAME = ~"id_certificado~" TYPE = number)  ARG(NAME = ~"an_pagina~" TYPE = number) " filter="len( cuerpo_reporte_texto_renglon )>0" arguments=(("an_cuenta", number),("an_cve_tipo_doc_rep", number),("id_certificado", number),("an_pagina", number)) )
+text(band=header alignment="0" text="1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+1
+2
+3
+4
+5
+6
+7
+8
+9
+20
+1
+2
+3
+4
+5
+6
+7
+8
+9
+30" border="0" color="0" x="3310" y="4" height="1588" width="96"  name=t_6 visible="1~t0"  font.face="Courier New" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+1
+2
+3
+4
+5
+6
+7
+8
+9
+20
+1
+2
+3
+4
+5
+6
+7
+8
+9
+30" border="0" color="0" x="9" y="4" height="1588" width="87"  name=t_2 visible="1~t0"  font.face="Courier New" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="2345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345" border="0" color="0" x="55" y="4" height="64" width="3378"  name=t_3 visible="1~t0"  font.face="Courier New" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="string( alumnos_cuenta )+obten_digito( alumnos_cuenta )"border="0" color="0" x="201" y="4" height="64" width="302" format="[GENERAL]"  name=cuenta_digito  font.face="Courier New" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="text" border="0" color="0" x="654" y="572" height="64" width="119"  name=t_7 visible="1~t0"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="text" border="0" color="0" x="654" y="700" height="64" width="119"  name=t_8 visible="1~t0"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=header alignment="0" expression=" alumnos_nombre + ~" ~"+ alumnos_apaterno +~" ~"+ alumnos_amaterno "border="0" color="0" x="777" y="548" height="64" width="2519" format="[GENERAL]"  name=nombre_completo  font.face="Courier New" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=header alignment="0" expression="f_elimina_acentos( carreras_carrera )"border="0" color="0" x="777" y="700" height="64" width="2519" format="[GENERAL]"  name=carreras_carrera  font.face="Courier New" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=9 alignment="0" tabsequence=10 border="0" color="0" x="155" y="0" height="60" width="3173" format="[general]"  name=cuerpo_reporte_texto_renglon edit.limit=255 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Courier New" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression=" cuerpo_reporte_num_renglon "border="0" color="255" x="14" y="0" height="64" width="155" format="[GENERAL]"  name=compute_1 visible="1~t0"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=footer alignment="0" text="1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+1
+2
+3
+4
+5
+6
+7
+8
+9
+20
+1
+2
+3
+4
+5
+6
+7
+8
+9
+30" border="0" color="0" x="3310" y="0" height="816" width="96"  name=t_5 visible="1~t0"  font.face="Courier New" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+1
+2
+3
+4
+5
+6
+7
+8
+9
+20
+1
+2
+3
+4
+5
+6
+7
+8
+9
+30" border="0" color="0" x="9" y="0" height="816" width="96"  name=t_1 visible="1~t0"  font.face="Courier New" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="2345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345" border="0" color="0" x="55" y="0" height="64" width="3378"  name=t_4 visible="1~t0"  font.face="Courier New" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=footer id=5 alignment="0" tabsequence=32766 border="0" color="0" x="2267" y="652" height="64" width="1138" format="[general]"  name=datos_certificado_nombre edit.limit=70 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Courier New" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=footer id=10 alignment="1" tabsequence=32766 border="0" color="0" x="2679" y="60" height="64" width="224" format="[general]"  name=cuerpo_reporte_pagina visible="1~t0" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Courier New" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=footer alignment="1" expression="page() +1"border="0" color="0" x="2679" y="60" height="64" width="224" format="[GENERAL]"  name=compute_2  font.face="Courier New" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=footer alignment="0" text="REF" border="0" color="0" x="1088" y="60" height="64" width="146"  name=t_9 visible="1~t0"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=footer alignment="2" expression="day(f_obten_fecha_servidor())"border="0" color="0" x="1143" y="60" height="64" width="165" format="[General]"  name=dia  font.face="Courier New" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=footer alignment="2" text="6" border="0" color="0" x="1143" y="60" height="64" width="165"  name=t_10  font.face="Courier New" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=footer alignment="2" expression="f_obten_mes(month(f_obten_fecha_servidor()))"border="0" color="0" x="1417" y="60" height="64" width="567" format="[GENERAL]"  name=mes  font.face="Courier New" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=footer alignment="2" text="MAYO" border="0" color="0" x="1417" y="60" height="64" width="567"  name=t_11  font.face="Courier New" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=footer alignment="1" expression="mid(string(year(f_obten_fecha_servidor())),3,2)"border="0" color="0" x="2107" y="60" height="64" width="174" format="[General]"  name=anio  font.face="Courier New" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=footer alignment="1" text="04" border="0" color="0" x="2107" y="60" height="64" width="174"  name=t_12  font.face="Courier New" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

@@ -1,0 +1,43 @@
+﻿$PBExportHeader$d_movimiento_prof_aux.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=30791125 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=252 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=cve_movimiento dbname="movimiento_prof_aux.cve_movimiento" values="ALTA	1/BAJA	0/" )
+ column=(type=datetime update=yes updatewhereclause=yes name=fecha_movimiento dbname="movimiento_prof_aux.fecha_movimiento" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=usuario dbname="movimiento_prof_aux.usuario" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=cve_profesor dbname="movimiento_prof_aux.cve_profesor" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=cve_mat dbname="movimiento_prof_aux.cve_mat" )
+ column=(type=char(2) update=yes updatewhereclause=yes key=yes name=gpo dbname="movimiento_prof_aux.gpo" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=periodo dbname="movimiento_prof_aux.periodo" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=anio dbname="movimiento_prof_aux.anio" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=cve_dia dbname="movimiento_prof_aux.cve_dia" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=hora_inicio dbname="movimiento_prof_aux.hora_inicio" )
+ column=(type=long update=yes updatewhereclause=yes name=hora_final dbname="movimiento_prof_aux.hora_final" )
+ column=(type=long update=yes updatewhereclause=yes name=cve_prof_ant dbname="movimiento_prof_aux.cve_prof_ant" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=cve_mat_gpo dbname="movimiento_prof_aux.cve_mat_gpo" )
+ retrieve="  SELECT movimiento_prof_aux.cve_movimiento,   
+         movimiento_prof_aux.fecha_movimiento,   
+         movimiento_prof_aux.usuario,   
+         movimiento_prof_aux.cve_profesor,   
+         movimiento_prof_aux.cve_mat,   
+         movimiento_prof_aux.gpo,   
+         movimiento_prof_aux.periodo,   
+         movimiento_prof_aux.anio,   
+         movimiento_prof_aux.cve_dia,   
+         movimiento_prof_aux.hora_inicio,   
+         movimiento_prof_aux.hora_final,   
+         movimiento_prof_aux.cve_prof_ant,
+         movimiento_prof_aux.cve_mat_gpo   
+    FROM movimiento_prof_aux   
+" update="movimiento_prof_aux" updatewhere=1 updatekeyinplace=yes )
+text(band=detail alignment="2" text="Fecha Movimiento" border="2" color="0" x="32" y="12" height="64" width="640"  name=fecha_movimiento_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="10789024" )
+text(band=detail alignment="2" text="Usuario" border="2" color="0" x="1413" y="12" height="64" width="558"  name=usuario_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="10789024" )
+text(band=detail alignment="2" text="DD/MM/AA HH:MM:SS" border="0" color="0" x="32" y="184" height="64" width="640"  name=t_1  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="10789024" )
+text(band=detail alignment="2" text=" Cve Movimiento " border="2" color="0" x="722" y="12" height="64" width="640"  name=cve_movimiento_t  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="10789024" )
+column(band=detail id=2 alignment="0" tabsequence=10 border="2" color="0" x="41" y="92" height="76" width="626" format=""  name=fecha_movimiento edit.name="DD/MM/YY HH:MM:SS" editmask.mask="DD/MM/YY HH:MM:SS" editmask.focusrectangle=no  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=1 alignment="0" tabsequence=20 border="2" color="0" x="773" y="92" height="76" width="549" format=""  name=cve_movimiento ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="2" color="0" x="1417" y="92" height="76" width="526" format="[general]"  name=usuario edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15793151" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

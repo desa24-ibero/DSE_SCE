@@ -1,0 +1,63 @@
+﻿$PBExportHeader$f_valida_habit_casa.srf
+global type f_valida_habit_casa from function_object
+end type
+
+forward prototypes
+global function string f_valida_habit_casa (string as_nombre)
+end prototypes
+
+global function string f_valida_habit_casa (string as_nombre);/*
+Esta función se utiliza en el proceso de carga automática del disco
+de CENEVAL para validar que la clave recibida para numero de habitantes en la casa
+sea correcta
+
+
+PARAMETROS:
+	as_nombre		string 	value
+	
+REGRESA:
+	La Cadena de la clave recuperada de la base de datos
+
+AUTOR:
+	Antonio Pica Ruiz
+
+FECHA:
+	12 de Abril de 1999
+	
+*/
+
+string ls_clave 
+
+ls_clave = as_nombre
+
+CHOOSE CASE as_nombre
+	CASE '01'
+		ls_clave='1'
+	CASE '02'
+		ls_clave='2'
+	CASE '03'
+		ls_clave='3'
+	CASE '04'
+		ls_clave='4'
+	CASE '05'
+		ls_clave='5'
+	CASE '06'
+		ls_clave='6'
+	CASE '07'
+		ls_clave='7'
+	CASE '08'
+		ls_clave='8'
+	CASE '09'
+		ls_clave='9'
+	CASE 'MAS DE 9'
+		ls_clave='M'
+	CASE ELSE
+		ls_clave='*'
+END CHOOSE
+
+
+return ls_clave
+
+
+end function
+

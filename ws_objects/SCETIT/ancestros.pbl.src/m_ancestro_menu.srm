@@ -1,0 +1,308 @@
+﻿$PBExportHeader$m_ancestro_menu.srm
+$PBExportComments$Menu ancestro para Todas las ventanasI. NO Modificar, NO Borrar(13011999) CAMP.(DkWf)
+forward
+global type m_ancestro_menu from menu
+end type
+type m_archivo from menu within m_ancestro_menu
+end type
+type m_leer from menu within m_archivo
+end type
+type m_salvar from menu within m_archivo
+end type
+type m_configurarimpresora from menu within m_archivo
+end type
+type m_imprimir from menu within m_archivo
+end type
+type m_- from menu within m_archivo
+end type
+type m_salir from menu within m_archivo
+end type
+type m_archivo from menu within m_ancestro_menu
+m_leer m_leer
+m_salvar m_salvar
+m_configurarimpresora m_configurarimpresora
+m_imprimir m_imprimir
+m_- m_-
+m_salir m_salir
+end type
+type m_edicion from menu within m_ancestro_menu
+end type
+type m_deshacer from menu within m_edicion
+end type
+type m_cortar from menu within m_edicion
+end type
+type m_copiar from menu within m_edicion
+end type
+type m_pegar from menu within m_edicion
+end type
+type m_edicion from menu within m_ancestro_menu
+m_deshacer m_deshacer
+m_cortar m_cortar
+m_copiar m_copiar
+m_pegar m_pegar
+end type
+end forward
+
+global type m_ancestro_menu from menu
+m_archivo m_archivo
+m_edicion m_edicion
+end type
+global m_ancestro_menu m_ancestro_menu
+
+type variables
+datawindow dw
+
+//userobject objeto
+end variables
+
+on m_ancestro_menu.create
+m_ancestro_menu=this
+this.m_archivo=create m_archivo
+this.m_edicion=create m_edicion
+this.Item[]={this.m_archivo, &
+this.m_edicion}
+end on
+
+on m_ancestro_menu.destroy
+destroy(this.m_archivo)
+destroy(this.m_edicion)
+end on
+
+type m_archivo from menu within m_ancestro_menu
+m_leer m_leer
+m_salvar m_salvar
+m_configurarimpresora m_configurarimpresora
+m_imprimir m_imprimir
+m_- m_-
+m_salir m_salir
+end type
+
+on m_archivo.create
+this.Text="Archivo"
+this.m_leer=create m_leer
+this.m_salvar=create m_salvar
+this.m_configurarimpresora=create m_configurarimpresora
+this.m_imprimir=create m_imprimir
+this.m_-=create m_-
+this.m_salir=create m_salir
+this.Item[]={this.m_leer, &
+this.m_salvar, &
+this.m_configurarimpresora, &
+this.m_imprimir, &
+this.m_-, &
+this.m_salir}
+end on
+
+on m_archivo.destroy
+destroy(this.m_leer)
+destroy(this.m_salvar)
+destroy(this.m_configurarimpresora)
+destroy(this.m_imprimir)
+destroy(this.m_-)
+destroy(this.m_salir)
+end on
+
+event selected;//m_ancestro_menu lm_menu_total
+//long ll_contador,ll_maximo
+//lm_menu_total = parent
+//ll_maximo = upperbound(lm_menu_total.item[])
+//for ll_contador = 1 to ll_maximo
+//	if lm_menu_total.item[ll_contador].text = "m_1" then
+//		m_ventana = create m_ancestro_ventana
+//		lm_menu_total.item[ll_contador] = m_ventana.item[1]
+//		parentwindow.menuid = lm_menu_total
+////		lm_menu_total.item[ll_contador].text = m_ventana.item[1]text		
+//	end if
+//next
+//
+end event
+
+type m_leer from menu within m_archivo
+end type
+
+event clicked;string nulo
+
+setnull(nulo)
+
+if isvalid(dw) then
+	SetPointer(HourGlass!)
+	if dw.ImportFile(nulo)<1 then
+		messagebox("No se pudo leer el archivo","")
+	end if
+end if
+end event
+
+on m_leer.create
+this.Text="Leer"
+this.ToolBarItemName="Custom050!"
+this.ToolBarItemText="Leer"
+this.ToolBarItemOrder=1
+end on
+
+type m_salvar from menu within m_archivo
+end type
+
+event clicked;if isvalid(dw) then
+	SetPointer(HourGlass!)
+	if dw.SaveAs("",Excel!, TRUE)<>1 then
+		dw.SaveAs("",Clipboard!, TRUE)
+		messagebox("No se pudo guardar el archivo","La información se encuentra en el Clipboard")	
+	end if
+end if
+end event
+
+on m_salvar.create
+this.Text="Guardar"
+this.ToolBarItemName="Save!"
+this.ToolBarItemText="Salvar"
+this.ToolBarItemOrder=2
+end on
+
+type m_configurarimpresora from menu within m_archivo
+end type
+
+event clicked;printsetup()
+
+end event
+
+on m_configurarimpresora.create
+this.Text="C&onfigurar Impresora"
+this.ToolBarItemOrder=2
+end on
+
+type m_imprimir from menu within m_archivo
+end type
+
+on m_imprimir.create
+this.Text="&Imprimir~tCtrl+I"
+this.Microhelp="Imprimir "
+this.ToolBarItemName="Print!"
+this.ToolBarItemText="Imprimir"
+this.ToolBarItemOrder=3
+this.Shortcut=329
+end on
+
+event clicked;if isvalid(dw) then
+	dw.modify("Datawindow.print.preview = Yes")
+	SetPointer(HourGlass!)
+	openwithparm(conf_impr,dw)
+end if
+end event
+
+type m_- from menu within m_archivo
+end type
+
+on m_-.create
+this.Text="-"
+end on
+
+type m_salir from menu within m_archivo
+end type
+
+event clicked;Close(ParentWindow)
+end event
+
+on m_salir.create
+this.Text="Salir"
+this.Microhelp="Salir de la Ventana Actual"
+this.ToolBarItemName="Exit!"
+this.ToolBarItemText="Salir"
+this.ToolBarItemOrder=99
+this.ToolBarItemSpace=3
+end on
+
+type m_edicion from menu within m_ancestro_menu
+m_deshacer m_deshacer
+m_cortar m_cortar
+m_copiar m_copiar
+m_pegar m_pegar
+end type
+
+on m_edicion.create
+this.Text="Editar"
+this.m_deshacer=create m_deshacer
+this.m_cortar=create m_cortar
+this.m_copiar=create m_copiar
+this.m_pegar=create m_pegar
+this.Item[]={this.m_deshacer, &
+this.m_cortar, &
+this.m_copiar, &
+this.m_pegar}
+end on
+
+on m_edicion.destroy
+destroy(this.m_deshacer)
+destroy(this.m_cortar)
+destroy(this.m_copiar)
+destroy(this.m_pegar)
+end on
+
+type m_deshacer from menu within m_edicion
+end type
+
+on m_deshacer.create
+this.Text="Deshacer~tCtrl+U"
+this.Microhelp="Deshacer la última edición"
+this.ToolBarItemName="Undo!"
+this.ToolBarItemText="Deshacer"
+this.ToolBarItemOrder=4
+this.ToolBarItemSpace=4
+this.Shortcut=341
+end on
+
+event clicked;if isvalid(dw) then
+	dw.undo()
+end if
+end event
+
+type m_cortar from menu within m_edicion
+end type
+
+on m_cortar.create
+this.Text="C&ortar~tCtrl+X"
+this.Microhelp="Borra la selección actual y la pone en el portapapeles"
+this.ToolBarItemName="Cut!"
+this.ToolBarItemText="Cortar"
+this.ToolBarItemOrder=5
+this.Shortcut=344
+end on
+
+event clicked;if isvalid(dw) then
+	dw.cut()
+end if
+end event
+
+type m_copiar from menu within m_edicion
+end type
+
+on m_copiar.create
+this.Text="&Copiar~tCtrl+C"
+this.Microhelp="Copia la selección actual en el portapapeles"
+this.ToolBarItemName="Copy!"
+this.ToolBarItemText="Copiar"
+this.ToolBarItemOrder=6
+this.Shortcut=323
+end on
+
+event clicked;if isvalid(dw) then
+	dw.copy()
+end if
+end event
+
+type m_pegar from menu within m_edicion
+end type
+
+on m_pegar.create
+this.Text="&Pegar~tCtrl+V"
+this.Microhelp="Pega el contenido del portapapeles en el campo actual"
+this.ToolBarItemName="Paste!"
+this.ToolBarItemText="Pegar"
+this.ToolBarItemOrder=7
+this.Shortcut=342
+end on
+
+event clicked;if isvalid(dw) then
+	dw.paste()
+end if
+end event
+

@@ -1,0 +1,151 @@
+﻿$PBExportHeader$m_salones.srm
+forward
+global type m_salones from m_catalogo
+end type
+type m_-1 from menu within m_registro
+end type
+type m_primero from menu within m_registro
+end type
+type m_anterior from menu within m_registro
+end type
+type m_siguiente from menu within m_registro
+end type
+type m_ltimo from menu within m_registro
+end type
+end forward
+
+global type m_salones from m_catalogo
+end type
+global m_salones m_salones
+
+on m_salones.create
+m_salones=this
+call super::create
+end on
+
+on m_salones.destroy
+call super::destroy
+end on
+
+type m_registro from m_catalogo`m_registro within m_salones
+m_-1 m_-1
+m_primero m_primero
+m_anterior m_anterior
+m_siguiente m_siguiente
+m_ltimo m_ltimo
+end type
+
+on m_registro.create
+call super::create
+this.m_-1=create m_-1
+this.m_primero=create m_primero
+this.m_anterior=create m_anterior
+this.m_siguiente=create m_siguiente
+this.m_ltimo=create m_ltimo
+this.Item[UpperBound(this.item)+1]=this.m_-1
+this.Item[UpperBound(this.item)+1]=this.m_primero
+this.Item[UpperBound(this.item)+1]=this.m_anterior
+this.Item[UpperBound(this.item)+1]=this.m_siguiente
+this.Item[UpperBound(this.item)+1]=this.m_ltimo
+end on
+
+on m_registro.destroy
+call super::destroy
+destroy(this.m_-1)
+destroy(this.m_primero)
+destroy(this.m_anterior)
+destroy(this.m_siguiente)
+destroy(this.m_ltimo)
+end on
+
+event m_nuevo::clicked;w_salones.cbx_nuevo.triggerevent(clicked!)
+end event
+
+event m_actualiza::clicked;w_salones.dw_salon.triggerevent("Actualiza")
+
+
+end event
+
+event m_borraregistro::clicked;w_salones.dw_salon.triggerevent("Borra")
+end event
+
+on m_ordenarporclave.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+on m_ordenarpordescripcin.create
+call super::create
+this.Visible=false
+this.Enabled=false
+end on
+
+type m_-1 from menu within m_registro
+end type
+
+on m_-1.create
+this.Text="-"
+end on
+
+type m_primero from menu within m_registro
+end type
+
+on m_primero.create
+this.Text="Primero~tAlt+P"
+this.Microhelp="Despliega el primer salón"
+this.ToolBarItemName="VCRFirst!"
+this.ToolBarItemText="Primero"
+this.ToolBarItemOrder=9
+this.ToolBarItemSpace=3
+this.Shortcut=592
+end on
+
+event clicked;w_salones.dw_salon.triggerevent("Primero")
+end event
+
+type m_anterior from menu within m_registro
+end type
+
+on m_anterior.create
+this.Text="Anterior~tAlt+A"
+this.Microhelp="Despliega el salón anterior"
+this.ToolBarItemName="VCRPrior!"
+this.ToolBarItemText="Anterior"
+this.ToolBarItemOrder=10
+this.Shortcut=577
+end on
+
+event clicked;w_salones.dw_salon.triggerevent("Anterior")
+end event
+
+type m_siguiente from menu within m_registro
+end type
+
+on m_siguiente.create
+this.Text="Siguiente~tAlt+S"
+this.Microhelp="Despliega el salón siguiente"
+this.ToolBarItemName="VCRNext!"
+this.ToolBarItemText="Siguiente"
+this.ToolBarItemOrder=11
+this.Shortcut=595
+end on
+
+event clicked;w_salones.dw_salon.triggerevent("Siguiente")
+end event
+
+type m_ltimo from menu within m_registro
+end type
+
+on m_ltimo.create
+this.Text="Último~tAlt+U"
+this.Microhelp="Despliega el último salón"
+this.ToolBarItemName="VCRLast!"
+this.ToolBarItemText="Último"
+this.ToolBarItemOrder=12
+this.Shortcut=597
+end on
+
+event clicked;w_salones.dw_salon.triggerevent("Ultimo")
+end event
+

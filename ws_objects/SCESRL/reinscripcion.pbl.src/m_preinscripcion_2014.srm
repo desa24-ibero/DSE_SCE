@@ -1,0 +1,981 @@
+﻿$PBExportHeader$m_preinscripcion_2014.srm
+forward
+global type m_preinscripcion_2014 from menu
+end type
+type m_archivo from menu within m_preinscripcion_2014
+end type
+type m_nuevo from menu within m_archivo
+end type
+type m_- from menu within m_archivo
+end type
+type m_imprimircomprobante from menu within m_archivo
+end type
+type m_imprimirpasedeingreso from menu within m_archivo
+end type
+type m_archivo from menu within m_preinscripcion_2014
+m_nuevo m_nuevo
+m_- m_-
+m_imprimircomprobante m_imprimircomprobante
+m_imprimirpasedeingreso m_imprimirpasedeingreso
+end type
+type m_baja from menu within m_preinscripcion_2014
+end type
+type m_dardebajalamateria from menu within m_baja
+end type
+type m_baja from menu within m_preinscripcion_2014
+m_dardebajalamateria m_dardebajalamateria
+end type
+type m_ver from menu within m_preinscripcion_2014
+end type
+type m_gruposdisponibles from menu within m_ver
+end type
+type m_laboratoriosasimilados from menu within m_ver
+end type
+type m_ver from menu within m_preinscripcion_2014
+m_gruposdisponibles m_gruposdisponibles
+m_laboratoriosasimilados m_laboratoriosasimilados
+end type
+type m_integracin from menu within m_preinscripcion_2014
+end type
+type m_temafundamental from menu within m_integracin
+end type
+type m_temai from menu within m_integracin
+end type
+type m_temaii from menu within m_integracin
+end type
+type m_temaiii from menu within m_integracin
+end type
+type m_temaiv from menu within m_integracin
+end type
+type m_integracin from menu within m_preinscripcion_2014
+m_temafundamental m_temafundamental
+m_temai m_temai
+m_temaii m_temaii
+m_temaiii m_temaiii
+m_temaiv m_temaiv
+end type
+type m_ventana from menu within m_preinscripcion_2014
+end type
+type m_horizontal from menu within m_ventana
+end type
+type m_vertical from menu within m_ventana
+end type
+type m_primerplano from menu within m_ventana
+end type
+type m_cascada from menu within m_ventana
+end type
+type m_ventana from menu within m_preinscripcion_2014
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+type m_salir from menu within m_preinscripcion_2014
+end type
+global type m_preinscripcion_2014 from menu
+m_archivo m_archivo
+m_baja m_baja
+m_ver m_ver
+m_integracin m_integracin
+m_ventana m_ventana
+m_salir m_salir
+end type
+end forward
+
+global type m_preinscripcion_2014 from menu
+m_archivo m_archivo
+m_baja m_baja
+m_ver m_ver
+m_integracin m_integracin
+m_ventana m_ventana
+m_salir m_salir
+end type
+global m_preinscripcion_2014 m_preinscripcion_2014
+
+type variables
+datawindow dw, dw_2
+userobject objeto
+end variables
+
+on m_preinscripcion_2014.create
+m_preinscripcion_2014=this
+call super::create
+this.text = "m_preinscripcion_2014"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_archivo=create m_archivo
+this.m_baja=create m_baja
+this.m_ver=create m_ver
+this.m_integracin=create m_integracin
+this.m_ventana=create m_ventana
+this.m_salir=create m_salir
+this.Item[UpperBound(this.Item)+1]=this.m_archivo
+this.Item[UpperBound(this.Item)+1]=this.m_baja
+this.Item[UpperBound(this.Item)+1]=this.m_ver
+this.Item[UpperBound(this.Item)+1]=this.m_integracin
+this.Item[UpperBound(this.Item)+1]=this.m_ventana
+this.Item[UpperBound(this.Item)+1]=this.m_salir
+end on
+
+on m_preinscripcion_2014.destroy
+call super::destroy
+destroy(this.m_archivo)
+destroy(this.m_baja)
+destroy(this.m_ver)
+destroy(this.m_integracin)
+destroy(this.m_ventana)
+destroy(this.m_salir)
+end on
+
+type m_archivo from menu within m_preinscripcion_2014
+m_nuevo m_nuevo
+m_- m_-
+m_imprimircomprobante m_imprimircomprobante
+m_imprimirpasedeingreso m_imprimirpasedeingreso
+end type
+
+on m_archivo.create
+call super::create
+this.text = "Comprobante Inscripción"
+this.toolbaritemtext = "Imprimir"
+this.toolbaritemorder = 1
+this.toolbaritemspace = 2
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_nuevo=create m_nuevo
+this.m_-=create m_-
+this.m_imprimircomprobante=create m_imprimircomprobante
+this.m_imprimirpasedeingreso=create m_imprimirpasedeingreso
+this.Item[UpperBound(this.Item)+1]=this.m_nuevo
+this.Item[UpperBound(this.Item)+1]=this.m_-
+this.Item[UpperBound(this.Item)+1]=this.m_imprimircomprobante
+this.Item[UpperBound(this.Item)+1]=this.m_imprimirpasedeingreso
+end on
+
+on m_archivo.destroy
+call super::destroy
+destroy(this.m_nuevo)
+destroy(this.m_-)
+destroy(this.m_imprimircomprobante)
+destroy(this.m_imprimirpasedeingreso)
+end on
+
+type m_nuevo from menu within m_archivo
+end type
+
+event clicked;//m_nuevo()
+w_preinscripción_2014.limpia_lineas_vacias()
+
+if w_preinscripción_2014.revisa_labs(long(w_preinscripción_2014.uo_nombre.em_cuenta.text)) = 0 then
+	w_preinscripción_2014.event cierra_ventanas_grupos()
+	w_preinscripción_2014.borrado_cuenta()
+	w_preinscripción_2014.uo_nombre.em_cuenta.enabled = true
+	w_preinscripción_2014.uo_nombre.dw_nombre_alumno.enabled = true
+	w_preinscripción_2014.uo_nombre.em_cuenta.setfocus()		
+end if
+end event
+
+on m_nuevo.create
+call super::create
+this.text = "Nuevo ~tCtrl+N"
+this.shortcut = 334
+this.microhelp = "Permite la inscripción de un nuevo alumno."
+this.toolbaritemname = "custom075!"
+this.toolbaritemtext = "Nuevo Alumno"
+this.toolbaritemorder = 1
+this.toolbaritemspace = 3
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_nuevo.destroy
+call super::destroy
+end on
+
+type m_- from menu within m_archivo
+end type
+
+on m_-.create
+call super::create
+this.text = "-"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_-.destroy
+call super::destroy
+end on
+
+type m_imprimircomprobante from menu within m_archivo
+end type
+
+on m_imprimircomprobante.create
+call super::create
+this.text = "&Imprimir comprobante~tCtrl+I"
+this.shortcut = 329
+this.microhelp = "Imprimir Relación de Materias Inscritas."
+this.toolbaritemname = "print!"
+this.toolbaritemtext = "Imprimir"
+this.toolbaritemspace = 3
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;//long año
+//int per
+//periodo_actual_insc(per,año)
+int respuesta
+w_preinscripción_2014.limpia_lineas_vacias()
+//w_preinscripción.dw_materias.retrieve(long(w_preinscripción.uo_nombre.em_cuenta.text))
+//w_preinscripción.dw_ext_h.reset()
+//w_preinscripción.dw_ext_h.triggerevent(constructor!)
+
+if w_preinscripción_2014.revisa_impresiones() = 0 then
+	respuesta = messagebox("Verificación","¿Quiere imprimir el comprobante?",Question!,YesNoCancel!,1)
+	if respuesta = 1 then
+		if w_preinscripción_2014.revisa_labs(long(w_preinscripción_2014.uo_nombre.em_cuenta.text)) = 0 then
+//			w_preinscripción.dw_comprobante.retrieve(long(w_preinscripción.uo_nombre.em_cuenta.text),G_per,G_anio)
+			if w_preinscripción_2014.dw_materias.rowcount() > 0 then
+				w_preinscripción_2014.llena_comprobante()
+//				if m_archivo.m_presentacinpreliminar.checked = true then
+//					m_archivo.m_presentacinpreliminar.triggerevent(clicked!)
+//				end if
+				w_preinscripción_2014.dw_comprobante.print()
+				w_preinscripción_2014.borrado_cuenta()
+				w_preinscripción_2014.uo_nombre.em_cuenta.enabled = true
+				w_preinscripción_2014.uo_nombre.dw_nombre_alumno.enabled = true
+				w_preinscripción_2014.uo_nombre.em_cuenta.setfocus()		
+			end if
+		end if
+	elseif respuesta = 2 then
+		if w_preinscripción_2014.revisa_labs(long(w_preinscripción_2014.uo_nombre.em_cuenta.text)) = 0 then
+			w_preinscripción_2014.borrado_cuenta()
+			w_preinscripción_2014.uo_nombre.em_cuenta.enabled = true
+			w_preinscripción_2014.uo_nombre.dw_nombre_alumno.enabled = true
+			w_preinscripción_2014.uo_nombre.em_cuenta.setfocus()
+		end if
+	else			
+	end if
+end if
+end event
+
+on m_imprimircomprobante.destroy
+call super::destroy
+end on
+
+type m_imprimirpasedeingreso from menu within m_archivo
+end type
+
+on m_imprimirpasedeingreso.create
+call super::create
+this.text = "Imprimir Pase de Ingreso"
+this.microhelp = "Imprimir Pase de Ingreso"
+this.toolbaritemname = "applicationicon!"
+this.toolbaritemtext = "Imprimir Pase de Ingreso"
+this.toolbaritemorder = 11
+this.toolbaritemspace = 5
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_imprimirpasedeingreso.destroy
+call super::destroy
+end on
+
+event clicked;long ll_cuenta
+integer li_return
+
+if isvalid(w_reinscripcion_2014) then
+	ll_cuenta = long(w_reinscripcion_2014.uo_nombre.em_cuenta.text)
+	w_reinscripcion_2014.il_cuenta = ll_cuenta
+
+	li_return = Open(w_pase_ingreso,w_reinscripcion_2014)
+else
+	ll_cuenta = long(w_preinscripción_2014.uo_nombre.em_cuenta.text)
+	w_preinscripción_2014.il_cuenta = ll_cuenta
+
+	li_return = Open(w_pase_ingreso,w_preinscripción_2014)
+end if
+
+end event
+
+type m_baja from menu within m_preinscripcion_2014
+m_dardebajalamateria m_dardebajalamateria
+end type
+
+on m_baja.create
+call super::create
+this.text = "Bajas"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_dardebajalamateria=create m_dardebajalamateria
+this.Item[UpperBound(this.Item)+1]=this.m_dardebajalamateria
+end on
+
+on m_baja.destroy
+call super::destroy
+destroy(this.m_dardebajalamateria)
+end on
+
+type m_dardebajalamateria from menu within m_baja
+end type
+
+event clicked;int respuesta
+respuesta = messagebox("VERIFICANDO la BAJA de una MATERIA","¿Quiere dar de BAJA la MATERIA?",Question!,YesNo!,2)
+if respuesta = 1 then
+	 w_preinscripción_2014.dw_materias.triggerevent("borramat")
+end if
+
+end event
+
+on m_dardebajalamateria.create
+call super::create
+this.text = "De una materia~tCtrl+Del"
+this.shortcut = 302
+this.microhelp = "Dar de baja la materia seleccionada"
+this.toolbaritemname = "custom027!"
+this.toolbaritemtext = "Baja"
+this.toolbaritemorder = 8
+this.toolbaritemspace = 3
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_dardebajalamateria.destroy
+call super::destroy
+end on
+
+type m_ver from menu within m_preinscripcion_2014
+m_gruposdisponibles m_gruposdisponibles
+m_laboratoriosasimilados m_laboratoriosasimilados
+end type
+
+on m_ver.create
+call super::create
+this.text = "Consulta"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_gruposdisponibles=create m_gruposdisponibles
+this.m_laboratoriosasimilados=create m_laboratoriosasimilados
+this.Item[UpperBound(this.Item)+1]=this.m_gruposdisponibles
+this.Item[UpperBound(this.Item)+1]=this.m_laboratoriosasimilados
+end on
+
+on m_ver.destroy
+call super::destroy
+destroy(this.m_gruposdisponibles)
+destroy(this.m_laboratoriosasimilados)
+end on
+
+type m_gruposdisponibles from menu within m_ver
+end type
+
+event clicked;w_preinscripción_2014.dw_materias.triggerevent("verhorariodisp")
+end event
+
+on m_gruposdisponibles.create
+call super::create
+this.text = "&Grupos disponibles~tCtrl+G"
+this.shortcut = 327
+this.microhelp = "Despliega los grupos disponibles de una materia"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_gruposdisponibles.destroy
+call super::destroy
+end on
+
+type m_laboratoriosasimilados from menu within m_ver
+end type
+
+on m_laboratoriosasimilados.create
+call super::create
+this.text = "&Laboratorios asimilados~tCtrl+L"
+this.shortcut = 332
+this.microhelp = "Despliega las materias "
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;w_preinscripción_2014.dw_materias.triggerevent("laboratorios")
+end event
+
+on m_laboratoriosasimilados.destroy
+call super::destroy
+end on
+
+type m_integracin from menu within m_preinscripcion_2014
+m_temafundamental m_temafundamental
+m_temai m_temai
+m_temaii m_temaii
+m_temaiii m_temaiii
+m_temaiv m_temaiv
+end type
+
+on m_integracin.create
+call super::create
+this.text = "Integración"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_temafundamental=create m_temafundamental
+this.m_temai=create m_temai
+this.m_temaii=create m_temaii
+this.m_temaiii=create m_temaiii
+this.m_temaiv=create m_temaiv
+this.Item[UpperBound(this.Item)+1]=this.m_temafundamental
+this.Item[UpperBound(this.Item)+1]=this.m_temai
+this.Item[UpperBound(this.Item)+1]=this.m_temaii
+this.Item[UpperBound(this.Item)+1]=this.m_temaiii
+this.Item[UpperBound(this.Item)+1]=this.m_temaiv
+end on
+
+on m_integracin.destroy
+call super::destroy
+destroy(this.m_temafundamental)
+destroy(this.m_temai)
+destroy(this.m_temaii)
+destroy(this.m_temaiii)
+destroy(this.m_temaiv)
+end on
+
+type m_temafundamental from menu within m_integracin
+end type
+
+on m_temafundamental.create
+call super::create
+this.text = "Tema &Fundamental~tCtrl+F"
+this.shortcut = 326
+this.microhelp = "Despliega las materias con grupos disponibles del tema fundamental de integración"
+this.toolbaritemname = "custom076!"
+this.toolbaritemtext = " TemaFundamental"
+this.toolbaritemorder = 2
+this.toolbaritemspace = 3
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;//w_preinscripción_2014.dw_materias.triggerevent("verhorariodispinteg",0,2201)
+w_preinscripción_2014.dw_materias.triggerevent("verhorariodispinteg",0,0)
+end event
+
+on m_temafundamental.destroy
+call super::destroy
+end on
+
+type m_temai from menu within m_integracin
+end type
+
+on m_temai.create
+call super::create
+this.text = "Tema I~tCtrl+P"
+this.shortcut = 336
+this.microhelp = "Despliega las materias con grupos disponibles del tema I de integración"
+this.toolbaritemname = "custom090!"
+this.toolbaritemtext = "Tema I"
+this.toolbaritemorder = 3
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;//w_preinscripción_2014.dw_materias.triggerevent("verhorariodispinteg",0,2202)
+w_preinscripción_2014.dw_materias.triggerevent("verhorariodispinteg",0,1)
+end event
+
+on m_temai.destroy
+call super::destroy
+end on
+
+type m_temaii from menu within m_integracin
+end type
+
+on m_temaii.create
+call super::create
+this.text = "Tema II~tCtrl+H"
+this.shortcut = 328
+this.microhelp = "Despliega las materias con grupos disponibles del tema II de integración"
+this.toolbaritemname = "globals!"
+this.toolbaritemtext = "Tema II"
+this.toolbaritemorder = 4
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;//w_preinscripción_2014.dw_materias.triggerevent("verhorariodispinteg",0,2203)
+w_preinscripción_2014.dw_materias.triggerevent("verhorariodispinteg",0,2)
+end event
+
+on m_temaii.destroy
+call super::destroy
+end on
+
+type m_temaiii from menu within m_integracin
+end type
+
+on m_temaiii.create
+call super::create
+this.text = "Tema III~tCtrl+R"
+this.shortcut = 338
+this.microhelp = "Despliega las materias con grupos disponibles del tema III de integración"
+this.toolbaritemname = "environment!"
+this.toolbaritemtext = "Tema III"
+this.toolbaritemorder = 5
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;//w_preinscripción_2014.dw_materias.triggerevent("verhorariodispinteg",0,2204)
+w_preinscripción_2014.dw_materias.triggerevent("verhorariodispinteg",0,3)
+end event
+
+on m_temaiii.destroy
+call super::destroy
+end on
+
+type m_temaiv from menu within m_integracin
+end type
+
+on m_temaiv.create
+call super::create
+this.text = "Tema IV"
+this.microhelp = "Despliega las materias con grupos disponibles del tema IV de integración"
+this.toolbaritemname = "custom010!"
+this.toolbaritemtext = "Tema IV"
+this.toolbaritemorder = 6
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+event clicked;//w_preinscripción_2014.dw_materias.triggerevent("verhorariodispinteg",0,2205)
+w_preinscripción_2014.dw_materias.triggerevent("verhorariodispinteg",0,4)
+end event
+
+on m_temaiv.destroy
+call super::destroy
+end on
+
+type m_ventana from menu within m_preinscripcion_2014
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+
+on m_ventana.create
+call super::create
+this.text = "Ventana"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_horizontal=create m_horizontal
+this.m_vertical=create m_vertical
+this.m_primerplano=create m_primerplano
+this.m_cascada=create m_cascada
+this.Item[UpperBound(this.Item)+1]=this.m_horizontal
+this.Item[UpperBound(this.Item)+1]=this.m_vertical
+this.Item[UpperBound(this.Item)+1]=this.m_primerplano
+this.Item[UpperBound(this.Item)+1]=this.m_cascada
+end on
+
+on m_ventana.destroy
+call super::destroy
+destroy(this.m_horizontal)
+destroy(this.m_vertical)
+destroy(this.m_primerplano)
+destroy(this.m_cascada)
+end on
+
+type m_horizontal from menu within m_ventana
+end type
+
+event clicked;w_srl.arrangesheets(Tilehorizontal!)
+end event
+
+on m_horizontal.create
+call super::create
+this.text = "Horizontal"
+this.microhelp = "Organiza las ventanas horizontalmente"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_horizontal.destroy
+call super::destroy
+end on
+
+type m_vertical from menu within m_ventana
+end type
+
+event clicked;w_srl.arrangesheets(Tile!)
+end event
+
+on m_vertical.create
+call super::create
+this.text = "Vertical"
+this.microhelp = "Organiza las ventanas verticalmente"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_vertical.destroy
+call super::destroy
+end on
+
+type m_primerplano from menu within m_ventana
+end type
+
+event clicked;w_srl.arrangesheets(Layer!)
+end event
+
+on m_primerplano.create
+call super::create
+this.text = "Primer Plano"
+this.microhelp = "Coloca la ventana actual en primer plano"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_primerplano.destroy
+call super::destroy
+end on
+
+type m_cascada from menu within m_ventana
+end type
+
+event clicked;w_srl.arrangesheets(Cascade!)
+end event
+
+on m_cascada.create
+call super::create
+this.text = "Cascada"
+this.microhelp = "Organiza las ventanas en cascada"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_cascada.destroy
+call super::destroy
+end on
+
+type m_salir from menu within m_preinscripcion_2014
+end type
+
+on m_salir.create
+call super::create
+this.text = "&Salir"
+this.microhelp = "Salir del sistema de reinscripción en linea"
+this.toolbaritemname = "exit!"
+this.toolbaritemtext = "Salir"
+this.toolbaritemorder = 10
+this.toolbaritemspace = 3
+this.menuitemtype = menuitemtypeexit!
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_salir.destroy
+call super::destroy
+end on
+
+event clicked;close(parentwindow)
+
+end event
+

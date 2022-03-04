@@ -1,0 +1,50 @@
+﻿$PBExportHeader$f_valida_carrera_aspirantes.srf
+global type f_valida_carrera_aspirantes from function_object
+end type
+
+forward prototypes
+global function integer f_valida_carrera_aspirantes (integer ar_ing_anio, integer ar_ing_periodo)
+end prototypes
+
+global function integer f_valida_carrera_aspirantes (integer ar_ing_anio, integer ar_ing_periodo);/* VALIDA DIFERENCIAS ENTRE CARRERAS ADMISION-CONTROL ESCOLAR   */
+integer li_codigo_sql
+long ll_rows
+string ls_mensaje
+
+SELECT IsNull(COUNT(*), 0)
+   INTO : ll_rows
+  FROM aspiran a, general g, controlescolar_bd.dbo.academicos ac, controlescolar_bd.dbo.alumnos al, controlescolar_bd.dbo.carreras c1,
+           controlescolar_bd.dbo.carreras c2, controlescolar_bd.dbo.v_sce_alumno_digito d
+WHERE a.folio = g.folio
+	AND a.clv_ver = g.clv_ver
+	AND a.clv_per = g.clv_per
+	AND a.anio= g.anio
+	AND a.ing_anio =:ar_ing_anio
+	AND a.ing_per =:ar_ing_periodo
+	AND a.pago_insc = 1
+	AND g.cuenta = ac.cuenta
+	AND g.cuenta <> 0
+	AND  a.clv_carr <> ac.cve_carrera
+	AND ac.cuenta = al.cuenta
+	AND ac.cuenta = d.cuenta
+	AND a.clv_carr = c1.cve_carrera
+	AND ac.cve_carrera = c2.cve_carrera USING gtr_sadm;
+
+li_codigo_sql = gtr_sadm.SqlCode
+ls_mensaje = gtr_sadm.SqlErrText
+
+IF li_codigo_sql = -1 THEN
+	MessageBox ( "Mensaje del Sistema" , "Error al validar las carreras de los aspirantes~n~r" + ls_mensaje, StopSign!)
+	return -1
+END IF
+
+IF (li_codigo_sql <> 100) AND (ll_rows > 0)  THEN
+	MessageBox ( "Mensaje del Sistema" , "Existen carreras de aspirantes con diferencias entre admisión y control escolar...Favor de verificar", StopSign!)
+	return 1
+END IF
+
+
+
+return 0
+end function
+

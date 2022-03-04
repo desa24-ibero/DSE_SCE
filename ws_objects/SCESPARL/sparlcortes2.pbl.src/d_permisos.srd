@@ -1,0 +1,18 @@
+﻿$PBExportHeader$d_permisos.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=5 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=char(30) updatewhereclause=no name=uno dbname="uno" )
+ column=(type=char(30) updatewhereclause=no name=dos dbname="dos" )
+ column=(type=char(30) updatewhereclause=no name=tres dbname="tres" )
+ column=(type=char(30) updatewhereclause=no name=cuatro dbname="cuatro" )
+ column=(type=char(30) updatewhereclause=no name=cinco dbname="cinco" )
+ column=(type=char(30) updatewhereclause=no name=seis dbname="seis" )
+ column=(type=char(30) updatewhereclause=no name=siete dbname="siete" )
+ procedure="1 execute dbo.sp_helprotect;1 @name = :name" arguments=(("name", string)) )
+compute(band=detail alignment="0" expression=" ~" to ~"+dos +~";~""border="0" color="33554432" x="2026" y="4" height="77" width="481" format="[general]"  name=cu  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="33554432" x="1761" y="4" height="77" width="197" format="[general]"  name=seis visible="1~tif(  seis = ~"All~",0,1 )" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+compute(band=detail alignment="0" expression=" tres + ~" ~" + cuatro + ~" on  ~" +  cinco"border="0" color="33554432" x="1" y="4" height="77" width="1683" format="[general]"  name=un  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )

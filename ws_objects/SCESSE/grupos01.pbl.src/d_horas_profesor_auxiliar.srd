@@ -1,0 +1,45 @@
+﻿$PBExportHeader$d_horas_profesor_auxiliar.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=195 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=horas_tot_coord dbname="horas_tot_coord" )
+ column=(type=long updatewhereclause=yes name=materias_cve_coordinacion dbname="materias.cve_coordinacion" )
+ column=(type=char(70) updatewhereclause=yes name=coordinaciones_coordinacion dbname="coordinaciones.coordinacion" )
+ column=(type=long updatewhereclause=yes name=profesor_auxiliar_cve_profesor dbname="profesor_auxiliar.cve_profesor" )
+ retrieve="SELECT horas_tot_coord = sum(p.horas), 
+       m.cve_coordinacion, 
+		 c.coordinacion,
+		 p.cve_profesor
+FROM profesor_auxiliar p, materias m, coordinaciones c, grupos g
+WHERE p.cve_mat = m.cve_mat
+AND	p.cve_profesor = :al_cve_profesor
+AND	m.cve_coordinacion = c.cve_coordinacion
+AND   p.periodo = :ai_periodo
+AND   p.anio = :ai_anio
+AND 	p.cve_mat = g.cve_mat
+AND	p.gpo = g.gpo
+AND	p.periodo = g.periodo
+AND	p.anio = g.anio
+AND	g.cond_gpo = 1
+AND NOT (p.cve_mat = :al_cve_mat
+		   AND p.gpo = :as_gpo)
+GROUP BY m.cve_coordinacion, 
+   		c.coordinacion, 
+         p.cve_profesor
+ORDER BY p.cve_profesor" arguments=(("al_cve_profesor", number),("al_cve_mat", number),("as_gpo", string),("ai_periodo", number),("ai_anio", number)) )
+text(band=header alignment="2" text="Horas Tot Coord" border="0" color="0" x="4" y="3" height="64" width="439"  name=horas_tot_coord_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Materias
+Cve Coordinacion" border="0" color="0" x="446" y="3" height="128" width="479"  name=materias_cve_coordinacion_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Coordinaciones
+Coordinacion" border="0" color="0" x="929" y="3" height="128" width="2077"  name=coordinaciones_coordinacion_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Grupos
+Cve Profesor" border="0" color="0" x="3010" y="3" height="128" width="351"  name=grupos_cve_profesor_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="4" y="3" height="74" width="351" format="[general]"  name=horas_tot_coord edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="446" y="3" height="74" width="351" format="[general]"  name=materias_cve_coordinacion edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="929" y="3" height="74" width="2077" format="[general]"  name=coordinaciones_coordinacion edit.limit=70 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="3361" y="0" height="64" width="1247" format="[general]"  name=profesor_auxiliar_cve_profesor edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

@@ -1,0 +1,33 @@
+﻿$PBExportHeader$dia_string.srf
+$PBExportComments$Regresa un string el nombre de un dia valido esto es de Lunes a sabado.   Juan Campos.      Junio-1997.
+global type dia_string from function_object
+end type
+
+forward prototypes
+global function string dia_string (integer dia)
+end prototypes
+
+global function string dia_string (integer dia);// Regresa un string el nombre de un dia valido esto es de Lunes a sabado.
+// Juan Campos.      Junio-1997.
+
+if Dia  = 1  then
+	Return  "LUNES"
+elseif Dia = 2 Then 
+	Return  "MARTES"
+elseif Dia = 3 Then 
+	Return  "MIERCOLES"
+elseif Dia = 4 Then 
+	Return  "JUEVES"
+elseif Dia = 5 Then 
+	Return  "VIERNES"
+elseif Dia = 6 Then 
+	Return  "SABADO"
+elseif Dia = 7 Then 
+	Return  ""
+end if
+
+
+
+Return ""
+end function
+

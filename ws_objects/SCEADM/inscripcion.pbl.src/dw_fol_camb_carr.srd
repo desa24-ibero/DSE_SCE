@@ -1,0 +1,13 @@
+﻿$PBExportHeader$dw_fol_camb_carr.srd
+$PBExportComments$Folios de los aceptados que han cambiado carrera
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=folio dbname="bita_carr.folio" )
+ column=(type=long updatewhereclause=yes name=aspiran_status dbname="aspiran.status" )
+ retrieve="PBSELECT( VERSION(400) DISTINCT ()TABLE(NAME=~"bita_carr~" )  TABLE(NAME=~"aspiran~" ) COLUMN(NAME=~"bita_carr.folio~") COLUMN(NAME=~"aspiran.status~")    JOIN (LEFT=~"aspiran.folio~"    OP =~"=~"RIGHT=~"bita_carr.folio~" )    JOIN (LEFT=~"aspiran.clv_ver~"    OP =~"=~"RIGHT=~"bita_carr.clv_ver~" )    JOIN (LEFT=~"aspiran.clv_per~"    OP =~"=~"RIGHT=~"bita_carr.clv_per~" )    JOIN (LEFT=~"aspiran.anio~"    OP =~"=~"RIGHT=~"bita_carr.anio~" )WHERE(    EXP1 =~"bita_carr.clv_ver~"   OP =~"=~"    EXP2 =~":ver~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"bita_carr.clv_per~"   OP =~"=~"    EXP2 =~":per~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"bita_carr.anio~"   OP =~"=~"    EXP2 =~":ani~" ) ) ARG(NAME = ~"ver~" TYPE = number)  ARG(NAME = ~"per~" TYPE = number)  ARG(NAME = ~"ani~" TYPE = number) " arguments=(("ver", number),("per", number),("ani", number)) )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="330" format="[general]"  name=folio edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="334" y="0" height="65" width="225" format="[general]"  name=aspiran_status edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

@@ -1,0 +1,13 @@
+﻿$PBExportHeader$fu_errorbd.srf
+global type fu_errorbd from function_object
+end type
+
+forward prototypes
+global subroutine fu_errorbd (n_tr an_tr_transaction, string as_message)
+end prototypes
+
+global subroutine fu_errorbd (n_tr an_tr_transaction, string as_message);if an_tr_transaction.sqlcode <> 0 then
+	MessageBox("Error en BD",as_message+"~n"+an_tr_transaction.sqlerrtext)
+end if
+end subroutine
+

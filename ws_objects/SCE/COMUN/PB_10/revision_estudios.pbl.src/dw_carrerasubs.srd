@@ -1,0 +1,34 @@
+﻿$PBExportHeader$dw_carrerasubs.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=141 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=89 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=academicos_cve_carrera dbname="academicos.cve_carrera" )
+ column=(type=char(100) updatewhereclause=yes name=carreras_carrera dbname="carreras.carrera" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_plan dbname="academicos.cve_plan" )
+ column=(type=char(20) updatewhereclause=yes name=nombre_plan_nombre_plan dbname="nombre_plan.nombre_plan" )
+ column=(type=long updatewhereclause=yes name=academicos_cve_subsistema dbname="academicos.cve_subsistema" )
+ column=(type=char(40) updatewhereclause=yes name=subsistema_subsistema dbname="subsistema.subsistema" )
+ column=(type=char(1) updatewhereclause=yes name=academicos_nivel dbname="academicos.nivel" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"academicos~" )  TABLE(NAME=~"carreras~" )  TABLE(NAME=~"nombre_plan~" )  TABLE(NAME=~"subsistema~" ) COLUMN(NAME=~"academicos.cve_carrera~") COLUMN(NAME=~"carreras.carrera~") COLUMN(NAME=~"academicos.cve_plan~") COLUMN(NAME=~"nombre_plan.nombre_plan~") COLUMN(NAME=~"academicos.cve_subsistema~") COLUMN(NAME=~"subsistema.subsistema~") COLUMN(NAME=~"academicos.nivel~")    JOIN (LEFT=~"academicos.cve_carrera~"    OP =~"=~"RIGHT=~"carreras.cve_carrera~" )    JOIN (LEFT=~"academicos.cve_plan~"    OP =~"=~"RIGHT=~"nombre_plan.cve_plan~" )    JOIN (LEFT=~"nombre_plan.cve_plan~"    OP =~"=~"RIGHT=~"subsistema.cve_plan~" )    JOIN (LEFT=~"carreras.cve_carrera~"    OP =~"=~"RIGHT=~"subsistema.cve_carrera~" )WHERE(    EXP1 =~"academicos.cuenta~"   OP =~"=~"    EXP2 =~":cuenta~" ) ) ARG(NAME = ~"cuenta~" TYPE = number) " arguments=(("cuenta", number)) )
+text(band=header alignment="2" text="Academicos
+Cve Carrera"border="0" color="0" x="5" y="4" height="129" width="330"  name=academicos_cve_carrera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Carreras
+Carrera"border="0" color="0" x="339" y="4" height="129" width="1399"  name=carreras_carrera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Academicos
+Cve Plan"border="0" color="0" x="1742" y="4" height="129" width="330"  name=academicos_cve_plan_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Nombre Plan
+Nombre Plan"border="0" color="0" x="2076" y="4" height="129" width="581"  name=nombre_plan_nombre_plan_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Academicos
+Cve Subsistema"border="0" color="0" x="2661" y="4" height="129" width="430"  name=academicos_cve_subsistema_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Subsistema
+Subsistema"border="0" color="0" x="3095" y="4" height="129" width="1125"  name=subsistema_subsistema_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="77" width="330" format="[general]"  name=academicos_cve_carrera edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="339" y="4" height="77" width="1399" format="[general]"  name=carreras_carrera edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="1742" y="4" height="77" width="330" format="[general]"  name=academicos_cve_plan edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="2076" y="4" height="77" width="581" format="[general]"  name=nombre_plan_nombre_plan edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="2661" y="4" height="77" width="330" format="[general]"  name=academicos_cve_subsistema edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="3095" y="4" height="77" width="1125" format="[general]"  name=subsistema_subsistema edit.limit=40 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="4220" y="0" height="65" width="28" format="[general]"  name=academicos_nivel edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )

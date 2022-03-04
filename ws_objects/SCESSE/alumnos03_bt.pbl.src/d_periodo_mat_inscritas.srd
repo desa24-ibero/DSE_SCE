@@ -1,0 +1,28 @@
+﻿$PBExportHeader$d_periodo_mat_inscritas.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=32168624 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=88 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=mat_inscritas_periodo dbname="periodo" )
+ column=(type=char(10) updatewhereclause=yes name=periodo_descripcion dbname="periodo_descripcion" )
+ column=(type=long updatewhereclause=yes name=mat_inscritas_anio dbname="anio" )
+ retrieve="  SELECT DISTINCT periodo = mat_inscritas.periodo,   
+         periodo_descripcion = periodo.descripcion,   
+         anio = mat_inscritas.anio  
+    FROM mat_inscritas,   
+         periodo  
+   WHERE ( mat_inscritas.periodo = periodo.periodo )    
+" )
+compute(band=detail alignment="2" expression=" periodo_descripcion +~" - ~"+ string( mat_inscritas_anio )"border="6" color="33554432" x="5" y="0" height="80" width="786" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Arial" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="31904157" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0  template=(comment="" encoding="UTF-16LE" name="d_periodo_mat_inscritas" xml="<?xml version=~"1.0~" encoding=~"UTF-16LE~" standalone=~"no~"?><untitled><untitled_row __pbband=~"detail~"><mat_inscritas_periodo/><periodo_descripcion/><mat_inscritas_anio/></untitled_row></untitled>"))
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

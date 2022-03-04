@@ -1,0 +1,104 @@
+﻿$PBExportHeader$m_imprime_kardex.srm
+$PBExportComments$Este menu tiene solo una opción de Salir de la ventana de w_imp_kardex. el proceso de impresin de kardex se hace en el evento de doublecliked de la ventana w_imp_kardex. Juan Campos Nov-1996.
+forward
+global type m_imprime_kardex from menu
+end type
+type m_impresin from menu within m_imprime_kardex
+end type
+type m_configuraimpresosa from menu within m_impresin
+end type
+type m_imprime from menu within m_impresin
+end type
+type m_impresin from menu within m_imprime_kardex
+m_configuraimpresosa m_configuraimpresosa
+m_imprime m_imprime
+end type
+type m_salir from menu within m_imprime_kardex
+end type
+type m_salir from menu within m_imprime_kardex
+end type
+end forward
+
+global type m_imprime_kardex from menu
+m_impresin m_impresin
+m_salir m_salir
+end type
+global m_imprime_kardex m_imprime_kardex
+
+on m_imprime_kardex.create
+m_imprime_kardex=this
+this.m_impresin=create m_impresin
+this.m_salir=create m_salir
+this.Item[]={this.m_impresin, &
+this.m_salir}
+end on
+
+on m_imprime_kardex.destroy
+destroy(this.m_impresin)
+destroy(this.m_salir)
+end on
+
+type m_impresin from menu within m_imprime_kardex
+m_configuraimpresosa m_configuraimpresosa
+m_imprime m_imprime
+end type
+
+on m_impresin.create
+this.Text="Impresión"
+this.m_configuraimpresosa=create m_configuraimpresosa
+this.m_imprime=create m_imprime
+this.Item[]={this.m_configuraimpresosa, &
+this.m_imprime}
+end on
+
+on m_impresin.destroy
+destroy(this.m_configuraimpresosa)
+destroy(this.m_imprime)
+end on
+
+type m_configuraimpresosa from menu within m_impresin
+end type
+
+event clicked;PrintSetup()
+end event
+
+on m_configuraimpresosa.create
+this.Text="Configura Impresosa"
+this.ToolBarItemName="Print!"
+this.ToolBarItemText="Configura Impresora"
+end on
+
+type m_imprime from menu within m_impresin
+end type
+
+event clicked;// Obsoleto. desde 20 feb-1998.
+
+// Juan Campos Sánchez.   Enero-1998.
+//w_imp_kardex.dw_preview_kardex.TriggerEvent("Imprime")
+
+end event
+
+on m_imprime.create
+this.Text="Imprime"
+this.ToolBarItemText="Imprime Kárdex"
+this.Visible=false
+this.Enabled=false
+end on
+
+type m_salir from menu within m_imprime_kardex
+end type
+
+event clicked;
+Close(w_imp_kardex)
+end event
+
+on m_salir.create
+this.Text="Salir"
+this.Microhelp="Cierra la ventana actual"
+this.ToolBarItemName="Exit!"
+this.ToolBarItemText="Salir Impresión de kárdex"
+end on
+
+on m_salir.destroy
+end on
+

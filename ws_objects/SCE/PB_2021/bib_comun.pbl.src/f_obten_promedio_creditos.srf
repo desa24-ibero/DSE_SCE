@@ -1,0 +1,68 @@
+﻿$PBExportHeader$f_obten_promedio_creditos.srf
+global type f_obten_promedio_creditos from function_object
+end type
+
+forward prototypes
+global subroutine f_obten_promedio_creditos (long a_cuenta, integer a_cve_carr, integer a_plan, ref decimal a_o_promedio, ref decimal a_o_creditos)
+end prototypes
+
+global subroutine f_obten_promedio_creditos (long a_cuenta, integer a_cve_carr, integer a_plan, ref decimal a_o_promedio, ref decimal a_o_creditos);//Función
+//
+//f_obten_promedio_creditos
+//
+//Objetivo: Regresa en dos parámetros el promedio y número de créditos
+//				correspondiente a los datos del alumno
+//
+//Parámetros:	a_cuenta 		long		val	Número de cuenta del alumno
+//					a_cve_carr		int		val	Clave de la carrera del alumno
+//					a_plan			int		val	Clave del plan de estudios de la carrera
+//					a_o_promedio	decimal	ref	Resultado del promedio del alumno
+//					a_o_creditos	int		ref	Resultado de los créditos del alumno
+//
+
+decimal ld_promedio, ldc_creditos
+integer li_codigo_sql
+string ls_mensaje_sql
+
+DECLARE  spobtenpromcred PROCEDURE FOR dbo.calcula_promedio @cuenta= :a_cuenta, 
+@cve_carr= :a_cve_carr, 
+@plan = :a_plan, 
+@promedio = :ld_promedio OUT, 
+@creditos = :ldc_creditos OUT
+USING gtr_sce;
+
+EXECUTE spobtenpromcred;
+
+
+FETCH spobtenpromcred INTO :ld_promedio,:ldc_creditos;
+li_codigo_sql = gtr_sce.SQLCode
+ls_mensaje_sql = gtr_sce.SQLErrText
+
+if li_codigo_sql = -1 then
+	
+//	rollback using gtr_sce;
+	MessageBox("Error en la ejecución del stored procedure: calcula_promedio", ls_mensaje_sql)				
+	a_o_promedio = 0
+	a_o_creditos =0
+else
+//	commit using gtr_sce;
+	a_o_promedio = ld_promedio
+	a_o_creditos = ldc_creditos
+end if
+
+CLOSE spobtenpromcred;
+
+return
+
+
+
+
+
+
+
+
+
+
+
+end subroutine
+

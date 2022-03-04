@@ -1,0 +1,56 @@
+﻿$PBExportHeader$f_escursativa.srf
+global type f_escursativa from function_object
+end type
+
+forward prototypes
+global function integer f_escursativa (long al_cve_mat, integer ai_cve_carrera, integer ai_cve_plan)
+end prototypes
+
+global function integer f_escursativa (long al_cve_mat, integer ai_cve_carrera, integer ai_cve_plan);///*
+// *		Nombre	escursativa
+// *		Recibe	al_cve_mat,ai_cve_carrera,ai_cve_plan
+// *		Regresa	0		la materia al_cve_mat no pertence al plan de estudios
+// *					100	la materia no es cursativa
+// *					101	la materia es cursativa
+// *					-1	error de comunicacion
+// *					FMC19011999
+// */
+
+
+DataStore lds_mat_prerrequisito,lds_materia
+string ls_nivel
+int li_cursativa, li_res
+
+lds_materia = Create DataStore
+lds_materia.DataObject = "dw_mad_prerrequisito_c"
+lds_materia.SetTransObject(gtr_sce)
+if (lds_materia.Retrieve(al_cve_mat)=1) then
+	ls_nivel = lds_materia.GetItemString(1,"nivel")
+	Destroy lds_materia
+	lds_mat_prerrequisito = Create DataStore
+	//if ls_nivel = "L" then
+	if ls_nivel <> "P" then 
+		lds_mat_prerrequisito.DataObject = "dw_mad_prerrequisito_b"
+	else
+		lds_mat_prerrequisito.DataObject = "dw_mad_prerrequisito_pos_b"
+	end if
+	lds_mat_prerrequisito.SetTransObject(gtr_sce)
+	li_res = lds_mat_prerrequisito.Retrieve(al_cve_mat,ai_cve_carrera,ai_cve_plan)
+	if ( li_res = 1) then
+		li_cursativa = lds_mat_prerrequisito.GetItemNumber(1,"cursativa")
+		Destroy lds_mat_prerrequisito
+		return li_cursativa+100
+	elseif ( li_res = 0) then
+		Destroy lds_mat_prerrequisito
+		return 0
+	else
+		Destroy lds_mat_prerrequisito
+		return -1
+	end if
+else
+	//Error de comunicacion
+	Destroy lds_materia
+	return -1
+end if
+end function
+

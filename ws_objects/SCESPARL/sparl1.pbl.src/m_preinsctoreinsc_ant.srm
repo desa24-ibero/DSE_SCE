@@ -1,0 +1,179 @@
+﻿$PBExportHeader$m_preinsctoreinsc_ant.srm
+forward
+global type m_preinsctoreinsc_ant from menu
+end type
+type m_archivo from menu within m_preinsctoreinsc_ant
+end type
+type m_empieza_proceso from menu within m_archivo
+end type
+type m_archivo from menu within m_preinsctoreinsc_ant
+m_empieza_proceso m_empieza_proceso
+end type
+type m_ventana from menu within m_preinsctoreinsc_ant
+end type
+type m_horizontal from menu within m_ventana
+end type
+type m_vertical from menu within m_ventana
+end type
+type m_primerplano from menu within m_ventana
+end type
+type m_cascada from menu within m_ventana
+end type
+type m_ventana from menu within m_preinsctoreinsc_ant
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+type m_salir from menu within m_preinsctoreinsc_ant
+end type
+type m_salir from menu within m_preinsctoreinsc_ant
+end type
+end forward
+
+global type m_preinsctoreinsc_ant from menu
+m_archivo m_archivo
+m_ventana m_ventana
+m_salir m_salir
+end type
+global m_preinsctoreinsc_ant m_preinsctoreinsc_ant
+
+on m_preinsctoreinsc_ant.create
+m_preinsctoreinsc_ant=this
+this.m_archivo=create m_archivo
+this.m_ventana=create m_ventana
+this.m_salir=create m_salir
+this.Item[]={this.m_archivo, &
+this.m_ventana, &
+this.m_salir}
+end on
+
+on m_preinsctoreinsc_ant.destroy
+destroy(this.m_archivo)
+destroy(this.m_ventana)
+destroy(this.m_salir)
+end on
+
+type m_archivo from menu within m_preinsctoreinsc_ant
+m_empieza_proceso m_empieza_proceso
+end type
+
+on m_archivo.create
+this.Text="Preinsc a Reinsc"
+this.ToolBarItemText="Imprimir"
+this.ToolBarItemOrder=1
+this.ToolBarItemSpace=2
+this.m_empieza_proceso=create m_empieza_proceso
+this.Item[]={this.m_empieza_proceso}
+end on
+
+on m_archivo.destroy
+destroy(this.m_empieza_proceso)
+end on
+
+type m_empieza_proceso from menu within m_archivo
+end type
+
+on m_empieza_proceso.create
+this.Text="Empieza Proceso~tCtrl+N"
+this.Microhelp="Paso de Preinscripcion a Reinscripción"
+this.ToolBarItemName="Custom075!"
+this.ToolBarItemText="Paso de Preinscripción a Reinscripción"
+this.ToolBarItemOrder=1
+this.ToolBarItemSpace=3
+this.Shortcut=334
+end on
+
+event clicked;w_preinsctoreinsc.cb_preinsctoreinsc.event clicked()
+end event
+
+type m_ventana from menu within m_preinsctoreinsc_ant
+m_horizontal m_horizontal
+m_vertical m_vertical
+m_primerplano m_primerplano
+m_cascada m_cascada
+end type
+
+on m_ventana.create
+this.Text="Ventana"
+this.m_horizontal=create m_horizontal
+this.m_vertical=create m_vertical
+this.m_primerplano=create m_primerplano
+this.m_cascada=create m_cascada
+this.Item[]={this.m_horizontal, &
+this.m_vertical, &
+this.m_primerplano, &
+this.m_cascada}
+end on
+
+on m_ventana.destroy
+destroy(this.m_horizontal)
+destroy(this.m_vertical)
+destroy(this.m_primerplano)
+destroy(this.m_cascada)
+end on
+
+type m_horizontal from menu within m_ventana
+end type
+
+event clicked;w_sparl.arrangesheets(Tilehorizontal!)
+end event
+
+on m_horizontal.create
+this.Text="Horizontal"
+this.Microhelp="Organiza las ventanas horizontalmente"
+end on
+
+type m_vertical from menu within m_ventana
+end type
+
+event clicked;w_sparl.arrangesheets(Tile!)
+end event
+
+on m_vertical.create
+this.Text="Vertical"
+this.Microhelp="Organiza las ventanas verticalmente"
+end on
+
+type m_primerplano from menu within m_ventana
+end type
+
+event clicked;w_sparl.arrangesheets(Layer!)
+end event
+
+on m_primerplano.create
+this.Text="Primer Plano"
+this.Microhelp="Coloca la ventana actual en primer plano"
+end on
+
+type m_cascada from menu within m_ventana
+end type
+
+event clicked;w_sparl.arrangesheets(Cascade!)
+end event
+
+on m_cascada.create
+this.Text="Cascada"
+this.Microhelp="Organiza las ventanas en cascada"
+end on
+
+type m_salir from menu within m_preinsctoreinsc_ant
+end type
+
+on m_salir.create
+this.Text="&Salir"
+this.Microhelp="Salir del sistema de reinscripción en linea"
+this.ToolBarItemName="Exit!"
+this.ToolBarItemText="Salir"
+this.MenuItemType=MenuItemTypeExit!
+this.ToolBarItemOrder=10
+this.ToolBarItemSpace=3
+end on
+
+on m_salir.destroy
+end on
+
+event clicked;close(parentwindow)
+
+end event
+

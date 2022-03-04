@@ -1,0 +1,45 @@
+﻿$PBExportHeader$d_mod_texto_certificados_rg.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=72 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=long updatewhereclause=yes key=yes name=cve_tipo_doc_rep dbname="cuerpo_reporte.cve_tipo_doc_rep" )
+ column=(type=long updatewhereclause=yes key=yes name=cuenta dbname="cuerpo_reporte.cuenta" )
+ column=(type=long updatewhereclause=yes key=yes name=num_renglon dbname="cuerpo_reporte.num_renglon" )
+ column=(type=char(255) update=yes updatewhereclause=yes name=texto_renglon dbname="cuerpo_reporte.texto_renglon" )
+ column=(type=long updatewhereclause=yes key=yes name=pagina dbname="cuerpo_reporte.pagina" )
+ column=(type=long updatewhereclause=yes name=cve_carrera dbname="cuerpo_reporte.cve_carrera" )
+ retrieve="select * from cuerpo_reporte
+where cuenta in 
+(98045,
+62035,
+27724,
+11636,
+60736,
+3720,
+69347,
+72135,
+28452,
+56167,
+25469,
+73212,
+82963,
+55915)
+and   
+texto_renglon like ~"%2005%~"" update="cuerpo_reporte" updatewhere=1 updatekeyinplace=yes )
+text(band=header alignment="2" text="Cve Tipo Doc Rep" border="0" color="0" x="5" y="4" height="64" width="471"  name=cve_tipo_doc_rep_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cuenta" border="0" color="0" x="480" y="4" height="64" width="329"  name=cuenta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Num Renglon" border="0" color="0" x="814" y="4" height="64" width="357"  name=num_renglon_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Texto Renglon" border="0" color="0" x="1175" y="4" height="64" width="3511"  name=texto_renglon_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Pagina" border="0" color="0" x="4690" y="4" height="64" width="329"  name=pagina_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cve Carrera" border="0" color="0" x="5024" y="4" height="64" width="329"  name=cve_carrera_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="76" width="329" format="[general]"  name=cve_tipo_doc_rep edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="480" y="4" height="76" width="329" format="[general]"  name=cuenta edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="814" y="4" height="76" width="329" format="[general]"  name=num_renglon edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=10 border="0" color="0" x="1175" y="4" height="76" width="3511" format="[general]"  name=texto_renglon edit.limit=255 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="4690" y="4" height="76" width="329" format="[general]"  name=pagina edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="5024" y="4" height="76" width="329" format="[general]"  name=cve_carrera edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

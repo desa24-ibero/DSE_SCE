@@ -1,0 +1,47 @@
+﻿$PBExportHeader$fecha_español.srf
+$PBExportComments$Función que entrega la fecha en español.
+global type fecha_español from function_object
+end type
+
+forward prototypes
+global function string fecha_español (string fecha_ingles)
+end prototypes
+
+global function string fecha_español (string fecha_ingles);String Fecha, Dia , Mes, Año
+
+Dia=string(day(date(fecha_ingles)))
+Mes=string(month(date(fecha_ingles)))
+Año=string(year(date(fecha_ingles)))
+
+CHOOSE CASE Mes
+	CASE '1'
+		Mes='Enero'
+	CASE '2'
+		Mes='Febrero'
+	CASE '3'
+		Mes='Marzo'
+	CASE '4'
+		Mes='Abril'
+	CASE '5'
+		Mes='Mayo'
+	CASE '6'
+		Mes='Junio'
+	CASE '7'
+		Mes='Julio'
+	CASE '8'
+		Mes='Agosto'
+	CASE '9'
+		Mes='Septiembre'
+	CASE '10'
+		Mes='Octubre'
+	CASE '11'
+		Mes='Noviembre'
+	CASE '12'
+		Mes='Diciembre'
+END CHOOSE
+
+Fecha=Dia+' de '+Mes+' de '+Año
+
+return Fecha
+end function
+

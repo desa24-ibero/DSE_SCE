@@ -1,0 +1,291 @@
+﻿$PBExportHeader$m_bitacoras.srm
+forward
+global type m_bitacoras from menu
+end type
+type m_reporte from menu within m_bitacoras
+end type
+type m_reporte from menu within m_bitacoras
+end type
+type m_imprime from menu within m_bitacoras
+end type
+type m_imprime from menu within m_bitacoras
+end type
+type m_salvar from menu within m_bitacoras
+end type
+type m_salvar from menu within m_bitacoras
+end type
+type m_fin from menu within m_bitacoras
+end type
+type m_fin from menu within m_bitacoras
+end type
+end forward
+
+global type m_bitacoras from menu
+m_reporte m_reporte
+m_imprime m_imprime
+m_salvar m_salvar
+m_fin m_fin
+end type
+global m_bitacoras m_bitacoras
+
+on m_bitacoras.create
+m_bitacoras=this
+this.m_reporte=create m_reporte
+this.m_imprime=create m_imprime
+this.m_salvar=create m_salvar
+this.m_fin=create m_fin
+this.Item[]={this.m_reporte, &
+this.m_imprime, &
+this.m_salvar, &
+this.m_fin}
+end on
+
+on m_bitacoras.destroy
+destroy(this.m_reporte)
+destroy(this.m_imprime)
+destroy(this.m_salvar)
+destroy(this.m_fin)
+end on
+
+type m_reporte from menu within m_bitacoras
+end type
+
+on m_reporte.create
+this.Text="Reporte"
+end on
+
+on m_reporte.destroy
+end on
+
+event clicked;long ll_num_rows
+string ls_fecha_inicio, ls_fecha_final, ls_periodo, ls_anio
+date ldt_fecha_inicio, ldt_fecha_final
+datetime ldttm_fecha_inicio, ldttm_fecha_final
+integer li_periodo, li_anio
+boolean lb_todos
+
+lb_todos= w_bitacoras.cbx_todos.checked
+
+ls_periodo= w_bitacoras.uo_cap_periodo.ddlb_periodo.text
+ls_anio= w_bitacoras.uo_cap_periodo.em_año.text
+
+choose case ls_periodo
+	case "Primavera"
+		li_periodo = 0		
+	case "Verano"
+		li_periodo = 1		
+	case "Otoño"
+		li_periodo = 2		
+	case else
+		li_periodo = 100
+end choose
+
+
+if not lb_todos then
+	
+	if li_periodo>=100 then
+		MessageBox("Periodo Incorrecto: "+ls_periodo, "Favor de escribir un periodo valido")
+		return
+	end if
+
+	if not isnumber(ls_anio) then
+		MessageBox("Anio Incorrecto: "+ls_anio, "Favor de escribir un anio valido")
+		return
+	end if	
+	li_anio = integer(ls_anio)	
+else
+	li_periodo = 99
+	li_anio = 9999
+end if
+
+ls_fecha_inicio= w_bitacoras.em_fecha_inicio.text
+ls_fecha_final= w_bitacoras.em_fecha_final.text
+
+if not isdate(ls_fecha_inicio) then
+	MessageBox("Fecha de Inicio Incorrecta", "Favor de escribir una fecha valida")
+	return
+end if
+
+if not isdate(ls_fecha_final) then
+	MessageBox("Fecha Final Incorrecta", "Favor de escribir una fecha valida")
+	return
+end if
+
+
+
+ldttm_fecha_inicio= datetime(date(ls_fecha_inicio))
+ldttm_fecha_final= datetime(date(ls_fecha_final))
+
+//MessageBox("Fechas procesadas",&
+//				"Inicio"+string(ldttm_fecha_inicio)+"~n"+&
+//				"Final"+string(ldttm_fecha_final))
+
+ll_num_rows= w_bitacoras.dw_bitacora.Retrieve(ldttm_fecha_inicio, ldttm_fecha_final, li_periodo, li_anio)
+
+
+end event
+
+type m_imprime from menu within m_bitacoras
+end type
+
+on m_imprime.create
+this.Text="Imprime"
+this.ToolBarItemName="Print!"
+this.ToolBarItemText="Imprime Bitácora Histórico"
+end on
+
+on m_imprime.destroy
+end on
+
+event clicked;// Imprime el data window que corresponda al proceso que previamente se seleccionó
+// Juan Campos.   Febrero-1997.
+
+Long    Job 
+Integer EstasSeguro
+ 
+SetPointer(Hourglass!)  	
+
+Job = PrintOpen("Reporte Bitacora" )  
+
+EstasSeguro = MessageBox("Aviso","Esta seguro que desea imprimir este reporte de bitacora",Question!,YesNo!,1)
+
+IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" And	EstasSeguro = 1 Then
+  PrintDataWindow(Job,w_bitacoras.dw_bitacora)  
+ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" And	EstasSeguro = 1 Then
+	   PrintDataWindow(Job,w_bitacoras.dw_bitacora_periodo)   
+End if
+ 
+PrintClose(job)
+ 
+ 
+  
+end event
+
+type m_salvar from menu within m_bitacoras
+end type
+
+event clicked;int in_value
+string st_docname,st_named
+
+in_value = GetFileSaveName("Selecciona Archivo",  & 
+	st_docname, st_named, "CSV",  &
+	" Comma-separated in_values,*.CSV," +&
+	" dBASE-III format,*.DBF," +&
+	" Data Interchange Format,*.DIF," +&
+	" Microsoft Excel format,*.XLS," +&
+	" Text with HTML formatting that approximates the DataWindow layout,*.HTM," +&
+	" Powersoft Report (PSR) format,*.PSR," +&
+	" SQL syntax,*.SQL," +&
+	" Microsoft Multiplan format,*.SYL," +&
+	" Tab-separated columns with a return at the end of each row,*.TXT," +&
+	" Lotus 1-2-3 format,*.WKS," +&
+	" Lotus 1-2-3 format,*.WK1," +&
+	" Windows Metafile format,*.WMF,")
+
+IF in_value = 1 THEN
+	CHOOSE CASE Right (st_named, 3) 
+		CASE "CSV"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,CSV!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,CSV!, FALSE)
+			End if
+		CASE "DBF"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,dBASE3!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,dBASE3!, FALSE)
+			End if
+		CASE "DIF"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,DIF!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,DIF!, FALSE)
+			End if
+		CASE "XLS"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,Excel!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,Excel!, FALSE)
+			End if
+		CASE "HTM"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,HTMLTable!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,HTMLTable!, FALSE)
+			End if
+		CASE "PSR"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,PSReport!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,PSReport!, FALSE)
+			End if
+		CASE "SQL"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,SQLInsert!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,SQLInsert!, FALSE)
+			End if
+		CASE "SYL"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,SYLK!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,SYLK!, FALSE)
+			End if
+		CASE "TXT"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,Text!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,Text!, FALSE)
+			End if
+		CASE "WKS"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,WKS!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,WKS!, FALSE)
+			End if
+		CASE "WK1"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,WK1!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,WK1!, FALSE)
+			End if
+		CASE "WMF"
+			IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+			  w_bitacoras.dw_bitacora.SaveAs(st_docname,WMF!, FALSE)
+			ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+				w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,WMF!, FALSE)
+			End if
+	END CHOOSE
+else
+	IF w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR FECHAS" Then
+	  w_bitacoras.dw_bitacora.SaveAs(st_docname,Clipboard!, FALSE)
+	ElseIf w_bitacoras.title = "REPORTE BITÁCORA HISTÓRICO POR PERIODO" Then
+		w_bitacoras.dw_bitacora_periodo.SaveAs(st_docname,Clipboard!, FALSE)
+	End if
+end if
+end event
+
+on m_salvar.create
+this.Text="Salvar"
+this.ToolBarItemName="Save!"
+end on
+
+on m_salvar.destroy
+end on
+
+type m_fin from menu within m_bitacoras
+end type
+
+on m_fin.create
+this.Text="Salir"
+this.ToolBarItemName="Exit!"
+this.ToolBarItemText="Salir Reporte Bitácora"
+end on
+
+on m_fin.destroy
+end on
+
+event clicked;Close(w_bitacoras)
+end event
+

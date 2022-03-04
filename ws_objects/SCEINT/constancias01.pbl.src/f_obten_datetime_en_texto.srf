@@ -1,0 +1,26 @@
+﻿$PBExportHeader$f_obten_datetime_en_texto.srf
+global type f_obten_datetime_en_texto from function_object
+end type
+
+forward prototypes
+global function string f_obten_datetime_en_texto (datetime a_fecha)
+end prototypes
+
+global function string f_obten_datetime_en_texto (datetime a_fecha);//El objetivo de esta función es convertir una fecha a su representación escrita
+//
+//f_obten_fecha_en_texto
+//
+
+integer li_dia, li_mes, li_anio
+string ls_dia, ls_mes, ls_anio, ls_fecha, ls_fecha_string, ls_fecha_texto
+date ldt_fecha
+
+ls_fecha_string = string( a_fecha, "dd/mm/yyyy")
+
+ldt_fecha= date(ls_fecha_string)
+
+ls_fecha_texto = f_obten_fecha_en_texto(ldt_fecha)
+
+return ls_fecha_texto
+end function
+

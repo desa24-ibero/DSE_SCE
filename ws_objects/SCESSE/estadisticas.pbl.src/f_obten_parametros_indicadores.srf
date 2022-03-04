@@ -1,0 +1,44 @@
+﻿$PBExportHeader$f_obten_parametros_indicadores.srf
+global type f_obten_parametros_indicadores from function_object
+end type
+
+forward prototypes
+global function integer f_obten_parametros_indicadores (long al_cve_parametro, ref long al_inscritos_minimos)
+end prototypes
+
+global function integer f_obten_parametros_indicadores (long al_cve_parametro, ref long al_inscritos_minimos);//f_obten_parametros_indicadores
+//Recibe		long al_cve_parametro
+//Devuelve	 en parámetro de salida 
+//		long al_inscritos_minimos   con los inscritos mínimos a consultar
+//La función regresa el código de SQL en función al resultado de la operación
+
+integer li_cve_coordinacion, li_codigo_sql
+string ls_mensaje_sql, ls_nivel=''
+long ll_inscritos_minimos
+
+if al_cve_parametro = 0 then
+	return -1	
+end if
+
+SELECT inscritos_minimos
+INTO :ll_inscritos_minimos
+FROM parametros_indicadores 
+WHERE cve_parametro = :al_cve_parametro
+USING gtr_sce;
+
+li_codigo_sql = gtr_sce.SqlCode
+ls_mensaje_sql = gtr_sce.SqlErrText
+
+//Si no existen registros, falta dar de alta el parámetro
+if li_codigo_sql = 100 or isnull(ll_inscritos_minimos) then
+	return -1
+elseif li_codigo_sql = -1 then
+	MessageBox("Error al consultar parametros_indicadores", ls_mensaje_sql)
+	return -1
+end if
+
+al_inscritos_minimos =ll_inscritos_minimos 
+
+return 0
+end function
+

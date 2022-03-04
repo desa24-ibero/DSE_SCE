@@ -1,0 +1,28 @@
+﻿$PBExportHeader$f_coordinacion_por_usuario.srf
+global type f_coordinacion_por_usuario from function_object
+end type
+
+forward prototypes
+global function integer f_coordinacion_por_usuario (string as_usuario)
+end prototypes
+
+global function integer f_coordinacion_por_usuario (string as_usuario);int li_cve_coordinacion
+DataStore lds_coordinacion_por_coordinador
+lds_coordinacion_por_coordinador = CREATE DataStore
+lds_coordinacion_por_coordinador.DataObject = "d_coordinacion_por_coordinador"
+lds_coordinacion_por_coordinador.SetTransObject(gtr_sce)
+int li_regresa
+as_usuario = Upper(as_usuario)
+li_regresa = lds_coordinacion_por_coordinador.Retrieve(as_usuario)
+if li_regresa = 0 then
+	li_cve_coordinacion = 9999
+elseif li_regresa > 0 then
+	li_cve_coordinacion = lds_coordinacion_por_coordinador.GetItemNumber(1,1)
+else
+	li_cve_coordinacion = -1
+end if
+
+Destroy lds_coordinacion_por_coordinador
+return li_cve_coordinacion
+end function
+
