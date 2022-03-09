@@ -215,6 +215,7 @@ public function integer revisa_prerrequisito_especial (long mat, long cuenta)
 public function integer revisa_creditos (long cta, decimal cred_act)
 public function integer existe_materia (long cvmat, ref string mat, ref decimal crd, ref integer hrst, ref integer hrsp)
 public function integer f_crea_servicios_mat_sep ()
+public function integer f_inserta_tema (long al_cve_mat, string as_gpo)
 end prototypes
 
 event cierra_ventanas_grupos;/*Evento que verifica si las ventanas estan abiertas y las cierra Agosto 1998
@@ -3572,6 +3573,36 @@ RETURN 0
 
 end function
 
+public function integer f_inserta_tema (long al_cve_mat, string as_gpo);string columna 
+int ultimo
+
+//columna = getcolumnname()
+
+if long(uo_nombre.em_cuenta.text) > 0 then
+	if dw_materias.getitemnumber(dw_materias.rowcount(),1) > 0 and dw_materias.getitemstring(dw_materias.rowcount(),2) <> " " then
+		dw_materias.insertrow(0)
+		agrega_mat()
+	end if
+	
+	if columna = "grupos_gpo"  or columna = "grupos_cve_mat"  then
+		dw_materias.scrolltorow(dw_materias.rowcount())
+		dw_materias.setitem(dw_materias.rowcount(),"mat_inscritas_cve_mat", al_cve_mat)
+		dw_materias.setfocus()
+		visible = false		
+		dw_materias.setcolumn("mat_inscritas_cve_mat")
+		dw_materias.triggerevent(itemchanged!)	
+		if dw_materias.getitemnumber(dw_materias.rowcount(),"mat_inscritas_cve_mat") > 0 then
+			dw_materias.setitem(dw_materias.rowcount(),"mat_inscritas_gpo", as_gpo)
+			dw_materias.setfocus()		
+			dw_materias.setcolumn("mat_inscritas_gpo")
+			dw_materias.triggerevent(itemchanged!)	
+		end if
+	end if
+end if 
+
+RETURN 0
+end function
+
 on w_reinscripcion_2014.create
 if this.MenuName = "m_reinscripcion_2014" then this.MenuID = create m_reinscripcion_2014
 this.cb_2=create cb_2
@@ -4360,6 +4391,8 @@ LONG ll_cve_area_integ_tema3
 LONG ll_cve_area_integ_tema4 
 STRING ls_cve_sep_unica
 
+
+
 area = Message.LongParm
 
 IF LEN(TRIM(uo_nombre.em_cuenta.text)) = 0 THEN 
@@ -4383,73 +4416,96 @@ IF ls_cve_sep_unica = 'S' THEN
 	
 	// Se crean los servicios de materias SEP	
 	f_crea_servicios_mat_sep()  
-	//iuo_servicios_manresa.of_selecciona_materia()
+	
+	CHOOSE CASE area 
+		CASE 0 
+			iuo_servicios_manresa.il_area = ll_cve_area_integ_fundamental 
+		CASE 1
+			iuo_servicios_manresa.il_area = ll_cve_area_integ_tema1
+		CASE 2
+			iuo_servicios_manresa.il_area = ll_cve_area_integ_tema2
+		CASE 3
+			iuo_servicios_manresa.il_area = ll_cve_area_integ_tema3
+		CASE 4	
+			iuo_servicios_manresa.il_area = ll_cve_area_integ_tema4
+	END CHOOSE 
+	
+	iuo_servicios_manresa.of_selecciona_materia_sep() 
+	
+	f_inserta_tema(iuo_servicios_manresa.il_cve_mat_sel, iuo_servicios_manresa.is_gpo_sel)
+	
+	
+	
+//	
+//	 
+//	iuo_servicios_manresa.ll_cve_mat_sep_sel
+
+	
 	
 	RETURN 
 	
 	
+ELSE 
+
+	// Se verifica el tipo de tema que se solicita.
+	CHOOSE CASE area
+		CASE 0
+			numarea = "fundamental"
+			dw_mat_integ.title ="Grupos disponibles para materias de Integración" 
+			area = ll_cve_area_integ_fundamental
+			IF ISNULL(ll_cve_area_integ_fundamental) OR ll_cve_area_integ_fundamental = 0 THEN 
+				MESSAGEBOX("Aviso", "El plan de estudios del alumno no tiene asignadas Materias de Integración.") 
+				RETURN 
+			END IF
+		CASE 1
+			numarea = "I"
+			dw_mat_integ.title = "Grupos disponibles para materias de Reflexión Universitaria" 
+			area = ll_cve_area_integ_tema1
+			IF ISNULL(ll_cve_area_integ_tema1) OR ll_cve_area_integ_tema1 = 0 THEN 
+				MESSAGEBOX("Aviso", "El plan de estudios del alumno no tiene asignadas materias de Reflexión Universitaria I.") 
+				RETURN 
+			END IF			
+		CASE 2
+			numarea = "II"
+			dw_mat_integ.title = "Grupos disponibles para materias de Reflexión Universitaria" 
+			area = ll_cve_area_integ_tema2
+			IF ISNULL(ll_cve_area_integ_tema2) OR ll_cve_area_integ_tema2 = 0 THEN 
+				MESSAGEBOX("Aviso", "El plan de estudios del alumno no tiene asignadas materias de Reflexión Universitaria II.") 
+				RETURN 
+			END IF						
+		CASE 3
+			numarea = "III"
+			dw_mat_integ.title = "Grupos disponibles para materias de Reflexión Universitaria" 
+			area = ll_cve_area_integ_tema3
+			IF ISNULL(ll_cve_area_integ_tema3) OR ll_cve_area_integ_tema3 = 0 THEN 
+				MESSAGEBOX("Aviso", "El plan de estudios del alumno no tiene asignadas materias de Reflexión Universitaria III.") 
+				RETURN 
+			END IF						
+		CASE 4
+			numarea = "IV"
+			dw_mat_integ.title = "Grupos disponibles para materias de Reflexión Universitaria" 
+			area = ll_cve_area_integ_tema4
+			IF ISNULL(ll_cve_area_integ_tema4) OR ll_cve_area_integ_tema4 = 0 THEN 
+				MESSAGEBOX("Aviso", "El plan de estudios del alumno no tiene asignadas materias de Reflexión Universitaria IV.") 
+				RETURN 
+			END IF						
+	END CHOOSE
+	
+	
+			
+	if dw_mat_integ.retrieve(area,G_per,G_anio) = 0 then		
+		commit;
+		dw_mat_integ.insertrow(0)	
+		messagebox("No hay grupos disponibles","El tema " +numarea+" de integración no tiene grupos disponibles.",Exclamation!)
+		dw_mat_integ.visible = False
+		timer(0)
+	else
+		commit;
+		dw_mat_integ.visible = True
+		timer(45)
+	end if
+	
 END IF 
-
-
-// Se verifica el tipo de tema que se solicita.
-CHOOSE CASE area
-	CASE 0
-		numarea = "fundamental"
-		dw_mat_integ.title ="Grupos disponibles para materias de Integración" 
-		area = ll_cve_area_integ_fundamental
-		IF ISNULL(ll_cve_area_integ_fundamental) OR ll_cve_area_integ_fundamental = 0 THEN 
-			MESSAGEBOX("Aviso", "El plan de estudios del alumno no tiene asignadas Materias de Integración.") 
-			RETURN 
-		END IF
-	CASE 1
-		numarea = "I"
-		dw_mat_integ.title = "Grupos disponibles para materias de Reflexión Universitaria" 
-		area = ll_cve_area_integ_tema1
-		IF ISNULL(ll_cve_area_integ_tema1) OR ll_cve_area_integ_tema1 = 0 THEN 
-			MESSAGEBOX("Aviso", "El plan de estudios del alumno no tiene asignadas materias de Reflexión Universitaria I.") 
-			RETURN 
-		END IF			
-	CASE 2
-		numarea = "II"
-		dw_mat_integ.title = "Grupos disponibles para materias de Reflexión Universitaria" 
-		area = ll_cve_area_integ_tema2
-		IF ISNULL(ll_cve_area_integ_tema2) OR ll_cve_area_integ_tema2 = 0 THEN 
-			MESSAGEBOX("Aviso", "El plan de estudios del alumno no tiene asignadas materias de Reflexión Universitaria II.") 
-			RETURN 
-		END IF						
-	CASE 3
-		numarea = "III"
-		dw_mat_integ.title = "Grupos disponibles para materias de Reflexión Universitaria" 
-		area = ll_cve_area_integ_tema3
-		IF ISNULL(ll_cve_area_integ_tema3) OR ll_cve_area_integ_tema3 = 0 THEN 
-			MESSAGEBOX("Aviso", "El plan de estudios del alumno no tiene asignadas materias de Reflexión Universitaria III.") 
-			RETURN 
-		END IF						
-	CASE 4
-		numarea = "IV"
-		dw_mat_integ.title = "Grupos disponibles para materias de Reflexión Universitaria" 
-		area = ll_cve_area_integ_tema4
-		IF ISNULL(ll_cve_area_integ_tema4) OR ll_cve_area_integ_tema4 = 0 THEN 
-			MESSAGEBOX("Aviso", "El plan de estudios del alumno no tiene asignadas materias de Reflexión Universitaria IV.") 
-			RETURN 
-		END IF						
-END CHOOSE
-
-
-		
-if dw_mat_integ.retrieve(area,G_per,G_anio) = 0 then		
-	commit;
-	dw_mat_integ.insertrow(0)	
-	messagebox("No hay grupos disponibles","El tema " +numarea+" de integración no tiene grupos disponibles.",Exclamation!)
-	dw_mat_integ.visible = False
-	timer(0)
-else
-	commit;
-	dw_mat_integ.visible = True
-	timer(45)
-end if
-
-
 
 
 
@@ -5183,32 +5239,32 @@ end type
 event losefocus;timer(0)
 end event
 
-event doubleclicked;string columna 
-int ultimo
-
-columna = getcolumnname()
-
-if long(uo_nombre.em_cuenta.text) > 0 then
-	if dw_materias.getitemnumber(dw_materias.rowcount(),1) > 0 and dw_materias.getitemstring(dw_materias.rowcount(),2) <> " " then
-		dw_materias.insertrow(0)
-		agrega_mat()
-	end if
-	
-	if columna = "grupos_gpo"  or columna = "grupos_cve_mat"  then
-		dw_materias.scrolltorow(dw_materias.rowcount())
-		dw_materias.setitem(dw_materias.rowcount(),"mat_inscritas_cve_mat",getitemnumber(getrow(),"grupos_cve_mat"))
-		dw_materias.setfocus()
-		visible = false		
-		dw_materias.setcolumn("mat_inscritas_cve_mat")
-		dw_materias.triggerevent(itemchanged!)	
-		if dw_materias.getitemnumber(dw_materias.rowcount(),"mat_inscritas_cve_mat") > 0 then
-			dw_materias.setitem(dw_materias.rowcount(),"mat_inscritas_gpo",getitemstring(getrow(),"grupos_gpo"))
-			dw_materias.setfocus()		
-			dw_materias.setcolumn("mat_inscritas_gpo")
-			dw_materias.triggerevent(itemchanged!)	
-		end if
-	end if
-end if
+event doubleclicked;//string columna 
+//int ultimo
+//
+//columna = getcolumnname()
+//
+//if long(uo_nombre.em_cuenta.text) > 0 then
+//	if dw_materias.getitemnumber(dw_materias.rowcount(),1) > 0 and dw_materias.getitemstring(dw_materias.rowcount(),2) <> " " then
+//		dw_materias.insertrow(0)
+//		agrega_mat()
+//	end if
+//	
+//	if columna = "grupos_gpo"  or columna = "grupos_cve_mat"  then
+//		dw_materias.scrolltorow(dw_materias.rowcount())
+//		dw_materias.setitem(dw_materias.rowcount(),"mat_inscritas_cve_mat",getitemnumber(getrow(),"grupos_cve_mat"))
+//		dw_materias.setfocus()
+//		visible = false		
+//		dw_materias.setcolumn("mat_inscritas_cve_mat")
+//		dw_materias.triggerevent(itemchanged!)	
+//		if dw_materias.getitemnumber(dw_materias.rowcount(),"mat_inscritas_cve_mat") > 0 then
+//			dw_materias.setitem(dw_materias.rowcount(),"mat_inscritas_gpo",getitemstring(getrow(),"grupos_gpo"))
+//			dw_materias.setfocus()		
+//			dw_materias.setcolumn("mat_inscritas_gpo")
+//			dw_materias.triggerevent(itemchanged!)	
+//		end if
+//	end if
+//end if
 end event
 
 event rbuttondown;long cve_mat
