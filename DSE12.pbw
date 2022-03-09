@@ -10,6 +10,6 @@ Save Format v3.0(19990112)
  7 "D2L\\d2lxml.pbt";
  8 "SCETIT\\titulacion.pbt";
 @end;
-DefaultTarget "SCETIT\\titulacion.pbt";
+DefaultTarget "SCESRL\\srl.pbt";
 DefaultExportEncode "UTF-8";
-DefaultRemoteTarget "SCETIT\\titulacion.pbt";
+DefaultRemoteTarget "SCESRL\\srl.pbt";
