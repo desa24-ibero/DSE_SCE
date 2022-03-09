@@ -15,17 +15,19 @@ transaction itr_trans
 LONG il_cuenta  
 LONG il_cve_carrera  
 INTEGER ie_cve_plan 
-//@cve_mat_sep,
-//@gpo_sep, 
-//@cve_mat, 
-//@gpo, 
 INTEGER ie_periodo  
 INTEGER ie_anio 
+LONG il_area
+
+LONG il_cve_mat_sel
+STRING is_gpo_sel 
+LONG ll_cve_mat_sep_sel
+
+
 
 
 
 end variables
-
 forward prototypes
 public function integer of_inserta_mat_insc_sep (long al_cve_mat_sep, string as_gpo_sep, long al_cve_mat, string as_gpo)
 public function long of_recupera_mat_sep_area (long al_area)
@@ -84,6 +86,24 @@ public function integer of_selecciona_materia_sep ();//LONG il_coordinacion
 //LONG il_area 
 //LONG il_cve_carrera 
 //INTEGER ie_plan 
+
+
+uo_paso_parm_manresa luo_paso_parm_manresa
+luo_paso_parm_manresa = CREATE uo_paso_parm_manresa
+
+uo_paso_parm_manresa luo_paso_parm_manresa_ret
+luo_paso_parm_manresa_ret = CREATE uo_paso_parm_manresa
+
+luo_paso_parm_manresa.ie_plan = ie_cve_plan 
+luo_paso_parm_manresa.il_area = il_area
+luo_paso_parm_manresa.il_coordinacion = 0
+luo_paso_parm_manresa.il_cve_carrera = il_cve_carrera 
+luo_paso_parm_manresa.itr_trans = itr_trans 
+
+OPENWITHPARM(w_selecciona_materia_sep, luo_paso_parm_manresa) 
+
+luo_paso_parm_manresa_ret = Message.PowerObjectParm
+
 
 
 RETURN 0 
