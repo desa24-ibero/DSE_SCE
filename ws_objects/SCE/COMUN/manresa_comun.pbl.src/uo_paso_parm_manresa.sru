@@ -10,11 +10,15 @@ end type
 global uo_paso_parm_manresa uo_paso_parm_manresa
 
 type variables
+TRANSACTION itr_trans
 
 LONG il_coordinacion 
 LONG il_area 
 LONG il_cve_carrera 
 INTEGER ie_plan 
+
+INTEGER le_anio 
+INTEGER le_periodo
 
 
 
