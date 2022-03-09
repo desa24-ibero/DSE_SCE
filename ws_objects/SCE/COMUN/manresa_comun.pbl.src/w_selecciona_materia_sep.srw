@@ -20,14 +20,12 @@ end type
 end forward
 
 global type w_selecciona_materia_sep from window
-integer width = 4055
-integer height = 1884
+integer width = 4027
+integer height = 1860
 boolean titlebar = true
 string title = "Untitled"
 boolean controlmenu = true
-boolean minbox = true
-boolean maxbox = true
-boolean resizable = true
+windowtype windowtype = response!
 long backcolor = 67108864
 string icon = "AppIcon!"
 boolean center = true
@@ -48,6 +46,7 @@ TRANSACTION itr_trans
 STRING is_orden
 
 end variables
+
 forward prototypes
 public function integer wf_tipo_busqueda ()
 end prototypes
@@ -97,17 +96,31 @@ destroy(this.dw_materias)
 destroy(this.gb_1)
 end on
 
-event open;
-il_coord = Message.LongParm 
+event open;uo_paso_parm_manresa luo_paso_parm_manresa
+luo_paso_parm_manresa = CREATE uo_paso_parm_manresa
 
+OPENWITHPARM(w_selecciona_materia_sep, luo_paso_parm_manresa) 
+
+luo_paso_parm_manresa = Message.PowerObjectParm
+
+il_coord = luo_paso_parm_manresa.il_coordinacion
 
 // Se revisa si se trata de una coordinación en particular 
 IF il_coord > 0 THEN 
+	
 	rb_carrera.visible = FALSE
 	rb_carrera.CHECKED = FALSE 
 	rb_coordinacion.CHECKED = TRUE 
-	rb_coordinacion.ENABLED = FALSE
+	rb_coordinacion.ENABLED = FALSE 
+	
+ELSE 
+	
+	dw_materias.DATAOBJECT = "dw_materias_gpo_aru_sep"  
+	dw_materias.SETTRANSOBJECT(luo_paso_parm_manresa.itr_trans)
+	dw_materias.RETRIEVE(luo_paso_parm_manresa.il_area, luo_paso_parm_manresa.le_anio,  luo_paso_parm_manresa.le_periodo) 
+	
 END IF 
+
 
 
 
@@ -226,6 +239,19 @@ string dataobject = "dw_materias_ofertadas"
 boolean livescroll = true
 borderstyle borderstyle = stylelowered!
 end type
+
+event itemfocuschanged;THIS.SELECTROW(0, FALSE)  
+THIS.SELECTROW(row, TRUE)   
+THIS.SETROW(row)
+end event
+
+event clicked;THIS.SELECTROW(0, FALSE)  
+THIS.SELECTROW(row, TRUE)   
+THIS.SETROW(row) 
+
+
+
+end event
 
 type gb_1 from groupbox within w_selecciona_materia_sep
 integer x = 55
