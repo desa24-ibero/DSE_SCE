@@ -45,8 +45,9 @@ LONG il_coord
 TRANSACTION itr_trans
 STRING is_orden
 
-end variables
 
+STRING is_modo
+end variables
 forward prototypes
 public function integer wf_tipo_busqueda ()
 end prototypes
@@ -99,10 +100,7 @@ end on
 event open;uo_paso_parm_manresa luo_paso_parm_manresa
 luo_paso_parm_manresa = CREATE uo_paso_parm_manresa
 
-OPENWITHPARM(w_selecciona_materia_sep, luo_paso_parm_manresa) 
-
 luo_paso_parm_manresa = Message.PowerObjectParm
-
 il_coord = luo_paso_parm_manresa.il_coordinacion
 
 // Se revisa si se trata de una coordinación en particular 
@@ -117,7 +115,8 @@ ELSE
 	
 	dw_materias.DATAOBJECT = "dw_materias_gpo_aru_sep"  
 	dw_materias.SETTRANSOBJECT(luo_paso_parm_manresa.itr_trans)
-	dw_materias.RETRIEVE(luo_paso_parm_manresa.il_area, luo_paso_parm_manresa.le_anio,  luo_paso_parm_manresa.le_periodo) 
+	dw_materias.RETRIEVE(luo_paso_parm_manresa.il_area, luo_paso_parm_manresa.ie_periodo, luo_paso_parm_manresa.ie_anio)  
+	
 	
 END IF 
 
@@ -151,13 +150,42 @@ integer width = 402
 integer height = 112
 integer taborder = 20
 integer textsize = -10
-integer weight = 400
+integer weight = 700
 fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 string text = "Seleccionar"
 end type
+
+event clicked;
+uo_paso_parm_manresa luo_paso_parm_manresa
+luo_paso_parm_manresa = CREATE uo_paso_parm_manresa
+
+LONG ll_row 
+
+ll_row = dw_materias.GETSELECTEDROW(0)
+IF ll_row <= 0 THEN 
+	IF MESSAGEBOX("Confirmación", "No ha seleccionado la materia a inscribir. ¿Desea Salir?", Question!, YesNo!) > 0 THEN 
+		RETURN 0
+	ELSE
+		luo_paso_parm_manresa.il_cve_mat = 0
+		luo_paso_parm_manresa.is_gpo = ''
+		CLOSEWITHRETURN(PARENT, luo_paso_parm_manresa) 
+		RETURN 0 
+	END IF 
+END IF 
+
+luo_paso_parm_manresa.il_cve_mat = dw_materias.GETITEMNUMBER(ll_row, "grupos_cve_mat")
+luo_paso_parm_manresa.is_gpo = dw_materias.GETITEMSTRING(ll_row, "grupos_gpo")
+CLOSEWITHRETURN(PARENT, luo_paso_parm_manresa) 
+
+
+
+
+
+
+end event
 
 type rb_coordinacion from radiobutton within w_selecciona_materia_sep
 integer x = 101
