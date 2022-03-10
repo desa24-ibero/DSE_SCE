@@ -4432,7 +4432,15 @@ IF ls_cve_sep_unica = 'S' THEN
 	
 	iuo_servicios_manresa.of_selecciona_materia_sep() 
 	
-	f_inserta_tema(iuo_servicios_manresa.il_cve_mat_sel, iuo_servicios_manresa.is_gpo_sel)
+	MESSAGEBOX("", STRING(iuo_servicios_manresa.il_cve_mat_sel) + " " + iuo_servicios_manresa.is_gpo_sel + " " + STRING(iuo_servicios_manresa.ll_cve_mat_sep_sel))
+	
+	
+	
+	
+	
+
+	
+	//f_inserta_tema(iuo_servicios_manresa.il_cve_mat_sel, iuo_servicios_manresa.is_gpo_sel)
 	
 	
 	
