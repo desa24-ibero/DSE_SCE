@@ -17,10 +17,11 @@ LONG il_area
 LONG il_cve_carrera 
 INTEGER ie_plan 
 
-INTEGER le_anio 
-INTEGER le_periodo
+INTEGER ie_anio 
+INTEGER ie_periodo
 
-
+LONG il_cve_mat 
+STRING is_gpo
 
 end variables
 on uo_paso_parm_manresa.create
