@@ -23,7 +23,7 @@ LONG il_cve_mat_sel
 STRING is_gpo_sel 
 LONG ll_cve_mat_sep_sel
 
-
+INTEGER ie_error
 
 
 
@@ -57,6 +57,12 @@ FROM materias_sep
 WHERE cve_area = :al_area 
 USING itr_trans; 
 
+IF itr_trans.SQLCODE < 0 THEN 
+	MESSAGEBOX("Error", "Se produjo un error all recuperar la clave SEP de la materia: " + itr_trans.SQLERRTEXT) 
+	ie_error = 1 
+END IF 	
+
+IF ISNULL(ll_cve_materia_sep) THEN ll_cve_materia_sep = 0 
 
 RETURN ll_cve_materia_sep 
 
@@ -100,11 +106,16 @@ luo_paso_parm_manresa.il_coordinacion = 0
 luo_paso_parm_manresa.il_cve_carrera = il_cve_carrera 
 luo_paso_parm_manresa.itr_trans = itr_trans 
 
+luo_paso_parm_manresa.ie_anio = ie_anio 
+luo_paso_parm_manresa.ie_periodo = ie_periodo 
+
 OPENWITHPARM(w_selecciona_materia_sep, luo_paso_parm_manresa) 
 
-luo_paso_parm_manresa_ret = Message.PowerObjectParm
+luo_paso_parm_manresa_ret = Message.PowerObjectParm  
 
-
+il_cve_mat_sel = luo_paso_parm_manresa_ret.il_cve_mat
+is_gpo_sel = luo_paso_parm_manresa_ret.is_gpo
+ll_cve_mat_sep_sel = of_recupera_mat_sep_area(il_area) 
 
 RETURN 0 
 
