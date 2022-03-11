@@ -215,7 +215,7 @@ public function integer revisa_prerrequisito_especial (long mat, long cuenta)
 public function integer revisa_creditos (long cta, decimal cred_act)
 public function integer existe_materia (long cvmat, ref string mat, ref decimal crd, ref integer hrst, ref integer hrsp)
 public function integer f_crea_servicios_mat_sep ()
-public function integer f_inserta_tema (long al_cve_mat, string as_gpo)
+public function integer f_inserta_mat_sep (long al_cve_mat, string as_gpo)
 end prototypes
 
 event cierra_ventanas_grupos;/*Evento que verifica si las ventanas estan abiertas y las cierra Agosto 1998
@@ -3573,7 +3573,7 @@ RETURN 0
 
 end function
 
-public function integer f_inserta_tema (long al_cve_mat, string as_gpo);string columna 
+public function integer f_inserta_mat_sep (long al_cve_mat, string as_gpo);string columna 
 int ultimo
 
 //columna = getcolumnname()
@@ -3584,7 +3584,7 @@ if long(uo_nombre.em_cuenta.text) > 0 then
 		agrega_mat()
 	end if
 	
-	if columna = "grupos_gpo"  or columna = "grupos_cve_mat"  then
+	//if columna = "grupos_gpo"  or columna = "grupos_cve_mat"  then
 		dw_materias.scrolltorow(dw_materias.rowcount())
 		dw_materias.setitem(dw_materias.rowcount(),"mat_inscritas_cve_mat", al_cve_mat)
 		dw_materias.setfocus()
@@ -3597,7 +3597,11 @@ if long(uo_nombre.em_cuenta.text) > 0 then
 			dw_materias.setcolumn("mat_inscritas_gpo")
 			dw_materias.triggerevent(itemchanged!)	
 		end if
-	end if
+	//end if
+	
+	
+	
+	
 end if 
 
 RETURN 0
@@ -4390,7 +4394,7 @@ LONG ll_cve_area_integ_tema2
 LONG ll_cve_area_integ_tema3 
 LONG ll_cve_area_integ_tema4 
 STRING ls_cve_sep_unica
-
+LONG ll_cve_area_sep
 
 
 area = Message.LongParm
@@ -4432,17 +4436,19 @@ IF ls_cve_sep_unica = 'S' THEN
 	
 	iuo_servicios_manresa.of_selecciona_materia_sep() 
 	
-	MESSAGEBOX("", STRING(iuo_servicios_manresa.il_cve_mat_sel) + " " + iuo_servicios_manresa.is_gpo_sel + " " + STRING(iuo_servicios_manresa.ll_cve_mat_sep_sel))
+LONG ll_cve_mat_sel 
+STRING ls_gpo_sel 
+LONG ll_cve_mat_SEP 
 	
-	
-	
-	
-	
+ll_cve_mat_sel = iuo_servicios_manresa.il_cve_mat_sel
+ls_gpo_sel = iuo_servicios_manresa.is_gpo_sel 
+ll_cve_mat_SEP = iuo_servicios_manresa.ll_cve_mat_sep_sel
 
+//	MESSAGEBOX("", STRING(iuo_servicios_manresa.il_cve_mat_sel) + " " + iuo_servicios_manresa.is_gpo_sel + " " + STRING(iuo_servicios_manresa.ll_cve_mat_sep_sel))
 	
-	//f_inserta_tema(iuo_servicios_manresa.il_cve_mat_sel, iuo_servicios_manresa.is_gpo_sel)
+f_inserta_mat_sep(iuo_servicios_manresa.il_cve_mat_sel, iuo_servicios_manresa.is_gpo_sel)
 	
-	
+iuo_servicios_manresa.of_inserta_mat_insc_sep_area( ll_cve_mat_sel, ls_gpo_sel, iuo_servicios_manresa.il_area)	
 	
 //	
 //	 
