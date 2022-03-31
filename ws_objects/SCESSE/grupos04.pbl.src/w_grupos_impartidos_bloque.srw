@@ -228,6 +228,7 @@ public function integer wf_aplica_seguridad ()
 public function integer wf_ordena_profesor ()
 public function integer wf_confirma_salida ()
 public function boolean wf_valida_salon_en_linea ()
+public function integer wf_filtra_instrumento (long al_cve_mat)
 end prototypes
 
 event ue_nuevo();INTEGER li_retorno 
@@ -256,6 +257,9 @@ dw_grupo.SETITEM(1, "grupos_cond_gpo", 1)
 dw_grupo.SETITEM(1, "grupos_idioma", 1)
 dw_grupo.SETITEM(1, "grupos_inscritos", 0)
 dw_grupo.SETITEM(1, "grupos_tipo", 0) 
+
+dw_grupo.SETITEM(1, "grupos_d_tipo", 10) 
+
 ib_permite_modulares = TRUE 
 dw_grupo.TRIGGEREVENT("ue_filtra_tipo_grupo") 
 
@@ -366,6 +370,7 @@ iuo_grupo_servicios.ie_insc_desp_bajas = dw_grupo.GETITEMNUMBER(1, "grupos_insc_
 iuo_grupo_servicios.il_cve_asimilada = dw_grupo.GETITEMNUMBER(1, "grupos_cve_asimilada")
 iuo_grupo_servicios.is_gpo_asimilado = dw_grupo.GETITEMSTRING(1, "grupos_gpo_asimilado") 
 iuo_grupo_servicios.ie_modalidad = dw_grupo.GETITEMNUMBER(1, "grupos_modalidad")  
+iuo_grupo_servicios.ie_d_tipo = dw_grupo.GETITEMNUMBER(1, "grupos_d_tipo")  
 
 //iuo_grupo_servicios.ie_horas_reales_tot_sem = dw_grupo.GETITEMNUMBER(1, "grupos_horas_reales")  
 le_horas_reales_base = dw_grupo.GETITEMNUMBER(1, "materias_horas_reales")  
@@ -580,7 +585,7 @@ dw_grupo.SETITEM(1, "grupos_insc_desp_bajas", iuo_grupo_servicios.ie_insc_desp_b
 dw_grupo.SETITEM(1, "grupos_cve_asimilada", iuo_grupo_servicios.il_cve_asimilada)
 dw_grupo.SETITEM(1, "grupos_gpo_asimilado", iuo_grupo_servicios.is_gpo_asimilado) 
 dw_grupo.SETITEM(1, "grupos_modalidad", iuo_grupo_servicios.ie_modalidad) 
-
+dw_grupo.SETITEM(1, "grupos_d_tipo", iuo_grupo_servicios.ie_d_tipo) 
 
 
 /*QUEDA PENDIENTE LA CARGA DEL PROFESOR*/
@@ -1433,6 +1438,9 @@ IF ie_modo_opera = 2 AND ie_modo = 2 THEN
 	IF dw_grupo.GETITEMNUMBER(1, "grupos_tipo") = 2 THEN 
 		dw_grupo.MODIFY("grupos_cupo.PROTECT = 1") 
 		dw_grupo.MODIFY("grupos_cupo.Background.Color = '67108864'") 
+		
+		dw_grupo.MODIFY("grupos_d_tipo.PROTECT = 1") 
+		dw_grupo.MODIFY("grupos_d_tipo.Background.Color = '67108864'") 
 	END IF 	
 
 	dw_sesiones.MODIFY("fecha_inicio.PROTECT = 1")
@@ -1522,10 +1530,14 @@ ELSE
 	IF le_tipo = 2 THEN 
 		dw_grupo.MODIFY("grupos_modalidad.PROTECT = 1") 
 		dw_grupo.MODIFY("grupos_cupo.PROTECT = 1") 
+		dw_grupo.MODIFY("grupos_d_tipo.PROTECT = 1") 
 	ELSE
 		dw_grupo.MODIFY("grupos_modalidad.PROTECT = 0") 
 		dw_grupo.MODIFY("grupos_cupo.PROTECT = 0") 
+		dw_grupo.MODIFY("grupos_d_tipo.PROTECT = 0") 
 	END IF 	
+	//dw_grupo.MODIFY("grupos_d_tipo.PROTECT = 0")
+
 
 	dw_grupo.Modify("materias_materia.Background.Color = '1073741824'")
 	IF ib_permite_modulares THEN dw_grupo.Modify("grupos_forma_imparte.Background.Color = '1073741824'")
@@ -1537,12 +1549,15 @@ ELSE
 //	dw_grupo.Modify("grupos_gpo_asimilado.Background.Color = '1073741824'")
 	dw_grupo.Modify("grupos_idioma.Background.Color = '1073741824'")
 	dw_grupo.Modify("grupos_cond_gpo.Background.Color = '1073741824'")
+	
 	IF le_tipo = 2 THEN 
 		dw_grupo.Modify("grupos_modalidad.Background.Color = '67108864'")
 		dw_grupo.Modify("grupos_cupo.Background.Color = '67108864'") 
+		dw_grupo.Modify("grupos_d_tipo.Background.Color = '67108864'")
 	ELSE 	
 		dw_grupo.Modify("grupos_modalidad.Background.Color = '1073741824'")
 		dw_grupo.Modify("grupos_cupo.Background.Color = '1073741824'") 
+		dw_grupo.Modify("grupos_d_tipo.Background.Color = '1073741824'")
 	END IF  	
 
 
@@ -2439,6 +2454,76 @@ public function boolean wf_valida_salon_en_linea ();
 // Retorna TRUE si existe una clase aula diferente a OTRO 
 IF dw_horario.FIND("clase_aula <> 3", 0, dw_horario.ROWCOUNT() + 1) > 0 THEN RETURN TRUE 
 	
+
+end function
+
+public function integer wf_filtra_instrumento (long al_cve_mat);
+// Se recupera el nivel de la materia. 
+DATASTORE lds_nivel_materia
+INTEGER le_registros 
+STRING ls_nivel 
+STRING ls_filtro_instrumento 
+DATAWINDOWCHILD dwc_inst
+
+lds_nivel_materia = CREATE DATASTORE 
+lds_nivel_materia.DATAOBJECT = "dw_nivel_materia_dialogremos" 
+lds_nivel_materia.SETTRANSOBJECT(itr_sce)  
+le_registros = lds_nivel_materia.RETRIEVE(al_cve_mat)
+IF le_registros <= 0 THEN 
+	
+
+END IF 
+
+ls_nivel = lds_nivel_materia.GETITEMSTRING(1, "carreras_cve_grado") 
+
+// Se filtra el DWC de acuerdo al nivel de la materia. 
+ls_filtro_instrumento = " SELECT id.d_tipo, id.tipo_materia " + &   
+								" FROM instrumento_dialogremos id, inst_dialogremos_grado dg " + &    
+								" WHERE id.d_tipo = dg.d_tipo "  
+
+CHOOSE CASE ls_nivel 	
+	CASE 'L' 
+		ls_filtro_instrumento = ls_filtro_instrumento + " AND dg.cve_grado = ~~'L~~' "
+	CASE 'T'
+		ls_filtro_instrumento = ls_filtro_instrumento + " AND dg.cve_grado = ~~'T~~' "
+	CASE 'D'
+		ls_filtro_instrumento = ls_filtro_instrumento + " AND dg.cve_grado = ~~'D~~' "
+	CASE 'E'
+		ls_filtro_instrumento = ls_filtro_instrumento + " AND dg.cve_grado = ~~'E~~' "
+	CASE 'M'
+		ls_filtro_instrumento = ls_filtro_instrumento + " AND dg.cve_grado = ~~'M~~' "
+END CHOOSE
+
+dw_grupo.GETCHILD("grupos_d_tipo", dwc_inst)
+dwc_inst.MODIFY("Datawindow.Table.Select = '" + ls_filtro_instrumento + "'" ) 
+dwc_inst.SETTRANSOBJECT(itr_sce) 
+dwc_inst.RETRIEVE()
+
+INTEGER le_instrumento
+// Se recupera el instrumento dialogremos por default que tiene la materia 
+
+SELECT ins_dialogremos 
+INTO :le_instrumento 
+FROM v_inst_dialogremos_mat
+WHERE cve_mat = :al_cve_mat
+USING itr_sce; 
+IF itr_sce.SQLCODE < 0 THEN 
+	MESSAGEBOX("Error", "Se produjo un error al recuperar el INSTRUMENTO DIALOGREMOS por default: " + itr_sce.SQLERRTEXT)
+	RETURN -1 
+END IF 	
+
+IF ISNULL(le_instrumento) THEN le_instrumento = 0 
+IF le_instrumento = 0 THEN le_instrumento = 10
+
+dw_grupo.SETITEM(1, "grupos_d_tipo", le_instrumento)
+
+RETURN 0 
+
+
+
+
+
+
 
 end function
 
@@ -3515,7 +3600,7 @@ boolean border = true
 borderstyle borderstyle = styleraised!
 date maxdate = Date("2999-12-31")
 date mindate = Date("1800-01-01")
-datetime value = DateTime(Date("2021-09-21"), Time("12:57:55.000000"))
+datetime value = DateTime(Date("2022-03-23"), Time("15:34:24.000000"))
 integer textsize = -9
 fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
@@ -3587,7 +3672,7 @@ boolean border = true
 borderstyle borderstyle = styleraised!
 date maxdate = Date("2999-12-31")
 date mindate = Date("1800-01-01")
-datetime value = DateTime(Date("2021-09-21"), Time("12:57:55.000000"))
+datetime value = DateTime(Date("2022-03-23"), Time("15:34:24.000000"))
 integer textsize = -9
 integer fontweight = 700
 fontcharset fontcharset = ansi!
@@ -4695,7 +4780,7 @@ event consulta ( )
 event ue_filtra_tipo_grupo ( )
 integer x = 27
 integer y = 220
-integer width = 3035
+integer width = 3154
 integer height = 836
 integer taborder = 10
 string title = "none"
@@ -5204,6 +5289,7 @@ ELSE
 	THIS.MODIFY("grupos_cupo.PROTECT = 1")  
 	THIS.Modify("grupos_modalidad.PROTECT = 1")  
 //	THIS.MODIFY("grupos_fecha_fin.PROTECT = 1")  	
+	THIS.Modify("grupos_d_tipo.PROTECT = 1")  
 	
 	THIS.Modify("grupos_cve_asimilada.Background.Color = '1073741824'") 
 	THIS.Modify("grupos_gpo_asimilado.Background.Color = '1073741824'") 	
@@ -5213,6 +5299,8 @@ ELSE
 	THIS.Modify("grupos_cupo.Background.Color = '67108864'")	
 	THIS.Modify("grupos_modalidad.Background.Color = '67108864'")	
 //	THIS.Modify("grupos_fecha_fin.Background.Color = '67108864'")	
+	THIS.Modify("grupos_d_tipo.Background.Color = '67108864'")	
+	
 	PARENT.dp_inicio.ENABLED = FALSE
 	PARENT.dp_fin.ENABLED = FALSE  
 	
@@ -5260,6 +5348,7 @@ THIS.SETITEM(1, "grupos_fecha_inicio", luo_grupo_servicios.idt_fecha_inicio)
 THIS.SETITEM(1, "grupos_fecha_fin", luo_grupo_servicios.idt_fecha_fin)
 THIS.SETITEM(1, "grupos_cupo", luo_grupo_servicios.ie_cupo)
 THIS.SETITEM(1, "grupos_modalidad", luo_grupo_servicios.ie_modalidad) 
+THIS.SETITEM(1, "grupos_d_tipo", luo_grupo_servicios.ie_d_tipo) 
 
 // Se despliega el detalle de Horario.
 dw_horario.RESET() 
@@ -5530,6 +5619,8 @@ CHOOSE CASE dwo.name
 		THIS.MODIFY("cve_mat.PROTECT = 1")
 		THIS.Modify("cve_mat.Background.Color = '67108864'")		
 		THIS.Modify("b_buscar.Visible = 0")		
+		
+		wf_filtra_instrumento(LONG(data)) 
 		
 		POST wf_carga_horas_permitidas() 
 		iuo_grupo_servicios.of_carga_valida_exepciones(LONG(data)) 

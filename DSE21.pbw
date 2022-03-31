@@ -1,0 +1,15 @@
+Save Format v3.0(19990112)
+@begin Targets
+ 0 "SCESPARL\\sparl.pbt";
+ 1 "SCESRL\\srl.pbt";
+ 2 "SCEINT\\scei.pbt";
+ 3 "SCEADM\\admision.pbt";
+ 4 "SCESRLCORD\\insc_coord.pbt";
+ 5 "SCEEST\\estadisticas.pbt";
+ 6 "D2L\\d2lxml.pbt";
+ 7 "SCESSE\\control_escolar.pbt";
+ 8 "SCETIT\\titulacion.pbt";
+@end;
+DefaultTarget "SCETIT\\titulacion.pbt";
+DefaultExportEncode "UTF-8";
+DefaultRemoteTarget "SCETIT\\titulacion.pbt";

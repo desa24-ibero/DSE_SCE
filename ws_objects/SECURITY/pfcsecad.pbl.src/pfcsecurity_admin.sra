@@ -20,7 +20,8 @@ transaction gtr_sce
 end variables
 
 global type pfcsecurity_admin from application
- end type
+ string appruntimeversion = "21.0.0.1311"
+end type
 global pfcsecurity_admin pfcsecurity_admin
 
 on pfcsecurity_admin.create

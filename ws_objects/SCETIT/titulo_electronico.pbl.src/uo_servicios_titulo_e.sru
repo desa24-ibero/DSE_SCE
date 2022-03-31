@@ -1516,7 +1516,6 @@ WHERE m.cve_mat = h.cve_mat AND
 	AND h.cve_mat = mc.cve_mat 
 	AND h.cve_carrera= mc.cve_carrera 
 	AND mc.es_materia = 1 AND mc.cve_tipo_doc_rep BETWEEN :le_doc_inf AND :le_doc_sup 	
-	AND h.observacion <> 5 
 USING gtr_sce; 
 IF gtr_sce.SQLCODE < 0 THEN 
 	MESSAGEBOX("Error", "Se produjo un error al recuperar la opción terminal: " + gtr_sce.SQLERRTEXT)  
@@ -1524,6 +1523,8 @@ IF gtr_sce.SQLCODE < 0 THEN
 END IF 		
 
 ai_creditos = le_ttl_creditos
+
+//AND h.observacion <> 5 
 
 RETURN 0 
 

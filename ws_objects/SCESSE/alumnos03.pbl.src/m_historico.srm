@@ -1,5 +1,5 @@
 ﻿$PBExportHeader$m_historico.srm
-$PBExportComments$Este menu fija el orden de busqueda para historico, envia los parametros de calificaciones con las que se desea la busqueda. ejecuta los procesos de primero.ultimo,siguiente, anterior.. Ver descripción detallada en cada script_cliked del menu. Juan ca䅄⩔踀3
+$PBExportComments$Este menu fija el orden de busqueda para historico, envia los parametros de calificaciones con las que se desea la busqueda. ejecuta los procesos de primero.ultimo,siguiente, anterior.. Ver descripción detallada en cada script_cliked del menu. Juan ca䅄⩔�2
 forward
 global type m_historico from menu
 end type

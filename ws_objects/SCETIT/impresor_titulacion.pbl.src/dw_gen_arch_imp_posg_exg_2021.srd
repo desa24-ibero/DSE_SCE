@@ -31,7 +31,7 @@ table(column=(type=char(12) updatewhereclause=yes name=cuenta dbname="CUENTA" )
  column=(type=char(1) updatewhereclause=yes name=cve_grado dbname="cve_grado" )
  column=(type=char(18) updatewhereclause=yes name=curp dbname="CURP" )
  column=(type=long updatewhereclause=yes name=sep dbname="sep" )
- retrieve="SELECT  CUENTA =  Rtrim(convert(varchar(10),t.cuenta)) + '-' + convert(varchar(01), d.digito), 
+ retrieve="SELECT distinct  CUENTA =  Rtrim(convert(varchar(10),t.cuenta)) + '-' + convert(varchar(01), d.digito), 
 	   	NOMBRE = ISNULL(t.nombre_t, a.nombre),
 	   	APELLIDO_PAT = ISNULL(t.apaterno_t, a.apaterno), 
 	   	APELLIDO_MAT = ISNULL(t.amaterno_t, a.amaterno),  

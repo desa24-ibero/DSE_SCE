@@ -28,6 +28,7 @@ INTEGER ie_error
 
 
 end variables
+
 forward prototypes
 public function integer of_inserta_mat_insc_sep (long al_cve_mat_sep, string as_gpo_sep, long al_cve_mat, string as_gpo)
 public function long of_recupera_mat_sep_area (long al_area)
@@ -37,8 +38,8 @@ end prototypes
 
 public function integer of_inserta_mat_insc_sep (long al_cve_mat_sep, string as_gpo_sep, long al_cve_mat, string as_gpo);
 
-INSERT INTO mat_inscritas_sep (cuenta, cve_carrera, cve_plan, cve_mat_sep, gpo_sep, cve_mat, gpo, periodo, anio)
-VALUES (:il_cuenta, :il_cve_carrera, :ie_cve_plan, :al_cve_mat_sep, :as_gpo_sep, :al_cve_mat, :as_gpo, :ie_periodo, :ie_anio)  
+INSERT INTO mat_inscritas_sep (cuenta, cve_carrera, cve_plan, cve_mat_sep, gpo_sep, cve_mat, gpo, periodo, anio, tipo)
+VALUES (:il_cuenta, :il_cve_carrera, :ie_cve_plan, :al_cve_mat_sep, :as_gpo_sep, :al_cve_mat, :as_gpo, :ie_periodo, :ie_anio, '')  
 USING itr_trans;
 
 

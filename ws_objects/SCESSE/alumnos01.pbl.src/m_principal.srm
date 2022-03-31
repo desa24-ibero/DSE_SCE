@@ -877,9 +877,23 @@ end on
 type m_datosgeneralesdealumnos from menu within m_alumnos
 end type
 
-event clicked;
+event clicked;Int		li_cve_plantel
 setpointer(Hourglass!)
-opensheet(w_datosgenerales_2013,w_principal,4,Layered!)
+
+SELECT	cve_plantel
+INTO		:li_cve_plantel
+FROM		planteles
+WHERE	actual = 1
+USING	gtr_sce;
+
+IF li_cve_plantel = 20 THEN
+	// Plantel Tijuana ...
+	opensheet(w_datosgenerales_tij,w_principal,4,Layered!)
+ELSE
+	opensheet(w_datosgenerales_2013,w_principal,4,Layered!)
+	//alumnos02.pbl
+END IF
+
 end event
 
 on m_datosgeneralesdealumnos.create
@@ -3749,7 +3763,7 @@ type m_generarcuadrosdeevaluación from menu within m_reportes1
 end type
 
 event clicked;setpointer(Hourglass!)
-//opensheet(w_mad_repo_13,w_principal,4,Original!)
+opensheet(w_cuadros_evaluacion,w_principal,4,Original!)
 end event
 
 on m_generarcuadrosdeevaluación.create
@@ -5020,7 +5034,7 @@ end event
 
 on m_gruposmodulares.create
 call super::create
-this.text = "Grupos Modulares"
+this.text = "Captura de Grupos"
 this.menutextcolor = 134217735
 this.menubackcolor = 134217732
 this.menuhighlightcolor = 134217741
@@ -5055,7 +5069,7 @@ end event
 
 on m_gruposmodularescambios.create
 call super::create
-this.text = "Grupos Modulares Cambios"
+this.text = "Captura de Grupos Cambios"
 this.menutextcolor = 134217735
 this.menubackcolor = 134217732
 this.menuhighlightcolor = 134217741

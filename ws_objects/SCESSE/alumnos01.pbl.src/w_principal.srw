@@ -78,8 +78,10 @@ USING	gtr_sce;
 IF li_cve_plantel = 20 THEN
 	// Plantel Tijuana ...
 	m_principal.m_alumnos.m_reportes1.m_documentos1.m_recepcióndedocumentos.Visible = True
+	m_principal.m_alumnos.m_reportes1.m_generarcuadrosdeevaluación.Visible = True
 ELSE
 	m_principal.m_alumnos.m_reportes1.m_documentos1.m_recepcióndedocumentos.Visible = False
+	m_principal.m_alumnos.m_reportes1.m_generarcuadrosdeevaluación.Visible = False
 END IF
 
 

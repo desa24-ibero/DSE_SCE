@@ -35,7 +35,8 @@ LONG il_idioma
 INTEGER ie_factor_horas 
 STRING is_sesionado 
 INTEGER ie_modalidad
-//INTEGEr ie_horas_reales_gpo
+//INTEGEr ie_horas_reales_gpo 
+INTEGER ie_d_tipo
 
 BOOLEAN ib_modifica_salon
 
@@ -227,10 +228,10 @@ IF le_existe <= 0 THEN
 	
 	INSERT INTO grupos (cve_mat_gpo, cve_mat, gpo, periodo, anio, cond_gpo, cupo, tipo, 
 								inscritos, insc_desp_bajas, cve_asimilada, gpo_asimilado, cve_profesor, prom_gpo, porc_asis, ema4, 
-								primer_sem, comentarios, demanda_inscritos, forma_imparte, fecha_inicio, fecha_fin, idioma, factor_horas, sesionado, modalidad) 
+								primer_sem, comentarios, demanda_inscritos, forma_imparte, fecha_inicio, fecha_fin, idioma, factor_horas, sesionado, modalidad, d_tipo) 
 	VALUES(:is_cve_mat_gpo, :il_cve_mat, :is_gpo, :ie_periodo, :ie_anio, :ie_cond_gpo, :ie_cupo, :ie_tipo, 
 				:ie_inscritos, :ie_insc_desp_bajas, :il_cve_asimilada, :is_gpo_asimilado, :il_cve_profesor, :id_prom_gpo, :id_porc_asis, :id_ema4, 
-				:ie_primer_sem, :is_comentarios, :il_demanda_inscritos, :ie_forma_imparte, :idt_fecha_inicio, :idt_fecha_fin, :il_idioma, :ie_factor_horas, :is_sesionado, :ie_modalidad ) 
+				:ie_primer_sem, :is_comentarios, :il_demanda_inscritos, :ie_forma_imparte, :idt_fecha_inicio, :idt_fecha_fin, :il_idioma, :ie_factor_horas, :is_sesionado, :ie_modalidad, :ie_d_tipo ) 
 	USING itr_sce; 
 	IF itr_sce.SQLCODE < 0 THEN 
 		is_error = " Se produjo un error al actualizar el grupo: " + itr_sce.SQLERRTEXT  
@@ -258,7 +259,8 @@ ELSE
 			fecha_fin = :idt_fecha_fin,  
 			idioma = :il_idioma, 
 			sesionado = :is_sesionado, 
-			modalidad = :ie_modalidad
+			modalidad = :ie_modalidad, 
+			d_tipo = :ie_d_tipo
 	WHERE cve_mat = :il_cve_mat  
 	 AND gpo = :is_gpo   
 	 AND periodo = :ie_periodo   
@@ -369,6 +371,11 @@ IF ISNULL(ie_tipo)  THEN
 	MESSAGEBOX("Error", "No se ha especificado el tipo del grupo.")   
 	RETURN -1	
 END IF 
+
+IF ISNULL(ie_d_tipo) THEN 
+	MESSAGEBOX("Error", "No se ha especificado el instrumento DIALOGREMOS.")   
+	RETURN -1		
+END IF 	
 
 // Validaciones según el TIPO DE GRUPO 
 if ids_profesor.ROWCOUNT() > 1 and (ie_tipo = 1)  then 
@@ -597,11 +604,11 @@ public function integer of_carga_grupo ();
 SELECT cve_mat_gpo,  cond_gpo, cupo, tipo, 
 							inscritos, insc_desp_bajas, cve_asimilada, gpo_asimilado, cve_profesor, prom_gpo, porc_asis, ema4, 
 							primer_sem, comentarios, demanda_inscritos, forma_imparte, fecha_inicio, fecha_fin, idioma, factor_horas, 
-							sesionado, modalidad  
+							sesionado, modalidad, d_tipo   
 INTO :is_cve_mat_gpo,  :ie_cond_gpo, :ie_cupo, :ie_tipo, 
 			:ie_inscritos, :ie_insc_desp_bajas, :il_cve_asimilada, :is_gpo_asimilado, :il_cve_profesor, :id_prom_gpo, :id_porc_asis, :id_ema4, 
 			:ie_primer_sem, :is_comentarios, :il_demanda_inscritos, :ie_forma_imparte, :idt_fecha_inicio, :idt_fecha_fin, :il_idioma, :ie_factor_horas, 
-			:is_sesionado, :ie_modalidad 
+			:is_sesionado, :ie_modalidad, :ie_d_tipo  
 FROM grupos 
 WHERE cve_mat = :il_cve_mat  
 AND gpo = :is_gpo 
@@ -1589,6 +1596,7 @@ ie_forma_imparte = 0
 idt_fecha_inicio = ldt_lmp
 idt_fecha_fin = ldt_lmp
 il_idioma = 0
+ie_d_tipo = 0
 
 IF ISVALID(ids_profesor) THEN ids_profesor.RESET() 
 IF ISVALID(ids_horario) THEN ids_horario.RESET() 

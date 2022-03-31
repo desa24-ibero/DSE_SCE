@@ -1,5 +1,5 @@
 ﻿$PBExportHeader$obten_cve_opcion_terminal.srf
-$PBExportComments$Regresa "true" si encuentra las materias de Opcion terminal. se recibe 5 parametros carrera,plan,cveopcterm,cvesemtit,cveproyopcterm. si hay exito, en los 3 ultimos parametros se regresa las claves que le corresponde al plan de estudios. Juan Campos 䅄䅄⩔฀
+$PBExportComments$Regresa "true" si encuentra las materias de Opcion terminal. se recibe 5 parametros carrera,plan,cveopcterm,cvesemtit,cveproyopcterm. si hay exito, en los 3 ultimos parametros se regresa las claves que le corresponde al plan de estudios. Juan Campos 䅄䅄⩔退
 global type obten_cve_opcion_terminal from function_object
 end type
 

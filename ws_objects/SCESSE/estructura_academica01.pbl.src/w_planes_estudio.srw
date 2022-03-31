@@ -16,6 +16,10 @@ type dw_tab from datawindow within w_planes_estudio
 end type
 type dw_key from datawindow within w_planes_estudio
 end type
+type dw_tab2 from datawindow within w_planes_estudio
+end type
+type cb_matmin from commandbutton within w_planes_estudio
+end type
 end forward
 
 shared variables
@@ -44,6 +48,8 @@ em_clave em_clave
 cbx_nuevo cbx_nuevo
 dw_tab dw_tab
 dw_key dw_key
+dw_tab2 dw_tab2
+cb_matmin cb_matmin
 end type
 global w_planes_estudio w_planes_estudio
 
@@ -110,13 +116,17 @@ this.em_clave=create em_clave
 this.cbx_nuevo=create cbx_nuevo
 this.dw_tab=create dw_tab
 this.dw_key=create dw_key
+this.dw_tab2=create dw_tab2
+this.cb_matmin=create cb_matmin
 this.Control[]={this.dw_autorizacion,&
 this.st_1,&
 this.p_1,&
 this.em_clave,&
 this.cbx_nuevo,&
 this.dw_tab,&
-this.dw_key}
+this.dw_key,&
+this.dw_tab2,&
+this.cb_matmin}
 end on
 
 on w_planes_estudio.destroy
@@ -128,6 +138,8 @@ destroy(this.em_clave)
 destroy(this.cbx_nuevo)
 destroy(this.dw_tab)
 destroy(this.dw_key)
+destroy(this.dw_tab2)
+destroy(this.cb_matmin)
 end on
 
 event open;
@@ -226,6 +238,8 @@ ls_nombre_separador= "guion"
 ls_carreraplan=text
 
 li_pos = Pos(ls_carreraplan, ls_separador)
+dw_tab2.reset() 
+
 
 if isnull(li_pos) or li_pos = 0 then
 	MessageBox("Plan Invalido", "Favor de separar la carrera y el plan con un "+&
@@ -302,10 +316,11 @@ boolean automatic = false
 end type
 
 type dw_tab from datawindow within w_planes_estudio
-integer x = 1339
-integer y = 1484
+boolean visible = false
+integer x = 1358
+integer y = 1472
 integer width = 1239
-integer height = 452
+integer height = 700
 integer taborder = 20
 boolean bringtotop = true
 string dataobject = "dw_tab_total_cred"
@@ -923,7 +938,9 @@ END IF
 
 end event
 
-event retrieveend;IF rowcount>0 THEN
+event retrieveend;Integer li_i , li_new, ll_cvearea , ll_find , ll_cve
+
+IF rowcount>0 THEN
 	cbx_nuevo.Checked=FALSE
 	int	row 
 	row = Getrow()
@@ -933,9 +950,116 @@ event retrieveend;IF rowcount>0 THEN
 							GetItemNumber(row,"plan_estudios_cve_area_mayor_oblig"), &
 							GetItemNumber(row,"plan_estudios_cve_area_mayor_opt"), &
 							GetItemNumber(row,"plan_estudios_cve_area_servicio_social"), &
-							GetItemNumber(row,"plan_estudios_cve_area_opcion_terminal"))	  
+							GetItemNumber(row,"plan_estudios_cve_area_opcion_terminal"), &
+							GetItemNumber(row,"plan_estudios_cve_area_sintesis_eval_oblig"), &
+							GetItemNumber(row,"plan_estudios_cve_area_sintesis_eval_opt"))	  
 	
+If dw_tab.rowcount() > 0 then
+	for li_i = 1 to 7
+		CHOOSE CASE li_i 
+			case 1
+			    	ll_cve = this.object.plan_estudios_cve_area_basica[row]
+				
+				ll_find = dw_tab.Find( "areas_cve_area = " + String( ll_cve ) +" ", 1, dw_tab.Rowcount())
+				
+				 if ll_find > 0 then
+							li_new = dw_tab2.insertrow(0)
+							dw_tab2.object.creditos[li_new] = dw_tab.object.materias_creditos[ll_find]
+							dw_tab2.object.areas_totales[li_new] = 	dw_tab.object.areas_total_materias[ll_find]
+							dw_tab2.object.creditos_min[li_new] = 	dw_tab.object.areas_creditos_min[ll_find]
+						else
+								li_new = dw_tab2.insertrow(0)
+				end if
 
+	
+		case 2
+			    	ll_cve = this.object.plan_estudios_cve_area_mayor_oblig[row]
+				
+				ll_find = dw_tab.Find( "areas_cve_area = " + String( ll_cve ) +" ", 1, dw_tab.Rowcount())
+				
+				 if ll_find > 0 then
+							li_new = dw_tab2.insertrow(0)
+							dw_tab2.object.creditos[li_new] = dw_tab.object.materias_creditos[ll_find]
+							dw_tab2.object.areas_totales[li_new] = 	dw_tab.object.areas_total_materias[ll_find]
+							dw_tab2.object.creditos_min[li_new] = 	dw_tab.object.areas_creditos_min[ll_find]
+						else
+								li_new = dw_tab2.insertrow(0)
+				end if
+				
+				case 3
+			    	ll_cve = this.object.plan_estudios_cve_area_mayor_opt[row]
+				
+				ll_find = dw_tab.Find( "areas_cve_area = " + String( ll_cve ) +" ", 1, dw_tab.Rowcount())
+				
+				 if ll_find > 0 then
+							li_new = dw_tab2.insertrow(0)
+							dw_tab2.object.creditos[li_new] = dw_tab.object.materias_creditos[ll_find]
+							dw_tab2.object.areas_totales[li_new] = 	dw_tab.object.areas_total_materias[ll_find]
+							dw_tab2.object.creditos_min[li_new] = 	dw_tab.object.areas_creditos_min[ll_find]
+						else
+								li_new = dw_tab2.insertrow(0)
+				end if
+				
+				case 4
+			    	ll_cve = this.object.plan_estudios_cve_area_servicio_social[row]
+				
+				ll_find = dw_tab.Find( "areas_cve_area = " + String( ll_cve ) +" ", 1, dw_tab.Rowcount())
+				
+				 if ll_find > 0 then
+							li_new = dw_tab2.insertrow(0)
+							dw_tab2.object.creditos[li_new] = dw_tab.object.materias_creditos[ll_find]
+							dw_tab2.object.areas_totales[li_new] = 	dw_tab.object.areas_total_materias[ll_find]
+							dw_tab2.object.creditos_min[li_new] = 	dw_tab.object.areas_creditos_min[ll_find]
+						else
+								li_new = dw_tab2.insertrow(0)
+				end if
+				
+				case 5
+			    	ll_cve = this.object.plan_estudios_cve_area_opcion_terminal[row]
+				
+				ll_find = dw_tab.Find( "areas_cve_area = " + String( ll_cve ) +" ", 1, dw_tab.Rowcount())
+				
+				 if ll_find > 0 then
+							li_new = dw_tab2.insertrow(0)
+							dw_tab2.object.creditos[li_new] = dw_tab.object.materias_creditos[ll_find]
+							dw_tab2.object.areas_totales[li_new] = 	dw_tab.object.areas_total_materias[ll_find]
+							dw_tab2.object.creditos_min[li_new] = 	dw_tab.object.areas_creditos_min[ll_find]
+						else
+								li_new = dw_tab2.insertrow(0)
+				end if
+				
+				case 6
+			    	ll_cve = this.object.plan_estudios_cve_area_sintesis_eval_oblig[row]
+				
+				ll_find = dw_tab.Find( "areas_cve_area = " + String( ll_cve ) +" ", 1, dw_tab.Rowcount())
+				
+				 if ll_find > 0 then
+							li_new = dw_tab2.insertrow(0)
+							dw_tab2.object.creditos[li_new] = dw_tab.object.materias_creditos[ll_find]
+							dw_tab2.object.areas_totales[li_new] = 	dw_tab.object.areas_total_materias[ll_find]
+							dw_tab2.object.creditos_min[li_new] = 	dw_tab.object.areas_creditos_min[ll_find]
+						else
+								li_new = dw_tab2.insertrow(0)
+				end if
+				
+				case 7
+			    	ll_cve = this.object.plan_estudios_cve_area_sintesis_eval_opt[row]
+				
+				ll_find = dw_tab.Find( "areas_cve_area = " + String( ll_cve ) +" ", 1, dw_tab.Rowcount())
+				
+				 if ll_find > 0 then
+							li_new = dw_tab2.insertrow(0)
+							dw_tab2.object.creditos[li_new] = dw_tab.object.materias_creditos[ll_find]
+							dw_tab2.object.areas_totales[li_new] = 	dw_tab.object.areas_total_materias[ll_find]
+							dw_tab2.object.creditos_min[li_new] = 	dw_tab.object.areas_creditos_min[ll_find]
+						else
+								li_new = dw_tab2.insertrow(0)
+				end if
+	end choose
+
+	next
+	
+End if 
 							
 ELSE		
 	cbx_nuevo.Checked=TRUE		
@@ -997,5 +1121,74 @@ event sqlpreview;
 //END IF
 //
 
+end event
+
+type dw_tab2 from datawindow within w_planes_estudio
+integer x = 1358
+integer y = 1472
+integer width = 1239
+integer height = 752
+integer taborder = 30
+boolean bringtotop = true
+string dataobject = "d_ext_creditosmin"
+boolean border = false
+boolean livescroll = true
+end type
+
+type cb_matmin from commandbutton within w_planes_estudio
+integer x = 1888
+integer y = 2136
+integer width = 635
+integer height = 112
+integer taborder = 30
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "Materias Min x Area"
+end type
+
+event clicked;DATASTORE lds_paso 
+Long ll_new
+uo_parametros_corr_titulacion luo_parametros_corr_titulacion 
+luo_parametros_corr_titulacion = CREATE uo_parametros_corr_titulacion 
+luo_parametros_corr_titulacion.ids_paso = CREATE DATASTORE 
+luo_parametros_corr_titulacion.ids_paso.DATAOBJECT = "dw_mat_min_xarea"  
+
+lds_paso = CREATE DATASTORE 
+lds_paso.DATAOBJECT = "dw_mat_min_xarea"  
+
+if dw_key.rowcount() > 0 then
+		ll_new = lds_paso.insertrow(0)
+		
+		lds_paso.object.cve_carrera[ll_new] = il_cve_carrera
+		lds_paso.object.cve_plan[ll_new] = il_cve_plan
+		
+//		lds_paso.object.cve_carrera[ll_new] = dw_key.object.plan_estudios_cve_carrera[dw_key.getrow()]
+//		lds_paso.object.cve_plan[ll_new] = dw_key.object.plan_estudios_cve_plan[dw_key.getrow()]
+		
+lds_paso.object.cve_area_basica[ll_new] = dw_key.object.plan_estudios_cve_area_basica[dw_key.getrow()]
+lds_paso.object.cve_area_mayor_oblig [ll_new] = dw_key.object.plan_estudios_cve_area_mayor_oblig[dw_key.getrow()]
+lds_paso.object.cve_area_mayor_opt[ll_new] = dw_key.object.plan_estudios_cve_area_mayor_opt[dw_key.getrow()]
+lds_paso.object.cve_area_opcion_terminal[ll_new] = dw_key.object.plan_estudios_cve_area_opcion_terminal[dw_key.getrow()]
+lds_paso.object.cve_area_servicio_social[ll_new] = dw_key.object.plan_estudios_cve_area_servicio_social[dw_key.getrow()]
+//lds_paso.object.cve_area_integ_fundamental[ll_new] = dw_key.object.plan_estudios_cve_area_integ_fundamental[dw_key.getrow()]
+//lds_paso.object.cve_area_integ_tema1[ll_new] = dw_key.object.plan_estudios_cve_area_integ_tema1[dw_key.getrow()]
+//lds_paso.object.cve_area_integ_tema2[ll_new] = dw_key.object.plan_estudios_cve_area_integ_tema2[dw_key.getrow()]
+//lds_paso.object.cve_area_integ_tema3[ll_new] = dw_key.object.plan_estudios_cve_area_integ_tema3[dw_key.getrow()]
+//lds_paso.object.cve_area_integ_tema4[ll_new] = dw_key.object.plan_estudios_cve_area_integ_tema4[dw_key.getrow()]
+lds_paso.object.cve_area_sintesis_eval_oblig[ll_new] = dw_key.object.plan_estudios_cve_area_sintesis_eval_oblig[dw_key.getrow()]
+lds_paso.object.cve_area_sintesis_eval_opt [ll_new] = dw_key.object.plan_estudios_cve_area_sintesis_eval_opt[dw_key.getrow()]
+//
+		
+		
+		lds_paso.ROWSCOPY(1, lds_paso.ROWCOUNT(), PRIMARY!, luo_parametros_corr_titulacion.ids_paso, 1, PRIMARY!)   
+		
+		OPENWITHPARM(w_matmin_xarea, luo_parametros_corr_titulacion)   
+
+end if
 end event
 
