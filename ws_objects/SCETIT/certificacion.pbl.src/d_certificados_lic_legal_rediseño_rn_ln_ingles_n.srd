@@ -5,32 +5,141 @@ header(height=1084 color="536870912" transparency="0" gradient.color="8421504" g
 summary(height=0 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
 footer(height=764 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
 detail(height=60 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
-table(column=(type=long updatewhereclause=yes name=alumnos_cuenta dbname="alumnos.cuenta" )
- column=(type=char(50) updatewhereclause=yes name=alumnos_nombre dbname="alumnos.nombre" )
- column=(type=char(50) updatewhereclause=yes name=alumnos_apaterno dbname="alumnos.apaterno" )
- column=(type=char(50) updatewhereclause=yes name=alumnos_amaterno dbname="alumnos.amaterno" )
- column=(type=char(70) updatewhereclause=yes name=datos_certificado_nombre dbname="datos_certificado.nombre" )
- column=(type=char(100) updatewhereclause=yes name=carreras_carrera dbname="carreras.carrera" )
- column=(type=char(1) updatewhereclause=yes name=carreras_nivel dbname="carreras.nivel" )
- column=(type=char(70) updatewhereclause=yes name=datos_certificado_nombre dbname="datos_certificado.nombre" )
- column=(type=char(6) updatewhereclause=yes name=materias_certificado_sigla dbname="materias_certificado.sigla" )
- column=(type=char(255) updatewhereclause=yes name=materias_certificado_materia dbname="materias_certificado.materia" )
- column=(type=char(15) updatewhereclause=yes name=materias_certificado_periodo_str dbname="materias_certificado.periodo_str" )
- column=(type=long updatewhereclause=yes name=materias_certificado_creditos dbname="materias_certificado.creditos" )
- column=(type=char(10) updatewhereclause=yes name=materias_certificado_calificacion_str dbname="materias_certificado.calificacion_str" )
- column=(type=char(15) updatewhereclause=yes name=materias_certificado_obs dbname="materias_certificado.obs" )
- column=(type=char(1) updatewhereclause=yes name=alumnos_sexo dbname="alumnos.sexo" )
- column=(type=char(1) updatewhereclause=yes name=carreras_cve_grado dbname="carreras.cve_grado" )
- column=(type=char(12) updatewhereclause=yes name=grado_grado dbname="grado.grado" )
- column=(type=char(2) updatewhereclause=yes name=materias_certificado_calificacion dbname="materias_certificado.calificacion" )
- column=(type=long updatewhereclause=yes name=plan_estudios_incorporado_sep dbname="plan_estudios.incorporado_sep" )
- column=(type=long updatewhereclause=yes name=materias_certificado_cve_mat dbname="materias_certificado.cve_mat" )
- column=(type=long updatewhereclause=yes name=materias_certificado_tipo dbname="materias_certificado.tipo" )
- column=(type=long updatewhereclause=yes name=materias_certificado_cve_idioma dbname="materias_certificado.cve_idioma" )
- column=(type=long updatewhereclause=yes name=materias_certificado_numero_pagina dbname="materias_certificado.numero_pagina" )
- column=(type=char(6) updatewhereclause=yes name=materias_certificado_sigla_anterior dbname="materias_certificado.sigla_anterior" )
- column=(type=long updatewhereclause=yes name=academicos_cve_plan dbname="academicos.cve_plan" )
- retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"alumnos~" )  TABLE(NAME=~"datos_certificado~" ALIAS=~"datos_certificado_a~" )  TABLE(NAME=~"academicos~" )  TABLE(NAME=~"carreras~" )  TABLE(NAME=~"datos_certificado~" ALIAS=~"datos_certificado_b~" )  TABLE(NAME=~"materias_certificado~" )  TABLE(NAME=~"grado~" )  TABLE(NAME=~"plan_estudios~" ) COLUMN(NAME=~"alumnos.cuenta~") COLUMN(NAME=~"alumnos.nombre~") COLUMN(NAME=~"alumnos.apaterno~") COLUMN(NAME=~"alumnos.amaterno~") COLUMN(NAME=~"datos_certificado_a.nombre~") COLUMN(NAME=~"carreras.carrera~") COLUMN(NAME=~"carreras.nivel~") COLUMN(NAME=~"datos_certificado_b.nombre~") COLUMN(NAME=~"materias_certificado.sigla~") COLUMN(NAME=~"materias_certificado.materia~") COLUMN(NAME=~"materias_certificado.periodo_str~") COLUMN(NAME=~"materias_certificado.creditos~") COLUMN(NAME=~"materias_certificado.calificacion_str~") COLUMN(NAME=~"materias_certificado.obs~") COLUMN(NAME=~"alumnos.sexo~") COLUMN(NAME=~"carreras.cve_grado~") COLUMN(NAME=~"grado.grado~") COLUMN(NAME=~"materias_certificado.calificacion~") COLUMN(NAME=~"plan_estudios.incorporado_sep~") COLUMN(NAME=~"materias_certificado.cve_mat~") COLUMN(NAME=~"materias_certificado.tipo~") COLUMN(NAME=~"materias_certificado.cve_idioma~") COLUMN(NAME=~"materias_certificado.numero_pagina~") COLUMN(NAME=~"materias_certificado.sigla_anterior~") COLUMN(NAME=~"academicos.cve_plan~")    JOIN (LEFT=~"academicos.cuenta~"    OP =~"=~"RIGHT=~"alumnos.cuenta~" )    JOIN (LEFT=~"academicos.cve_carrera~"    OP =~"=~"RIGHT=~"carreras.cve_carrera~" )    JOIN (LEFT=~"academicos.cve_carrera~"    OP =~"=~"RIGHT=~"materias_certificado.cve_carrera~" )    JOIN (LEFT=~"academicos.cuenta~"    OP =~"=~"RIGHT=~"materias_certificado.cuenta~" )    JOIN (LEFT=~"carreras.cve_grado~"    OP =~"=~"RIGHT=~"grado.cve_grado~" )    JOIN (LEFT=~"academicos.cve_carrera~"    OP =~"=~"RIGHT=~"plan_estudios.cve_carrera~" )    JOIN (LEFT=~"academicos.cve_plan~"    OP =~"=~"RIGHT=~"plan_estudios.cve_plan~" )WHERE(    EXP1 =~"alumnos.cuenta~"   OP =~"=~"    EXP2 =~":an_cuenta~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"materias_certificado.cve_tipo_doc_rep~"   OP =~"=~"    EXP2 =~":an_cve_tipo_doc_rep~"    LOGIC =~"And~" ) WHERE(    EXP1 =~"datos_certificado_a.id~"   OP =~"=~"    EXP2 =~"9~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"((materias_certificado.numero_pagina~"   OP =~"=~"    EXP2 =~":an_pagina)~"    LOGIC =~"or~" ) WHERE(    EXP1 =~"(9999~"   OP =~"=~"    EXP2 =~":an_pagina~"    LOGIC =~"And~" ) WHERE(    EXP1 =~"materias_certificado.numero_pagina~"   OP =~">~"    EXP2 =~"1))~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"(academicos.cve_carrera~"   OP =~"=~"    EXP2 =~":an_cve_carrera)~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"datos_certificado_b.id~"   OP =~"=~"    EXP2 =~"10~" ) ) ORDER(NAME=~"materias_certificado.numero_pagina~" ASC=yes )  ORDER(NAME=~"materias_certificado.renglon_relativo~" ASC=yes ) ARG(NAME = ~"an_cuenta~" TYPE = number)  ARG(NAME = ~"an_cve_tipo_doc_rep~" TYPE = number)  ARG(NAME = ~"id_certificado~" TYPE = number)  ARG(NAME = ~"an_pagina~" TYPE = number)  ARG(NAME = ~"an_cve_carrera~" TYPE = number) " arguments=(("an_cuenta", number),("an_cve_tipo_doc_rep", number),("id_certificado", number),("an_pagina", number),("an_cve_carrera", number)) )
+table(column=(type=long updatewhereclause=yes name=alumnos_cuenta dbname="alumnos.cuenta" dbalias=".cuenta" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_nombre dbname="alumnos.nombre" dbalias=".nombre" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_apaterno dbname="alumnos.apaterno" dbalias=".apaterno" )
+ column=(type=char(50) updatewhereclause=yes name=alumnos_amaterno dbname="alumnos.amaterno" dbalias=".amaterno" )
+ column=(type=char(70) updatewhereclause=yes name=datos_certificado_nombre dbname="datos_certificado.nombre" dbalias="datos_certificado_a.nombre" )
+ column=(type=char(100) updatewhereclause=yes name=carreras_carrera dbname="carreras.carrera" dbalias=".carrera" )
+ column=(type=char(1) updatewhereclause=yes name=carreras_nivel dbname="carreras.nivel" dbalias=".nivel" )
+ column=(type=char(70) updatewhereclause=yes name=datos_certificado_nombre dbname="datos_certificado.nombre" dbalias="datos_certificado_b.nombre" )
+ column=(type=char(6) updatewhereclause=yes name=materias_certificado_sigla dbname="materias_certificado.sigla" dbalias=".sigla" )
+ column=(type=char(255) updatewhereclause=yes name=materias_certificado_materia dbname="materias_certificado.materia" dbalias=".materia" )
+ column=(type=char(15) updatewhereclause=yes name=materias_certificado_periodo_str dbname="materias_certificado.periodo_str" dbalias=".periodo_str" )
+ column=(type=long updatewhereclause=yes name=materias_certificado_creditos dbname="materias_certificado.creditos" dbalias=".creditos" )
+ column=(type=char(10) updatewhereclause=yes name=materias_certificado_calificacion_str dbname="materias_certificado.calificacion_str" dbalias=".calificacion_str" )
+ column=(type=char(15) updatewhereclause=yes name=materias_certificado_obs dbname="materias_certificado.obs" dbalias=".obs" )
+ column=(type=char(1) updatewhereclause=yes name=alumnos_sexo dbname="alumnos.sexo" dbalias=".sexo" )
+ column=(type=char(1) updatewhereclause=yes name=carreras_cve_grado dbname="carreras.cve_grado" dbalias=".cve_grado" )
+ column=(type=char(12) updatewhereclause=yes name=grado_grado dbname="grado.grado" dbalias=".grado" )
+ column=(type=char(2) updatewhereclause=yes name=materias_certificado_calificacion dbname="materias_certificado.calificacion" dbalias=".calificacion" )
+ column=(type=long updatewhereclause=yes name=plan_estudios_incorporado_sep dbname="plan_estudios.incorporado_sep" dbalias=".incorporado_sep" )
+ column=(type=long updatewhereclause=yes name=materias_certificado_cve_mat dbname="materias_certificado.cve_mat" dbalias=".cve_mat" )
+ column=(type=long updatewhereclause=yes name=materias_certificado_tipo dbname="materias_certificado.tipo" dbalias=".tipo" )
+ column=(type=long updatewhereclause=yes name=materias_certificado_cve_idioma dbname="materias_certificado.cve_idioma" dbalias=".cve_idioma" )
+ column=(type=long updatewhereclause=yes name=materias_certificado_numero_pagina dbname="materias_certificado.numero_pagina" dbalias=".numero_pagina" )
+ column=(type=char(6) updatewhereclause=yes name=materias_certificado_sigla_anterior dbname="materias_certificado.sigla_anterior" dbalias=".sigla_anterior" )
+ column=(type=long updatewhereclause=yes name=historico_cve_plan dbname="historico.cve_plan" dbalias=".cve_plan" )
+ retrieve="  SELECT DISTINCT alumnos.cuenta,   
+         alumnos.nombre,   
+         alumnos.apaterno,   
+         alumnos.amaterno,   
+         datos_certificado_a.nombre,   
+         carreras.carrera,   
+         carreras.nivel,   
+         datos_certificado_b.nombre,   
+         materias_certificado.sigla,   
+         materias_certificado.materia,   
+         materias_certificado.periodo_str,   
+         materias_certificado.creditos,   
+         materias_certificado.calificacion_str,   
+         materias_certificado.obs,   
+         alumnos.sexo,   
+         carreras.cve_grado,   
+         grado.grado,   
+         materias_certificado.calificacion,   
+         plan_estudios.incorporado_sep,   
+         materias_certificado.cve_mat,   
+         materias_certificado.tipo,   
+         materias_certificado.cve_idioma,   
+         materias_certificado.numero_pagina,   
+         materias_certificado.sigla_anterior,   
+         historico.cve_plan  
+    FROM alumnos,   
+         datos_certificado datos_certificado_a,   
+         historico,    
+         carreras,   
+         datos_certificado datos_certificado_b,   
+         materias_certificado,   
+         grado,   
+         plan_estudios  
+   WHERE ( historico.cuenta = alumnos.cuenta ) and  
+         ( historico.cve_carrera = carreras.cve_carrera ) and  
+         ( historico.cve_carrera = materias_certificado.cve_carrera ) and  
+         ( historico.cuenta = materias_certificado.cuenta ) and  
+         ( carreras.cve_grado = grado.cve_grado ) and  
+         ( historico.cve_carrera = plan_estudios.cve_carrera ) and  
+         ( historico.cve_plan = plan_estudios.cve_plan ) and  
+         historico.cve_plan = :an_cve_plan AND 
+         ( ( alumnos.cuenta = :an_cuenta ) AND  
+         ( materias_certificado.cve_tipo_doc_rep = :an_cve_tipo_doc_rep ) AND  
+         ( datos_certificado_a.id = 9 ) AND  
+         ((materias_certificado.numero_pagina = :an_pagina) OR  
+         (9999 = :an_pagina AND  
+         materias_certificado.numero_pagina > 1)) AND  
+         (historico.cve_carrera = :an_cve_carrera) AND  
+         datos_certificado_b.id = 10 )   
+ORDER BY materias_certificado.numero_pagina ASC,   
+         materias_certificado.renglon_relativo ASC   
+
+
+
+/*  SELECT alumnos.cuenta,   
+         alumnos.nombre,   
+         alumnos.apaterno,   
+         alumnos.amaterno,   
+         datos_certificado_a.nombre,   
+         carreras.carrera,   
+         carreras.nivel,   
+         datos_certificado_b.nombre,   
+         materias_certificado.sigla,   
+         materias_certificado.materia,   
+         materias_certificado.periodo_str,   
+         materias_certificado.creditos,   
+         materias_certificado.calificacion_str,   
+         materias_certificado.obs,   
+         alumnos.sexo,   
+         carreras.cve_grado,   
+         grado.grado,   
+         materias_certificado.calificacion,   
+         plan_estudios.incorporado_sep,   
+         materias_certificado.cve_mat,   
+         materias_certificado.tipo,   
+         materias_certificado.cve_idioma,   
+         materias_certificado.numero_pagina,   
+         materias_certificado.sigla_anterior,   
+         academicos.cve_plan  
+    FROM alumnos,   
+         datos_certificado datos_certificado_a,   
+         academicos,   
+         carreras,   
+         datos_certificado datos_certificado_b,   
+         materias_certificado,   
+         grado,   
+         plan_estudios  
+   WHERE ( academicos.cuenta = alumnos.cuenta ) and  
+         ( academicos.cve_carrera = carreras.cve_carrera ) and  
+         ( academicos.cve_carrera = materias_certificado.cve_carrera ) and  
+         ( academicos.cuenta = materias_certificado.cuenta ) and  
+         ( carreras.cve_grado = grado.cve_grado ) and  
+         ( academicos.cve_carrera = plan_estudios.cve_carrera ) and  
+         ( academicos.cve_plan = plan_estudios.cve_plan ) and  
+         ( ( alumnos.cuenta = :an_cuenta ) AND  
+         ( materias_certificado.cve_tipo_doc_rep = :an_cve_tipo_doc_rep ) AND  
+         ( datos_certificado_a.id = 9 ) AND  
+         ((materias_certificado.numero_pagina = :an_pagina) OR  
+         (9999 = :an_pagina AND  
+         materias_certificado.numero_pagina > 1)) AND  
+         (academicos.cve_carrera = :an_cve_carrera) AND  
+         datos_certificado_b.id = 10 )   
+ORDER BY materias_certificado.numero_pagina ASC,   
+         materias_certificado.renglon_relativo ASC   
+*/
+
+
+
+
+" arguments=(("an_cuenta", number),("an_cve_tipo_doc_rep", number),("id_certificado", number),("an_pagina", number),("an_cve_carrera", number),("an_cve_plan", number)) )
 group(level=1 header.height=0 trailer.height=0 by=("materias_certificado_numero_pagina" ) newpage=yes header.color="536870912" header.transparency="0" header.gradient.color="8421504" header.gradient.transparency="0" header.gradient.angle="0" header.brushmode="0" header.gradient.repetition.mode="0" header.gradient.repetition.count="0" header.gradient.repetition.length="100" header.gradient.focus="0" header.gradient.scale="100" header.gradient.spread="100" trailer.color="536870912" trailer.transparency="0" trailer.gradient.color="8421504" trailer.gradient.transparency="0" trailer.gradient.angle="0" trailer.brushmode="0" trailer.gradient.repetition.mode="0" trailer.gradient.repetition.count="0" trailer.gradient.repetition.length="100" trailer.gradient.focus="0" trailer.gradient.scale="100" trailer.gradient.spread="100" )
 compute(band=header alignment="0" expression="case(  carreras_cve_grado  when 'L' then ~"BACHELOR'S : ~"  else 'STUDIES OF  :')"border="0" color="0" x="46" y="652" height="64" width="645" format="[GENERAL]" html.valueishtml="0"  name=carreras_carrera visible="1"  font.face="Arial" font.height="-11" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
 compute(band=header alignment="0" expression="case( alumnos_sexo  when 'M' then 'STUDENT: ' when 'F' then 'STUDENT: ' else 'STUDENT: ') "border="0" color="0" x="46" y="504" height="64" width="645" format="[GENERAL]" html.valueishtml="0"  name=nombre_completo visible="1"  font.face="Arial" font.height="-11" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
@@ -206,6 +315,7 @@ roundrectangle(band=foreground ellipseheight="36" ellipsewidth="41"x="41" y="936
 rectangle(band=foreground x="315" y="936" height="280~t330+(rowheight()*(36-3))" width="1742"  name=r_materia visible="1"  slideup=allabove brush.hatch="7" brush.color="536870912" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" )
 rectangle(band=foreground x="2619" y="932~t932 +146" height="284~t330+(rowheight()*(36-3)) -148 +4" width="142"  name=r_calif_num visible="1"  slideup=allabove brush.hatch="7" brush.color="536870912" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" )
 rectangle(band=foreground x="2761" y="932~t932+146" height="284~t 330+(rowheight()*(36-3)) -148 +4" width="393"  name=r_calif_string visible="1"  slideup=allabove brush.hatch="7" brush.color="536870912" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" )
+column(band=detail id=25 alignment="0" tabsequence=100 border="0" color="0" x="3447" y="0" height="60" width="160" html.valueishtml="0"  name=historico_cve_plan visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
 htmltable(border="1" )
 htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
 xhtmlgen() cssgen(sessionspecific="0" )
@@ -216,3 +326,4 @@ export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0  t
 import.xml()
 export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
 export.xhtml()
+ 
